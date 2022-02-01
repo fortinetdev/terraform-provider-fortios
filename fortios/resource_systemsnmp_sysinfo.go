@@ -40,9 +40,14 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"engine_id_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"engine_id": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 24),
+				ValidateFunc: validation.StringLenBetween(0, 54),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -176,6 +181,10 @@ func flattenSystemSnmpSysinfoStatus(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemSnmpSysinfoEngineIdType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSnmpSysinfoEngineId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -210,6 +219,12 @@ func refreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("status", flattenSystemSnmpSysinfoStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("engine_id_type", flattenSystemSnmpSysinfoEngineIdType(o["engine-id-type"], d, "engine_id_type", sv)); err != nil {
+		if !fortiAPIPatch(o["engine-id-type"]) {
+			return fmt.Errorf("Error reading engine_id_type: %v", err)
 		}
 	}
 
@@ -268,6 +283,10 @@ func expandSystemSnmpSysinfoStatus(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandSystemSnmpSysinfoEngineIdType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSnmpSysinfoEngineId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -306,6 +325,16 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("engine_id_type"); ok {
+
+		t, err := expandSystemSnmpSysinfoEngineIdType(d, v, "engine_id_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["engine-id-type"] = t
 		}
 	}
 

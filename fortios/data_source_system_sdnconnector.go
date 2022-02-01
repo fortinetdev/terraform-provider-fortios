@@ -43,9 +43,25 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"verify_certificate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"server_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"server_port": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -90,6 +106,30 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 			"vpc_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"external_account_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"role_arn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"region_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"region": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 			"tenant_id": &schema.Schema{
 				Type:     schema.TypeString,
@@ -240,6 +280,46 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 					},
 				},
 			},
+			"gcp_project_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"gcp_zone_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"forwarding_rule": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"rule_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"target": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"use_metadata_iam": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -355,7 +435,47 @@ func dataSourceFlattenSystemSdnConnectorHaStatus(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorVerifyCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorServerList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := i["ip"]; ok {
+			tmp["ip"] = dataSourceFlattenSystemSdnConnectorServerListIp(i["ip"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorServerListIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -396,6 +516,83 @@ func dataSourceFlattenSystemSdnConnectorRegion(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemSdnConnectorVpcId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "role_arn"
+		if _, ok := i["role-arn"]; ok {
+			tmp["role_arn"] = dataSourceFlattenSystemSdnConnectorExternalAccountListRoleArn(i["role-arn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
+		if _, ok := i["region-list"]; ok {
+			tmp["region_list"] = dataSourceFlattenSystemSdnConnectorExternalAccountListRegionList(i["region-list"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorExternalAccountListRoleArn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorExternalAccountListRegionList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
+		if _, ok := i["region"]; ok {
+			tmp["region"] = dataSourceFlattenSystemSdnConnectorExternalAccountListRegionListRegion(i["region"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorExternalAccountListRegionListRegion(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -726,6 +923,128 @@ func dataSourceFlattenSystemSdnConnectorRouteName(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemSdnConnectorGcpProjectListId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "gcp_zone_list"
+		if _, ok := i["gcp-zone-list"]; ok {
+			tmp["gcp_zone_list"] = dataSourceFlattenSystemSdnConnectorGcpProjectListGcpZoneList(i["gcp-zone-list"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorGcpProjectListId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemSdnConnectorGcpProjectListGcpZoneListName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorGcpProjectListGcpZoneListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
+		if _, ok := i["rule-name"]; ok {
+			tmp["rule_name"] = dataSourceFlattenSystemSdnConnectorForwardingRuleRuleName(i["rule-name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := i["target"]; ok {
+			tmp["target"] = dataSourceFlattenSystemSdnConnectorForwardingRuleTarget(i["target"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorForwardingRuleRuleName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorForwardingRuleTarget(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorUseMetadataIam(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -801,9 +1120,21 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("verify_certificate", dataSourceFlattenSystemSdnConnectorVerifyCertificate(o["verify-certificate"], d, "verify_certificate")); err != nil {
+		if !fortiAPIPatch(o["verify-certificate"]) {
+			return fmt.Errorf("Error reading verify_certificate: %v", err)
+		}
+	}
+
 	if err = d.Set("server", dataSourceFlattenSystemSdnConnectorServer(o["server"], d, "server")); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
+		}
+	}
+
+	if err = d.Set("server_list", dataSourceFlattenSystemSdnConnectorServerList(o["server-list"], d, "server_list")); err != nil {
+		if !fortiAPIPatch(o["server-list"]) {
+			return fmt.Errorf("Error reading server_list: %v", err)
 		}
 	}
 
@@ -840,6 +1171,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("vpc_id", dataSourceFlattenSystemSdnConnectorVpcId(o["vpc-id"], d, "vpc_id")); err != nil {
 		if !fortiAPIPatch(o["vpc-id"]) {
 			return fmt.Errorf("Error reading vpc_id: %v", err)
+		}
+	}
+
+	if err = d.Set("external_account_list", dataSourceFlattenSystemSdnConnectorExternalAccountList(o["external-account-list"], d, "external_account_list")); err != nil {
+		if !fortiAPIPatch(o["external-account-list"]) {
+			return fmt.Errorf("Error reading external_account_list: %v", err)
 		}
 	}
 
@@ -942,6 +1279,18 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("route", dataSourceFlattenSystemSdnConnectorRoute(o["route"], d, "route")); err != nil {
 		if !fortiAPIPatch(o["route"]) {
 			return fmt.Errorf("Error reading route: %v", err)
+		}
+	}
+
+	if err = d.Set("gcp_project_list", dataSourceFlattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list")); err != nil {
+		if !fortiAPIPatch(o["gcp-project-list"]) {
+			return fmt.Errorf("Error reading gcp_project_list: %v", err)
+		}
+	}
+
+	if err = d.Set("forwarding_rule", dataSourceFlattenSystemSdnConnectorForwardingRule(o["forwarding-rule"], d, "forwarding_rule")); err != nil {
+		if !fortiAPIPatch(o["forwarding-rule"]) {
+			return fmt.Errorf("Error reading forwarding_rule: %v", err)
 		}
 	}
 

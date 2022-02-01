@@ -109,6 +109,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -130,6 +135,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -148,6 +168,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -173,6 +198,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -182,6 +222,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -208,6 +253,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -226,6 +286,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -252,6 +317,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -270,6 +350,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -296,6 +381,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -314,6 +414,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -344,6 +449,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -353,6 +473,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -374,6 +499,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -387,6 +527,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -408,6 +553,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -421,6 +581,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"av_scan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -442,6 +607,21 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -630,6 +810,45 @@ func resourceAntivirusProfile() *schema.Resource {
 					},
 				},
 			},
+			"outbreak_prevention_archive_scan": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"external_blocklist_enable_all": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"external_blocklist": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"ems_threat_feed": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fortiai_error_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fortiai_timeout_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"av_virus_log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -649,6 +868,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -836,6 +1060,12 @@ func flattenAntivirusProfileHttp(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileHttpAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -866,6 +1096,24 @@ func flattenAntivirusProfileHttp(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfileHttpOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileHttpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileHttpFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileHttpQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 
@@ -874,6 +1122,10 @@ func flattenAntivirusProfileHttp(v interface{}, d *schema.ResourceData, pre stri
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileHttpAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileHttpOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -896,6 +1148,18 @@ func flattenAntivirusProfileHttpOutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfileHttpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileHttpFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileHttpQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileHttpContentDisarm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -909,6 +1173,12 @@ func flattenAntivirusProfileFtp(v interface{}, d *schema.ResourceData, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileFtpAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -939,8 +1209,30 @@ func flattenAntivirusProfileFtp(v interface{}, d *schema.ResourceData, pre strin
 		result["outbreak_prevention"] = flattenAntivirusProfileFtpOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileFtpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileFtpFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileFtpQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileFtpAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileFtpOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -963,6 +1255,18 @@ func flattenAntivirusProfileFtpOutbreakPrevention(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenAntivirusProfileFtpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileFtpFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileFtpQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileImap(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -972,6 +1276,12 @@ func flattenAntivirusProfileImap(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileImapAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1008,6 +1318,24 @@ func flattenAntivirusProfileImap(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfileImapOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileImapExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileImapFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileImapQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 
@@ -1016,6 +1344,10 @@ func flattenAntivirusProfileImap(v interface{}, d *schema.ResourceData, pre stri
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileImapAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileImapOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1042,6 +1374,18 @@ func flattenAntivirusProfileImapOutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfileImapExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileImapFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileImapQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileImapContentDisarm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1055,6 +1399,12 @@ func flattenAntivirusProfilePop3(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfilePop3AvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1091,6 +1441,24 @@ func flattenAntivirusProfilePop3(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfilePop3OutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfilePop3ExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfilePop3Fortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfilePop3Quarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 
@@ -1099,6 +1467,10 @@ func flattenAntivirusProfilePop3(v interface{}, d *schema.ResourceData, pre stri
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfilePop3AvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfilePop3Options(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1125,6 +1497,18 @@ func flattenAntivirusProfilePop3OutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfilePop3ExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfilePop3Fortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfilePop3Quarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfilePop3ContentDisarm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1138,6 +1522,12 @@ func flattenAntivirusProfileSmtp(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileSmtpAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1174,6 +1564,24 @@ func flattenAntivirusProfileSmtp(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfileSmtpOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileSmtpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileSmtpFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileSmtpQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 
@@ -1182,6 +1590,10 @@ func flattenAntivirusProfileSmtp(v interface{}, d *schema.ResourceData, pre stri
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileSmtpAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileSmtpOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1208,6 +1620,18 @@ func flattenAntivirusProfileSmtpOutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfileSmtpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSmtpFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSmtpQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileSmtpContentDisarm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1221,6 +1645,12 @@ func flattenAntivirusProfileMapi(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileMapiAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1257,8 +1687,30 @@ func flattenAntivirusProfileMapi(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfileMapiOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileMapiExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileMapiFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileMapiQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileMapiAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileMapiOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1285,6 +1737,18 @@ func flattenAntivirusProfileMapiOutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfileMapiExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileMapiFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileMapiQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileNntp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1294,6 +1758,12 @@ func flattenAntivirusProfileNntp(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileNntpAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1324,8 +1794,30 @@ func flattenAntivirusProfileNntp(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfileNntpOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileNntpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileNntpFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileNntpQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileNntpAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileNntpOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1348,6 +1840,18 @@ func flattenAntivirusProfileNntpOutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfileNntpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileNntpFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileNntpQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileCifs(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1357,6 +1861,12 @@ func flattenAntivirusProfileCifs(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileCifsAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1387,8 +1897,30 @@ func flattenAntivirusProfileCifs(v interface{}, d *schema.ResourceData, pre stri
 		result["outbreak_prevention"] = flattenAntivirusProfileCifsOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileCifsExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileCifsFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileCifsQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileCifsAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileCifsOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1411,6 +1943,18 @@ func flattenAntivirusProfileCifsOutbreakPrevention(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAntivirusProfileCifsExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileCifsFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileCifsQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileSsh(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1420,6 +1964,12 @@ func flattenAntivirusProfileSsh(v interface{}, d *schema.ResourceData, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := i["av-scan"]; ok {
+
+		result["av_scan"] = flattenAntivirusProfileSshAvScan(i["av-scan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 
@@ -1450,8 +2000,30 @@ func flattenAntivirusProfileSsh(v interface{}, d *schema.ResourceData, pre strin
 		result["outbreak_prevention"] = flattenAntivirusProfileSshOutbreakPrevention(i["outbreak-prevention"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := i["external-blocklist"]; ok {
+
+		result["external_blocklist"] = flattenAntivirusProfileSshExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenAntivirusProfileSshFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := i["quarantine"]; ok {
+
+		result["quarantine"] = flattenAntivirusProfileSshQuarantine(i["quarantine"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileSshAvScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileSshOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1471,6 +2043,18 @@ func flattenAntivirusProfileSshEmulator(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenAntivirusProfileSshOutbreakPrevention(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSshExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSshFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSshQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1816,6 +2400,64 @@ func flattenAntivirusProfileContentDisarmDetectOnly(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenAntivirusProfileOutbreakPreventionArchiveScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileExternalBlocklistEnableAll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenAntivirusProfileExternalBlocklistName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenAntivirusProfileExternalBlocklistName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileEmsThreatFeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileFortiaiErrorAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileFortiaiTimeoutAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusProfileAvVirusLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2121,6 +2763,52 @@ func refreshObjectAntivirusProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("outbreak_prevention_archive_scan", flattenAntivirusProfileOutbreakPreventionArchiveScan(o["outbreak-prevention-archive-scan"], d, "outbreak_prevention_archive_scan", sv)); err != nil {
+		if !fortiAPIPatch(o["outbreak-prevention-archive-scan"]) {
+			return fmt.Errorf("Error reading outbreak_prevention_archive_scan: %v", err)
+		}
+	}
+
+	if err = d.Set("external_blocklist_enable_all", flattenAntivirusProfileExternalBlocklistEnableAll(o["external-blocklist-enable-all"], d, "external_blocklist_enable_all", sv)); err != nil {
+		if !fortiAPIPatch(o["external-blocklist-enable-all"]) {
+			return fmt.Errorf("Error reading external_blocklist_enable_all: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("external_blocklist", flattenAntivirusProfileExternalBlocklist(o["external-blocklist"], d, "external_blocklist", sv)); err != nil {
+			if !fortiAPIPatch(o["external-blocklist"]) {
+				return fmt.Errorf("Error reading external_blocklist: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("external_blocklist"); ok {
+			if err = d.Set("external_blocklist", flattenAntivirusProfileExternalBlocklist(o["external-blocklist"], d, "external_blocklist", sv)); err != nil {
+				if !fortiAPIPatch(o["external-blocklist"]) {
+					return fmt.Errorf("Error reading external_blocklist: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("ems_threat_feed", flattenAntivirusProfileEmsThreatFeed(o["ems-threat-feed"], d, "ems_threat_feed", sv)); err != nil {
+		if !fortiAPIPatch(o["ems-threat-feed"]) {
+			return fmt.Errorf("Error reading ems_threat_feed: %v", err)
+		}
+	}
+
+	if err = d.Set("fortiai_error_action", flattenAntivirusProfileFortiaiErrorAction(o["fortiai-error-action"], d, "fortiai_error_action", sv)); err != nil {
+		if !fortiAPIPatch(o["fortiai-error-action"]) {
+			return fmt.Errorf("Error reading fortiai_error_action: %v", err)
+		}
+	}
+
+	if err = d.Set("fortiai_timeout_action", flattenAntivirusProfileFortiaiTimeoutAction(o["fortiai-timeout-action"], d, "fortiai_timeout_action", sv)); err != nil {
+		if !fortiAPIPatch(o["fortiai-timeout-action"]) {
+			return fmt.Errorf("Error reading fortiai_timeout_action: %v", err)
+		}
+	}
+
 	if err = d.Set("av_virus_log", flattenAntivirusProfileAvVirusLog(o["av-virus-log"], d, "av_virus_log", sv)); err != nil {
 		if !fortiAPIPatch(o["av-virus-log"]) {
 			return fmt.Errorf("Error reading av_virus_log: %v", err)
@@ -2216,6 +2904,11 @@ func expandAntivirusProfileHttp(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileHttpAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2241,6 +2934,21 @@ func expandAntivirusProfileHttp(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileHttpOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileHttpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileHttpFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileHttpQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2248,6 +2956,10 @@ func expandAntivirusProfileHttp(d *schema.ResourceData, v interface{}, pre strin
 	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileHttpAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileHttpOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2270,6 +2982,18 @@ func expandAntivirusProfileHttpOutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfileHttpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileHttpFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileHttpQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileHttpContentDisarm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2284,6 +3008,11 @@ func expandAntivirusProfileFtp(d *schema.ResourceData, v interface{}, pre string
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileFtpAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2309,8 +3038,27 @@ func expandAntivirusProfileFtp(d *schema.ResourceData, v interface{}, pre string
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileFtpOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileFtpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileFtpFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileFtpQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileFtpAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileFtpOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2333,6 +3081,18 @@ func expandAntivirusProfileFtpOutbreakPrevention(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandAntivirusProfileFtpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileFtpFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileFtpQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileImap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -2343,6 +3103,11 @@ func expandAntivirusProfileImap(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileImapAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2373,6 +3138,21 @@ func expandAntivirusProfileImap(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileImapOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileImapExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileImapFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileImapQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2380,6 +3160,10 @@ func expandAntivirusProfileImap(d *schema.ResourceData, v interface{}, pre strin
 	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileImapAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileImapOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2406,6 +3190,18 @@ func expandAntivirusProfileImapOutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfileImapExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileImapFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileImapQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileImapContentDisarm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2420,6 +3216,11 @@ func expandAntivirusProfilePop3(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfilePop3AvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2450,6 +3251,21 @@ func expandAntivirusProfilePop3(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfilePop3OutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfilePop3ExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfilePop3Fortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfilePop3Quarantine(d, i["quarantine"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2457,6 +3273,10 @@ func expandAntivirusProfilePop3(d *schema.ResourceData, v interface{}, pre strin
 	}
 
 	return result, nil
+}
+
+func expandAntivirusProfilePop3AvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfilePop3Options(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2483,6 +3303,18 @@ func expandAntivirusProfilePop3OutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfilePop3ExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfilePop3Fortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfilePop3Quarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfilePop3ContentDisarm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2497,6 +3329,11 @@ func expandAntivirusProfileSmtp(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileSmtpAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2527,6 +3364,21 @@ func expandAntivirusProfileSmtp(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileSmtpOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileSmtpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileSmtpFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileSmtpQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2534,6 +3386,10 @@ func expandAntivirusProfileSmtp(d *schema.ResourceData, v interface{}, pre strin
 	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileSmtpAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileSmtpOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2560,6 +3416,18 @@ func expandAntivirusProfileSmtpOutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfileSmtpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSmtpFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSmtpQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileSmtpContentDisarm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2574,6 +3442,11 @@ func expandAntivirusProfileMapi(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileMapiAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2604,8 +3477,27 @@ func expandAntivirusProfileMapi(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileMapiOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileMapiExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileMapiFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileMapiQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileMapiAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileMapiOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2632,6 +3524,18 @@ func expandAntivirusProfileMapiOutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfileMapiExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileMapiFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileMapiQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileNntp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -2642,6 +3546,11 @@ func expandAntivirusProfileNntp(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileNntpAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2667,8 +3576,27 @@ func expandAntivirusProfileNntp(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileNntpOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileNntpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileNntpFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileNntpQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileNntpAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileNntpOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2691,6 +3619,18 @@ func expandAntivirusProfileNntpOutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfileNntpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileNntpFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileNntpQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileCifs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -2701,6 +3641,11 @@ func expandAntivirusProfileCifs(d *schema.ResourceData, v interface{}, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileCifsAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2726,8 +3671,27 @@ func expandAntivirusProfileCifs(d *schema.ResourceData, v interface{}, pre strin
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileCifsOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileCifsExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileCifsFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileCifsQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileCifsAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileCifsOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2750,6 +3714,18 @@ func expandAntivirusProfileCifsOutbreakPrevention(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAntivirusProfileCifsExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileCifsFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileCifsQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileSsh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -2760,6 +3736,11 @@ func expandAntivirusProfileSsh(d *schema.ResourceData, v interface{}, pre string
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "av_scan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["av-scan"], _ = expandAntivirusProfileSshAvScan(d, i["av_scan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2785,8 +3766,27 @@ func expandAntivirusProfileSsh(d *schema.ResourceData, v interface{}, pre string
 
 		result["outbreak-prevention"], _ = expandAntivirusProfileSshOutbreakPrevention(d, i["outbreak_prevention"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "external_blocklist"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["external-blocklist"], _ = expandAntivirusProfileSshExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandAntivirusProfileSshFortiai(d, i["fortiai"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "quarantine"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["quarantine"], _ = expandAntivirusProfileSshQuarantine(d, i["quarantine"], pre_append, sv)
+	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileSshAvScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileSshOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2806,6 +3806,18 @@ func expandAntivirusProfileSshEmulator(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandAntivirusProfileSshOutbreakPrevention(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSshExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSshFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSshQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3126,6 +4138,58 @@ func expandAntivirusProfileContentDisarmDetectOnly(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandAntivirusProfileOutbreakPreventionArchiveScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileExternalBlocklistEnableAll(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandAntivirusProfileExternalBlocklistName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandAntivirusProfileExternalBlocklistName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileEmsThreatFeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileFortiaiErrorAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileFortiaiTimeoutAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAntivirusProfileAvVirusLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3402,6 +4466,66 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["content-disarm"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("outbreak_prevention_archive_scan"); ok {
+
+		t, err := expandAntivirusProfileOutbreakPreventionArchiveScan(d, v, "outbreak_prevention_archive_scan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["outbreak-prevention-archive-scan"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("external_blocklist_enable_all"); ok {
+
+		t, err := expandAntivirusProfileExternalBlocklistEnableAll(d, v, "external_blocklist_enable_all", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["external-blocklist-enable-all"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("external_blocklist"); ok {
+
+		t, err := expandAntivirusProfileExternalBlocklist(d, v, "external_blocklist", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["external-blocklist"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ems_threat_feed"); ok {
+
+		t, err := expandAntivirusProfileEmsThreatFeed(d, v, "ems_threat_feed", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ems-threat-feed"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fortiai_error_action"); ok {
+
+		t, err := expandAntivirusProfileFortiaiErrorAction(d, v, "fortiai_error_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortiai-error-action"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fortiai_timeout_action"); ok {
+
+		t, err := expandAntivirusProfileFortiaiTimeoutAction(d, v, "fortiai_timeout_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortiai-timeout-action"] = t
 		}
 	}
 

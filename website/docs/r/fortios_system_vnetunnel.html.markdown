@@ -17,6 +17,7 @@ The following arguments are supported:
 * `interface` - Interface name.
 * `ssl_certificate` - Name of local certificate for SSL connections.
 * `bmr_hostname` - BMR hostname.
+* `auto_asic_offload` - Enable/disable tunnel ASIC offloading. Valid values: `enable`, `disable`.
 * `ipv4_address` - Tunnel IPv4 address and netmask.
 * `br` - Border relay IPv6 address.
 * `update_url` - URL of provisioning server.

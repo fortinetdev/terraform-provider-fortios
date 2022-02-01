@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontrollersecuritypolicy_localaccess
-Configure allowaccess list for mgmt and internal interfaces on managed FortiSwitch.
+Configure allowaccess list for mgmt and internal interfaces on managed FortiSwitch. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

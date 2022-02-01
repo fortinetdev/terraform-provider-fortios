@@ -71,6 +71,12 @@ func resourceSwitchControllerInitialConfigVlans() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"nac_segment": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -188,6 +194,10 @@ func flattenSwitchControllerInitialConfigVlansNac(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenSwitchControllerInitialConfigVlansNacSegment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -227,6 +237,12 @@ func refreshObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, o m
 		}
 	}
 
+	if err = d.Set("nac_segment", flattenSwitchControllerInitialConfigVlansNacSegment(o["nac-segment"], d, "nac_segment", sv)); err != nil {
+		if !fortiAPIPatch(o["nac-segment"]) {
+			return fmt.Errorf("Error reading nac_segment: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -257,6 +273,10 @@ func expandSwitchControllerInitialConfigVlansVideo(d *schema.ResourceData, v int
 }
 
 func expandSwitchControllerInitialConfigVlansNac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerInitialConfigVlansNacSegment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -320,6 +340,16 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, sv stri
 			return &obj, err
 		} else if t != nil {
 			obj["nac"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nac_segment"); ok {
+
+		t, err := expandSwitchControllerInitialConfigVlansNacSegment(d, v, "nac_segment", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nac-segment"] = t
 		}
 	}
 

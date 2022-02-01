@@ -19,6 +19,7 @@ The following arguments are supported:
 * `voice` - VLAN dedicated for voice devices.
 * `video` - VLAN dedicated for video devices.
 * `nac` - VLAN for NAC onboarding devices.
+* `nac_segment` - VLAN for NAC segemnt primary interface.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -52,6 +52,7 @@ The following arguments are supported:
 * `tcp_halfclose_timer` - Wait time to close a TCP session waiting for an unanswered FIN packet (1 - 86400 sec, 0 = default).
 * `tcp_halfopen_timer` - Wait time to close a TCP session waiting for an unanswered open session packet (1 - 86400 sec, 0 = default).
 * `tcp_timewait_timer` - Set the length of the TCP TIME-WAIT state in seconds (1 - 300 sec, 0 = default).
+* `tcp_rst_timer` - Set the length of the TCP CLOSE state in seconds (5 - 300 sec, 0 = default).
 * `udp_idle_timer` - UDP half close timeout (0 - 86400 sec, 0 = default).
 * `session_ttl` - Session TTL (300 - 604800, 0 = default).
 * `check_reset_range` - Configure the type of ICMP error message verification. Valid values: `disable`, `strict`, `default`.
@@ -61,6 +62,7 @@ The following arguments are supported:
 * `app_service_type` - Application service type. Valid values: `disable`, `app-id`, `app-category`.
 * `app_category` - Application category ID. The structure of `app_category` block is documented below.
 * `application` - Application ID. The structure of `application` block is documented below.
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

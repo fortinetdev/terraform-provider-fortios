@@ -23,6 +23,7 @@ The following arguments are supported:
 * `fsw_wan2_peer` - FortiSwitch WAN2 peer port.
 * `fsw_wan2_admin` - FortiSwitch WAN2 admin status; enable to authorize the FortiSwitch as a managed switch. Valid values: `discovered`, `disable`, `enable`.
 * `poe_pre_standard_detection` - Enable/disable PoE pre-standard detection. Valid values: `enable`, `disable`.
+* `dhcp_server_access_list` - DHCP snooping server access list. Valid values: `global`, `enable`, `disable`.
 * `poe_detection_type` - PoE detection type for FortiSwitch.
 * `poe_lldp_detection` - Enable/disable PoE LLDP detection. Valid values: `enable`, `disable`.
 * `directly_connected` - Directly connected FortiSwitch.
@@ -43,6 +44,7 @@ The following arguments are supported:
 * `delayed_restart_trigger` - Delayed restart triggered for this FortiSwitch.
 * `firmware_provision` - Enable/disable provisioning of firmware to FortiSwitches on join connection. Valid values: `enable`, `disable`.
 * `firmware_provision_version` - Firmware version to provision to this FortiSwitch on bootup (major.minor.build, i.e. 6.2.1234).
+* `firmware_provision_latest` - Enable/disable one-time automatic provisioning of the latest firmware version. Valid values: `disable`, `once`.
 * `ports` - Managed-switch port list. The structure of `ports` block is documented below.
 * `ip_source_guard` - IP source guard. The structure of `ip_source_guard` block is documented below.
 * `stp_settings` - Configuration method to edit Spanning Tree Protocol (STP) settings used to prevent bridge loops. The structure of `stp_settings` block is documented below.
@@ -65,7 +67,7 @@ The following arguments are supported:
 * `static_mac` - Configuration method to edit FortiSwitch Static and Sticky MAC. The structure of `static_mac` block is documented below.
 * `custom_command` - Configuration method to edit FortiSwitch commands to be pushed to this FortiSwitch device upon rebooting the FortiGate switch controller or the FortiSwitch. The structure of `custom_command` block is documented below.
 * `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings. The structure of `igmp_snooping` block is documented below.
-* `n802_1X_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1X_settings` block is documented below.
+* `n802_1x_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1x_settings` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -92,6 +94,8 @@ The `ports` block supports:
 * `mclag_icl_port` - MCLAG-ICL port.
 * `fiber_port` - Fiber-port.
 * `media_type` - Media type.
+* `poe_standard` - PoE standard supported.
+* `poe_max_power` - PoE maximum power.
 * `flags` - Port properties flags.
 * `virtual_port` - Virtualized switch port.
 * `isl_local_trunk_name` - ISL local trunk name.
@@ -104,7 +108,9 @@ The `ports` block supports:
 * `allowed_vlans` - Configure switch port tagged vlans The structure of `allowed_vlans` block is documented below.
 * `untagged_vlans` - Configure switch port untagged vlans The structure of `untagged_vlans` block is documented below.
 * `type` - Interface type: physical or trunk port. Valid values: `physical`, `trunk`.
-* `access_mode` - Access mode of the port. Valid values: `normal`, `nac`.
+* `access_mode` - Access mode of the port.
+* `matched_dpp_policy` - Matched child policy in the dynamic port policy.
+* `matched_dpp_intf_tags` - Matched interface tags in the dynamic port policy.
 * `dhcp_snooping` - Trusted or untrusted DHCP-snooping interface. Valid values: `untrusted`, `trusted`.
 * `dhcp_snoop_option82_trust` - Enable/disable allowance of DHCP with option-82 on untrusted interface. Valid values: `enable`, `disable`.
 * `arp_inspection_trust` - Trusted or untrusted dynamic ARP inspection. Valid values: `untrusted`, `trusted`.
@@ -130,10 +136,12 @@ The `ports` block supports:
 * `pause_meter_resume` - Resume threshold for resuming traffic on ingress port. Valid values: `75%`, `50%`, `25%`.
 * `loop_guard` - Enable/disable loop-guard on this interface, an STP optimization used to prevent network loops. Valid values: `enabled`, `disabled`.
 * `loop_guard_timeout` - Loop-guard timeout (0 - 120 min, default = 45).
+* `port_policy` - Switch controller dynamic port policy from available options.
 * `qos_policy` - Switch controller QoS policy from available options.
 * `storm_control_policy` - Switch controller storm control policy from available options.
 * `port_security_policy` - Switch controller authentication policy to apply to this managed switch from available options.
 * `export_to_pool` - Switch controller export port to pool-list.
+* `interface_tags` - Tag(s) associated with the interface for various features including virtual port pool, dynamic port policy. The structure of `interface_tags` block is documented below.
 * `export_tags` - Switch controller export tag name. The structure of `export_tags` block is documented below.
 * `export_to_pool_flag` - Switch controller export port to pool-list.
 * `learning_limit` - Limit the number of dynamic MAC addresses on this Port (1 - 128, 0 = no limit, default).
@@ -160,6 +168,10 @@ The `allowed_vlans` block supports:
 The `untagged_vlans` block supports:
 
 * `vlan_name` - VLAN name.
+
+The `interface_tags` block supports:
+
+* `tag_name` - FortiSwitch port tag name when exported to a virtual port pool or matched to dynamic port policy.
 
 The `export_tags` block supports:
 
@@ -241,9 +253,9 @@ The `snmp_user` block supports:
 * `queries` - Enable/disable SNMP queries for this user. Valid values: `disable`, `enable`.
 * `query_port` - SNMPv3 query port (default = 161).
 * `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
-* `auth_proto` - Authentication protocol. Valid values: `md5`, `sha`.
+* `auth_proto` - Authentication protocol.
 * `auth_pwd` - Password for authentication protocol.
-* `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`.
+* `priv_proto` - Privacy (encryption) protocol.
 * `priv_pwd` - Password for privacy (encryption) protocol.
 
 The `switch_stp_settings` block supports:
@@ -310,8 +322,17 @@ The `igmp_snooping` block supports:
 * `local_override` - Enable/disable overriding the global IGMP snooping configuration. Valid values: `enable`, `disable`.
 * `aging_time` - Maximum time to retain a multicast snooping entry for which no packets have been seen (15 - 3600 sec, default = 300).
 * `flood_unknown_multicast` - Enable/disable unknown multicast flooding. Valid values: `enable`, `disable`.
+* `vlans` - Configure IGMP snooping VLAN. The structure of `vlans` block is documented below.
 
-The `n802_1X_settings` block supports:
+The `vlans` block supports:
+
+* `vlan_name` - List of FortiSwitch VLANs.
+* `proxy` - IGMP snooping proxy for the VLAN interface. Valid values: `disable`, `enable`, `global`.
+* `querier` - Enable/disable IGMP snooping querier for the VLAN interface. Valid values: `disable`, `enable`.
+* `querier_addr` - IGMP snooping querier address.
+* `version` - IGMP snooping querier version.
+
+The `n802_1x_settings` block supports:
 
 * `local_override` - Enable to override global 802.1X settings on individual FortiSwitches. Valid values: `enable`, `disable`.
 * `link_down_auth` - Authentication state to set if a link is down. Valid values: `set-unauth`, `no-action`.

@@ -168,6 +168,10 @@ func dataSourceRouterOspf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"range": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -213,6 +217,10 @@ func dataSourceRouterOspf() *schema.Resource {
 										Type:      schema.TypeString,
 										Sensitive: true,
 										Computed:  true,
+									},
+									"keychain": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"md5_key": &schema.Schema{
 										Type:      schema.TypeString,
@@ -295,6 +303,10 @@ func dataSourceRouterOspf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"comments": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -311,6 +323,10 @@ func dataSourceRouterOspf() *schema.Resource {
 							Type:      schema.TypeString,
 							Sensitive: true,
 							Computed:  true,
+						},
+						"keychain": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"md5_key": &schema.Schema{
 							Type:      schema.TypeString,
@@ -415,6 +431,10 @@ func dataSourceRouterOspf() *schema.Resource {
 							Computed: true,
 						},
 						"area": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"comments": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -741,6 +761,11 @@ func dataSourceFlattenRouterOspfArea(v interface{}, d *schema.ResourceData, pre 
 			tmp["nssa_redistribution"] = dataSourceFlattenRouterOspfAreaNssaRedistribution(i["nssa-redistribution"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := i["comments"]; ok {
+			tmp["comments"] = dataSourceFlattenRouterOspfAreaComments(i["comments"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := i["range"]; ok {
 			tmp["range"] = dataSourceFlattenRouterOspfAreaRange(i["range"], d, pre_append)
@@ -805,6 +830,10 @@ func dataSourceFlattenRouterOspfAreaNssaDefaultInformationOriginateMetricType(v 
 }
 
 func dataSourceFlattenRouterOspfAreaNssaRedistribution(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfAreaComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -932,6 +961,11 @@ func dataSourceFlattenRouterOspfAreaVirtualLink(v interface{}, d *schema.Resourc
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+		if _, ok := i["keychain"]; ok {
+			tmp["keychain"] = dataSourceFlattenRouterOspfAreaVirtualLinkKeychain(i["keychain"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
 			tmp["md5_key"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5Key(i["md5-key"], d, pre_append)
@@ -993,6 +1027,10 @@ func dataSourceFlattenRouterOspfAreaVirtualLinkAuthentication(v interface{}, d *
 }
 
 func dataSourceFlattenRouterOspfAreaVirtualLinkAuthenticationKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfAreaVirtualLinkKeychain(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1151,6 +1189,11 @@ func dataSourceFlattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceD
 			tmp["name"] = dataSourceFlattenRouterOspfOspfInterfaceName(i["name"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := i["comments"]; ok {
+			tmp["comments"] = dataSourceFlattenRouterOspfOspfInterfaceComments(i["comments"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
 			tmp["interface"] = dataSourceFlattenRouterOspfOspfInterfaceInterface(i["interface"], d, pre_append)
@@ -1173,6 +1216,11 @@ func dataSourceFlattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceD
 			if c != "" {
 				tmp["authentication_key"] = c
 			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+		if _, ok := i["keychain"]; ok {
+			tmp["keychain"] = dataSourceFlattenRouterOspfOspfInterfaceKeychain(i["keychain"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
@@ -1281,6 +1329,10 @@ func dataSourceFlattenRouterOspfOspfInterfaceName(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenRouterOspfOspfInterfaceComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterOspfOspfInterfaceInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1294,6 +1346,10 @@ func dataSourceFlattenRouterOspfOspfInterfaceAuthentication(v interface{}, d *sc
 }
 
 func dataSourceFlattenRouterOspfOspfInterfaceAuthenticationKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfOspfInterfaceKeychain(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1448,6 +1504,11 @@ func dataSourceFlattenRouterOspfNetwork(v interface{}, d *schema.ResourceData, p
 			tmp["area"] = dataSourceFlattenRouterOspfNetworkArea(i["area"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := i["comments"]; ok {
+			tmp["comments"] = dataSourceFlattenRouterOspfNetworkComments(i["comments"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1472,6 +1533,10 @@ func dataSourceFlattenRouterOspfNetworkPrefix(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenRouterOspfNetworkArea(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfNetworkComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

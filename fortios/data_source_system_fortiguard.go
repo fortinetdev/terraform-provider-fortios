@@ -55,6 +55,26 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"update_ffdb": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"update_uwdb": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"update_extdb": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"update_build_proxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"persistent_connection": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -188,7 +208,19 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Sensitive: true,
 				Computed:  true,
 			},
+			"videofilter_license": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"videofilter_expiration": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"ddns_server_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ddns_server_ip6": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -267,6 +299,26 @@ func dataSourceFlattenSystemFortiguardUpdateServerLocation(v interface{}, d *sch
 }
 
 func dataSourceFlattenSystemFortiguardSandboxRegion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardUpdateFfdb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardUpdateUwdb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardUpdateExtdb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardUpdateBuildProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardPersistentConnection(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -402,7 +454,19 @@ func dataSourceFlattenSystemFortiguardProxyPassword(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemFortiguardVideofilterLicense(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardVideofilterExpiration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortiguardDdnsServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardDdnsServerIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -460,6 +524,36 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("sandbox_region", dataSourceFlattenSystemFortiguardSandboxRegion(o["sandbox-region"], d, "sandbox_region")); err != nil {
 		if !fortiAPIPatch(o["sandbox-region"]) {
 			return fmt.Errorf("Error reading sandbox_region: %v", err)
+		}
+	}
+
+	if err = d.Set("update_ffdb", dataSourceFlattenSystemFortiguardUpdateFfdb(o["update-ffdb"], d, "update_ffdb")); err != nil {
+		if !fortiAPIPatch(o["update-ffdb"]) {
+			return fmt.Errorf("Error reading update_ffdb: %v", err)
+		}
+	}
+
+	if err = d.Set("update_uwdb", dataSourceFlattenSystemFortiguardUpdateUwdb(o["update-uwdb"], d, "update_uwdb")); err != nil {
+		if !fortiAPIPatch(o["update-uwdb"]) {
+			return fmt.Errorf("Error reading update_uwdb: %v", err)
+		}
+	}
+
+	if err = d.Set("update_extdb", dataSourceFlattenSystemFortiguardUpdateExtdb(o["update-extdb"], d, "update_extdb")); err != nil {
+		if !fortiAPIPatch(o["update-extdb"]) {
+			return fmt.Errorf("Error reading update_extdb: %v", err)
+		}
+	}
+
+	if err = d.Set("update_build_proxy", dataSourceFlattenSystemFortiguardUpdateBuildProxy(o["update-build-proxy"], d, "update_build_proxy")); err != nil {
+		if !fortiAPIPatch(o["update-build-proxy"]) {
+			return fmt.Errorf("Error reading update_build_proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("persistent_connection", dataSourceFlattenSystemFortiguardPersistentConnection(o["persistent-connection"], d, "persistent_connection")); err != nil {
+		if !fortiAPIPatch(o["persistent-connection"]) {
+			return fmt.Errorf("Error reading persistent_connection: %v", err)
 		}
 	}
 
@@ -655,9 +749,27 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("videofilter_license", dataSourceFlattenSystemFortiguardVideofilterLicense(o["videofilter-license"], d, "videofilter_license")); err != nil {
+		if !fortiAPIPatch(o["videofilter-license"]) {
+			return fmt.Errorf("Error reading videofilter_license: %v", err)
+		}
+	}
+
+	if err = d.Set("videofilter_expiration", dataSourceFlattenSystemFortiguardVideofilterExpiration(o["videofilter-expiration"], d, "videofilter_expiration")); err != nil {
+		if !fortiAPIPatch(o["videofilter-expiration"]) {
+			return fmt.Errorf("Error reading videofilter_expiration: %v", err)
+		}
+	}
+
 	if err = d.Set("ddns_server_ip", dataSourceFlattenSystemFortiguardDdnsServerIp(o["ddns-server-ip"], d, "ddns_server_ip")); err != nil {
 		if !fortiAPIPatch(o["ddns-server-ip"]) {
 			return fmt.Errorf("Error reading ddns_server_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("ddns_server_ip6", dataSourceFlattenSystemFortiguardDdnsServerIp6(o["ddns-server-ip6"], d, "ddns_server_ip6")); err != nil {
+		if !fortiAPIPatch(o["ddns-server-ip6"]) {
+			return fmt.Errorf("Error reading ddns_server_ip6: %v", err)
 		}
 	}
 

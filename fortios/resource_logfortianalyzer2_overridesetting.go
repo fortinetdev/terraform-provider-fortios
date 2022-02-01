@@ -80,6 +80,12 @@ func resourceLogFortianalyzer2OverrideSetting() *schema.Resource {
 					},
 				},
 			},
+			"preshared_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -354,6 +360,10 @@ func flattenLogFortianalyzer2OverrideSettingSerialName(v interface{}, d *schema.
 	return v
 }
 
+func flattenLogFortianalyzer2OverrideSettingPresharedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzer2OverrideSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -490,6 +500,12 @@ func refreshObjectLogFortianalyzer2OverrideSetting(d *schema.ResourceData, o map
 					return fmt.Errorf("Error reading serial: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("preshared_key", flattenLogFortianalyzer2OverrideSettingPresharedKey(o["preshared-key"], d, "preshared_key", sv)); err != nil {
+		if !fortiAPIPatch(o["preshared-key"]) {
+			return fmt.Errorf("Error reading preshared_key: %v", err)
 		}
 	}
 
@@ -684,6 +700,10 @@ func expandLogFortianalyzer2OverrideSettingSerialName(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandLogFortianalyzer2OverrideSettingPresharedKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzer2OverrideSettingAccessConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -838,6 +858,16 @@ func getObjectLogFortianalyzer2OverrideSetting(d *schema.ResourceData, sv string
 			return &obj, err
 		} else if t != nil {
 			obj["serial"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("preshared_key"); ok {
+
+		t, err := expandLogFortianalyzer2OverrideSettingPresharedKey(d, v, "preshared_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["preshared-key"] = t
 		}
 	}
 

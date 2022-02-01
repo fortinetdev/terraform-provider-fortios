@@ -35,6 +35,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_replacement_message_groups": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_local_out": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"gui_certificates": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -72,6 +80,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"admin_https_ssl_versions": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"admin_https_ssl_ciphersuites": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"admin_https_ssl_banned_ciphers": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -199,6 +215,18 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"pmtu_discovery": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"virtual_switch_vlan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"split_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"revision_image_auto_backup": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -220,6 +248,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"gui_forticare_registration_setup_warning": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_cdn_usage": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -251,7 +283,23 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ssh_kex_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ssh_enc_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ssh_mac_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"snat_route_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"speedtest_server": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -311,6 +359,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"proxy_resource_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"proxy_cert_use_mgmt_vdom": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"sys_perf_log_interval": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -348,6 +404,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"tcp_timewait_timer": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"tcp_rst_timer": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -403,11 +463,19 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vdom_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"vdom_admin": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"long_vdom_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"edit_vdom_prompt": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -453,6 +521,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"admin_telnet_port": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_forticloud_sso_login": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"default_service_source_port": &schema.Schema{
@@ -567,6 +639,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"extender_controller_reserved_network": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fortiextender_discovery_lockdown": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fortiextender_vlan_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -593,6 +673,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"scanunit_count": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"proxy_hardware_acceleration": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"proxy_kxp_hardware_acceleration": &schema.Schema{
@@ -731,8 +815,20 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_rest_api_cache": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"arp_max_entry": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"ha_affinity": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cmdbsvr_affinity": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"av_affinity": &schema.Schema{
@@ -791,6 +887,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"user_device_store_max_unified_mem": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"device_identification_active_scan_delay": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -843,6 +943,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"ipsec_ha_seqjump_rate": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"fortitoken_cloud": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -859,7 +963,19 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"vdom_mode": &schema.Schema{
+			"management_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"management_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"management_port_use_admin_sport": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"internet_service_database": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -909,6 +1025,14 @@ func dataSourceFlattenSystemGlobalGuiIpv6(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func dataSourceFlattenSystemGlobalGuiReplacementMessageGroups(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGuiLocalOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalGuiCertificates(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -946,6 +1070,14 @@ func dataSourceFlattenSystemGlobalGuiLinesPerPage(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemGlobalAdminHttpsSslVersions(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpsSslCiphersuites(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpsSslBannedCiphers(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1073,6 +1205,18 @@ func dataSourceFlattenSystemGlobalHonorDf(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func dataSourceFlattenSystemGlobalPmtuDiscovery(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalVirtualSwitchVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSplitPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalRevisionImageAutoBackup(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1094,6 +1238,10 @@ func dataSourceFlattenSystemGlobalGuiAllowDefaultHostname(v interface{}, d *sche
 }
 
 func dataSourceFlattenSystemGlobalGuiForticareRegistrationSetupWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGuiCdnUsage(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1125,7 +1273,23 @@ func dataSourceFlattenSystemGlobalSslStaticKeyCiphers(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenSystemGlobalSshKexAlgo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSshEncAlgo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSshMacAlgo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalSnatRouteChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSpeedtestServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1185,6 +1349,14 @@ func dataSourceFlattenSystemGlobalProxyAuthLifetimeTimeout(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenSystemGlobalProxyResourceMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalProxyCertUseMgmtVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalSysPerfLogInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1222,6 +1394,10 @@ func dataSourceFlattenSystemGlobalTcpHalfopenTimer(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemGlobalTcpTimewaitTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalTcpRstTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1277,11 +1453,19 @@ func dataSourceFlattenSystemGlobalCheckResetRange(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemGlobalVdomMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalVdomAdmin(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenSystemGlobalLongVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalEditVdomPrompt(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1326,6 +1510,10 @@ func dataSourceFlattenSystemGlobalAdminTelnet(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemGlobalAdminTelnetPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminForticloudSsoLogin(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1441,6 +1629,14 @@ func dataSourceFlattenSystemGlobalFortiextender(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenSystemGlobalExtenderControllerReservedNetwork(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalFortiextenderDiscoveryLockdown(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalFortiextenderVlanMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1473,6 +1669,10 @@ func dataSourceFlattenSystemGlobalProxyWorkerCount(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemGlobalScanunitCount(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalProxyHardwareAcceleration(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1612,7 +1812,19 @@ func dataSourceFlattenSystemGlobalLogSslConnection(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemGlobalGuiRestApiCache(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalArpMaxEntry(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalHaAffinity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalCmdbsvrAffinity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1672,6 +1884,10 @@ func dataSourceFlattenSystemGlobalUserDeviceStoreMaxUsers(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemGlobalUserDeviceStoreMaxUnifiedMem(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalDeviceIdentificationActiveScanDelay(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1724,6 +1940,10 @@ func dataSourceFlattenSystemGlobalFecPort(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func dataSourceFlattenSystemGlobalIpsecHaSeqjumpRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalFortitokenCloud(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1740,7 +1960,19 @@ func dataSourceFlattenSystemGlobalFortiipamIntegration(v interface{}, d *schema.
 	return v
 }
 
-func dataSourceFlattenSystemGlobalVdomMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenSystemGlobalManagementIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalManagementPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalManagementPortUseAdminSport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalInternetServiceDatabase(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1756,6 +1988,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gui_ipv6", dataSourceFlattenSystemGlobalGuiIpv6(o["gui-ipv6"], d, "gui_ipv6")); err != nil {
 		if !fortiAPIPatch(o["gui-ipv6"]) {
 			return fmt.Errorf("Error reading gui_ipv6: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_replacement_message_groups", dataSourceFlattenSystemGlobalGuiReplacementMessageGroups(o["gui-replacement-message-groups"], d, "gui_replacement_message_groups")); err != nil {
+		if !fortiAPIPatch(o["gui-replacement-message-groups"]) {
+			return fmt.Errorf("Error reading gui_replacement_message_groups: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_local_out", dataSourceFlattenSystemGlobalGuiLocalOut(o["gui-local-out"], d, "gui_local_out")); err != nil {
+		if !fortiAPIPatch(o["gui-local-out"]) {
+			return fmt.Errorf("Error reading gui_local_out: %v", err)
 		}
 	}
 
@@ -1816,6 +2060,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("admin_https_ssl_versions", dataSourceFlattenSystemGlobalAdminHttpsSslVersions(o["admin-https-ssl-versions"], d, "admin_https_ssl_versions")); err != nil {
 		if !fortiAPIPatch(o["admin-https-ssl-versions"]) {
 			return fmt.Errorf("Error reading admin_https_ssl_versions: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_https_ssl_ciphersuites", dataSourceFlattenSystemGlobalAdminHttpsSslCiphersuites(o["admin-https-ssl-ciphersuites"], d, "admin_https_ssl_ciphersuites")); err != nil {
+		if !fortiAPIPatch(o["admin-https-ssl-ciphersuites"]) {
+			return fmt.Errorf("Error reading admin_https_ssl_ciphersuites: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_https_ssl_banned_ciphers", dataSourceFlattenSystemGlobalAdminHttpsSslBannedCiphers(o["admin-https-ssl-banned-ciphers"], d, "admin_https_ssl_banned_ciphers")); err != nil {
+		if !fortiAPIPatch(o["admin-https-ssl-banned-ciphers"]) {
+			return fmt.Errorf("Error reading admin_https_ssl_banned_ciphers: %v", err)
 		}
 	}
 
@@ -2005,6 +2261,24 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("pmtu_discovery", dataSourceFlattenSystemGlobalPmtuDiscovery(o["pmtu-discovery"], d, "pmtu_discovery")); err != nil {
+		if !fortiAPIPatch(o["pmtu-discovery"]) {
+			return fmt.Errorf("Error reading pmtu_discovery: %v", err)
+		}
+	}
+
+	if err = d.Set("virtual_switch_vlan", dataSourceFlattenSystemGlobalVirtualSwitchVlan(o["virtual-switch-vlan"], d, "virtual_switch_vlan")); err != nil {
+		if !fortiAPIPatch(o["virtual-switch-vlan"]) {
+			return fmt.Errorf("Error reading virtual_switch_vlan: %v", err)
+		}
+	}
+
+	if err = d.Set("split_port", dataSourceFlattenSystemGlobalSplitPort(o["split-port"], d, "split_port")); err != nil {
+		if !fortiAPIPatch(o["split-port"]) {
+			return fmt.Errorf("Error reading split_port: %v", err)
+		}
+	}
+
 	if err = d.Set("revision_image_auto_backup", dataSourceFlattenSystemGlobalRevisionImageAutoBackup(o["revision-image-auto-backup"], d, "revision_image_auto_backup")); err != nil {
 		if !fortiAPIPatch(o["revision-image-auto-backup"]) {
 			return fmt.Errorf("Error reading revision_image_auto_backup: %v", err)
@@ -2038,6 +2312,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gui_forticare_registration_setup_warning", dataSourceFlattenSystemGlobalGuiForticareRegistrationSetupWarning(o["gui-forticare-registration-setup-warning"], d, "gui_forticare_registration_setup_warning")); err != nil {
 		if !fortiAPIPatch(o["gui-forticare-registration-setup-warning"]) {
 			return fmt.Errorf("Error reading gui_forticare_registration_setup_warning: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_cdn_usage", dataSourceFlattenSystemGlobalGuiCdnUsage(o["gui-cdn-usage"], d, "gui_cdn_usage")); err != nil {
+		if !fortiAPIPatch(o["gui-cdn-usage"]) {
+			return fmt.Errorf("Error reading gui_cdn_usage: %v", err)
 		}
 	}
 
@@ -2083,9 +2363,33 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("ssh_kex_algo", dataSourceFlattenSystemGlobalSshKexAlgo(o["ssh-kex-algo"], d, "ssh_kex_algo")); err != nil {
+		if !fortiAPIPatch(o["ssh-kex-algo"]) {
+			return fmt.Errorf("Error reading ssh_kex_algo: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_enc_algo", dataSourceFlattenSystemGlobalSshEncAlgo(o["ssh-enc-algo"], d, "ssh_enc_algo")); err != nil {
+		if !fortiAPIPatch(o["ssh-enc-algo"]) {
+			return fmt.Errorf("Error reading ssh_enc_algo: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_mac_algo", dataSourceFlattenSystemGlobalSshMacAlgo(o["ssh-mac-algo"], d, "ssh_mac_algo")); err != nil {
+		if !fortiAPIPatch(o["ssh-mac-algo"]) {
+			return fmt.Errorf("Error reading ssh_mac_algo: %v", err)
+		}
+	}
+
 	if err = d.Set("snat_route_change", dataSourceFlattenSystemGlobalSnatRouteChange(o["snat-route-change"], d, "snat_route_change")); err != nil {
 		if !fortiAPIPatch(o["snat-route-change"]) {
 			return fmt.Errorf("Error reading snat_route_change: %v", err)
+		}
+	}
+
+	if err = d.Set("speedtest_server", dataSourceFlattenSystemGlobalSpeedtestServer(o["speedtest-server"], d, "speedtest_server")); err != nil {
+		if !fortiAPIPatch(o["speedtest-server"]) {
+			return fmt.Errorf("Error reading speedtest_server: %v", err)
 		}
 	}
 
@@ -2173,6 +2477,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("proxy_resource_mode", dataSourceFlattenSystemGlobalProxyResourceMode(o["proxy-resource-mode"], d, "proxy_resource_mode")); err != nil {
+		if !fortiAPIPatch(o["proxy-resource-mode"]) {
+			return fmt.Errorf("Error reading proxy_resource_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_cert_use_mgmt_vdom", dataSourceFlattenSystemGlobalProxyCertUseMgmtVdom(o["proxy-cert-use-mgmt-vdom"], d, "proxy_cert_use_mgmt_vdom")); err != nil {
+		if !fortiAPIPatch(o["proxy-cert-use-mgmt-vdom"]) {
+			return fmt.Errorf("Error reading proxy_cert_use_mgmt_vdom: %v", err)
+		}
+	}
+
 	if err = d.Set("sys_perf_log_interval", dataSourceFlattenSystemGlobalSysPerfLogInterval(o["sys-perf-log-interval"], d, "sys_perf_log_interval")); err != nil {
 		if !fortiAPIPatch(o["sys-perf-log-interval"]) {
 			return fmt.Errorf("Error reading sys_perf_log_interval: %v", err)
@@ -2230,6 +2546,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("tcp_timewait_timer", dataSourceFlattenSystemGlobalTcpTimewaitTimer(o["tcp-timewait-timer"], d, "tcp_timewait_timer")); err != nil {
 		if !fortiAPIPatch(o["tcp-timewait-timer"]) {
 			return fmt.Errorf("Error reading tcp_timewait_timer: %v", err)
+		}
+	}
+
+	if err = d.Set("tcp_rst_timer", dataSourceFlattenSystemGlobalTcpRstTimer(o["tcp-rst-timer"], d, "tcp_rst_timer")); err != nil {
+		if !fortiAPIPatch(o["tcp-rst-timer"]) {
+			return fmt.Errorf("Error reading tcp_rst_timer: %v", err)
 		}
 	}
 
@@ -2311,6 +2633,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("vdom_mode", dataSourceFlattenSystemGlobalVdomMode(o["vdom-mode"], d, "vdom_mode")); err != nil {
+		if !fortiAPIPatch(o["vdom-mode"]) {
+			return fmt.Errorf("Error reading vdom_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("vdom_admin", dataSourceFlattenSystemGlobalVdomAdmin(o["vdom-admin"], d, "vdom_admin")); err != nil {
 		if !fortiAPIPatch(o["vdom-admin"]) {
 			return fmt.Errorf("Error reading vdom_admin: %v", err)
@@ -2320,6 +2648,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("long_vdom_name", dataSourceFlattenSystemGlobalLongVdomName(o["long-vdom-name"], d, "long_vdom_name")); err != nil {
 		if !fortiAPIPatch(o["long-vdom-name"]) {
 			return fmt.Errorf("Error reading long_vdom_name: %v", err)
+		}
+	}
+
+	if err = d.Set("edit_vdom_prompt", dataSourceFlattenSystemGlobalEditVdomPrompt(o["edit-vdom-prompt"], d, "edit_vdom_prompt")); err != nil {
+		if !fortiAPIPatch(o["edit-vdom-prompt"]) {
+			return fmt.Errorf("Error reading edit_vdom_prompt: %v", err)
 		}
 	}
 
@@ -2386,6 +2720,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("admin_telnet_port", dataSourceFlattenSystemGlobalAdminTelnetPort(o["admin-telnet-port"], d, "admin_telnet_port")); err != nil {
 		if !fortiAPIPatch(o["admin-telnet-port"]) {
 			return fmt.Errorf("Error reading admin_telnet_port: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_forticloud_sso_login", dataSourceFlattenSystemGlobalAdminForticloudSsoLogin(o["admin-forticloud-sso-login"], d, "admin_forticloud_sso_login")); err != nil {
+		if !fortiAPIPatch(o["admin-forticloud-sso-login"]) {
+			return fmt.Errorf("Error reading admin_forticloud_sso_login: %v", err)
 		}
 	}
 
@@ -2557,6 +2897,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("extender_controller_reserved_network", dataSourceFlattenSystemGlobalExtenderControllerReservedNetwork(o["extender-controller-reserved-network"], d, "extender_controller_reserved_network")); err != nil {
+		if !fortiAPIPatch(o["extender-controller-reserved-network"]) {
+			return fmt.Errorf("Error reading extender_controller_reserved_network: %v", err)
+		}
+	}
+
+	if err = d.Set("fortiextender_discovery_lockdown", dataSourceFlattenSystemGlobalFortiextenderDiscoveryLockdown(o["fortiextender-discovery-lockdown"], d, "fortiextender_discovery_lockdown")); err != nil {
+		if !fortiAPIPatch(o["fortiextender-discovery-lockdown"]) {
+			return fmt.Errorf("Error reading fortiextender_discovery_lockdown: %v", err)
+		}
+	}
+
 	if err = d.Set("fortiextender_vlan_mode", dataSourceFlattenSystemGlobalFortiextenderVlanMode(o["fortiextender-vlan-mode"], d, "fortiextender_vlan_mode")); err != nil {
 		if !fortiAPIPatch(o["fortiextender-vlan-mode"]) {
 			return fmt.Errorf("Error reading fortiextender_vlan_mode: %v", err)
@@ -2596,6 +2948,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("scanunit_count", dataSourceFlattenSystemGlobalScanunitCount(o["scanunit-count"], d, "scanunit_count")); err != nil {
 		if !fortiAPIPatch(o["scanunit-count"]) {
 			return fmt.Errorf("Error reading scanunit_count: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_hardware_acceleration", dataSourceFlattenSystemGlobalProxyHardwareAcceleration(o["proxy-hardware-acceleration"], d, "proxy_hardware_acceleration")); err != nil {
+		if !fortiAPIPatch(o["proxy-hardware-acceleration"]) {
+			return fmt.Errorf("Error reading proxy_hardware_acceleration: %v", err)
 		}
 	}
 
@@ -2803,9 +3161,27 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("gui_rest_api_cache", dataSourceFlattenSystemGlobalGuiRestApiCache(o["gui-rest-api-cache"], d, "gui_rest_api_cache")); err != nil {
+		if !fortiAPIPatch(o["gui-rest-api-cache"]) {
+			return fmt.Errorf("Error reading gui_rest_api_cache: %v", err)
+		}
+	}
+
 	if err = d.Set("arp_max_entry", dataSourceFlattenSystemGlobalArpMaxEntry(o["arp-max-entry"], d, "arp_max_entry")); err != nil {
 		if !fortiAPIPatch(o["arp-max-entry"]) {
 			return fmt.Errorf("Error reading arp_max_entry: %v", err)
+		}
+	}
+
+	if err = d.Set("ha_affinity", dataSourceFlattenSystemGlobalHaAffinity(o["ha-affinity"], d, "ha_affinity")); err != nil {
+		if !fortiAPIPatch(o["ha-affinity"]) {
+			return fmt.Errorf("Error reading ha_affinity: %v", err)
+		}
+	}
+
+	if err = d.Set("cmdbsvr_affinity", dataSourceFlattenSystemGlobalCmdbsvrAffinity(o["cmdbsvr-affinity"], d, "cmdbsvr_affinity")); err != nil {
+		if !fortiAPIPatch(o["cmdbsvr-affinity"]) {
+			return fmt.Errorf("Error reading cmdbsvr_affinity: %v", err)
 		}
 	}
 
@@ -2893,6 +3269,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("user_device_store_max_unified_mem", dataSourceFlattenSystemGlobalUserDeviceStoreMaxUnifiedMem(o["user-device-store-max-unified-mem"], d, "user_device_store_max_unified_mem")); err != nil {
+		if !fortiAPIPatch(o["user-device-store-max-unified-mem"]) {
+			return fmt.Errorf("Error reading user_device_store_max_unified_mem: %v", err)
+		}
+	}
+
 	if err = d.Set("device_identification_active_scan_delay", dataSourceFlattenSystemGlobalDeviceIdentificationActiveScanDelay(o["device-identification-active-scan-delay"], d, "device_identification_active_scan_delay")); err != nil {
 		if !fortiAPIPatch(o["device-identification-active-scan-delay"]) {
 			return fmt.Errorf("Error reading device_identification_active_scan_delay: %v", err)
@@ -2971,6 +3353,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("ipsec_ha_seqjump_rate", dataSourceFlattenSystemGlobalIpsecHaSeqjumpRate(o["ipsec-ha-seqjump-rate"], d, "ipsec_ha_seqjump_rate")); err != nil {
+		if !fortiAPIPatch(o["ipsec-ha-seqjump-rate"]) {
+			return fmt.Errorf("Error reading ipsec_ha_seqjump_rate: %v", err)
+		}
+	}
+
 	if err = d.Set("fortitoken_cloud", dataSourceFlattenSystemGlobalFortitokenCloud(o["fortitoken-cloud"], d, "fortitoken_cloud")); err != nil {
 		if !fortiAPIPatch(o["fortitoken-cloud"]) {
 			return fmt.Errorf("Error reading fortitoken_cloud: %v", err)
@@ -2995,9 +3383,27 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if err = d.Set("vdom_mode", dataSourceFlattenSystemGlobalVdomMode(o["vdom-mode"], d, "vdom_mode")); err != nil {
-		if !fortiAPIPatch(o["vdom-mode"]) {
-			return fmt.Errorf("Error reading vdom_mode: %v", err)
+	if err = d.Set("management_ip", dataSourceFlattenSystemGlobalManagementIp(o["management-ip"], d, "management_ip")); err != nil {
+		if !fortiAPIPatch(o["management-ip"]) {
+			return fmt.Errorf("Error reading management_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("management_port", dataSourceFlattenSystemGlobalManagementPort(o["management-port"], d, "management_port")); err != nil {
+		if !fortiAPIPatch(o["management-port"]) {
+			return fmt.Errorf("Error reading management_port: %v", err)
+		}
+	}
+
+	if err = d.Set("management_port_use_admin_sport", dataSourceFlattenSystemGlobalManagementPortUseAdminSport(o["management-port-use-admin-sport"], d, "management_port_use_admin_sport")); err != nil {
+		if !fortiAPIPatch(o["management-port-use-admin-sport"]) {
+			return fmt.Errorf("Error reading management_port_use_admin_sport: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_database", dataSourceFlattenSystemGlobalInternetServiceDatabase(o["internet-service-database"], d, "internet_service_database")); err != nil {
+		if !fortiAPIPatch(o["internet-service-database"]) {
+			return fmt.Errorf("Error reading internet_service_database: %v", err)
 		}
 	}
 

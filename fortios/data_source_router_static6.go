@@ -67,6 +67,22 @@ func dataSourceRouterStatic6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dynamic_gateway": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"sdwan_zone": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"sdwan": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -77,6 +93,10 @@ func dataSourceRouterStatic6() *schema.Resource {
 			},
 			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vrf": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"bfd": &schema.Schema{
@@ -170,6 +190,46 @@ func dataSourceFlattenRouterStatic6Blackhole(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenRouterStatic6DynamicGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterStatic6SdwanZone(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenRouterStatic6SdwanZoneName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterStatic6SdwanZoneName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStatic6Sdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -179,6 +239,10 @@ func dataSourceFlattenRouterStatic6VirtualWanLink(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenRouterStatic6LinkMonitorExempt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterStatic6Vrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -249,6 +313,18 @@ func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("dynamic_gateway", dataSourceFlattenRouterStatic6DynamicGateway(o["dynamic-gateway"], d, "dynamic_gateway")); err != nil {
+		if !fortiAPIPatch(o["dynamic-gateway"]) {
+			return fmt.Errorf("Error reading dynamic_gateway: %v", err)
+		}
+	}
+
+	if err = d.Set("sdwan_zone", dataSourceFlattenRouterStatic6SdwanZone(o["sdwan-zone"], d, "sdwan_zone")); err != nil {
+		if !fortiAPIPatch(o["sdwan-zone"]) {
+			return fmt.Errorf("Error reading sdwan_zone: %v", err)
+		}
+	}
+
 	if err = d.Set("sdwan", dataSourceFlattenRouterStatic6Sdwan(o["sdwan"], d, "sdwan")); err != nil {
 		if !fortiAPIPatch(o["sdwan"]) {
 			return fmt.Errorf("Error reading sdwan: %v", err)
@@ -264,6 +340,12 @@ func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]i
 	if err = d.Set("link_monitor_exempt", dataSourceFlattenRouterStatic6LinkMonitorExempt(o["link-monitor-exempt"], d, "link_monitor_exempt")); err != nil {
 		if !fortiAPIPatch(o["link-monitor-exempt"]) {
 			return fmt.Errorf("Error reading link_monitor_exempt: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf", dataSourceFlattenRouterStatic6Vrf(o["vrf"], d, "vrf")); err != nil {
+		if !fortiAPIPatch(o["vrf"]) {
+			return fmt.Errorf("Error reading vrf: %v", err)
 		}
 	}
 

@@ -52,6 +52,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ldap_user_cache": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"proxy_fqdn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -144,6 +149,16 @@ func resourceWebProxyGlobal() *schema.Resource {
 						},
 					},
 				},
+			},
+			"src_affinity_exempt_addr": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"src_affinity_exempt_addr6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -252,6 +267,10 @@ func flattenWebProxyGlobalSslCaCert(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenWebProxyGlobalFastPolicyMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyGlobalLdapUserCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -379,6 +398,14 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr6Name(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenWebProxyGlobalSrcAffinityExemptAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyGlobalSrcAffinityExemptAddr6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -397,6 +424,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("fast_policy_match", flattenWebProxyGlobalFastPolicyMatch(o["fast-policy-match"], d, "fast_policy_match", sv)); err != nil {
 		if !fortiAPIPatch(o["fast-policy-match"]) {
 			return fmt.Errorf("Error reading fast_policy_match: %v", err)
+		}
+	}
+
+	if err = d.Set("ldap_user_cache", flattenWebProxyGlobalLdapUserCache(o["ldap-user-cache"], d, "ldap_user_cache", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-user-cache"]) {
+			return fmt.Errorf("Error reading ldap_user_cache: %v", err)
 		}
 	}
 
@@ -504,6 +537,18 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("src_affinity_exempt_addr", flattenWebProxyGlobalSrcAffinityExemptAddr(o["src-affinity-exempt-addr"], d, "src_affinity_exempt_addr", sv)); err != nil {
+		if !fortiAPIPatch(o["src-affinity-exempt-addr"]) {
+			return fmt.Errorf("Error reading src_affinity_exempt_addr: %v", err)
+		}
+	}
+
+	if err = d.Set("src_affinity_exempt_addr6", flattenWebProxyGlobalSrcAffinityExemptAddr6(o["src-affinity-exempt-addr6"], d, "src_affinity_exempt_addr6", sv)); err != nil {
+		if !fortiAPIPatch(o["src-affinity-exempt-addr6"]) {
+			return fmt.Errorf("Error reading src_affinity_exempt_addr6: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -522,6 +567,10 @@ func expandWebProxyGlobalSslCaCert(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandWebProxyGlobalFastPolicyMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalLdapUserCache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -637,6 +686,14 @@ func expandWebProxyGlobalLearnClientIpSrcaddr6Name(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandWebProxyGlobalSrcAffinityExemptAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalSrcAffinityExemptAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectWebProxyGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -667,6 +724,16 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["fast-policy-match"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ldap_user_cache"); ok {
+
+		t, err := expandWebProxyGlobalLdapUserCache(d, v, "ldap_user_cache", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ldap-user-cache"] = t
 		}
 	}
 
@@ -807,6 +874,26 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["learn-client-ip-srcaddr6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("src_affinity_exempt_addr"); ok {
+
+		t, err := expandWebProxyGlobalSrcAffinityExemptAddr(d, v, "src_affinity_exempt_addr", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["src-affinity-exempt-addr"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("src_affinity_exempt_addr6"); ok {
+
+		t, err := expandWebProxyGlobalSrcAffinityExemptAddr6(d, v, "src_affinity_exempt_addr6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["src-affinity-exempt-addr6"] = t
 		}
 	}
 

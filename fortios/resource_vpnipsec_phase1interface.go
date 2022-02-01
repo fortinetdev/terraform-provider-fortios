@@ -407,6 +407,12 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ip_delay_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 28800),
+				Optional:     true,
+				Computed:     true,
+			},
 			"unity_support": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -567,6 +573,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
+			},
+			"npu_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"send_cert_chain": &schema.Schema{
 				Type:     schema.TypeString,
@@ -750,6 +761,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"esn": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fragmentation_mtu": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(500, 16000),
@@ -816,7 +832,7 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 			},
 			"fec_redundant": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 100),
+				ValidateFunc: validation.IntBetween(0, 100),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -831,6 +847,18 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fec_health_check": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"fec_mapping_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"network_overlay": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -841,6 +869,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
+			},
+			"loopback_asymroute": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1362,6 +1395,10 @@ func flattenVpnIpsecPhase1InterfaceIpv6Name(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceIpDelayInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceUnitySupport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1512,6 +1549,10 @@ func flattenVpnIpsecPhase1InterfaceComments(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceNpuOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceSendCertChain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1652,6 +1693,10 @@ func flattenVpnIpsecPhase1InterfaceNattraversal(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceEsn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceFragmentationMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1712,11 +1757,23 @@ func flattenVpnIpsecPhase1InterfaceFecReceiveTimeout(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceFecHealthCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceFecMappingProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceNetworkOverlay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenVpnIpsecPhase1InterfaceNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceLoopbackAsymroute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2125,6 +2182,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("ip_delay_interval", flattenVpnIpsecPhase1InterfaceIpDelayInterval(o["ip-delay-interval"], d, "ip_delay_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["ip-delay-interval"]) {
+			return fmt.Errorf("Error reading ip_delay_interval: %v", err)
+		}
+	}
+
 	if err = d.Set("unity_support", flattenVpnIpsecPhase1InterfaceUnitySupport(o["unity-support"], d, "unity_support", sv)); err != nil {
 		if !fortiAPIPatch(o["unity-support"]) {
 			return fmt.Errorf("Error reading unity_support: %v", err)
@@ -2294,6 +2357,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("comments", flattenVpnIpsecPhase1InterfaceComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
+	if err = d.Set("npu_offload", flattenVpnIpsecPhase1InterfaceNpuOffload(o["npu-offload"], d, "npu_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["npu-offload"]) {
+			return fmt.Errorf("Error reading npu_offload: %v", err)
 		}
 	}
 
@@ -2489,6 +2558,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("esn", flattenVpnIpsecPhase1InterfaceEsn(o["esn"], d, "esn", sv)); err != nil {
+		if !fortiAPIPatch(o["esn"]) {
+			return fmt.Errorf("Error reading esn: %v", err)
+		}
+	}
+
 	if err = d.Set("fragmentation_mtu", flattenVpnIpsecPhase1InterfaceFragmentationMtu(o["fragmentation-mtu"], d, "fragmentation_mtu", sv)); err != nil {
 		if !fortiAPIPatch(o["fragmentation-mtu"]) {
 			return fmt.Errorf("Error reading fragmentation_mtu: %v", err)
@@ -2579,6 +2654,18 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("fec_health_check", flattenVpnIpsecPhase1InterfaceFecHealthCheck(o["fec-health-check"], d, "fec_health_check", sv)); err != nil {
+		if !fortiAPIPatch(o["fec-health-check"]) {
+			return fmt.Errorf("Error reading fec_health_check: %v", err)
+		}
+	}
+
+	if err = d.Set("fec_mapping_profile", flattenVpnIpsecPhase1InterfaceFecMappingProfile(o["fec-mapping-profile"], d, "fec_mapping_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["fec-mapping-profile"]) {
+			return fmt.Errorf("Error reading fec_mapping_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("network_overlay", flattenVpnIpsecPhase1InterfaceNetworkOverlay(o["network-overlay"], d, "network_overlay", sv)); err != nil {
 		if !fortiAPIPatch(o["network-overlay"]) {
 			return fmt.Errorf("Error reading network_overlay: %v", err)
@@ -2588,6 +2675,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("network_id", flattenVpnIpsecPhase1InterfaceNetworkId(o["network-id"], d, "network_id", sv)); err != nil {
 		if !fortiAPIPatch(o["network-id"]) {
 			return fmt.Errorf("Error reading network_id: %v", err)
+		}
+	}
+
+	if err = d.Set("loopback_asymroute", flattenVpnIpsecPhase1InterfaceLoopbackAsymroute(o["loopback-asymroute"], d, "loopback_asymroute", sv)); err != nil {
+		if !fortiAPIPatch(o["loopback-asymroute"]) {
+			return fmt.Errorf("Error reading loopback_asymroute: %v", err)
 		}
 	}
 
@@ -2972,6 +3065,10 @@ func expandVpnIpsecPhase1InterfaceIpv6Name(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceIpDelayInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceUnitySupport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3116,6 +3213,10 @@ func expandVpnIpsecPhase1InterfaceComments(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceNpuOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceSendCertChain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3256,6 +3357,10 @@ func expandVpnIpsecPhase1InterfaceNattraversal(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceEsn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceFragmentationMtu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3316,11 +3421,23 @@ func expandVpnIpsecPhase1InterfaceFecReceiveTimeout(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceFecHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceFecMappingProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceNetworkOverlay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandVpnIpsecPhase1InterfaceNetworkId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceLoopbackAsymroute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3947,6 +4064,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOkExists("ip_delay_interval"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceIpDelayInterval(d, v, "ip_delay_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ip-delay-interval"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("unity_support"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceUnitySupport(d, v, "unity_support", sv)
@@ -4234,6 +4361,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["comments"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("npu_offload"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceNpuOffload(d, v, "npu_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["npu-offload"] = t
 		}
 	}
 
@@ -4587,6 +4724,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("esn"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceEsn(d, v, "esn", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["esn"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fragmentation_mtu"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceFragmentationMtu(d, v, "fragmentation_mtu", sv)
@@ -4707,7 +4854,7 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("fec_redundant"); ok {
+	if v, ok := d.GetOkExists("fec_redundant"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceFecRedundant(d, v, "fec_redundant", sv)
 		if err != nil {
@@ -4737,6 +4884,26 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("fec_health_check"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceFecHealthCheck(d, v, "fec_health_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fec-health-check"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fec_mapping_profile"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceFecMappingProfile(d, v, "fec_mapping_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fec-mapping-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("network_overlay"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceNetworkOverlay(d, v, "network_overlay", sv)
@@ -4754,6 +4921,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["network-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("loopback_asymroute"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceLoopbackAsymroute(d, v, "loopback_asymroute", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["loopback-asymroute"] = t
 		}
 	}
 

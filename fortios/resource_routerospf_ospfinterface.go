@@ -42,6 +42,11 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"comments": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -62,6 +67,12 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 8),
 				Optional:     true,
+			},
+			"keychain": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
 			},
 			"md5_key": &schema.Schema{
 				Type:     schema.TypeString,
@@ -312,6 +323,10 @@ func flattenRouterospfOspfInterfaceName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenRouterospfOspfInterfaceComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterospfOspfInterfaceInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -325,6 +340,10 @@ func flattenRouterospfOspfInterfaceAuthentication(v interface{}, d *schema.Resou
 }
 
 func flattenRouterospfOspfInterfaceAuthenticationKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterospfOspfInterfaceKeychain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -453,6 +472,12 @@ func refreshObjectRouterospfOspfInterface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("comments", flattenRouterospfOspfInterfaceComments(o["comments"], d, "comments", sv)); err != nil {
+		if !fortiAPIPatch(o["comments"]) {
+			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
 	if err = d.Set("interface", flattenRouterospfOspfInterfaceInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
@@ -474,6 +499,12 @@ func refreshObjectRouterospfOspfInterface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("authentication_key", flattenRouterospfOspfInterfaceAuthenticationKey(o["authentication-key"], d, "authentication_key", sv)); err != nil {
 		if !fortiAPIPatch(o["authentication-key"]) {
 			return fmt.Errorf("Error reading authentication_key: %v", err)
+		}
+	}
+
+	if err = d.Set("keychain", flattenRouterospfOspfInterfaceKeychain(o["keychain"], d, "keychain", sv)); err != nil {
+		if !fortiAPIPatch(o["keychain"]) {
+			return fmt.Errorf("Error reading keychain: %v", err)
 		}
 	}
 
@@ -608,6 +639,10 @@ func expandRouterospfOspfInterfaceName(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandRouterospfOspfInterfaceComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterospfOspfInterfaceInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -621,6 +656,10 @@ func expandRouterospfOspfInterfaceAuthentication(d *schema.ResourceData, v inter
 }
 
 func expandRouterospfOspfInterfaceAuthenticationKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterospfOspfInterfaceKeychain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -747,6 +786,16 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("comments"); ok {
+
+		t, err := expandRouterospfOspfInterfaceComments(d, v, "comments", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["comments"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("interface"); ok {
 
 		t, err := expandRouterospfOspfInterfaceInterface(d, v, "interface", sv)
@@ -784,6 +833,16 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["authentication-key"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("keychain"); ok {
+
+		t, err := expandRouterospfOspfInterfaceKeychain(d, v, "keychain", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["keychain"] = t
 		}
 	}
 

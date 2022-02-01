@@ -31,6 +31,10 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"description": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"action_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -174,11 +178,19 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Sensitive: true,
 				Computed:  true,
 			},
+			"message_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"message": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"replacement_message": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"replacemsg_group": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -214,7 +226,15 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 					},
 				},
 			},
+			"verify_host_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"script": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -286,6 +306,10 @@ func dataSourceSystemAutomationActionRead(d *schema.ResourceData, m interface{})
 }
 
 func dataSourceFlattenSystemAutomationActionName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -453,11 +477,19 @@ func dataSourceFlattenSystemAutomationActionAlicloudAccessKeySecret(v interface{
 	return v
 }
 
+func dataSourceFlattenSystemAutomationActionMessageType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationActionMessage(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenSystemAutomationActionReplacementMessage(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionReplacemsgGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -517,7 +549,15 @@ func dataSourceFlattenSystemAutomationActionHeadersHeader(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemAutomationActionVerifyHostCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationActionScript(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -571,6 +611,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("name", dataSourceFlattenSystemAutomationActionName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("description", dataSourceFlattenSystemAutomationActionDescription(o["description"], d, "description")); err != nil {
+		if !fortiAPIPatch(o["description"]) {
+			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
@@ -754,6 +800,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("message_type", dataSourceFlattenSystemAutomationActionMessageType(o["message-type"], d, "message_type")); err != nil {
+		if !fortiAPIPatch(o["message-type"]) {
+			return fmt.Errorf("Error reading message_type: %v", err)
+		}
+	}
+
 	if err = d.Set("message", dataSourceFlattenSystemAutomationActionMessage(o["message"], d, "message")); err != nil {
 		if !fortiAPIPatch(o["message"]) {
 			return fmt.Errorf("Error reading message: %v", err)
@@ -763,6 +815,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("replacement_message", dataSourceFlattenSystemAutomationActionReplacementMessage(o["replacement-message"], d, "replacement_message")); err != nil {
 		if !fortiAPIPatch(o["replacement-message"]) {
 			return fmt.Errorf("Error reading replacement_message: %v", err)
+		}
+	}
+
+	if err = d.Set("replacemsg_group", dataSourceFlattenSystemAutomationActionReplacemsgGroup(o["replacemsg-group"], d, "replacemsg_group")); err != nil {
+		if !fortiAPIPatch(o["replacemsg-group"]) {
+			return fmt.Errorf("Error reading replacemsg_group: %v", err)
 		}
 	}
 
@@ -802,9 +860,21 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("verify_host_cert", dataSourceFlattenSystemAutomationActionVerifyHostCert(o["verify-host-cert"], d, "verify_host_cert")); err != nil {
+		if !fortiAPIPatch(o["verify-host-cert"]) {
+			return fmt.Errorf("Error reading verify_host_cert: %v", err)
+		}
+	}
+
 	if err = d.Set("script", dataSourceFlattenSystemAutomationActionScript(o["script"], d, "script")); err != nil {
 		if !fortiAPIPatch(o["script"]) {
 			return fmt.Errorf("Error reading script: %v", err)
+		}
+	}
+
+	if err = d.Set("execute_security_fabric", dataSourceFlattenSystemAutomationActionExecuteSecurityFabric(o["execute-security-fabric"], d, "execute_security_fabric")); err != nil {
+		if !fortiAPIPatch(o["execute-security-fabric"]) {
+			return fmt.Errorf("Error reading execute_security_fabric: %v", err)
 		}
 	}
 

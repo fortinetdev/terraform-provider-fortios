@@ -91,6 +91,10 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"tcp_rst_timer": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"udp_idle_timer": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -142,6 +146,10 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 						},
 					},
 				},
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 		},
 	}
@@ -254,6 +262,10 @@ func dataSourceFlattenFirewallServiceCustomTcpTimewaitTimer(v interface{}, d *sc
 	return v
 }
 
+func dataSourceFlattenFirewallServiceCustomTcpRstTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallServiceCustomUdpIdleTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -351,6 +363,10 @@ func dataSourceFlattenFirewallServiceCustomApplication(v interface{}, d *schema.
 }
 
 func dataSourceFlattenFirewallServiceCustomApplicationId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallServiceCustomFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -453,6 +469,12 @@ func dataSourceRefreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[
 		}
 	}
 
+	if err = d.Set("tcp_rst_timer", dataSourceFlattenFirewallServiceCustomTcpRstTimer(o["tcp-rst-timer"], d, "tcp_rst_timer")); err != nil {
+		if !fortiAPIPatch(o["tcp-rst-timer"]) {
+			return fmt.Errorf("Error reading tcp_rst_timer: %v", err)
+		}
+	}
+
 	if err = d.Set("udp_idle_timer", dataSourceFlattenFirewallServiceCustomUdpIdleTimer(o["udp-idle-timer"], d, "udp_idle_timer")); err != nil {
 		if !fortiAPIPatch(o["udp-idle-timer"]) {
 			return fmt.Errorf("Error reading udp_idle_timer: %v", err)
@@ -504,6 +526,12 @@ func dataSourceRefreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[
 	if err = d.Set("application", dataSourceFlattenFirewallServiceCustomApplication(o["application"], d, "application")); err != nil {
 		if !fortiAPIPatch(o["application"]) {
 			return fmt.Errorf("Error reading application: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallServiceCustomFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

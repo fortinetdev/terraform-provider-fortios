@@ -58,91 +58,134 @@ The following arguments are supported:
 * `nac_quar` - Configure AntiVirus quarantine settings. The structure of `nac_quar` block is documented below.
 * `outbreak_prevention` - Configure Virus Outbreak Prevention settings. The structure of `outbreak_prevention` block is documented below.
 * `content_disarm` - AV Content Disarm and Reconstruction settings. The structure of `content_disarm` block is documented below.
+* `outbreak_prevention_archive_scan` - Enable/disable outbreak-prevention archive scanning. Valid values: `disable`, `enable`.
+* `external_blocklist_enable_all` - Enable/disable all external blocklists. Valid values: `disable`, `enable`.
+* `external_blocklist` - One or more external malware block lists. The structure of `external_blocklist` block is documented below.
+* `ems_threat_feed` - Enable/disable use of EMS threat feed when performing AntiVirus scan. Analyzes files including the content of archives. Valid values: `disable`, `enable`.
+* `fortiai_error_action` - Action to take if FortiAI encounters an error. Valid values: `log-only`, `block`, `ignore`.
+* `fortiai_timeout_action` - Action to take if FortiAI encounters a scan timeout. Valid values: `log-only`, `block`, `ignore`.
 * `av_virus_log` - Enable/disable AntiVirus logging. Valid values: `enable`, `disable`.
 * `av_block_log` - Enable/disable logging for AntiVirus file blocking. Valid values: `enable`, `disable`.
 * `extended_log` - Enable/disable extended logging for antivirus. Valid values: `enable`, `disable`.
 * `scan_mode` - Choose between full scan mode and quick scan mode.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `http` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable HTTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `ftp` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable FTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
 The `imap` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable IMAP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `pop3` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable POP3 AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `smtp` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable SMTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `mapi` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable MAPI AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
 The `nntp` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable NNTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
 The `cifs` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable CIFS AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
 The `ssh` block supports:
 
+* `av_scan` - Enable AntiVirus scan service. Valid values: `disable`, `block`, `monitor`.
 * `options` - Enable/disable SFTP and SCP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
-* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
-* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
+* `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
 The `smb` block supports:
 
@@ -184,6 +227,10 @@ The `content_disarm` block supports:
 * `pdf_act_form` - Enable/disable stripping of actions that submit data to other targets in PDF documents. Valid values: `disable`, `enable`.
 * `cover_page` - Enable/disable inserting a cover page into the disarmed document. Valid values: `disable`, `enable`.
 * `detect_only` - Enable/disable only detect disarmable files, do not alter content. Valid values: `disable`, `enable`.
+
+The `external_blocklist` block supports:
+
+* `name` - External blocklist.
 
 
 ## Attribute Reference

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_securitypolicy
-Configure NGFW IPv4/IPv6 application policies.
+Configure NGFW IPv4/IPv6 application policies. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Example Usage
 
@@ -80,6 +80,9 @@ The following arguments are supported:
 * `schedule` - Schedule name.
 * `status` - Enable or disable this policy. Valid values: `enable`, `disable`.
 * `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions. Valid values: `all`, `utm`, `disable`.
+* `learning_mode` - Enable to allow everything, but log all of the meaningful data for security information gathering. A learning report will be generated. Valid values: `enable`, `disable`.
+* `nat46` - Enable/disable NAT46. Valid values: `enable`, `disable`.
+* `nat64` - Enable/disable NAT64. Valid values: `enable`, `disable`.
 * `logtraffic_start` - Record logs when a session starts. Valid values: `enable`, `disable`.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only. Valid values: `single`, `group`.
 * `profile_group` - Name of profile group.
@@ -94,8 +97,10 @@ The following arguments are supported:
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `voip_profile` - Name of an existing VoIP profile.
+* `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
+* `videofilter_profile` - Name of an existing VideoFilter profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `application` - Application ID list. The structure of `application` block is documented below.
 * `app_category` - Application category ID list. The structure of `app_category` block is documented below.

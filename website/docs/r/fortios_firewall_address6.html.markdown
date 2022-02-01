@@ -33,6 +33,7 @@ The following arguments are supported:
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
+* `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.
 * `sdn` - SDN.
@@ -52,8 +53,13 @@ The following arguments are supported:
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
 * `host_type` - Host type. Valid values: `any`, `specific`.
 * `host` - Host Address.
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `macaddr` block supports:
+
+* `macaddr` - MAC address ranges <start>[-<end>] separated by space.
 
 The `list` block supports:
 

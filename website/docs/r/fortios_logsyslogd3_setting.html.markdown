@@ -34,7 +34,7 @@ The following arguments are supported:
 * `port` - Server listen port.
 * `facility` - Remote syslog facility. Valid values: `kernel`, `user`, `mail`, `daemon`, `auth`, `syslog`, `lpr`, `news`, `uucp`, `cron`, `authpriv`, `ftp`, `ntp`, `audit`, `alert`, `clock`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`.
 * `source_ip` - Source IP address of syslog.
-* `format` - Log format. Valid values: `default`, `csv`, `cef`.
+* `format` - Log format.
 * `priority` - Set log transmission priority. Valid values: `default`, `low`.
 * `max_log_rate` - Syslog maximum log rate in MBps (0 = unlimited).
 * `enc_algorithm` - Enable/disable reliable syslogging with TLS encryption. Valid values: `high-medium`, `high`, `low`, `disable`.

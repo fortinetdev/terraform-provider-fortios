@@ -75,6 +75,22 @@ func dataSourceSystemClusterSync() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ike_monitor": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ike_monitor_interval": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"ike_heartbeat_interval": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"secondary_add_ipsec_routes": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"slave_add_ike_routes": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -275,6 +291,22 @@ func dataSourceFlattenSystemClusterSyncIpsecTunnelSync(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemClusterSyncIkeMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemClusterSyncIkeMonitorInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemClusterSyncIkeHeartbeatInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemClusterSyncSecondaryAddIpsecRoutes(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemClusterSyncSlaveAddIkeRoutes(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -467,6 +499,30 @@ func dataSourceRefreshObjectSystemClusterSync(d *schema.ResourceData, o map[stri
 	if err = d.Set("ipsec_tunnel_sync", dataSourceFlattenSystemClusterSyncIpsecTunnelSync(o["ipsec-tunnel-sync"], d, "ipsec_tunnel_sync")); err != nil {
 		if !fortiAPIPatch(o["ipsec-tunnel-sync"]) {
 			return fmt.Errorf("Error reading ipsec_tunnel_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("ike_monitor", dataSourceFlattenSystemClusterSyncIkeMonitor(o["ike-monitor"], d, "ike_monitor")); err != nil {
+		if !fortiAPIPatch(o["ike-monitor"]) {
+			return fmt.Errorf("Error reading ike_monitor: %v", err)
+		}
+	}
+
+	if err = d.Set("ike_monitor_interval", dataSourceFlattenSystemClusterSyncIkeMonitorInterval(o["ike-monitor-interval"], d, "ike_monitor_interval")); err != nil {
+		if !fortiAPIPatch(o["ike-monitor-interval"]) {
+			return fmt.Errorf("Error reading ike_monitor_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("ike_heartbeat_interval", dataSourceFlattenSystemClusterSyncIkeHeartbeatInterval(o["ike-heartbeat-interval"], d, "ike_heartbeat_interval")); err != nil {
+		if !fortiAPIPatch(o["ike-heartbeat-interval"]) {
+			return fmt.Errorf("Error reading ike_heartbeat_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("secondary_add_ipsec_routes", dataSourceFlattenSystemClusterSyncSecondaryAddIpsecRoutes(o["secondary-add-ipsec-routes"], d, "secondary_add_ipsec_routes")); err != nil {
+		if !fortiAPIPatch(o["secondary-add-ipsec-routes"]) {
+			return fmt.Errorf("Error reading secondary_add_ipsec_routes: %v", err)
 		}
 	}
 

@@ -107,11 +107,23 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dhcp_relay_link_selection": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"dhcp_relay_request_all_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"dhcp_relay_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"dhcp_relay_agent_option": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"dhcp_classless_route_addition": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -240,6 +252,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dns_server_protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -307,6 +323,10 @@ func dataSourceSystemInterface() *schema.Resource {
 			},
 			"icmp_accept_redirect": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"reachable_time": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"vlanforward": &schema.Schema{
@@ -465,6 +485,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"mediatype": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"inbandwidth": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -513,6 +537,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"trunk": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"forward_domain": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -538,6 +566,14 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"lacp_ha_slave": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"system_id_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"system_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -633,6 +669,14 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"auth_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auth_portal_addr": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"security_exempt_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -648,6 +692,14 @@ func dataSourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
+			},
+			"stp": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"stp_ha_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"device_identification": &schema.Schema{
 				Type:     schema.TypeString,
@@ -929,6 +981,22 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dhcp_snooping_server_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"server_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"switch_controller_arp_inspection": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -938,6 +1006,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"switch_controller_nac": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"switch_controller_dynamic": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -988,6 +1060,10 @@ func dataSourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
+			},
+			"forward_error_correction": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"ipv6": &schema.Schema{
 				Type:     schema.TypeList,
@@ -1075,6 +1151,10 @@ func dataSourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"ra_send_mtu": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"ip6_reachable_time": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -1109,6 +1189,10 @@ func dataSourceSystemInterface() *schema.Resource {
 						},
 						"ip6_upstream_interface": &schema.Schema{
 							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip6_delegated_prefix_iaid": &schema.Schema{
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 						"ip6_subnet": &schema.Schema{
@@ -1172,6 +1256,10 @@ func dataSourceSystemInterface() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"delegated_prefix_iaid": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
 									"autonomous_flag": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -1218,6 +1306,30 @@ func dataSourceSystemInterface() *schema.Resource {
 						"dhcp6_information_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"dhcp6_iapd_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"iaid": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"prefix_hint": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"prefix_hint_plt": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"prefix_hint_vlt": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"dhcp6_prefix_hint": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1465,11 +1577,23 @@ func dataSourceFlattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceDhcpRelayLinkSelection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpRelayRequestAllServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceDhcpRelayType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenSystemInterfaceDhcpRelayAgentOption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpClasslessRouteAddition(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1628,6 +1752,10 @@ func dataSourceFlattenSystemInterfaceDnsServerOverride(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceDnsServerProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1693,6 +1821,10 @@ func dataSourceFlattenSystemInterfaceIcmpSendRedirect(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenSystemInterfaceIcmpAcceptRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceReachableTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1873,6 +2005,10 @@ func dataSourceFlattenSystemInterfaceTcpMss(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceMediatype(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceInbandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1918,6 +2054,10 @@ func dataSourceFlattenSystemInterfaceVlanProtocol(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemInterfaceVlanid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceTrunk(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1970,6 +2110,14 @@ func dataSourceFlattenSystemInterfaceLacpMode(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemInterfaceLacpHaSlave(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSystemIdType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSystemId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2089,6 +2237,14 @@ func dataSourceFlattenSystemInterfaceSecurityRedirectUrl(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceAuthCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceAuthPortalAddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceSecurityExemptList(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2126,6 +2282,14 @@ func dataSourceFlattenSystemInterfaceSecurityGroups(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemInterfaceSecurityGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceStp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceStpHaSecondary(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2586,6 +2750,51 @@ func dataSourceFlattenSystemInterfaceSwitchControllerDhcpSnoopingOption82(v inte
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceDhcpSnoopingServerList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemInterfaceDhcpSnoopingServerListName(i["name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_ip"
+		if _, ok := i["server-ip"]; ok {
+			tmp["server_ip"] = dataSourceFlattenSystemInterfaceDhcpSnoopingServerListServerIp(i["server-ip"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemInterfaceDhcpSnoopingServerListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpSnoopingServerListServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceSwitchControllerArpInspection(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2595,6 +2804,10 @@ func dataSourceFlattenSystemInterfaceSwitchControllerLearningLimit(v interface{}
 }
 
 func dataSourceFlattenSystemInterfaceSwitchControllerNac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSwitchControllerDynamic(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2704,6 +2917,10 @@ func dataSourceFlattenSystemInterfaceTaggingTagsName(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceForwardErrorCorrection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -2803,6 +3020,11 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 		result["ip6_link_mtu"] = dataSourceFlattenSystemInterfaceIpv6Ip6LinkMtu(i["ip6-link-mtu"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "ra_send_mtu"
+	if _, ok := i["ra-send-mtu"]; ok {
+		result["ra_send_mtu"] = dataSourceFlattenSystemInterfaceIpv6RaSendMtu(i["ra-send-mtu"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "ip6_reachable_time"
 	if _, ok := i["ip6-reachable-time"]; ok {
 		result["ip6_reachable_time"] = dataSourceFlattenSystemInterfaceIpv6Ip6ReachableTime(i["ip6-reachable-time"], d, pre_append)
@@ -2848,6 +3070,11 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 		result["ip6_upstream_interface"] = dataSourceFlattenSystemInterfaceIpv6Ip6UpstreamInterface(i["ip6-upstream-interface"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "ip6_delegated_prefix_iaid"
+	if _, ok := i["ip6-delegated-prefix-iaid"]; ok {
+		result["ip6_delegated_prefix_iaid"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixIaid(i["ip6-delegated-prefix-iaid"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "ip6_subnet"
 	if _, ok := i["ip6-subnet"]; ok {
 		result["ip6_subnet"] = dataSourceFlattenSystemInterfaceIpv6Ip6Subnet(i["ip6-subnet"], d, pre_append)
@@ -2891,6 +3118,11 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 	pre_append = pre + ".0." + "dhcp6_information_request"
 	if _, ok := i["dhcp6-information-request"]; ok {
 		result["dhcp6_information_request"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6InformationRequest(i["dhcp6-information-request"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "dhcp6_iapd_list"
+	if _, ok := i["dhcp6-iapd-list"]; ok {
+		result["dhcp6_iapd_list"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdList(i["dhcp6-iapd-list"], d, pre_append)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_prefix_hint"
@@ -3036,6 +3268,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6LinkMtu(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceIpv6RaSendMtu(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceIpv6Ip6ReachableTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3069,6 +3305,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6PrefixMode(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6UpstreamInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixIaid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3227,6 +3467,11 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d
 			tmp["upstream_interface"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(i["upstream-interface"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "delegated_prefix_iaid"
+		if _, ok := i["delegated-prefix-iaid"]; ok {
+			tmp["delegated_prefix_iaid"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListDelegatedPrefixIaid(i["delegated-prefix-iaid"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
 		if _, ok := i["autonomous-flag"]; ok {
 			tmp["autonomous_flag"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append)
@@ -3265,6 +3510,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(v interf
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListDelegatedPrefixIaid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3309,6 +3558,69 @@ func dataSourceFlattenSystemInterfaceIpv6Dhcp6PrefixDelegation(v interface{}, d 
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Dhcp6InformationRequest(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "iaid"
+		if _, ok := i["iaid"]; ok {
+			tmp["iaid"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListIaid(i["iaid"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_hint"
+		if _, ok := i["prefix-hint"]; ok {
+			tmp["prefix_hint"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListPrefixHint(i["prefix-hint"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_hint_plt"
+		if _, ok := i["prefix-hint-plt"]; ok {
+			tmp["prefix_hint_plt"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintPlt(i["prefix-hint-plt"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_hint_vlt"
+		if _, ok := i["prefix-hint-vlt"]; ok {
+			tmp["prefix_hint_vlt"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintVlt(i["prefix-hint-vlt"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListIaid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListPrefixHint(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintPlt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintVlt(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3540,6 +3852,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("dhcp_relay_link_selection", dataSourceFlattenSystemInterfaceDhcpRelayLinkSelection(o["dhcp-relay-link-selection"], d, "dhcp_relay_link_selection")); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-link-selection"]) {
+			return fmt.Errorf("Error reading dhcp_relay_link_selection: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_request_all_server", dataSourceFlattenSystemInterfaceDhcpRelayRequestAllServer(o["dhcp-relay-request-all-server"], d, "dhcp_relay_request_all_server")); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-request-all-server"]) {
+			return fmt.Errorf("Error reading dhcp_relay_request_all_server: %v", err)
+		}
+	}
+
 	if err = d.Set("dhcp_relay_type", dataSourceFlattenSystemInterfaceDhcpRelayType(o["dhcp-relay-type"], d, "dhcp_relay_type")); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-type"]) {
 			return fmt.Errorf("Error reading dhcp_relay_type: %v", err)
@@ -3549,6 +3873,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("dhcp_relay_agent_option", dataSourceFlattenSystemInterfaceDhcpRelayAgentOption(o["dhcp-relay-agent-option"], d, "dhcp_relay_agent_option")); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-agent-option"]) {
 			return fmt.Errorf("Error reading dhcp_relay_agent_option: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_classless_route_addition", dataSourceFlattenSystemInterfaceDhcpClasslessRouteAddition(o["dhcp-classless-route-addition"], d, "dhcp_classless_route_addition")); err != nil {
+		if !fortiAPIPatch(o["dhcp-classless-route-addition"]) {
+			return fmt.Errorf("Error reading dhcp_classless_route_addition: %v", err)
 		}
 	}
 
@@ -3720,6 +4050,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("dns_server_protocol", dataSourceFlattenSystemInterfaceDnsServerProtocol(o["dns-server-protocol"], d, "dns_server_protocol")); err != nil {
+		if !fortiAPIPatch(o["dns-server-protocol"]) {
+			return fmt.Errorf("Error reading dns_server_protocol: %v", err)
+		}
+	}
+
 	if err = d.Set("auth_type", dataSourceFlattenSystemInterfaceAuthType(o["auth-type"], d, "auth_type")); err != nil {
 		if !fortiAPIPatch(o["auth-type"]) {
 			return fmt.Errorf("Error reading auth_type: %v", err)
@@ -3813,6 +4149,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("icmp_accept_redirect", dataSourceFlattenSystemInterfaceIcmpAcceptRedirect(o["icmp-accept-redirect"], d, "icmp_accept_redirect")); err != nil {
 		if !fortiAPIPatch(o["icmp-accept-redirect"]) {
 			return fmt.Errorf("Error reading icmp_accept_redirect: %v", err)
+		}
+	}
+
+	if err = d.Set("reachable_time", dataSourceFlattenSystemInterfaceReachableTime(o["reachable-time"], d, "reachable_time")); err != nil {
+		if !fortiAPIPatch(o["reachable-time"]) {
+			return fmt.Errorf("Error reading reachable_time: %v", err)
 		}
 	}
 
@@ -4050,6 +4392,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("mediatype", dataSourceFlattenSystemInterfaceMediatype(o["mediatype"], d, "mediatype")); err != nil {
+		if !fortiAPIPatch(o["mediatype"]) {
+			return fmt.Errorf("Error reading mediatype: %v", err)
+		}
+	}
+
 	if err = d.Set("inbandwidth", dataSourceFlattenSystemInterfaceInbandwidth(o["inbandwidth"], d, "inbandwidth")); err != nil {
 		if !fortiAPIPatch(o["inbandwidth"]) {
 			return fmt.Errorf("Error reading inbandwidth: %v", err)
@@ -4122,6 +4470,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("trunk", dataSourceFlattenSystemInterfaceTrunk(o["trunk"], d, "trunk")); err != nil {
+		if !fortiAPIPatch(o["trunk"]) {
+			return fmt.Errorf("Error reading trunk: %v", err)
+		}
+	}
+
 	if err = d.Set("forward_domain", dataSourceFlattenSystemInterfaceForwardDomain(o["forward-domain"], d, "forward_domain")); err != nil {
 		if !fortiAPIPatch(o["forward-domain"]) {
 			return fmt.Errorf("Error reading forward_domain: %v", err)
@@ -4149,6 +4503,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("lacp_ha_slave", dataSourceFlattenSystemInterfaceLacpHaSlave(o["lacp-ha-slave"], d, "lacp_ha_slave")); err != nil {
 		if !fortiAPIPatch(o["lacp-ha-slave"]) {
 			return fmt.Errorf("Error reading lacp_ha_slave: %v", err)
+		}
+	}
+
+	if err = d.Set("system_id_type", dataSourceFlattenSystemInterfaceSystemIdType(o["system-id-type"], d, "system_id_type")); err != nil {
+		if !fortiAPIPatch(o["system-id-type"]) {
+			return fmt.Errorf("Error reading system_id_type: %v", err)
+		}
+	}
+
+	if err = d.Set("system_id", dataSourceFlattenSystemInterfaceSystemId(o["system-id"], d, "system_id")); err != nil {
+		if !fortiAPIPatch(o["system-id"]) {
+			return fmt.Errorf("Error reading system_id: %v", err)
 		}
 	}
 
@@ -4278,6 +4644,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("auth_cert", dataSourceFlattenSystemInterfaceAuthCert(o["auth-cert"], d, "auth_cert")); err != nil {
+		if !fortiAPIPatch(o["auth-cert"]) {
+			return fmt.Errorf("Error reading auth_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_portal_addr", dataSourceFlattenSystemInterfaceAuthPortalAddr(o["auth-portal-addr"], d, "auth_portal_addr")); err != nil {
+		if !fortiAPIPatch(o["auth-portal-addr"]) {
+			return fmt.Errorf("Error reading auth_portal_addr: %v", err)
+		}
+	}
+
 	if err = d.Set("security_exempt_list", dataSourceFlattenSystemInterfaceSecurityExemptList(o["security-exempt-list"], d, "security_exempt_list")); err != nil {
 		if !fortiAPIPatch(o["security-exempt-list"]) {
 			return fmt.Errorf("Error reading security_exempt_list: %v", err)
@@ -4287,6 +4665,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("security_groups", dataSourceFlattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
 		if !fortiAPIPatch(o["security-groups"]) {
 			return fmt.Errorf("Error reading security_groups: %v", err)
+		}
+	}
+
+	if err = d.Set("stp", dataSourceFlattenSystemInterfaceStp(o["stp"], d, "stp")); err != nil {
+		if !fortiAPIPatch(o["stp"]) {
+			return fmt.Errorf("Error reading stp: %v", err)
+		}
+	}
+
+	if err = d.Set("stp_ha_secondary", dataSourceFlattenSystemInterfaceStpHaSecondary(o["stp-ha-secondary"], d, "stp_ha_secondary")); err != nil {
+		if !fortiAPIPatch(o["stp-ha-secondary"]) {
+			return fmt.Errorf("Error reading stp_ha_secondary: %v", err)
 		}
 	}
 
@@ -4416,8 +4806,8 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if err = d.Set("secondary_ip", dataSourceFlattenSystemInterfaceSecondaryIp(o["secondary-IP"], d, "secondary_ip")); err != nil {
-		if !fortiAPIPatch(o["secondary-IP"]) {
+	if err = d.Set("secondary_ip", dataSourceFlattenSystemInterfaceSecondaryIp(o["secondary-ip"], d, "secondary_ip")); err != nil {
+		if !fortiAPIPatch(o["secondary-ip"]) {
 			return fmt.Errorf("Error reading secondary_ip: %v", err)
 		}
 	}
@@ -4548,6 +4938,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("dhcp_snooping_server_list", dataSourceFlattenSystemInterfaceDhcpSnoopingServerList(o["dhcp-snooping-server-list"], d, "dhcp_snooping_server_list")); err != nil {
+		if !fortiAPIPatch(o["dhcp-snooping-server-list"]) {
+			return fmt.Errorf("Error reading dhcp_snooping_server_list: %v", err)
+		}
+	}
+
 	if err = d.Set("switch_controller_arp_inspection", dataSourceFlattenSystemInterfaceSwitchControllerArpInspection(o["switch-controller-arp-inspection"], d, "switch_controller_arp_inspection")); err != nil {
 		if !fortiAPIPatch(o["switch-controller-arp-inspection"]) {
 			return fmt.Errorf("Error reading switch_controller_arp_inspection: %v", err)
@@ -4563,6 +4959,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("switch_controller_nac", dataSourceFlattenSystemInterfaceSwitchControllerNac(o["switch-controller-nac"], d, "switch_controller_nac")); err != nil {
 		if !fortiAPIPatch(o["switch-controller-nac"]) {
 			return fmt.Errorf("Error reading switch_controller_nac: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_dynamic", dataSourceFlattenSystemInterfaceSwitchControllerDynamic(o["switch-controller-dynamic"], d, "switch_controller_dynamic")); err != nil {
+		if !fortiAPIPatch(o["switch-controller-dynamic"]) {
+			return fmt.Errorf("Error reading switch_controller_dynamic: %v", err)
 		}
 	}
 
@@ -4599,6 +5001,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("tagging", dataSourceFlattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
 		if !fortiAPIPatch(o["tagging"]) {
 			return fmt.Errorf("Error reading tagging: %v", err)
+		}
+	}
+
+	if err = d.Set("forward_error_correction", dataSourceFlattenSystemInterfaceForwardErrorCorrection(o["forward-error-correction"], d, "forward_error_correction")); err != nil {
+		if !fortiAPIPatch(o["forward-error-correction"]) {
+			return fmt.Errorf("Error reading forward_error_correction: %v", err)
 		}
 	}
 

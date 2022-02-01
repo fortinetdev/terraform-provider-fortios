@@ -51,6 +51,12 @@ func resourceFirewallVendorMac() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"obsolete": &schema.Schema{
+				Type: schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -189,6 +195,10 @@ func flattenFirewallVendorMacMacNumber(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenFirewallVendorMacObsolete(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 
 func refreshObjectFirewallVendorMac(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
@@ -216,6 +226,13 @@ func refreshObjectFirewallVendorMac(d *schema.ResourceData, o map[string]interfa
 	}
 
 
+	if err = d.Set("obsolete", flattenFirewallVendorMacObsolete(o["obsolete"], d, "obsolete", sv)); err != nil {
+		if !fortiAPIPatch(o["obsolete"]) {
+			return fmt.Errorf("Error reading obsolete: %v", err)
+		}
+	}
+
+
 	return nil
 }
 
@@ -235,6 +252,10 @@ func expandFirewallVendorMacName(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandFirewallVendorMacMacNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVendorMacObsolete(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -272,6 +293,17 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["mac-number"] = t
+		}
+	}
+
+
+	if v, ok := d.GetOkExists("obsolete"); ok {
+    
+		t, err := expandFirewallVendorMacObsolete(d, v, "obsolete", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["obsolete"] = t
 		}
 	}
 

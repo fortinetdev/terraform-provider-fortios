@@ -31,6 +31,10 @@ func dataSourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"description": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"trigger_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -107,6 +111,18 @@ func dataSourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"serial": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_event_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_event_severity": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -155,6 +171,10 @@ func dataSourceSystemAutomationTriggerRead(d *schema.ResourceData, m interface{}
 }
 
 func dataSourceFlattenSystemAutomationTriggerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationTriggerDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -268,12 +288,30 @@ func dataSourceFlattenSystemAutomationTriggerFazEventTags(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemAutomationTriggerSerial(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationTriggerFabricEventName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationTriggerFabricEventSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
 	if err = d.Set("name", dataSourceFlattenSystemAutomationTriggerName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("description", dataSourceFlattenSystemAutomationTriggerDescription(o["description"], d, "description")); err != nil {
+		if !fortiAPIPatch(o["description"]) {
+			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
@@ -364,6 +402,24 @@ func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o ma
 	if err = d.Set("faz_event_tags", dataSourceFlattenSystemAutomationTriggerFazEventTags(o["faz-event-tags"], d, "faz_event_tags")); err != nil {
 		if !fortiAPIPatch(o["faz-event-tags"]) {
 			return fmt.Errorf("Error reading faz_event_tags: %v", err)
+		}
+	}
+
+	if err = d.Set("serial", dataSourceFlattenSystemAutomationTriggerSerial(o["serial"], d, "serial")); err != nil {
+		if !fortiAPIPatch(o["serial"]) {
+			return fmt.Errorf("Error reading serial: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_event_name", dataSourceFlattenSystemAutomationTriggerFabricEventName(o["fabric-event-name"], d, "fabric_event_name")); err != nil {
+		if !fortiAPIPatch(o["fabric-event-name"]) {
+			return fmt.Errorf("Error reading fabric_event_name: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_event_severity", dataSourceFlattenSystemAutomationTriggerFabricEventSeverity(o["fabric-event-severity"], d, "fabric_event_severity")); err != nil {
+		if !fortiAPIPatch(o["fabric-event-severity"]) {
+			return fmt.Errorf("Error reading fabric_event_severity: %v", err)
 		}
 	}
 

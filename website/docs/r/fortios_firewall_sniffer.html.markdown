@@ -63,6 +63,8 @@ The following arguments are supported:
 * `dlp_sensor` - Name of an existing DLP sensor.
 * `ip_threatfeed_status` - Enable/disable IP threat feed. Valid values: `enable`, `disable`.
 * `ip_threatfeed` - Name of an existing IP threat feed. The structure of `ip_threatfeed` block is documented below.
+* `file_filter_profile_status` - Enable/disable file filter. Valid values: `enable`, `disable`.
+* `file_filter_profile` - Name of an existing file-filter profile.
 * `ips_dos_status` - Enable/disable IPS DoS anomaly detection. Valid values: `enable`, `disable`.
 * `anomaly` - Configuration method to edit Denial of Service (DoS) anomaly settings. The structure of `anomaly` block is documented below.
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers. Valid values: `disable`, `block`, `monitor`.
@@ -79,7 +81,7 @@ The `anomaly` block supports:
 * `name` - Anomaly name.
 * `status` - Enable/disable this anomaly. Valid values: `disable`, `enable`.
 * `log` - Enable/disable anomaly logging. Valid values: `enable`, `disable`.
-* `action` - Action taken when the threshold is reached. Valid values: `pass`, `block`.
+* `action` - Action taken when the threshold is reached.
 * `quarantine` - Quarantine method. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine. (Format ###d##h##m, minimum 1m, maximum 364d23h59m, default = 5m). Requires quarantine set to attacker.
 * `quarantine_log` - Enable/disable quarantine logging. Valid values: `disable`, `enable`.

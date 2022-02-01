@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_remotelog
-Configure logging by FortiSwitch device to a remote syslog server.
+Configure logging by FortiSwitch device to a remote syslog server. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

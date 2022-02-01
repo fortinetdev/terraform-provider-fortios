@@ -38,6 +38,7 @@ The following arguments are supported:
 * `min_upper_case_letter` - Minimum number of uppercase characters in password (0 - 128, default = 0).
 * `min_non_alphanumeric` - Minimum number of non-alphanumeric characters in password (0 - 128, default = 0).
 * `min_number` - Minimum number of numeric characters in password (0 - 128, default = 0).
+* `min_change_characters` - Minimum number of unique characters in new password which do not exist in old password (This attribute overrides reuse-password if both are enabled).
 * `change_4_characters` - Enable/disable changing at least 4 characters for a new password (This attribute overrides reuse-password if both are enabled). Valid values: `enable`, `disable`.
 * `expire_status` - Enable/disable password expiration. Valid values: `enable`, `disable`.
 * `expire_day` - Number of days after which passwords expire (1 - 999 days, default = 90).

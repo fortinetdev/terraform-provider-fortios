@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_internetserviceowner
-Internet Service owner.
+Internet Service owner. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

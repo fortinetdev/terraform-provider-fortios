@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_options
-Configure AntiSpam options.
+Configure AntiSpam options. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

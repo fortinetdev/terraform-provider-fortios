@@ -59,6 +59,12 @@ func resourceDpdkCpus() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"isolated_cpus": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 1022),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -168,6 +174,10 @@ func flattenDpdkCpusTxCpus(v interface{}, d *schema.ResourceData, pre string, sv
 	return v
 }
 
+func flattenDpdkCpusIsolatedCpus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectDpdkCpus(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -195,6 +205,12 @@ func refreshObjectDpdkCpus(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("isolated_cpus", flattenDpdkCpusIsolatedCpus(o["isolated-cpus"], d, "isolated_cpus", sv)); err != nil {
+		if !fortiAPIPatch(o["isolated-cpus"]) {
+			return fmt.Errorf("Error reading isolated_cpus: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -217,6 +233,10 @@ func expandDpdkCpusIpsCpus(d *schema.ResourceData, v interface{}, pre string, sv
 }
 
 func expandDpdkCpusTxCpus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDpdkCpusIsolatedCpus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -260,6 +280,16 @@ func getObjectDpdkCpus(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["tx-cpus"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("isolated_cpus"); ok {
+
+		t, err := expandDpdkCpusIsolatedCpus(d, v, "isolated_cpus", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["isolated-cpus"] = t
 		}
 	}
 

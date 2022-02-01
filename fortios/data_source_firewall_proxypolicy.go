@@ -43,6 +43,30 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"access_proxy": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"access_proxy6": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"srcintf": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -102,6 +126,26 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 						},
 					},
 				},
+			},
+			"ztna_ems_tag": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"ztna_tags_match_logic": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"device_ownership": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
@@ -339,11 +383,23 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"voip_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"sctp_filter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"cifs_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"videofilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -384,6 +440,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"comments": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"block_notification": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -455,6 +515,78 @@ func dataSourceFlattenFirewallProxyPolicyName(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenFirewallProxyPolicyProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyAccessProxy(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyAccessProxyName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyAccessProxyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyAccessProxy6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyAccessProxy6Name(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyAccessProxy6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -635,6 +767,50 @@ func dataSourceFlattenFirewallProxyPolicyDstaddr(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenFirewallProxyPolicyDstaddrName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyZtnaEmsTagName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyZtnaEmsTagName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyZtnaTagsMatchLogic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyDeviceOwnership(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1114,11 +1290,23 @@ func dataSourceFlattenFirewallProxyPolicyApplicationList(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyVoipProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicySctpFilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyIcapProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenFirewallProxyPolicyCifsProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyVideofilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1162,6 +1350,10 @@ func dataSourceFlattenFirewallProxyPolicyComments(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyBlockNotification(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyRedirectUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1197,6 +1389,18 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("access_proxy", dataSourceFlattenFirewallProxyPolicyAccessProxy(o["access-proxy"], d, "access_proxy")); err != nil {
+		if !fortiAPIPatch(o["access-proxy"]) {
+			return fmt.Errorf("Error reading access_proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("access_proxy6", dataSourceFlattenFirewallProxyPolicyAccessProxy6(o["access-proxy6"], d, "access_proxy6")); err != nil {
+		if !fortiAPIPatch(o["access-proxy6"]) {
+			return fmt.Errorf("Error reading access_proxy6: %v", err)
+		}
+	}
+
 	if err = d.Set("srcintf", dataSourceFlattenFirewallProxyPolicySrcintf(o["srcintf"], d, "srcintf")); err != nil {
 		if !fortiAPIPatch(o["srcintf"]) {
 			return fmt.Errorf("Error reading srcintf: %v", err)
@@ -1224,6 +1428,24 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("dstaddr", dataSourceFlattenFirewallProxyPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
 		if !fortiAPIPatch(o["dstaddr"]) {
 			return fmt.Errorf("Error reading dstaddr: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_ems_tag", dataSourceFlattenFirewallProxyPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag")); err != nil {
+		if !fortiAPIPatch(o["ztna-ems-tag"]) {
+			return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_tags_match_logic", dataSourceFlattenFirewallProxyPolicyZtnaTagsMatchLogic(o["ztna-tags-match-logic"], d, "ztna_tags_match_logic")); err != nil {
+		if !fortiAPIPatch(o["ztna-tags-match-logic"]) {
+			return fmt.Errorf("Error reading ztna_tags_match_logic: %v", err)
+		}
+	}
+
+	if err = d.Set("device_ownership", dataSourceFlattenFirewallProxyPolicyDeviceOwnership(o["device-ownership"], d, "device_ownership")); err != nil {
+		if !fortiAPIPatch(o["device-ownership"]) {
+			return fmt.Errorf("Error reading device_ownership: %v", err)
 		}
 	}
 
@@ -1461,6 +1683,18 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("voip_profile", dataSourceFlattenFirewallProxyPolicyVoipProfile(o["voip-profile"], d, "voip_profile")); err != nil {
+		if !fortiAPIPatch(o["voip-profile"]) {
+			return fmt.Errorf("Error reading voip_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("sctp_filter_profile", dataSourceFlattenFirewallProxyPolicySctpFilterProfile(o["sctp-filter-profile"], d, "sctp_filter_profile")); err != nil {
+		if !fortiAPIPatch(o["sctp-filter-profile"]) {
+			return fmt.Errorf("Error reading sctp_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", dataSourceFlattenFirewallProxyPolicyIcapProfile(o["icap-profile"], d, "icap_profile")); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -1470,6 +1704,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("cifs_profile", dataSourceFlattenFirewallProxyPolicyCifsProfile(o["cifs-profile"], d, "cifs_profile")); err != nil {
 		if !fortiAPIPatch(o["cifs-profile"]) {
 			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("videofilter_profile", dataSourceFlattenFirewallProxyPolicyVideofilterProfile(o["videofilter-profile"], d, "videofilter_profile")); err != nil {
+		if !fortiAPIPatch(o["videofilter-profile"]) {
+			return fmt.Errorf("Error reading videofilter_profile: %v", err)
 		}
 	}
 
@@ -1530,6 +1770,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("comments", dataSourceFlattenFirewallProxyPolicyComments(o["comments"], d, "comments")); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
+	if err = d.Set("block_notification", dataSourceFlattenFirewallProxyPolicyBlockNotification(o["block-notification"], d, "block_notification")); err != nil {
+		if !fortiAPIPatch(o["block-notification"]) {
+			return fmt.Errorf("Error reading block_notification: %v", err)
 		}
 	}
 

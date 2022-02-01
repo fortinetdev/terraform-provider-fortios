@@ -23,4 +23,6 @@ The following attributes are exported:
 * `interface` - Interface name that is associated with the incoming traffic from available options.
 * `remote_gw` - IPv4 address for the remote gateway.
 * `local_gw` - IPv4 address for the local gateway.
+* `use_sdwan` - Enable/disable use of SD-WAN to reach remote gateway.
+* `auto_asic_offload` - Enable/disable tunnel ASIC offloading.
 

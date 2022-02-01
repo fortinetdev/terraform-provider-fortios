@@ -387,6 +387,21 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"learning_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat46": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat64": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"logtraffic_start": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -469,6 +484,12 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"sctp_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -476,6 +497,12 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -1502,6 +1529,18 @@ func flattenFirewallSecurityPolicyLogtrafficSp(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenFirewallSecurityPolicyLearningModeSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSecurityPolicyNat46Sp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSecurityPolicyNat64Sp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSecurityPolicyLogtrafficStartSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1558,11 +1597,19 @@ func flattenFirewallSecurityPolicyVoipProfileSp(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenFirewallSecurityPolicySctpFilterProfileSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSecurityPolicyIcapProfileSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallSecurityPolicyCifsProfileSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSecurityPolicyVideofilterProfileSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2245,6 +2292,24 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("learning_mode", flattenFirewallSecurityPolicyLearningModeSp(o["learning-mode"], d, "learning_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["learning-mode"]) {
+			return fmt.Errorf("Error reading learning_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46", flattenFirewallSecurityPolicyNat46Sp(o["nat46"], d, "nat46", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46"]) {
+			return fmt.Errorf("Error reading nat46: %v", err)
+		}
+	}
+
+	if err = d.Set("nat64", flattenFirewallSecurityPolicyNat64Sp(o["nat64"], d, "nat64", sv)); err != nil {
+		if !fortiAPIPatch(o["nat64"]) {
+			return fmt.Errorf("Error reading nat64: %v", err)
+		}
+	}
+
 	if err = d.Set("logtraffic_start", flattenFirewallSecurityPolicyLogtrafficStartSp(o["logtraffic-start"], d, "logtraffic_start", sv)); err != nil {
 		if !fortiAPIPatch(o["logtraffic-start"]) {
 			return fmt.Errorf("Error reading logtraffic_start: %v", err)
@@ -2329,6 +2394,12 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("sctp_filter_profile", flattenFirewallSecurityPolicySctpFilterProfileSp(o["sctp-filter-profile"], d, "sctp_filter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["sctp-filter-profile"]) {
+			return fmt.Errorf("Error reading sctp_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", flattenFirewallSecurityPolicyIcapProfileSp(o["icap-profile"], d, "icap_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -2338,6 +2409,12 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 	if err = d.Set("cifs_profile", flattenFirewallSecurityPolicyCifsProfileSp(o["cifs-profile"], d, "cifs_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["cifs-profile"]) {
 			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("videofilter_profile", flattenFirewallSecurityPolicyVideofilterProfileSp(o["videofilter-profile"], d, "videofilter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["videofilter-profile"]) {
+			return fmt.Errorf("Error reading videofilter_profile: %v", err)
 		}
 	}
 
@@ -3144,6 +3221,18 @@ func expandFirewallSecurityPolicyLogtrafficSp(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandFirewallSecurityPolicyLearningModeSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSecurityPolicyNat46Sp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSecurityPolicyNat64Sp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallSecurityPolicyLogtrafficStartSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3200,11 +3289,19 @@ func expandFirewallSecurityPolicyVoipProfileSp(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandFirewallSecurityPolicySctpFilterProfileSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallSecurityPolicyIcapProfileSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandFirewallSecurityPolicyCifsProfileSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSecurityPolicyVideofilterProfileSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3799,6 +3896,36 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("learning_mode"); ok {
+
+		t, err := expandFirewallSecurityPolicyLearningModeSp(d, v, "learning_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["learning-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat46"); ok {
+
+		t, err := expandFirewallSecurityPolicyNat46Sp(d, v, "nat46", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat46"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat64"); ok {
+
+		t, err := expandFirewallSecurityPolicyNat64Sp(d, v, "nat64", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat64"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("logtraffic_start"); ok {
 
 		t, err := expandFirewallSecurityPolicyLogtrafficStartSp(d, v, "logtraffic_start", sv)
@@ -3939,6 +4066,16 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("sctp_filter_profile"); ok {
+
+		t, err := expandFirewallSecurityPolicySctpFilterProfileSp(d, v, "sctp_filter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sctp-filter-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("icap_profile"); ok {
 
 		t, err := expandFirewallSecurityPolicyIcapProfileSp(d, v, "icap_profile", sv)
@@ -3956,6 +4093,16 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["cifs-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("videofilter_profile"); ok {
+
+		t, err := expandFirewallSecurityPolicyVideofilterProfileSp(d, v, "videofilter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["videofilter-profile"] = t
 		}
 	}
 

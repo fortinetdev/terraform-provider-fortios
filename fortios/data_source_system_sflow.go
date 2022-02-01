@@ -39,6 +39,14 @@ func dataSourceSystemSflow() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -89,6 +97,14 @@ func dataSourceFlattenSystemSflowSourceIp(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func dataSourceFlattenSystemSflowInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSflowInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -107,6 +123,18 @@ func dataSourceRefreshObjectSystemSflow(d *schema.ResourceData, o map[string]int
 	if err = d.Set("source_ip", dataSourceFlattenSystemSflowSourceIp(o["source-ip"], d, "source_ip")); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", dataSourceFlattenSystemSflowInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method")); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemSflowInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 

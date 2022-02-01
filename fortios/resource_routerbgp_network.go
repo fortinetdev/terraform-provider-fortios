@@ -45,6 +45,11 @@ func resourceRouterbgpNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"network_import_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"backdoor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -196,6 +201,10 @@ func flattenRouterbgpNetworkPrefix(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenRouterbgpNetworkNetworkImportCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNetworkBackdoor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -216,6 +225,12 @@ func refreshObjectRouterbgpNetwork(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("prefix", flattenRouterbgpNetworkPrefix(o["prefix"], d, "prefix", sv)); err != nil {
 		if !fortiAPIPatch(o["prefix"]) {
 			return fmt.Errorf("Error reading prefix: %v", err)
+		}
+	}
+
+	if err = d.Set("network_import_check", flattenRouterbgpNetworkNetworkImportCheck(o["network-import-check"], d, "network_import_check", sv)); err != nil {
+		if !fortiAPIPatch(o["network-import-check"]) {
+			return fmt.Errorf("Error reading network_import_check: %v", err)
 		}
 	}
 
@@ -248,6 +263,10 @@ func expandRouterbgpNetworkPrefix(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandRouterbgpNetworkNetworkImportCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNetworkBackdoor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -276,6 +295,16 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["prefix"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("network_import_check"); ok {
+
+		t, err := expandRouterbgpNetworkNetworkImportCheck(d, v, "network_import_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["network-import-check"] = t
 		}
 	}
 

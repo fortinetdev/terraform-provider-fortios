@@ -70,6 +70,11 @@ func resourceFirewallServiceGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -254,6 +259,10 @@ func flattenFirewallServiceGroupColor(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenFirewallServiceGroupFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -294,6 +303,12 @@ func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("color", flattenFirewallServiceGroupColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenFirewallServiceGroupFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 
@@ -354,6 +369,10 @@ func expandFirewallServiceGroupColor(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandFirewallServiceGroupFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -404,6 +423,16 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["color"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallServiceGroupFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

@@ -62,6 +62,16 @@ func resourceSystemSitTunnel() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"use_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -207,6 +217,14 @@ func flattenSystemSitTunnelInterface(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenSystemSitTunnelUseSdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSitTunnelAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -240,6 +258,18 @@ func refreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("use_sdwan", flattenSystemSitTunnelUseSdwan(o["use-sdwan"], d, "use_sdwan", sv)); err != nil {
+		if !fortiAPIPatch(o["use-sdwan"]) {
+			return fmt.Errorf("Error reading use_sdwan: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", flattenSystemSitTunnelAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -266,6 +296,14 @@ func expandSystemSitTunnelIp6(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandSystemSitTunnelInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSitTunnelUseSdwan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSitTunnelAutoAsicOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -319,6 +357,26 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("use_sdwan"); ok {
+
+		t, err := expandSystemSitTunnelUseSdwan(d, v, "use_sdwan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["use-sdwan"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_asic_offload"); ok {
+
+		t, err := expandSystemSitTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-asic-offload"] = t
 		}
 	}
 

@@ -106,7 +106,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						},
 						"comfort_amount": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 10240),
+							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -267,7 +267,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						},
 						"comfort_amount": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 10240),
+							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
 							Computed:     true,
 						},

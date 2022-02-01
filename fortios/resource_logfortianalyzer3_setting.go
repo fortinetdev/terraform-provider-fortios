@@ -70,6 +70,12 @@ func resourceLogFortianalyzer3Setting() *schema.Resource {
 					},
 				},
 			},
+			"preshared_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -336,6 +342,10 @@ func flattenLogFortianalyzer3SettingSerialName(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenLogFortianalyzer3SettingPresharedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzer3SettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -460,6 +470,12 @@ func refreshObjectLogFortianalyzer3Setting(d *schema.ResourceData, o map[string]
 					return fmt.Errorf("Error reading serial: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("preshared_key", flattenLogFortianalyzer3SettingPresharedKey(o["preshared-key"], d, "preshared_key", sv)); err != nil {
+		if !fortiAPIPatch(o["preshared-key"]) {
+			return fmt.Errorf("Error reading preshared_key: %v", err)
 		}
 	}
 
@@ -646,6 +662,10 @@ func expandLogFortianalyzer3SettingSerialName(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandLogFortianalyzer3SettingPresharedKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzer3SettingAccessConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -780,6 +800,16 @@ func getObjectLogFortianalyzer3Setting(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["serial"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("preshared_key"); ok {
+
+		t, err := expandLogFortianalyzer3SettingPresharedKey(d, v, "preshared_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["preshared-key"] = t
 		}
 	}
 

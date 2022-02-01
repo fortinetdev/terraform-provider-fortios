@@ -37,7 +37,7 @@ func resourceSystemHa() *schema.Resource {
 			},
 			"group_id": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 255),
+				ValidateFunc: validation.IntBetween(0, 1023),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -144,6 +144,11 @@ func resourceSystemHa() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"hb_interval_in_milliseconds": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"hb_lost_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
@@ -207,6 +212,12 @@ func resourceSystemHa() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"uninterruptible_primary_wait": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 300),
+				Optional:     true,
+				Computed:     true,
 			},
 			"standalone_mgmt_vdom": &schema.Schema{
 				Type:     schema.TypeString,
@@ -280,6 +291,34 @@ func resourceSystemHa() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"unicast_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"unicast_gateway": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"unicast_peers": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"peer_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"logical_sn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -478,6 +517,40 @@ func resourceSystemHa() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"memory_based_failover": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"memory_failover_threshold": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 95),
+				Optional:     true,
+				Computed:     true,
+			},
+			"memory_failover_monitor_period": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 300),
+				Optional:     true,
+				Computed:     true,
+			},
+			"memory_failover_sample_rate": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 60),
+				Optional:     true,
+				Computed:     true,
+			},
+			"memory_failover_flip_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"failover_hold_time": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 300),
+				Optional:     true,
+				Computed:     true,
+			},
 			"inter_cluster_session_sync": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -661,6 +734,10 @@ func flattenSystemHaHbInterval(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemHaHbIntervalInMilliseconds(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemHaHbLostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -706,6 +783,10 @@ func flattenSystemHaLinkFailedSignal(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemHaUninterruptibleUpgrade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaUninterruptiblePrimaryWait(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -819,6 +900,62 @@ func flattenSystemHaHaUptimeDiffMargin(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemHaStandaloneConfigSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaUnicastStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaUnicastGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaUnicastPeers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemHaUnicastPeersId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
+		if _, ok := i["peer-ip"]; ok {
+
+			tmp["peer_ip"] = flattenSystemHaUnicastPeersPeerIp(i["peer-ip"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemHaUnicastPeersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaUnicastPeersPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1039,6 +1176,30 @@ func flattenSystemHaMemoryCompatibleMode(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemHaMemoryBasedFailover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaMemoryFailoverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaMemoryFailoverMonitorPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaMemoryFailoverSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaMemoryFailoverFlipTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaFailoverHoldTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemHaInterClusterSessionSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1154,6 +1315,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("hb_interval_in_milliseconds", flattenSystemHaHbIntervalInMilliseconds(o["hb-interval-in-milliseconds"], d, "hb_interval_in_milliseconds", sv)); err != nil {
+		if !fortiAPIPatch(o["hb-interval-in-milliseconds"]) {
+			return fmt.Errorf("Error reading hb_interval_in_milliseconds: %v", err)
+		}
+	}
+
 	if err = d.Set("hb_lost_threshold", flattenSystemHaHbLostThreshold(o["hb-lost-threshold"], d, "hb_lost_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["hb-lost-threshold"]) {
 			return fmt.Errorf("Error reading hb_lost_threshold: %v", err)
@@ -1226,6 +1393,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("uninterruptible_primary_wait", flattenSystemHaUninterruptiblePrimaryWait(o["uninterruptible-primary-wait"], d, "uninterruptible_primary_wait", sv)); err != nil {
+		if !fortiAPIPatch(o["uninterruptible-primary-wait"]) {
+			return fmt.Errorf("Error reading uninterruptible_primary_wait: %v", err)
+		}
+	}
+
 	if err = d.Set("standalone_mgmt_vdom", flattenSystemHaStandaloneMgmtVdom(o["standalone-mgmt-vdom"], d, "standalone_mgmt_vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["standalone-mgmt-vdom"]) {
 			return fmt.Errorf("Error reading standalone_mgmt_vdom: %v", err)
@@ -1281,6 +1454,34 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("standalone_config_sync", flattenSystemHaStandaloneConfigSync(o["standalone-config-sync"], d, "standalone_config_sync", sv)); err != nil {
 		if !fortiAPIPatch(o["standalone-config-sync"]) {
 			return fmt.Errorf("Error reading standalone_config_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("unicast_status", flattenSystemHaUnicastStatus(o["unicast-status"], d, "unicast_status", sv)); err != nil {
+		if !fortiAPIPatch(o["unicast-status"]) {
+			return fmt.Errorf("Error reading unicast_status: %v", err)
+		}
+	}
+
+	if err = d.Set("unicast_gateway", flattenSystemHaUnicastGateway(o["unicast-gateway"], d, "unicast_gateway", sv)); err != nil {
+		if !fortiAPIPatch(o["unicast-gateway"]) {
+			return fmt.Errorf("Error reading unicast_gateway: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("unicast_peers", flattenSystemHaUnicastPeers(o["unicast-peers"], d, "unicast_peers", sv)); err != nil {
+			if !fortiAPIPatch(o["unicast-peers"]) {
+				return fmt.Errorf("Error reading unicast_peers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("unicast_peers"); ok {
+			if err = d.Set("unicast_peers", flattenSystemHaUnicastPeers(o["unicast-peers"], d, "unicast_peers", sv)); err != nil {
+				if !fortiAPIPatch(o["unicast-peers"]) {
+					return fmt.Errorf("Error reading unicast_peers: %v", err)
+				}
+			}
 		}
 	}
 
@@ -1456,6 +1657,42 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("memory_based_failover", flattenSystemHaMemoryBasedFailover(o["memory-based-failover"], d, "memory_based_failover", sv)); err != nil {
+		if !fortiAPIPatch(o["memory-based-failover"]) {
+			return fmt.Errorf("Error reading memory_based_failover: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_threshold", flattenSystemHaMemoryFailoverThreshold(o["memory-failover-threshold"], d, "memory_failover_threshold", sv)); err != nil {
+		if !fortiAPIPatch(o["memory-failover-threshold"]) {
+			return fmt.Errorf("Error reading memory_failover_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_monitor_period", flattenSystemHaMemoryFailoverMonitorPeriod(o["memory-failover-monitor-period"], d, "memory_failover_monitor_period", sv)); err != nil {
+		if !fortiAPIPatch(o["memory-failover-monitor-period"]) {
+			return fmt.Errorf("Error reading memory_failover_monitor_period: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_sample_rate", flattenSystemHaMemoryFailoverSampleRate(o["memory-failover-sample-rate"], d, "memory_failover_sample_rate", sv)); err != nil {
+		if !fortiAPIPatch(o["memory-failover-sample-rate"]) {
+			return fmt.Errorf("Error reading memory_failover_sample_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_flip_timeout", flattenSystemHaMemoryFailoverFlipTimeout(o["memory-failover-flip-timeout"], d, "memory_failover_flip_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["memory-failover-flip-timeout"]) {
+			return fmt.Errorf("Error reading memory_failover_flip_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("failover_hold_time", flattenSystemHaFailoverHoldTime(o["failover-hold-time"], d, "failover_hold_time", sv)); err != nil {
+		if !fortiAPIPatch(o["failover-hold-time"]) {
+			return fmt.Errorf("Error reading failover_hold_time: %v", err)
+		}
+	}
+
 	if err = d.Set("inter_cluster_session_sync", flattenSystemHaInterClusterSessionSync(o["inter-cluster-session-sync"], d, "inter_cluster_session_sync", sv)); err != nil {
 		if !fortiAPIPatch(o["inter-cluster-session-sync"]) {
 			return fmt.Errorf("Error reading inter_cluster_session_sync: %v", err)
@@ -1551,6 +1788,10 @@ func expandSystemHaHbInterval(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandSystemHaHbIntervalInMilliseconds(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemHaHbLostThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1596,6 +1837,10 @@ func expandSystemHaLinkFailedSignal(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemHaUninterruptibleUpgrade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaUninterruptiblePrimaryWait(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1696,6 +1941,56 @@ func expandSystemHaHaUptimeDiffMargin(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemHaStandaloneConfigSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaUnicastStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaUnicastGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaUnicastPeers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemHaUnicastPeersId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["peer-ip"], _ = expandSystemHaUnicastPeersPeerIp(d, i["peer_ip"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemHaUnicastPeersId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaUnicastPeersPeerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1907,6 +2202,30 @@ func expandSystemHaMemoryCompatibleMode(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemHaMemoryBasedFailover(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaMemoryFailoverThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaMemoryFailoverMonitorPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaMemoryFailoverSampleRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaMemoryFailoverFlipTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaFailoverHoldTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemHaInterClusterSessionSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2114,6 +2433,16 @@ func getObjectSystemHa(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
+	if v, ok := d.GetOk("hb_interval_in_milliseconds"); ok {
+
+		t, err := expandSystemHaHbIntervalInMilliseconds(d, v, "hb_interval_in_milliseconds", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["hb-interval-in-milliseconds"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("hb_lost_threshold"); ok {
 
 		t, err := expandSystemHaHbLostThreshold(d, v, "hb_lost_threshold", sv)
@@ -2234,6 +2563,16 @@ func getObjectSystemHa(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
+	if v, ok := d.GetOk("uninterruptible_primary_wait"); ok {
+
+		t, err := expandSystemHaUninterruptiblePrimaryWait(d, v, "uninterruptible_primary_wait", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uninterruptible-primary-wait"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("standalone_mgmt_vdom"); ok {
 
 		t, err := expandSystemHaStandaloneMgmtVdom(d, v, "standalone_mgmt_vdom", sv)
@@ -2311,6 +2650,36 @@ func getObjectSystemHa(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["standalone-config-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("unicast_status"); ok {
+
+		t, err := expandSystemHaUnicastStatus(d, v, "unicast_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["unicast-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("unicast_gateway"); ok {
+
+		t, err := expandSystemHaUnicastGateway(d, v, "unicast_gateway", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["unicast-gateway"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("unicast_peers"); ok {
+
+		t, err := expandSystemHaUnicastPeers(d, v, "unicast_peers", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["unicast-peers"] = t
 		}
 	}
 
@@ -2581,6 +2950,66 @@ func getObjectSystemHa(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["memory-compatible-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("memory_based_failover"); ok {
+
+		t, err := expandSystemHaMemoryBasedFailover(d, v, "memory_based_failover", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["memory-based-failover"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("memory_failover_threshold"); ok {
+
+		t, err := expandSystemHaMemoryFailoverThreshold(d, v, "memory_failover_threshold", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["memory-failover-threshold"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("memory_failover_monitor_period"); ok {
+
+		t, err := expandSystemHaMemoryFailoverMonitorPeriod(d, v, "memory_failover_monitor_period", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["memory-failover-monitor-period"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("memory_failover_sample_rate"); ok {
+
+		t, err := expandSystemHaMemoryFailoverSampleRate(d, v, "memory_failover_sample_rate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["memory-failover-sample-rate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("memory_failover_flip_timeout"); ok {
+
+		t, err := expandSystemHaMemoryFailoverFlipTimeout(d, v, "memory_failover_flip_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["memory-failover-flip-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("failover_hold_time"); ok {
+
+		t, err := expandSystemHaFailoverHoldTime(d, v, "failover_hold_time", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["failover-hold-time"] = t
 		}
 	}
 

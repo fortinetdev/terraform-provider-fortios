@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_stormcontrolpolicy
-Configure FortiSwitch storm control policy to be applied on managed-switch ports.
+Configure FortiSwitch storm control policy to be applied on managed-switch ports. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

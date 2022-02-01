@@ -56,6 +56,17 @@ func resourceSystemVdomSflow() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -165,6 +176,14 @@ func flattenSystemVdomSflowSourceIp(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemVdomSflowInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomSflowInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemVdomSflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -192,6 +211,18 @@ func refreshObjectSystemVdomSflow(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("interface_select_method", flattenSystemVdomSflowInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenSystemVdomSflowInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -214,6 +245,14 @@ func expandSystemVdomSflowCollectorPort(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemVdomSflowSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -257,6 +296,26 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["source-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandSystemVdomSflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandSystemVdomSflowInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
 		}
 	}
 

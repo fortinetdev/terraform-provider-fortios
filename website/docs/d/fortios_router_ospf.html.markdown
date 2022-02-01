@@ -64,6 +64,7 @@ The `area` block contains:
 * `nssa_default_information_originate_metric` - OSPF default metric.
 * `nssa_default_information_originate_metric_type` - OSPF metric type for default routes.
 * `nssa_redistribution` - Enable/disable redistribute into NSSA area.
+* `comments` - Comment.
 * `range` - OSPF area range configuration. The structure of `range` block is documented below.
 * `virtual_link` - OSPF virtual link configuration. The structure of `virtual_link` block is documented below.
 * `filter_list` - OSPF area filter-list configuration. The structure of `filter_list` block is documented below.
@@ -81,6 +82,7 @@ The `virtual_link` block contains:
 * `name` - Virtual link entry name.
 * `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
+* `keychain` - Message-digest key-chain name.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
 * `dead_interval` - Dead interval.
@@ -104,10 +106,12 @@ The `filter_list` block contains:
 The `ospf_interface` block contains:
 
 * `name` - Interface entry name.
+* `comments` - Comment.
 * `interface` - Configuration interface name.
 * `ip` - IP address.
 * `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
+* `keychain` - Message-digest key-chain name.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
 * `prefix_length` - Prefix length.
@@ -137,6 +141,7 @@ The `network` block contains:
 * `id` - Network entry ID.
 * `prefix` - Prefix.
 * `area` - Attach the network to area.
+* `comments` - Comment.
 
 The `neighbor` block contains:
 

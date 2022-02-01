@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_report_style
-Report style configuration.
+Report style configuration. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

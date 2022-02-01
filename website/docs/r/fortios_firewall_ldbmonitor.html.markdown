@@ -37,6 +37,9 @@ The following arguments are supported:
 * `http_get` - URL used to send a GET request to check the health of an HTTP server.
 * `http_match` - String to match the value expected in response to an HTTP-GET request.
 * `http_max_redirects` - The maximum number of HTTP redirects to be allowed (0 - 5, default = 0).
+* `dns_protocol` - Select the protocol used by the DNS health check monitor to check the health of the server (UDP | TCP). Valid values: `udp`, `tcp`.
+* `dns_request_domain` - Fully qualified domain name to resolve for the DNS probe.
+* `dns_match_ip` - Response IP expected from DNS server.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

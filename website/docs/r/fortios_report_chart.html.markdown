@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_report_chart
-Report chart widget configuration.
+Report chart widget configuration. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

@@ -101,7 +101,7 @@ func resourceUserRadius() *schema.Resource {
 			},
 			"acct_interim_interval": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(600, 86400),
+				ValidateFunc: validation.IntBetween(60, 86400),
 				Optional:     true,
 				Computed:     true,
 			},

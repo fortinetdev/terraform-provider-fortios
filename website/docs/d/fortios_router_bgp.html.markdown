@@ -54,6 +54,7 @@ The following attributes are exported:
 * `additional_path6` - Enable/disable selection of BGP IPv6 additional paths.
 * `multipath_recursive_distance` - Enable/disable use of recursive distance to select multipath.
 * `recursive_next_hop` - Enable/disable recursive resolution of next-hop using BGP route.
+* `tag_resolve_mode` - Configure tag-match mode. Resolves BGP routes with other routes containing the same tag.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.
 * `confederation_peers` - Confederation peers. The structure of `confederation_peers` block is documented below.
@@ -88,6 +89,7 @@ The following attributes are exported:
 * `redistribute6` - BGP IPv6 redistribute table. The structure of `redistribute6` block is documented below.
 * `admin_distance` - Administrative distance modifications. The structure of `admin_distance` block is documented below.
 * `vrf_leak` - BGP VRF leaking table. The structure of `vrf_leak` block is documented below.
+* `vrf_leak6` - BGP IPv6 VRF leaking table. The structure of `vrf_leak6` block is documented below.
 
 The `confederation_peers` block contains:
 
@@ -200,8 +202,15 @@ The `neighbor` block contains:
 * `adv_additional_path6` - Number of IPv6 additional paths that can be advertised to this neighbor.
 * `password` - Password used in MD5 authentication.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
+* `conditional_advertise6` - IPv6 conditional advertisement. The structure of `conditional_advertise6` block is documented below.
 
 The `conditional_advertise` block contains:
+
+* `advertise_routemap` - Name of advertising route map.
+* `condition_routemap` - Name of condition route map.
+* `condition_type` - Type of condition.
+
+The `conditional_advertise6` block contains:
 
 * `advertise_routemap` - Name of advertising route map.
 * `condition_routemap` - Name of condition route map.
@@ -317,6 +326,7 @@ The `network` block contains:
 
 * `id` - ID.
 * `prefix` - Network prefix.
+* `network_import_check` - Configure insurance of BGP network route existence in IGP.
 * `backdoor` - Enable/disable route as backdoor.
 * `route_map` - Route map to modify generated route.
 
@@ -324,6 +334,7 @@ The `network6` block contains:
 
 * `id` - ID.
 * `prefix6` - Network IPv6 prefix.
+* `network_import_check` - Configure insurance of BGP network route existence in IGP.
 * `backdoor` - Enable/disable route as backdoor.
 * `route_map` - Route map to modify generated route.
 
@@ -347,6 +358,17 @@ The `admin_distance` block contains:
 * `distance` - Administrative distance to apply (1 - 255).
 
 The `vrf_leak` block contains:
+
+* `vrf` - Origin VRF ID <0 - 31>.
+* `target` - Target VRF table. The structure of `target` block is documented below.
+
+The `target` block contains:
+
+* `vrf` - Target VRF ID <0 - 31>.
+* `route_map` - Route map of VRF leaking.
+* `interface` - Interface which is used to leak routes to target VRF.
+
+The `vrf_leak6` block contains:
 
 * `vrf` - Origin VRF ID <0 - 31>.
 * `target` - Target VRF table. The structure of `target` block is documented below.

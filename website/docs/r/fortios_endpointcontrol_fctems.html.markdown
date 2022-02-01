@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_endpointcontrol_fctems
-Configure FortiClient Enterprise Management Server (EMS) entries.
+Configure FortiClient Enterprise Management Server (EMS) entries. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 
@@ -25,8 +25,12 @@ The following arguments are supported:
 * `pull_vulnerabilities` - Enable/disable pulling vulnerabilities from EMS. Valid values: `enable`, `disable`.
 * `pull_avatars` - Enable/disable pulling avatars from EMS. Valid values: `enable`, `disable`.
 * `pull_tags` - Enable/disable pulling FortiClient user tags from EMS. Valid values: `enable`, `disable`.
+* `pull_malware_hash` - Enable/disable pulling FortiClient malware hash from EMS. Valid values: `enable`, `disable`.
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
+* `capabilities` - List of EMS capabilities.
 * `call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
+* `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.
+* `preserve_ssl_session` - Enable/disable preservation of EMS SSL session connection. WARNING: Most users should not touch this setting! Valid values: `enable`, `disable`.
 * `certificate` - FortiClient EMS certificate.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

@@ -60,6 +60,11 @@ func resourceLogFortianalyzer3OverrideFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -258,6 +263,10 @@ func flattenLogFortianalyzer3OverrideFilterSnifferTraffic(v interface{}, d *sche
 	return v
 }
 
+func flattenLogFortianalyzer3OverrideFilterZtnaTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzer3OverrideFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -399,6 +408,12 @@ func refreshObjectLogFortianalyzer3OverrideFilter(d *schema.ResourceData, o map[
 		}
 	}
 
+	if err = d.Set("ztna_traffic", flattenLogFortianalyzer3OverrideFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-traffic"]) {
+			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
 	if err = d.Set("anomaly", flattenLogFortianalyzer3OverrideFilterAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 		if !fortiAPIPatch(o["anomaly"]) {
 			return fmt.Errorf("Error reading anomaly: %v", err)
@@ -501,6 +516,10 @@ func expandLogFortianalyzer3OverrideFilterMulticastTraffic(d *schema.ResourceDat
 }
 
 func expandLogFortianalyzer3OverrideFilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer3OverrideFilterZtnaTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -656,6 +675,16 @@ func getObjectLogFortianalyzer3OverrideFilter(d *schema.ResourceData, sv string)
 			return &obj, err
 		} else if t != nil {
 			obj["sniffer-traffic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_traffic"); ok {
+
+		t, err := expandLogFortianalyzer3OverrideFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-traffic"] = t
 		}
 	}
 

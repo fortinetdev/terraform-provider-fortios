@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_logfortianalyzercloud_overridesetting
-Override FortiAnalyzer Cloud settings.
+Override FortiAnalyzer Cloud settings. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

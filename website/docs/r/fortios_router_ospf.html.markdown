@@ -122,7 +122,7 @@ The `area` block supports:
 
 * `id` - Area entry IP address.
 * `shortcut` - Enable/disable shortcut option. Valid values: `disable`, `enable`, `default`.
-* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
+* `authentication` - Authentication type.
 * `default_cost` - Summary default cost of stub or NSSA area.
 * `nssa_translator_role` - NSSA translator role type. Valid values: `candidate`, `never`, `always`.
 * `stub_type` - Stub summary setting. Valid values: `no-summary`, `summary`.
@@ -131,6 +131,7 @@ The `area` block supports:
 * `nssa_default_information_originate_metric` - OSPF default metric.
 * `nssa_default_information_originate_metric_type` - OSPF metric type for default routes. Valid values: `1`, `2`.
 * `nssa_redistribution` - Enable/disable redistribute into NSSA area. Valid values: `enable`, `disable`.
+* `comments` - Comment.
 * `range` - OSPF area range configuration. The structure of `range` block is documented below.
 * `virtual_link` - OSPF virtual link configuration. The structure of `virtual_link` block is documented below.
 * `filter_list` - OSPF area filter-list configuration. The structure of `filter_list` block is documented below.
@@ -146,8 +147,9 @@ The `range` block supports:
 The `virtual_link` block supports:
 
 * `name` - Virtual link entry name.
-* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
+* `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
+* `keychain` - Message-digest key-chain name.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
 * `dead_interval` - Dead interval.
@@ -171,10 +173,12 @@ The `filter_list` block supports:
 The `ospf_interface` block supports:
 
 * `name` - Interface entry name.
+* `comments` - Comment.
 * `interface` - Configuration interface name.
 * `ip` - IP address.
-* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
+* `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
+* `keychain` - Message-digest key-chain name.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
 * `prefix_length` - Prefix length.
@@ -204,6 +208,7 @@ The `network` block supports:
 * `id` - Network entry ID.
 * `prefix` - Prefix.
 * `area` - Attach the network to area.
+* `comments` - Comment.
 
 The `neighbor` block supports:
 

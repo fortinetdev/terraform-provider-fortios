@@ -55,6 +55,11 @@ func resourceSystemConsole() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fortiexplorer": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -164,6 +169,10 @@ func flattenSystemConsoleLogin(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemConsoleFortiexplorer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -191,6 +200,12 @@ func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("fortiexplorer", flattenSystemConsoleFortiexplorer(o["fortiexplorer"], d, "fortiexplorer", sv)); err != nil {
+		if !fortiAPIPatch(o["fortiexplorer"]) {
+			return fmt.Errorf("Error reading fortiexplorer: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -213,6 +228,10 @@ func expandSystemConsoleOutput(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemConsoleLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemConsoleFortiexplorer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -256,6 +275,16 @@ func getObjectSystemConsole(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["login"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fortiexplorer"); ok {
+
+		t, err := expandSystemConsoleFortiexplorer(d, v, "fortiexplorer", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortiexplorer"] = t
 		}
 	}
 

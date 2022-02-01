@@ -24,4 +24,5 @@ The following attributes are exported:
 * `end` - Time of day to end the schedule, format hh:mm.
 * `day` - One or more days of the week on which the schedule is valid. Separate the names of the days with a space.
 * `color` - Color of icon on the GUI.
+* `fabric_object` - Security Fabric global object setting.
 

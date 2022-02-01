@@ -63,6 +63,18 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"saml_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"saml_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(30, 1200),
+				Optional:     true,
+				Computed:     true,
+			},
 			"fsso_agent_for_ntlm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -75,6 +87,11 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Computed: true,
 			},
 			"fsso_guest": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"user_cert": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -249,6 +266,14 @@ func flattenAuthenticationSchemeDomainController(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenAuthenticationSchemeSamlServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeSamlTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationSchemeFssoAgentForNtlm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -258,6 +283,10 @@ func flattenAuthenticationSchemeRequireTfa(v interface{}, d *schema.ResourceData
 }
 
 func flattenAuthenticationSchemeFssoGuest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeUserCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -336,6 +365,18 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("saml_server", flattenAuthenticationSchemeSamlServer(o["saml-server"], d, "saml_server", sv)); err != nil {
+		if !fortiAPIPatch(o["saml-server"]) {
+			return fmt.Errorf("Error reading saml_server: %v", err)
+		}
+	}
+
+	if err = d.Set("saml_timeout", flattenAuthenticationSchemeSamlTimeout(o["saml-timeout"], d, "saml_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["saml-timeout"]) {
+			return fmt.Errorf("Error reading saml_timeout: %v", err)
+		}
+	}
+
 	if err = d.Set("fsso_agent_for_ntlm", flattenAuthenticationSchemeFssoAgentForNtlm(o["fsso-agent-for-ntlm"], d, "fsso_agent_for_ntlm", sv)); err != nil {
 		if !fortiAPIPatch(o["fsso-agent-for-ntlm"]) {
 			return fmt.Errorf("Error reading fsso_agent_for_ntlm: %v", err)
@@ -351,6 +392,12 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("fsso_guest", flattenAuthenticationSchemeFssoGuest(o["fsso-guest"], d, "fsso_guest", sv)); err != nil {
 		if !fortiAPIPatch(o["fsso-guest"]) {
 			return fmt.Errorf("Error reading fsso_guest: %v", err)
+		}
+	}
+
+	if err = d.Set("user_cert", flattenAuthenticationSchemeUserCert(o["user-cert"], d, "user_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["user-cert"]) {
+			return fmt.Errorf("Error reading user_cert: %v", err)
 		}
 	}
 
@@ -405,6 +452,14 @@ func expandAuthenticationSchemeDomainController(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandAuthenticationSchemeSamlServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeSamlTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAuthenticationSchemeFssoAgentForNtlm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -414,6 +469,10 @@ func expandAuthenticationSchemeRequireTfa(d *schema.ResourceData, v interface{},
 }
 
 func expandAuthenticationSchemeFssoGuest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeUserCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -506,6 +565,26 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("saml_server"); ok {
+
+		t, err := expandAuthenticationSchemeSamlServer(d, v, "saml_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["saml-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("saml_timeout"); ok {
+
+		t, err := expandAuthenticationSchemeSamlTimeout(d, v, "saml_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["saml-timeout"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fsso_agent_for_ntlm"); ok {
 
 		t, err := expandAuthenticationSchemeFssoAgentForNtlm(d, v, "fsso_agent_for_ntlm", sv)
@@ -533,6 +612,16 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["fsso-guest"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_cert"); ok {
+
+		t, err := expandAuthenticationSchemeUserCert(d, v, "user_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-cert"] = t
 		}
 	}
 

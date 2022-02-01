@@ -51,9 +51,8 @@ func resourceFirewallShapingProfile() *schema.Resource {
 				Computed: true,
 			},
 			"default_class_id": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(2, 31),
-				Required:     true,
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"shaping_entries": &schema.Schema{
 				Type:     schema.TypeList,
@@ -66,10 +65,9 @@ func resourceFirewallShapingProfile() *schema.Resource {
 							Computed: true,
 						},
 						"class_id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(2, 31),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"priority": &schema.Schema{
 							Type:     schema.TypeString,
@@ -644,7 +642,7 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("default_class_id"); ok {
+	if v, ok := d.GetOkExists("default_class_id"); ok {
 
 		t, err := expandFirewallShapingProfileDefaultClassId(d, v, "default_class_id", sv)
 		if err != nil {

@@ -114,6 +114,11 @@ func resourceWirelessControllerSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"firmware_provision_on_authorization": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"darrp_optimize": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
@@ -330,6 +335,10 @@ func flattenWirelessControllerSettingDeviceIdle(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenWirelessControllerSettingFirmwareProvisionOnAuthorization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerSettingDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -448,6 +457,12 @@ func refreshObjectWirelessControllerSetting(d *schema.ResourceData, o map[string
 	if err = d.Set("device_idle", flattenWirelessControllerSettingDeviceIdle(o["device-idle"], d, "device_idle", sv)); err != nil {
 		if !fortiAPIPatch(o["device-idle"]) {
 			return fmt.Errorf("Error reading device_idle: %v", err)
+		}
+	}
+
+	if err = d.Set("firmware_provision_on_authorization", flattenWirelessControllerSettingFirmwareProvisionOnAuthorization(o["firmware-provision-on-authorization"], d, "firmware_provision_on_authorization", sv)); err != nil {
+		if !fortiAPIPatch(o["firmware-provision-on-authorization"]) {
+			return fmt.Errorf("Error reading firmware_provision_on_authorization: %v", err)
 		}
 	}
 
@@ -571,6 +586,10 @@ func expandWirelessControllerSettingDeviceHoldoff(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerSettingDeviceIdle(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerSettingFirmwareProvisionOnAuthorization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -720,6 +739,16 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, sv string) (*map
 			return &obj, err
 		} else if t != nil {
 			obj["device-idle"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("firmware_provision_on_authorization"); ok {
+
+		t, err := expandWirelessControllerSettingFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["firmware-provision-on-authorization"] = t
 		}
 	}
 

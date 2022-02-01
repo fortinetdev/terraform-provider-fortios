@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_wirelesscontroller_address
-Configure the client with its MAC address.
+Configure the client with its MAC address. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

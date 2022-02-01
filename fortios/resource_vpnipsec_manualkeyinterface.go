@@ -105,6 +105,11 @@ func resourceVpnIpsecManualkeyInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"npu_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -286,6 +291,10 @@ func flattenVpnIpsecManualkeyInterfaceRemoteSpi(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenVpnIpsecManualkeyInterfaceNpuOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -361,6 +370,12 @@ func refreshObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("npu_offload", flattenVpnIpsecManualkeyInterfaceNpuOffload(o["npu-offload"], d, "npu_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["npu-offload"]) {
+			return fmt.Errorf("Error reading npu_offload: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -423,6 +438,10 @@ func expandVpnIpsecManualkeyInterfaceLocalSpi(d *schema.ResourceData, v interfac
 }
 
 func expandVpnIpsecManualkeyInterfaceRemoteSpi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecManualkeyInterfaceNpuOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -566,6 +585,16 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 			return &obj, err
 		} else if t != nil {
 			obj["remote-spi"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("npu_offload"); ok {
+
+		t, err := expandVpnIpsecManualkeyInterfaceNpuOffload(d, v, "npu_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["npu-offload"] = t
 		}
 	}
 

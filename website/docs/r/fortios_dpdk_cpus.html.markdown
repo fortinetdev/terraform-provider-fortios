@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_dpdk_cpus
-Configure CPUs enabled to run engines in each DPDK stage.
+Configure CPUs enabled to run engines in each DPDK stage. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 
@@ -17,6 +17,7 @@ The following arguments are supported:
 * `vnp_cpus` - CPUs enabled to run DPDK VNP engines.
 * `ips_cpus` - CPUs enabled to run DPDK IPS engines.
 * `tx_cpus` - CPUs enabled to run DPDK TX engines.
+* `isolated_cpus` - CPUs isolated to run only the DPDK engines with the exception of processes that have affinity explicitly set by either a user configuration or by their implementation.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

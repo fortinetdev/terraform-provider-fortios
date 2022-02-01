@@ -43,6 +43,7 @@ The following attributes are exported:
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
 * `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server.
+* `sdwan_zone` - Choose SD-WAN Zone. The structure of `sdwan_zone` block is documented below.
 * `sdwan` - Enable/disable egress through SD-WAN.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
 * `dstaddr` - Name of firewall address or address group.
@@ -51,4 +52,8 @@ The following attributes are exported:
 * `link_monitor_exempt` - Enable/disable withdrawing this route when link monitor or health check is down.
 * `vrf` - Virtual Routing Forwarding ID.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+
+The `sdwan_zone` block contains:
+
+* `name` - SD-WAN zone name.
 

@@ -87,6 +87,25 @@ func resourceRouterStatic6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_gateway": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sdwan_zone": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"sdwan": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -102,10 +121,21 @@ func resourceRouterStatic6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vrf": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 31),
+				Optional:     true,
+				Computed:     true,
+			},
 			"bfd": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -272,6 +302,48 @@ func flattenRouterStatic6Blackhole(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenRouterStatic6DynamicGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterStatic6SdwanZone(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenRouterStatic6SdwanZoneName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenRouterStatic6SdwanZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterStatic6Sdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -281,6 +353,10 @@ func flattenRouterStatic6VirtualWanLink(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterStatic6LinkMonitorExempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterStatic6Vrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -351,6 +427,28 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("dynamic_gateway", flattenRouterStatic6DynamicGateway(o["dynamic-gateway"], d, "dynamic_gateway", sv)); err != nil {
+		if !fortiAPIPatch(o["dynamic-gateway"]) {
+			return fmt.Errorf("Error reading dynamic_gateway: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("sdwan_zone", flattenRouterStatic6SdwanZone(o["sdwan-zone"], d, "sdwan_zone", sv)); err != nil {
+			if !fortiAPIPatch(o["sdwan-zone"]) {
+				return fmt.Errorf("Error reading sdwan_zone: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sdwan_zone"); ok {
+			if err = d.Set("sdwan_zone", flattenRouterStatic6SdwanZone(o["sdwan-zone"], d, "sdwan_zone", sv)); err != nil {
+				if !fortiAPIPatch(o["sdwan-zone"]) {
+					return fmt.Errorf("Error reading sdwan_zone: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("sdwan", flattenRouterStatic6Sdwan(o["sdwan"], d, "sdwan", sv)); err != nil {
 		if !fortiAPIPatch(o["sdwan"]) {
 			return fmt.Errorf("Error reading sdwan: %v", err)
@@ -366,6 +464,12 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("link_monitor_exempt", flattenRouterStatic6LinkMonitorExempt(o["link-monitor-exempt"], d, "link_monitor_exempt", sv)); err != nil {
 		if !fortiAPIPatch(o["link-monitor-exempt"]) {
 			return fmt.Errorf("Error reading link_monitor_exempt: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf", flattenRouterStatic6Vrf(o["vrf"], d, "vrf", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf"]) {
+			return fmt.Errorf("Error reading vrf: %v", err)
 		}
 	}
 
@@ -424,6 +528,42 @@ func expandRouterStatic6Blackhole(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandRouterStatic6DynamicGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStatic6SdwanZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandRouterStatic6SdwanZoneName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterStatic6SdwanZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterStatic6Sdwan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -433,6 +573,10 @@ func expandRouterStatic6VirtualWanLink(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandRouterStatic6LinkMonitorExempt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStatic6Vrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -543,6 +687,26 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
+	if v, ok := d.GetOk("dynamic_gateway"); ok {
+
+		t, err := expandRouterStatic6DynamicGateway(d, v, "dynamic_gateway", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dynamic-gateway"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sdwan_zone"); ok {
+
+		t, err := expandRouterStatic6SdwanZone(d, v, "sdwan_zone", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sdwan-zone"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("sdwan"); ok {
 
 		t, err := expandRouterStatic6Sdwan(d, v, "sdwan", sv)
@@ -570,6 +734,16 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["link-monitor-exempt"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("vrf"); ok {
+
+		t, err := expandRouterStatic6Vrf(d, v, "vrf", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf"] = t
 		}
 	}
 

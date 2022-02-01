@@ -23,6 +23,7 @@ The following attributes are exported:
 * `ip6` - IPv6 address prefix.
 * `subnet_segment_count` - Number of IPv6 subnet segments.
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
+* `fabric_object` - Security Fabric global object setting.
 
 The `subnet_segment` block contains:
 

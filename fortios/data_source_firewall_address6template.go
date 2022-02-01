@@ -79,6 +79,10 @@ func dataSourceFirewallAddress6Template() *schema.Resource {
 					},
 				},
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -251,6 +255,10 @@ func dataSourceFlattenFirewallAddress6TemplateSubnetSegmentValuesValue(v interfa
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6TemplateFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -275,6 +283,12 @@ func dataSourceRefreshObjectFirewallAddress6Template(d *schema.ResourceData, o m
 	if err = d.Set("subnet_segment", dataSourceFlattenFirewallAddress6TemplateSubnetSegment(o["subnet-segment"], d, "subnet_segment")); err != nil {
 		if !fortiAPIPatch(o["subnet-segment"]) {
 			return fmt.Errorf("Error reading subnet_segment: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddress6TemplateFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

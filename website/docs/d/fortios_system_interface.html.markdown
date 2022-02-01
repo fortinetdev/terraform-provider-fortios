@@ -45,8 +45,11 @@ The following attributes are exported:
 * `dhcp_relay_interface` - Specify outgoing interface to reach server.
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay.
 * `dhcp_relay_ip` - DHCP relay IP address.
+* `dhcp_relay_link_selection` - DHCP relay link selection.
+* `dhcp_relay_request_all_server` - Enable/disable sending of DHCP requests to all servers.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec).
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option.
+* `dhcp_classless_route_addition` - Enable/disable addition of classless static routes retrieved from DHCP server.
 * `management_ip` - High Availability in-band management IP address of this interface.
 * `ip` - Interface IPv4 address and subnet mask, syntax: X.X.X.X/24.
 * `allowaccess` - Permitted types of management access to this interface.
@@ -76,6 +79,7 @@ The following attributes are exported:
 * `lcp_max_echo_fails` - Maximum missed LCP echo messages before disconnect.
 * `defaultgw` - Enable to get the gateway IP from the DHCP or PPPoE server.
 * `dns_server_override` - Enable/disable use DNS acquired by DHCP or PPPoE.
+* `dns_server_protocol` - DNS transport protocols.
 * `auth_type` - PPP authentication type to use.
 * `pptp_client` - Enable/disable PPTP client.
 * `pptp_user` - PPTP user name.
@@ -93,6 +97,7 @@ The following attributes are exported:
 * `l2forward` - Enable/disable l2 forwarding.
 * `icmp_send_redirect` - Enable/disable ICMP send redirect.
 * `icmp_accept_redirect` - Enable/disable ICMP accept redirect.
+* `reachable_time` - IPv4 reachable time in milliseconds (30000 - 3600000, default = 30000).
 * `vlanforward` - Enable/disable traffic forwarding between VLANs on this interface.
 * `stpforward` - Enable/disable STP forwarding.
 * `stpforward_mode` - Configure STP forwarding mode.
@@ -132,6 +137,7 @@ The following attributes are exported:
 * `explicit_ftp_proxy` - Enable/disable the explicit FTP proxy on this interface.
 * `proxy_captive_portal` - Enable/disable proxy captive portal on this interface.
 * `tcp_mss` - TCP maximum segment size. 0 means do not change segment size.
+* `mediatype` - Select SFP media interface type
 * `inbandwidth` - Bandwidth limit for incoming traffic (0 - 16776000 kbps), 0 means unlimited.
 * `outbandwidth` - Bandwidth limit for outgoing traffic (0 - 16776000 kbps).
 * `egress_shaping_profile` - Outgoing traffic shaping profile.
@@ -144,11 +150,14 @@ The following attributes are exported:
 * `external` - Enable/disable identifying the interface as an external interface (which usually means it's connected to the Internet).
 * `vlan_protocol` - Ethernet protocol of VLAN.
 * `vlanid` - VLAN ID (1 - 4094).
+* `trunk` - Enable/disable VLAN trunk.
 * `forward_domain` - Transparent mode forward domain.
 * `remote_ip` - Remote IP address of tunnel.
 * `member` - Physical interfaces that belong to the aggregate or redundant interface. The structure of `member` block is documented below.
 * `lacp_mode` - LACP mode.
 * `lacp_ha_slave` - LACP HA slave.
+* `system_id_type` - Method in which system ID is generated.
+* `system_id` - Define a system ID for the aggregate interface.
 * `lacp_speed` - How often the interface sends LACP messages.
 * `min_links` - Minimum number of aggregated ports that must be up.
 * `min_links_down` - Action to take when less than the configured minimum number of links are active.
@@ -170,8 +179,12 @@ The following attributes are exported:
 * `security_external_logout` - URL of external authentication logout server.
 * `replacemsg_override_group` - Replacement message override group.
 * `security_redirect_url` - URL redirection after disclaimer/authentication.
+* `auth_cert` - HTTPS server certificate.
+* `auth_portal_addr` - Address of captive portal.
 * `security_exempt_list` - Name of security-exempt-list.
 * `security_groups` - User groups that can authenticate with the captive portal. The structure of `security_groups` block is documented below.
+* `stp` - Enable/disable STP.
+* `stp_ha_secondary` - Control STP behaviour on HA secondary.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface.
 * `device_user_identification` - Enable/disable passive gathering of user identity information about users on this interface.
 * `device_identification_active_scan` - Enable/disable active gathering of device identity information about the devices on the network connected to this interface.
@@ -193,7 +206,7 @@ The following attributes are exported:
 * `vrrp` - VRRP configuration. The structure of `vrrp` block is documented below.
 * `role` - Interface role.
 * `snmp_index` - Permanent SNMP Index of the interface.
-* `secondary_IP` - Enable/disable adding a secondary IP to this interface.
+* `secondary_ip` - Enable/disable adding a secondary IP to this interface.
 * `secondaryip` - Second IP address of interface. The structure of `secondaryip` block is documented below.
 * `preserve_session_route` - Enable/disable preservation of session route when dirty.
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension device on this interface.
@@ -215,15 +228,18 @@ The following attributes are exported:
 * `switch_controller_dhcp_snooping` - Switch controller DHCP snooping.
 * `switch_controller_dhcp_snooping_verify_mac` - Switch controller DHCP snooping verify MAC.
 * `switch_controller_dhcp_snooping_option82` - Switch controller DHCP snooping option82.
+* `dhcp_snooping_server_list` - Configure DHCP server access list. The structure of `dhcp_snooping_server_list` block is documented below.
 * `switch_controller_arp_inspection` - Enable/disable FortiSwitch ARP inspection.
 * `switch_controller_learning_limit` - Limit the number of dynamic MAC addresses on this VLAN (1 - 128, 0 = no limit, default).
 * `switch_controller_nac` - Integrated NAC settings for managed FortiSwitch.
+* `switch_controller_dynamic` - Integrated FortiLink settings for managed FortiSwitch.
 * `switch_controller_feature` - Interface's purpose when assigning traffic (read only).
 * `switch_controller_iot_scanning` - Enable/disable managed FortiSwitch IoT scanning.
 * `swc_vlan` - Creation status for switch-controller VLANs.
 * `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `forward_error_correction` - Configure forward error correction (FEC).
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
 
 The `client_options` block contains:
@@ -283,6 +299,11 @@ The `secondaryip` block contains:
 * `detectprotocol` - Protocols used to detect the server.
 * `ha_priority` - HA election priority for the PING server.
 
+The `dhcp_snooping_server_list` block contains:
+
+* `name` - DHCP server name.
+* `server_ip` - IP address for DHCP server.
+
 The `tagging` block contains:
 
 * `name` - Tagging entry name.
@@ -313,6 +334,7 @@ The `ipv6` block contains:
 * `ip6_max_interval` - IPv6 maximum interval (4 to 1800 sec).
 * `ip6_min_interval` - IPv6 minimum interval (3 to 1350 sec).
 * `ip6_link_mtu` - IPv6 link MTU.
+* `ra_send_mtu` - Enable/disable sending link MTU in RA packet.
 * `ip6_reachable_time` - IPv6 reachable time (milliseconds; 0 means unspecified).
 * `ip6_retrans_time` - IPv6 retransmit time (milliseconds; 0 means unspecified).
 * `ip6_default_life` - Default life (sec).
@@ -322,6 +344,7 @@ The `ipv6` block contains:
 * `interface_identifier` - IPv6 interface identifier.
 * `ip6_prefix_mode` - Assigning a prefix from DHCP or RA.
 * `ip6_upstream_interface` - Interface name providing delegated information.
+* `ip6_delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `ip6_subnet` -  Subnet to routing prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
 * `ip6_prefix_list` - Advertised prefix list. The structure of `ip6_prefix_list` block is documented below.
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
@@ -331,6 +354,7 @@ The `ipv6` block contains:
 * `dhcp6_client_options` - DHCPv6 client options.
 * `dhcp6_prefix_delegation` - Enable/disable DHCPv6 prefix delegation.
 * `dhcp6_information_request` - Enable/disable DHCPv6 information request.
+* `dhcp6_iapd_list` - DHCPv6 IA-PD list The structure of `dhcp6_iapd_list` block is documented below.
 * `dhcp6_prefix_hint` - DHCPv6 prefix that will be used as a hint to the upstream DHCPv6 server.
 * `dhcp6_prefix_hint_plt` - DHCPv6 prefix hint preferred life time (sec), 0 means unlimited lease time.
 * `dhcp6_prefix_hint_vlt` - DHCPv6 prefix hint valid life time (sec).
@@ -361,11 +385,19 @@ The `ip6_delegated_prefix_list` block contains:
 
 * `prefix_id` - Prefix ID.
 * `upstream_interface` - Name of the interface that provides delegated information.
+* `delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `autonomous_flag` - Enable/disable the autonomous flag.
 * `onlink_flag` - Enable/disable the onlink flag.
 * `subnet` -  Add subnet ID to routing prefix.
 * `rdnss_service` - Recursive DNS service option.
 * `rdnss` - Recursive DNS server option.
+
+The `dhcp6_iapd_list` block contains:
+
+* `iaid` - Identity association identifier.
+* `prefix_hint` - DHCPv6 prefix that will be used as a hint to the upstream DHCPv6 server.
+* `prefix_hint_plt` - DHCPv6 prefix hint preferred life time (sec), 0 means unlimited lease time.
+* `prefix_hint_vlt` - DHCPv6 prefix hint valid life time (sec).
 
 The `vrrp6` block contains:
 

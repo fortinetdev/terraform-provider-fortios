@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_snmpcommunity
-Configure FortiSwitch SNMP v1/v2c communities globally.
+Configure FortiSwitch SNMP v1/v2c communities globally. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

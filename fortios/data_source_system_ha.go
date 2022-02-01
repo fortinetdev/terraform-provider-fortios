@@ -109,6 +109,10 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"hb_interval_in_milliseconds": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"hb_lost_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -155,6 +159,10 @@ func dataSourceSystemHa() *schema.Resource {
 			},
 			"uninterruptible_upgrade": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"uninterruptible_primary_wait": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"standalone_mgmt_vdom": &schema.Schema{
@@ -212,6 +220,30 @@ func dataSourceSystemHa() *schema.Resource {
 			"standalone_config_sync": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"unicast_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"unicast_gateway": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"unicast_peers": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"peer_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"logical_sn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -366,6 +398,30 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"memory_based_failover": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"memory_failover_threshold": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"memory_failover_monitor_period": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"memory_failover_sample_rate": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"memory_failover_flip_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"failover_hold_time": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"inter_cluster_session_sync": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -488,6 +544,10 @@ func dataSourceFlattenSystemHaHbInterval(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenSystemHaHbIntervalInMilliseconds(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemHaHbLostThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -533,6 +593,10 @@ func dataSourceFlattenSystemHaLinkFailedSignal(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemHaUninterruptibleUpgrade(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaUninterruptiblePrimaryWait(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -640,6 +704,59 @@ func dataSourceFlattenSystemHaHaUptimeDiffMargin(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenSystemHaStandaloneConfigSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaUnicastStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaUnicastGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaUnicastPeers(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemHaUnicastPeersId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
+		if _, ok := i["peer-ip"]; ok {
+			tmp["peer_ip"] = dataSourceFlattenSystemHaUnicastPeersPeerIp(i["peer-ip"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaUnicastPeersId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaUnicastPeersPeerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -850,6 +967,30 @@ func dataSourceFlattenSystemHaMemoryCompatibleMode(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemHaMemoryBasedFailover(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaMemoryFailoverThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaMemoryFailoverMonitorPeriod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaMemoryFailoverSampleRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaMemoryFailoverFlipTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaFailoverHoldTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemHaInterClusterSessionSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -965,6 +1106,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("hb_interval_in_milliseconds", dataSourceFlattenSystemHaHbIntervalInMilliseconds(o["hb-interval-in-milliseconds"], d, "hb_interval_in_milliseconds")); err != nil {
+		if !fortiAPIPatch(o["hb-interval-in-milliseconds"]) {
+			return fmt.Errorf("Error reading hb_interval_in_milliseconds: %v", err)
+		}
+	}
+
 	if err = d.Set("hb_lost_threshold", dataSourceFlattenSystemHaHbLostThreshold(o["hb-lost-threshold"], d, "hb_lost_threshold")); err != nil {
 		if !fortiAPIPatch(o["hb-lost-threshold"]) {
 			return fmt.Errorf("Error reading hb_lost_threshold: %v", err)
@@ -1037,6 +1184,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("uninterruptible_primary_wait", dataSourceFlattenSystemHaUninterruptiblePrimaryWait(o["uninterruptible-primary-wait"], d, "uninterruptible_primary_wait")); err != nil {
+		if !fortiAPIPatch(o["uninterruptible-primary-wait"]) {
+			return fmt.Errorf("Error reading uninterruptible_primary_wait: %v", err)
+		}
+	}
+
 	if err = d.Set("standalone_mgmt_vdom", dataSourceFlattenSystemHaStandaloneMgmtVdom(o["standalone-mgmt-vdom"], d, "standalone_mgmt_vdom")); err != nil {
 		if !fortiAPIPatch(o["standalone-mgmt-vdom"]) {
 			return fmt.Errorf("Error reading standalone_mgmt_vdom: %v", err)
@@ -1082,6 +1235,24 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("standalone_config_sync", dataSourceFlattenSystemHaStandaloneConfigSync(o["standalone-config-sync"], d, "standalone_config_sync")); err != nil {
 		if !fortiAPIPatch(o["standalone-config-sync"]) {
 			return fmt.Errorf("Error reading standalone_config_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("unicast_status", dataSourceFlattenSystemHaUnicastStatus(o["unicast-status"], d, "unicast_status")); err != nil {
+		if !fortiAPIPatch(o["unicast-status"]) {
+			return fmt.Errorf("Error reading unicast_status: %v", err)
+		}
+	}
+
+	if err = d.Set("unicast_gateway", dataSourceFlattenSystemHaUnicastGateway(o["unicast-gateway"], d, "unicast_gateway")); err != nil {
+		if !fortiAPIPatch(o["unicast-gateway"]) {
+			return fmt.Errorf("Error reading unicast_gateway: %v", err)
+		}
+	}
+
+	if err = d.Set("unicast_peers", dataSourceFlattenSystemHaUnicastPeers(o["unicast-peers"], d, "unicast_peers")); err != nil {
+		if !fortiAPIPatch(o["unicast-peers"]) {
+			return fmt.Errorf("Error reading unicast_peers: %v", err)
 		}
 	}
 
@@ -1244,6 +1415,42 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("memory_compatible_mode", dataSourceFlattenSystemHaMemoryCompatibleMode(o["memory-compatible-mode"], d, "memory_compatible_mode")); err != nil {
 		if !fortiAPIPatch(o["memory-compatible-mode"]) {
 			return fmt.Errorf("Error reading memory_compatible_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_based_failover", dataSourceFlattenSystemHaMemoryBasedFailover(o["memory-based-failover"], d, "memory_based_failover")); err != nil {
+		if !fortiAPIPatch(o["memory-based-failover"]) {
+			return fmt.Errorf("Error reading memory_based_failover: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_threshold", dataSourceFlattenSystemHaMemoryFailoverThreshold(o["memory-failover-threshold"], d, "memory_failover_threshold")); err != nil {
+		if !fortiAPIPatch(o["memory-failover-threshold"]) {
+			return fmt.Errorf("Error reading memory_failover_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_monitor_period", dataSourceFlattenSystemHaMemoryFailoverMonitorPeriod(o["memory-failover-monitor-period"], d, "memory_failover_monitor_period")); err != nil {
+		if !fortiAPIPatch(o["memory-failover-monitor-period"]) {
+			return fmt.Errorf("Error reading memory_failover_monitor_period: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_sample_rate", dataSourceFlattenSystemHaMemoryFailoverSampleRate(o["memory-failover-sample-rate"], d, "memory_failover_sample_rate")); err != nil {
+		if !fortiAPIPatch(o["memory-failover-sample-rate"]) {
+			return fmt.Errorf("Error reading memory_failover_sample_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("memory_failover_flip_timeout", dataSourceFlattenSystemHaMemoryFailoverFlipTimeout(o["memory-failover-flip-timeout"], d, "memory_failover_flip_timeout")); err != nil {
+		if !fortiAPIPatch(o["memory-failover-flip-timeout"]) {
+			return fmt.Errorf("Error reading memory_failover_flip_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("failover_hold_time", dataSourceFlattenSystemHaFailoverHoldTime(o["failover-hold-time"], d, "failover_hold_time")); err != nil {
+		if !fortiAPIPatch(o["failover-hold-time"]) {
+			return fmt.Errorf("Error reading failover_hold_time: %v", err)
 		}
 	}
 

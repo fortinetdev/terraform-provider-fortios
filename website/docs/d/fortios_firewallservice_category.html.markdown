@@ -21,4 +21,5 @@ The following attributes are exported:
 
 * `name` - Service category name.
 * `comment` - Comment.
+* `fabric_object` - Security Fabric global object setting.
 

@@ -20,6 +20,7 @@ Use this data source to get information on an fortios system automationtrigger
 The following attributes are exported:
 
 * `name` - Name.
+* `description` - Description.
 * `trigger_type` - Trigger type.
 * `event_type` - Event type.
 * `license_type` - License type.
@@ -35,6 +36,9 @@ The following attributes are exported:
 * `faz_event_name` - FortiAnalyzer event handler name.
 * `faz_event_severity` - FortiAnalyzer event severity.
 * `faz_event_tags` - FortiAnalyzer event tags.
+* `serial` - Fabric connector serial number.
+* `fabric_event_name` - Fabric connector event handler name.
+* `fabric_event_severity` - Fabric connector event severity.
 
 The `fields` block contains:
 

@@ -35,6 +35,8 @@ The following attributes are exported:
 * `orig_port` - Original TCP port (0 to 65535).
 * `nat_port` - Translated port or port range (0 to 65535).
 * `nat` - Enable/disable source NAT.
+* `nat46` - Enable/disable NAT46.
+* `nat64` - Enable/disable NAT64.
 * `comments` - Comment.
 
 The `orig_addr` block contains:

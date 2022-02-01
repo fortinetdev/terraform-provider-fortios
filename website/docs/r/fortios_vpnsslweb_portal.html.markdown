@@ -103,12 +103,13 @@ The following arguments are supported:
 * `web_mode` - Enable/disable SSL VPN web mode. Valid values: `enable`, `disable`.
 * `display_bookmark` - Enable to display the web portal bookmark widget. Valid values: `enable`, `disable`.
 * `user_bookmark` - Enable to allow web portal users to create their own bookmarks. Valid values: `enable`, `disable`.
-* `allow_user_access` - Allow user access to SSL-VPN applications. Valid values: `web`, `ftp`, `smb`, `sftp`, `telnet`, `ssh`, `vnc`, `rdp`, `ping`, `citrix`, `portforward`.
+* `allow_user_access` - Allow user access to SSL-VPN applications.
 * `user_group_bookmark` - Enable to allow web portal users to create bookmarks for all users in the same user group. Valid values: `enable`, `disable`.
 * `bookmark_group` - Portal bookmark group. The structure of `bookmark_group` block is documented below.
 * `display_connection_tools` - Enable to display the web portal connection tools widget. Valid values: `enable`, `disable`.
 * `display_history` - Enable to display the web portal user login history widget. Valid values: `enable`, `disable`.
 * `display_status` - Enable to display the web portal status widget. Valid values: `enable`, `disable`.
+* `rewrite_ip_uri_ui` - Rewrite contents for URI contains IP and "/ui/". (default = disable) Valid values: `enable`, `disable`.
 * `heading` - Web portal heading message.
 * `redir_url` - Client login redirect URL.
 * `theme` - Web portal color scheme.
@@ -119,6 +120,8 @@ The following arguments are supported:
 * `smb_max_version` - SMB maximum client protocol version. Valid values: `smbv1`, `smbv2`, `smbv3`.
 * `transform_backward_slashes` - Transform backward slashes to forward slashes in URLs. Valid values: `enable`, `disable`.
 * `use_sdwan` - Use SD-WAN rules to get output interface. Valid values: `enable`, `disable`.
+* `prefer_ipv6_dns` - prefer to query IPv6 dns first if enabled. Valid values: `enable`, `disable`.
+* `clipboard` - Enable to support RDP/VPC clipboard functionality. Valid values: `enable`, `disable`.
 * `host_check` - Type of host checking performed on endpoints. Valid values: `none`, `av`, `fw`, `av-fw`, `custom`.
 * `host_check_interval` - Periodic host check interval. Value of 0 means disabled and host checking only happens when the endpoint connects.
 * `host_check_policy` - One or more policies to require the endpoint to have specific security software. The structure of `host_check_policy` block is documented below.
@@ -174,20 +177,26 @@ The `bookmarks` block supports:
 * `remote_port` - Remote port (0 - 65535).
 * `show_status_window` - Enable/disable showing of status window. Valid values: `enable`, `disable`.
 * `description` - Description.
+* `keyboard_layout` - Keyboard layout. Valid values: `ar-101`, `ar-102`, `ar-102-azerty`, `can-mul`, `cz`, `cz-qwerty`, `cz-pr`, `da`, `nl`, `de`, `de-ch`, `de-ibm`, `en-uk`, `en-uk-ext`, `en-us`, `en-us-dvorak`, `es`, `es-var`, `fi`, `fi-sami`, `fr`, `fr-ca`, `fr-ch`, `fr-be`, `hr`, `hu`, `hu-101`, `it`, `it-142`, `ja`, `ko`, `lt`, `lt-ibm`, `lt-std`, `lav-std`, `lav-leg`, `mk`, `mk-std`, `no`, `no-sami`, `pol-214`, `pol-pr`, `pt`, `pt-br`, `pt-br-abnt2`, `ru`, `ru-mne`, `ru-t`, `sl`, `sv`, `sv-sami`, `tuk`, `tur-f`, `tur-q`, `zh-sym-sg-us`, `zh-sym-us`, `zh-tr-hk`, `zh-tr-mo`, `zh-tr-us`.
 * `server_layout` - Server side keyboard layout.
 * `security` - Security mode for RDP connection. Valid values: `rdp`, `nla`, `tls`, `any`.
+* `send_preconnection_id` - Enable/disable sending of preconnection ID. Valid values: `enable`, `disable`.
 * `preconnection_id` - The numeric ID of the RDP source (0-2147483648).
 * `preconnection_blob` - An arbitrary string which identifies the RDP source.
 * `load_balancing_info` - The load balancing information or cookie which should be provided to the connection broker.
+* `restricted_admin` - Enable/disable restricted admin mode for RDP. Valid values: `enable`, `disable`.
 * `port` - Remote port.
 * `logon_user` - Logon user.
 * `logon_password` - Logon password.
+* `color_depth` - Color depth per pixel. Valid values: `32`, `16`, `8`.
 * `sso` - Single Sign-On. Valid values: `disable`, `static`, `auto`.
 * `form_data` - Form data. The structure of `form_data` block is documented below.
 * `sso_credential` - Single sign-on credentials. Valid values: `sslvpn-login`, `alternative`.
 * `sso_username` - SSO user name.
 * `sso_password` - SSO password.
 * `sso_credential_sent_once` - Single sign-on credentials are only sent once to remote server. Valid values: `enable`, `disable`.
+* `width` - Screen width (range from 640 - 65535, default = 1024).
+* `height` - Screen height (range from 480 - 65535, default = 768).
 
 The `form_data` block supports:
 

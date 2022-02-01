@@ -71,6 +71,11 @@ func resourceLogFortiguardSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"access_config": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -224,6 +229,10 @@ func flattenLogFortiguardSettingMaxLogRate(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogFortiguardSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortiguardSettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -290,6 +299,12 @@ func refreshObjectLogFortiguardSetting(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("max_log_rate", flattenLogFortiguardSettingMaxLogRate(o["max-log-rate"], d, "max_log_rate", sv)); err != nil {
 		if !fortiAPIPatch(o["max-log-rate"]) {
 			return fmt.Errorf("Error reading max_log_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("access_config", flattenLogFortiguardSettingAccessConfig(o["access-config"], d, "access_config", sv)); err != nil {
+		if !fortiAPIPatch(o["access-config"]) {
+			return fmt.Errorf("Error reading access_config: %v", err)
 		}
 	}
 
@@ -363,6 +378,10 @@ func expandLogFortiguardSettingPriority(d *schema.ResourceData, v interface{}, p
 }
 
 func expandLogFortiguardSettingMaxLogRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardSettingAccessConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -460,6 +479,16 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["max-log-rate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("access_config"); ok {
+
+		t, err := expandLogFortiguardSettingAccessConfig(d, v, "access_config", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["access-config"] = t
 		}
 	}
 

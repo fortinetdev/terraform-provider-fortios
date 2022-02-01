@@ -60,6 +60,11 @@ func resourceLogDiskFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -348,6 +353,10 @@ func flattenLogDiskFilterSnifferTraffic(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenLogDiskFilterZtnaTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogDiskFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -561,6 +570,12 @@ func refreshObjectLogDiskFilter(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("ztna_traffic", flattenLogDiskFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-traffic"]) {
+			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
 	if err = d.Set("anomaly", flattenLogDiskFilterAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 		if !fortiAPIPatch(o["anomaly"]) {
 			return fmt.Errorf("Error reading anomaly: %v", err)
@@ -771,6 +786,10 @@ func expandLogDiskFilterMulticastTraffic(d *schema.ResourceData, v interface{}, 
 }
 
 func expandLogDiskFilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogDiskFilterZtnaTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -998,6 +1017,16 @@ func getObjectLogDiskFilter(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["sniffer-traffic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_traffic"); ok {
+
+		t, err := expandLogDiskFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-traffic"] = t
 		}
 	}
 

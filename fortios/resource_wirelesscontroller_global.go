@@ -111,6 +111,17 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tunnel_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nac_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ap_log_server": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -276,6 +287,14 @@ func flattenWirelessControllerGlobalWtpShare(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenWirelessControllerGlobalTunnelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalNacInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerGlobalApLogServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -321,8 +340,8 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if err = d.Set("data_ethernet_ii", flattenWirelessControllerGlobalDataEthernetIi(o["data-ethernet-II"], d, "data_ethernet_ii", sv)); err != nil {
-		if !fortiAPIPatch(o["data-ethernet-II"]) {
+	if err = d.Set("data_ethernet_ii", flattenWirelessControllerGlobalDataEthernetIi(o["data-ethernet-ii"], d, "data_ethernet_ii", sv)); err != nil {
+		if !fortiAPIPatch(o["data-ethernet-ii"]) {
 			return fmt.Errorf("Error reading data_ethernet_ii: %v", err)
 		}
 	}
@@ -372,6 +391,18 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 	if err = d.Set("wtp_share", flattenWirelessControllerGlobalWtpShare(o["wtp-share"], d, "wtp_share", sv)); err != nil {
 		if !fortiAPIPatch(o["wtp-share"]) {
 			return fmt.Errorf("Error reading wtp_share: %v", err)
+		}
+	}
+
+	if err = d.Set("tunnel_mode", flattenWirelessControllerGlobalTunnelMode(o["tunnel-mode"], d, "tunnel_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["tunnel-mode"]) {
+			return fmt.Errorf("Error reading tunnel_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("nac_interval", flattenWirelessControllerGlobalNacInterval(o["nac-interval"], d, "nac_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["nac-interval"]) {
+			return fmt.Errorf("Error reading nac_interval: %v", err)
 		}
 	}
 
@@ -458,6 +489,14 @@ func expandWirelessControllerGlobalWtpShare(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandWirelessControllerGlobalTunnelMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalNacInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerGlobalApLogServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -529,7 +568,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, sv string) (*map[
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["data-ethernet-II"] = t
+			obj["data-ethernet-ii"] = t
 		}
 	}
 
@@ -610,6 +649,26 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["wtp-share"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tunnel_mode"); ok {
+
+		t, err := expandWirelessControllerGlobalTunnelMode(d, v, "tunnel_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tunnel-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nac_interval"); ok {
+
+		t, err := expandWirelessControllerGlobalNacInterval(d, v, "nac_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nac-interval"] = t
 		}
 	}
 

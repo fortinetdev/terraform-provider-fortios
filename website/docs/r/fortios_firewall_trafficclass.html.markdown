@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_trafficclass
-Configure names for shaping classes.
+Configure names for shaping classes. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

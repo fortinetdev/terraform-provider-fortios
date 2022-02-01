@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_nat64
-Configure NAT64.
+Configure NAT64. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

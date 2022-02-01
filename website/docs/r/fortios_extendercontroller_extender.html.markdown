@@ -42,10 +42,27 @@ resource "fortios_extendercontroller_extender" "trname" {
 
 The following arguments are supported:
 
+* `name` - FortiExtender entry name.
 * `fosid` - (Required) FortiExtender serial number.
+* `authorized` - FortiExtender Administration (enable or disable). Valid values: `disable`, `enable`.
 * `admin` - (Required) FortiExtender Administration (enable or disable). Valid values: `disable`, `discovered`, `enable`.
 * `ifname` - FortiExtender interface name.
 * `vdom` - VDOM
+* `device_id` - device-id
+* `extension_type` - Extension type for this FortiExtender. Valid values: `wan-extension`, `lan-extension`.
+* `override_allowaccess` - Enable to override the extender profile management access configuration. Valid values: `enable`, `disable`.
+* `allowaccess` - Control management access to the managed extender. Separate entries with a space. Valid values: `ping`, `telnet`, `http`, `https`, `ssh`, `snmp`.
+* `override_login_password_change` - Enable to override the extender profile login-password (administrator password) setting. Valid values: `enable`, `disable`.
+* `login_password_change` - Change or reset the administrator password of a managed extender (yes, default, or no, default = no). Valid values: `yes`, `default`, `no`.
+* `login_password` - FortiExtender login password.
+* `override_enforce_bandwidth` - Enable to override the extender profile enforce-bandwidth setting. Valid values: `enable`, `disable`.
+* `enforce_bandwidth` - Enable/disable enforcement of bandwidth on LAN extension interface. Valid values: `enable`, `disable`.
+* `bandwidth_limit` - FortiExtender LAN extension bandwidth limit (Mbps).
+* `wan_extension` - FortiExtender wan extension configuration. The structure of `wan_extension` block is documented below.
+* `profile` - FortiExtender profile configuration.
+* `controller_report` - FortiExtender controller report configuration. The structure of `controller_report` block is documented below.
+* `modem1` - Configuration options for modem 1. The structure of `modem1` block is documented below.
+* `modem2` - Configuration options for modem 2. The structure of `modem2` block is documented below.
 * `role` - (Required) FortiExtender work role(Primary, Secondary, None). Valid values: `none`, `primary`, `secondary`.
 * `mode` - FortiExtender mode. Valid values: `standalone`, `redundant`.
 * `dial_mode` - Dial mode (dial-on-demand or always-connect). Valid values: `dial-on-demand`, `always-connect`.
@@ -80,6 +97,69 @@ The following arguments are supported:
 * `cdma_aaa_spi` - CDMA AAA SPI.
 * `cdma_ha_spi` - CDMA HA SPI.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `wan_extension` block supports:
+
+* `modem1_extension` - FortiExtender interface name.
+* `modem2_extension` - FortiExtender interface name.
+
+The `controller_report` block supports:
+
+* `status` - FortiExtender controller report status. Valid values: `disable`, `enable`.
+* `interval` - Controller report interval.
+* `signal_threshold` - Controller report signal threshold.
+
+The `modem1` block supports:
+
+* `ifname` - FortiExtender interface name.
+* `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
+* `redundant_intf` - Redundant interface.
+* `conn_status` - Connection status.
+* `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
+* `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
+* `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
+* `sim2_pin` - SIM #2 PIN status. Valid values: `disable`, `enable`.
+* `sim1_pin_code` - SIM #1 PIN password.
+* `sim2_pin_code` - SIM #2 PIN password.
+* `preferred_carrier` - Preferred carrier.
+* `auto_switch` - FortiExtender auto switch configuration. The structure of `auto_switch` block is documented below.
+
+The `auto_switch` block supports:
+
+* `disconnect` - Auto switch by disconnect. Valid values: `disable`, `enable`.
+* `disconnect_threshold` - Automatically switch based on disconnect threshold.
+* `disconnect_period` - Automatically switch based on disconnect period.
+* `signal` - Automatically switch based on signal strength. Valid values: `disable`, `enable`.
+* `dataplan` - Automatically switch based on data usage. Valid values: `disable`, `enable`.
+* `switch_back` - Auto switch with switch back multi-options. Valid values: `time`, `timer`.
+* `switch_back_time` - Automatically switch over to preferred SIM/carrier at a specified time in UTC (HH:MM).
+* `switch_back_timer` - Automatically switch over to preferred SIM/carrier after the given time (3600 - 2147483647 sec).
+
+The `modem2` block supports:
+
+* `ifname` - FortiExtender interface name.
+* `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
+* `redundant_intf` - Redundant interface.
+* `conn_status` - Connection status.
+* `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
+* `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
+* `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
+* `sim2_pin` - SIM #2 PIN status. Valid values: `disable`, `enable`.
+* `sim1_pin_code` - SIM #1 PIN password.
+* `sim2_pin_code` - SIM #2 PIN password.
+* `preferred_carrier` - Preferred carrier.
+* `auto_switch` - FortiExtender auto switch configuration. The structure of `auto_switch` block is documented below.
+
+The `auto_switch` block supports:
+
+* `disconnect` - Auto switch by disconnect. Valid values: `disable`, `enable`.
+* `disconnect_threshold` - Automatically switch based on disconnect threshold.
+* `disconnect_period` - Automatically switch based on disconnect period.
+* `signal` - Automatically switch based on signal strength. Valid values: `disable`, `enable`.
+* `dataplan` - Automatically switch based on data usage. Valid values: `disable`, `enable`.
+* `switch_back` - Auto switch with switch back multi-options. Valid values: `time`, `timer`.
+* `switch_back_time` - Automatically switch over to preferred SIM/carrier at a specified time in UTC (HH:MM).
+* `switch_back_timer` - Automatically switch over to preferred SIM/carrier after the given time (3600 - 2147483647 sec).
 
 
 ## Attribute Reference

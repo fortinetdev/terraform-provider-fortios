@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_report_theme
-Report themes configuration
+Report themes configuration Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

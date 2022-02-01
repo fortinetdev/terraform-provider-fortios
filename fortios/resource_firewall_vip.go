@@ -120,6 +120,21 @@ func resourceFirewallVip() *schema.Resource {
 					},
 				},
 			},
+			"nat44": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat46": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"add_nat46_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"mappedip": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -172,6 +187,11 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"portforward": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -461,6 +481,11 @@ func resourceFirewallVip() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssl_accept_ffdhe_groups": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ssl_send_empty_frags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -600,6 +625,16 @@ func resourceFirewallVip() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
 				Computed:     true,
+			},
+			"ipv6_mappedip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ipv6_mappedport": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -877,6 +912,18 @@ func flattenFirewallVipExtaddrName(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenFirewallVipNat44(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipNat46(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipAddNat46Route(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVipMappedip(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -944,6 +991,10 @@ func flattenFirewallVipNatSourceVip(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallVipPortforward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1395,6 +1446,10 @@ func flattenFirewallVipSslServerMaxVersion(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallVipSslAcceptFfdheGroups(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVipSslSendEmptyFrags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1525,6 +1580,14 @@ func flattenFirewallVipColor(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
+func flattenFirewallVipIpv6Mappedip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipIpv6Mappedport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -1624,6 +1687,24 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("nat44", flattenFirewallVipNat44(o["nat44"], d, "nat44", sv)); err != nil {
+		if !fortiAPIPatch(o["nat44"]) {
+			return fmt.Errorf("Error reading nat44: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46", flattenFirewallVipNat46(o["nat46"], d, "nat46", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46"]) {
+			return fmt.Errorf("Error reading nat46: %v", err)
+		}
+	}
+
+	if err = d.Set("add_nat46_route", flattenFirewallVipAddNat46Route(o["add-nat46-route"], d, "add_nat46_route", sv)); err != nil {
+		if !fortiAPIPatch(o["add-nat46-route"]) {
+			return fmt.Errorf("Error reading add_nat46_route: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("mappedip", flattenFirewallVipMappedip(o["mappedip"], d, "mappedip", sv)); err != nil {
 			if !fortiAPIPatch(o["mappedip"]) {
@@ -1685,6 +1766,12 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("portforward", flattenFirewallVipPortforward(o["portforward"], d, "portforward", sv)); err != nil {
 		if !fortiAPIPatch(o["portforward"]) {
 			return fmt.Errorf("Error reading portforward: %v", err)
+		}
+	}
+
+	if err = d.Set("status", flattenFirewallVipStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
@@ -1920,6 +2007,12 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("ssl_accept_ffdhe_groups", flattenFirewallVipSslAcceptFfdheGroups(o["ssl-accept-ffdhe-groups"], d, "ssl_accept_ffdhe_groups", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-accept-ffdhe-groups"]) {
+			return fmt.Errorf("Error reading ssl_accept_ffdhe_groups: %v", err)
+		}
+	}
+
 	if err = d.Set("ssl_send_empty_frags", flattenFirewallVipSslSendEmptyFrags(o["ssl-send-empty-frags"], d, "ssl_send_empty_frags", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-send-empty-frags"]) {
 			return fmt.Errorf("Error reading ssl_send_empty_frags: %v", err)
@@ -2074,6 +2167,18 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("ipv6_mappedip", flattenFirewallVipIpv6Mappedip(o["ipv6-mappedip"], d, "ipv6_mappedip", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-mappedip"]) {
+			return fmt.Errorf("Error reading ipv6_mappedip: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv6_mappedport", flattenFirewallVipIpv6Mappedport(o["ipv6-mappedport"], d, "ipv6_mappedport", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-mappedport"]) {
+			return fmt.Errorf("Error reading ipv6_mappedport: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -2211,6 +2316,18 @@ func expandFirewallVipExtaddrName(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandFirewallVipNat44(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipNat46(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipAddNat46Route(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallVipMappedip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -2272,6 +2389,10 @@ func expandFirewallVipNatSourceVip(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandFirewallVipPortforward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2700,6 +2821,10 @@ func expandFirewallVipSslServerMaxVersion(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandFirewallVipSslAcceptFfdheGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallVipSslSendEmptyFrags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2824,6 +2949,14 @@ func expandFirewallVipColor(d *schema.ResourceData, v interface{}, pre string, s
 	return v, nil
 }
 
+func expandFirewallVipIpv6Mappedip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipIpv6Mappedport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -2937,6 +3070,36 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
+	if v, ok := d.GetOk("nat44"); ok {
+
+		t, err := expandFirewallVipNat44(d, v, "nat44", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat44"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat46"); ok {
+
+		t, err := expandFirewallVipNat46(d, v, "nat46", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat46"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("add_nat46_route"); ok {
+
+		t, err := expandFirewallVipAddNat46Route(d, v, "add_nat46_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["add-nat46-route"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("mappedip"); ok {
 
 		t, err := expandFirewallVipMappedip(d, v, "mappedip", sv)
@@ -3024,6 +3187,16 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["portforward"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("status"); ok {
+
+		t, err := expandFirewallVipStatus(d, v, "status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
 		}
 	}
 
@@ -3347,6 +3520,16 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
+	if v, ok := d.GetOk("ssl_accept_ffdhe_groups"); ok {
+
+		t, err := expandFirewallVipSslAcceptFfdheGroups(d, v, "ssl_accept_ffdhe_groups", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-accept-ffdhe-groups"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ssl_send_empty_frags"); ok {
 
 		t, err := expandFirewallVipSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
@@ -3584,6 +3767,26 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["color"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ipv6_mappedip"); ok {
+
+		t, err := expandFirewallVipIpv6Mappedip(d, v, "ipv6_mappedip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipv6-mappedip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ipv6_mappedport"); ok {
+
+		t, err := expandFirewallVipIpv6Mappedport(d, v, "ipv6_mappedport", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipv6-mappedport"] = t
 		}
 	}
 

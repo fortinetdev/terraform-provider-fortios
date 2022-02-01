@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_antivirus_heuristic
-Configure global heuristic options.
+Configure global heuristic options. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

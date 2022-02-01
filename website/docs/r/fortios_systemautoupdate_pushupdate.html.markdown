@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_systemautoupdate_pushupdate
-Configure push updates.
+Configure push updates. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

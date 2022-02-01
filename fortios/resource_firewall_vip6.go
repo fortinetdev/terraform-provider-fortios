@@ -140,6 +140,21 @@ func resourceFirewallVip6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"nat66": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat64": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"add_nat64_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"realservers": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -374,6 +389,11 @@ func resourceFirewallVip6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssl_accept_ffdhe_groups": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ssl_send_empty_frags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -507,6 +527,21 @@ func resourceFirewallVip6() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 100000),
 				Optional:     true,
 				Computed:     true,
+			},
+			"embedded_ipv4_address": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ipv4_mappedip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ipv4_mappedport": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -745,6 +780,18 @@ func flattenFirewallVip6HttpRedirect(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenFirewallVip6Persistence(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6Nat66(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6Nat64(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6AddNat64Route(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1118,6 +1165,10 @@ func flattenFirewallVip6SslServerMaxVersion(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallVip6SslAcceptFfdheGroups(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVip6SslSendEmptyFrags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1241,6 +1292,18 @@ func flattenFirewallVip6MonitorName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallVip6MaxEmbryonicConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6EmbeddedIpv4Address(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6Ipv4Mappedip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6Ipv4Mappedport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1368,6 +1431,24 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("persistence", flattenFirewallVip6Persistence(o["persistence"], d, "persistence", sv)); err != nil {
 		if !fortiAPIPatch(o["persistence"]) {
 			return fmt.Errorf("Error reading persistence: %v", err)
+		}
+	}
+
+	if err = d.Set("nat66", flattenFirewallVip6Nat66(o["nat66"], d, "nat66", sv)); err != nil {
+		if !fortiAPIPatch(o["nat66"]) {
+			return fmt.Errorf("Error reading nat66: %v", err)
+		}
+	}
+
+	if err = d.Set("nat64", flattenFirewallVip6Nat64(o["nat64"], d, "nat64", sv)); err != nil {
+		if !fortiAPIPatch(o["nat64"]) {
+			return fmt.Errorf("Error reading nat64: %v", err)
+		}
+	}
+
+	if err = d.Set("add_nat64_route", flattenFirewallVip6AddNat64Route(o["add-nat64-route"], d, "add_nat64_route", sv)); err != nil {
+		if !fortiAPIPatch(o["add-nat64-route"]) {
+			return fmt.Errorf("Error reading add_nat64_route: %v", err)
 		}
 	}
 
@@ -1557,6 +1638,12 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ssl_accept_ffdhe_groups", flattenFirewallVip6SslAcceptFfdheGroups(o["ssl-accept-ffdhe-groups"], d, "ssl_accept_ffdhe_groups", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-accept-ffdhe-groups"]) {
+			return fmt.Errorf("Error reading ssl_accept_ffdhe_groups: %v", err)
+		}
+	}
+
 	if err = d.Set("ssl_send_empty_frags", flattenFirewallVip6SslSendEmptyFrags(o["ssl-send-empty-frags"], d, "ssl_send_empty_frags", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-send-empty-frags"]) {
 			return fmt.Errorf("Error reading ssl_send_empty_frags: %v", err)
@@ -1705,6 +1792,24 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("embedded_ipv4_address", flattenFirewallVip6EmbeddedIpv4Address(o["embedded-ipv4-address"], d, "embedded_ipv4_address", sv)); err != nil {
+		if !fortiAPIPatch(o["embedded-ipv4-address"]) {
+			return fmt.Errorf("Error reading embedded_ipv4_address: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv4_mappedip", flattenFirewallVip6Ipv4Mappedip(o["ipv4-mappedip"], d, "ipv4_mappedip", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv4-mappedip"]) {
+			return fmt.Errorf("Error reading ipv4_mappedip: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv4_mappedport", flattenFirewallVip6Ipv4Mappedport(o["ipv4-mappedport"], d, "ipv4_mappedport", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv4-mappedport"]) {
+			return fmt.Errorf("Error reading ipv4_mappedport: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -1815,6 +1920,18 @@ func expandFirewallVip6HttpRedirect(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandFirewallVip6Persistence(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6Nat66(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6Nat64(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6AddNat64Route(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2171,6 +2288,10 @@ func expandFirewallVip6SslServerMaxVersion(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandFirewallVip6SslAcceptFfdheGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallVip6SslSendEmptyFrags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2288,6 +2409,18 @@ func expandFirewallVip6MonitorName(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandFirewallVip6MaxEmbryonicConnections(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6EmbeddedIpv4Address(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6Ipv4Mappedip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6Ipv4Mappedport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2481,6 +2614,36 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["persistence"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat66"); ok {
+
+		t, err := expandFirewallVip6Nat66(d, v, "nat66", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat66"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat64"); ok {
+
+		t, err := expandFirewallVip6Nat64(d, v, "nat64", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat64"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("add_nat64_route"); ok {
+
+		t, err := expandFirewallVip6AddNat64Route(d, v, "add_nat64_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["add-nat64-route"] = t
 		}
 	}
 
@@ -2744,6 +2907,16 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
+	if v, ok := d.GetOk("ssl_accept_ffdhe_groups"); ok {
+
+		t, err := expandFirewallVip6SslAcceptFfdheGroups(d, v, "ssl_accept_ffdhe_groups", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-accept-ffdhe-groups"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ssl_send_empty_frags"); ok {
 
 		t, err := expandFirewallVip6SslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
@@ -2971,6 +3144,36 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["max-embryonic-connections"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("embedded_ipv4_address"); ok {
+
+		t, err := expandFirewallVip6EmbeddedIpv4Address(d, v, "embedded_ipv4_address", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["embedded-ipv4-address"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ipv4_mappedip"); ok {
+
+		t, err := expandFirewallVip6Ipv4Mappedip(d, v, "ipv4_mappedip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipv4-mappedip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ipv4_mappedport"); ok {
+
+		t, err := expandFirewallVip6Ipv4Mappedport(d, v, "ipv4_mappedport", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipv4-mappedport"] = t
 		}
 	}
 

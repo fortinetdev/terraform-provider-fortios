@@ -39,6 +39,10 @@ func dataSourceSystemFtmPush() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -93,6 +97,10 @@ func dataSourceFlattenSystemFtmPushServerIp(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func dataSourceFlattenSystemFtmPushServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFtmPushStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -115,6 +123,12 @@ func dataSourceRefreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]i
 	if err = d.Set("server_ip", dataSourceFlattenSystemFtmPushServerIp(o["server-ip"], d, "server_ip")); err != nil {
 		if !fortiAPIPatch(o["server-ip"]) {
 			return fmt.Errorf("Error reading server_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("server", dataSourceFlattenSystemFtmPushServer(o["server"], d, "server")); err != nil {
+		if !fortiAPIPatch(o["server"]) {
+			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 

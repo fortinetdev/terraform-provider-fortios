@@ -64,12 +64,17 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `policyid` - Policy ID.
 * `name` - Policy name.
-* `proxy` - (Required) Type of explicit proxy. Valid values: `explicit-web`, `transparent-web`, `ftp`, `ssh`, `ssh-tunnel`, `wanopt`.
+* `proxy` - (Required) Type of explicit proxy.
+* `access_proxy` - IPv4 access proxy. The structure of `access_proxy` block is documented below.
+* `access_proxy6` - IPv6 access proxy. The structure of `access_proxy6` block is documented below.
 * `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
 * `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
 * `poolname` - Name of IP pool object. The structure of `poolname` block is documented below.
 * `dstaddr` - Destination address objects. The structure of `dstaddr` block is documented below.
+* `ztna_ems_tag` - ZTNA EMS Tag names. The structure of `ztna_ems_tag` block is documented below.
+* `ztna_tags_match_logic` - ZTNA tag matching logic. Valid values: `or`, `and`.
+* `device_ownership` - When enabled, the ownership enforcement will be done at policy level. Valid values: `enable`, `disable`.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. Valid values: `enable`, `disable`.
 * `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service. Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
@@ -109,8 +114,11 @@ The following arguments are supported:
 * `file_filter_profile` - Name of an existing file-filter profile.
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
+* `voip_profile` - Name of an existing VoIP profile.
+* `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
+* `videofilter_profile` - Name of an existing VideoFilter profile.
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
@@ -121,10 +129,19 @@ The following arguments are supported:
 * `global_label` - Global web-based manager visible label.
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers. Valid values: `disable`, `block`, `monitor`.
 * `comments` - Optional comments.
+* `block_notification` - Enable/disable block notification. Valid values: `enable`, `disable`.
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `access_proxy` block supports:
+
+* `name` - Access Proxy name.
+
+The `access_proxy6` block supports:
+
+* `name` - Access proxy name.
 
 The `srcintf` block supports:
 
@@ -145,6 +162,10 @@ The `poolname` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address name.
+
+The `ztna_ems_tag` block supports:
+
+* `name` - EMS Tag name.
 
 The `internet_service_name` block supports:
 

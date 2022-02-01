@@ -30,12 +30,19 @@ The following arguments are supported:
 * `user_group` - NAC policy matching user group.
 * `ems_tag` - NAC policy matching EMS tag.
 * `switch_fortilink` - FortiLink interface for which this NAC policy belongs to.
+* `switch_group` - List of managed FortiSwitch groups on which NAC policy can be applied. The structure of `switch_group` block is documented below.
 * `switch_scope` - List of managed FortiSwitches on which NAC policy can be applied. The structure of `switch_scope` block is documented below.
 * `switch_auto_auth` - NAC device auto authorization when discovered and nac-policy matched. Valid values: `global`, `disable`, `enable`.
 * `switch_port_policy` - switch-port-policy to be applied on the matched NAC policy.
 * `switch_mac_policy` - switch-mac-policy to be applied on the matched NAC policy.
+* `firewall_address` - Dynamic firewall address to associate MAC which match this policy.
+* `ssid_policy` - SSID policy to be applied on the matched NAC policy.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `switch_group` block supports:
+
+* `name` - Managed FortiSwitch group name from available options.
 
 The `switch_scope` block supports:
 

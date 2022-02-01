@@ -34,6 +34,8 @@ The following arguments are supported:
 * `inactive_flow_timeout` - Timeout for periodic report of finished flows (10 - 600 sec, default = 15).
 * `template_tx_timeout` - Timeout for periodic template flowset transmission (1 - 1440 min, default = 30).
 * `template_tx_counter` - Counter of flowset records before resending a template flowset record.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
+* `interface` - Specify outgoing interface to reach server.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

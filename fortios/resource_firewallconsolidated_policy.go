@@ -647,7 +647,7 @@ func resourceFirewallConsolidatedPolicy() *schema.Resource {
 			},
 			"session_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: intBetweenWithZero(300, 604800),
+				ValidateFunc: intBetweenWithZero(300, 2764800),
 				Optional:     true,
 				Computed:     true,
 			},

@@ -168,6 +168,11 @@ func resourceUserLocal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"username_sensitivity": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"username_case_insensitivity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -399,6 +404,10 @@ func flattenUserLocalPpkIdentity(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenUserLocalUsernameSensitivity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLocalUsernameCaseInsensitivity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -542,6 +551,12 @@ func refreshObjectUserLocal(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("username_sensitivity", flattenUserLocalUsernameSensitivity(o["username-sensitivity"], d, "username_sensitivity", sv)); err != nil {
+		if !fortiAPIPatch(o["username-sensitivity"]) {
+			return fmt.Errorf("Error reading username_sensitivity: %v", err)
+		}
+	}
+
 	if err = d.Set("username_case_insensitivity", flattenUserLocalUsernameCaseInsensitivity(o["username-case-insensitivity"], d, "username_case_insensitivity", sv)); err != nil {
 		if !fortiAPIPatch(o["username-case-insensitivity"]) {
 			return fmt.Errorf("Error reading username_case_insensitivity: %v", err)
@@ -656,6 +671,10 @@ func expandUserLocalPpkSecret(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandUserLocalPpkIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLocalUsernameSensitivity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -907,6 +926,16 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["ppk-identity"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("username_sensitivity"); ok {
+
+		t, err := expandUserLocalUsernameSensitivity(d, v, "username_sensitivity", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["username-sensitivity"] = t
 		}
 	}
 

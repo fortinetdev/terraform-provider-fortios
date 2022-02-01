@@ -22,6 +22,7 @@ resource "fortios_vpnipsec_concentrator" "trname" {
 
 The following arguments are supported:
 
+* `fosid` - Concentrator ID. (1-65535)
 * `name` - Concentrator name.
 * `src_check` - Enable to check source address of phase 2 selector. Disable to check only the destination selector. Valid values: `disable`, `enable`.
 * `member` - Names of up to 3 VPN tunnels to add to the concentrator. The structure of `member` block is documented below.

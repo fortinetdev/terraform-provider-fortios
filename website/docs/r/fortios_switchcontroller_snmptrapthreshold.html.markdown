@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_snmptrapthreshold
-Configure FortiSwitch SNMP trap threshold values globally.
+Configure FortiSwitch SNMP trap threshold values globally. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

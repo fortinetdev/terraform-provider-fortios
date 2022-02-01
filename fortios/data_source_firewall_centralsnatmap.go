@@ -155,6 +155,14 @@ func dataSourceFirewallCentralSnatMap() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"nat46": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"nat64": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -526,6 +534,14 @@ func dataSourceFlattenFirewallCentralSnatMapNat(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenFirewallCentralSnatMapNat46(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallCentralSnatMapNat64(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallCentralSnatMapComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -626,6 +642,18 @@ func dataSourceRefreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map
 	if err = d.Set("nat", dataSourceFlattenFirewallCentralSnatMapNat(o["nat"], d, "nat")); err != nil {
 		if !fortiAPIPatch(o["nat"]) {
 			return fmt.Errorf("Error reading nat: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46", dataSourceFlattenFirewallCentralSnatMapNat46(o["nat46"], d, "nat46")); err != nil {
+		if !fortiAPIPatch(o["nat46"]) {
+			return fmt.Errorf("Error reading nat46: %v", err)
+		}
+	}
+
+	if err = d.Set("nat64", dataSourceFlattenFirewallCentralSnatMapNat64(o["nat64"], d, "nat64")); err != nil {
+		if !fortiAPIPatch(o["nat64"]) {
+			return fmt.Errorf("Error reading nat64: %v", err)
 		}
 	}
 

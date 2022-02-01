@@ -32,6 +32,8 @@ The following attributes are exported:
 
 * `language` - GUI display language.
 * `gui_ipv6` - Enable/disable IPv6 settings on the GUI.
+* `gui_replacement_message_groups` - Enable/disable replacement message groups on the GUI.
+* `gui_local_out` - Enable/disable Local-out traffic on the GUI.
 * `gui_certificates` - Enable/disable the System > Certificate GUI page, allowing you to add and configure certificates from the GUI.
 * `gui_custom_language` - Enable/disable custom languages in GUI.
 * `gui_wireless_opensecurity` - Enable/disable wireless open security option on the GUI.
@@ -42,6 +44,8 @@ The following attributes are exported:
 * `gui_firmware_upgrade_setup_warning` - Enable/disable the firmware upgrade warning on GUI setup wizard.
 * `gui_lines_per_page` - Number of lines to display per page for web administration.
 * `admin_https_ssl_versions` - Allowed TLS versions for web administration.
+* `admin_https_ssl_ciphersuites` - Select one or more TLS 1.3 ciphersuites to enable. Does not affect ciphers in TLS 1.2 and below. At least one must be enabled. To disable all, remove TLS1.3 from admin-https-ssl-versions.
+* `admin_https_ssl_banned_ciphers` - Select one or more cipher technologies that cannot be used in GUI HTTPS negotiations. Only applies to TLS 1.2 and below.
 * `admintimeout` - Number of minutes before an idle administrator session times out (5 - 480 minutes (8 hours), default = 5). A shorter idle timeout is more secure.
 * `admin_console_timeout` - Console login timeout that overrides the admintimeout value. (15 - 300 seconds) (15 seconds to 5 minutes). 0 the default, disables this timeout.
 * `ssd_trim_freq` - How often to run SSD Trim (default = weekly). SSD Trim prevents SSD drive data loss by finding and isolating errors.
@@ -73,12 +77,16 @@ The following attributes are exported:
 * `anti_replay` - Level of checking for packet replay and TCP sequence checking.
 * `send_pmtu_icmp` - Enable/disable sending of path maximum transmission unit (PMTU) - ICMP destination unreachable packet and to support PMTUD protocol on your network to reduce fragmentation of packets.
 * `honor_df` - Enable/disable honoring of Don't-Fragment (DF) flag.
+* `pmtu_discovery` - Enable/disable path MTU discovery.
+* `virtual_switch_vlan` - Enable/disable virtual switch VLAN.
+* `split_port` - Split port(s) to multiple 10Gbps ports.
 * `revision_image_auto_backup` - Enable/disable back-up of the latest configuration revision after the firmware is upgraded.
 * `revision_backup_on_logout` - Enable/disable back-up of the latest configuration revision when an administrator logs out of the CLI or GUI.
 * `management_vdom` - Management virtual domain name.
 * `hostname` - FortiGate unit's hostname. Most models will truncate names longer than 24 characters. Some models support hostnames up to 35 characters.
 * `gui_allow_default_hostname` - Enable/disable the GUI warning about using a default hostname
 * `gui_forticare_registration_setup_warning` - Enable/disable the FortiCare registration setup warning on the GUI.
+* `gui_cdn_usage` - Enable/disable Load GUI static files from a CDN.
 * `alias` - Alias for your FortiGate unit.
 * `strong_crypto` - Enable to use strong encryption and only allow strong ciphers (AES, 3DES) and digest (SHA1) for HTTPS/SSH/TLS/SSL functions.
 * `ssh_cbc_cipher` - Enable/disable CBC cipher for SSH access.
@@ -86,7 +94,11 @@ The following attributes are exported:
 * `ssh_kex_sha1` - Enable/disable SHA1 key exchange for SSH access.
 * `ssh_mac_weak` - Enable/disable HMAC-SHA1 and UMAC-64-ETM for SSH access.
 * `ssl_static_key_ciphers` - Enable/disable static key ciphers in SSL/TLS connections (e.g. AES128-SHA, AES256-SHA, AES128-SHA256, AES256-SHA256).
+* `ssh_kex_algo` - Select one or more SSH kex algorithms.
+* `ssh_enc_algo` - Select one or more SSH ciphers.
+* `ssh_mac_algo` - Select one or more SSH MAC algorithms.
 * `snat_route_change` - Enable/disable the ability to change the static NAT route.
+* `speedtest_server` - Enable/disable speed test server.
 * `cli_audit_log` - Enable/disable CLI audit log.
 * `dh_params` - Number of bits to use in the Diffie-Hellman exchange for HTTPS/SSH protocols.
 * `fds_statistics` - Enable/disable sending IPS, Application Control, and AntiVirus data to FortiGuard. This data is used to improve FortiGuard services and is not shared with external parties and is protected by Fortinet's privacy policy.
@@ -101,6 +113,8 @@ The following attributes are exported:
 * `proxy_re_authentication_mode` - Control if users must re-authenticate after a session is closed, traffic has been idle, or from the point at which the user was first created.
 * `proxy_auth_lifetime` - Enable/disable authenticated users lifetime control.  This is a cap on the total time a proxy user can be authenticated for after which re-authentication will take place.
 * `proxy_auth_lifetime_timeout` - Lifetime timeout in minutes for authenticated users (5  - 65535 min, default=480 (8 hours)).
+* `proxy_resource_mode` - Enable/disable use of the maximum memory usage on the FortiGate unit's proxy processing of resources, such as block lists, allow lists, and external resources.
+* `proxy_cert_use_mgmt_vdom` - Enable/disable using management VDOM to send requests.
 * `sys_perf_log_interval` - Time in minutes between updates of performance statistics logging. (1 - 15 min, default = 5, 0 = disabled).
 * `check_protocol_header` - Level of checking performed on protocol headers. Strict checking is more thorough but may affect performance. Loose checking is ok in most cases.
 * `vip_arp_range` - Controls the number of ARPs that the FortiGate sends for a Virtual IP (VIP) address range.
@@ -111,6 +125,7 @@ The following attributes are exported:
 * `tcp_halfclose_timer` - Number of seconds the FortiGate unit should wait to close a session after one peer has sent a FIN packet but the other has not responded (1 - 86400 sec (1 day), default = 120).
 * `tcp_halfopen_timer` - Number of seconds the FortiGate unit should wait to close a session after one peer has sent an open session packet but the other has not responded (1 - 86400 sec (1 day), default = 10).
 * `tcp_timewait_timer` - Length of the TCP TIME-WAIT state in seconds.
+* `tcp_rst_timer` - Length of the TCP CLOSE state in seconds (5 - 300 sec, default = 5).
 * `udp_idle_timer` - UDP connection session timeout. This command can be useful in managing CPU and memory resources (1 - 86400 seconds (1 day), default = 60).
 * `block_session_timer` - Duration in seconds for blocked sessions (1 - 300 sec  (5 minutes), default = 30).
 * `ip_src_port_range` - IP source port range used for traffic originating from the FortiGate unit.
@@ -124,8 +139,10 @@ The following attributes are exported:
 * `memory_use_threshold_green` - Threshold at which memory usage forces the FortiGate to exit conserve mode (% of total RAM, default = 82).
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it.
+* `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs).
 * `vdom_admin` - Enable/disable support for multiple virtual domains (VDOMs).
 * `long_vdom_name` - Enable/disable long VDOM name support.
+* `edit_vdom_prompt` - Enable/disable edit new VDOM prompt.
 * `admin_port` - Administrative access port for HTTP. (1 - 65535, default = 80).
 * `admin_sport` - Administrative access port for HTTPS. (1 - 65535, default = 443).
 * `admin_https_redirect` - Enable/disable redirection of HTTP administration access to HTTPS.
@@ -137,6 +154,7 @@ The following attributes are exported:
 * `admin_ssh_v1` - Enable/disable SSH v1 compatibility.
 * `admin_telnet` - Enable/disable TELNET service.
 * `admin_telnet_port` - Administrative access port for TELNET. (1 - 65535, default = 23).
+* `admin_forticloud_sso_login` - Enable/disable FortiCloud admin login via SSO.
 * `default_service_source_port` - Default service source port range. (default=1-65535)
 * `admin_maintainer` - Enable/disable maintainer administrator login. When enabled, the maintainer account can be used to log in from the console after a hard reboot. The password is "bcpb" followed by the FortiGate unit serial number. You have limited time to complete this login.
 * `admin_server_cert` - Server certificate that the FortiGate uses for HTTPS administrative connections.
@@ -165,6 +183,8 @@ The following attributes are exported:
 * `wireless_controller_port` - Port used for the control channel in wireless controller mode (wireless-mode is ac). The data channel port is the control channel port number plus one (1024 - 49150, default = 5246).
 * `fortiextender_data_port` - FortiExtender data port (1024 - 49150, default = 25246).
 * `fortiextender` - Enable/disable FortiExtender.
+* `extender_controller_reserved_network` - Configure reserved network subnet for managed LAN extension FortiExtenders. This is available when the extender daemon is running.
+* `fortiextender_discovery_lockdown` - Enable/disable FortiExtender CAPWAP lockdown.
 * `fortiextender_vlan_mode` - Enable/disable FortiExtender VLAN mode.
 * `switch_controller` - Enable/disable switch controller feature. Switch controller allows you to manage FortiSwitch from the FortiGate itself.
 * `switch_controller_reserved_network` - Enable reserved network subnet for controlled switches. This is available when the switch controller is enabled.
@@ -172,6 +192,7 @@ The following attributes are exported:
 * `url_filter_count` - URL filter daemon count.
 * `proxy_worker_count` - Proxy worker count.
 * `scanunit_count` - Number of scanunits. The range and the default depend on the number of CPUs. Only available on FortiGate units with multiple CPUs.
+* `proxy_hardware_acceleration` - Enable/disable email proxy hardware acceleration.
 * `proxy_kxp_hardware_acceleration` - Enable/disable using the content processor to accelerate KXP traffic.
 * `proxy_cipher_hardware_acceleration` - Enable/disable using content processor (CP8 or CP9) hardware acceleration to encrypt and decrypt IPsec and SSL traffic.
 * `fgd_alert_subscription` - Type of alert to retrieve from FortiGuard.
@@ -206,7 +227,10 @@ The following attributes are exported:
 * `log_uuid_policy` - Enable/disable insertion of policy UUIDs to traffic logs.
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs.
 * `log_ssl_connection` - Enable/disable logging of SSL connection events.
+* `gui_rest_api_cache` - Enable/disable REST API result caching on FortiGate.
 * `arp_max_entry` - Maximum number of dynamically learned MAC addresses that can be added to the ARP table (131072 - 2147483647, default = 131072).
+* `ha_affinity` - Affinity setting for HA daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
+* `cmdbsvr_affinity` - Affinity setting for cmdbsvr (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `av_affinity` - Affinity setting for AV scanning (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `wad_affinity` - Affinity setting for wad (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `ips_affinity` - Affinity setting for IPS (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx; allowed CPUs must be less than total number of IPS engine daemons).
@@ -221,6 +245,7 @@ The following attributes are exported:
 * `device_idle_timeout` - Time in seconds that a device must be idle to automatically log the device user out. (30 - 31536000 sec (30 sec to 1 year), default = 300).
 * `user_device_store_max_devices` - Maximum number of devices allowed in user device store.
 * `user_device_store_max_users` - Maximum number of users allowed in user device store.
+* `user_device_store_max_unified_mem` - Maximum unified memory allowed in user device store.
 * `device_identification_active_scan_delay` - Number of seconds to passively scan a device before performing an active scan. (20 - 3600 sec, (20 sec to 1 hour), default = 90).
 * `compliance_check` - Enable/disable global PCI DSS compliance check.
 * `compliance_check_time` - Time of day to run scheduled PCI DSS compliance checks.
@@ -234,9 +259,13 @@ The following attributes are exported:
 * `igmp_state_limit` - Maximum number of IGMP memberships (96 - 64000, default = 3200).
 * `cloud_communication` - Enable/disable all cloud communication.
 * `fec_port` - Local UDP port for Forward Error Correction (49152 - 65535).
+* `ipsec_ha_seqjump_rate` - ESP jump ahead rate (1G - 10G pps equivalent).
 * `fortitoken_cloud` - Enable/disable FortiToken Cloud service.
 * `faz_disk_buffer_size` - Maximum disk buffer size to temporarily store logs destined for FortiAnalyzer. To be used in the event that FortiAnalyzer is unavailalble.
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode.
 * `fortiipam_integration` - Enable/disable integration with the FortiIPAM cloud service.
-* `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). no-vdom:Disable split/multiple VDOMs mode. split-vdom:Enable split VDOMs mode. multi-vdom:Enable multiple VDOMs mode.
+* `management_ip` - Management IP address of this FortiGate. Used to log into this FortiGate from another FortiGate in the Security Fabric.
+* `management_port` - Overriding port for management connection (Overrides admin port).
+* `management_port_use_admin_sport` - Enable/disable use of the admin-sport setting for the management port. If disabled, FortiGate will allow user to specify management-port.
+* `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use.
 

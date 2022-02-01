@@ -54,6 +54,16 @@ func resourceFirewallIppool6() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"nat46": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"add_nat46_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -195,6 +205,14 @@ func flattenFirewallIppool6Comments(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenFirewallIppool6Nat46(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppool6AddNat46Route(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -222,6 +240,18 @@ func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("nat46", flattenFirewallIppool6Nat46(o["nat46"], d, "nat46", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46"]) {
+			return fmt.Errorf("Error reading nat46: %v", err)
+		}
+	}
+
+	if err = d.Set("add_nat46_route", flattenFirewallIppool6AddNat46Route(o["add-nat46-route"], d, "add_nat46_route", sv)); err != nil {
+		if !fortiAPIPatch(o["add-nat46-route"]) {
+			return fmt.Errorf("Error reading add_nat46_route: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -244,6 +274,14 @@ func expandFirewallIppool6Endip(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandFirewallIppool6Comments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppool6Nat46(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppool6AddNat46Route(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -287,6 +325,26 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["comments"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat46"); ok {
+
+		t, err := expandFirewallIppool6Nat46(d, v, "nat46", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat46"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("add_nat46_route"); ok {
+
+		t, err := expandFirewallIppool6AddNat46Route(d, v, "add_nat46_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["add-nat46-route"] = t
 		}
 	}
 

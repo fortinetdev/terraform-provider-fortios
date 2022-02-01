@@ -28,6 +28,7 @@ The following arguments are supported:
 * `baudrate` - Console baud rate. Valid values: `9600`, `19200`, `38400`, `57600`, `115200`.
 * `output` - Console output mode. Valid values: `standard`, `more`.
 * `login` - Enable/disable serial console and FortiExplorer. Valid values: `enable`, `disable`.
+* `fortiexplorer` - Enable/disable access for FortiExplorer. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

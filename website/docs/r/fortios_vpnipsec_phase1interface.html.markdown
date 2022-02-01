@@ -179,6 +179,7 @@ The following arguments are supported:
 * `ipv6_exclude_range` - Configuration method IPv6 exclude ranges. The structure of `ipv6_exclude_range` block is documented below.
 * `ipv6_split_include` - IPv6 split-include subnets.
 * `ipv6_name` - IPv6 address name.
+* `ip_delay_interval` - IP address reuse delay interval in seconds (0 - 28800).
 * `unity_support` - Enable/disable support for Cisco UNITY Configuration Method extensions. Valid values: `disable`, `enable`.
 * `domain` - Instruct unity clients about the default DNS domain.
 * `banner` - Message that unity client should display after connecting.
@@ -208,6 +209,7 @@ The following arguments are supported:
 * `dpd_retryinterval` - DPD retry interval.
 * `forticlient_enforcement` - Enable/disable FortiClient enforcement. Valid values: `enable`, `disable`.
 * `comments` - Comment.
+* `npu_offload` - Enable/disable offloading NPU. Valid values: `enable`, `disable`.
 * `send_cert_chain` - Enable/disable sending certificate chain. Valid values: `enable`, `disable`.
 * `dhgrp` - DH group. Valid values: `1`, `2`, `5`, `14`, `15`, `16`, `17`, `18`, `19`, `20`, `21`, `27`, `28`, `29`, `30`, `31`, `32`.
 * `suite_b` - Use Suite-B. Valid values: `disable`, `suite-b-gcm-128`, `suite-b-gcm-256`.
@@ -243,6 +245,7 @@ The following arguments are supported:
 * `encap_remote_gw6` - Remote IPv6 address of GRE/VXLAN tunnel.
 * `vni` - VNI of VXLAN tunnel.
 * `nattraversal` - Enable/disable NAT traversal. Valid values: `enable`, `disable`, `forced`.
+* `esn` - Extended sequence number (ESN) negotiation. Valid values: `require`, `allow`, `disable`.
 * `fragmentation_mtu` - IKE fragmentation MTU (500 - 16000).
 * `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023). Valid values: `enable`, `disable`.
 * `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
@@ -258,8 +261,11 @@ The following arguments are supported:
 * `fec_redundant` - Number of redundant Forward Error Correction packets (1 - 100).
 * `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic. Valid values: `enable`, `disable`.
 * `fec_receive_timeout` - Timeout in milliseconds before dropping Forward Error Correction packets (1 - 10000).
+* `fec_health_check` - SD-WAN health check.
+* `fec_mapping_profile` - Forward Error Correction (FEC) mapping profile.
 * `network_overlay` - Enable/disable network overlays. Valid values: `disable`, `enable`.
 * `network_id` - VPN gateway network ID.
+* `loopback_asymroute` - Enable/disable asymmetric routing for IKE traffic on loopback interface. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

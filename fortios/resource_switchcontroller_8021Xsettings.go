@@ -42,7 +42,7 @@ func resourceSwitchController8021XSettings() *schema.Resource {
 			},
 			"reauth_period": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 1440),
+				ValidateFunc: validation.IntBetween(0, 1440),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -232,7 +232,7 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("reauth_period"); ok {
+	if v, ok := d.GetOkExists("reauth_period"); ok {
 
 		t, err := expandSwitchController8021XSettingsReauthPeriod(d, v, "reauth_period", sv)
 		if err != nil {

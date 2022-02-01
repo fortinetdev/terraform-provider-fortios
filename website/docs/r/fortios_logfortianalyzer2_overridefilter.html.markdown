@@ -37,6 +37,7 @@ The following arguments are supported:
 * `local_traffic` - Enable/disable local in or out traffic logging. Valid values: `enable`, `disable`.
 * `multicast_traffic` - Enable/disable multicast traffic logging. Valid values: `enable`, `disable`.
 * `sniffer_traffic` - Enable/disable sniffer traffic logging. Valid values: `enable`, `disable`.
+* `ztna_traffic` - Enable/disable ztna traffic logging. Valid values: `enable`, `disable`.
 * `anomaly` - Enable/disable anomaly logging. Valid values: `enable`, `disable`.
 * `netscan_discovery` - Enable/disable netscan discovery event logging.
 * `netscan_vulnerability` - Enable/disable netscan vulnerability event logging.
@@ -54,7 +55,7 @@ The following arguments are supported:
 The `free_style` block supports:
 
 * `id` - Entry ID.
-* `category` - Log category. Valid values: `traffic`, `event`, `virus`, `webfilter`, `attack`, `spam`, `anomaly`, `voip`, `dlp`, `app-ctrl`, `waf`, `gtp`, `dns`, `ssh`, `ssl`, `file-filter`, `icap`.
+* `category` - Log category.
 * `filter` - Free style filter string.
 * `filter_type` - Include/exclude logs that match the filter. Valid values: `include`, `exclude`.
 

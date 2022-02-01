@@ -49,8 +49,11 @@ The following arguments are supported:
 * `dhcp_relay_interface` - Specify outgoing interface to reach server.
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay. Valid values: `disable`, `enable`.
 * `dhcp_relay_ip` - DHCP relay IP address.
+* `dhcp_relay_link_selection` - DHCP relay link selection.
+* `dhcp_relay_request_all_server` - Enable/disable sending of DHCP requests to all servers. Valid values: `disable`, `enable`.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec). Valid values: `regular`, `ipsec`.
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option. Valid values: `enable`, `disable`.
+* `dhcp_classless_route_addition` - Enable/disable addition of classless static routes retrieved from DHCP server. Valid values: `enable`, `disable`.
 * `management_ip` - High Availability in-band management IP address of this interface.
 * `ip` - Interface IPv4 address and subnet mask, syntax: X.X.X.X/24.
 * `allowaccess` - Permitted types of management access to this interface.
@@ -80,6 +83,7 @@ The following arguments are supported:
 * `lcp_max_echo_fails` - Maximum missed LCP echo messages before disconnect.
 * `defaultgw` - Enable to get the gateway IP from the DHCP or PPPoE server. Valid values: `enable`, `disable`.
 * `dns_server_override` - Enable/disable use DNS acquired by DHCP or PPPoE. Valid values: `enable`, `disable`.
+* `dns_server_protocol` - DNS transport protocols. Valid values: `cleartext`, `dot`, `doh`.
 * `auth_type` - PPP authentication type to use. Valid values: `auto`, `pap`, `chap`, `mschapv1`, `mschapv2`.
 * `pptp_client` - Enable/disable PPTP client. Valid values: `enable`, `disable`.
 * `pptp_user` - PPTP user name.
@@ -97,6 +101,7 @@ The following arguments are supported:
 * `l2forward` - Enable/disable l2 forwarding. Valid values: `enable`, `disable`.
 * `icmp_send_redirect` - Enable/disable ICMP send redirect. Valid values: `enable`, `disable`.
 * `icmp_accept_redirect` - Enable/disable ICMP accept redirect. Valid values: `enable`, `disable`.
+* `reachable_time` - IPv4 reachable time in milliseconds (30000 - 3600000, default = 30000).
 * `vlanforward` - Enable/disable traffic forwarding between VLANs on this interface. Valid values: `enable`, `disable`.
 * `stpforward` - Enable/disable STP forwarding. Valid values: `enable`, `disable`.
 * `stpforward_mode` - Configure STP forwarding mode. Valid values: `rpl-all-ext-id`, `rpl-bridge-ext-id`, `rpl-nothing`.
@@ -106,7 +111,7 @@ The following arguments are supported:
 * `subst` - Enable to always send packets from this interface to a destination MAC address. Valid values: `enable`, `disable`.
 * `macaddr` - Change the interface's MAC address.
 * `substitute_dst_mac` - Destination MAC address that all packets are sent to from this interface.
-* `speed` - Interface speed. The default setting and the options available depend on the interface hardware. Valid values: `auto`, `10full`, `10half`, `100full`, `100half`, `1000full`, `1000half`, `1000auto`.
+* `speed` - Interface speed. The default setting and the options available depend on the interface hardware.
 * `status` - Bring the interface up or shut the interface down. Valid values: `up`, `down`.
 * `netbios_forward` - Enable/disable NETBIOS forwarding. Valid values: `disable`, `enable`.
 * `wins_ip` - WINS server IP.
@@ -136,6 +141,7 @@ The following arguments are supported:
 * `explicit_ftp_proxy` - Enable/disable the explicit FTP proxy on this interface. Valid values: `enable`, `disable`.
 * `proxy_captive_portal` - Enable/disable proxy captive portal on this interface. Valid values: `enable`, `disable`.
 * `tcp_mss` - TCP maximum segment size. 0 means do not change segment size.
+* `mediatype` - Select SFP media interface type Valid values: `none`, `gmii`, `sgmii`, `sr`, `lr`, `cr`, `sr4`, `lr4`, `cr4`.
 * `inbandwidth` - Bandwidth limit for incoming traffic (0 - 16776000 kbps), 0 means unlimited.
 * `outbandwidth` - Bandwidth limit for outgoing traffic (0 - 16776000 kbps).
 * `egress_shaping_profile` - Outgoing traffic shaping profile.
@@ -148,11 +154,14 @@ The following arguments are supported:
 * `external` - Enable/disable identifying the interface as an external interface (which usually means it's connected to the Internet). Valid values: `enable`, `disable`.
 * `vlan_protocol` - Ethernet protocol of VLAN. Valid values: `8021q`, `8021ad`.
 * `vlanid` - VLAN ID (1 - 4094).
+* `trunk` - Enable/disable VLAN trunk. Valid values: `enable`, `disable`.
 * `forward_domain` - Transparent mode forward domain.
 * `remote_ip` - Remote IP address of tunnel.
 * `member` - Physical interfaces that belong to the aggregate or redundant interface. The structure of `member` block is documented below.
 * `lacp_mode` - LACP mode. Valid values: `static`, `passive`, `active`.
 * `lacp_ha_slave` - LACP HA slave. Valid values: `enable`, `disable`.
+* `system_id_type` - Method in which system ID is generated. Valid values: `auto`, `user`.
+* `system_id` - Define a system ID for the aggregate interface.
 * `lacp_speed` - How often the interface sends LACP messages. Valid values: `slow`, `fast`.
 * `min_links` - Minimum number of aggregated ports that must be up.
 * `min_links_down` - Action to take when less than the configured minimum number of links are active. Valid values: `operational`, `administrative`.
@@ -174,8 +183,12 @@ The following arguments are supported:
 * `security_external_logout` - URL of external authentication logout server.
 * `replacemsg_override_group` - Replacement message override group.
 * `security_redirect_url` - URL redirection after disclaimer/authentication.
+* `auth_cert` - HTTPS server certificate.
+* `auth_portal_addr` - Address of captive portal.
 * `security_exempt_list` - Name of security-exempt-list.
 * `security_groups` - User groups that can authenticate with the captive portal. The structure of `security_groups` block is documented below.
+* `stp` - Enable/disable STP. Valid values: `disable`, `enable`.
+* `stp_ha_secondary` - Control STP behaviour on HA secondary. Valid values: `disable`, `enable`, `priority-adjust`.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface. Valid values: `enable`, `disable`.
 * `device_user_identification` - Enable/disable passive gathering of user identity information about users on this interface. Valid values: `enable`, `disable`.
 * `device_identification_active_scan` - Enable/disable active gathering of device identity information about the devices on the network connected to this interface. Valid values: `enable`, `disable`.
@@ -197,7 +210,7 @@ The following arguments are supported:
 * `vrrp` - VRRP configuration. The structure of `vrrp` block is documented below.
 * `role` - Interface role. Valid values: `lan`, `wan`, `dmz`, `undefined`.
 * `snmp_index` - Permanent SNMP Index of the interface.
-* `secondary_IP` - Enable/disable adding a secondary IP to this interface. Valid values: `enable`, `disable`.
+* `secondary_ip` - Enable/disable adding a secondary IP to this interface. Valid values: `enable`, `disable`.
 * `secondaryip` - Second IP address of interface. The structure of `secondaryip` block is documented below.
 * `preserve_session_route` - Enable/disable preservation of session route when dirty. Valid values: `enable`, `disable`.
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension device on this interface. Valid values: `enable`, `disable`.
@@ -205,7 +218,7 @@ The following arguments are supported:
 * `fortilink_stacking` - Enable/disable FortiLink switch-stacking on this interface. Valid values: `enable`, `disable`.
 * `fortilink_neighbor_detect` - Protocol for FortiGate neighbor discovery. Valid values: `lldp`, `fortilink`.
 * `ip_managed_by_fortiipam` - Enable/disable automatic IP address assignment of this interface by FortiIPAM. Valid values: `enable`, `disable`.
-* `managed_subnetwork_size` - Number of IP addresses to be allocated by FortiIPAM and used by this FortiGate unit's DHCP server settings. Valid values: `256`, `512`, `1024`, `2048`, `4096`, `8192`, `16384`, `32768`, `65536`.
+* `managed_subnetwork_size` - Number of IP addresses to be allocated by FortiIPAM and used by this FortiGate unit's DHCP server settings.
 * `fortilink_split_interface` - Enable/disable FortiLink split interface to connect member link to different FortiSwitch in stack for uplink redundancy. Valid values: `enable`, `disable`.
 * `internal` - Implicitly created.
 * `fortilink_backup_link` - fortilink split interface backup link.
@@ -219,15 +232,18 @@ The following arguments are supported:
 * `switch_controller_dhcp_snooping` - Switch controller DHCP snooping. Valid values: `enable`, `disable`.
 * `switch_controller_dhcp_snooping_verify_mac` - Switch controller DHCP snooping verify MAC. Valid values: `enable`, `disable`.
 * `switch_controller_dhcp_snooping_option82` - Switch controller DHCP snooping option82. Valid values: `enable`, `disable`.
+* `dhcp_snooping_server_list` - Configure DHCP server access list. The structure of `dhcp_snooping_server_list` block is documented below.
 * `switch_controller_arp_inspection` - Enable/disable FortiSwitch ARP inspection. Valid values: `enable`, `disable`.
 * `switch_controller_learning_limit` - Limit the number of dynamic MAC addresses on this VLAN (1 - 128, 0 = no limit, default).
 * `switch_controller_nac` - Integrated NAC settings for managed FortiSwitch.
-* `switch_controller_feature` - Interface's purpose when assigning traffic (read only). Valid values: `none`, `default-vlan`, `quarantine`, `rspan`, `voice`, `video`, `nac`.
+* `switch_controller_dynamic` - Integrated FortiLink settings for managed FortiSwitch.
+* `switch_controller_feature` - Interface's purpose when assigning traffic (read only).
 * `switch_controller_iot_scanning` - Enable/disable managed FortiSwitch IoT scanning. Valid values: `enable`, `disable`.
 * `swc_vlan` - Creation status for switch-controller VLANs.
 * `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `forward_error_correction` - Configure forward error correction (FEC). Valid values: `none`, `disable`, `cl91-rs-fec`, `cl74-fc-fec`.
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
 * `autogenerated` - Indicates whether the interface is automatically created by FortiGate, for example, created during the VPN creation process. If it is, set it to "auto", else keep it empty.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -290,6 +306,11 @@ The `secondaryip` block supports:
 * `detectprotocol` - Protocols used to detect the server. Valid values: `ping`, `tcp-echo`, `udp-echo`.
 * `ha_priority` - HA election priority for the PING server.
 
+The `dhcp_snooping_server_list` block supports:
+
+* `name` - DHCP server name.
+* `server_ip` - IP address for DHCP server.
+
 The `tagging` block supports:
 
 * `name` - Tagging entry name.
@@ -320,6 +341,7 @@ The `ipv6` block supports:
 * `ip6_max_interval` - IPv6 maximum interval (4 to 1800 sec).
 * `ip6_min_interval` - IPv6 minimum interval (3 to 1350 sec).
 * `ip6_link_mtu` - IPv6 link MTU.
+* `ra_send_mtu` - Enable/disable sending link MTU in RA packet. Valid values: `enable`, `disable`.
 * `ip6_reachable_time` - IPv6 reachable time (milliseconds; 0 means unspecified).
 * `ip6_retrans_time` - IPv6 retransmit time (milliseconds; 0 means unspecified).
 * `ip6_default_life` - Default life (sec).
@@ -329,6 +351,7 @@ The `ipv6` block supports:
 * `interface_identifier` - IPv6 interface identifier.
 * `ip6_prefix_mode` - Assigning a prefix from DHCP or RA. Valid values: `dhcp6`, `ra`.
 * `ip6_upstream_interface` - Interface name providing delegated information.
+* `ip6_delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `ip6_subnet` -  Subnet to routing prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
 * `ip6_prefix_list` - Advertised prefix list. The structure of `ip6_prefix_list` block is documented below.
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
@@ -338,6 +361,7 @@ The `ipv6` block supports:
 * `dhcp6_client_options` - DHCPv6 client options. Valid values: `rapid`, `iapd`, `iana`.
 * `dhcp6_prefix_delegation` - Enable/disable DHCPv6 prefix delegation. Valid values: `enable`, `disable`.
 * `dhcp6_information_request` - Enable/disable DHCPv6 information request. Valid values: `enable`, `disable`.
+* `dhcp6_iapd_list` - DHCPv6 IA-PD list The structure of `dhcp6_iapd_list` block is documented below.
 * `dhcp6_prefix_hint` - DHCPv6 prefix that will be used as a hint to the upstream DHCPv6 server.
 * `dhcp6_prefix_hint_plt` - DHCPv6 prefix hint preferred life time (sec), 0 means unlimited lease time.
 * `dhcp6_prefix_hint_vlt` - DHCPv6 prefix hint valid life time (sec).
@@ -368,11 +392,19 @@ The `ip6_delegated_prefix_list` block supports:
 
 * `prefix_id` - Prefix ID.
 * `upstream_interface` - Name of the interface that provides delegated information.
+* `delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `autonomous_flag` - Enable/disable the autonomous flag. Valid values: `enable`, `disable`.
 * `onlink_flag` - Enable/disable the onlink flag. Valid values: `enable`, `disable`.
 * `subnet` -  Add subnet ID to routing prefix.
 * `rdnss_service` - Recursive DNS service option. Valid values: `delegated`, `default`, `specify`.
 * `rdnss` - Recursive DNS server option.
+
+The `dhcp6_iapd_list` block supports:
+
+* `iaid` - Identity association identifier.
+* `prefix_hint` - DHCPv6 prefix that will be used as a hint to the upstream DHCPv6 server.
+* `prefix_hint_plt` - DHCPv6 prefix hint preferred life time (sec), 0 means unlimited lease time.
+* `prefix_hint_vlt` - DHCPv6 prefix hint valid life time (sec).
 
 The `vrrp6` block supports:
 

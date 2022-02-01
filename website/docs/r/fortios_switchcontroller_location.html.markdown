@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_location
-Configure FortiSwitch location services.
+Configure FortiSwitch location services. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

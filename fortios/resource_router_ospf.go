@@ -222,6 +222,11 @@ func resourceRouterOspf() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"comments": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
 						"range": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -276,6 +281,12 @@ func resourceRouterOspf() *schema.Resource {
 										ValidateFunc: validation.StringLenBetween(0, 8),
 										Optional:     true,
 										Sensitive:    true,
+									},
+									"keychain": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
 									},
 									"md5_key": &schema.Schema{
 										Type:      schema.TypeString,
@@ -379,6 +390,11 @@ func resourceRouterOspf() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"comments": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
@@ -400,6 +416,12 @@ func resourceRouterOspf() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 8),
 							Optional:     true,
 							Sensitive:    true,
+						},
+						"keychain": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
 						},
 						"md5_key": &schema.Schema{
 							Type:      schema.TypeString,
@@ -540,6 +562,11 @@ func resourceRouterOspf() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"comments": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
 						},
 					},
 				},
@@ -967,6 +994,12 @@ func flattenRouterOspfArea(v interface{}, d *schema.ResourceData, pre string, sv
 			tmp["nssa_redistribution"] = flattenRouterOspfAreaNssaRedistribution(i["nssa-redistribution"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := i["comments"]; ok {
+
+			tmp["comments"] = flattenRouterOspfAreaComments(i["comments"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := i["range"]; ok {
 
@@ -1035,6 +1068,10 @@ func flattenRouterOspfAreaNssaDefaultInformationOriginateMetricType(v interface{
 }
 
 func flattenRouterOspfAreaNssaRedistribution(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfAreaComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1170,6 +1207,12 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+		if _, ok := i["keychain"]; ok {
+
+			tmp["keychain"] = flattenRouterOspfAreaVirtualLinkKeychain(i["keychain"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
 
@@ -1239,6 +1282,10 @@ func flattenRouterOspfAreaVirtualLinkAuthentication(v interface{}, d *schema.Res
 }
 
 func flattenRouterOspfAreaVirtualLinkAuthenticationKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfAreaVirtualLinkKeychain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1403,6 +1450,12 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 			tmp["name"] = flattenRouterOspfOspfInterfaceName(i["name"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := i["comments"]; ok {
+
+			tmp["comments"] = flattenRouterOspfOspfInterfaceComments(i["comments"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
 
@@ -1429,6 +1482,12 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 			if c != "" {
 				tmp["authentication_key"] = c
 			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+		if _, ok := i["keychain"]; ok {
+
+			tmp["keychain"] = flattenRouterOspfOspfInterfaceKeychain(i["keychain"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
@@ -1556,6 +1615,10 @@ func flattenRouterOspfOspfInterfaceName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenRouterOspfOspfInterfaceComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterOspfOspfInterfaceInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1569,6 +1632,10 @@ func flattenRouterOspfOspfInterfaceAuthentication(v interface{}, d *schema.Resou
 }
 
 func flattenRouterOspfOspfInterfaceAuthenticationKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfOspfInterfaceKeychain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1728,6 +1795,12 @@ func flattenRouterOspfNetwork(v interface{}, d *schema.ResourceData, pre string,
 			tmp["area"] = flattenRouterOspfNetworkArea(i["area"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := i["comments"]; ok {
+
+			tmp["comments"] = flattenRouterOspfNetworkComments(i["comments"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1753,6 +1826,10 @@ func flattenRouterOspfNetworkPrefix(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenRouterOspfNetworkArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfNetworkComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2543,6 +2620,12 @@ func expandRouterOspfArea(d *schema.ResourceData, v interface{}, pre string, sv 
 			tmp["nssa-redistribution"], _ = expandRouterOspfAreaNssaRedistribution(d, i["nssa_redistribution"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["comments"], _ = expandRouterOspfAreaComments(d, i["comments"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -2616,6 +2699,10 @@ func expandRouterOspfAreaNssaDefaultInformationOriginateMetricType(d *schema.Res
 }
 
 func expandRouterOspfAreaNssaRedistribution(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfAreaComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2723,6 +2810,12 @@ func expandRouterOspfAreaVirtualLink(d *schema.ResourceData, v interface{}, pre 
 			tmp["authentication-key"], _ = expandRouterOspfAreaVirtualLinkAuthenticationKey(d, i["authentication_key"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["keychain"], _ = expandRouterOspfAreaVirtualLinkKeychain(d, i["keychain"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -2790,6 +2883,10 @@ func expandRouterOspfAreaVirtualLinkAuthentication(d *schema.ResourceData, v int
 }
 
 func expandRouterOspfAreaVirtualLinkAuthenticationKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfAreaVirtualLinkKeychain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2935,6 +3032,12 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 			tmp["name"], _ = expandRouterOspfOspfInterfaceName(d, i["name"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["comments"], _ = expandRouterOspfOspfInterfaceComments(d, i["comments"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -2957,6 +3060,12 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["authentication-key"], _ = expandRouterOspfOspfInterfaceAuthenticationKey(d, i["authentication_key"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["keychain"], _ = expandRouterOspfOspfInterfaceKeychain(d, i["keychain"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
@@ -3081,6 +3190,10 @@ func expandRouterOspfOspfInterfaceName(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandRouterOspfOspfInterfaceComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterOspfOspfInterfaceInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3094,6 +3207,10 @@ func expandRouterOspfOspfInterfaceAuthentication(d *schema.ResourceData, v inter
 }
 
 func expandRouterOspfOspfInterfaceAuthenticationKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfOspfInterfaceKeychain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3239,6 +3356,12 @@ func expandRouterOspfNetwork(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["area"], _ = expandRouterOspfNetworkArea(d, i["area"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["comments"], _ = expandRouterOspfNetworkComments(d, i["comments"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3256,6 +3379,10 @@ func expandRouterOspfNetworkPrefix(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandRouterOspfNetworkArea(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfNetworkComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -51,6 +51,11 @@ func resourceRouterospfNetwork() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"comments": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -195,6 +200,10 @@ func flattenRouterospfNetworkArea(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenRouterospfNetworkComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectRouterospfNetwork(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -216,6 +225,12 @@ func refreshObjectRouterospfNetwork(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("comments", flattenRouterospfNetworkComments(o["comments"], d, "comments", sv)); err != nil {
+		if !fortiAPIPatch(o["comments"]) {
+			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -234,6 +249,10 @@ func expandRouterospfNetworkPrefix(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandRouterospfNetworkArea(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterospfNetworkComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -267,6 +286,16 @@ func getObjectRouterospfNetwork(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["area"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("comments"); ok {
+
+		t, err := expandRouterospfNetworkComments(d, v, "comments", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["comments"] = t
 		}
 	}
 

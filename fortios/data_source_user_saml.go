@@ -71,6 +71,30 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"digest_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"limit_relaystate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"clock_tolerance": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"adfs_claim": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"user_claim_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"group_claim_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -162,6 +186,30 @@ func dataSourceFlattenUserSamlGroupName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func dataSourceFlattenUserSamlDigestMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlLimitRelaystate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlClockTolerance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlAdfsClaim(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlUserClaimType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlGroupClaimType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -228,6 +276,42 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("group_name", dataSourceFlattenUserSamlGroupName(o["group-name"], d, "group_name")); err != nil {
 		if !fortiAPIPatch(o["group-name"]) {
 			return fmt.Errorf("Error reading group_name: %v", err)
+		}
+	}
+
+	if err = d.Set("digest_method", dataSourceFlattenUserSamlDigestMethod(o["digest-method"], d, "digest_method")); err != nil {
+		if !fortiAPIPatch(o["digest-method"]) {
+			return fmt.Errorf("Error reading digest_method: %v", err)
+		}
+	}
+
+	if err = d.Set("limit_relaystate", dataSourceFlattenUserSamlLimitRelaystate(o["limit-relaystate"], d, "limit_relaystate")); err != nil {
+		if !fortiAPIPatch(o["limit-relaystate"]) {
+			return fmt.Errorf("Error reading limit_relaystate: %v", err)
+		}
+	}
+
+	if err = d.Set("clock_tolerance", dataSourceFlattenUserSamlClockTolerance(o["clock-tolerance"], d, "clock_tolerance")); err != nil {
+		if !fortiAPIPatch(o["clock-tolerance"]) {
+			return fmt.Errorf("Error reading clock_tolerance: %v", err)
+		}
+	}
+
+	if err = d.Set("adfs_claim", dataSourceFlattenUserSamlAdfsClaim(o["adfs-claim"], d, "adfs_claim")); err != nil {
+		if !fortiAPIPatch(o["adfs-claim"]) {
+			return fmt.Errorf("Error reading adfs_claim: %v", err)
+		}
+	}
+
+	if err = d.Set("user_claim_type", dataSourceFlattenUserSamlUserClaimType(o["user-claim-type"], d, "user_claim_type")); err != nil {
+		if !fortiAPIPatch(o["user-claim-type"]) {
+			return fmt.Errorf("Error reading user_claim_type: %v", err)
+		}
+	}
+
+	if err = d.Set("group_claim_type", dataSourceFlattenUserSamlGroupClaimType(o["group-claim-type"], d, "group_claim_type")); err != nil {
+		if !fortiAPIPatch(o["group-claim-type"]) {
+			return fmt.Errorf("Error reading group_claim_type: %v", err)
 		}
 	}
 

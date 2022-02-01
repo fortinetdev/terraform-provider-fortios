@@ -60,6 +60,11 @@ func resourceLogFortiguardFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -258,6 +263,10 @@ func flattenLogFortiguardFilterSnifferTraffic(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenLogFortiguardFilterZtnaTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortiguardFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -399,6 +408,12 @@ func refreshObjectLogFortiguardFilter(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("ztna_traffic", flattenLogFortiguardFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-traffic"]) {
+			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
 	if err = d.Set("anomaly", flattenLogFortiguardFilterAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 		if !fortiAPIPatch(o["anomaly"]) {
 			return fmt.Errorf("Error reading anomaly: %v", err)
@@ -501,6 +516,10 @@ func expandLogFortiguardFilterMulticastTraffic(d *schema.ResourceData, v interfa
 }
 
 func expandLogFortiguardFilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardFilterZtnaTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -656,6 +675,16 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["sniffer-traffic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_traffic"); ok {
+
+		t, err := expandLogFortiguardFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-traffic"] = t
 		}
 	}
 

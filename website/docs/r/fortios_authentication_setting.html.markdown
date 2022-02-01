@@ -33,10 +33,25 @@ The following arguments are supported:
 * `captive_portal_ip6` - Captive portal IPv6 address.
 * `captive_portal` - Captive portal host name.
 * `captive_portal6` - IPv6 captive portal host name.
+* `cert_auth` - Enable/disable redirecting certificate authentication to HTTPS portal. Valid values: `enable`, `disable`.
+* `cert_captive_portal` - Certificate captive portal host name.
+* `cert_captive_portal_ip` - Certificate captive portal IP address.
+* `cert_captive_portal_port` - Certificate captive portal port number (1 - 65535, default = 7832).
 * `captive_portal_port` - Captive portal port number (1 - 65535, default = 7830).
 * `auth_https` - Enable/disable redirecting HTTP user authentication to HTTPS. Valid values: `enable`, `disable`.
 * `captive_portal_ssl_port` - Captive portal SSL port number (1 - 65535, default = 7831).
+* `user_cert_ca` - CA certificate used for client certificate verification. The structure of `user_cert_ca` block is documented below.
+* `dev_range` - Address range for the IP based device query. The structure of `dev_range` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `user_cert_ca` block supports:
+
+* `name` - CA certificate list.
+
+The `dev_range` block supports:
+
+* `name` - Address name.
 
 
 ## Attribute Reference

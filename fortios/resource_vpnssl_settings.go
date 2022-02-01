@@ -35,6 +35,11 @@ func resourceVpnSslSettings() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"reqclientcert": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -77,6 +82,11 @@ func resourceVpnSslSettings() *schema.Resource {
 				Computed: true,
 			},
 			"banned_cipher": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ciphersuite": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -532,6 +542,27 @@ func resourceVpnSslSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"client_sigalgs": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dual_stack_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"tunnel_addr_assigned_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"saml_redirect_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -635,6 +666,10 @@ func resourceVpnSslSettingsRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func flattenVpnSslSettingsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnSslSettingsReqclientcert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -668,6 +703,10 @@ func flattenVpnSslSettingsTlsv13(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenVpnSslSettingsBannedCipher(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsCiphersuite(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1390,8 +1429,30 @@ func flattenVpnSslSettingsEncryptAndStorePassword(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenVpnSslSettingsClientSigalgs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsDualStackMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsTunnelAddrAssignedMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsSamlRedirectPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("status", flattenVpnSslSettingsStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
 
 	if err = d.Set("reqclientcert", flattenVpnSslSettingsReqclientcert(o["reqclientcert"], d, "reqclientcert", sv)); err != nil {
 		if !fortiAPIPatch(o["reqclientcert"]) {
@@ -1444,6 +1505,12 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("banned_cipher", flattenVpnSslSettingsBannedCipher(o["banned-cipher"], d, "banned_cipher", sv)); err != nil {
 		if !fortiAPIPatch(o["banned-cipher"]) {
 			return fmt.Errorf("Error reading banned_cipher: %v", err)
+		}
+	}
+
+	if err = d.Set("ciphersuite", flattenVpnSslSettingsCiphersuite(o["ciphersuite"], d, "ciphersuite", sv)); err != nil {
+		if !fortiAPIPatch(o["ciphersuite"]) {
+			return fmt.Errorf("Error reading ciphersuite: %v", err)
 		}
 	}
 
@@ -1837,6 +1904,30 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("client_sigalgs", flattenVpnSslSettingsClientSigalgs(o["client-sigalgs"], d, "client_sigalgs", sv)); err != nil {
+		if !fortiAPIPatch(o["client-sigalgs"]) {
+			return fmt.Errorf("Error reading client_sigalgs: %v", err)
+		}
+	}
+
+	if err = d.Set("dual_stack_mode", flattenVpnSslSettingsDualStackMode(o["dual-stack-mode"], d, "dual_stack_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["dual-stack-mode"]) {
+			return fmt.Errorf("Error reading dual_stack_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("tunnel_addr_assigned_method", flattenVpnSslSettingsTunnelAddrAssignedMethod(o["tunnel-addr-assigned-method"], d, "tunnel_addr_assigned_method", sv)); err != nil {
+		if !fortiAPIPatch(o["tunnel-addr-assigned-method"]) {
+			return fmt.Errorf("Error reading tunnel_addr_assigned_method: %v", err)
+		}
+	}
+
+	if err = d.Set("saml_redirect_port", flattenVpnSslSettingsSamlRedirectPort(o["saml-redirect-port"], d, "saml_redirect_port", sv)); err != nil {
+		if !fortiAPIPatch(o["saml-redirect-port"]) {
+			return fmt.Errorf("Error reading saml_redirect_port: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -1844,6 +1935,10 @@ func flattenVpnSslSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
+}
+
+func expandVpnSslSettingsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandVpnSslSettingsReqclientcert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -1879,6 +1974,10 @@ func expandVpnSslSettingsTlsv13(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandVpnSslSettingsBannedCipher(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsCiphersuite(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2550,8 +2649,34 @@ func expandVpnSslSettingsEncryptAndStorePassword(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandVpnSslSettingsClientSigalgs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsDualStackMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsTunnelAddrAssignedMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsSamlRedirectPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("status"); ok {
+
+		t, err := expandVpnSslSettingsStatus(d, v, "status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("reqclientcert"); ok {
 
@@ -2640,6 +2765,16 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 			return &obj, err
 		} else if t != nil {
 			obj["banned-cipher"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ciphersuite"); ok {
+
+		t, err := expandVpnSslSettingsCiphersuite(d, v, "ciphersuite", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ciphersuite"] = t
 		}
 	}
 
@@ -3214,6 +3349,46 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 			return &obj, err
 		} else if t != nil {
 			obj["encrypt-and-store-password"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_sigalgs"); ok {
+
+		t, err := expandVpnSslSettingsClientSigalgs(d, v, "client_sigalgs", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-sigalgs"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dual_stack_mode"); ok {
+
+		t, err := expandVpnSslSettingsDualStackMode(d, v, "dual_stack_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dual-stack-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tunnel_addr_assigned_method"); ok {
+
+		t, err := expandVpnSslSettingsTunnelAddrAssignedMethod(d, v, "tunnel_addr_assigned_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tunnel-addr-assigned-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("saml_redirect_port"); ok {
+
+		t, err := expandVpnSslSettingsSamlRedirectPort(d, v, "saml_redirect_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["saml-redirect-port"] = t
 		}
 	}
 

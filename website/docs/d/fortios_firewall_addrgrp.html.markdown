@@ -21,6 +21,7 @@ The following attributes are exported:
 
 * `name` - Address group name.
 * `type` - Address group type.
+* `category` - Address group category.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - Address objects contained within the group. The structure of `member` block is documented below.
 * `comment` - Comment.
@@ -30,6 +31,7 @@ The following attributes are exported:
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this group in the static route configuration.
+* `fabric_object` - Security Fabric global object setting.
 
 The `member` block contains:
 

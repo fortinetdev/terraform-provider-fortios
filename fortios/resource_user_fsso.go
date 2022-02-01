@@ -135,6 +135,12 @@ func resourceUserFsso() *schema.Resource {
 				Optional:     true,
 				Sensitive:    true,
 			},
+			"logon_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 2880),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -171,6 +177,11 @@ func resourceUserFsso() *schema.Resource {
 				Computed:     true,
 			},
 			"ssl": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssl_server_host_ip_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -395,6 +406,10 @@ func flattenUserFssoPassword5(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenUserFssoLogonTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserFssoLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -420,6 +435,10 @@ func flattenUserFssoUserInfoServer(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserFssoSsl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoSslServerHostIpCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -518,6 +537,12 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("logon_timeout", flattenUserFssoLogonTimeout(o["logon-timeout"], d, "logon_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["logon-timeout"]) {
+			return fmt.Errorf("Error reading logon_timeout: %v", err)
+		}
+	}
+
 	if err = d.Set("ldap_server", flattenUserFssoLdapServer(o["ldap-server"], d, "ldap_server", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-server"]) {
 			return fmt.Errorf("Error reading ldap_server: %v", err)
@@ -557,6 +582,12 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("ssl", flattenUserFssoSsl(o["ssl"], d, "ssl", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl"]) {
 			return fmt.Errorf("Error reading ssl: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl_server_host_ip_check", flattenUserFssoSslServerHostIpCheck(o["ssl-server-host-ip-check"], d, "ssl_server_host_ip_check", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-server-host-ip-check"]) {
+			return fmt.Errorf("Error reading ssl_server_host_ip_check: %v", err)
 		}
 	}
 
@@ -667,6 +698,10 @@ func expandUserFssoPassword5(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
+func expandUserFssoLogonTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserFssoLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -692,6 +727,10 @@ func expandUserFssoUserInfoServer(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserFssoSsl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoSslServerHostIpCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -888,6 +927,16 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
+	if v, ok := d.GetOk("logon_timeout"); ok {
+
+		t, err := expandUserFssoLogonTimeout(d, v, "logon_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["logon-timeout"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ldap_server"); ok {
 
 		t, err := expandUserFssoLdapServer(d, v, "ldap_server", sv)
@@ -955,6 +1004,16 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["ssl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_server_host_ip_check"); ok {
+
+		t, err := expandUserFssoSslServerHostIpCheck(d, v, "ssl_server_host_ip_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-server-host-ip-check"] = t
 		}
 	}
 

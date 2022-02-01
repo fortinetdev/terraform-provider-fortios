@@ -115,6 +115,11 @@ func resourceLogEventfilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rest_api": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -272,6 +277,10 @@ func flattenLogEventfilterSwitchController(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogEventfilterRestApi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -371,6 +380,12 @@ func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("rest_api", flattenLogEventfilterRestApi(o["rest-api"], d, "rest_api", sv)); err != nil {
+		if !fortiAPIPatch(o["rest-api"]) {
+			return fmt.Errorf("Error reading rest_api: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -441,6 +456,10 @@ func expandLogEventfilterCifs(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandLogEventfilterSwitchController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogEventfilterRestApi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -604,6 +623,16 @@ func getObjectLogEventfilter(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["switch-controller"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rest_api"); ok {
+
+		t, err := expandLogEventfilterRestApi(d, v, "rest_api", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rest-api"] = t
 		}
 	}
 

@@ -60,6 +60,11 @@ func resourceLogMemoryFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -343,6 +348,10 @@ func flattenLogMemoryFilterSnifferTraffic(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenLogMemoryFilterZtnaTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogMemoryFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -552,6 +561,12 @@ func refreshObjectLogMemoryFilter(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("ztna_traffic", flattenLogMemoryFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-traffic"]) {
+			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
 	if err = d.Set("anomaly", flattenLogMemoryFilterAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 		if !fortiAPIPatch(o["anomaly"]) {
 			return fmt.Errorf("Error reading anomaly: %v", err)
@@ -756,6 +771,10 @@ func expandLogMemoryFilterMulticastTraffic(d *schema.ResourceData, v interface{}
 }
 
 func expandLogMemoryFilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogMemoryFilterZtnaTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -979,6 +998,16 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["sniffer-traffic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_traffic"); ok {
+
+		t, err := expandLogMemoryFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-traffic"] = t
 		}
 	}
 

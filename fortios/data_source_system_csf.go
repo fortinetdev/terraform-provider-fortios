@@ -31,6 +31,10 @@ func dataSourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"upstream": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"upstream_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -49,6 +53,10 @@ func dataSourceSystemCsf() *schema.Resource {
 				Computed:  true,
 			},
 			"accept_auth_by_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"log_unification": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -77,6 +85,18 @@ func dataSourceSystemCsf() *schema.Resource {
 				Computed: true,
 			},
 			"certificate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_workers": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"downstream_access": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"downstream_accprofile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -120,6 +140,30 @@ func dataSourceSystemCsf() *schema.Resource {
 						},
 					},
 				},
+			},
+			"fabric_connector": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"serial": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"accprofile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"configuration_write_access": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"forticloud_account_enforcement": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"fabric_device": &schema.Schema{
 				Type:     schema.TypeList,
@@ -201,6 +245,10 @@ func dataSourceFlattenSystemCsfStatus(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func dataSourceFlattenSystemCsfUpstream(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCsfUpstreamIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -218,6 +266,10 @@ func dataSourceFlattenSystemCsfGroupPassword(v interface{}, d *schema.ResourceDa
 }
 
 func dataSourceFlattenSystemCsfAcceptAuthByCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfLogUnification(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -246,6 +298,18 @@ func dataSourceFlattenSystemCsfAuthorizationRequestType(v interface{}, d *schema
 }
 
 func dataSourceFlattenSystemCsfCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFabricWorkers(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfDownstreamAccess(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfDownstreamAccprofile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -340,6 +404,64 @@ func dataSourceFlattenSystemCsfTrustedListHaMembers(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemCsfTrustedListDownstreamAuthorization(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFabricConnector(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+		if _, ok := i["serial"]; ok {
+			tmp["serial"] = dataSourceFlattenSystemCsfFabricConnectorSerial(i["serial"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "accprofile"
+		if _, ok := i["accprofile"]; ok {
+			tmp["accprofile"] = dataSourceFlattenSystemCsfFabricConnectorAccprofile(i["accprofile"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "configuration_write_access"
+		if _, ok := i["configuration-write-access"]; ok {
+			tmp["configuration_write_access"] = dataSourceFlattenSystemCsfFabricConnectorConfigurationWriteAccess(i["configuration-write-access"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemCsfFabricConnectorSerial(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFabricConnectorAccprofile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFabricConnectorConfigurationWriteAccess(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfForticloudAccountEnforcement(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -450,6 +572,12 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("upstream", dataSourceFlattenSystemCsfUpstream(o["upstream"], d, "upstream")); err != nil {
+		if !fortiAPIPatch(o["upstream"]) {
+			return fmt.Errorf("Error reading upstream: %v", err)
+		}
+	}
+
 	if err = d.Set("upstream_ip", dataSourceFlattenSystemCsfUpstreamIp(o["upstream-ip"], d, "upstream_ip")); err != nil {
 		if !fortiAPIPatch(o["upstream-ip"]) {
 			return fmt.Errorf("Error reading upstream_ip: %v", err)
@@ -471,6 +599,12 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("accept_auth_by_cert", dataSourceFlattenSystemCsfAcceptAuthByCert(o["accept-auth-by-cert"], d, "accept_auth_by_cert")); err != nil {
 		if !fortiAPIPatch(o["accept-auth-by-cert"]) {
 			return fmt.Errorf("Error reading accept_auth_by_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("log_unification", dataSourceFlattenSystemCsfLogUnification(o["log-unification"], d, "log_unification")); err != nil {
+		if !fortiAPIPatch(o["log-unification"]) {
+			return fmt.Errorf("Error reading log_unification: %v", err)
 		}
 	}
 
@@ -516,9 +650,39 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("fabric_workers", dataSourceFlattenSystemCsfFabricWorkers(o["fabric-workers"], d, "fabric_workers")); err != nil {
+		if !fortiAPIPatch(o["fabric-workers"]) {
+			return fmt.Errorf("Error reading fabric_workers: %v", err)
+		}
+	}
+
+	if err = d.Set("downstream_access", dataSourceFlattenSystemCsfDownstreamAccess(o["downstream-access"], d, "downstream_access")); err != nil {
+		if !fortiAPIPatch(o["downstream-access"]) {
+			return fmt.Errorf("Error reading downstream_access: %v", err)
+		}
+	}
+
+	if err = d.Set("downstream_accprofile", dataSourceFlattenSystemCsfDownstreamAccprofile(o["downstream-accprofile"], d, "downstream_accprofile")); err != nil {
+		if !fortiAPIPatch(o["downstream-accprofile"]) {
+			return fmt.Errorf("Error reading downstream_accprofile: %v", err)
+		}
+	}
+
 	if err = d.Set("trusted_list", dataSourceFlattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list")); err != nil {
 		if !fortiAPIPatch(o["trusted-list"]) {
 			return fmt.Errorf("Error reading trusted_list: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_connector", dataSourceFlattenSystemCsfFabricConnector(o["fabric-connector"], d, "fabric_connector")); err != nil {
+		if !fortiAPIPatch(o["fabric-connector"]) {
+			return fmt.Errorf("Error reading fabric_connector: %v", err)
+		}
+	}
+
+	if err = d.Set("forticloud_account_enforcement", dataSourceFlattenSystemCsfForticloudAccountEnforcement(o["forticloud-account-enforcement"], d, "forticloud_account_enforcement")); err != nil {
+		if !fortiAPIPatch(o["forticloud-account-enforcement"]) {
+			return fmt.Errorf("Error reading forticloud_account_enforcement: %v", err)
 		}
 	}
 

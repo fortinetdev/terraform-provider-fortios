@@ -24,4 +24,5 @@ The following attributes are exported:
 * `end` - Schedule end date and time, format hh:mm yyyy/mm/dd.
 * `color` - Color of icon on the GUI.
 * `expiration_days` - Write an event log message this many days before the schedule expires.
+* `fabric_object` - Security Fabric global object setting.
 

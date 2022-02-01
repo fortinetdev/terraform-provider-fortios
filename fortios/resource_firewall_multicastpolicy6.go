@@ -41,6 +41,11 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -262,6 +267,10 @@ func flattenFirewallMulticastPolicy6Id(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenFirewallMulticastPolicy6Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallMulticastPolicy6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -391,6 +400,12 @@ func refreshObjectFirewallMulticastPolicy6(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("uuid", flattenFirewallMulticastPolicy6Uuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
 	if err = d.Set("status", flattenFirewallMulticastPolicy6Status(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
@@ -499,6 +514,10 @@ func flattenFirewallMulticastPolicy6FortiTestDebug(d *schema.ResourceData, fosde
 }
 
 func expandFirewallMulticastPolicy6Id(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallMulticastPolicy6Uuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -620,6 +639,16 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+
+		t, err := expandFirewallMulticastPolicy6Uuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
 		}
 	}
 

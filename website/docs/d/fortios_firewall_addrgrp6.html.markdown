@@ -26,6 +26,7 @@ The following attributes are exported:
 * `comment` - Comment.
 * `member` - Address objects contained within the group. The structure of `member` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `fabric_object` - Security Fabric global object setting.
 
 The `member` block contains:
 

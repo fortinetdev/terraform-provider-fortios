@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_fm
-Configure FM.
+Configure FM. Applies to FortiOS Version `<= 7.0.1`.
 
 ## Example Usage
 

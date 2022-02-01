@@ -73,13 +73,13 @@ func resourceWirelessControllerBleProfile() *schema.Resource {
 			},
 			"eddystone_namespace": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 10),
+				ValidateFunc: validation.StringLenBetween(0, 20),
 				Optional:     true,
 				Computed:     true,
 			},
 			"eddystone_instance": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 6),
+				ValidateFunc: validation.StringLenBetween(0, 12),
 				Optional:     true,
 				Computed:     true,
 			},

@@ -37,7 +37,7 @@ func resourceFirewallInternetServiceAppend() *schema.Resource {
 			},
 			"match_port": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 65535),
+				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -183,7 +183,7 @@ func expandFirewallInternetServiceAppendAppendPort(d *schema.ResourceData, v int
 func getObjectFirewallInternetServiceAppend(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("match_port"); ok {
+	if v, ok := d.GetOkExists("match_port"); ok {
 
 		t, err := expandFirewallInternetServiceAppendMatchPort(d, v, "match_port", sv)
 		if err != nil {

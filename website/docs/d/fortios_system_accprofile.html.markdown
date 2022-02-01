@@ -61,6 +61,7 @@ The `fwgrp_permission` block contains:
 * `address` - Address Configuration.
 * `service` - Service Configuration.
 * `schedule` - Schedule Configuration.
+* `others` - Other Firewall Configuration.
 
 The `loggrp_permission` block contains:
 

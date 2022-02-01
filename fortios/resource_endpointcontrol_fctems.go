@@ -102,16 +102,36 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"pull_malware_hash": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cloud_server_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"capabilities": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"call_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(500, 30000),
+				ValidateFunc: validation.IntBetween(1, 50000),
 				Optional:     true,
 				Computed:     true,
+			},
+			"websocket_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"preserve_ssl_session": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"certificate": &schema.Schema{
 				Type:         schema.TypeString,
@@ -292,11 +312,27 @@ func flattenEndpointControlFctemsPullTags(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenEndpointControlFctemsPullMalwareHash(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsCloudServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenEndpointControlFctemsCapabilities(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsCallTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsWebsocketOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsPreserveSslSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -373,15 +409,39 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("pull_malware_hash", flattenEndpointControlFctemsPullMalwareHash(o["pull-malware-hash"], d, "pull_malware_hash", sv)); err != nil {
+		if !fortiAPIPatch(o["pull-malware-hash"]) {
+			return fmt.Errorf("Error reading pull_malware_hash: %v", err)
+		}
+	}
+
 	if err = d.Set("cloud_server_type", flattenEndpointControlFctemsCloudServerType(o["cloud-server-type"], d, "cloud_server_type", sv)); err != nil {
 		if !fortiAPIPatch(o["cloud-server-type"]) {
 			return fmt.Errorf("Error reading cloud_server_type: %v", err)
 		}
 	}
 
+	if err = d.Set("capabilities", flattenEndpointControlFctemsCapabilities(o["capabilities"], d, "capabilities", sv)); err != nil {
+		if !fortiAPIPatch(o["capabilities"]) {
+			return fmt.Errorf("Error reading capabilities: %v", err)
+		}
+	}
+
 	if err = d.Set("call_timeout", flattenEndpointControlFctemsCallTimeout(o["call-timeout"], d, "call_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["call-timeout"]) {
 			return fmt.Errorf("Error reading call_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("websocket_override", flattenEndpointControlFctemsWebsocketOverride(o["websocket-override"], d, "websocket_override", sv)); err != nil {
+		if !fortiAPIPatch(o["websocket-override"]) {
+			return fmt.Errorf("Error reading websocket_override: %v", err)
+		}
+	}
+
+	if err = d.Set("preserve_ssl_session", flattenEndpointControlFctemsPreserveSslSession(o["preserve-ssl-session"], d, "preserve_ssl_session", sv)); err != nil {
+		if !fortiAPIPatch(o["preserve-ssl-session"]) {
+			return fmt.Errorf("Error reading preserve_ssl_session: %v", err)
 		}
 	}
 
@@ -448,11 +508,27 @@ func expandEndpointControlFctemsPullTags(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandEndpointControlFctemsPullMalwareHash(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsCloudServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
+func expandEndpointControlFctemsCapabilities(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsCallTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsWebsocketOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsPreserveSslSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -583,6 +659,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("pull_malware_hash"); ok {
+
+		t, err := expandEndpointControlFctemsPullMalwareHash(d, v, "pull_malware_hash", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pull-malware-hash"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("cloud_server_type"); ok {
 
 		t, err := expandEndpointControlFctemsCloudServerType(d, v, "cloud_server_type", sv)
@@ -593,6 +679,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("capabilities"); ok {
+
+		t, err := expandEndpointControlFctemsCapabilities(d, v, "capabilities", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["capabilities"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("call_timeout"); ok {
 
 		t, err := expandEndpointControlFctemsCallTimeout(d, v, "call_timeout", sv)
@@ -600,6 +696,26 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["call-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("websocket_override"); ok {
+
+		t, err := expandEndpointControlFctemsWebsocketOverride(d, v, "websocket_override", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["websocket-override"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("preserve_ssl_session"); ok {
+
+		t, err := expandEndpointControlFctemsPreserveSslSession(d, v, "preserve_ssl_session", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["preserve-ssl-session"] = t
 		}
 	}
 

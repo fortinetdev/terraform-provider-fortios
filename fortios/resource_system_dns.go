@@ -44,6 +44,11 @@ func resourceSystemDns() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dns_over_tls": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -136,6 +141,26 @@ func resourceSystemDns() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"server_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"alt_primary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"alt_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -240,6 +265,10 @@ func flattenSystemDnsPrimary(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSystemDnsSecondary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -367,6 +396,22 @@ func flattenSystemDnsInterface(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemDnsServerSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsAltPrimary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsAltSecondary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -379,6 +424,12 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("secondary", flattenSystemDnsSecondary(o["secondary"], d, "secondary", sv)); err != nil {
 		if !fortiAPIPatch(o["secondary"]) {
 			return fmt.Errorf("Error reading secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", flattenSystemDnsProtocol(o["protocol"], d, "protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
@@ -486,6 +537,30 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("server_select_method", flattenSystemDnsServerSelectMethod(o["server-select-method"], d, "server_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["server-select-method"]) {
+			return fmt.Errorf("Error reading server_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_primary", flattenSystemDnsAltPrimary(o["alt-primary"], d, "alt_primary", sv)); err != nil {
+		if !fortiAPIPatch(o["alt-primary"]) {
+			return fmt.Errorf("Error reading alt_primary: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_secondary", flattenSystemDnsAltSecondary(o["alt-secondary"], d, "alt_secondary", sv)); err != nil {
+		if !fortiAPIPatch(o["alt-secondary"]) {
+			return fmt.Errorf("Error reading alt_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("log", flattenSystemDnsLog(o["log"], d, "log", sv)); err != nil {
+		if !fortiAPIPatch(o["log"]) {
+			return fmt.Errorf("Error reading log: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -500,6 +575,10 @@ func expandSystemDnsPrimary(d *schema.ResourceData, v interface{}, pre string, s
 }
 
 func expandSystemDnsSecondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -615,6 +694,22 @@ func expandSystemDnsInterface(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandSystemDnsServerSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsAltPrimary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsAltSecondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemDns(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -635,6 +730,16 @@ func getObjectSystemDns(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["secondary"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("protocol"); ok {
+
+		t, err := expandSystemDnsProtocol(d, v, "protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["protocol"] = t
 		}
 	}
 
@@ -775,6 +880,46 @@ func getObjectSystemDns(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_select_method"); ok {
+
+		t, err := expandSystemDnsServerSelectMethod(d, v, "server_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("alt_primary"); ok {
+
+		t, err := expandSystemDnsAltPrimary(d, v, "alt_primary", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["alt-primary"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("alt_secondary"); ok {
+
+		t, err := expandSystemDnsAltSecondary(d, v, "alt_secondary", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["alt-secondary"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("log"); ok {
+
+		t, err := expandSystemDnsLog(d, v, "log", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["log"] = t
 		}
 	}
 

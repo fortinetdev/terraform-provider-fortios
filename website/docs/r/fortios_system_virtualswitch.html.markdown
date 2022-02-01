@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_virtualswitch
-Configure virtual hardware switch interfaces.
+Configure virtual hardware switch interfaces. Applies to FortiOS Version `>= 7.0.4`.
 
 ## Argument Reference
 
@@ -15,9 +15,10 @@ The following arguments are supported:
 
 * `name` - Name of the virtual switch.
 * `physical_switch` - Physical switch parent.
+* `vlan` - VLAN.
 * `port` - Configure member ports. The structure of `port` block is documented below.
 * `span` - Enable/disable SPAN. Valid values: `disable`, `enable`.
-* `span_source_port` - SPAN source ports.
+* `span_source_port` - SPAN source port.
 * `span_dest_port` - SPAN destination port.
 * `span_direction` - SPAN direction. Valid values: `rx`, `tx`, `both`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -26,8 +27,6 @@ The following arguments are supported:
 The `port` block supports:
 
 * `name` - Physical interface name.
-* `speed` - Interface speed. Valid values: `auto`, `10full`, `10half`, `100full`, `100half`, `1000full`, `1000half`, `1000auto`.
-* `status` - Interface status. Valid values: `up`, `down`.
 * `alias` - Alias.
 
 

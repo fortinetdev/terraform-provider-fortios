@@ -72,6 +72,16 @@ func resourceAntivirusQuarantine() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"drop_machine_learning": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"store_machine_learning": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"drop_heuristic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -213,6 +223,14 @@ func flattenAntivirusQuarantineStoreBlocked(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenAntivirusQuarantineDropMachineLearning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusQuarantineStoreMachineLearning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusQuarantineDropHeuristic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -274,6 +292,18 @@ func refreshObjectAntivirusQuarantine(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("drop_machine_learning", flattenAntivirusQuarantineDropMachineLearning(o["drop-machine-learning"], d, "drop_machine_learning", sv)); err != nil {
+		if !fortiAPIPatch(o["drop-machine-learning"]) {
+			return fmt.Errorf("Error reading drop_machine_learning: %v", err)
+		}
+	}
+
+	if err = d.Set("store_machine_learning", flattenAntivirusQuarantineStoreMachineLearning(o["store-machine-learning"], d, "store_machine_learning", sv)); err != nil {
+		if !fortiAPIPatch(o["store-machine-learning"]) {
+			return fmt.Errorf("Error reading store_machine_learning: %v", err)
+		}
+	}
+
 	if err = d.Set("drop_heuristic", flattenAntivirusQuarantineDropHeuristic(o["drop-heuristic"], d, "drop_heuristic", sv)); err != nil {
 		if !fortiAPIPatch(o["drop-heuristic"]) {
 			return fmt.Errorf("Error reading drop_heuristic: %v", err)
@@ -332,6 +362,14 @@ func expandAntivirusQuarantineDropBlocked(d *schema.ResourceData, v interface{},
 }
 
 func expandAntivirusQuarantineStoreBlocked(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusQuarantineDropMachineLearning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusQuarantineStoreMachineLearning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -421,6 +459,26 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["store-blocked"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("drop_machine_learning"); ok {
+
+		t, err := expandAntivirusQuarantineDropMachineLearning(d, v, "drop_machine_learning", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["drop-machine-learning"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("store_machine_learning"); ok {
+
+		t, err := expandAntivirusQuarantineStoreMachineLearning(d, v, "store_machine_learning", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["store-machine-learning"] = t
 		}
 	}
 

@@ -53,6 +53,10 @@ func dataSourceRouterKeyChain() *schema.Resource {
 							Sensitive: true,
 							Computed:  true,
 						},
+						"algorithm": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -150,6 +154,11 @@ func dataSourceFlattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, p
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
+		if _, ok := i["algorithm"]; ok {
+			tmp["algorithm"] = dataSourceFlattenRouterKeyChainKeyAlgorithm(i["algorithm"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -171,6 +180,10 @@ func dataSourceFlattenRouterKeyChainKeySendLifetime(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenRouterKeyChainKeyKeyString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterKeyChainKeyAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

@@ -59,6 +59,11 @@ func resourceFirewallScheduleRecurring() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -204,6 +209,10 @@ func flattenFirewallScheduleRecurringColor(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallScheduleRecurringFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -237,6 +246,12 @@ func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("fabric_object", flattenFirewallScheduleRecurringFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -263,6 +278,10 @@ func expandFirewallScheduleRecurringDay(d *schema.ResourceData, v interface{}, p
 }
 
 func expandFirewallScheduleRecurringColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallScheduleRecurringFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -316,6 +335,16 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 			return &obj, err
 		} else if t != nil {
 			obj["color"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallScheduleRecurringFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

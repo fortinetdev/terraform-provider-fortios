@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_certificate_remote
-Remote certificate as a PEM file.
+Remote certificate as a PEM file. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

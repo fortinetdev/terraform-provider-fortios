@@ -60,6 +60,11 @@ func resourceFirewallScheduleOnetime() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -205,6 +210,10 @@ func flattenFirewallScheduleOnetimeExpirationDays(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenFirewallScheduleOnetimeFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -238,6 +247,12 @@ func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("fabric_object", flattenFirewallScheduleOnetimeFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -264,6 +279,10 @@ func expandFirewallScheduleOnetimeColor(d *schema.ResourceData, v interface{}, p
 }
 
 func expandFirewallScheduleOnetimeExpirationDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallScheduleOnetimeFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -317,6 +336,16 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["expiration-days"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallScheduleOnetimeFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

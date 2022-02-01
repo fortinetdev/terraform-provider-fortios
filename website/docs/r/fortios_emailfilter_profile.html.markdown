@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_profile
-Configure Email Filter profiles.
+Configure Email Filter profiles. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

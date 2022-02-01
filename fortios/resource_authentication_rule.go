@@ -108,6 +108,20 @@ func resourceAuthenticationRule() *schema.Resource {
 					},
 				},
 			},
+			"dstaddr6": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"ip_based": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -439,6 +453,44 @@ func flattenAuthenticationRuleSrcaddr6Name(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenAuthenticationRuleDstaddr6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenAuthenticationRuleDstaddr6Name(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenAuthenticationRuleDstaddr6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationRuleIpBased(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -547,6 +599,22 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 			if err = d.Set("srcaddr6", flattenAuthenticationRuleSrcaddr6(o["srcaddr6"], d, "srcaddr6", sv)); err != nil {
 				if !fortiAPIPatch(o["srcaddr6"]) {
 					return fmt.Errorf("Error reading srcaddr6: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("dstaddr6", flattenAuthenticationRuleDstaddr6(o["dstaddr6"], d, "dstaddr6", sv)); err != nil {
+			if !fortiAPIPatch(o["dstaddr6"]) {
+				return fmt.Errorf("Error reading dstaddr6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr6"); ok {
+			if err = d.Set("dstaddr6", flattenAuthenticationRuleDstaddr6(o["dstaddr6"], d, "dstaddr6", sv)); err != nil {
+				if !fortiAPIPatch(o["dstaddr6"]) {
+					return fmt.Errorf("Error reading dstaddr6: %v", err)
 				}
 			}
 		}
@@ -743,6 +811,38 @@ func expandAuthenticationRuleSrcaddr6Name(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandAuthenticationRuleDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandAuthenticationRuleDstaddr6Name(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandAuthenticationRuleDstaddr6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAuthenticationRuleIpBased(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -841,6 +941,16 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["srcaddr6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dstaddr6"); ok {
+
+		t, err := expandAuthenticationRuleDstaddr6(d, v, "dstaddr6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dstaddr6"] = t
 		}
 	}
 

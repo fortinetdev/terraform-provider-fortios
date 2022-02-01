@@ -99,6 +99,11 @@ func resourceFirewallAddress6Template() *schema.Resource {
 					},
 				},
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -362,6 +367,10 @@ func flattenFirewallAddress6TemplateSubnetSegmentValuesValue(v interface{}, d *s
 	return v
 }
 
+func flattenFirewallAddress6TemplateFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -396,6 +405,12 @@ func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]
 					return fmt.Errorf("Error reading subnet_segment: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenFirewallAddress6TemplateFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 
@@ -532,6 +547,10 @@ func expandFirewallAddress6TemplateSubnetSegmentValuesValue(d *schema.ResourceDa
 	return v, nil
 }
 
+func expandFirewallAddress6TemplateFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -572,6 +591,16 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["subnet-segment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallAddress6TemplateFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

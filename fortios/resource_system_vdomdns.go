@@ -50,6 +50,11 @@ func resourceSystemVdomDns() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dns_over_tls": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -100,6 +105,21 @@ func resourceSystemVdomDns() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"server_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"alt_primary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"alt_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -211,6 +231,10 @@ func flattenSystemVdomDnsSecondary(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemVdomDnsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVdomDnsDnsOverTls(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -277,6 +301,18 @@ func flattenSystemVdomDnsInterface(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemVdomDnsServerSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomDnsAltPrimary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomDnsAltSecondary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -295,6 +331,12 @@ func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("secondary", flattenSystemVdomDnsSecondary(o["secondary"], d, "secondary", sv)); err != nil {
 		if !fortiAPIPatch(o["secondary"]) {
 			return fmt.Errorf("Error reading secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", flattenSystemVdomDnsProtocol(o["protocol"], d, "protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
@@ -356,6 +398,24 @@ func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("server_select_method", flattenSystemVdomDnsServerSelectMethod(o["server-select-method"], d, "server_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["server-select-method"]) {
+			return fmt.Errorf("Error reading server_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_primary", flattenSystemVdomDnsAltPrimary(o["alt-primary"], d, "alt_primary", sv)); err != nil {
+		if !fortiAPIPatch(o["alt-primary"]) {
+			return fmt.Errorf("Error reading alt_primary: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_secondary", flattenSystemVdomDnsAltSecondary(o["alt-secondary"], d, "alt_secondary", sv)); err != nil {
+		if !fortiAPIPatch(o["alt-secondary"]) {
+			return fmt.Errorf("Error reading alt_secondary: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -374,6 +434,10 @@ func expandSystemVdomDnsPrimary(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemVdomDnsSecondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomDnsProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -437,6 +501,18 @@ func expandSystemVdomDnsInterface(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandSystemVdomDnsServerSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomDnsAltPrimary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomDnsAltSecondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemVdomDns(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -467,6 +543,16 @@ func getObjectSystemVdomDns(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["secondary"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("protocol"); ok {
+
+		t, err := expandSystemVdomDnsProtocol(d, v, "protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["protocol"] = t
 		}
 	}
 
@@ -547,6 +633,36 @@ func getObjectSystemVdomDns(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_select_method"); ok {
+
+		t, err := expandSystemVdomDnsServerSelectMethod(d, v, "server_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("alt_primary"); ok {
+
+		t, err := expandSystemVdomDnsAltPrimary(d, v, "alt_primary", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["alt-primary"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("alt_secondary"); ok {
+
+		t, err := expandSystemVdomDnsAltSecondary(d, v, "alt_secondary", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["alt-secondary"] = t
 		}
 	}
 

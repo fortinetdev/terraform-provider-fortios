@@ -38,6 +38,8 @@ The following arguments are supported:
 
 * `ddnsid` - DDNS ID.
 * `ddns_server` - (Required) Select a DDNS service provider. Valid values: `dyndns.org`, `dyns.net`, `tzo.com`, `vavic.com`, `dipdns.net`, `now.net.cn`, `dhs.org`, `easydns.com`, `genericDDNS`, `FortiGuardDDNS`, `noip.com`.
+* `server_type` - Address type of the DDNS server. Valid values: `ipv4`, `ipv6`.
+* `ddns_server_addr` - Generic DDNS server IP/FQDN list. The structure of `ddns_server_addr` block is documented below.
 * `ddns_server_ip` - Generic DDNS server IP.
 * `ddns_zone` - Zone of your domain name (for example, DDNS.com).
 * `ddns_ttl` - Time-to-live for DDNS packets.
@@ -49,6 +51,7 @@ The following arguments are supported:
 * `ddns_sn` - DDNS Serial Number.
 * `ddns_password` - DDNS password.
 * `use_public_ip` - Enable/disable use of public IP address. Valid values: `disable`, `enable`.
+* `addr_type` - Address type of interface address in DDNS update. Valid values: `ipv4`, `ipv6`.
 * `update_interval` - DDNS update interval (60 - 2592000 sec, default = 300).
 * `clear_text` - Enable/disable use of clear text connections. Valid values: `disable`, `enable`.
 * `ssl_certificate` - Name of local certificate for SSL connections.
@@ -56,6 +59,10 @@ The following arguments are supported:
 * `monitor_interface` - (Required) Monitored interface. The structure of `monitor_interface` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `ddns_server_addr` block supports:
+
+* `addr` - IP address or FQDN of the server.
 
 The `monitor_interface` block supports:
 

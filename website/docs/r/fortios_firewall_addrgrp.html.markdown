@@ -44,6 +44,7 @@ The following arguments are supported:
 
 * `name` - (Required) Address group name.
 * `type` - Address group type. Valid values: `default`, `folder`.
+* `category` - Address group category. Valid values: `default`, `ztna-ems-tag`, `ztna-geo-tag`.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - (Required) Address objects contained within the group. The structure of `member` block is documented below.
 * `comment` - Comment.
@@ -53,6 +54,7 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this group in the static route configuration. Valid values: `enable`, `disable`.
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_internetservicelist
-Internet Service list.
+Internet Service list. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

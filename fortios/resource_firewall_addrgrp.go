@@ -45,6 +45,11 @@ func resourceFirewallAddrgrp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"category": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -134,6 +139,11 @@ func resourceFirewallAddrgrp() *schema.Resource {
 				},
 			},
 			"allow_routing": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -273,6 +283,10 @@ func flattenFirewallAddrgrpName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallAddrgrpType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddrgrpCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -467,6 +481,10 @@ func flattenFirewallAddrgrpAllowRouting(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallAddrgrpFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -479,6 +497,12 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("type", flattenFirewallAddrgrpType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("category", flattenFirewallAddrgrpCategory(o["category"], d, "category", sv)); err != nil {
+		if !fortiAPIPatch(o["category"]) {
+			return fmt.Errorf("Error reading category: %v", err)
 		}
 	}
 
@@ -566,6 +590,12 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("fabric_object", flattenFirewallAddrgrpFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -580,6 +610,10 @@ func expandFirewallAddrgrpName(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandFirewallAddrgrpType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddrgrpCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -753,6 +787,10 @@ func expandFirewallAddrgrpAllowRouting(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallAddrgrpFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -773,6 +811,16 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("category"); ok {
+
+		t, err := expandFirewallAddrgrpCategory(d, v, "category", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["category"] = t
 		}
 	}
 
@@ -863,6 +911,16 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["allow-routing"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallAddrgrpFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

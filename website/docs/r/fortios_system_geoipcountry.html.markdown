@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_geoipcountry
-Define geoip country name-ID table.
+Define geoip country name-ID table. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

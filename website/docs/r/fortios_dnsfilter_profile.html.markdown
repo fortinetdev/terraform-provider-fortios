@@ -67,7 +67,7 @@ The following arguments are supported:
 * `log_all_domain` - Enable/disable logging of all domains visited (detailed DNS logging). Valid values: `enable`, `disable`.
 * `sdns_ftgd_err_log` - Enable/disable FortiGuard SDNS rating error logging. Valid values: `enable`, `disable`.
 * `sdns_domain_log` - Enable/disable domain filtering and botnet domain logging. Valid values: `enable`, `disable`.
-* `block_action` - Action to take for blocked domains. Valid values: `block`, `redirect`.
+* `block_action` - Action to take for blocked domains.
 * `redirect_portal` - IP address of the SDNS redirect portal.
 * `redirect_portal6` - IPv6 address of the SDNS redirect portal.
 * `block_botnet` - Enable/disable blocking botnet C&C DNS lookups. Valid values: `disable`, `enable`.

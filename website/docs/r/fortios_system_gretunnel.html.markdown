@@ -43,6 +43,7 @@ The following arguments are supported:
 * `local_gw6` - IPv6 address of the local gateway.
 * `remote_gw` - (Required) IP address of the remote gateway.
 * `local_gw` - (Required) IP address of the local gateway.
+* `use_sdwan` - Enable/disable use of SD-WAN to reach remote gateway. Valid values: `disable`, `enable`.
 * `sequence_number_transmission` - Enable/disable including of sequence numbers in transmitted GRE packets. Valid values: `disable`, `enable`.
 * `sequence_number_reception` - Enable/disable validating sequence numbers in received GRE packets. Valid values: `disable`, `enable`.
 * `checksum_transmission` - Enable/disable including checksums in transmitted GRE packets. Valid values: `disable`, `enable`.

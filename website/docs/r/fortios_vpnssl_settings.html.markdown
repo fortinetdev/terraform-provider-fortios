@@ -25,6 +25,7 @@ resource "fortios_vpnssl_settings" "trname" {
 
 The following arguments are supported:
 
+* `status` - Enable/disable SSL-VPN. Valid values: `enable`, `disable`.
 * `reqclientcert` - Enable to require client certificates for all SSL-VPN users. Valid values: `enable`, `disable`.
 * `user_peer` - Name of user peer.
 * `ssl_max_proto_ver` - SSL maximum protocol version. Valid values: `tls1-0`, `tls1-1`, `tls1-2`, `tls1-3`.
@@ -34,6 +35,7 @@ The following arguments are supported:
 * `tlsv1_2` - Enable/disable TLSv1.2. Valid values: `enable`, `disable`.
 * `tlsv1_3` - Enable/disable TLSv1.3. Valid values: `enable`, `disable`.
 * `banned_cipher` - Select one or more cipher technologies that cannot be used in SSL-VPN negotiations.
+* `ciphersuite` - Select one or more TLS 1.3 ciphersuites to enable. Does not affect ciphers in TLS 1.2 and below. At least one must be enabled. To disable all, set ssl-max-proto-ver to tls1-2 or below. Valid values: `TLS-AES-128-GCM-SHA256`, `TLS-AES-256-GCM-SHA384`, `TLS-CHACHA20-POLY1305-SHA256`, `TLS-AES-128-CCM-SHA256`, `TLS-AES-128-CCM-8-SHA256`.
 * `ssl_insert_empty_fragment` - Enable/disable insertion of empty fragment. Valid values: `enable`, `disable`.
 * `https_redirect` - Enable/disable redirect of port 80 to SSL-VPN port. Valid values: `enable`, `disable`.
 * `x_content_type_options` - Add HTTP X-Content-Type-Options header. Valid values: `enable`, `disable`.
@@ -89,6 +91,10 @@ The following arguments are supported:
 * `transform_backward_slashes` - Transform backward slashes to forward slashes in URLs. Valid values: `enable`, `disable`.
 * `encode_2f_sequence` - Encode \2F sequence to forward slash in URLs. Valid values: `enable`, `disable`.
 * `encrypt_and_store_password` - Encrypt and store user passwords for SSL-VPN web sessions. Valid values: `enable`, `disable`.
+* `client_sigalgs` - Set signature algorithms related to client authentication. Affects TLS version <= 1.2 only. Valid values: `no-rsa-pss`, `all`.
+* `dual_stack_mode` - Tunnel mode: enable parallel IPv4 and IPv6 tunnel. Web mode: support IPv4 and IPv6 bookmarks in the portal. Valid values: `enable`, `disable`.
+* `tunnel_addr_assigned_method` - Method used for assigning address for tunnel. Valid values: `first-available`, `round-robin`.
+* `saml_redirect_port` - SAML local redirect port in the machine running FCT (0 - 65535). 0 is to disable redirection on FGT side.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -127,7 +133,7 @@ The `authentication_rule` block supports:
 * `client_cert` - Enable/disable SSL VPN client certificate restrictive. Valid values: `enable`, `disable`.
 * `user_peer` - Name of user peer.
 * `cipher` - SSL VPN cipher strength. Valid values: `any`, `high`, `medium`.
-* `auth` - SSL VPN authentication method restriction. Valid values: `any`, `local`, `radius`, `tacacs+`, `ldap`.
+* `auth` - SSL VPN authentication method restriction.
 
 The `source_interface` block supports:
 

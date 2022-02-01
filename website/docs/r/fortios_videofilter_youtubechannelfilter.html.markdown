@@ -1,0 +1,45 @@
+---
+subcategory: "FortiGate Videofilter"
+layout: "fortios"
+page_title: "FortiOS: fortios_videofilter_youtubechannelfilter"
+description: |-
+  Configure YouTube channel filter.
+---
+
+# fortios_videofilter_youtubechannelfilter
+Configure YouTube channel filter. Applies to FortiOS Version `>= 7.0.1`.
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `fosid` - ID.
+* `name` - Name.
+* `comment` - Comment.
+* `default_action` - YouTube channel filter default action. Valid values: `allow`, `monitor`, `block`.
+* `entries` - YouTube filter entries. The structure of `entries` block is documented below.
+* `log` - Eanble/disable logging. Valid values: `enable`, `disable`.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `entries` block supports:
+
+* `id` - ID.
+* `comment` - Comment.
+* `action` - YouTube channel filter action. Valid values: `allow`, `monitor`, `block`.
+* `channel_id` - Channel ID.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{fosid}}.
+
+## Import
+
+Videofilter YoutubeChannelFilter can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_videofilter_youtubechannelfilter.labelname {{fosid}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```

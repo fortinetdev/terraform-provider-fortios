@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_internetserviceipblvendor
-IP blacklist vendor.
+IP blacklist vendor. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

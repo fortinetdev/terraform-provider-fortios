@@ -23,6 +23,7 @@ The following arguments are supported:
 * `region_x` - Relative horizontal region coordinate (between 0 and 1).
 * `region_y` - Relative vertical region coordinate (between 0 and 1).
 * `firmware_provision` - Firmware version to provision to this FortiAP on bootup (major.minor.build, i.e. 6.2.1234).
+* `firmware_provision_latest` - Enable/disable one-time automatic provisioning of the latest firmware version. Valid values: `disable`, `once`.
 * `wtp_profile` - (Required) WTP profile name to apply to this WTP, AP or FortiAP.
 * `wtp_mode` - WTP, AP, or FortiAP operating mode; normal (by default) or remote. A tunnel mode SSID can be assigned to an AP in normal mode but not remote mode, while a local-bridge mode SSID can be assigned to an AP in either normal mode or remote mode. Valid values: `normal`, `remote`.
 * `apcfg_profile` - AP local configuration profile name.
@@ -97,7 +98,9 @@ The `radio_1` block supports:
 * `auto_power_high` - Automatic transmission power high limit in decibels (dB) of the measured power referenced to one milliwatt (mW), or dBm (10 - 17 dBm, default = 17).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
@@ -125,7 +128,9 @@ The `radio_2` block supports:
 * `auto_power_high` - Automatic transmission power high limit in decibels (dB) of the measured power referenced to one milliwatt (mW), or dBm (10 - 17 dBm, default = 17).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
@@ -152,7 +157,9 @@ The `radio_3` block supports:
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
@@ -179,7 +186,9 @@ The `radio_4` block supports:
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.

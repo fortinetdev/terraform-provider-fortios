@@ -48,6 +48,7 @@ The following arguments are supported:
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole. Valid values: `enable`, `disable`.
 * `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server. Valid values: `enable`, `disable`.
+* `sdwan_zone` - Choose SD-WAN Zone. The structure of `sdwan_zone` block is documented below.
 * `sdwan` - Enable/disable egress through SD-WAN. Valid values: `enable`, `disable`.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link. Valid values: `enable`, `disable`.
 * `dstaddr` - Name of firewall address or address group.
@@ -56,7 +57,12 @@ The following arguments are supported:
 * `link_monitor_exempt` - Enable/disable withdrawing this route when link monitor or health check is down. Valid values: `enable`, `disable`.
 * `vrf` - Virtual Routing Forwarding ID.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `sdwan_zone` block supports:
+
+* `name` - SD-WAN zone name.
 
 
 ## Attribute Reference

@@ -88,6 +88,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"syslog_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"wan_port_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -347,7 +353,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"login_passwd": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 31),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
 			},
@@ -449,6 +455,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"bss_color_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"short_guard_interval": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -480,9 +491,20 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -551,6 +573,111 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"sam_ssid": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_bssid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_security_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_captive_portal": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_cwp_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_cwp_test_url": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_match_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_success_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_failure_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_test": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_server_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_report_intv": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(60, 864000),
+							Optional:     true,
+							Computed:     true,
+						},
 						"channel_utilization": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -571,6 +698,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"arrp_profile": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_clients": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -729,6 +862,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"bss_color_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"short_guard_interval": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -760,9 +898,20 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -831,6 +980,111 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"sam_ssid": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_bssid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_security_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_captive_portal": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_cwp_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_cwp_test_url": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_match_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_success_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_failure_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_test": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_server_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_report_intv": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(60, 864000),
+							Optional:     true,
+							Computed:     true,
+						},
 						"channel_utilization": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -851,6 +1105,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"arrp_profile": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_clients": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -1003,6 +1263,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"bss_color_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"short_guard_interval": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1034,9 +1299,20 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1105,6 +1381,111 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"sam_ssid": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_bssid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_security_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_captive_portal": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_cwp_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_cwp_test_url": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_match_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_success_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_failure_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_test": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_server_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_report_intv": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(60, 864000),
+							Optional:     true,
+							Computed:     true,
+						},
 						"channel_utilization": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1125,6 +1506,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"arrp_profile": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_clients": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -1277,6 +1664,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"bss_color_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"short_guard_interval": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1308,9 +1700,20 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1379,6 +1782,111 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"sam_ssid": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_bssid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_security_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_captive_portal": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_cwp_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_cwp_test_url": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_match_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_success_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_cwp_failure_string": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_username": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sam_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+						},
+						"sam_test": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_server_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_server_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"iperf_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sam_report_intv": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(60, 864000),
+							Optional:     true,
+							Computed:     true,
+						},
 						"channel_utilization": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1399,6 +1907,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"arrp_profile": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_clients": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -1553,10 +2067,21 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"fortipresence_server_addr_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortipresence_server": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"fortipresence_server_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
 						},
 						"fortipresence_port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1606,6 +2131,103 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				},
 			},
 			"ext_info_enable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"indoor_outdoor_deployment": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"esl_ses_dongle": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"compliance_level": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"scd_enable": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"esl_channel": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"output_power": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"apc_addr_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"apc_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"apc_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"apc_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"coex_level": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"tls_cert_verification": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"tls_fqdn_verification": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"console_login": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wan_port_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wan_port_auth_usrname": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"wan_port_auth_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+			},
+			"wan_port_auth_methods": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1800,6 +2422,10 @@ func flattenWirelessControllerWtpProfileApcfgProfile(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerWtpProfileBleProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileSyslogProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2338,6 +2964,12 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 		result["bss_color"] = flattenWirelessControllerWtpProfileRadio1BssColor(i["bss-color"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := i["bss-color-mode"]; ok {
+
+		result["bss_color_mode"] = flattenWirelessControllerWtpProfileRadio1BssColorMode(i["bss-color-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := i["short-guard-interval"]; ok {
 
@@ -2374,10 +3006,22 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 		result["auto_power_target"] = flattenWirelessControllerWtpProfileRadio1AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpProfileRadio1PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpProfileRadio1PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpProfileRadio1PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dtim"
@@ -2452,6 +3096,120 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 		result["ap_sniffer_data"] = flattenWirelessControllerWtpProfileRadio1ApSnifferData(i["ap-sniffer-data"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := i["sam-ssid"]; ok {
+
+		result["sam_ssid"] = flattenWirelessControllerWtpProfileRadio1SamSsid(i["sam-ssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := i["sam-bssid"]; ok {
+
+		result["sam_bssid"] = flattenWirelessControllerWtpProfileRadio1SamBssid(i["sam-bssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := i["sam-security-type"]; ok {
+
+		result["sam_security_type"] = flattenWirelessControllerWtpProfileRadio1SamSecurityType(i["sam-security-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := i["sam-captive-portal"]; ok {
+
+		result["sam_captive_portal"] = flattenWirelessControllerWtpProfileRadio1SamCaptivePortal(i["sam-captive-portal"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := i["sam-cwp-username"]; ok {
+
+		result["sam_cwp_username"] = flattenWirelessControllerWtpProfileRadio1SamCwpUsername(i["sam-cwp-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := i["sam-cwp-password"]; ok {
+
+		result["sam_cwp_password"] = flattenWirelessControllerWtpProfileRadio1SamCwpPassword(i["sam-cwp-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := i["sam-cwp-test-url"]; ok {
+
+		result["sam_cwp_test_url"] = flattenWirelessControllerWtpProfileRadio1SamCwpTestUrl(i["sam-cwp-test-url"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := i["sam-cwp-match-string"]; ok {
+
+		result["sam_cwp_match_string"] = flattenWirelessControllerWtpProfileRadio1SamCwpMatchString(i["sam-cwp-match-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := i["sam-cwp-success-string"]; ok {
+
+		result["sam_cwp_success_string"] = flattenWirelessControllerWtpProfileRadio1SamCwpSuccessString(i["sam-cwp-success-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := i["sam-cwp-failure-string"]; ok {
+
+		result["sam_cwp_failure_string"] = flattenWirelessControllerWtpProfileRadio1SamCwpFailureString(i["sam-cwp-failure-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := i["sam-username"]; ok {
+
+		result["sam_username"] = flattenWirelessControllerWtpProfileRadio1SamUsername(i["sam-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := i["sam-password"]; ok {
+
+		result["sam_password"] = flattenWirelessControllerWtpProfileRadio1SamPassword(i["sam-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := i["sam-test"]; ok {
+
+		result["sam_test"] = flattenWirelessControllerWtpProfileRadio1SamTest(i["sam-test"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := i["sam-server-type"]; ok {
+
+		result["sam_server_type"] = flattenWirelessControllerWtpProfileRadio1SamServerType(i["sam-server-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := i["sam-server-ip"]; ok {
+
+		result["sam_server_ip"] = flattenWirelessControllerWtpProfileRadio1SamServerIp(i["sam-server-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := i["sam-server-fqdn"]; ok {
+
+		result["sam_server_fqdn"] = flattenWirelessControllerWtpProfileRadio1SamServerFqdn(i["sam-server-fqdn"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := i["iperf-server-port"]; ok {
+
+		result["iperf_server_port"] = flattenWirelessControllerWtpProfileRadio1IperfServerPort(i["iperf-server-port"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := i["iperf-protocol"]; ok {
+
+		result["iperf_protocol"] = flattenWirelessControllerWtpProfileRadio1IperfProtocol(i["iperf-protocol"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := i["sam-report-intv"]; ok {
+
+		result["sam_report_intv"] = flattenWirelessControllerWtpProfileRadio1SamReportIntv(i["sam-report-intv"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := i["channel-utilization"]; ok {
 
@@ -2474,6 +3232,12 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 	if _, ok := i["darrp"]; ok {
 
 		result["darrp"] = flattenWirelessControllerWtpProfileRadio1Darrp(i["darrp"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := i["arrp-profile"]; ok {
+
+		result["arrp_profile"] = flattenWirelessControllerWtpProfileRadio1ArrpProfile(i["arrp-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_clients"
@@ -2602,6 +3366,10 @@ func flattenWirelessControllerWtpProfileRadio1BssColor(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio1BssColorMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio1ShortGuardInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2626,7 +3394,15 @@ func flattenWirelessControllerWtpProfileRadio1AutoPowerTarget(v interface{}, d *
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio1PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio1PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2678,6 +3454,82 @@ func flattenWirelessControllerWtpProfileRadio1ApSnifferData(v interface{}, d *sc
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio1SamSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamBssid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamSecurityType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCwpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCwpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCwpTestUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCwpMatchString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCwpSuccessString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamCwpFailureString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1IperfServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1IperfProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1SamReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio1ChannelUtilization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2691,6 +3543,10 @@ func flattenWirelessControllerWtpProfileRadio1WidsProfile(v interface{}, d *sche
 }
 
 func flattenWirelessControllerWtpProfileRadio1Darrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1ArrpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2897,6 +3753,12 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["bss_color"] = flattenWirelessControllerWtpProfileRadio2BssColor(i["bss-color"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := i["bss-color-mode"]; ok {
+
+		result["bss_color_mode"] = flattenWirelessControllerWtpProfileRadio2BssColorMode(i["bss-color-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := i["short-guard-interval"]; ok {
 
@@ -2933,10 +3795,22 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["auto_power_target"] = flattenWirelessControllerWtpProfileRadio2AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpProfileRadio2PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpProfileRadio2PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpProfileRadio2PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dtim"
@@ -3011,6 +3885,120 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["ap_sniffer_data"] = flattenWirelessControllerWtpProfileRadio2ApSnifferData(i["ap-sniffer-data"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := i["sam-ssid"]; ok {
+
+		result["sam_ssid"] = flattenWirelessControllerWtpProfileRadio2SamSsid(i["sam-ssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := i["sam-bssid"]; ok {
+
+		result["sam_bssid"] = flattenWirelessControllerWtpProfileRadio2SamBssid(i["sam-bssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := i["sam-security-type"]; ok {
+
+		result["sam_security_type"] = flattenWirelessControllerWtpProfileRadio2SamSecurityType(i["sam-security-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := i["sam-captive-portal"]; ok {
+
+		result["sam_captive_portal"] = flattenWirelessControllerWtpProfileRadio2SamCaptivePortal(i["sam-captive-portal"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := i["sam-cwp-username"]; ok {
+
+		result["sam_cwp_username"] = flattenWirelessControllerWtpProfileRadio2SamCwpUsername(i["sam-cwp-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := i["sam-cwp-password"]; ok {
+
+		result["sam_cwp_password"] = flattenWirelessControllerWtpProfileRadio2SamCwpPassword(i["sam-cwp-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := i["sam-cwp-test-url"]; ok {
+
+		result["sam_cwp_test_url"] = flattenWirelessControllerWtpProfileRadio2SamCwpTestUrl(i["sam-cwp-test-url"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := i["sam-cwp-match-string"]; ok {
+
+		result["sam_cwp_match_string"] = flattenWirelessControllerWtpProfileRadio2SamCwpMatchString(i["sam-cwp-match-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := i["sam-cwp-success-string"]; ok {
+
+		result["sam_cwp_success_string"] = flattenWirelessControllerWtpProfileRadio2SamCwpSuccessString(i["sam-cwp-success-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := i["sam-cwp-failure-string"]; ok {
+
+		result["sam_cwp_failure_string"] = flattenWirelessControllerWtpProfileRadio2SamCwpFailureString(i["sam-cwp-failure-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := i["sam-username"]; ok {
+
+		result["sam_username"] = flattenWirelessControllerWtpProfileRadio2SamUsername(i["sam-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := i["sam-password"]; ok {
+
+		result["sam_password"] = flattenWirelessControllerWtpProfileRadio2SamPassword(i["sam-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := i["sam-test"]; ok {
+
+		result["sam_test"] = flattenWirelessControllerWtpProfileRadio2SamTest(i["sam-test"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := i["sam-server-type"]; ok {
+
+		result["sam_server_type"] = flattenWirelessControllerWtpProfileRadio2SamServerType(i["sam-server-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := i["sam-server-ip"]; ok {
+
+		result["sam_server_ip"] = flattenWirelessControllerWtpProfileRadio2SamServerIp(i["sam-server-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := i["sam-server-fqdn"]; ok {
+
+		result["sam_server_fqdn"] = flattenWirelessControllerWtpProfileRadio2SamServerFqdn(i["sam-server-fqdn"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := i["iperf-server-port"]; ok {
+
+		result["iperf_server_port"] = flattenWirelessControllerWtpProfileRadio2IperfServerPort(i["iperf-server-port"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := i["iperf-protocol"]; ok {
+
+		result["iperf_protocol"] = flattenWirelessControllerWtpProfileRadio2IperfProtocol(i["iperf-protocol"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := i["sam-report-intv"]; ok {
+
+		result["sam_report_intv"] = flattenWirelessControllerWtpProfileRadio2SamReportIntv(i["sam-report-intv"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := i["channel-utilization"]; ok {
 
@@ -3033,6 +4021,12 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 	if _, ok := i["darrp"]; ok {
 
 		result["darrp"] = flattenWirelessControllerWtpProfileRadio2Darrp(i["darrp"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := i["arrp-profile"]; ok {
+
+		result["arrp_profile"] = flattenWirelessControllerWtpProfileRadio2ArrpProfile(i["arrp-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_clients"
@@ -3161,6 +4155,10 @@ func flattenWirelessControllerWtpProfileRadio2BssColor(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio2BssColorMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio2ShortGuardInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3185,7 +4183,15 @@ func flattenWirelessControllerWtpProfileRadio2AutoPowerTarget(v interface{}, d *
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio2PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio2PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3237,6 +4243,82 @@ func flattenWirelessControllerWtpProfileRadio2ApSnifferData(v interface{}, d *sc
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio2SamSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamBssid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamSecurityType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCwpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCwpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCwpTestUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCwpMatchString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCwpSuccessString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamCwpFailureString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2IperfServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2IperfProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2SamReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio2ChannelUtilization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3250,6 +4332,10 @@ func flattenWirelessControllerWtpProfileRadio2WidsProfile(v interface{}, d *sche
 }
 
 func flattenWirelessControllerWtpProfileRadio2Darrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2ArrpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3450,6 +4536,12 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["bss_color"] = flattenWirelessControllerWtpProfileRadio3BssColor(i["bss-color"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := i["bss-color-mode"]; ok {
+
+		result["bss_color_mode"] = flattenWirelessControllerWtpProfileRadio3BssColorMode(i["bss-color-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := i["short-guard-interval"]; ok {
 
@@ -3486,10 +4578,22 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["auto_power_target"] = flattenWirelessControllerWtpProfileRadio3AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpProfileRadio3PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpProfileRadio3PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpProfileRadio3PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dtim"
@@ -3564,6 +4668,120 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["ap_sniffer_data"] = flattenWirelessControllerWtpProfileRadio3ApSnifferData(i["ap-sniffer-data"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := i["sam-ssid"]; ok {
+
+		result["sam_ssid"] = flattenWirelessControllerWtpProfileRadio3SamSsid(i["sam-ssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := i["sam-bssid"]; ok {
+
+		result["sam_bssid"] = flattenWirelessControllerWtpProfileRadio3SamBssid(i["sam-bssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := i["sam-security-type"]; ok {
+
+		result["sam_security_type"] = flattenWirelessControllerWtpProfileRadio3SamSecurityType(i["sam-security-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := i["sam-captive-portal"]; ok {
+
+		result["sam_captive_portal"] = flattenWirelessControllerWtpProfileRadio3SamCaptivePortal(i["sam-captive-portal"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := i["sam-cwp-username"]; ok {
+
+		result["sam_cwp_username"] = flattenWirelessControllerWtpProfileRadio3SamCwpUsername(i["sam-cwp-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := i["sam-cwp-password"]; ok {
+
+		result["sam_cwp_password"] = flattenWirelessControllerWtpProfileRadio3SamCwpPassword(i["sam-cwp-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := i["sam-cwp-test-url"]; ok {
+
+		result["sam_cwp_test_url"] = flattenWirelessControllerWtpProfileRadio3SamCwpTestUrl(i["sam-cwp-test-url"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := i["sam-cwp-match-string"]; ok {
+
+		result["sam_cwp_match_string"] = flattenWirelessControllerWtpProfileRadio3SamCwpMatchString(i["sam-cwp-match-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := i["sam-cwp-success-string"]; ok {
+
+		result["sam_cwp_success_string"] = flattenWirelessControllerWtpProfileRadio3SamCwpSuccessString(i["sam-cwp-success-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := i["sam-cwp-failure-string"]; ok {
+
+		result["sam_cwp_failure_string"] = flattenWirelessControllerWtpProfileRadio3SamCwpFailureString(i["sam-cwp-failure-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := i["sam-username"]; ok {
+
+		result["sam_username"] = flattenWirelessControllerWtpProfileRadio3SamUsername(i["sam-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := i["sam-password"]; ok {
+
+		result["sam_password"] = flattenWirelessControllerWtpProfileRadio3SamPassword(i["sam-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := i["sam-test"]; ok {
+
+		result["sam_test"] = flattenWirelessControllerWtpProfileRadio3SamTest(i["sam-test"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := i["sam-server-type"]; ok {
+
+		result["sam_server_type"] = flattenWirelessControllerWtpProfileRadio3SamServerType(i["sam-server-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := i["sam-server-ip"]; ok {
+
+		result["sam_server_ip"] = flattenWirelessControllerWtpProfileRadio3SamServerIp(i["sam-server-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := i["sam-server-fqdn"]; ok {
+
+		result["sam_server_fqdn"] = flattenWirelessControllerWtpProfileRadio3SamServerFqdn(i["sam-server-fqdn"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := i["iperf-server-port"]; ok {
+
+		result["iperf_server_port"] = flattenWirelessControllerWtpProfileRadio3IperfServerPort(i["iperf-server-port"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := i["iperf-protocol"]; ok {
+
+		result["iperf_protocol"] = flattenWirelessControllerWtpProfileRadio3IperfProtocol(i["iperf-protocol"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := i["sam-report-intv"]; ok {
+
+		result["sam_report_intv"] = flattenWirelessControllerWtpProfileRadio3SamReportIntv(i["sam-report-intv"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := i["channel-utilization"]; ok {
 
@@ -3586,6 +4804,12 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 	if _, ok := i["darrp"]; ok {
 
 		result["darrp"] = flattenWirelessControllerWtpProfileRadio3Darrp(i["darrp"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := i["arrp-profile"]; ok {
+
+		result["arrp_profile"] = flattenWirelessControllerWtpProfileRadio3ArrpProfile(i["arrp-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_clients"
@@ -3710,6 +4934,10 @@ func flattenWirelessControllerWtpProfileRadio3BssColor(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio3BssColorMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio3ShortGuardInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3734,7 +4962,15 @@ func flattenWirelessControllerWtpProfileRadio3AutoPowerTarget(v interface{}, d *
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio3PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio3PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3786,6 +5022,82 @@ func flattenWirelessControllerWtpProfileRadio3ApSnifferData(v interface{}, d *sc
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio3SamSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamBssid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamSecurityType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCwpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCwpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCwpTestUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCwpMatchString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCwpSuccessString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamCwpFailureString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3IperfServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3IperfProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3SamReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio3ChannelUtilization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3799,6 +5111,10 @@ func flattenWirelessControllerWtpProfileRadio3WidsProfile(v interface{}, d *sche
 }
 
 func flattenWirelessControllerWtpProfileRadio3Darrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3ArrpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3999,6 +5315,12 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["bss_color"] = flattenWirelessControllerWtpProfileRadio4BssColor(i["bss-color"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := i["bss-color-mode"]; ok {
+
+		result["bss_color_mode"] = flattenWirelessControllerWtpProfileRadio4BssColorMode(i["bss-color-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := i["short-guard-interval"]; ok {
 
@@ -4035,10 +5357,22 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["auto_power_target"] = flattenWirelessControllerWtpProfileRadio4AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpProfileRadio4PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpProfileRadio4PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpProfileRadio4PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dtim"
@@ -4113,6 +5447,120 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["ap_sniffer_data"] = flattenWirelessControllerWtpProfileRadio4ApSnifferData(i["ap-sniffer-data"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := i["sam-ssid"]; ok {
+
+		result["sam_ssid"] = flattenWirelessControllerWtpProfileRadio4SamSsid(i["sam-ssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := i["sam-bssid"]; ok {
+
+		result["sam_bssid"] = flattenWirelessControllerWtpProfileRadio4SamBssid(i["sam-bssid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := i["sam-security-type"]; ok {
+
+		result["sam_security_type"] = flattenWirelessControllerWtpProfileRadio4SamSecurityType(i["sam-security-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := i["sam-captive-portal"]; ok {
+
+		result["sam_captive_portal"] = flattenWirelessControllerWtpProfileRadio4SamCaptivePortal(i["sam-captive-portal"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := i["sam-cwp-username"]; ok {
+
+		result["sam_cwp_username"] = flattenWirelessControllerWtpProfileRadio4SamCwpUsername(i["sam-cwp-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := i["sam-cwp-password"]; ok {
+
+		result["sam_cwp_password"] = flattenWirelessControllerWtpProfileRadio4SamCwpPassword(i["sam-cwp-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := i["sam-cwp-test-url"]; ok {
+
+		result["sam_cwp_test_url"] = flattenWirelessControllerWtpProfileRadio4SamCwpTestUrl(i["sam-cwp-test-url"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := i["sam-cwp-match-string"]; ok {
+
+		result["sam_cwp_match_string"] = flattenWirelessControllerWtpProfileRadio4SamCwpMatchString(i["sam-cwp-match-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := i["sam-cwp-success-string"]; ok {
+
+		result["sam_cwp_success_string"] = flattenWirelessControllerWtpProfileRadio4SamCwpSuccessString(i["sam-cwp-success-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := i["sam-cwp-failure-string"]; ok {
+
+		result["sam_cwp_failure_string"] = flattenWirelessControllerWtpProfileRadio4SamCwpFailureString(i["sam-cwp-failure-string"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := i["sam-username"]; ok {
+
+		result["sam_username"] = flattenWirelessControllerWtpProfileRadio4SamUsername(i["sam-username"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := i["sam-password"]; ok {
+
+		result["sam_password"] = flattenWirelessControllerWtpProfileRadio4SamPassword(i["sam-password"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := i["sam-test"]; ok {
+
+		result["sam_test"] = flattenWirelessControllerWtpProfileRadio4SamTest(i["sam-test"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := i["sam-server-type"]; ok {
+
+		result["sam_server_type"] = flattenWirelessControllerWtpProfileRadio4SamServerType(i["sam-server-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := i["sam-server-ip"]; ok {
+
+		result["sam_server_ip"] = flattenWirelessControllerWtpProfileRadio4SamServerIp(i["sam-server-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := i["sam-server-fqdn"]; ok {
+
+		result["sam_server_fqdn"] = flattenWirelessControllerWtpProfileRadio4SamServerFqdn(i["sam-server-fqdn"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := i["iperf-server-port"]; ok {
+
+		result["iperf_server_port"] = flattenWirelessControllerWtpProfileRadio4IperfServerPort(i["iperf-server-port"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := i["iperf-protocol"]; ok {
+
+		result["iperf_protocol"] = flattenWirelessControllerWtpProfileRadio4IperfProtocol(i["iperf-protocol"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := i["sam-report-intv"]; ok {
+
+		result["sam_report_intv"] = flattenWirelessControllerWtpProfileRadio4SamReportIntv(i["sam-report-intv"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := i["channel-utilization"]; ok {
 
@@ -4135,6 +5583,12 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 	if _, ok := i["darrp"]; ok {
 
 		result["darrp"] = flattenWirelessControllerWtpProfileRadio4Darrp(i["darrp"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := i["arrp-profile"]; ok {
+
+		result["arrp_profile"] = flattenWirelessControllerWtpProfileRadio4ArrpProfile(i["arrp-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_clients"
@@ -4259,6 +5713,10 @@ func flattenWirelessControllerWtpProfileRadio4BssColor(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio4BssColorMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio4ShortGuardInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -4283,7 +5741,15 @@ func flattenWirelessControllerWtpProfileRadio4AutoPowerTarget(v interface{}, d *
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio4PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio4PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4335,6 +5801,82 @@ func flattenWirelessControllerWtpProfileRadio4ApSnifferData(v interface{}, d *sc
 	return v
 }
 
+func flattenWirelessControllerWtpProfileRadio4SamSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamBssid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamSecurityType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCwpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCwpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCwpTestUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCwpMatchString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCwpSuccessString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamCwpFailureString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4IperfServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4IperfProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4SamReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio4ChannelUtilization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -4348,6 +5890,10 @@ func flattenWirelessControllerWtpProfileRadio4WidsProfile(v interface{}, d *sche
 }
 
 func flattenWirelessControllerWtpProfileRadio4Darrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4ArrpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4548,10 +6094,22 @@ func flattenWirelessControllerWtpProfileLbs(v interface{}, d *schema.ResourceDat
 		result["fortipresence"] = flattenWirelessControllerWtpProfileLbsFortipresence(i["fortipresence"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "fortipresence_server_addr_type"
+	if _, ok := i["fortipresence-server-addr-type"]; ok {
+
+		result["fortipresence_server_addr_type"] = flattenWirelessControllerWtpProfileLbsFortipresenceServerAddrType(i["fortipresence-server-addr-type"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortipresence_server"
 	if _, ok := i["fortipresence-server"]; ok {
 
 		result["fortipresence_server"] = flattenWirelessControllerWtpProfileLbsFortipresenceServer(i["fortipresence-server"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortipresence_server_fqdn"
+	if _, ok := i["fortipresence-server-fqdn"]; ok {
+
+		result["fortipresence_server_fqdn"] = flattenWirelessControllerWtpProfileLbsFortipresenceServerFqdn(i["fortipresence-server-fqdn"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fortipresence_port"
@@ -4662,7 +6220,15 @@ func flattenWirelessControllerWtpProfileLbsFortipresence(v interface{}, d *schem
 	return v
 }
 
+func flattenWirelessControllerWtpProfileLbsFortipresenceServerAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileLbsFortipresenceServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsFortipresenceServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4699,6 +6265,153 @@ func flattenWirelessControllerWtpProfileLbsStationLocate(v interface{}, d *schem
 }
 
 func flattenWirelessControllerWtpProfileExtInfoEnable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileIndoorOutdoorDeployment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "compliance_level"
+	if _, ok := i["compliance-level"]; ok {
+
+		result["compliance_level"] = flattenWirelessControllerWtpProfileEslSesDongleComplianceLevel(i["compliance-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "scd_enable"
+	if _, ok := i["scd-enable"]; ok {
+
+		result["scd_enable"] = flattenWirelessControllerWtpProfileEslSesDongleScdEnable(i["scd-enable"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "esl_channel"
+	if _, ok := i["esl-channel"]; ok {
+
+		result["esl_channel"] = flattenWirelessControllerWtpProfileEslSesDongleEslChannel(i["esl-channel"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "output_power"
+	if _, ok := i["output-power"]; ok {
+
+		result["output_power"] = flattenWirelessControllerWtpProfileEslSesDongleOutputPower(i["output-power"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "apc_addr_type"
+	if _, ok := i["apc-addr-type"]; ok {
+
+		result["apc_addr_type"] = flattenWirelessControllerWtpProfileEslSesDongleApcAddrType(i["apc-addr-type"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "apc_fqdn"
+	if _, ok := i["apc-fqdn"]; ok {
+
+		result["apc_fqdn"] = flattenWirelessControllerWtpProfileEslSesDongleApcFqdn(i["apc-fqdn"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "apc_ip"
+	if _, ok := i["apc-ip"]; ok {
+
+		result["apc_ip"] = flattenWirelessControllerWtpProfileEslSesDongleApcIp(i["apc-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "apc_port"
+	if _, ok := i["apc-port"]; ok {
+
+		result["apc_port"] = flattenWirelessControllerWtpProfileEslSesDongleApcPort(i["apc-port"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "coex_level"
+	if _, ok := i["coex-level"]; ok {
+
+		result["coex_level"] = flattenWirelessControllerWtpProfileEslSesDongleCoexLevel(i["coex-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "tls_cert_verification"
+	if _, ok := i["tls-cert-verification"]; ok {
+
+		result["tls_cert_verification"] = flattenWirelessControllerWtpProfileEslSesDongleTlsCertVerification(i["tls-cert-verification"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "tls_fqdn_verification"
+	if _, ok := i["tls-fqdn-verification"]; ok {
+
+		result["tls_fqdn_verification"] = flattenWirelessControllerWtpProfileEslSesDongleTlsFqdnVerification(i["tls-fqdn-verification"], d, pre_append, sv)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleComplianceLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleScdEnable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleEslChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleOutputPower(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleApcAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleApcFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleApcIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleApcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleCoexLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleTlsCertVerification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileEslSesDongleTlsFqdnVerification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileConsoleLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileWanPortAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileWanPortAuthUsrname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileWanPortAuthPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileWanPortAuthMethods(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4748,6 +6461,12 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 	if err = d.Set("ble_profile", flattenWirelessControllerWtpProfileBleProfile(o["ble-profile"], d, "ble_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["ble-profile"]) {
 			return fmt.Errorf("Error reading ble_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("syslog_profile", flattenWirelessControllerWtpProfileSyslogProfile(o["syslog-profile"], d, "syslog_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["syslog-profile"]) {
+			return fmt.Errorf("Error reading syslog_profile: %v", err)
 		}
 	}
 
@@ -5027,6 +6746,58 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("indoor_outdoor_deployment", flattenWirelessControllerWtpProfileIndoorOutdoorDeployment(o["indoor-outdoor-deployment"], d, "indoor_outdoor_deployment", sv)); err != nil {
+		if !fortiAPIPatch(o["indoor-outdoor-deployment"]) {
+			return fmt.Errorf("Error reading indoor_outdoor_deployment: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("esl_ses_dongle", flattenWirelessControllerWtpProfileEslSesDongle(o["esl-ses-dongle"], d, "esl_ses_dongle", sv)); err != nil {
+			if !fortiAPIPatch(o["esl-ses-dongle"]) {
+				return fmt.Errorf("Error reading esl_ses_dongle: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("esl_ses_dongle"); ok {
+			if err = d.Set("esl_ses_dongle", flattenWirelessControllerWtpProfileEslSesDongle(o["esl-ses-dongle"], d, "esl_ses_dongle", sv)); err != nil {
+				if !fortiAPIPatch(o["esl-ses-dongle"]) {
+					return fmt.Errorf("Error reading esl_ses_dongle: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("console_login", flattenWirelessControllerWtpProfileConsoleLogin(o["console-login"], d, "console_login", sv)); err != nil {
+		if !fortiAPIPatch(o["console-login"]) {
+			return fmt.Errorf("Error reading console_login: %v", err)
+		}
+	}
+
+	if err = d.Set("wan_port_auth", flattenWirelessControllerWtpProfileWanPortAuth(o["wan-port-auth"], d, "wan_port_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["wan-port-auth"]) {
+			return fmt.Errorf("Error reading wan_port_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("wan_port_auth_usrname", flattenWirelessControllerWtpProfileWanPortAuthUsrname(o["wan-port-auth-usrname"], d, "wan_port_auth_usrname", sv)); err != nil {
+		if !fortiAPIPatch(o["wan-port-auth-usrname"]) {
+			return fmt.Errorf("Error reading wan_port_auth_usrname: %v", err)
+		}
+	}
+
+	if err = d.Set("wan_port_auth_password", flattenWirelessControllerWtpProfileWanPortAuthPassword(o["wan-port-auth-password"], d, "wan_port_auth_password", sv)); err != nil {
+		if !fortiAPIPatch(o["wan-port-auth-password"]) {
+			return fmt.Errorf("Error reading wan_port_auth_password: %v", err)
+		}
+	}
+
+	if err = d.Set("wan_port_auth_methods", flattenWirelessControllerWtpProfileWanPortAuthMethods(o["wan-port-auth-methods"], d, "wan_port_auth_methods", sv)); err != nil {
+		if !fortiAPIPatch(o["wan-port-auth-methods"]) {
+			return fmt.Errorf("Error reading wan_port_auth_methods: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -5094,6 +6865,10 @@ func expandWirelessControllerWtpProfileApcfgProfile(d *schema.ResourceData, v in
 }
 
 func expandWirelessControllerWtpProfileBleProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileSyslogProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5575,6 +7350,11 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 
 		result["bss-color"], _ = expandWirelessControllerWtpProfileRadio1BssColor(d, i["bss_color"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["bss-color-mode"], _ = expandWirelessControllerWtpProfileRadio1BssColorMode(d, i["bss_color_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -5605,10 +7385,20 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpProfileRadio1AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpProfileRadio1PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpProfileRadio1PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpProfileRadio1PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dtim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -5670,6 +7460,101 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 
 		result["ap-sniffer-data"], _ = expandWirelessControllerWtpProfileRadio1ApSnifferData(d, i["ap_sniffer_data"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-ssid"], _ = expandWirelessControllerWtpProfileRadio1SamSsid(d, i["sam_ssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-bssid"], _ = expandWirelessControllerWtpProfileRadio1SamBssid(d, i["sam_bssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-security-type"], _ = expandWirelessControllerWtpProfileRadio1SamSecurityType(d, i["sam_security_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-captive-portal"], _ = expandWirelessControllerWtpProfileRadio1SamCaptivePortal(d, i["sam_captive_portal"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-username"], _ = expandWirelessControllerWtpProfileRadio1SamCwpUsername(d, i["sam_cwp_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-password"], _ = expandWirelessControllerWtpProfileRadio1SamCwpPassword(d, i["sam_cwp_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-test-url"], _ = expandWirelessControllerWtpProfileRadio1SamCwpTestUrl(d, i["sam_cwp_test_url"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-match-string"], _ = expandWirelessControllerWtpProfileRadio1SamCwpMatchString(d, i["sam_cwp_match_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-success-string"], _ = expandWirelessControllerWtpProfileRadio1SamCwpSuccessString(d, i["sam_cwp_success_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-failure-string"], _ = expandWirelessControllerWtpProfileRadio1SamCwpFailureString(d, i["sam_cwp_failure_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-username"], _ = expandWirelessControllerWtpProfileRadio1SamUsername(d, i["sam_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-password"], _ = expandWirelessControllerWtpProfileRadio1SamPassword(d, i["sam_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-test"], _ = expandWirelessControllerWtpProfileRadio1SamTest(d, i["sam_test"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-type"], _ = expandWirelessControllerWtpProfileRadio1SamServerType(d, i["sam_server_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-ip"], _ = expandWirelessControllerWtpProfileRadio1SamServerIp(d, i["sam_server_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-fqdn"], _ = expandWirelessControllerWtpProfileRadio1SamServerFqdn(d, i["sam_server_fqdn"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-server-port"], _ = expandWirelessControllerWtpProfileRadio1IperfServerPort(d, i["iperf_server_port"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-protocol"], _ = expandWirelessControllerWtpProfileRadio1IperfProtocol(d, i["iperf_protocol"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-report-intv"], _ = expandWirelessControllerWtpProfileRadio1SamReportIntv(d, i["sam_report_intv"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -5689,6 +7574,11 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["darrp"], _ = expandWirelessControllerWtpProfileRadio1Darrp(d, i["darrp"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["arrp-profile"], _ = expandWirelessControllerWtpProfileRadio1ArrpProfile(d, i["arrp_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_clients"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -5809,6 +7699,10 @@ func expandWirelessControllerWtpProfileRadio1BssColor(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio1BssColorMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio1ShortGuardInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5833,7 +7727,15 @@ func expandWirelessControllerWtpProfileRadio1AutoPowerTarget(d *schema.ResourceD
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio1PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio1PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5885,6 +7787,82 @@ func expandWirelessControllerWtpProfileRadio1ApSnifferData(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio1SamSsid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamBssid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamSecurityType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCwpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCwpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCwpTestUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCwpMatchString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCwpSuccessString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamCwpFailureString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamTest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1IperfServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1IperfProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1SamReportIntv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio1ChannelUtilization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5898,6 +7876,10 @@ func expandWirelessControllerWtpProfileRadio1WidsProfile(d *schema.ResourceData,
 }
 
 func expandWirelessControllerWtpProfileRadio1Darrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1ArrpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6081,6 +8063,11 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 
 		result["bss-color"], _ = expandWirelessControllerWtpProfileRadio2BssColor(d, i["bss_color"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["bss-color-mode"], _ = expandWirelessControllerWtpProfileRadio2BssColorMode(d, i["bss_color_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -6111,10 +8098,20 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpProfileRadio2AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpProfileRadio2PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpProfileRadio2PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpProfileRadio2PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dtim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -6176,6 +8173,101 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 
 		result["ap-sniffer-data"], _ = expandWirelessControllerWtpProfileRadio2ApSnifferData(d, i["ap_sniffer_data"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-ssid"], _ = expandWirelessControllerWtpProfileRadio2SamSsid(d, i["sam_ssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-bssid"], _ = expandWirelessControllerWtpProfileRadio2SamBssid(d, i["sam_bssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-security-type"], _ = expandWirelessControllerWtpProfileRadio2SamSecurityType(d, i["sam_security_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-captive-portal"], _ = expandWirelessControllerWtpProfileRadio2SamCaptivePortal(d, i["sam_captive_portal"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-username"], _ = expandWirelessControllerWtpProfileRadio2SamCwpUsername(d, i["sam_cwp_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-password"], _ = expandWirelessControllerWtpProfileRadio2SamCwpPassword(d, i["sam_cwp_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-test-url"], _ = expandWirelessControllerWtpProfileRadio2SamCwpTestUrl(d, i["sam_cwp_test_url"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-match-string"], _ = expandWirelessControllerWtpProfileRadio2SamCwpMatchString(d, i["sam_cwp_match_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-success-string"], _ = expandWirelessControllerWtpProfileRadio2SamCwpSuccessString(d, i["sam_cwp_success_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-failure-string"], _ = expandWirelessControllerWtpProfileRadio2SamCwpFailureString(d, i["sam_cwp_failure_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-username"], _ = expandWirelessControllerWtpProfileRadio2SamUsername(d, i["sam_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-password"], _ = expandWirelessControllerWtpProfileRadio2SamPassword(d, i["sam_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-test"], _ = expandWirelessControllerWtpProfileRadio2SamTest(d, i["sam_test"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-type"], _ = expandWirelessControllerWtpProfileRadio2SamServerType(d, i["sam_server_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-ip"], _ = expandWirelessControllerWtpProfileRadio2SamServerIp(d, i["sam_server_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-fqdn"], _ = expandWirelessControllerWtpProfileRadio2SamServerFqdn(d, i["sam_server_fqdn"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-server-port"], _ = expandWirelessControllerWtpProfileRadio2IperfServerPort(d, i["iperf_server_port"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-protocol"], _ = expandWirelessControllerWtpProfileRadio2IperfProtocol(d, i["iperf_protocol"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-report-intv"], _ = expandWirelessControllerWtpProfileRadio2SamReportIntv(d, i["sam_report_intv"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -6195,6 +8287,11 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["darrp"], _ = expandWirelessControllerWtpProfileRadio2Darrp(d, i["darrp"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["arrp-profile"], _ = expandWirelessControllerWtpProfileRadio2ArrpProfile(d, i["arrp_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_clients"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -6315,6 +8412,10 @@ func expandWirelessControllerWtpProfileRadio2BssColor(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio2BssColorMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio2ShortGuardInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6339,7 +8440,15 @@ func expandWirelessControllerWtpProfileRadio2AutoPowerTarget(d *schema.ResourceD
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio2PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio2PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6391,6 +8500,82 @@ func expandWirelessControllerWtpProfileRadio2ApSnifferData(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio2SamSsid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamBssid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamSecurityType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCwpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCwpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCwpTestUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCwpMatchString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCwpSuccessString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamCwpFailureString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamTest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2IperfServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2IperfProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2SamReportIntv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio2ChannelUtilization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6404,6 +8589,10 @@ func expandWirelessControllerWtpProfileRadio2WidsProfile(d *schema.ResourceData,
 }
 
 func expandWirelessControllerWtpProfileRadio2Darrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2ArrpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6582,6 +8771,11 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 
 		result["bss-color"], _ = expandWirelessControllerWtpProfileRadio3BssColor(d, i["bss_color"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["bss-color-mode"], _ = expandWirelessControllerWtpProfileRadio3BssColorMode(d, i["bss_color_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -6612,10 +8806,20 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpProfileRadio3AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpProfileRadio3PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpProfileRadio3PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpProfileRadio3PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dtim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -6677,6 +8881,101 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 
 		result["ap-sniffer-data"], _ = expandWirelessControllerWtpProfileRadio3ApSnifferData(d, i["ap_sniffer_data"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-ssid"], _ = expandWirelessControllerWtpProfileRadio3SamSsid(d, i["sam_ssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-bssid"], _ = expandWirelessControllerWtpProfileRadio3SamBssid(d, i["sam_bssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-security-type"], _ = expandWirelessControllerWtpProfileRadio3SamSecurityType(d, i["sam_security_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-captive-portal"], _ = expandWirelessControllerWtpProfileRadio3SamCaptivePortal(d, i["sam_captive_portal"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-username"], _ = expandWirelessControllerWtpProfileRadio3SamCwpUsername(d, i["sam_cwp_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-password"], _ = expandWirelessControllerWtpProfileRadio3SamCwpPassword(d, i["sam_cwp_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-test-url"], _ = expandWirelessControllerWtpProfileRadio3SamCwpTestUrl(d, i["sam_cwp_test_url"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-match-string"], _ = expandWirelessControllerWtpProfileRadio3SamCwpMatchString(d, i["sam_cwp_match_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-success-string"], _ = expandWirelessControllerWtpProfileRadio3SamCwpSuccessString(d, i["sam_cwp_success_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-failure-string"], _ = expandWirelessControllerWtpProfileRadio3SamCwpFailureString(d, i["sam_cwp_failure_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-username"], _ = expandWirelessControllerWtpProfileRadio3SamUsername(d, i["sam_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-password"], _ = expandWirelessControllerWtpProfileRadio3SamPassword(d, i["sam_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-test"], _ = expandWirelessControllerWtpProfileRadio3SamTest(d, i["sam_test"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-type"], _ = expandWirelessControllerWtpProfileRadio3SamServerType(d, i["sam_server_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-ip"], _ = expandWirelessControllerWtpProfileRadio3SamServerIp(d, i["sam_server_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-fqdn"], _ = expandWirelessControllerWtpProfileRadio3SamServerFqdn(d, i["sam_server_fqdn"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-server-port"], _ = expandWirelessControllerWtpProfileRadio3IperfServerPort(d, i["iperf_server_port"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-protocol"], _ = expandWirelessControllerWtpProfileRadio3IperfProtocol(d, i["iperf_protocol"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-report-intv"], _ = expandWirelessControllerWtpProfileRadio3SamReportIntv(d, i["sam_report_intv"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -6696,6 +8995,11 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["darrp"], _ = expandWirelessControllerWtpProfileRadio3Darrp(d, i["darrp"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["arrp-profile"], _ = expandWirelessControllerWtpProfileRadio3ArrpProfile(d, i["arrp_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_clients"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -6812,6 +9116,10 @@ func expandWirelessControllerWtpProfileRadio3BssColor(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio3BssColorMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio3ShortGuardInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6836,7 +9144,15 @@ func expandWirelessControllerWtpProfileRadio3AutoPowerTarget(d *schema.ResourceD
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio3PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio3PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6888,6 +9204,82 @@ func expandWirelessControllerWtpProfileRadio3ApSnifferData(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio3SamSsid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamBssid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamSecurityType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCwpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCwpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCwpTestUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCwpMatchString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCwpSuccessString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamCwpFailureString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamTest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3IperfServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3IperfProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3SamReportIntv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio3ChannelUtilization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6901,6 +9293,10 @@ func expandWirelessControllerWtpProfileRadio3WidsProfile(d *schema.ResourceData,
 }
 
 func expandWirelessControllerWtpProfileRadio3Darrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3ArrpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7079,6 +9475,11 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 
 		result["bss-color"], _ = expandWirelessControllerWtpProfileRadio4BssColor(d, i["bss_color"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "bss_color_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["bss-color-mode"], _ = expandWirelessControllerWtpProfileRadio4BssColorMode(d, i["bss_color_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "short_guard_interval"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -7109,10 +9510,20 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpProfileRadio4AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpProfileRadio4PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpProfileRadio4PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpProfileRadio4PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dtim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -7174,6 +9585,101 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 
 		result["ap-sniffer-data"], _ = expandWirelessControllerWtpProfileRadio4ApSnifferData(d, i["ap_sniffer_data"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "sam_ssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-ssid"], _ = expandWirelessControllerWtpProfileRadio4SamSsid(d, i["sam_ssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_bssid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-bssid"], _ = expandWirelessControllerWtpProfileRadio4SamBssid(d, i["sam_bssid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_security_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-security-type"], _ = expandWirelessControllerWtpProfileRadio4SamSecurityType(d, i["sam_security_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_captive_portal"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-captive-portal"], _ = expandWirelessControllerWtpProfileRadio4SamCaptivePortal(d, i["sam_captive_portal"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-username"], _ = expandWirelessControllerWtpProfileRadio4SamCwpUsername(d, i["sam_cwp_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-password"], _ = expandWirelessControllerWtpProfileRadio4SamCwpPassword(d, i["sam_cwp_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_test_url"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-test-url"], _ = expandWirelessControllerWtpProfileRadio4SamCwpTestUrl(d, i["sam_cwp_test_url"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_match_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-match-string"], _ = expandWirelessControllerWtpProfileRadio4SamCwpMatchString(d, i["sam_cwp_match_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_success_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-success-string"], _ = expandWirelessControllerWtpProfileRadio4SamCwpSuccessString(d, i["sam_cwp_success_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_cwp_failure_string"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-cwp-failure-string"], _ = expandWirelessControllerWtpProfileRadio4SamCwpFailureString(d, i["sam_cwp_failure_string"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_username"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-username"], _ = expandWirelessControllerWtpProfileRadio4SamUsername(d, i["sam_username"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_password"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-password"], _ = expandWirelessControllerWtpProfileRadio4SamPassword(d, i["sam_password"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_test"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-test"], _ = expandWirelessControllerWtpProfileRadio4SamTest(d, i["sam_test"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-type"], _ = expandWirelessControllerWtpProfileRadio4SamServerType(d, i["sam_server_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_ip"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-ip"], _ = expandWirelessControllerWtpProfileRadio4SamServerIp(d, i["sam_server_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_server_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-server-fqdn"], _ = expandWirelessControllerWtpProfileRadio4SamServerFqdn(d, i["sam_server_fqdn"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_server_port"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-server-port"], _ = expandWirelessControllerWtpProfileRadio4IperfServerPort(d, i["iperf_server_port"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "iperf_protocol"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["iperf-protocol"], _ = expandWirelessControllerWtpProfileRadio4IperfProtocol(d, i["iperf_protocol"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "sam_report_intv"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["sam-report-intv"], _ = expandWirelessControllerWtpProfileRadio4SamReportIntv(d, i["sam_report_intv"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "channel_utilization"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -7193,6 +9699,11 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["darrp"], _ = expandWirelessControllerWtpProfileRadio4Darrp(d, i["darrp"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "arrp_profile"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["arrp-profile"], _ = expandWirelessControllerWtpProfileRadio4ArrpProfile(d, i["arrp_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_clients"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -7309,6 +9820,10 @@ func expandWirelessControllerWtpProfileRadio4BssColor(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio4BssColorMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio4ShortGuardInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7333,7 +9848,15 @@ func expandWirelessControllerWtpProfileRadio4AutoPowerTarget(d *schema.ResourceD
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio4PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio4PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7385,6 +9908,82 @@ func expandWirelessControllerWtpProfileRadio4ApSnifferData(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio4SamSsid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamBssid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamSecurityType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCwpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCwpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCwpTestUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCwpMatchString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCwpSuccessString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamCwpFailureString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamTest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4IperfServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4IperfProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4SamReportIntv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio4ChannelUtilization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7398,6 +9997,10 @@ func expandWirelessControllerWtpProfileRadio4WidsProfile(d *schema.ResourceData,
 }
 
 func expandWirelessControllerWtpProfileRadio4Darrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4ArrpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7576,10 +10179,20 @@ func expandWirelessControllerWtpProfileLbs(d *schema.ResourceData, v interface{}
 
 		result["fortipresence"], _ = expandWirelessControllerWtpProfileLbsFortipresence(d, i["fortipresence"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "fortipresence_server_addr_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortipresence-server-addr-type"], _ = expandWirelessControllerWtpProfileLbsFortipresenceServerAddrType(d, i["fortipresence_server_addr_type"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortipresence_server"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["fortipresence-server"], _ = expandWirelessControllerWtpProfileLbsFortipresenceServer(d, i["fortipresence_server"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "fortipresence_server_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortipresence-server-fqdn"], _ = expandWirelessControllerWtpProfileLbsFortipresenceServerFqdn(d, i["fortipresence_server_fqdn"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "fortipresence_port"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -7677,7 +10290,15 @@ func expandWirelessControllerWtpProfileLbsFortipresence(d *schema.ResourceData, 
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileLbsFortipresenceServerAddrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileLbsFortipresenceServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsFortipresenceServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7714,6 +10335,143 @@ func expandWirelessControllerWtpProfileLbsStationLocate(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerWtpProfileExtInfoEnable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileIndoorOutdoorDeployment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongle(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	i := l[0].(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "compliance_level"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["compliance-level"], _ = expandWirelessControllerWtpProfileEslSesDongleComplianceLevel(d, i["compliance_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "scd_enable"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["scd-enable"], _ = expandWirelessControllerWtpProfileEslSesDongleScdEnable(d, i["scd_enable"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "esl_channel"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["esl-channel"], _ = expandWirelessControllerWtpProfileEslSesDongleEslChannel(d, i["esl_channel"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "output_power"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["output-power"], _ = expandWirelessControllerWtpProfileEslSesDongleOutputPower(d, i["output_power"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "apc_addr_type"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["apc-addr-type"], _ = expandWirelessControllerWtpProfileEslSesDongleApcAddrType(d, i["apc_addr_type"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "apc_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["apc-fqdn"], _ = expandWirelessControllerWtpProfileEslSesDongleApcFqdn(d, i["apc_fqdn"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "apc_ip"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["apc-ip"], _ = expandWirelessControllerWtpProfileEslSesDongleApcIp(d, i["apc_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "apc_port"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["apc-port"], _ = expandWirelessControllerWtpProfileEslSesDongleApcPort(d, i["apc_port"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "coex_level"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["coex-level"], _ = expandWirelessControllerWtpProfileEslSesDongleCoexLevel(d, i["coex_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "tls_cert_verification"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["tls-cert-verification"], _ = expandWirelessControllerWtpProfileEslSesDongleTlsCertVerification(d, i["tls_cert_verification"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "tls_fqdn_verification"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["tls-fqdn-verification"], _ = expandWirelessControllerWtpProfileEslSesDongleTlsFqdnVerification(d, i["tls_fqdn_verification"], pre_append, sv)
+	}
+
+	return result, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleComplianceLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleScdEnable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleEslChannel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleOutputPower(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleApcAddrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleApcFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleApcIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleApcPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleCoexLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleTlsCertVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileEslSesDongleTlsFqdnVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileConsoleLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileWanPortAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileWanPortAuthUsrname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileWanPortAuthPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileWanPortAuthMethods(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7777,6 +10535,16 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["ble-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("syslog_profile"); ok {
+
+		t, err := expandWirelessControllerWtpProfileSyslogProfile(d, v, "syslog_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["syslog-profile"] = t
 		}
 	}
 
@@ -8097,6 +10865,76 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["ext-info-enable"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("indoor_outdoor_deployment"); ok {
+
+		t, err := expandWirelessControllerWtpProfileIndoorOutdoorDeployment(d, v, "indoor_outdoor_deployment", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["indoor-outdoor-deployment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("esl_ses_dongle"); ok {
+
+		t, err := expandWirelessControllerWtpProfileEslSesDongle(d, v, "esl_ses_dongle", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["esl-ses-dongle"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("console_login"); ok {
+
+		t, err := expandWirelessControllerWtpProfileConsoleLogin(d, v, "console_login", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["console-login"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wan_port_auth"); ok {
+
+		t, err := expandWirelessControllerWtpProfileWanPortAuth(d, v, "wan_port_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wan-port-auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wan_port_auth_usrname"); ok {
+
+		t, err := expandWirelessControllerWtpProfileWanPortAuthUsrname(d, v, "wan_port_auth_usrname", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wan-port-auth-usrname"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wan_port_auth_password"); ok {
+
+		t, err := expandWirelessControllerWtpProfileWanPortAuthPassword(d, v, "wan_port_auth_password", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wan-port-auth-password"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wan_port_auth_methods"); ok {
+
+		t, err := expandWirelessControllerWtpProfileWanPortAuthMethods(d, v, "wan_port_auth_methods", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wan-port-auth-methods"] = t
 		}
 	}
 

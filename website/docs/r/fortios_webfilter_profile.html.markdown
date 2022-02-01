@@ -185,6 +185,7 @@ The `web` block supports:
 * `whitelist` - FortiGuard whitelist settings. Valid values: `exempt-av`, `exempt-webcontent`, `exempt-activex-java-cookie`, `exempt-dlp`, `exempt-rangeblock`, `extended-log-others`.
 * `safe_search` - Safe search type. Valid values: `url`, `header`.
 * `youtube_restrict` - YouTube EDU filter level. Valid values: `none`, `strict`, `moderate`.
+* `vimeo_restrict` - Set Vimeo-restrict ("7" = don't show mature content, "134" = don't show unrated and mature content). A value of cookie "content_rating".
 * `log_search` - Enable/disable logging all search phrases. Valid values: `enable`, `disable`.
 * `keyword_match` - Search keywords to log when match is found. The structure of `keyword_match` block is documented below.
 
@@ -241,12 +242,15 @@ The `antiphish` block supports:
 
 * `status` - Toggle AntiPhishing functionality. Valid values: `enable`, `disable`.
 * `domain_controller` - Domain for which to verify received credentials against.
+* `ldap` - LDAP server for which to verify received credentials against.
 * `default_action` - Action to be taken when there is no matching rule. Valid values: `exempt`, `log`, `block`.
 * `check_uri` - Enable/disable checking of GET URI parameters for known credentials. Valid values: `enable`, `disable`.
 * `check_basic_auth` - Enable/disable checking of HTTP Basic Auth field for known credentials. Valid values: `enable`, `disable`.
+* `check_username_only` - Enable/disable username only matching of credentials. Action will be taken for valid usernames regardless of password validity. Valid values: `enable`, `disable`.
 * `max_body_len` - Maximum size of a POST body to check for credentials.
 * `inspection_entries` - AntiPhishing entries. The structure of `inspection_entries` block is documented below.
 * `custom_patterns` - Custom username and password regex patterns. The structure of `custom_patterns` block is documented below.
+* `authentication` - Authentication methods. Valid values: `domain-controller`, `ldap`.
 
 The `inspection_entries` block supports:
 
@@ -258,6 +262,7 @@ The `custom_patterns` block supports:
 
 * `pattern` - Target pattern.
 * `category` - Category that the pattern matches. Valid values: `username`, `password`.
+* `type` - Pattern will be treated either as a regex pattern or literal string. Valid values: `regex`, `literal`.
 
 The `wisp_servers` block supports:
 

@@ -38,6 +38,7 @@ resource "fortios_firewall_multicastpolicy6" "trname" {
 The following arguments are supported:
 
 * `fosid` - Policy ID.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
 * `name` - Policy name.
 * `logtraffic` - Enable/disable logging traffic accepted by this policy. Valid values: `enable`, `disable`.

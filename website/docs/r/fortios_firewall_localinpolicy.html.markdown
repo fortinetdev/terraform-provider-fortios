@@ -43,9 +43,12 @@ The following arguments are supported:
 * `ha_mgmt_intf_only` - Enable/disable dedicating the HA management interface only for local-in policy. Valid values: `enable`, `disable`.
 * `intf` - Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
+* `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
+* `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - Service object from available options. The structure of `service` block is documented below.
+* `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy. Valid values: `enable`, `disable`.
 * `comments` - Comment.

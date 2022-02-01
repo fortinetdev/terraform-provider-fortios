@@ -66,6 +66,20 @@ func resourceFirewallAddress() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"macaddr": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"macaddr": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 127),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"start_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -188,6 +202,18 @@ func resourceFirewallAddress() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tag_detection_level": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
+			"tag_type": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -279,6 +305,11 @@ func resourceFirewallAddress() *schema.Resource {
 				},
 			},
 			"allow_routing": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -444,6 +475,44 @@ func flattenFirewallAddressClearpassSpt(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallAddressMacaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
+		if _, ok := i["macaddr"]; ok {
+
+			tmp["macaddr"] = flattenFirewallAddressMacaddrMacaddr(i["macaddr"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "macaddr", d)
+	return result
+}
+
+func flattenFirewallAddressMacaddrMacaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddressStartMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -562,6 +631,14 @@ func flattenFirewallAddressObjTag(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenFirewallAddressObjType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddressTagDetectionLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddressTagType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -730,6 +807,10 @@ func flattenFirewallAddressAllowRouting(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallAddressFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -766,6 +847,22 @@ func refreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("clearpass_spt", flattenFirewallAddressClearpassSpt(o["clearpass-spt"], d, "clearpass_spt", sv)); err != nil {
 		if !fortiAPIPatch(o["clearpass-spt"]) {
 			return fmt.Errorf("Error reading clearpass_spt: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("macaddr", flattenFirewallAddressMacaddr(o["macaddr"], d, "macaddr", sv)); err != nil {
+			if !fortiAPIPatch(o["macaddr"]) {
+				return fmt.Errorf("Error reading macaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("macaddr"); ok {
+			if err = d.Set("macaddr", flattenFirewallAddressMacaddr(o["macaddr"], d, "macaddr", sv)); err != nil {
+				if !fortiAPIPatch(o["macaddr"]) {
+					return fmt.Errorf("Error reading macaddr: %v", err)
+				}
+			}
 		}
 	}
 
@@ -899,6 +996,18 @@ func refreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("tag_detection_level", flattenFirewallAddressTagDetectionLevel(o["tag-detection-level"], d, "tag_detection_level", sv)); err != nil {
+		if !fortiAPIPatch(o["tag-detection-level"]) {
+			return fmt.Errorf("Error reading tag_detection_level: %v", err)
+		}
+	}
+
+	if err = d.Set("tag_type", flattenFirewallAddressTagType(o["tag-type"], d, "tag_type", sv)); err != nil {
+		if !fortiAPIPatch(o["tag-type"]) {
+			return fmt.Errorf("Error reading tag_type: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenFirewallAddressComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -985,6 +1094,12 @@ func refreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("fabric_object", flattenFirewallAddressFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -1015,6 +1130,38 @@ func expandFirewallAddressSubType(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandFirewallAddressClearpassSpt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddressMacaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["macaddr"], _ = expandFirewallAddressMacaddrMacaddr(d, i["macaddr"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallAddressMacaddrMacaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1123,6 +1270,14 @@ func expandFirewallAddressObjTag(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandFirewallAddressObjType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddressTagDetectionLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddressTagType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1276,6 +1431,10 @@ func expandFirewallAddressAllowRouting(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallAddressFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1336,6 +1495,16 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["clearpass-spt"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("macaddr"); ok {
+
+		t, err := expandFirewallAddressMacaddr(d, v, "macaddr", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["macaddr"] = t
 		}
 	}
 
@@ -1539,6 +1708,26 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	if v, ok := d.GetOk("tag_detection_level"); ok {
+
+		t, err := expandFirewallAddressTagDetectionLevel(d, v, "tag_detection_level", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tag-detection-level"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tag_type"); ok {
+
+		t, err := expandFirewallAddressTagType(d, v, "tag_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tag-type"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("comment"); ok {
 
 		t, err := expandFirewallAddressComment(d, v, "comment", sv)
@@ -1646,6 +1835,16 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["allow-routing"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallAddressFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

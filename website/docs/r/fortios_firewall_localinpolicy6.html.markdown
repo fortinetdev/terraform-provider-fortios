@@ -41,9 +41,12 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `intf` - (Required) Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
+* `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
+* `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - (Required) Service object from available options. Separate names with a space. The structure of `service` block is documented below.
+* `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy. Valid values: `enable`, `disable`.
 * `comments` - Comment.

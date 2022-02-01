@@ -135,6 +135,20 @@ func resourceUserNacPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"switch_group": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"switch_scope": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -163,6 +177,18 @@ func resourceUserNacPolicy() *schema.Resource {
 			"switch_mac_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"firewall_address": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ssid_policy": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -364,6 +390,44 @@ func flattenUserNacPolicySwitchFortilink(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenUserNacPolicySwitchGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenUserNacPolicySwitchGroupName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenUserNacPolicySwitchGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserNacPolicySwitchScope(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -411,6 +475,14 @@ func flattenUserNacPolicySwitchPortPolicy(v interface{}, d *schema.ResourceData,
 }
 
 func flattenUserNacPolicySwitchMacPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserNacPolicyFirewallAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserNacPolicySsidPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -520,6 +592,22 @@ func refreshObjectUserNacPolicy(d *schema.ResourceData, o map[string]interface{}
 	}
 
 	if isImportTable() {
+		if err = d.Set("switch_group", flattenUserNacPolicySwitchGroup(o["switch-group"], d, "switch_group", sv)); err != nil {
+			if !fortiAPIPatch(o["switch-group"]) {
+				return fmt.Errorf("Error reading switch_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("switch_group"); ok {
+			if err = d.Set("switch_group", flattenUserNacPolicySwitchGroup(o["switch-group"], d, "switch_group", sv)); err != nil {
+				if !fortiAPIPatch(o["switch-group"]) {
+					return fmt.Errorf("Error reading switch_group: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
 		if err = d.Set("switch_scope", flattenUserNacPolicySwitchScope(o["switch-scope"], d, "switch_scope", sv)); err != nil {
 			if !fortiAPIPatch(o["switch-scope"]) {
 				return fmt.Errorf("Error reading switch_scope: %v", err)
@@ -550,6 +638,18 @@ func refreshObjectUserNacPolicy(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("switch_mac_policy", flattenUserNacPolicySwitchMacPolicy(o["switch-mac-policy"], d, "switch_mac_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-mac-policy"]) {
 			return fmt.Errorf("Error reading switch_mac_policy: %v", err)
+		}
+	}
+
+	if err = d.Set("firewall_address", flattenUserNacPolicyFirewallAddress(o["firewall-address"], d, "firewall_address", sv)); err != nil {
+		if !fortiAPIPatch(o["firewall-address"]) {
+			return fmt.Errorf("Error reading firewall_address: %v", err)
+		}
+	}
+
+	if err = d.Set("ssid_policy", flattenUserNacPolicySsidPolicy(o["ssid-policy"], d, "ssid_policy", sv)); err != nil {
+		if !fortiAPIPatch(o["ssid-policy"]) {
+			return fmt.Errorf("Error reading ssid_policy: %v", err)
 		}
 	}
 
@@ -630,6 +730,38 @@ func expandUserNacPolicySwitchFortilink(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandUserNacPolicySwitchGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandUserNacPolicySwitchGroupName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandUserNacPolicySwitchGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserNacPolicySwitchScope(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -671,6 +803,14 @@ func expandUserNacPolicySwitchPortPolicy(d *schema.ResourceData, v interface{}, 
 }
 
 func expandUserNacPolicySwitchMacPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicyFirewallAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicySsidPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -847,6 +987,16 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
+	if v, ok := d.GetOk("switch_group"); ok {
+
+		t, err := expandUserNacPolicySwitchGroup(d, v, "switch_group", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-group"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("switch_scope"); ok {
 
 		t, err := expandUserNacPolicySwitchScope(d, v, "switch_scope", sv)
@@ -884,6 +1034,26 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["switch-mac-policy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("firewall_address"); ok {
+
+		t, err := expandUserNacPolicyFirewallAddress(d, v, "firewall_address", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["firewall-address"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssid_policy"); ok {
+
+		t, err := expandUserNacPolicySsidPolicy(d, v, "ssid_policy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssid-policy"] = t
 		}
 	}
 

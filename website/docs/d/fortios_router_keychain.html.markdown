@@ -28,4 +28,5 @@ The `key` block contains:
 * `accept_lifetime` - Lifetime of received authentication key (format: hh:mm:ss day month year).
 * `send_lifetime` - Lifetime of sent authentication key (format: hh:mm:ss day month year).
 * `key_string` - Password for the key (max. = 35 characters).
+* `algorithm` - Cryptographic algorithm.
 

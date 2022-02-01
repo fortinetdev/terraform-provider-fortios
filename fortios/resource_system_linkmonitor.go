@@ -53,6 +53,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"server_config": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -88,6 +93,20 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"route": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"subnet": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -118,7 +137,7 @@ func resourceSystemLinkMonitor() *schema.Resource {
 			},
 			"interval": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 3600),
+				ValidateFunc: validation.IntBetween(1, 3600000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -169,6 +188,12 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fail_weight": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"update_cascade_interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -179,10 +204,67 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"update_policy_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"diffservcode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"class_id": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"service_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"server_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 32),
+							Optional:     true,
+							Computed:     true,
+						},
+						"dst": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"weight": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -326,6 +408,10 @@ func flattenSystemLinkMonitorSrcintf(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenSystemLinkMonitorServerConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -377,6 +463,44 @@ func flattenSystemLinkMonitorGatewayIp(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemLinkMonitorGatewayIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorRoute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
+		if _, ok := i["subnet"]; ok {
+
+			tmp["subnet"] = flattenSystemLinkMonitorRouteSubnet(i["subnet"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "subnet", d)
+	return result
+}
+
+func flattenSystemLinkMonitorRouteSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -436,6 +560,10 @@ func flattenSystemLinkMonitorHaPriority(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemLinkMonitorFailWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemLinkMonitorUpdateCascadeInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -444,7 +572,101 @@ func flattenSystemLinkMonitorUpdateStaticRoute(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSystemLinkMonitorUpdatePolicyRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemLinkMonitorStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorDiffservcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorServiceDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorServerList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemLinkMonitorServerListId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
+		if _, ok := i["dst"]; ok {
+
+			tmp["dst"] = flattenSystemLinkMonitorServerListDst(i["dst"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if _, ok := i["protocol"]; ok {
+
+			tmp["protocol"] = flattenSystemLinkMonitorServerListProtocol(i["protocol"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := i["port"]; ok {
+
+			tmp["port"] = flattenSystemLinkMonitorServerListPort(i["port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+		if _, ok := i["weight"]; ok {
+
+			tmp["weight"] = flattenSystemLinkMonitorServerListWeight(i["weight"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemLinkMonitorServerListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorServerListDst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorServerListProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorServerListPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemLinkMonitorServerListWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -466,6 +688,12 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("srcintf", flattenSystemLinkMonitorSrcintf(o["srcintf"], d, "srcintf", sv)); err != nil {
 		if !fortiAPIPatch(o["srcintf"]) {
 			return fmt.Errorf("Error reading srcintf: %v", err)
+		}
+	}
+
+	if err = d.Set("server_config", flattenSystemLinkMonitorServerConfig(o["server-config"], d, "server_config", sv)); err != nil {
+		if !fortiAPIPatch(o["server-config"]) {
+			return fmt.Errorf("Error reading server_config: %v", err)
 		}
 	}
 
@@ -506,6 +734,22 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("gateway_ip6", flattenSystemLinkMonitorGatewayIp6(o["gateway-ip6"], d, "gateway_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["gateway-ip6"]) {
 			return fmt.Errorf("Error reading gateway_ip6: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("route", flattenSystemLinkMonitorRoute(o["route"], d, "route", sv)); err != nil {
+			if !fortiAPIPatch(o["route"]) {
+				return fmt.Errorf("Error reading route: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("route"); ok {
+			if err = d.Set("route", flattenSystemLinkMonitorRoute(o["route"], d, "route", sv)); err != nil {
+				if !fortiAPIPatch(o["route"]) {
+					return fmt.Errorf("Error reading route: %v", err)
+				}
+			}
 		}
 	}
 
@@ -587,6 +831,12 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("fail_weight", flattenSystemLinkMonitorFailWeight(o["fail-weight"], d, "fail_weight", sv)); err != nil {
+		if !fortiAPIPatch(o["fail-weight"]) {
+			return fmt.Errorf("Error reading fail_weight: %v", err)
+		}
+	}
+
 	if err = d.Set("update_cascade_interface", flattenSystemLinkMonitorUpdateCascadeInterface(o["update-cascade-interface"], d, "update_cascade_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["update-cascade-interface"]) {
 			return fmt.Errorf("Error reading update_cascade_interface: %v", err)
@@ -599,9 +849,49 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("update_policy_route", flattenSystemLinkMonitorUpdatePolicyRoute(o["update-policy-route"], d, "update_policy_route", sv)); err != nil {
+		if !fortiAPIPatch(o["update-policy-route"]) {
+			return fmt.Errorf("Error reading update_policy_route: %v", err)
+		}
+	}
+
 	if err = d.Set("status", flattenSystemLinkMonitorStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("diffservcode", flattenSystemLinkMonitorDiffservcode(o["diffservcode"], d, "diffservcode", sv)); err != nil {
+		if !fortiAPIPatch(o["diffservcode"]) {
+			return fmt.Errorf("Error reading diffservcode: %v", err)
+		}
+	}
+
+	if err = d.Set("class_id", flattenSystemLinkMonitorClassId(o["class-id"], d, "class_id", sv)); err != nil {
+		if !fortiAPIPatch(o["class-id"]) {
+			return fmt.Errorf("Error reading class_id: %v", err)
+		}
+	}
+
+	if err = d.Set("service_detection", flattenSystemLinkMonitorServiceDetection(o["service-detection"], d, "service_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["service-detection"]) {
+			return fmt.Errorf("Error reading service_detection: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("server_list", flattenSystemLinkMonitorServerList(o["server-list"], d, "server_list", sv)); err != nil {
+			if !fortiAPIPatch(o["server-list"]) {
+				return fmt.Errorf("Error reading server_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("server_list"); ok {
+			if err = d.Set("server_list", flattenSystemLinkMonitorServerList(o["server-list"], d, "server_list", sv)); err != nil {
+				if !fortiAPIPatch(o["server-list"]) {
+					return fmt.Errorf("Error reading server_list: %v", err)
+				}
+			}
 		}
 	}
 
@@ -623,6 +913,10 @@ func expandSystemLinkMonitorAddrMode(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSystemLinkMonitorSrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -671,6 +965,38 @@ func expandSystemLinkMonitorGatewayIp(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemLinkMonitorGatewayIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["subnet"], _ = expandSystemLinkMonitorRouteSubnet(d, i["subnet"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemLinkMonitorRouteSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -730,6 +1056,10 @@ func expandSystemLinkMonitorHaPriority(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemLinkMonitorFailWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemLinkMonitorUpdateCascadeInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -738,7 +1068,95 @@ func expandSystemLinkMonitorUpdateStaticRoute(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandSystemLinkMonitorUpdatePolicyRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemLinkMonitorStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorDiffservcode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorClassId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServiceDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemLinkMonitorServerListId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["dst"], _ = expandSystemLinkMonitorServerListDst(d, i["dst"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["protocol"], _ = expandSystemLinkMonitorServerListProtocol(d, i["protocol"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["port"], _ = expandSystemLinkMonitorServerListPort(d, i["port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["weight"], _ = expandSystemLinkMonitorServerListWeight(d, i["weight"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemLinkMonitorServerListId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerListDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerListProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerListPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerListWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -772,6 +1190,16 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["srcintf"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_config"); ok {
+
+		t, err := expandSystemLinkMonitorServerConfig(d, v, "server_config", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-config"] = t
 		}
 	}
 
@@ -822,6 +1250,16 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["gateway-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("route"); ok {
+
+		t, err := expandSystemLinkMonitorRoute(d, v, "route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route"] = t
 		}
 	}
 
@@ -965,6 +1403,16 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOkExists("fail_weight"); ok {
+
+		t, err := expandSystemLinkMonitorFailWeight(d, v, "fail_weight", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fail-weight"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("update_cascade_interface"); ok {
 
 		t, err := expandSystemLinkMonitorUpdateCascadeInterface(d, v, "update_cascade_interface", sv)
@@ -985,6 +1433,16 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("update_policy_route"); ok {
+
+		t, err := expandSystemLinkMonitorUpdatePolicyRoute(d, v, "update_policy_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["update-policy-route"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("status"); ok {
 
 		t, err := expandSystemLinkMonitorStatus(d, v, "status", sv)
@@ -992,6 +1450,46 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("diffservcode"); ok {
+
+		t, err := expandSystemLinkMonitorDiffservcode(d, v, "diffservcode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["diffservcode"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("class_id"); ok {
+
+		t, err := expandSystemLinkMonitorClassId(d, v, "class_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["class-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("service_detection"); ok {
+
+		t, err := expandSystemLinkMonitorServiceDetection(d, v, "service_detection", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["service-detection"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_list"); ok {
+
+		t, err := expandSystemLinkMonitorServerList(d, v, "server_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-list"] = t
 		}
 	}
 

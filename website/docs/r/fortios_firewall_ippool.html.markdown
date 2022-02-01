@@ -48,6 +48,8 @@ The following arguments are supported:
 * `arp_intf` - Select an interface from available options that will reply to ARP requests. (If blank, any is selected).
 * `associated_interface` - Associated interface name.
 * `comments` - Comment.
+* `nat64` - Enable/disable NAT64. Valid values: `disable`, `enable`.
+* `add_nat64_route` - Enable/disable adding NAT64 route. Valid values: `disable`, `enable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

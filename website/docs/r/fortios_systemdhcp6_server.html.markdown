@@ -43,6 +43,7 @@ The following arguments are supported:
 * `option2` - Option 2.
 * `option3` - Option 3.
 * `upstream_interface` - Interface name from where delegated information is provided.
+* `delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `ip_mode` - Method used to assign client IP. Valid values: `range`, `delegated`.
 * `prefix_mode` - Assigning a prefix from a DHCPv6 client or RA. Valid values: `dhcp6`, `ra`.
 * `prefix_range` - DHCP prefix configuration. The structure of `prefix_range` block is documented below.

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_user_exchange
-Configure MS Exchange server entries.
+Configure MS Exchange server entries. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

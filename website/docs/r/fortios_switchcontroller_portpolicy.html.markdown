@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_portpolicy
-Configure port policy to be applied on the managed FortiSwitch ports through NAC device. Applies to FortiOS Version `>= 6.4.0`.
+Configure port policy to be applied on the managed FortiSwitch ports through NAC device. Applies to FortiOS Version `6.4.0,6.4.2,7.0.0`.
 
 ## Argument Reference
 

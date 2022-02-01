@@ -168,7 +168,7 @@ The `http` block supports:
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `block_page_status_code` - Code number returned for blocked HTTP pages (non-FortiGuard only) (100 - 599, default = 403).
 * `retry_count` - Number of attempts to retry HTTP connection (0 - 100, default = 0).
-* `tcp_window_type` - Specify type of TCP window to use for this protocol. Valid values: `system`, `static`, `dynamic`.
+* `tcp_window_type` - Specify type of TCP window to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size (default = 128KB).
 * `tcp_window_maximum` - Maximum dynamic TCP window size (default = 8MB).
 * `tcp_window_size` - Set TCP static window size (default = 256KB).
@@ -187,7 +187,7 @@ The `ftp` block supports:
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned (MB, 0 = unlimited (default).  Stream-based uncompression used only under certain conditions.).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
-* `tcp_window_type` - TCP window type to use for this protocol. Valid values: `system`, `static`, `dynamic`.
+* `tcp_window_type` - TCP window type to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size.
 * `tcp_window_maximum` - Maximum dynamic TCP window size.
 * `tcp_window_size` - Set TCP static window size.
@@ -265,7 +265,7 @@ The `ssh` block supports:
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned (MB, 0 = unlimited (default).  Stream-based uncompression used only under certain conditions.).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
-* `tcp_window_type` - TCP window type to use for this protocol. Valid values: `system`, `static`, `dynamic`.
+* `tcp_window_type` - TCP window type to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size.
 * `tcp_window_maximum` - Maximum dynamic TCP window size.
 * `tcp_window_size` - Set TCP static window size.
@@ -285,7 +285,7 @@ The `cifs` block supports:
 * `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
-* `tcp_window_type` - Specify type of TCP window to use for this protocol. Valid values: `system`, `static`, `dynamic`.
+* `tcp_window_type` - Specify type of TCP window to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size (default = 128KB).
 * `tcp_window_maximum` - Maximum dynamic TCP window size (default = 8MB).
 * `tcp_window_size` - Set TCP static window size (default = 256KB).

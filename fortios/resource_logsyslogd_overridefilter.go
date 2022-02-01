@@ -60,6 +60,11 @@ func resourceLogSyslogdOverrideFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -253,6 +258,10 @@ func flattenLogSyslogdOverrideFilterSnifferTraffic(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenLogSyslogdOverrideFilterZtnaTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSyslogdOverrideFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -390,6 +399,12 @@ func refreshObjectLogSyslogdOverrideFilter(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("ztna_traffic", flattenLogSyslogdOverrideFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-traffic"]) {
+			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
 	if err = d.Set("anomaly", flattenLogSyslogdOverrideFilterAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 		if !fortiAPIPatch(o["anomaly"]) {
 			return fmt.Errorf("Error reading anomaly: %v", err)
@@ -486,6 +501,10 @@ func expandLogSyslogdOverrideFilterMulticastTraffic(d *schema.ResourceData, v in
 }
 
 func expandLogSyslogdOverrideFilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogdOverrideFilterZtnaTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -637,6 +656,16 @@ func getObjectLogSyslogdOverrideFilter(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["sniffer-traffic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_traffic"); ok {
+
+		t, err := expandLogSyslogdOverrideFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-traffic"] = t
 		}
 	}
 

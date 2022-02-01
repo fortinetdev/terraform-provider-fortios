@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_ips_viewmap
-configure ips view-map
+configure ips view-map Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

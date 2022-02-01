@@ -71,6 +71,11 @@ func resourceSystemGreTunnel() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"use_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"sequence_number_transmission": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -276,6 +281,10 @@ func flattenSystemGreTunnelLocalGw(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemGreTunnelUseSdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGreTunnelSequenceNumberTransmission(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -358,6 +367,12 @@ func refreshObjectSystemGreTunnel(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("local_gw", flattenSystemGreTunnelLocalGw(o["local-gw"], d, "local_gw", sv)); err != nil {
 		if !fortiAPIPatch(o["local-gw"]) {
 			return fmt.Errorf("Error reading local_gw: %v", err)
+		}
+	}
+
+	if err = d.Set("use_sdwan", flattenSystemGreTunnelUseSdwan(o["use-sdwan"], d, "use_sdwan", sv)); err != nil {
+		if !fortiAPIPatch(o["use-sdwan"]) {
+			return fmt.Errorf("Error reading use_sdwan: %v", err)
 		}
 	}
 
@@ -455,6 +470,10 @@ func expandSystemGreTunnelRemoteGw(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemGreTunnelLocalGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGreTunnelUseSdwan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -568,6 +587,16 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["local-gw"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("use_sdwan"); ok {
+
+		t, err := expandSystemGreTunnelUseSdwan(d, v, "use_sdwan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["use-sdwan"] = t
 		}
 	}
 

@@ -122,6 +122,11 @@ func resourceSystemDhcp6Server() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"delegated_prefix_iaid": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"ip_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -382,6 +387,10 @@ func flattenSystemDhcp6ServerUpstreamInterface(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSystemDhcp6ServerDelegatedPrefixIaid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDhcp6ServerIpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -621,6 +630,12 @@ func refreshObjectSystemDhcp6Server(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("delegated_prefix_iaid", flattenSystemDhcp6ServerDelegatedPrefixIaid(o["delegated-prefix-iaid"], d, "delegated_prefix_iaid", sv)); err != nil {
+		if !fortiAPIPatch(o["delegated-prefix-iaid"]) {
+			return fmt.Errorf("Error reading delegated_prefix_iaid: %v", err)
+		}
+	}
+
 	if err = d.Set("ip_mode", flattenSystemDhcp6ServerIpMode(o["ip-mode"], d, "ip_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["ip-mode"]) {
 			return fmt.Errorf("Error reading ip_mode: %v", err)
@@ -739,6 +754,10 @@ func expandSystemDhcp6ServerOption3(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemDhcp6ServerUpstreamInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcp6ServerDelegatedPrefixIaid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1034,6 +1053,16 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["upstream-interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("delegated_prefix_iaid"); ok {
+
+		t, err := expandSystemDhcp6ServerDelegatedPrefixIaid(d, v, "delegated_prefix_iaid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["delegated-prefix-iaid"] = t
 		}
 	}
 

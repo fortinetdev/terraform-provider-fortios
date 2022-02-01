@@ -39,6 +39,18 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"macaddr": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"macaddr": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"start_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -163,6 +175,10 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -219,6 +235,42 @@ func dataSourceFlattenFirewallAddress6Uuid(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenFirewallAddress6Type(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Macaddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
+		if _, ok := i["macaddr"]; ok {
+			tmp["macaddr"] = dataSourceFlattenFirewallAddress6MacaddrMacaddr(i["macaddr"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddress6MacaddrMacaddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -462,6 +514,10 @@ func dataSourceFlattenFirewallAddress6Host(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -480,6 +536,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("type", dataSourceFlattenFirewallAddress6Type(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("macaddr", dataSourceFlattenFirewallAddress6Macaddr(o["macaddr"], d, "macaddr")); err != nil {
+		if !fortiAPIPatch(o["macaddr"]) {
+			return fmt.Errorf("Error reading macaddr: %v", err)
 		}
 	}
 
@@ -594,6 +656,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("host", dataSourceFlattenFirewallAddress6Host(o["host"], d, "host")); err != nil {
 		if !fortiAPIPatch(o["host"]) {
 			return fmt.Errorf("Error reading host: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddress6FabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

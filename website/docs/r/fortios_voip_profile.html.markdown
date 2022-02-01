@@ -81,9 +81,11 @@ resource "fortios_voip_profile" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
+* `feature_set` - Flow or proxy inspection feature set. Valid values: `flow`, `proxy`.
 * `comment` - Comment.
 * `sip` - SIP. The structure of `sip` block is documented below.
 * `sccp` - SCCP. The structure of `sccp` block is documented below.
+* `msrp` - MSRP. The structure of `msrp` block is documented below.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `sip` block supports:
@@ -95,7 +97,9 @@ The `sip` block supports:
 * `open_contact_pinhole` - Enable/disable open pinhole for non-REGISTER Contact port. Valid values: `disable`, `enable`.
 * `strict_register` - Enable/disable only allow the registrar to connect. Valid values: `disable`, `enable`.
 * `register_rate` - REGISTER request rate limit (per second, per policy).
+* `register_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `invite_rate` - INVITE request rate limit (per second, per policy).
+* `invite_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `max_dialogs` - Maximum number of concurrent calls/dialogs (per policy).
 * `max_line_length` - Maximum SIP header line length (78-4096).
 * `block_long_lines` - Enable/disable block requests with headers exceeding max-line-length. Valid values: `disable`, `enable`.
@@ -123,17 +127,29 @@ The `sip` block supports:
 * `log_call_summary` - Enable/disable logging of SIP call summary. Valid values: `disable`, `enable`.
 * `nat_trace` - Enable/disable preservation of original IP in SDP i line. Valid values: `disable`, `enable`.
 * `subscribe_rate` - SUBSCRIBE request rate limit (per second, per policy).
+* `subscribe_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `message_rate` - MESSAGE request rate limit (per second, per policy).
+* `message_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `notify_rate` - NOTIFY request rate limit (per second, per policy).
+* `notify_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `refer_rate` - REFER request rate limit (per second, per policy).
+* `refer_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `update_rate` - UPDATE request rate limit (per second, per policy).
+* `update_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `options_rate` - OPTIONS request rate limit (per second, per policy).
+* `options_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `ack_rate` - ACK request rate limit (per second, per policy).
+* `ack_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `prack_rate` - PRACK request rate limit (per second, per policy).
+* `prack_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `info_rate` - INFO request rate limit (per second, per policy).
+* `info_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `publish_rate` - PUBLISH request rate limit (per second, per policy).
+* `publish_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `bye_rate` - BYE request rate limit (per second, per policy).
+* `bye_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `cancel_rate` - CANCEL request rate limit (per second, per policy).
+* `cancel_rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`.
 * `preserve_override` - Override i line to preserve original IPS (default: append). Valid values: `disable`, `enable`.
 * `no_sdp_fixup` - Enable/disable no SDP fix-up. Valid values: `disable`, `enable`.
 * `contact_fixup` - Fixup contact anyway even if contact's IP:port doesn't match session's IP:port. Valid values: `disable`, `enable`.
@@ -160,6 +176,8 @@ The `sip` block supports:
 * `malformed_header_max_forwards` - Action for malformed Max-Forwards header. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_allow` - Action for malformed Allow header. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_p_asserted_identity` - Action for malformed P-Asserted-Identity header. Valid values: `discard`, `pass`, `respond`.
+* `malformed_header_no_require` - Action for malformed SIP messages without Require header. Valid values: `discard`, `pass`, `respond`.
+* `malformed_header_no_proxy_require` - Action for malformed SIP messages without Proxy-Require header. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_sdp_v` - Action for malformed SDP v line. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_sdp_o` - Action for malformed SDP o line. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_sdp_s` - Action for malformed SDP s line. Valid values: `discard`, `pass`, `respond`.
@@ -194,6 +212,13 @@ The `sccp` block supports:
 * `log_call_summary` - Enable/disable log summary of SCCP calls. Valid values: `disable`, `enable`.
 * `log_violations` - Enable/disable logging of SCCP violations. Valid values: `disable`, `enable`.
 * `max_calls` - Maximum calls per minute per SCCP client (max 65535).
+
+The `msrp` block supports:
+
+* `status` - Enable/disable MSRP. Valid values: `disable`, `enable`.
+* `log_violations` - Enable/disable logging of MSRP violations. Valid values: `disable`, `enable`.
+* `max_msg_size` - Maximum allowable MSRP message size (1-65535).
+* `max_msg_size_action` - Action for violation of max-msg-size. Valid values: `pass`, `block`, `reset`, `monitor`.
 
 
 ## Attribute Reference

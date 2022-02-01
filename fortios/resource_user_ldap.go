@@ -69,6 +69,12 @@ func resourceUserLdap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"cnid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 20),
@@ -208,6 +214,17 @@ func resourceUserLdap() *schema.Resource {
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
+			"antiphish": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"password_attr": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -360,6 +377,10 @@ func flattenUserLdapSourceIp(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
+func flattenUserLdapSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapCnid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -464,6 +485,14 @@ func flattenUserLdapInterface(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenUserLdapAntiphish(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserLdapPasswordAttr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -500,6 +529,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("source_ip", flattenUserLdapSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_port", flattenUserLdapSourcePort(o["source-port"], d, "source_port", sv)); err != nil {
+		if !fortiAPIPatch(o["source-port"]) {
+			return fmt.Errorf("Error reading source_port: %v", err)
 		}
 	}
 
@@ -653,6 +688,18 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("antiphish", flattenUserLdapAntiphish(o["antiphish"], d, "antiphish", sv)); err != nil {
+		if !fortiAPIPatch(o["antiphish"]) {
+			return fmt.Errorf("Error reading antiphish: %v", err)
+		}
+	}
+
+	if err = d.Set("password_attr", flattenUserLdapPasswordAttr(o["password-attr"], d, "password_attr", sv)); err != nil {
+		if !fortiAPIPatch(o["password-attr"]) {
+			return fmt.Errorf("Error reading password_attr: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -683,6 +730,10 @@ func expandUserLdapServerIdentityCheck(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandUserLdapSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -790,6 +841,14 @@ func expandUserLdapInterface(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
+func expandUserLdapAntiphish(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapPasswordAttr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -850,6 +909,16 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["source-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("source_port"); ok {
+
+		t, err := expandUserLdapSourcePort(d, v, "source_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-port"] = t
 		}
 	}
 
@@ -1110,6 +1179,26 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("antiphish"); ok {
+
+		t, err := expandUserLdapAntiphish(d, v, "antiphish", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["antiphish"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("password_attr"); ok {
+
+		t, err := expandUserLdapPasswordAttr(d, v, "password_attr", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["password-attr"] = t
 		}
 	}
 

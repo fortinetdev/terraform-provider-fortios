@@ -46,6 +46,11 @@ func resourceFirewallServiceCategory() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -179,6 +184,10 @@ func flattenFirewallServiceCategoryComment(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallServiceCategoryFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -191,6 +200,12 @@ func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]i
 	if err = d.Set("comment", flattenFirewallServiceCategoryComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenFirewallServiceCategoryFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 
@@ -208,6 +223,10 @@ func expandFirewallServiceCategoryName(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallServiceCategoryComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallServiceCategoryFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -231,6 +250,16 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["comment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallServiceCategoryFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

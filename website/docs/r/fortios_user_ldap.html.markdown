@@ -43,6 +43,7 @@ The following arguments are supported:
 * `tertiary_server` - Tertiary LDAP server CN domain name or IP.
 * `server_identity_check` - Enable/disable LDAP server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `source_ip` - Source IP for communications to LDAP server.
+* `source_port` - Source port to be used for communication with the LDAP server.
 * `cnid` - Common name identifier for the LDAP server. The common name identifier for most LDAP servers is "cn".
 * `dn` - (Required) Distinguished name used to look up entries on the LDAP server.
 * `type` - Authentication type for LDAP searches. Valid values: `simple`, `anonymous`, `regular`.
@@ -69,6 +70,8 @@ The following arguments are supported:
 * `user_info_exchange_server` - MS Exchange server from which to fetch user information.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `antiphish` - Enable/disable AntiPhishing credential backend. Valid values: `enable`, `disable`.
+* `password_attr` - Name of attribute to get password hash.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

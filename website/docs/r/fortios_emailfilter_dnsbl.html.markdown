@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_dnsbl
-Configure AntiSpam DNSBL/ORBL.
+Configure AntiSpam DNSBL/ORBL. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

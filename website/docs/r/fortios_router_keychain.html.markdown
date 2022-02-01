@@ -38,6 +38,7 @@ The `key` block supports:
 * `accept_lifetime` - Lifetime of received authentication key (format: hh:mm:ss day month year).
 * `send_lifetime` - Lifetime of sent authentication key (format: hh:mm:ss day month year).
 * `key_string` - Password for the key (max. = 35 characters).
+* `algorithm` - Cryptographic algorithm. Valid values: `md5`, `hmac-sha1`, `hmac-sha256`, `hmac-sha384`, `hmac-sha512`.
 
 
 ## Attribute Reference

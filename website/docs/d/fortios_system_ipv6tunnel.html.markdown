@@ -23,4 +23,6 @@ The following attributes are exported:
 * `source` - Local IPv6 address of the tunnel.
 * `destination` - Remote IPv6 address of the tunnel.
 * `interface` - Interface name.
+* `use_sdwan` - Enable/disable use of SD-WAN to reach remote gateway.
+* `auto_asic_offload` - Enable/disable tunnel ASIC offloading.
 

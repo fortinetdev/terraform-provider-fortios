@@ -19,6 +19,7 @@ The following arguments are supported:
 * `control_message_offload` - Enable/disable CAPWAP control message data channel offload.
 * `apcfg_profile` - AP local configuration profile name.
 * `ble_profile` - Bluetooth Low Energy profile name.
+* `syslog_profile` - System log server configuration profile name.
 * `wan_port_mode` - Enable/disable using a WAN port as a LAN port. Valid values: `wan-lan`, `wan-only`.
 * `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
 * `energy_efficient_ethernet` - Enable/disable use of energy efficient Ethernet on WTP. Valid values: `enable`, `disable`.
@@ -51,6 +52,13 @@ The following arguments are supported:
 * `radio_4` - Configuration options for radio 4. The structure of `radio_4` block is documented below.
 * `lbs` - Set various location based service (LBS) options. The structure of `lbs` block is documented below.
 * `ext_info_enable` - Enable/disable station/VAP/radio extension information. Valid values: `enable`, `disable`.
+* `indoor_outdoor_deployment` - Set to allow indoor/outdoor-only channels under regulatory rules (default = platform-determined). Valid values: `platform-determined`, `outdoor`, `indoor`.
+* `esl_ses_dongle` - ESL SES-imagotag dongle configuration. The structure of `esl_ses_dongle` block is documented below.
+* `console_login` - Enable/disable FAP console login access (default = enable). Valid values: `enable`, `disable`.
+* `wan_port_auth` - Set WAN port authentication mode (default = none). Valid values: `none`, `802.1x`.
+* `wan_port_auth_usrname` - Set WAN port 802.1x supplicant user name.
+* `wan_port_auth_password` - Set WAN port 802.1x supplicant password.
+* `wan_port_auth_methods` - WAN port 802.1x supplicant EAP methods (default = all). Valid values: `all`, `EAP-FAST`, `EAP-TLS`, `EAP-PEAP`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -100,7 +108,7 @@ The `split_tunneling_acl` block supports:
 The `radio_1` block supports:
 
 * `radio_id` - radio-id
-* `mode` - Mode of radio 1. Radio 1 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer. Valid values: `disabled`, `ap`, `monitor`, `sniffer`.
+* `mode` - Mode of radio 1. Radio 1 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
 * `band` - WiFi band that Radio 1 operates on.
 * `band_5g_type` - WiFi 5G band type. Valid values: `5g-full`, `5g-high`, `5g-low`.
 * `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable). Valid values: `disable`, `enable`.
@@ -113,13 +121,16 @@ The `radio_1` block supports:
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
 * `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable). Valid values: `enable`, `disable`.
 * `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
@@ -132,10 +143,30 @@ The `radio_1` block supports:
 * `ap_sniffer_mgmt_other` - Enable/disable sniffer on WiFi management other frames  (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_ctl` - Enable/disable sniffer on WiFi control frame (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
+* `sam_ssid` - SSID for WiFi network.
+* `sam_bssid` - BSSID for WiFi network.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
+* `sam_cwp_username` - Username for captive portal authentication.
+* `sam_cwp_password` - Password for captive portal authentication.
+* `sam_cwp_test_url` - Website the client is trying to access.
+* `sam_cwp_match_string` - Identification string from the captive portal login form.
+* `sam_cwp_success_string` - Success identification on the page after a successful login.
+* `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_username` - Username for WiFi network connection.
+* `sam_password` - Passphrase for WiFi network connection.
+* `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
+* `sam_server_type` - Select SAM server type (default = "IP"). Valid values: `ip`, `fqdn`.
+* `sam_server_ip` - SAM test server IP address.
+* `sam_server_fqdn` - SAM test server domain name.
+* `iperf_server_port` - Iperf service port number.
+* `iperf_protocol` - Iperf test protocol (default = "UDP"). Valid values: `udp`, `tcp`.
+* `sam_report_intv` - SAM report interval (sec), 0 for a one-time report.
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
+* `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
@@ -159,7 +190,7 @@ The `channel` block supports:
 The `radio_2` block supports:
 
 * `radio_id` - radio-id
-* `mode` - Mode of radio 2. Radio 2 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer. Valid values: `disabled`, `ap`, `monitor`, `sniffer`.
+* `mode` - Mode of radio 2. Radio 2 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
 * `band` - WiFi band that Radio 2 operates on.
 * `band_5g_type` - WiFi 5G band type. Valid values: `5g-full`, `5g-high`, `5g-low`.
 * `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable). Valid values: `disable`, `enable`.
@@ -172,13 +203,16 @@ The `radio_2` block supports:
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
 * `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable). Valid values: `enable`, `disable`.
 * `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
@@ -191,10 +225,30 @@ The `radio_2` block supports:
 * `ap_sniffer_mgmt_other` - Enable/disable sniffer on WiFi management other frames  (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_ctl` - Enable/disable sniffer on WiFi control frame (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
+* `sam_ssid` - SSID for WiFi network.
+* `sam_bssid` - BSSID for WiFi network.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
+* `sam_cwp_username` - Username for captive portal authentication.
+* `sam_cwp_password` - Password for captive portal authentication.
+* `sam_cwp_test_url` - Website the client is trying to access.
+* `sam_cwp_match_string` - Identification string from the captive portal login form.
+* `sam_cwp_success_string` - Success identification on the page after a successful login.
+* `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_username` - Username for WiFi network connection.
+* `sam_password` - Passphrase for WiFi network connection.
+* `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
+* `sam_server_type` - Select SAM server type (default = "IP"). Valid values: `ip`, `fqdn`.
+* `sam_server_ip` - SAM test server IP address.
+* `sam_server_fqdn` - SAM test server domain name.
+* `iperf_server_port` - Iperf service port number.
+* `iperf_protocol` - Iperf test protocol (default = "UDP"). Valid values: `udp`, `tcp`.
+* `sam_report_intv` - SAM report interval (sec), 0 for a one-time report.
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
+* `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
@@ -217,7 +271,7 @@ The `channel` block supports:
 
 The `radio_3` block supports:
 
-* `mode` - Mode of radio 3. Radio 3 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer. Valid values: `disabled`, `ap`, `monitor`, `sniffer`.
+* `mode` - Mode of radio 3. Radio 3 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
 * `band` - WiFi band that Radio 3 operates on.
 * `band_5g_type` - WiFi 5G band type. Valid values: `5g-full`, `5g-high`, `5g-low`.
 * `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable). Valid values: `disable`, `enable`.
@@ -230,13 +284,16 @@ The `radio_3` block supports:
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
 * `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence. Valid values: `160MHz`, `80MHz`, `40MHz`, `20MHz`.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
@@ -249,10 +306,30 @@ The `radio_3` block supports:
 * `ap_sniffer_mgmt_other` - Enable/disable sniffer on WiFi management other frames  (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_ctl` - Enable/disable sniffer on WiFi control frame (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
+* `sam_ssid` - SSID for WiFi network.
+* `sam_bssid` - BSSID for WiFi network.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
+* `sam_cwp_username` - Username for captive portal authentication.
+* `sam_cwp_password` - Password for captive portal authentication.
+* `sam_cwp_test_url` - Website the client is trying to access.
+* `sam_cwp_match_string` - Identification string from the captive portal login form.
+* `sam_cwp_success_string` - Success identification on the page after a successful login.
+* `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_username` - Username for WiFi network connection.
+* `sam_password` - Passphrase for WiFi network connection.
+* `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
+* `sam_server_type` - Select SAM server type (default = "IP"). Valid values: `ip`, `fqdn`.
+* `sam_server_ip` - SAM test server IP address.
+* `sam_server_fqdn` - SAM test server domain name.
+* `iperf_server_port` - Iperf service port number.
+* `iperf_protocol` - Iperf test protocol (default = "UDP"). Valid values: `udp`, `tcp`.
+* `sam_report_intv` - SAM report interval (sec), 0 for a one-time report.
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
+* `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
@@ -275,7 +352,7 @@ The `channel` block supports:
 
 The `radio_4` block supports:
 
-* `mode` - Mode of radio 3. Radio 3 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer. Valid values: `disabled`, `ap`, `monitor`, `sniffer`.
+* `mode` - Mode of radio 3. Radio 3 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
 * `band` - WiFi band that Radio 3 operates on.
 * `band_5g_type` - WiFi 5G band type. Valid values: `5g-full`, `5g-high`, `5g-low`.
 * `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable). Valid values: `disable`, `enable`.
@@ -288,13 +365,16 @@ The `radio_4` block supports:
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
 * `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence. Valid values: `160MHz`, `80MHz`, `40MHz`, `20MHz`.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
@@ -307,10 +387,30 @@ The `radio_4` block supports:
 * `ap_sniffer_mgmt_other` - Enable/disable sniffer on WiFi management other frames  (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_ctl` - Enable/disable sniffer on WiFi control frame (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
+* `sam_ssid` - SSID for WiFi network.
+* `sam_bssid` - BSSID for WiFi network.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
+* `sam_cwp_username` - Username for captive portal authentication.
+* `sam_cwp_password` - Password for captive portal authentication.
+* `sam_cwp_test_url` - Website the client is trying to access.
+* `sam_cwp_match_string` - Identification string from the captive portal login form.
+* `sam_cwp_success_string` - Success identification on the page after a successful login.
+* `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_username` - Username for WiFi network connection.
+* `sam_password` - Passphrase for WiFi network connection.
+* `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
+* `sam_server_type` - Select SAM server type (default = "IP"). Valid values: `ip`, `fqdn`.
+* `sam_server_ip` - SAM test server IP address.
+* `sam_server_fqdn` - SAM test server domain name.
+* `iperf_server_port` - Iperf service port number.
+* `iperf_protocol` - Iperf test protocol (default = "UDP"). Valid values: `udp`, `tcp`.
+* `sam_report_intv` - SAM report interval (sec), 0 for a one-time report.
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
+* `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
@@ -346,7 +446,9 @@ The `lbs` block supports:
 * `aeroscout_mu_factor` - AeroScout Mobile Unit (MU) mode dilution factor (default = 20).
 * `aeroscout_mu_timeout` - AeroScout MU mode timeout (0 - 65535 sec, default = 5).
 * `fortipresence` - Enable/disable FortiPresence to monitor the location and activity of WiFi clients even if they don't connect to this WiFi network (default = disable). Valid values: `foreign`, `both`, `disable`.
+* `fortipresence_server_addr_type` - FortiPresence server address type (default = ipv4). Valid values: `ipv4`, `fqdn`.
 * `fortipresence_server` - FortiPresence server IP address.
+* `fortipresence_server_fqdn` - FQDN of FortiPresence server.
 * `fortipresence_port` - FortiPresence server UDP listening port (default = 3000).
 * `fortipresence_secret` - FortiPresence secret password (max. 16 characters).
 * `fortipresence_project` - FortiPresence project name (max. 16 characters, default = fortipresence).
@@ -355,6 +457,20 @@ The `lbs` block supports:
 * `fortipresence_unassoc` - Enable/disable FortiPresence finding and reporting unassociated stations. Valid values: `enable`, `disable`.
 * `fortipresence_ble` - Enable/disable FortiPresence finding and reporting BLE devices. Valid values: `enable`, `disable`.
 * `station_locate` - Enable/disable client station locating services for all clients, whether associated or not (default = disable). Valid values: `enable`, `disable`.
+
+The `esl_ses_dongle` block supports:
+
+* `compliance_level` - Compliance levels for the ESL solution integration (default = compliance-level-2). Valid values: `compliance-level-2`.
+* `scd_enable` - Enable/disable ESL SES-imagotag Serial Communication Daemon (SCD) (default = disable). Valid values: `enable`, `disable`.
+* `esl_channel` - ESL SES-imagotag dongle channel (default = 127). Valid values: `-1`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `127`.
+* `output_power` - ESL SES-imagotag dongle output power (default = A). Valid values: `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`.
+* `apc_addr_type` - ESL SES-imagotag APC address type (default = fqdn). Valid values: `fqdn`, `ip`.
+* `apc_fqdn` - FQDN of ESL SES-imagotag Access Point Controller (APC).
+* `apc_ip` - IP address of ESL SES-imagotag Access Point Controller (APC).
+* `apc_port` - Port of ESL SES-imagotag Access Point Controller (APC).
+* `coex_level` - ESL SES-imagotag dongle coexistence level (default = none). Valid values: `none`.
+* `tls_cert_verification` - Enable/disable TLS Certificate verification. (default = enable). Valid values: `enable`, `disable`.
+* `tls_fqdn_verification` - Enable/disable TLS Certificate verification. (default = disable). Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_bword
-Configure AntiSpam banned word list.
+Configure AntiSpam banned word list. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

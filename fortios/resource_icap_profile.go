@@ -123,6 +123,27 @@ func resourceIcapProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"icap_block_log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"chunk_encap": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"extension_feature": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"scan_progress_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 30),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_headers": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -413,6 +434,22 @@ func flattenIcapProfileResponseReqHdr(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenIcapProfileRespmodDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIcapProfileIcapBlockLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIcapProfileChunkEncap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIcapProfileExtensionFeature(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIcapProfileScanProgressInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -757,6 +794,30 @@ func refreshObjectIcapProfile(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("icap_block_log", flattenIcapProfileIcapBlockLog(o["icap-block-log"], d, "icap_block_log", sv)); err != nil {
+		if !fortiAPIPatch(o["icap-block-log"]) {
+			return fmt.Errorf("Error reading icap_block_log: %v", err)
+		}
+	}
+
+	if err = d.Set("chunk_encap", flattenIcapProfileChunkEncap(o["chunk-encap"], d, "chunk_encap", sv)); err != nil {
+		if !fortiAPIPatch(o["chunk-encap"]) {
+			return fmt.Errorf("Error reading chunk_encap: %v", err)
+		}
+	}
+
+	if err = d.Set("extension_feature", flattenIcapProfileExtensionFeature(o["extension-feature"], d, "extension_feature", sv)); err != nil {
+		if !fortiAPIPatch(o["extension-feature"]) {
+			return fmt.Errorf("Error reading extension_feature: %v", err)
+		}
+	}
+
+	if err = d.Set("scan_progress_interval", flattenIcapProfileScanProgressInterval(o["scan-progress-interval"], d, "scan_progress_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["scan-progress-interval"]) {
+			return fmt.Errorf("Error reading scan_progress_interval: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("icap_headers", flattenIcapProfileIcapHeaders(o["icap-headers"], d, "icap_headers", sv)); err != nil {
 			if !fortiAPIPatch(o["icap-headers"]) {
@@ -859,6 +920,22 @@ func expandIcapProfileResponseReqHdr(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandIcapProfileRespmodDefaultAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapProfileIcapBlockLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapProfileChunkEncap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapProfileExtensionFeature(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapProfileScanProgressInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1246,6 +1323,46 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["respmod-default-action"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("icap_block_log"); ok {
+
+		t, err := expandIcapProfileIcapBlockLog(d, v, "icap_block_log", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["icap-block-log"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("chunk_encap"); ok {
+
+		t, err := expandIcapProfileChunkEncap(d, v, "chunk_encap", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["chunk-encap"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("extension_feature"); ok {
+
+		t, err := expandIcapProfileExtensionFeature(d, v, "extension_feature", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["extension-feature"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("scan_progress_interval"); ok {
+
+		t, err := expandIcapProfileScanProgressInterval(d, v, "scan_progress_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scan-progress-interval"] = t
 		}
 	}
 

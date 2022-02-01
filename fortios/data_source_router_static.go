@@ -75,6 +75,18 @@ func dataSourceRouterStatic() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sdwan_zone": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"sdwan": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -216,6 +228,42 @@ func dataSourceFlattenRouterStaticDynamicGateway(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenRouterStaticSdwanZone(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenRouterStaticSdwanZoneName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterStaticSdwanZoneName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStaticSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -320,6 +368,12 @@ func dataSourceRefreshObjectRouterStatic(d *schema.ResourceData, o map[string]in
 	if err = d.Set("dynamic_gateway", dataSourceFlattenRouterStaticDynamicGateway(o["dynamic-gateway"], d, "dynamic_gateway")); err != nil {
 		if !fortiAPIPatch(o["dynamic-gateway"]) {
 			return fmt.Errorf("Error reading dynamic_gateway: %v", err)
+		}
+	}
+
+	if err = d.Set("sdwan_zone", dataSourceFlattenRouterStaticSdwanZone(o["sdwan-zone"], d, "sdwan_zone")); err != nil {
+		if !fortiAPIPatch(o["sdwan-zone"]) {
+			return fmt.Errorf("Error reading sdwan_zone: %v", err)
 		}
 	}
 

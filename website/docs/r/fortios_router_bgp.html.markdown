@@ -122,6 +122,7 @@ The following arguments are supported:
 * `additional_path6` - Enable/disable selection of BGP IPv6 additional paths. Valid values: `enable`, `disable`.
 * `multipath_recursive_distance` - Enable/disable use of recursive distance to select multipath. Valid values: `enable`, `disable`.
 * `recursive_next_hop` - Enable/disable recursive resolution of next-hop using BGP route. Valid values: `enable`, `disable`.
+* `tag_resolve_mode` - Configure tag-match mode. Resolves BGP routes with other routes containing the same tag. Valid values: `disable`, `preferred`, `merge`.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.
 * `confederation_peers` - Confederation peers. The structure of `confederation_peers` block is documented below.
@@ -156,6 +157,7 @@ The following arguments are supported:
 * `redistribute6` - BGP IPv6 redistribute table. The structure of `redistribute6` block is documented below.
 * `admin_distance` - Administrative distance modifications. The structure of `admin_distance` block is documented below.
 * `vrf_leak` - BGP VRF leaking table. The structure of `vrf_leak` block is documented below.
+* `vrf_leak6` - BGP IPv6 VRF leaking table. The structure of `vrf_leak6` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -270,8 +272,15 @@ The `neighbor` block supports:
 * `adv_additional_path6` - Number of IPv6 additional paths that can be advertised to this neighbor.
 * `password` - Password used in MD5 authentication.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
+* `conditional_advertise6` - IPv6 conditional advertisement. The structure of `conditional_advertise6` block is documented below.
 
 The `conditional_advertise` block supports:
+
+* `advertise_routemap` - Name of advertising route map.
+* `condition_routemap` - Name of condition route map.
+* `condition_type` - Type of condition. Valid values: `exist`, `non-exist`.
+
+The `conditional_advertise6` block supports:
 
 * `advertise_routemap` - Name of advertising route map.
 * `condition_routemap` - Name of condition route map.
@@ -387,6 +396,7 @@ The `network` block supports:
 
 * `id` - ID.
 * `prefix` - Network prefix.
+* `network_import_check` - Configure insurance of BGP network route existence in IGP. Valid values: `global`, `enable`, `disable`.
 * `backdoor` - Enable/disable route as backdoor. Valid values: `enable`, `disable`.
 * `route_map` - Route map to modify generated route.
 
@@ -394,6 +404,7 @@ The `network6` block supports:
 
 * `id` - ID.
 * `prefix6` - Network IPv6 prefix.
+* `network_import_check` - Configure insurance of BGP network route existence in IGP. Valid values: `global`, `enable`, `disable`.
 * `backdoor` - Enable/disable route as backdoor. Valid values: `enable`, `disable`.
 * `route_map` - Route map to modify generated route.
 
@@ -417,6 +428,17 @@ The `admin_distance` block supports:
 * `distance` - Administrative distance to apply (1 - 255).
 
 The `vrf_leak` block supports:
+
+* `vrf` - Origin VRF ID <0 - 31>.
+* `target` - Target VRF table. The structure of `target` block is documented below.
+
+The `target` block supports:
+
+* `vrf` - Target VRF ID <0 - 31>.
+* `route_map` - Route map of VRF leaking.
+* `interface` - Interface which is used to leak routes to target VRF.
+
+The `vrf_leak6` block supports:
 
 * `vrf` - Origin VRF ID <0 - 31>.
 * `target` - Target VRF table. The structure of `target` block is documented below.

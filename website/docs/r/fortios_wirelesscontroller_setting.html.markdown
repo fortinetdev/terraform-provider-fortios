@@ -24,6 +24,7 @@ The following arguments are supported:
 * `device_weight` - Upper limit of confidence of device for identification (0 - 255, default = 1, 0 = disable).
 * `device_holdoff` - Lower limit of creation time of device for identification in minutes (0 - 60, default = 5).
 * `device_idle` - Upper limit of idle time of device for identification in minutes (0 - 14400, default = 1440).
+* `firmware_provision_on_authorization` - Enable/disable automatic provisioning of latest firmware on authorization. Valid values: `enable`, `disable`.
 * `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 86400, 0 = disable).
 * `darrp_optimize_schedules` - Firewall schedules for DARRP running time. DARRP will run periodically based on darrp-optimize within the schedules. Separate multiple schedule names with a space. The structure of `darrp_optimize_schedules` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.

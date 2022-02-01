@@ -14,6 +14,7 @@ Configure AP local configuration profiles. Applies to FortiOS Version `>= 6.4.0`
 The following arguments are supported:
 
 * `name` - AP local configuration profile name.
+* `ap_family` - FortiAP family type (default = fap). Valid values: `fap`, `fap-u`, `fap-c`.
 * `comment` - Comment.
 * `ac_type` - Validation controller type (default = default). Valid values: `default`, `specify`, `apcfg`.
 * `ac_timer` - Maximum waiting time for the AP to join the validation controller after applying AP local configuration (3 - 30 min, default = 10).

@@ -63,10 +63,15 @@ func resourceRouterKeyChain() *schema.Resource {
 						},
 						"key_string": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
+							ValidateFunc: validation.StringLenBetween(0, 60),
 							Optional:     true,
 							Sensitive:    true,
 							Computed:     true,
+						},
+						"algorithm": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -268,6 +273,12 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
+		if _, ok := i["algorithm"]; ok {
+
+			tmp["algorithm"] = flattenRouterKeyChainKeyAlgorithm(i["algorithm"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -290,6 +301,10 @@ func flattenRouterKeyChainKeySendLifetime(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterKeyChainKeyKeyString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterKeyChainKeyAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -382,6 +397,12 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["key-string"], _ = expandRouterKeyChainKeyKeyString(d, i["key_string"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["algorithm"], _ = expandRouterKeyChainKeyAlgorithm(d, i["algorithm"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -403,6 +424,10 @@ func expandRouterKeyChainKeySendLifetime(d *schema.ResourceData, v interface{}, 
 }
 
 func expandRouterKeyChainKeyKeyString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterKeyChainKeyAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

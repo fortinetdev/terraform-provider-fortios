@@ -48,6 +48,11 @@ func resourceSystemVirtualSwitch() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"vlan": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"port": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -58,16 +63,6 @@ func resourceSystemVirtualSwitch() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
 							Computed:     true,
-						},
-						"speed": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
-						},
-						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
 						},
 						"alias": &schema.Schema{
 							Type:         schema.TypeString,
@@ -238,6 +233,10 @@ func flattenSystemVirtualSwitchPhysicalSwitch(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemVirtualSwitchVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVirtualSwitchPort(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -263,18 +262,6 @@ func flattenSystemVirtualSwitchPort(v interface{}, d *schema.ResourceData, pre s
 			tmp["name"] = flattenSystemVirtualSwitchPortName(i["name"], d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed"
-		if _, ok := i["speed"]; ok {
-
-			tmp["speed"] = flattenSystemVirtualSwitchPortSpeed(i["speed"], d, pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-
-			tmp["status"] = flattenSystemVirtualSwitchPortStatus(i["status"], d, pre_append, sv)
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alias"
 		if _, ok := i["alias"]; ok {
 
@@ -291,14 +278,6 @@ func flattenSystemVirtualSwitchPort(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemVirtualSwitchPortName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemVirtualSwitchPortSpeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemVirtualSwitchPortStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -334,6 +313,12 @@ func refreshObjectSystemVirtualSwitch(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("physical_switch", flattenSystemVirtualSwitchPhysicalSwitch(o["physical-switch"], d, "physical_switch", sv)); err != nil {
 		if !fortiAPIPatch(o["physical-switch"]) {
 			return fmt.Errorf("Error reading physical_switch: %v", err)
+		}
+	}
+
+	if err = d.Set("vlan", flattenSystemVirtualSwitchVlan(o["vlan"], d, "vlan", sv)); err != nil {
+		if !fortiAPIPatch(o["vlan"]) {
+			return fmt.Errorf("Error reading vlan: %v", err)
 		}
 	}
 
@@ -394,6 +379,10 @@ func expandSystemVirtualSwitchPhysicalSwitch(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemVirtualSwitchVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemVirtualSwitchPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -414,18 +403,6 @@ func expandSystemVirtualSwitchPort(d *schema.ResourceData, v interface{}, pre st
 			tmp["name"], _ = expandSystemVirtualSwitchPortName(d, i["name"], pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed"
-		if _, ok := d.GetOk(pre_append); ok {
-
-			tmp["speed"], _ = expandSystemVirtualSwitchPortSpeed(d, i["speed"], pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-
-			tmp["status"], _ = expandSystemVirtualSwitchPortStatus(d, i["status"], pre_append, sv)
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alias"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -441,14 +418,6 @@ func expandSystemVirtualSwitchPort(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemVirtualSwitchPortName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemVirtualSwitchPortSpeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemVirtualSwitchPortStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -492,6 +461,16 @@ func getObjectSystemVirtualSwitch(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["physical-switch"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("vlan"); ok {
+
+		t, err := expandSystemVirtualSwitchVlan(d, v, "vlan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vlan"] = t
 		}
 	}
 

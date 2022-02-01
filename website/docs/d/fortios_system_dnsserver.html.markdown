@@ -22,4 +22,5 @@ The following attributes are exported:
 * `name` - DNS server name.
 * `mode` - DNS server mode.
 * `dnsfilter_profile` - DNS filter profile.
+* `doh` - DNS over HTTPS.
 

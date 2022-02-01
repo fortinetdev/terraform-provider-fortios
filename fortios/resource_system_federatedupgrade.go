@@ -40,6 +40,28 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"failure_reason": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"failure_device": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"upgrade_id": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"next_path_index": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 10),
+				Optional:     true,
+				Computed:     true,
+			},
 			"node_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -70,6 +92,17 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"device_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"coordinating_fortigate": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -176,6 +209,22 @@ func flattenSystemFederatedUpgradeStatus(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemFederatedUpgradeFailureReason(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeFailureDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeUpgradeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeNextPathIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -225,6 +274,18 @@ func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData
 			tmp["upgrade_path"] = flattenSystemFederatedUpgradeNodeListUpgradePath(i["upgrade-path"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
+		if _, ok := i["device-type"]; ok {
+
+			tmp["device_type"] = flattenSystemFederatedUpgradeNodeListDeviceType(i["device-type"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
+		if _, ok := i["coordinating-fortigate"]; ok {
+
+			tmp["coordinating_fortigate"] = flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(i["coordinating-fortigate"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -254,12 +315,44 @@ func flattenSystemFederatedUpgradeNodeListUpgradePath(v interface{}, d *schema.R
 	return v
 }
 
+func flattenSystemFederatedUpgradeNodeListDeviceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if err = d.Set("status", flattenSystemFederatedUpgradeStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("failure_reason", flattenSystemFederatedUpgradeFailureReason(o["failure-reason"], d, "failure_reason", sv)); err != nil {
+		if !fortiAPIPatch(o["failure-reason"]) {
+			return fmt.Errorf("Error reading failure_reason: %v", err)
+		}
+	}
+
+	if err = d.Set("failure_device", flattenSystemFederatedUpgradeFailureDevice(o["failure-device"], d, "failure_device", sv)); err != nil {
+		if !fortiAPIPatch(o["failure-device"]) {
+			return fmt.Errorf("Error reading failure_device: %v", err)
+		}
+	}
+
+	if err = d.Set("upgrade_id", flattenSystemFederatedUpgradeUpgradeId(o["upgrade-id"], d, "upgrade_id", sv)); err != nil {
+		if !fortiAPIPatch(o["upgrade-id"]) {
+			return fmt.Errorf("Error reading upgrade_id: %v", err)
+		}
+	}
+
+	if err = d.Set("next_path_index", flattenSystemFederatedUpgradeNextPathIndex(o["next-path-index"], d, "next_path_index", sv)); err != nil {
+		if !fortiAPIPatch(o["next-path-index"]) {
+			return fmt.Errorf("Error reading next_path_index: %v", err)
 		}
 	}
 
@@ -289,6 +382,22 @@ func flattenSystemFederatedUpgradeFortiTestDebug(d *schema.ResourceData, fosdebu
 }
 
 func expandSystemFederatedUpgradeStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeFailureReason(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeFailureDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeUpgradeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeNextPathIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -336,6 +445,18 @@ func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{},
 			tmp["upgrade-path"], _ = expandSystemFederatedUpgradeNodeListUpgradePath(d, i["upgrade_path"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["device-type"], _ = expandSystemFederatedUpgradeNodeListDeviceType(d, i["device_type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["coordinating-fortigate"], _ = expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d, i["coordinating_fortigate"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -364,6 +485,14 @@ func expandSystemFederatedUpgradeNodeListUpgradePath(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandSystemFederatedUpgradeNodeListDeviceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemFederatedUpgrade(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -374,6 +503,46 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("failure_reason"); ok {
+
+		t, err := expandSystemFederatedUpgradeFailureReason(d, v, "failure_reason", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["failure-reason"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("failure_device"); ok {
+
+		t, err := expandSystemFederatedUpgradeFailureDevice(d, v, "failure_device", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["failure-device"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("upgrade_id"); ok {
+
+		t, err := expandSystemFederatedUpgradeUpgradeId(d, v, "upgrade_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["upgrade-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("next_path_index"); ok {
+
+		t, err := expandSystemFederatedUpgradeNextPathIndex(d, v, "next_path_index", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["next-path-index"] = t
 		}
 	}
 

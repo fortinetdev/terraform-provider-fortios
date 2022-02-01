@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_logfortianalyzercloud_setting
-Global FortiAnalyzer Cloud settings.
+Global FortiAnalyzer Cloud settings. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 
@@ -15,6 +15,9 @@ The following arguments are supported:
 
 * `status` - Enable/disable logging to FortiAnalyzer. Valid values: `enable`, `disable`.
 * `ips_archive` - Enable/disable IPS packet archive logging. Valid values: `enable`, `disable`.
+* `certificate_verification` - Enable/disable identity verification of FortiAnalyzer by use of certificate. Valid values: `enable`, `disable`.
+* `serial` - Serial numbers of the FortiAnalyzer. The structure of `serial` block is documented below.
+* `preshared_key` - Preshared-key used for auto-authorization on FortiAnalyzer.
 * `access_config` - Enable/disable FortiAnalyzer access to configuration and data. Valid values: `enable`, `disable`.
 * `hmac_algorithm` - FortiAnalyzer IPsec tunnel HMAC algorithm. Valid values: `sha256`, `sha1`.
 * `enc_algorithm` - Configure the level of SSL protection for secure communication with FortiAnalyzer. Valid values: `high-medium`, `high`, `low`.
@@ -32,7 +35,12 @@ The following arguments are supported:
 * `max_log_rate` - FortiAnalyzer maximum log rate in MBps (0 = unlimited).
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `serial` block supports:
+
+* `name` - Serial Number.
 
 
 ## Attribute Reference

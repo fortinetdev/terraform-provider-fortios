@@ -87,15 +87,46 @@ func resourceUserSaml() *schema.Resource {
 			},
 			"user_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},
 			"group_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
+			},
+			"digest_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"limit_relaystate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"clock_tolerance": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 300),
+				Optional:     true,
+				Computed:     true,
+			},
+			"adfs_claim": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"user_claim_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"group_claim_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -266,6 +297,30 @@ func flattenUserSamlGroupName(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenUserSamlDigestMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlLimitRelaystate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlClockTolerance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlAdfsClaim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlUserClaimType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlGroupClaimType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -335,6 +390,42 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("digest_method", flattenUserSamlDigestMethod(o["digest-method"], d, "digest_method", sv)); err != nil {
+		if !fortiAPIPatch(o["digest-method"]) {
+			return fmt.Errorf("Error reading digest_method: %v", err)
+		}
+	}
+
+	if err = d.Set("limit_relaystate", flattenUserSamlLimitRelaystate(o["limit-relaystate"], d, "limit_relaystate", sv)); err != nil {
+		if !fortiAPIPatch(o["limit-relaystate"]) {
+			return fmt.Errorf("Error reading limit_relaystate: %v", err)
+		}
+	}
+
+	if err = d.Set("clock_tolerance", flattenUserSamlClockTolerance(o["clock-tolerance"], d, "clock_tolerance", sv)); err != nil {
+		if !fortiAPIPatch(o["clock-tolerance"]) {
+			return fmt.Errorf("Error reading clock_tolerance: %v", err)
+		}
+	}
+
+	if err = d.Set("adfs_claim", flattenUserSamlAdfsClaim(o["adfs-claim"], d, "adfs_claim", sv)); err != nil {
+		if !fortiAPIPatch(o["adfs-claim"]) {
+			return fmt.Errorf("Error reading adfs_claim: %v", err)
+		}
+	}
+
+	if err = d.Set("user_claim_type", flattenUserSamlUserClaimType(o["user-claim-type"], d, "user_claim_type", sv)); err != nil {
+		if !fortiAPIPatch(o["user-claim-type"]) {
+			return fmt.Errorf("Error reading user_claim_type: %v", err)
+		}
+	}
+
+	if err = d.Set("group_claim_type", flattenUserSamlGroupClaimType(o["group-claim-type"], d, "group_claim_type", sv)); err != nil {
+		if !fortiAPIPatch(o["group-claim-type"]) {
+			return fmt.Errorf("Error reading group_claim_type: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -385,6 +476,30 @@ func expandUserSamlUserName(d *schema.ResourceData, v interface{}, pre string, s
 }
 
 func expandUserSamlGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlDigestMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlLimitRelaystate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlClockTolerance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlAdfsClaim(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlUserClaimType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlGroupClaimType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -498,6 +613,66 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["group-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("digest_method"); ok {
+
+		t, err := expandUserSamlDigestMethod(d, v, "digest_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["digest-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("limit_relaystate"); ok {
+
+		t, err := expandUserSamlLimitRelaystate(d, v, "limit_relaystate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["limit-relaystate"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("clock_tolerance"); ok {
+
+		t, err := expandUserSamlClockTolerance(d, v, "clock_tolerance", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["clock-tolerance"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("adfs_claim"); ok {
+
+		t, err := expandUserSamlAdfsClaim(d, v, "adfs_claim", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adfs-claim"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_claim_type"); ok {
+
+		t, err := expandUserSamlUserClaimType(d, v, "user_claim_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-claim-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("group_claim_type"); ok {
+
+		t, err := expandUserSamlGroupClaimType(d, v, "group_claim_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["group-claim-type"] = t
 		}
 	}
 

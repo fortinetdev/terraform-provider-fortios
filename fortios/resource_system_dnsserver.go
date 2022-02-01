@@ -53,6 +53,11 @@ func resourceSystemDnsServer() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"doh": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -190,6 +195,10 @@ func flattenSystemDnsServerDnsfilterProfile(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenSystemDnsServerDoh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -211,6 +220,12 @@ func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("doh", flattenSystemDnsServerDoh(o["doh"], d, "doh", sv)); err != nil {
+		if !fortiAPIPatch(o["doh"]) {
+			return fmt.Errorf("Error reading doh: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -229,6 +244,10 @@ func expandSystemDnsServerMode(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemDnsServerDnsfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsServerDoh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -262,6 +281,16 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["dnsfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("doh"); ok {
+
+		t, err := expandSystemDnsServerDoh(d, v, "doh", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["doh"] = t
 		}
 	}
 

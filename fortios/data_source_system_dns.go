@@ -35,6 +35,10 @@ func dataSourceSystemDns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"dns_over_tls": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -107,6 +111,22 @@ func dataSourceSystemDns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"alt_primary": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"alt_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"log": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -150,6 +170,10 @@ func dataSourceFlattenSystemDnsPrimary(v interface{}, d *schema.ResourceData, pr
 }
 
 func dataSourceFlattenSystemDnsSecondary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -273,6 +297,22 @@ func dataSourceFlattenSystemDnsInterface(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenSystemDnsServerSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsAltPrimary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsAltSecondary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsLog(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -285,6 +325,12 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("secondary", dataSourceFlattenSystemDnsSecondary(o["secondary"], d, "secondary")); err != nil {
 		if !fortiAPIPatch(o["secondary"]) {
 			return fmt.Errorf("Error reading secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", dataSourceFlattenSystemDnsProtocol(o["protocol"], d, "protocol")); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
@@ -369,6 +415,30 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("interface", dataSourceFlattenSystemDnsInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("server_select_method", dataSourceFlattenSystemDnsServerSelectMethod(o["server-select-method"], d, "server_select_method")); err != nil {
+		if !fortiAPIPatch(o["server-select-method"]) {
+			return fmt.Errorf("Error reading server_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_primary", dataSourceFlattenSystemDnsAltPrimary(o["alt-primary"], d, "alt_primary")); err != nil {
+		if !fortiAPIPatch(o["alt-primary"]) {
+			return fmt.Errorf("Error reading alt_primary: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_secondary", dataSourceFlattenSystemDnsAltSecondary(o["alt-secondary"], d, "alt_secondary")); err != nil {
+		if !fortiAPIPatch(o["alt-secondary"]) {
+			return fmt.Errorf("Error reading alt_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("log", dataSourceFlattenSystemDnsLog(o["log"], d, "log")); err != nil {
+		if !fortiAPIPatch(o["log"]) {
+			return fmt.Errorf("Error reading log: %v", err)
 		}
 	}
 

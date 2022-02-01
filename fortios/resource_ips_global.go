@@ -67,7 +67,7 @@ func resourceIpsGlobal() *schema.Resource {
 			},
 			"socket_size": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 128),
+				ValidateFunc: validation.IntBetween(0, 512),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -78,6 +78,21 @@ func resourceIpsGlobal() *schema.Resource {
 				Computed:     true,
 			},
 			"sync_session_ttl": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"np_accel_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ips_reserve_cpu": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cp_accel_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -278,6 +293,18 @@ func flattenIpsGlobalSyncSessionTtl(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenIpsGlobalNpAccelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsGlobalIpsReserveCpu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsGlobalCpAccelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenIpsGlobalSkypeClientPublicIpaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -422,6 +449,24 @@ func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("np_accel_mode", flattenIpsGlobalNpAccelMode(o["np-accel-mode"], d, "np_accel_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["np-accel-mode"]) {
+			return fmt.Errorf("Error reading np_accel_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("ips_reserve_cpu", flattenIpsGlobalIpsReserveCpu(o["ips-reserve-cpu"], d, "ips_reserve_cpu", sv)); err != nil {
+		if !fortiAPIPatch(o["ips-reserve-cpu"]) {
+			return fmt.Errorf("Error reading ips_reserve_cpu: %v", err)
+		}
+	}
+
+	if err = d.Set("cp_accel_mode", flattenIpsGlobalCpAccelMode(o["cp-accel-mode"], d, "cp_accel_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["cp-accel-mode"]) {
+			return fmt.Errorf("Error reading cp_accel_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("skype_client_public_ipaddr", flattenIpsGlobalSkypeClientPublicIpaddr(o["skype-client-public-ipaddr"], d, "skype_client_public_ipaddr", sv)); err != nil {
 		if !fortiAPIPatch(o["skype-client-public-ipaddr"]) {
 			return fmt.Errorf("Error reading skype_client_public_ipaddr: %v", err)
@@ -516,6 +561,18 @@ func expandIpsGlobalEngineCount(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandIpsGlobalSyncSessionTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsGlobalNpAccelMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsGlobalIpsReserveCpu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsGlobalCpAccelMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -692,6 +749,36 @@ func getObjectIpsGlobal(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["sync-session-ttl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("np_accel_mode"); ok {
+
+		t, err := expandIpsGlobalNpAccelMode(d, v, "np_accel_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["np-accel-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ips_reserve_cpu"); ok {
+
+		t, err := expandIpsGlobalIpsReserveCpu(d, v, "ips_reserve_cpu", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ips-reserve-cpu"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cp_accel_mode"); ok {
+
+		t, err := expandIpsGlobalCpAccelMode(d, v, "cp_accel_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cp-accel-mode"] = t
 		}
 	}
 

@@ -50,6 +50,10 @@ The following arguments are supported:
 * `methods` - The allowed HTTP methods that will be sent to ICAP server for further processing. Valid values: `delete`, `get`, `head`, `options`, `post`, `put`, `trace`, `other`.
 * `response_req_hdr` - Enable/disable addition of req-hdr for ICAP response modification (respmod) processing. Valid values: `disable`, `enable`.
 * `respmod_default_action` - Default action to ICAP response modification (respmod) processing. Valid values: `forward`, `bypass`.
+* `icap_block_log` - Enable/disable UTM log when infection found (default = disable). Valid values: `disable`, `enable`.
+* `chunk_encap` - Enable/disable chunked encapsulation (default = disable). Valid values: `disable`, `enable`.
+* `extension_feature` - Enable/disable ICAP extension features. Valid values: `scan-progress`.
+* `scan_progress_interval` - Scan progress interval value.
 * `icap_headers` - Configure ICAP forwarded request headers. The structure of `icap_headers` block is documented below.
 * `respmod_forward_rules` - ICAP response mode forward rules. The structure of `respmod_forward_rules` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.

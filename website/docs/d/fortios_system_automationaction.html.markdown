@@ -20,6 +20,7 @@ Use this data source to get information on an fortios system automationaction
 The following attributes are exported:
 
 * `name` - Name.
+* `description` - Description.
 * `action_type` - Action type.
 * `tls_certificate` - Custom TLS certificate for API request.
 * `email_to` - Email addresses. The structure of `email_to` block is documented below.
@@ -53,15 +54,19 @@ The following attributes are exported:
 * `alicloud_function_authorization` - AliCloud function authorization type.
 * `alicloud_access_key_id` - AliCloud AccessKey ID.
 * `alicloud_access_key_secret` - AliCloud AccessKey secret.
+* `message_type` - Message type.
 * `message` - Message content.
 * `replacement_message` - Enable/disable replacement message.
+* `replacemsg_group` - Replacement message group.
 * `protocol` - Request protocol.
 * `method` - Request method (POST, PUT, GET, PATCH or DELETE).
 * `uri` - Request API URI.
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
 * `headers` - Request headers. The structure of `headers` block is documented below.
+* `verify_host_cert` - Enable/disable verification of the remote host certificate.
 * `script` - CLI script.
+* `execute_security_fabric` - Enable/disable execution of CLI script on all or only one FortiGate unit in the Security Fabric.
 * `accprofile` - Access profile for CLI script action to access FortiGate features.
 * `security_tag` - NSX security tag.
 * `sdn_connector` - NSX SDN connector names. The structure of `sdn_connector` block is documented below.

@@ -87,6 +87,10 @@ func dataSourceFirewallAddrgrp6() *schema.Resource {
 					},
 				},
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -276,6 +280,10 @@ func dataSourceFlattenFirewallAddrgrp6TaggingTagsName(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenFirewallAddrgrp6FabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -318,6 +326,12 @@ func dataSourceRefreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[strin
 	if err = d.Set("tagging", dataSourceFlattenFirewallAddrgrp6Tagging(o["tagging"], d, "tagging")); err != nil {
 		if !fortiAPIPatch(o["tagging"]) {
 			return fmt.Errorf("Error reading tagging: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddrgrp6FabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

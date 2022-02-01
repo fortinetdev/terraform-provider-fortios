@@ -43,7 +43,7 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 			},
 			"group_member_id": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 3),
+				ValidateFunc: validation.IntBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
 			},

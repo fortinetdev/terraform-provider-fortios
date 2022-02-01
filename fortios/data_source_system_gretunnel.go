@@ -55,6 +55,10 @@ func dataSourceSystemGreTunnel() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"use_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"sequence_number_transmission": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -170,6 +174,10 @@ func dataSourceFlattenSystemGreTunnelLocalGw(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenSystemGreTunnelUseSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGreTunnelSequenceNumberTransmission(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -252,6 +260,12 @@ func dataSourceRefreshObjectSystemGreTunnel(d *schema.ResourceData, o map[string
 	if err = d.Set("local_gw", dataSourceFlattenSystemGreTunnelLocalGw(o["local-gw"], d, "local_gw")); err != nil {
 		if !fortiAPIPatch(o["local-gw"]) {
 			return fmt.Errorf("Error reading local_gw: %v", err)
+		}
+	}
+
+	if err = d.Set("use_sdwan", dataSourceFlattenSystemGreTunnelUseSdwan(o["use-sdwan"], d, "use_sdwan")); err != nil {
+		if !fortiAPIPatch(o["use-sdwan"]) {
+			return fmt.Errorf("Error reading use_sdwan: %v", err)
 		}
 	}
 

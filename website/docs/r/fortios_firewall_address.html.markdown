@@ -35,6 +35,7 @@ The following arguments are supported:
 * `type` - Type of address.
 * `sub_type` - Sub-type of address.
 * `clearpass_spt` - SPT (System Posture Token) value. Valid values: `unknown`, `healthy`, `quarantine`, `checkup`, `transient`, `infected`.
+* `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.
 * `start_ip` - First IP address (inclusive) in the range for the address.
@@ -55,6 +56,8 @@ The following arguments are supported:
 * `policy_group` - Policy group name.
 * `obj_tag` - Tag of dynamic address object.
 * `obj_type` - Object type. Valid values: `ip`, `mac`.
+* `tag_detection_level` - Tag detection level of dynamic address object.
+* `tag_type` - Tag type of dynamic address object.
 * `comment` - Comment.
 * `visibility` - Enable/disable address visibility in the GUI. Valid values: `enable`, `disable`.
 * `associated_interface` - Network interface associated with address.
@@ -66,8 +69,13 @@ The following arguments are supported:
 * `list` - IP address list. The structure of `list` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this address in the static route configuration. Valid values: `enable`, `disable`.
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `macaddr` block supports:
+
+* `macaddr` - MAC address ranges <start>[-<end>] separated by space.
 
 The `fsso_group` block supports:
 

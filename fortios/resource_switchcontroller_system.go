@@ -78,6 +78,17 @@ func resourceSwitchControllerSystem() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dynamic_periodic_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 60),
+				Optional:     true,
+				Computed:     true,
+			},
+			"tunnel_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -203,6 +214,14 @@ func flattenSwitchControllerSystemNacPeriodicInterval(v interface{}, d *schema.R
 	return v
 }
 
+func flattenSwitchControllerSystemDynamicPeriodicInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSystemTunnelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSystem(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -254,6 +273,18 @@ func refreshObjectSwitchControllerSystem(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("dynamic_periodic_interval", flattenSwitchControllerSystemDynamicPeriodicInterval(o["dynamic-periodic-interval"], d, "dynamic_periodic_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["dynamic-periodic-interval"]) {
+			return fmt.Errorf("Error reading dynamic_periodic_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("tunnel_mode", flattenSwitchControllerSystemTunnelMode(o["tunnel-mode"], d, "tunnel_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["tunnel-mode"]) {
+			return fmt.Errorf("Error reading tunnel_mode: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -292,6 +323,14 @@ func expandSwitchControllerSystemIotMacIdle(d *schema.ResourceData, v interface{
 }
 
 func expandSwitchControllerSystemNacPeriodicInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSystemDynamicPeriodicInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSystemTunnelMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -375,6 +414,26 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["nac-periodic-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dynamic_periodic_interval"); ok {
+
+		t, err := expandSwitchControllerSystemDynamicPeriodicInterval(d, v, "dynamic_periodic_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dynamic-periodic-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tunnel_mode"); ok {
+
+		t, err := expandSwitchControllerSystemTunnelMode(d, v, "tunnel_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tunnel-mode"] = t
 		}
 	}
 

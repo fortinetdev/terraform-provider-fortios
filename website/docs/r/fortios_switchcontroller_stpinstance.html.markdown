@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_stpinstance
-Configure FortiSwitch multiple spanning tree protocol (MSTP) instances.
+Configure FortiSwitch multiple spanning tree protocol (MSTP) instances. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

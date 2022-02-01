@@ -75,6 +75,12 @@ func resourceSystemPasswordPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"min_change_characters": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 128),
+				Optional:     true,
+				Computed:     true,
+			},
 			"change_4_characters": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -217,6 +223,10 @@ func flattenSystemPasswordPolicyMinNumber(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemPasswordPolicyMinChangeCharacters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemPasswordPolicyChange4Characters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -278,6 +288,12 @@ func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("min_change_characters", flattenSystemPasswordPolicyMinChangeCharacters(o["min-change-characters"], d, "min_change_characters", sv)); err != nil {
+		if !fortiAPIPatch(o["min-change-characters"]) {
+			return fmt.Errorf("Error reading min_change_characters: %v", err)
+		}
+	}
+
 	if err = d.Set("change_4_characters", flattenSystemPasswordPolicyChange4Characters(o["change-4-characters"], d, "change_4_characters", sv)); err != nil {
 		if !fortiAPIPatch(o["change-4-characters"]) {
 			return fmt.Errorf("Error reading change_4_characters: %v", err)
@@ -336,6 +352,10 @@ func expandSystemPasswordPolicyMinNonAlphanumeric(d *schema.ResourceData, v inte
 }
 
 func expandSystemPasswordPolicyMinNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemPasswordPolicyMinChangeCharacters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -425,6 +445,16 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["min-number"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("min_change_characters"); ok {
+
+		t, err := expandSystemPasswordPolicyMinChangeCharacters(d, v, "min_change_characters", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["min-change-characters"] = t
 		}
 	}
 

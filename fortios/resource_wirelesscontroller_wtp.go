@@ -93,6 +93,11 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"firmware_provision_latest": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"wtp_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -336,7 +341,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			},
 			"login_passwd": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 31),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
 			},
@@ -398,9 +403,20 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -513,9 +529,20 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -622,9 +649,20 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -731,9 +769,20 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"power_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"power_level": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+							Computed:     true,
+						},
+						"power_value": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 33),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -977,6 +1026,10 @@ func flattenWirelessControllerWtpRegionY(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenWirelessControllerWtpFirmwareProvision(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpFirmwareProvisionLatest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1401,10 +1454,22 @@ func flattenWirelessControllerWtpRadio1(v interface{}, d *schema.ResourceData, p
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio1AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpRadio1PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpRadio1PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpRadio1PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
@@ -1487,7 +1552,15 @@ func flattenWirelessControllerWtpRadio1AutoPowerTarget(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpRadio1PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio1PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio1PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1650,10 +1723,22 @@ func flattenWirelessControllerWtpRadio2(v interface{}, d *schema.ResourceData, p
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio2AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpRadio2PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpRadio2PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpRadio2PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
@@ -1736,7 +1821,15 @@ func flattenWirelessControllerWtpRadio2AutoPowerTarget(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpRadio2PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio2PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio2PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1893,10 +1986,22 @@ func flattenWirelessControllerWtpRadio3(v interface{}, d *schema.ResourceData, p
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio3AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpRadio3PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpRadio3PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpRadio3PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
@@ -1975,7 +2080,15 @@ func flattenWirelessControllerWtpRadio3AutoPowerTarget(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpRadio3PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio3PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio3PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2132,10 +2245,22 @@ func flattenWirelessControllerWtpRadio4(v interface{}, d *schema.ResourceData, p
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio4AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := i["power-mode"]; ok {
+
+		result["power_mode"] = flattenWirelessControllerWtpRadio4PowerMode(i["power-mode"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
 
 		result["power_level"] = flattenWirelessControllerWtpRadio4PowerLevel(i["power-level"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := i["power-value"]; ok {
+
+		result["power_value"] = flattenWirelessControllerWtpRadio4PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
@@ -2214,7 +2339,15 @@ func flattenWirelessControllerWtpRadio4AutoPowerTarget(v interface{}, d *schema.
 	return v
 }
 
+func flattenWirelessControllerWtpRadio4PowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio4PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio4PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2384,6 +2517,12 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 	if err = d.Set("firmware_provision", flattenWirelessControllerWtpFirmwareProvision(o["firmware-provision"], d, "firmware_provision", sv)); err != nil {
 		if !fortiAPIPatch(o["firmware-provision"]) {
 			return fmt.Errorf("Error reading firmware_provision: %v", err)
+		}
+	}
+
+	if err = d.Set("firmware_provision_latest", flattenWirelessControllerWtpFirmwareProvisionLatest(o["firmware-provision-latest"], d, "firmware_provision_latest", sv)); err != nil {
+		if !fortiAPIPatch(o["firmware-provision-latest"]) {
+			return fmt.Errorf("Error reading firmware_provision_latest: %v", err)
 		}
 	}
 
@@ -2673,6 +2812,10 @@ func expandWirelessControllerWtpRegionY(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWirelessControllerWtpFirmwareProvision(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpFirmwareProvisionLatest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3056,10 +3199,20 @@ func expandWirelessControllerWtpRadio1(d *schema.ResourceData, v interface{}, pr
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio1AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpRadio1PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpRadio1PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpRadio1PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3139,7 +3292,15 @@ func expandWirelessControllerWtpRadio1AutoPowerTarget(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio1PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio1PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio1PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3283,10 +3444,20 @@ func expandWirelessControllerWtpRadio2(d *schema.ResourceData, v interface{}, pr
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio2AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpRadio2PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpRadio2PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpRadio2PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3366,7 +3537,15 @@ func expandWirelessControllerWtpRadio2AutoPowerTarget(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio2PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio2PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio2PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3505,10 +3684,20 @@ func expandWirelessControllerWtpRadio3(d *schema.ResourceData, v interface{}, pr
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio3AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpRadio3PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpRadio3PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpRadio3PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3584,7 +3773,15 @@ func expandWirelessControllerWtpRadio3AutoPowerTarget(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio3PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio3PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio3PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3723,10 +3920,20 @@ func expandWirelessControllerWtpRadio4(d *schema.ResourceData, v interface{}, pr
 
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio4AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "power_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-mode"], _ = expandWirelessControllerWtpRadio4PowerMode(d, i["power_mode"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["power-level"], _ = expandWirelessControllerWtpRadio4PowerLevel(d, i["power_level"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "power_value"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["power-value"], _ = expandWirelessControllerWtpRadio4PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3802,7 +4009,15 @@ func expandWirelessControllerWtpRadio4AutoPowerTarget(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio4PowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio4PowerLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio4PowerValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4002,6 +4217,16 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["firmware-provision"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("firmware_provision_latest"); ok {
+
+		t, err := expandWirelessControllerWtpFirmwareProvisionLatest(d, v, "firmware_provision_latest", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["firmware-provision-latest"] = t
 		}
 	}
 

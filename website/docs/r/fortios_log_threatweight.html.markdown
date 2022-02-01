@@ -159,6 +159,7 @@ The `level` block supports:
 The `malware` block supports:
 
 * `virus_infected` - Threat weight score for virus (infected) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `fortiai` - Threat weight score for FortiAI-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `file_blocked` - Threat weight score for blocked file detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `command_blocked` - Threat weight score for blocked command detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `oversized` - Threat weight score for oversized file detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
@@ -170,6 +171,7 @@ The `malware` block supports:
 * `botnet_connection` - Threat weight score for detected botnet connections. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `content_disarm` - Threat weight score for virus (content disarm) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `malware_list` - Threat weight score for virus (malware list) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `ems_threat_feed` - Threat weight score for virus (EMS threat feed) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fsa_malicious` - Threat weight score for FortiSandbox malicious malware detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fsa_high_risk` - Threat weight score for FortiSandbox high risk malware detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fsa_medium_risk` - Threat weight score for FortiSandbox medium risk malware detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.

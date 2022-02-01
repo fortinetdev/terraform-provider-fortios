@@ -65,6 +65,11 @@ func resourceFirewallLocalInPolicy6() *schema.Resource {
 					},
 				},
 			},
+			"srcaddr_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dstaddr": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -78,6 +83,11 @@ func resourceFirewallLocalInPolicy6() *schema.Resource {
 						},
 					},
 				},
+			},
+			"dstaddr_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -97,6 +107,11 @@ func resourceFirewallLocalInPolicy6() *schema.Resource {
 						},
 					},
 				},
+			},
+			"service_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"schedule": &schema.Schema{
 				Type:         schema.TypeString,
@@ -293,6 +308,10 @@ func flattenFirewallLocalInPolicy6SrcaddrName(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenFirewallLocalInPolicy6SrcaddrNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallLocalInPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -328,6 +347,10 @@ func flattenFirewallLocalInPolicy6Dstaddr(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallLocalInPolicy6DstaddrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallLocalInPolicy6DstaddrNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -370,6 +393,10 @@ func flattenFirewallLocalInPolicy6Service(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallLocalInPolicy6ServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallLocalInPolicy6ServiceNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -422,6 +449,12 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("srcaddr_negate", flattenFirewallLocalInPolicy6SrcaddrNegate(o["srcaddr-negate"], d, "srcaddr_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["srcaddr-negate"]) {
+			return fmt.Errorf("Error reading srcaddr_negate: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("dstaddr", flattenFirewallLocalInPolicy6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
@@ -435,6 +468,12 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 					return fmt.Errorf("Error reading dstaddr: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("dstaddr_negate", flattenFirewallLocalInPolicy6DstaddrNegate(o["dstaddr-negate"], d, "dstaddr_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["dstaddr-negate"]) {
+			return fmt.Errorf("Error reading dstaddr_negate: %v", err)
 		}
 	}
 
@@ -457,6 +496,12 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 					return fmt.Errorf("Error reading service: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("service_negate", flattenFirewallLocalInPolicy6ServiceNegate(o["service-negate"], d, "service_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["service-negate"]) {
+			return fmt.Errorf("Error reading service_negate: %v", err)
 		}
 	}
 
@@ -531,6 +576,10 @@ func expandFirewallLocalInPolicy6SrcaddrName(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandFirewallLocalInPolicy6SrcaddrNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallLocalInPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -560,6 +609,10 @@ func expandFirewallLocalInPolicy6Dstaddr(d *schema.ResourceData, v interface{}, 
 }
 
 func expandFirewallLocalInPolicy6DstaddrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallLocalInPolicy6DstaddrNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -596,6 +649,10 @@ func expandFirewallLocalInPolicy6Service(d *schema.ResourceData, v interface{}, 
 }
 
 func expandFirewallLocalInPolicy6ServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallLocalInPolicy6ServiceNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -654,6 +711,16 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("srcaddr_negate"); ok {
+
+		t, err := expandFirewallLocalInPolicy6SrcaddrNegate(d, v, "srcaddr_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["srcaddr-negate"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("dstaddr"); ok {
 
 		t, err := expandFirewallLocalInPolicy6Dstaddr(d, v, "dstaddr", sv)
@@ -661,6 +728,16 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["dstaddr"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dstaddr_negate"); ok {
+
+		t, err := expandFirewallLocalInPolicy6DstaddrNegate(d, v, "dstaddr_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dstaddr-negate"] = t
 		}
 	}
 
@@ -681,6 +758,16 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["service"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("service_negate"); ok {
+
+		t, err := expandFirewallLocalInPolicy6ServiceNegate(d, v, "service_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["service-negate"] = t
 		}
 	}
 

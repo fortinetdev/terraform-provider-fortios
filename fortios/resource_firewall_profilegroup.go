@@ -100,6 +100,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"sctp_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -107,6 +113,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -305,11 +317,19 @@ func flattenFirewallProfileGroupVoipProfile(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallProfileGroupSctpFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupIcapProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallProfileGroupCifsProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileGroupVideofilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -398,6 +418,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("sctp_filter_profile", flattenFirewallProfileGroupSctpFilterProfile(o["sctp-filter-profile"], d, "sctp_filter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["sctp-filter-profile"]) {
+			return fmt.Errorf("Error reading sctp_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", flattenFirewallProfileGroupIcapProfile(o["icap-profile"], d, "icap_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -407,6 +433,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("cifs_profile", flattenFirewallProfileGroupCifsProfile(o["cifs-profile"], d, "cifs_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["cifs-profile"]) {
 			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("videofilter_profile", flattenFirewallProfileGroupVideofilterProfile(o["videofilter-profile"], d, "videofilter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["videofilter-profile"]) {
+			return fmt.Errorf("Error reading videofilter_profile: %v", err)
 		}
 	}
 
@@ -487,11 +519,19 @@ func expandFirewallProfileGroupVoipProfile(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandFirewallProfileGroupSctpFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileGroupIcapProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandFirewallProfileGroupCifsProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupVideofilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -624,6 +664,16 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("sctp_filter_profile"); ok {
+
+		t, err := expandFirewallProfileGroupSctpFilterProfile(d, v, "sctp_filter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sctp-filter-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("icap_profile"); ok {
 
 		t, err := expandFirewallProfileGroupIcapProfile(d, v, "icap_profile", sv)
@@ -641,6 +691,16 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["cifs-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("videofilter_profile"); ok {
+
+		t, err := expandFirewallProfileGroupVideofilterProfile(d, v, "videofilter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["videofilter-profile"] = t
 		}
 	}
 

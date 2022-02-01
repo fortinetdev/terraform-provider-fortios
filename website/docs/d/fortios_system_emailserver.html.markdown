@@ -31,4 +31,6 @@ The following attributes are exported:
 * `password` - SMTP server user password for authentication.
 * `security` - Connection security used by the email server.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 

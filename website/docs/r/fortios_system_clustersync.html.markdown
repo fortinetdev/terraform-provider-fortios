@@ -34,6 +34,10 @@ The following arguments are supported:
 * `hb_interval` - Heartbeat interval (1 - 10 sec).
 * `hb_lost_threshold` - Lost heartbeat threshold (1 - 10).
 * `ipsec_tunnel_sync` - Enable/disable IPsec tunnel synchronization. Valid values: `enable`, `disable`.
+* `ike_monitor` - Enable/disable IKE HA monitor. Valid values: `enable`, `disable`.
+* `ike_monitor_interval` - IKE HA monitor interval (10 - 300 secs).
+* `ike_heartbeat_interval` - IKE heartbeat interval (1 - 60 secs).
+* `secondary_add_ipsec_routes` - Enable/disable IKE route announcement on the backup unit. Valid values: `enable`, `disable`.
 * `slave_add_ike_routes` - Enable/disable IKE route announcement on the backup unit. Valid values: `enable`, `disable`.
 * `session_sync_filter` - Add one or more filters if you only want to synchronize some sessions. Use the filter to configure the types of sessions to synchronize. The structure of `session_sync_filter` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.

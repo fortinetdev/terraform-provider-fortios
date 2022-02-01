@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_internetserviceipblreason
-IP blacklist reason.
+IP blacklist reason. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

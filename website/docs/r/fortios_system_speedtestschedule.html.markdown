@@ -18,6 +18,7 @@ The following arguments are supported:
 * `diffserv` - DSCP used for speed test.
 * `server_name` - Speed test server name.
 * `schedules` - Schedules for the interface. The structure of `schedules` block is documented below.
+* `dynamic_server` - Enable/disable dynamic server option. Valid values: `disable`, `enable`.
 * `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_outbandwidth` - Enable/disable bypassing interface's outbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_inbandwidth_maximum` - Maximum downloading bandwidth (kbps) to be used in a speed test.

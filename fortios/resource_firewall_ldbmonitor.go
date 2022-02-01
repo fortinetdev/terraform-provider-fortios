@@ -92,6 +92,22 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dns_protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dns_request_domain": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"dns_match_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -257,6 +273,18 @@ func flattenFirewallLdbMonitorHttpMaxRedirects(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenFirewallLdbMonitorDnsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallLdbMonitorDnsRequestDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallLdbMonitorDnsMatchIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -320,6 +348,24 @@ func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("dns_protocol", flattenFirewallLdbMonitorDnsProtocol(o["dns-protocol"], d, "dns_protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["dns-protocol"]) {
+			return fmt.Errorf("Error reading dns_protocol: %v", err)
+		}
+	}
+
+	if err = d.Set("dns_request_domain", flattenFirewallLdbMonitorDnsRequestDomain(o["dns-request-domain"], d, "dns_request_domain", sv)); err != nil {
+		if !fortiAPIPatch(o["dns-request-domain"]) {
+			return fmt.Errorf("Error reading dns_request_domain: %v", err)
+		}
+	}
+
+	if err = d.Set("dns_match_ip", flattenFirewallLdbMonitorDnsMatchIp(o["dns-match-ip"], d, "dns_match_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["dns-match-ip"]) {
+			return fmt.Errorf("Error reading dns_match_ip: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -366,6 +412,18 @@ func expandFirewallLdbMonitorHttpMatch(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallLdbMonitorHttpMaxRedirects(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallLdbMonitorDnsProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallLdbMonitorDnsRequestDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallLdbMonitorDnsMatchIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -469,6 +527,36 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["http-max-redirects"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dns_protocol"); ok {
+
+		t, err := expandFirewallLdbMonitorDnsProtocol(d, v, "dns_protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dns-protocol"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dns_request_domain"); ok {
+
+		t, err := expandFirewallLdbMonitorDnsRequestDomain(d, v, "dns_request_domain", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dns-request-domain"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dns_match_ip"); ok {
+
+		t, err := expandFirewallLdbMonitorDnsMatchIp(d, v, "dns_match_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dns-match-ip"] = t
 		}
 	}
 

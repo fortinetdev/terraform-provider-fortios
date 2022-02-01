@@ -45,6 +45,11 @@ func resourceSystemSdwan() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"speedtest_bypass_routing": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"duplication_max_num": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 4),
@@ -234,6 +239,11 @@ func resourceSystemSdwan() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
+						},
+						"detect_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -475,6 +485,11 @@ func resourceSystemSdwan() *schema.Resource {
 						},
 						"member": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"mode": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -892,6 +907,20 @@ func resourceSystemSdwan() *schema.Resource {
 								},
 							},
 						},
+						"priority_zone": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -918,6 +947,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Computed: true,
 						},
 						"use_shortcut_sla": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"passive_measurement": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1163,6 +1197,10 @@ func flattenSystemSdwanStatus(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemSdwanLoadBalanceMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanSpeedtestBypassRouting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1509,6 +1547,12 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 			tmp["server"] = flattenSystemSdwanHealthCheckServer(i["server"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "detect_mode"
+		if _, ok := i["detect-mode"]; ok {
+
+			tmp["detect_mode"] = flattenSystemSdwanHealthCheckDetectMode(i["detect-mode"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
 
@@ -1737,6 +1781,10 @@ func flattenSystemSdwanHealthCheckSystemDns(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemSdwanHealthCheckServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckDetectMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2009,6 +2057,12 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 			tmp["member"] = flattenSystemSdwanNeighborMember(i["member"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
+		if _, ok := i["mode"]; ok {
+
+			tmp["mode"] = flattenSystemSdwanNeighborMode(i["mode"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := i["role"]; ok {
 
@@ -2041,6 +2095,10 @@ func flattenSystemSdwanNeighborIp(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSdwanNeighborMember(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanNeighborMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2351,6 +2409,12 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 			tmp["priority_members"] = flattenSystemSdwanServicePriorityMembers(i["priority-members"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_zone"
+		if _, ok := i["priority-zone"]; ok {
+
+			tmp["priority_zone"] = flattenSystemSdwanServicePriorityZone(i["priority-zone"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
 
@@ -2385,6 +2449,12 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		if _, ok := i["use-shortcut-sla"]; ok {
 
 			tmp["use_shortcut_sla"] = flattenSystemSdwanServiceUseShortcutSla(i["use-shortcut-sla"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive_measurement"
+		if _, ok := i["passive-measurement"]; ok {
+
+			tmp["passive_measurement"] = flattenSystemSdwanServicePassiveMeasurement(i["passive-measurement"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3118,6 +3188,43 @@ func flattenSystemSdwanServicePriorityMembersSeqNum(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenSystemSdwanServicePriorityZone(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenSystemSdwanServicePriorityZoneName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemSdwanServicePriorityZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanServiceStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3139,6 +3246,10 @@ func flattenSystemSdwanServiceTieBreak(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemSdwanServiceUseShortcutSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServicePassiveMeasurement(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3559,6 +3670,12 @@ func refreshObjectSystemSdwan(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("speedtest_bypass_routing", flattenSystemSdwanSpeedtestBypassRouting(o["speedtest-bypass-routing"], d, "speedtest_bypass_routing", sv)); err != nil {
+		if !fortiAPIPatch(o["speedtest-bypass-routing"]) {
+			return fmt.Errorf("Error reading speedtest_bypass_routing: %v", err)
+		}
+	}
+
 	if err = d.Set("duplication_max_num", flattenSystemSdwanDuplicationMaxNum(o["duplication-max-num"], d, "duplication_max_num", sv)); err != nil {
 		if !fortiAPIPatch(o["duplication-max-num"]) {
 			return fmt.Errorf("Error reading duplication_max_num: %v", err)
@@ -3715,6 +3832,10 @@ func expandSystemSdwanStatus(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandSystemSdwanLoadBalanceMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanSpeedtestBypassRouting(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4038,6 +4159,12 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 			tmp["server"], _ = expandSystemSdwanHealthCheckServer(d, i["server"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "detect_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["detect-mode"], _ = expandSystemSdwanHealthCheckDetectMode(d, i["detect_mode"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -4265,6 +4392,10 @@ func expandSystemSdwanHealthCheckSystemDns(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemSdwanHealthCheckServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckDetectMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4522,6 +4653,12 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 			tmp["member"], _ = expandSystemSdwanNeighborMember(d, i["member"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["mode"], _ = expandSystemSdwanNeighborMode(d, i["mode"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -4553,6 +4690,10 @@ func expandSystemSdwanNeighborIp(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemSdwanNeighborMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanNeighborMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4890,6 +5031,14 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 			tmp["priority-members"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_zone"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["priority-zone"], _ = expandSystemSdwanServicePriorityZone(d, i["priority_zone"], pre_append, sv)
+		} else {
+			tmp["priority-zone"] = make([]string, 0)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -4924,6 +5073,12 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["use-shortcut-sla"], _ = expandSystemSdwanServiceUseShortcutSla(d, i["use_shortcut_sla"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive_measurement"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["passive-measurement"], _ = expandSystemSdwanServicePassiveMeasurement(d, i["passive_measurement"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5576,6 +5731,38 @@ func expandSystemSdwanServicePriorityMembersSeqNum(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandSystemSdwanServicePriorityZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandSystemSdwanServicePriorityZoneName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanServicePriorityZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanServiceStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5597,6 +5784,10 @@ func expandSystemSdwanServiceTieBreak(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemSdwanServiceUseShortcutSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServicePassiveMeasurement(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5992,6 +6183,16 @@ func getObjectSystemSdwan(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["load-balance-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("speedtest_bypass_routing"); ok {
+
+		t, err := expandSystemSdwanSpeedtestBypassRouting(d, v, "speedtest_bypass_routing", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["speedtest-bypass-routing"] = t
 		}
 	}
 

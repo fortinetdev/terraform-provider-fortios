@@ -186,6 +186,16 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"nat46": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat64": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
@@ -657,6 +667,14 @@ func flattenFirewallCentralSnatMapNat(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenFirewallCentralSnatMapNat46(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallCentralSnatMapNat64(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallCentralSnatMapComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -837,6 +855,18 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 	if err = d.Set("nat", flattenFirewallCentralSnatMapNat(o["nat"], d, "nat", sv)); err != nil {
 		if !fortiAPIPatch(o["nat"]) {
 			return fmt.Errorf("Error reading nat: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46", flattenFirewallCentralSnatMapNat46(o["nat46"], d, "nat46", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46"]) {
+			return fmt.Errorf("Error reading nat46: %v", err)
+		}
+	}
+
+	if err = d.Set("nat64", flattenFirewallCentralSnatMapNat64(o["nat64"], d, "nat64", sv)); err != nil {
+		if !fortiAPIPatch(o["nat64"]) {
+			return fmt.Errorf("Error reading nat64: %v", err)
 		}
 	}
 
@@ -1143,6 +1173,14 @@ func expandFirewallCentralSnatMapNat(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandFirewallCentralSnatMapNat46(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallCentralSnatMapNat64(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallCentralSnatMapComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1307,6 +1345,26 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["nat"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat46"); ok {
+
+		t, err := expandFirewallCentralSnatMapNat46(d, v, "nat46", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat46"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat64"); ok {
+
+		t, err := expandFirewallCentralSnatMapNat64(d, v, "nat64", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat64"] = t
 		}
 	}
 

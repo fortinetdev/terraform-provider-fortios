@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_wirelesscontroller_snmp
-Configure SNMP.
+Configure SNMP. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

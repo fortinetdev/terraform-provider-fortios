@@ -34,6 +34,7 @@ The following arguments are supported:
 * `disable_discovery` - Prevent this FortiSwitch from discovering. The structure of `disable_discovery` block is documented below.
 * `mac_retention_period` - Time in hours after which an inactive MAC is removed from client DB.
 * `default_virtual_switch_vlan` - Default VLAN for ports when added to the virtual-switch.
+* `dhcp_server_access_list` - Enable/disable DHCP snooping server access list. Valid values: `enable`, `disable`.
 * `log_mac_limit_violations` - Enable/disable logs for Learning Limit Violations. Valid values: `enable`, `disable`.
 * `mac_violation_timer` - Set timeout for Learning Limit Violations (0 = disabled).
 * `sn_dns_resolution` - Enable/disable DNS resolution of the FortiSwitch unit's IP address by use of its serial number. Valid values: `enable`, `disable`.
@@ -42,6 +43,8 @@ The following arguments are supported:
 * `quarantine_mode` - Quarantine mode. Valid values: `by-vlan`, `by-redirect`.
 * `update_user_device` - Control which sources update the device user list. Valid values: `mac-cache`, `lldp`, `dhcp-snooping`, `l2-db`, `l3-db`.
 * `custom_command` - List of custom commands to be pushed to all FortiSwitches in the VDOM. The structure of `custom_command` block is documented below.
+* `fips_enforce` - Enable/disable enforcement of FIPS on managed FortiSwitch devices. Valid values: `disable`, `enable`.
+* `firmware_provision_on_authorization` - Enable/disable automatic provisioning of latest firmware on authorization. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

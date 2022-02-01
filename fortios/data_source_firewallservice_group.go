@@ -55,6 +55,10 @@ func dataSourceFirewallServiceGroup() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -154,6 +158,10 @@ func dataSourceFlattenFirewallServiceGroupColor(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenFirewallServiceGroupFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -184,6 +192,12 @@ func dataSourceRefreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[s
 	if err = d.Set("color", dataSourceFlattenFirewallServiceGroupColor(o["color"], d, "color")); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallServiceGroupFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

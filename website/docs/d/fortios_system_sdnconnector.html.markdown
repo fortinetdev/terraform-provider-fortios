@@ -23,7 +23,9 @@ The following attributes are exported:
 * `status` - Enable/disable connection to the remote SDN connector.
 * `type` - Type of SDN connector.
 * `ha_status` - Enable/disable use for FortiGate HA service.
+* `verify_certificate` - Enable/disable server certificate verification.
 * `server` - Server address of the remote SDN connector.
+* `server_list` - Server address list of the remote SDN connector. The structure of `server_list` block is documented below.
 * `server_port` - Port number of the remote SDN connector.
 * `username` - Username of the remote SDN connector as login credentials.
 * `password` - Password of the remote SDN connector as login credentials.
@@ -34,6 +36,7 @@ The following attributes are exported:
 * `secret_key` - AWS secret access key.
 * `region` - AWS region name.
 * `vpc_id` - AWS VPC ID.
+* `external_account_list` - Configure AWS external account list. The structure of `external_account_list` block is documented below.
 * `tenant_id` - Tenant ID (directory ID).
 * `subscription_id` - Azure subscription ID.
 * `login_endpoint` - Azure Stack login endpoint.
@@ -52,6 +55,8 @@ The following attributes are exported:
 * `oci_fingerprint` - OCI pubkey fingerprint.
 * `external_ip` - Configure GCP external IP. The structure of `external_ip` block is documented below.
 * `route` - Configure GCP route. The structure of `route` block is documented below.
+* `gcp_project_list` - Configure GCP project list. The structure of `gcp_project_list` block is documented below.
+* `forwarding_rule` - Configure GCP forwarding rule. The structure of `forwarding_rule` block is documented below.
 * `use_metadata_iam` - Enable/disable using IAM role from metadata to call API.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
@@ -64,6 +69,19 @@ The following attributes are exported:
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
 * `ibm_region` - IBM cloud region name.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
+
+The `server_list` block contains:
+
+* `ip` - IPv4 address.
+
+The `external_account_list` block contains:
+
+* `role_arn` - AWS role ARN to assume.
+* `region_list` - AWS region name list. The structure of `region_list` block is documented below.
+
+The `region_list` block contains:
+
+* `region` - AWS region name.
 
 The `nic` block contains:
 
@@ -95,4 +113,18 @@ The `external_ip` block contains:
 The `route` block contains:
 
 * `name` - Route name.
+
+The `gcp_project_list` block contains:
+
+* `id` - GCP project ID.
+* `gcp_zone_list` - Configure GCP zone list. The structure of `gcp_zone_list` block is documented below.
+
+The `gcp_zone_list` block contains:
+
+* `name` - GCP zone name.
+
+The `forwarding_rule` block contains:
+
+* `rule_name` - Forwarding rule name.
+* `target` - Target instance name.
 

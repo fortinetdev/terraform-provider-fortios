@@ -185,6 +185,11 @@ func resourceSystemAccprofile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"others": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -617,6 +622,12 @@ func flattenSystemAccprofileFwgrpPermission(v interface{}, d *schema.ResourceDat
 		result["schedule"] = flattenSystemAccprofileFwgrpPermissionSchedule(i["schedule"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "others"
+	if _, ok := i["others"]; ok {
+
+		result["others"] = flattenSystemAccprofileFwgrpPermissionOthers(i["others"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -634,6 +645,10 @@ func flattenSystemAccprofileFwgrpPermissionService(v interface{}, d *schema.Reso
 }
 
 func flattenSystemAccprofileFwgrpPermissionSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileFwgrpPermissionOthers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1216,6 +1231,11 @@ func expandSystemAccprofileFwgrpPermission(d *schema.ResourceData, v interface{}
 
 		result["schedule"], _ = expandSystemAccprofileFwgrpPermissionSchedule(d, i["schedule"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "others"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["others"], _ = expandSystemAccprofileFwgrpPermissionOthers(d, i["others"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -1233,6 +1253,10 @@ func expandSystemAccprofileFwgrpPermissionService(d *schema.ResourceData, v inte
 }
 
 func expandSystemAccprofileFwgrpPermissionSchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileFwgrpPermissionOthers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

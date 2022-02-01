@@ -47,6 +47,10 @@ func dataSourceFirewallScheduleOnetime() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -114,6 +118,10 @@ func dataSourceFlattenFirewallScheduleOnetimeExpirationDays(v interface{}, d *sc
 	return v
 }
 
+func dataSourceFlattenFirewallScheduleOnetimeFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -144,6 +152,12 @@ func dataSourceRefreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o ma
 	if err = d.Set("expiration_days", dataSourceFlattenFirewallScheduleOnetimeExpirationDays(o["expiration-days"], d, "expiration_days")); err != nil {
 		if !fortiAPIPatch(o["expiration-days"]) {
 			return fmt.Errorf("Error reading expiration_days: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallScheduleOnetimeFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

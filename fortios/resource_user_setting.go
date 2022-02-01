@@ -156,6 +156,16 @@ func resourceUserSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auth_ssl_max_proto_version": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auth_ssl_sigalgs": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -389,6 +399,14 @@ func flattenUserSettingAuthSslMinProtoVersion(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenUserSettingAuthSslMaxProtoVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSettingAuthSslSigalgs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -513,6 +531,18 @@ func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("auth_ssl_min_proto_version", flattenUserSettingAuthSslMinProtoVersion(o["auth-ssl-min-proto-version"], d, "auth_ssl_min_proto_version", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-ssl-min-proto-version"]) {
 			return fmt.Errorf("Error reading auth_ssl_min_proto_version: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_ssl_max_proto_version", flattenUserSettingAuthSslMaxProtoVersion(o["auth-ssl-max-proto-version"], d, "auth_ssl_max_proto_version", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-ssl-max-proto-version"]) {
+			return fmt.Errorf("Error reading auth_ssl_max_proto_version: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_ssl_sigalgs", flattenUserSettingAuthSslSigalgs(o["auth-ssl-sigalgs"], d, "auth_ssl_sigalgs", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-ssl-sigalgs"]) {
+			return fmt.Errorf("Error reading auth_ssl_sigalgs: %v", err)
 		}
 	}
 
@@ -646,6 +676,14 @@ func expandUserSettingAuthPortsPort(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandUserSettingAuthSslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSettingAuthSslMaxProtoVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSettingAuthSslSigalgs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -843,6 +881,26 @@ func getObjectUserSetting(d *schema.ResourceData, bemptysontable bool, sv string
 			return &obj, err
 		} else if t != nil {
 			obj["auth-ssl-min-proto-version"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auth_ssl_max_proto_version"); ok {
+
+		t, err := expandUserSettingAuthSslMaxProtoVersion(d, v, "auth_ssl_max_proto_version", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-ssl-max-proto-version"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auth_ssl_sigalgs"); ok {
+
+		t, err := expandUserSettingAuthSslSigalgs(d, v, "auth_ssl_sigalgs", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-ssl-sigalgs"] = t
 		}
 	}
 

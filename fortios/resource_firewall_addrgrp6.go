@@ -110,6 +110,11 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 					},
 				},
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -389,6 +394,10 @@ func flattenFirewallAddrgrp6TaggingTagsName(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallAddrgrp6FabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -451,6 +460,12 @@ func refreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[string]interfac
 					return fmt.Errorf("Error reading tagging: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenFirewallAddrgrp6FabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 
@@ -597,6 +612,10 @@ func expandFirewallAddrgrp6TaggingTagsName(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandFirewallAddrgrp6FabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -667,6 +686,16 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["tagging"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+
+		t, err := expandFirewallAddrgrp6FabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
 		}
 	}
 

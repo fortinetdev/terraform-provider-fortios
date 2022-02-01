@@ -99,6 +99,9 @@ The following arguments are supported:
 * `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `srcaddr6` - Source IPv6 address name and address group names. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - Destination IPv6 address name and address group names. The structure of `dstaddr6` block is documented below.
+* `ztna_status` - Enable/disable zero trust access. Valid values: `enable`, `disable`.
+* `ztna_ems_tag` - Source ztna-ems-tag names. The structure of `ztna_ems_tag` block is documented below.
+* `ztna_geo_tag` - Source ztna-geo-tag names. The structure of `ztna_geo_tag` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.  Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
@@ -118,6 +121,8 @@ The following arguments are supported:
 * `rtp_addr` - Address names if this is an RTP NAT policy. The structure of `rtp_addr` block is documented below.
 * `learning_mode` - Enable to allow everything, but log all of the meaningful data for security information gathering. A learning report will be generated. Valid values: `enable`, `disable`.
 * `action` - Policy action (allow/deny/ipsec). Valid values: `accept`, `deny`, `ipsec`.
+* `nat64` - Enable/disable NAT64. Valid values: `enable`, `disable`.
+* `nat46` - Enable/disable NAT46. Valid values: `enable`, `disable`.
 * `send_deny_packet` - Enable to send a reply when a session is denied or blocked by a firewall policy. Valid values: `disable`, `enable`.
 * `firewall_session_dirty` - How to handle sessions if the configuration of this firewall policy changes. Valid values: `check-all`, `check-new`.
 * `status` - Enable or disable this policy. Valid values: `enable`, `disable`.
@@ -131,6 +136,8 @@ The following arguments are supported:
 * `tcp_session_without_syn` - Enable/disable creation of TCP session without SYN flag. Valid values: `all`, `data-only`, `disable`.
 * `geoip_anycast` - Enable/disable recognition of anycast IP addresses using the geography IP database. Valid values: `enable`, `disable`.
 * `geoip_match` - Match geography address based either on its physical location or registered location. Valid values: `physical-location`, `registered-location`.
+* `dynamic_shaping` - Enable/disable dynamic RADIUS defined traffic shaping. Valid values: `enable`, `disable`.
+* `passive_wan_health_measurement` - Enable/disable passive WAN health measurement. When enabled, auto-asic-offload is disabled. Valid values: `enable`, `disable`.
 * `utm_status` - Enable to add one or more security profiles (AV, IPS, etc.) to the firewall policy. Valid values: `enable`, `disable`.
 * `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode. Valid values: `proxy`, `flow`.
 * `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy. Valid values: `enable`, `disable`.
@@ -148,8 +155,10 @@ The following arguments are supported:
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `voip_profile` - Name of an existing VoIP profile.
+* `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
+* `videofilter_profile` - Name of an existing VideoFilter profile.
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
@@ -158,6 +167,7 @@ The following arguments are supported:
 * `logtraffic_start` - Record logs when a session starts. Valid values: `enable`, `disable`.
 * `capture_packet` - Enable/disable capture packets. Valid values: `enable`, `disable`.
 * `auto_asic_offload` - Enable/disable policy traffic ASIC offloading. Valid values: `enable`, `disable`.
+* `np_acceleration` - Enable/disable UTM Network Processor acceleration. Valid values: `enable`, `disable`.
 * `wanopt` - Enable/disable WAN optimization. Valid values: `enable`, `disable`.
 * `wanopt_detection` - WAN optimization auto-detection mode. Valid values: `active`, `passive`, `off`.
 * `wanopt_passive_opt` - WAN optimization passive mode options. This option decides what IP address will be used to connect server. Valid values: `default`, `transparent`, `non-transparent`.
@@ -187,6 +197,7 @@ The following arguments are supported:
 * `outbound` - Policy-based IPsec VPN: only traffic from the internal network can initiate a VPN. Valid values: `enable`, `disable`.
 * `natinbound` - Policy-based IPsec VPN: apply destination NAT to inbound traffic. Valid values: `enable`, `disable`.
 * `natoutbound` - Policy-based IPsec VPN: apply source NAT to outbound traffic. Valid values: `enable`, `disable`.
+* `fec` - Enable/disable Forward Error Correction on traffic matching this policy on a FEC device. Valid values: `enable`, `disable`.
 * `wccp` - Enable/disable forwarding traffic matching this policy to a configured WCCP server. Valid values: `enable`, `disable`.
 * `ntlm` - Enable/disable NTLM authentication. Valid values: `enable`, `disable`.
 * `ntlm_guest` - Enable/disable NTLM guest user access. Valid values: `enable`, `disable`.
@@ -237,6 +248,8 @@ The following arguments are supported:
 * `radius_mac_auth_bypass` - Enable MAC authentication bypass. The bypassed MAC address must be received from RADIUS server. Valid values: `enable`, `disable`.
 * `delay_tcp_npu_session` - Enable TCP NPU session delay to guarantee packet order of 3-way handshake. Valid values: `enable`, `disable`.
 * `vlan_filter` - Set VLAN filters.
+* `sgt_check` - Enable/disable security group tags (SGT) check. Valid values: `enable`, `disable`.
+* `sgt` - Security group tags. The structure of `sgt` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -261,6 +274,14 @@ The `srcaddr6` block supports:
 * `name` - Address name.
 
 The `dstaddr6` block supports:
+
+* `name` - Address name.
+
+The `ztna_ems_tag` block supports:
+
+* `name` - Address name.
+
+The `ztna_geo_tag` block supports:
 
 * `name` - Address name.
 
@@ -367,6 +388,10 @@ The `custom_log_fields` block supports:
 The `ssl_mirror_intf` block supports:
 
 * `name` - Mirror Interface name.
+
+The `sgt` block supports:
+
+* `id` - Security group tag.
 
 
 ## Attribute Reference

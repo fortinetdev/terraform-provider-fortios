@@ -70,6 +70,12 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 					},
 				},
 			},
+			"preshared_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -336,6 +342,10 @@ func flattenLogFortianalyzerSettingSerialName(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenLogFortianalyzerSettingPresharedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzerSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -460,6 +470,12 @@ func refreshObjectLogFortianalyzerSetting(d *schema.ResourceData, o map[string]i
 					return fmt.Errorf("Error reading serial: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("preshared_key", flattenLogFortianalyzerSettingPresharedKey(o["preshared-key"], d, "preshared_key", sv)); err != nil {
+		if !fortiAPIPatch(o["preshared-key"]) {
+			return fmt.Errorf("Error reading preshared_key: %v", err)
 		}
 	}
 
@@ -646,6 +662,10 @@ func expandLogFortianalyzerSettingSerialName(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandLogFortianalyzerSettingPresharedKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzerSettingAccessConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -780,6 +800,16 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["serial"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("preshared_key"); ok {
+
+		t, err := expandLogFortianalyzerSettingPresharedKey(d, v, "preshared_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["preshared-key"] = t
 		}
 	}
 

@@ -20,6 +20,7 @@ Use this data source to get information on fortios systemsnmp sysinfo
 The following attributes are exported:
 
 * `status` - Enable/disable SNMP.
+* `engine_id_type` - Local SNMP engineID type (text/hex/mac).
 * `engine_id` - Local SNMP engineID string (maximum 24 characters).
 * `description` - System description.
 * `contact_info` - Contact information.

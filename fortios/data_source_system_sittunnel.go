@@ -47,6 +47,14 @@ func dataSourceSystemSitTunnel() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"use_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -114,6 +122,14 @@ func dataSourceFlattenSystemSitTunnelInterface(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenSystemSitTunnelUseSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSitTunnelAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -144,6 +160,18 @@ func dataSourceRefreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string
 	if err = d.Set("interface", dataSourceFlattenSystemSitTunnelInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("use_sdwan", dataSourceFlattenSystemSitTunnelUseSdwan(o["use-sdwan"], d, "use_sdwan")); err != nil {
+		if !fortiAPIPatch(o["use-sdwan"]) {
+			return fmt.Errorf("Error reading use_sdwan: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", dataSourceFlattenSystemSitTunnelAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload")); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
 		}
 	}
 

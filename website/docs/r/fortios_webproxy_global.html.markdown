@@ -36,6 +36,7 @@ The following arguments are supported:
 * `ssl_cert` - SSL certificate for SSL interception.
 * `ssl_ca_cert` - SSL CA certificate for SSL interception.
 * `fast_policy_match` - Enable/disable fast matching algorithm for explicit and transparent proxy policy. Valid values: `enable`, `disable`.
+* `ldap_user_cache` - Enable/disable LDAP user cache for explicit and transparent proxy user. Valid values: `enable`, `disable`.
 * `proxy_fqdn` - (Required) Fully Qualified Domain Name (FQDN) that clients connect to (default = default.fqdn) to connect to the explicit web proxy.
 * `max_request_length` - Maximum length of HTTP request line (2 - 64 Kbytes, default = 4).
 * `max_message_length` - Maximum length of HTTP message, not including body (16 - 256 Kbytes, default = 32).
@@ -50,6 +51,8 @@ The following arguments are supported:
 * `learn_client_ip_from_header` - Learn client IP address from the specified headers. Valid values: `true-client-ip`, `x-real-ip`, `x-forwarded-for`.
 * `learn_client_ip_srcaddr` - Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr` block is documented below.
 * `learn_client_ip_srcaddr6` - IPv6 Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr6` block is documented below.
+* `src_affinity_exempt_addr` - IPv4 source addresses to exempt proxy affinity.
+* `src_affinity_exempt_addr6` - IPv6 source addresses to exempt proxy affinity.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

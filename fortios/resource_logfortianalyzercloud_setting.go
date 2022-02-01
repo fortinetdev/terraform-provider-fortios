@@ -45,6 +45,31 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"certificate_verification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"serial": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"preshared_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -136,6 +161,11 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -238,6 +268,52 @@ func flattenLogFortianalyzerCloudSettingIpsArchive(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenLogFortianalyzerCloudSettingCertificateVerification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzerCloudSettingSerial(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenLogFortianalyzerCloudSettingSerialName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenLogFortianalyzerCloudSettingSerialName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzerCloudSettingPresharedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzerCloudSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -318,6 +394,34 @@ func refreshObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, o map[str
 	if err = d.Set("ips_archive", flattenLogFortianalyzerCloudSettingIpsArchive(o["ips-archive"], d, "ips_archive", sv)); err != nil {
 		if !fortiAPIPatch(o["ips-archive"]) {
 			return fmt.Errorf("Error reading ips_archive: %v", err)
+		}
+	}
+
+	if err = d.Set("certificate_verification", flattenLogFortianalyzerCloudSettingCertificateVerification(o["certificate-verification"], d, "certificate_verification", sv)); err != nil {
+		if !fortiAPIPatch(o["certificate-verification"]) {
+			return fmt.Errorf("Error reading certificate_verification: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("serial", flattenLogFortianalyzerCloudSettingSerial(o["serial"], d, "serial", sv)); err != nil {
+			if !fortiAPIPatch(o["serial"]) {
+				return fmt.Errorf("Error reading serial: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("serial"); ok {
+			if err = d.Set("serial", flattenLogFortianalyzerCloudSettingSerial(o["serial"], d, "serial", sv)); err != nil {
+				if !fortiAPIPatch(o["serial"]) {
+					return fmt.Errorf("Error reading serial: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("preshared_key", flattenLogFortianalyzerCloudSettingPresharedKey(o["preshared-key"], d, "preshared_key", sv)); err != nil {
+		if !fortiAPIPatch(o["preshared-key"]) {
+			return fmt.Errorf("Error reading preshared_key: %v", err)
 		}
 	}
 
@@ -440,6 +544,46 @@ func expandLogFortianalyzerCloudSettingIpsArchive(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandLogFortianalyzerCloudSettingCertificateVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzerCloudSettingSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandLogFortianalyzerCloudSettingSerialName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandLogFortianalyzerCloudSettingSerialName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzerCloudSettingPresharedKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzerCloudSettingAccessConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -528,6 +672,36 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["ips-archive"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("certificate_verification"); ok {
+
+		t, err := expandLogFortianalyzerCloudSettingCertificateVerification(d, v, "certificate_verification", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["certificate-verification"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("serial"); ok {
+
+		t, err := expandLogFortianalyzerCloudSettingSerial(d, v, "serial", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["serial"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("preshared_key"); ok {
+
+		t, err := expandLogFortianalyzerCloudSettingPresharedKey(d, v, "preshared_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["preshared-key"] = t
 		}
 	}
 

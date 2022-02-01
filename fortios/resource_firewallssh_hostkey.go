@@ -56,6 +56,11 @@ func resourceFirewallSshHostKey() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"usage": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -219,6 +224,10 @@ func flattenFirewallSshHostKeyNid(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenFirewallSshHostKeyUsage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSshHostKeyIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -262,6 +271,12 @@ func refreshObjectFirewallSshHostKey(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("usage", flattenFirewallSshHostKeyUsage(o["usage"], d, "usage", sv)); err != nil {
+		if !fortiAPIPatch(o["usage"]) {
+			return fmt.Errorf("Error reading usage: %v", err)
+		}
+	}
+
 	if err = d.Set("ip", flattenFirewallSshHostKeyIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
@@ -302,6 +317,10 @@ func expandFirewallSshHostKeyType(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandFirewallSshHostKeyNid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSshHostKeyUsage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -361,6 +380,16 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["nid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("usage"); ok {
+
+		t, err := expandFirewallSshHostKeyUsage(d, v, "usage", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["usage"] = t
 		}
 	}
 

@@ -42,7 +42,7 @@ The `anomaly` block supports:
 * `name` - Anomaly name.
 * `status` - Enable/disable this anomaly. Valid values: `disable`, `enable`.
 * `log` - Enable/disable anomaly logging. Valid values: `enable`, `disable`.
-* `action` - Action taken when the threshold is reached. Valid values: `pass`, `block`.
+* `action` - Action taken when the threshold is reached.
 * `quarantine` - Quarantine method. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine. (Format ###d##h##m, minimum 1m, maximum 364d23h59m, default = 5m). Requires quarantine set to attacker.
 * `quarantine_log` - Enable/disable quarantine logging. Valid values: `disable`, `enable`.

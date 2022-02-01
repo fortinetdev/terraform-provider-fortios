@@ -39,6 +39,10 @@ func dataSourceSystemDnsServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"doh": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -98,6 +102,10 @@ func dataSourceFlattenSystemDnsServerDnsfilterProfile(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenSystemDnsServerDoh(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -116,6 +124,12 @@ func dataSourceRefreshObjectSystemDnsServer(d *schema.ResourceData, o map[string
 	if err = d.Set("dnsfilter_profile", dataSourceFlattenSystemDnsServerDnsfilterProfile(o["dnsfilter-profile"], d, "dnsfilter_profile")); err != nil {
 		if !fortiAPIPatch(o["dnsfilter-profile"]) {
 			return fmt.Errorf("Error reading dnsfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("doh", dataSourceFlattenSystemDnsServerDoh(o["doh"], d, "doh")); err != nil {
+		if !fortiAPIPatch(o["doh"]) {
+			return fmt.Errorf("Error reading doh: %v", err)
 		}
 	}
 

@@ -29,8 +29,15 @@ The following attributes are exported:
 * `priority` - Administrative priority (0 - 4294967295).
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
+* `dynamic_gateway` - Enable use of dynamic gateway retrieved from Router Advertisement (RA).
+* `sdwan_zone` - Choose SD-WAN Zone. The structure of `sdwan_zone` block is documented below.
 * `sdwan` - Enable/disable egress through the SD-WAN.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
 * `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down.
+* `vrf` - Virtual Routing Forwarding ID.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+
+The `sdwan_zone` block contains:
+
+* `name` - SD-WAN zone name.
 

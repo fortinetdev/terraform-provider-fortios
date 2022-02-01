@@ -35,7 +35,9 @@ The following arguments are supported:
 * `status` - (Required) Enable/disable connection to the remote SDN connector. Valid values: `disable`, `enable`.
 * `type` - (Required) Type of SDN connector.
 * `ha_status` - Enable/disable use for FortiGate HA service. Valid values: `disable`, `enable`.
+* `verify_certificate` - Enable/disable server certificate verification. Valid values: `disable`, `enable`.
 * `server` - Server address of the remote SDN connector.
+* `server_list` - Server address list of the remote SDN connector. The structure of `server_list` block is documented below.
 * `server_port` - Port number of the remote SDN connector.
 * `username` - Username of the remote SDN connector as login credentials.
 * `password` - Password of the remote SDN connector as login credentials.
@@ -46,6 +48,7 @@ The following arguments are supported:
 * `secret_key` - AWS secret access key.
 * `region` - AWS region name.
 * `vpc_id` - AWS VPC ID.
+* `external_account_list` - Configure AWS external account list. The structure of `external_account_list` block is documented below.
 * `tenant_id` - Tenant ID (directory ID).
 * `subscription_id` - Azure subscription ID.
 * `login_endpoint` - Azure Stack login endpoint.
@@ -64,6 +67,8 @@ The following arguments are supported:
 * `oci_fingerprint` - OCI pubkey fingerprint.
 * `external_ip` - Configure GCP external IP. The structure of `external_ip` block is documented below.
 * `route` - Configure GCP route. The structure of `route` block is documented below.
+* `gcp_project_list` - Configure GCP project list. The structure of `gcp_project_list` block is documented below.
+* `forwarding_rule` - Configure GCP forwarding rule. The structure of `forwarding_rule` block is documented below.
 * `use_metadata_iam` - Enable/disable using IAM role from metadata to call API. Valid values: `disable`, `enable`.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
@@ -74,10 +79,23 @@ The following arguments are supported:
 * `group_name` - Group name of computers.
 * `api_key` - IBM cloud API key or service ID API key.
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
-* `ibm_region` - IBM cloud region name. Valid values: `us-south`, `us-east`, `germany`, `great-britain`, `japan`, `australia`.
+* `ibm_region` - IBM cloud region name.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `server_list` block supports:
+
+* `ip` - IPv4 address.
+
+The `external_account_list` block supports:
+
+* `role_arn` - AWS role ARN to assume.
+* `region_list` - AWS region name list. The structure of `region_list` block is documented below.
+
+The `region_list` block supports:
+
+* `region` - AWS region name.
 
 The `nic` block supports:
 
@@ -109,6 +127,20 @@ The `external_ip` block supports:
 The `route` block supports:
 
 * `name` - Route name.
+
+The `gcp_project_list` block supports:
+
+* `id` - GCP project ID.
+* `gcp_zone_list` - Configure GCP zone list. The structure of `gcp_zone_list` block is documented below.
+
+The `gcp_zone_list` block supports:
+
+* `name` - GCP zone name.
+
+The `forwarding_rule` block supports:
+
+* `rule_name` - Forwarding rule name.
+* `target` - Target instance name.
 
 
 ## Attribute Reference

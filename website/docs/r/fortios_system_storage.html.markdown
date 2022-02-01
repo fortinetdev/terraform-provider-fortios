@@ -20,7 +20,7 @@ The following arguments are supported:
 * `partition` - Label of underlying partition.
 * `device` - Partition device.
 * `size` - Partition size.
-* `usage` - Use hard disk for logging or WAN Optimization (default = log). Valid values: `log`, `wanopt`.
+* `usage` - Use hard disk for logging or WAN Optimization (default = log).
 * `wanopt_mode` - WAN Optimization mode (default = mix). Valid values: `mix`, `wanopt`, `webcache`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

@@ -41,6 +41,9 @@ The following arguments are supported:
 * `socket_size` - IPS socket buffer size (0 - 256 MB). Default depends on available memory. Can be changed to tune performance.
 * `engine_count` - Number of IPS engines running. If set to the default value of 0, FortiOS sets the number to optimize performance depending on the number of CPU cores.
 * `sync_session_ttl` - Enable/disable use of kernel session TTL for IPS sessions. Valid values: `enable`, `disable`.
+* `np_accel_mode` - Acceleration mode for IPS processing by NPx processors. Valid values: `none`, `basic`.
+* `ips_reserve_cpu` - Enable/disable IPS daemon's use of CPUs other than CPU 0 Valid values: `disable`, `enable`.
+* `cp_accel_mode` - IPS Pattern matching acceleration/offloading to CPx processors. Valid values: `none`, `basic`, `advanced`.
 * `skype_client_public_ipaddr` - Public IP addresses of your network that receive Skype sessions. Helps identify Skype sessions. Separate IP addresses with commas.
 * `deep_app_insp_timeout` - Timeout for Deep application inspection (1 - 2147483647 sec., 0 = use recommended setting).
 * `deep_app_insp_db_limit` - Limit on number of entries in deep application inspection database (1 - 2147483647, 0 = use recommended setting)

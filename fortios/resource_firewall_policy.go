@@ -137,6 +137,39 @@ func resourceFirewallPolicy() *schema.Resource {
 					},
 				},
 			},
+			"ztna_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ztna_ems_tag": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"ztna_geo_tag": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -337,6 +370,16 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"nat64": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat46": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"send_deny_packet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -408,6 +451,16 @@ func resourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"geoip_match": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dynamic_shaping": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"passive_wan_health_measurement": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -509,6 +562,12 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"sctp_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -516,6 +575,12 @@ func resourceFirewallPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -561,6 +626,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"np_acceleration": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -770,6 +840,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fec": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"wccp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -975,7 +1050,7 @@ func resourceFirewallPolicy() *schema.Resource {
 			},
 			"redirect_url": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 255),
+				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1094,6 +1169,24 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"sgt_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sgt": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1462,6 +1555,86 @@ func flattenFirewallPolicyDstaddr6(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenFirewallPolicyDstaddr6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallPolicyZtnaEmsTagName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyZtnaEmsTagName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaGeoTag(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallPolicyZtnaGeoTagName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyZtnaGeoTagName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1949,6 +2122,14 @@ func flattenFirewallPolicyAction(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenFirewallPolicyNat64(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyNat46(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicySendDenyPacket(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2035,6 +2216,14 @@ func flattenFirewallPolicyGeoipMatch(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenFirewallPolicyDynamicShaping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyPassiveWanHealthMeasurement(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyUtmStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2103,11 +2292,19 @@ func flattenFirewallPolicyVoipProfile(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenFirewallPolicySctpFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyIcapProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallPolicyCifsProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyVideofilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2140,6 +2337,10 @@ func flattenFirewallPolicyCapturePacket(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallPolicyAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyNpAcceleration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2460,6 +2661,10 @@ func flattenFirewallPolicyNatinbound(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenFirewallPolicyNatoutbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyFec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2908,6 +3113,48 @@ func flattenFirewallPolicyVlanFilter(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenFirewallPolicySgtCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicySgt(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenFirewallPolicySgtId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenFirewallPolicySgtId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -3020,6 +3267,44 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 			if err = d.Set("dstaddr6", flattenFirewallPolicyDstaddr6(o["dstaddr6"], d, "dstaddr6", sv)); err != nil {
 				if !fortiAPIPatch(o["dstaddr6"]) {
 					return fmt.Errorf("Error reading dstaddr6: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("ztna_status", flattenFirewallPolicyZtnaStatus(o["ztna-status"], d, "ztna_status", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-status"]) {
+			return fmt.Errorf("Error reading ztna_status: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("ztna_ems_tag", flattenFirewallPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag", sv)); err != nil {
+			if !fortiAPIPatch(o["ztna-ems-tag"]) {
+				return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ztna_ems_tag"); ok {
+			if err = d.Set("ztna_ems_tag", flattenFirewallPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag", sv)); err != nil {
+				if !fortiAPIPatch(o["ztna-ems-tag"]) {
+					return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("ztna_geo_tag", flattenFirewallPolicyZtnaGeoTag(o["ztna-geo-tag"], d, "ztna_geo_tag", sv)); err != nil {
+			if !fortiAPIPatch(o["ztna-geo-tag"]) {
+				return fmt.Errorf("Error reading ztna_geo_tag: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ztna_geo_tag"); ok {
+			if err = d.Set("ztna_geo_tag", flattenFirewallPolicyZtnaGeoTag(o["ztna-geo-tag"], d, "ztna_geo_tag", sv)); err != nil {
+				if !fortiAPIPatch(o["ztna-geo-tag"]) {
+					return fmt.Errorf("Error reading ztna_geo_tag: %v", err)
 				}
 			}
 		}
@@ -3259,6 +3544,18 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("nat64", flattenFirewallPolicyNat64(o["nat64"], d, "nat64", sv)); err != nil {
+		if !fortiAPIPatch(o["nat64"]) {
+			return fmt.Errorf("Error reading nat64: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46", flattenFirewallPolicyNat46(o["nat46"], d, "nat46", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46"]) {
+			return fmt.Errorf("Error reading nat46: %v", err)
+		}
+	}
+
 	if err = d.Set("send_deny_packet", flattenFirewallPolicySendDenyPacket(o["send-deny-packet"], d, "send_deny_packet", sv)); err != nil {
 		if !fortiAPIPatch(o["send-deny-packet"]) {
 			return fmt.Errorf("Error reading send_deny_packet: %v", err)
@@ -3344,6 +3641,18 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("geoip_match", flattenFirewallPolicyGeoipMatch(o["geoip-match"], d, "geoip_match", sv)); err != nil {
 		if !fortiAPIPatch(o["geoip-match"]) {
 			return fmt.Errorf("Error reading geoip_match: %v", err)
+		}
+	}
+
+	if err = d.Set("dynamic_shaping", flattenFirewallPolicyDynamicShaping(o["dynamic-shaping"], d, "dynamic_shaping", sv)); err != nil {
+		if !fortiAPIPatch(o["dynamic-shaping"]) {
+			return fmt.Errorf("Error reading dynamic_shaping: %v", err)
+		}
+	}
+
+	if err = d.Set("passive_wan_health_measurement", flattenFirewallPolicyPassiveWanHealthMeasurement(o["passive-wan-health-measurement"], d, "passive_wan_health_measurement", sv)); err != nil {
+		if !fortiAPIPatch(o["passive-wan-health-measurement"]) {
+			return fmt.Errorf("Error reading passive_wan_health_measurement: %v", err)
 		}
 	}
 
@@ -3449,6 +3758,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("sctp_filter_profile", flattenFirewallPolicySctpFilterProfile(o["sctp-filter-profile"], d, "sctp_filter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["sctp-filter-profile"]) {
+			return fmt.Errorf("Error reading sctp_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", flattenFirewallPolicyIcapProfile(o["icap-profile"], d, "icap_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -3458,6 +3773,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("cifs_profile", flattenFirewallPolicyCifsProfile(o["cifs-profile"], d, "cifs_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["cifs-profile"]) {
 			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("videofilter_profile", flattenFirewallPolicyVideofilterProfile(o["videofilter-profile"], d, "videofilter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["videofilter-profile"]) {
+			return fmt.Errorf("Error reading videofilter_profile: %v", err)
 		}
 	}
 
@@ -3506,6 +3827,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("auto_asic_offload", flattenFirewallPolicyAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-asic-offload"]) {
 			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("np_acceleration", flattenFirewallPolicyNpAcceleration(o["np-acceleration"], d, "np_acceleration", sv)); err != nil {
+		if !fortiAPIPatch(o["np-acceleration"]) {
+			return fmt.Errorf("Error reading np_acceleration: %v", err)
 		}
 	}
 
@@ -3752,6 +4079,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("natoutbound", flattenFirewallPolicyNatoutbound(o["natoutbound"], d, "natoutbound", sv)); err != nil {
 		if !fortiAPIPatch(o["natoutbound"]) {
 			return fmt.Errorf("Error reading natoutbound: %v", err)
+		}
+	}
+
+	if err = d.Set("fec", flattenFirewallPolicyFec(o["fec"], d, "fec", sv)); err != nil {
+		if !fortiAPIPatch(o["fec"]) {
+			return fmt.Errorf("Error reading fec: %v", err)
 		}
 	}
 
@@ -4125,6 +4458,28 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("sgt_check", flattenFirewallPolicySgtCheck(o["sgt-check"], d, "sgt_check", sv)); err != nil {
+		if !fortiAPIPatch(o["sgt-check"]) {
+			return fmt.Errorf("Error reading sgt_check: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("sgt", flattenFirewallPolicySgt(o["sgt"], d, "sgt", sv)); err != nil {
+			if !fortiAPIPatch(o["sgt"]) {
+				return fmt.Errorf("Error reading sgt: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sgt"); ok {
+			if err = d.Set("sgt", flattenFirewallPolicySgt(o["sgt"], d, "sgt", sv)); err != nil {
+				if !fortiAPIPatch(o["sgt"]) {
+					return fmt.Errorf("Error reading sgt: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -4335,6 +4690,74 @@ func expandFirewallPolicyDstaddr6(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandFirewallPolicyDstaddr6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyZtnaStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyZtnaEmsTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallPolicyZtnaEmsTagName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyZtnaEmsTagName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyZtnaGeoTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallPolicyZtnaGeoTagName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyZtnaGeoTagName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4750,6 +5173,14 @@ func expandFirewallPolicyAction(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandFirewallPolicyNat64(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyNat46(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicySendDenyPacket(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4830,6 +5261,14 @@ func expandFirewallPolicyGeoipMatch(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandFirewallPolicyDynamicShaping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyPassiveWanHealthMeasurement(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyUtmStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4898,11 +5337,19 @@ func expandFirewallPolicyVoipProfile(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandFirewallPolicySctpFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyIcapProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandFirewallPolicyCifsProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyVideofilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4935,6 +5382,10 @@ func expandFirewallPolicyCapturePacket(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallPolicyAutoAsicOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyNpAcceleration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5219,6 +5670,10 @@ func expandFirewallPolicyNatinbound(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandFirewallPolicyNatoutbound(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyFec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5618,6 +6073,42 @@ func expandFirewallPolicyVlanFilter(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandFirewallPolicySgtCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicySgt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandFirewallPolicySgtId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicySgtId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -5708,6 +6199,36 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["dstaddr6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_status"); ok {
+
+		t, err := expandFirewallPolicyZtnaStatus(d, v, "ztna_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_ems_tag"); ok {
+
+		t, err := expandFirewallPolicyZtnaEmsTag(d, v, "ztna_ems_tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-ems-tag"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_geo_tag"); ok {
+
+		t, err := expandFirewallPolicyZtnaGeoTag(d, v, "ztna_geo_tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-geo-tag"] = t
 		}
 	}
 
@@ -5901,6 +6422,26 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("nat64"); ok {
+
+		t, err := expandFirewallPolicyNat64(d, v, "nat64", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat64"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat46"); ok {
+
+		t, err := expandFirewallPolicyNat46(d, v, "nat46", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat46"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("send_deny_packet"); ok {
 
 		t, err := expandFirewallPolicySendDenyPacket(d, v, "send_deny_packet", sv)
@@ -6028,6 +6569,26 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["geoip-match"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dynamic_shaping"); ok {
+
+		t, err := expandFirewallPolicyDynamicShaping(d, v, "dynamic_shaping", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dynamic-shaping"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("passive_wan_health_measurement"); ok {
+
+		t, err := expandFirewallPolicyPassiveWanHealthMeasurement(d, v, "passive_wan_health_measurement", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["passive-wan-health-measurement"] = t
 		}
 	}
 
@@ -6201,6 +6762,16 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("sctp_filter_profile"); ok {
+
+		t, err := expandFirewallPolicySctpFilterProfile(d, v, "sctp_filter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sctp-filter-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("icap_profile"); ok {
 
 		t, err := expandFirewallPolicyIcapProfile(d, v, "icap_profile", sv)
@@ -6218,6 +6789,16 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["cifs-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("videofilter_profile"); ok {
+
+		t, err := expandFirewallPolicyVideofilterProfile(d, v, "videofilter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["videofilter-profile"] = t
 		}
 	}
 
@@ -6298,6 +6879,16 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["auto-asic-offload"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("np_acceleration"); ok {
+
+		t, err := expandFirewallPolicyNpAcceleration(d, v, "np_acceleration", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["np-acceleration"] = t
 		}
 	}
 
@@ -6592,6 +7183,16 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["natoutbound"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fec"); ok {
+
+		t, err := expandFirewallPolicyFec(d, v, "fec", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fec"] = t
 		}
 	}
 
@@ -7092,6 +7693,26 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["vlan-filter"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sgt_check"); ok {
+
+		t, err := expandFirewallPolicySgtCheck(d, v, "sgt_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sgt-check"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sgt"); ok {
+
+		t, err := expandFirewallPolicySgt(d, v, "sgt", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sgt"] = t
 		}
 	}
 

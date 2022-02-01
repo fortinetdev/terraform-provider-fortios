@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_flowtracking
-Configure FortiSwitch flow tracking and export via ipfix/netflow.
+Configure FortiSwitch flow tracking and export via ipfix/netflow. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

@@ -58,7 +58,10 @@ The following arguments are supported:
 * `log_policy_name` - Enable/disable inserting policy name into traffic logs. Valid values: `enable`, `disable`.
 * `faz_override` - Enable/disable override FortiAnalyzer settings. Valid values: `enable`, `disable`.
 * `syslog_override` - Enable/disable override Syslog settings. Valid values: `enable`, `disable`.
+* `rest_api_set` - Enable/disable REST API POST/PUT/DELETE request logging. Valid values: `enable`, `disable`.
+* `rest_api_get` - Enable/disable REST API GET request logging. Valid values: `enable`, `disable`.
 * `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
+* `anonymization_hash` - User name anonymization hash salt.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

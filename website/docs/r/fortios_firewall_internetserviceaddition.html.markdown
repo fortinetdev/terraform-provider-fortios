@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_internetserviceaddition
-Configure Internet Services Addition.
+Configure Internet Services Addition. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

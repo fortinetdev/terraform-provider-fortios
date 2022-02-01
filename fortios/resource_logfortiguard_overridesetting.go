@@ -76,6 +76,11 @@ func resourceLogFortiguardOverrideSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"access_config": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -201,6 +206,10 @@ func flattenLogFortiguardOverrideSettingMaxLogRate(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenLogFortiguardOverrideSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -252,6 +261,12 @@ func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("access_config", flattenLogFortiguardOverrideSettingAccessConfig(o["access-config"], d, "access_config", sv)); err != nil {
+		if !fortiAPIPatch(o["access-config"]) {
+			return fmt.Errorf("Error reading access_config: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -290,6 +305,10 @@ func expandLogFortiguardOverrideSettingPriority(d *schema.ResourceData, v interf
 }
 
 func expandLogFortiguardOverrideSettingMaxLogRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardOverrideSettingAccessConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -373,6 +392,16 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["max-log-rate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("access_config"); ok {
+
+		t, err := expandLogFortiguardOverrideSettingAccessConfig(d, v, "access_config", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["access-config"] = t
 		}
 	}
 

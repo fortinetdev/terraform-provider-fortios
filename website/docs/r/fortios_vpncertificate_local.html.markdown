@@ -32,11 +32,16 @@ The following arguments are supported:
 * `ike_localid` - Local ID the FortiGate uses for authentication as a VPN client.
 * `ike_localid_type` - IKE local ID type. Valid values: `asn1dn`, `fqdn`.
 * `last_updated` - Time at which certificate was last updated.
-* `enroll_protocol` - Certificate enrollment protocol. Valid values: `none`, `scep`, `cmpv2`.
+* `enroll_protocol` - Certificate enrollment protocol.
 * `cmp_server` - 'ADDRESS:PORT' for CMP server.
 * `cmp_path` - Path location inside CMP server.
 * `cmp_server_cert` - CMP server certificate.
 * `cmp_regeneration_method` - CMP auto-regeneration method. Valid values: `keyupate`, `renewal`.
+* `acme_ca_url` - The URL for the ACME CA server (Let's Encrypt is the default provider).
+* `acme_domain` - A valid domain that resolves to this Fortigate.
+* `acme_email` - Contact email address that is required by some CAs like LetsEncrypt.
+* `acme_rsa_key_size` - Length of the RSA private key of the generated cert (Minimum 2048 bits).
+* `acme_renew_window` - Beginning of the renewal window (in days before certificate expiration, 30 by default).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

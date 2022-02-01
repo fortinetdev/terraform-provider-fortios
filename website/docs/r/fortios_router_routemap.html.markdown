@@ -73,7 +73,7 @@ The `rule` block supports:
 * `match_ip_nexthop` - Match next hop IP address passed by access-list or prefix-list.
 * `match_ip6_nexthop` - Match next hop IPv6 address passed by access-list6 or prefix-list6.
 * `match_metric` - Match metric for redistribute routes.
-* `match_route_type` - Match route type. Valid values: `1`, `2`, `none`.
+* `match_route_type` - Match route type.
 * `match_tag` - Match tag.
 * `match_vrf` - Match VRF ID.
 * `set_aggregator_as` - BGP aggregator AS.
@@ -96,7 +96,7 @@ The `rule` block supports:
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
 * `set_local_preference` - BGP local preference path attribute.
 * `set_metric` - Metric value.
-* `set_metric_type` - Metric type. Valid values: `1`, `2`, `none`.
+* `set_metric_type` - Metric type.
 * `set_originator_id` - BGP originator ID attribute.
 * `set_origin` - BGP origin code. Valid values: `none`, `egp`, `igp`, `incomplete`.
 * `set_tag` - Tag value.

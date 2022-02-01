@@ -60,7 +60,7 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 			},
 			"ap_bgscan_period": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(60, 3600),
+				ValidateFunc: validation.IntBetween(10, 3600),
 				Optional:     true,
 				Computed:     true,
 			},

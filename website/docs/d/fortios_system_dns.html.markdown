@@ -21,6 +21,7 @@ The following attributes are exported:
 
 * `primary` - Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
+* `protocol` - DNS protocols.
 * `dns_over_tls` - Enable/disable/enforce DNS over TLS.
 * `ssl_certificate` - Name of local certificate for SSL connections.
 * `server_hostname` - DNS server host name list. The structure of `server_hostname` block is documented below.
@@ -35,6 +36,10 @@ The following attributes are exported:
 * `source_ip` - IP address used by the DNS server as its source IP.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `server_select_method` - Specify how configured servers are prioritized.
+* `alt_primary` - Alternate primary DNS server. (This is not used as a failover DNS server.)
+* `alt_secondary` - Alternate secondary DNS server. (This is not used as a failover DNS server.)
+* `log` - Local DNS log setting.
 
 The `server_hostname` block contains:
 

@@ -39,6 +39,10 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_config": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -66,6 +70,18 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 			"gateway_ip6": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"route": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"subnet": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -124,6 +140,10 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"fail_weight": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"update_cascade_interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -132,9 +152,53 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"update_policy_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"diffservcode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"class_id": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"service_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"server_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"dst": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"weight": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -195,6 +259,10 @@ func dataSourceFlattenSystemLinkMonitorSrcintf(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenSystemLinkMonitorServerConfig(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -244,6 +312,42 @@ func dataSourceFlattenSystemLinkMonitorGatewayIp(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenSystemLinkMonitorGatewayIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorRoute(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
+		if _, ok := i["subnet"]; ok {
+			tmp["subnet"] = dataSourceFlattenSystemLinkMonitorRouteSubnet(i["subnet"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemLinkMonitorRouteSubnet(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -303,6 +407,10 @@ func dataSourceFlattenSystemLinkMonitorHaPriority(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemLinkMonitorFailWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemLinkMonitorUpdateCascadeInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -311,7 +419,95 @@ func dataSourceFlattenSystemLinkMonitorUpdateStaticRoute(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenSystemLinkMonitorUpdatePolicyRoute(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemLinkMonitorStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorDiffservcode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorClassId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServiceDetection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServerList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemLinkMonitorServerListId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
+		if _, ok := i["dst"]; ok {
+			tmp["dst"] = dataSourceFlattenSystemLinkMonitorServerListDst(i["dst"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if _, ok := i["protocol"]; ok {
+			tmp["protocol"] = dataSourceFlattenSystemLinkMonitorServerListProtocol(i["protocol"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := i["port"]; ok {
+			tmp["port"] = dataSourceFlattenSystemLinkMonitorServerListPort(i["port"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+		if _, ok := i["weight"]; ok {
+			tmp["weight"] = dataSourceFlattenSystemLinkMonitorServerListWeight(i["weight"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemLinkMonitorServerListId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServerListDst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServerListProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServerListPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServerListWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -333,6 +529,12 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 	if err = d.Set("srcintf", dataSourceFlattenSystemLinkMonitorSrcintf(o["srcintf"], d, "srcintf")); err != nil {
 		if !fortiAPIPatch(o["srcintf"]) {
 			return fmt.Errorf("Error reading srcintf: %v", err)
+		}
+	}
+
+	if err = d.Set("server_config", dataSourceFlattenSystemLinkMonitorServerConfig(o["server-config"], d, "server_config")); err != nil {
+		if !fortiAPIPatch(o["server-config"]) {
+			return fmt.Errorf("Error reading server_config: %v", err)
 		}
 	}
 
@@ -363,6 +565,12 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 	if err = d.Set("gateway_ip6", dataSourceFlattenSystemLinkMonitorGatewayIp6(o["gateway-ip6"], d, "gateway_ip6")); err != nil {
 		if !fortiAPIPatch(o["gateway-ip6"]) {
 			return fmt.Errorf("Error reading gateway_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("route", dataSourceFlattenSystemLinkMonitorRoute(o["route"], d, "route")); err != nil {
+		if !fortiAPIPatch(o["route"]) {
+			return fmt.Errorf("Error reading route: %v", err)
 		}
 	}
 
@@ -444,6 +652,12 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("fail_weight", dataSourceFlattenSystemLinkMonitorFailWeight(o["fail-weight"], d, "fail_weight")); err != nil {
+		if !fortiAPIPatch(o["fail-weight"]) {
+			return fmt.Errorf("Error reading fail_weight: %v", err)
+		}
+	}
+
 	if err = d.Set("update_cascade_interface", dataSourceFlattenSystemLinkMonitorUpdateCascadeInterface(o["update-cascade-interface"], d, "update_cascade_interface")); err != nil {
 		if !fortiAPIPatch(o["update-cascade-interface"]) {
 			return fmt.Errorf("Error reading update_cascade_interface: %v", err)
@@ -456,9 +670,39 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("update_policy_route", dataSourceFlattenSystemLinkMonitorUpdatePolicyRoute(o["update-policy-route"], d, "update_policy_route")); err != nil {
+		if !fortiAPIPatch(o["update-policy-route"]) {
+			return fmt.Errorf("Error reading update_policy_route: %v", err)
+		}
+	}
+
 	if err = d.Set("status", dataSourceFlattenSystemLinkMonitorStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("diffservcode", dataSourceFlattenSystemLinkMonitorDiffservcode(o["diffservcode"], d, "diffservcode")); err != nil {
+		if !fortiAPIPatch(o["diffservcode"]) {
+			return fmt.Errorf("Error reading diffservcode: %v", err)
+		}
+	}
+
+	if err = d.Set("class_id", dataSourceFlattenSystemLinkMonitorClassId(o["class-id"], d, "class_id")); err != nil {
+		if !fortiAPIPatch(o["class-id"]) {
+			return fmt.Errorf("Error reading class_id: %v", err)
+		}
+	}
+
+	if err = d.Set("service_detection", dataSourceFlattenSystemLinkMonitorServiceDetection(o["service-detection"], d, "service_detection")); err != nil {
+		if !fortiAPIPatch(o["service-detection"]) {
+			return fmt.Errorf("Error reading service_detection: %v", err)
+		}
+	}
+
+	if err = d.Set("server_list", dataSourceFlattenSystemLinkMonitorServerList(o["server-list"], d, "server_list")); err != nil {
+		if !fortiAPIPatch(o["server-list"]) {
+			return fmt.Errorf("Error reading server_list: %v", err)
 		}
 	}
 

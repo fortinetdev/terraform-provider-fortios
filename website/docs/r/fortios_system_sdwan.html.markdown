@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `status` - Enable/disable SD-WAN. Valid values: `disable`, `enable`.
 * `load_balance_mode` - Algorithm or mode to use for load balancing Internet traffic to SD-WAN members. Valid values: `source-ip-based`, `weight-based`, `usage-based`, `source-dest-ip-based`, `measured-volume-based`.
+* `speedtest_bypass_routing` - Enable/disable bypass routing when speedtest on a SD-WAN member. Valid values: `disable`, `enable`.
 * `duplication_max_num` - Maximum number of interface members a packet is duplicated in the SD-WAN zone (2 - 4, default = 2; if set to 3, the original packet plus 2 more copies are created).
 * `neighbor_hold_down` - Enable/disable hold switching from the secondary neighbor to the primary neighbor. Valid values: `enable`, `disable`.
 * `neighbor_hold_down_time` - Waiting period in seconds when switching from the secondary neighbor to the primary neighbor when hold-down is disabled. (0 - 10000000, default = 0).
@@ -65,6 +66,7 @@ The `health_check` block supports:
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `system_dns` - Enable/disable system DNS as the probe server. Valid values: `disable`, `enable`.
 * `server` - IP address or FQDN name of the server.
+* `detect_mode` - The mode determining how to detect the server. Valid values: `active`, `passive`, `prefer-passive`.
 * `protocol` - Protocol used to determine if the FortiGate can communicate with the server. Valid values: `ping`, `tcp-echo`, `udp-echo`, `http`, `twamp`, `dns`, `tcp-connect`, `ftp`.
 * `port` - Port number used to communicate with the server over the selected protocol (0-65535, default = 0, auto select. http, twamp: 80, udp-echo, tcp-echo: 7, dns: 53, ftp: 21).
 * `quality_measured_method` - Method to measure the quality of tcp-connect. Valid values: `half-open`, `half-close`.
@@ -115,6 +117,7 @@ The `neighbor` block supports:
 
 * `ip` - IP/IPv6 address of neighbor.
 * `member` - Member sequence number.
+* `mode` - What metric to select the neighbor. Valid values: `sla`, `speedtest`.
 * `role` - Role of neighbor. Valid values: `standalone`, `primary`, `secondary`.
 * `health_check` - SD-WAN health-check name.
 * `sla_id` - SLA ID.
@@ -167,12 +170,14 @@ The `service` block supports:
 * `dscp_reverse_tag` - Reverse traffic DSCP tag.
 * `sla` - Service level agreement (SLA). The structure of `sla` block is documented below.
 * `priority_members` - Member sequence number list. The structure of `priority_members` block is documented below.
+* `priority_zone` - Priority zone name list. The structure of `priority_zone` block is documented below.
 * `status` - Enable/disable SD-WAN service. Valid values: `enable`, `disable`.
 * `gateway` - Enable/disable SD-WAN service gateway. Valid values: `enable`, `disable`.
 * `default` - Enable/disable use of SD-WAN as default service. Valid values: `enable`, `disable`.
 * `sla_compare_method` - Method to compare SLA value for SLA mode. Valid values: `order`, `number`.
 * `tie_break` - Method of selecting member if more than one meets the SLA. Valid values: `zone`, `cfg-order`, `fib-best-match`.
 * `use_shortcut_sla` - Enable/disable use of ADVPN shortcut for quality comparison. Valid values: `enable`, `disable`.
+* `passive_measurement` - Enable/disable passive measurement based on the service criteria. Valid values: `enable`, `disable`.
 
 The `input_device` block supports:
 
@@ -238,6 +243,10 @@ The `sla` block supports:
 The `priority_members` block supports:
 
 * `seq_num` - Member sequence number.
+
+The `priority_zone` block supports:
+
+* `name` - Priority zone name.
 
 The `duplication` block supports:
 

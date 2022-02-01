@@ -191,6 +191,17 @@ func resourceFirewallSniffer() *schema.Resource {
 					},
 				},
 			},
+			"file_filter_profile_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"file_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ips_dos_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -533,6 +544,14 @@ func flattenFirewallSnifferIpThreatfeedName(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallSnifferFileFilterProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferFileFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSnifferIpsDosStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -838,6 +857,18 @@ func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("file_filter_profile_status", flattenFirewallSnifferFileFilterProfileStatus(o["file-filter-profile-status"], d, "file_filter_profile_status", sv)); err != nil {
+		if !fortiAPIPatch(o["file-filter-profile-status"]) {
+			return fmt.Errorf("Error reading file_filter_profile_status: %v", err)
+		}
+	}
+
+	if err = d.Set("file_filter_profile", flattenFirewallSnifferFileFilterProfile(o["file-filter-profile"], d, "file_filter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["file-filter-profile"]) {
+			return fmt.Errorf("Error reading file_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("ips_dos_status", flattenFirewallSnifferIpsDosStatus(o["ips-dos-status"], d, "ips_dos_status", sv)); err != nil {
 		if !fortiAPIPatch(o["ips-dos-status"]) {
 			return fmt.Errorf("Error reading ips_dos_status: %v", err)
@@ -1014,6 +1045,14 @@ func expandFirewallSnifferIpThreatfeed(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallSnifferIpThreatfeedName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferFileFilterProfileStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferFileFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1411,6 +1450,26 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["ip-threatfeed"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("file_filter_profile_status"); ok {
+
+		t, err := expandFirewallSnifferFileFilterProfileStatus(d, v, "file_filter_profile_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["file-filter-profile-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("file_filter_profile"); ok {
+
+		t, err := expandFirewallSnifferFileFilterProfile(d, v, "file_filter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["file-filter-profile"] = t
 		}
 	}
 

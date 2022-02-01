@@ -42,6 +42,12 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"release": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 3),
+				Optional:     true,
+				Computed:     true,
+			},
 			"access_network_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -117,7 +123,7 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 			},
 			"gas_comeback_delay": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(100, 4000),
+				ValidateFunc: validation.IntBetween(100, 10000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -154,6 +160,12 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"venue_url": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"roaming_consortium": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -167,6 +179,30 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Computed:     true,
 			},
 			"oper_friendly_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"oper_icon": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"advice_of_charge": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"osu_provider_nai": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"terms_and_conditions": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -356,6 +392,10 @@ func flattenWirelessControllerHotspot20HsProfileName(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenWirelessControllerHotspot20HsProfileRelease(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerHotspot20HsProfileAccessNetworkType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -440,6 +480,10 @@ func flattenWirelessControllerHotspot20HsProfileVenueName(v interface{}, d *sche
 	return v
 }
 
+func flattenWirelessControllerHotspot20HsProfileVenueUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerHotspot20HsProfileRoamingConsortium(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -449,6 +493,22 @@ func flattenWirelessControllerHotspot20HsProfileNaiRealm(v interface{}, d *schem
 }
 
 func flattenWirelessControllerHotspot20HsProfileOperFriendlyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileOperIcon(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileAdviceOfCharge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileOsuProviderNai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileTermsAndConditions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -520,6 +580,12 @@ func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o
 	if err = d.Set("name", flattenWirelessControllerHotspot20HsProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("release", flattenWirelessControllerHotspot20HsProfileRelease(o["release"], d, "release", sv)); err != nil {
+		if !fortiAPIPatch(o["release"]) {
+			return fmt.Errorf("Error reading release: %v", err)
 		}
 	}
 
@@ -649,6 +715,12 @@ func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o
 		}
 	}
 
+	if err = d.Set("venue_url", flattenWirelessControllerHotspot20HsProfileVenueUrl(o["venue-url"], d, "venue_url", sv)); err != nil {
+		if !fortiAPIPatch(o["venue-url"]) {
+			return fmt.Errorf("Error reading venue_url: %v", err)
+		}
+	}
+
 	if err = d.Set("roaming_consortium", flattenWirelessControllerHotspot20HsProfileRoamingConsortium(o["roaming-consortium"], d, "roaming_consortium", sv)); err != nil {
 		if !fortiAPIPatch(o["roaming-consortium"]) {
 			return fmt.Errorf("Error reading roaming_consortium: %v", err)
@@ -664,6 +736,30 @@ func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o
 	if err = d.Set("oper_friendly_name", flattenWirelessControllerHotspot20HsProfileOperFriendlyName(o["oper-friendly-name"], d, "oper_friendly_name", sv)); err != nil {
 		if !fortiAPIPatch(o["oper-friendly-name"]) {
 			return fmt.Errorf("Error reading oper_friendly_name: %v", err)
+		}
+	}
+
+	if err = d.Set("oper_icon", flattenWirelessControllerHotspot20HsProfileOperIcon(o["oper-icon"], d, "oper_icon", sv)); err != nil {
+		if !fortiAPIPatch(o["oper-icon"]) {
+			return fmt.Errorf("Error reading oper_icon: %v", err)
+		}
+	}
+
+	if err = d.Set("advice_of_charge", flattenWirelessControllerHotspot20HsProfileAdviceOfCharge(o["advice-of-charge"], d, "advice_of_charge", sv)); err != nil {
+		if !fortiAPIPatch(o["advice-of-charge"]) {
+			return fmt.Errorf("Error reading advice_of_charge: %v", err)
+		}
+	}
+
+	if err = d.Set("osu_provider_nai", flattenWirelessControllerHotspot20HsProfileOsuProviderNai(o["osu-provider-nai"], d, "osu_provider_nai", sv)); err != nil {
+		if !fortiAPIPatch(o["osu-provider-nai"]) {
+			return fmt.Errorf("Error reading osu_provider_nai: %v", err)
+		}
+	}
+
+	if err = d.Set("terms_and_conditions", flattenWirelessControllerHotspot20HsProfileTermsAndConditions(o["terms-and-conditions"], d, "terms_and_conditions", sv)); err != nil {
+		if !fortiAPIPatch(o["terms-and-conditions"]) {
+			return fmt.Errorf("Error reading terms_and_conditions: %v", err)
 		}
 	}
 
@@ -729,6 +825,10 @@ func flattenWirelessControllerHotspot20HsProfileFortiTestDebug(d *schema.Resourc
 }
 
 func expandWirelessControllerHotspot20HsProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileRelease(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -816,6 +916,10 @@ func expandWirelessControllerHotspot20HsProfileVenueName(d *schema.ResourceData,
 	return v, nil
 }
 
+func expandWirelessControllerHotspot20HsProfileVenueUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerHotspot20HsProfileRoamingConsortium(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -825,6 +929,22 @@ func expandWirelessControllerHotspot20HsProfileNaiRealm(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerHotspot20HsProfileOperFriendlyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileOperIcon(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileAdviceOfCharge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileOsuProviderNai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileTermsAndConditions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -894,6 +1014,16 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("release"); ok {
+
+		t, err := expandWirelessControllerHotspot20HsProfileRelease(d, v, "release", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["release"] = t
 		}
 	}
 
@@ -1107,6 +1237,16 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		}
 	}
 
+	if v, ok := d.GetOk("venue_url"); ok {
+
+		t, err := expandWirelessControllerHotspot20HsProfileVenueUrl(d, v, "venue_url", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["venue-url"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("roaming_consortium"); ok {
 
 		t, err := expandWirelessControllerHotspot20HsProfileRoamingConsortium(d, v, "roaming_consortium", sv)
@@ -1134,6 +1274,46 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 			return &obj, err
 		} else if t != nil {
 			obj["oper-friendly-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("oper_icon"); ok {
+
+		t, err := expandWirelessControllerHotspot20HsProfileOperIcon(d, v, "oper_icon", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["oper-icon"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("advice_of_charge"); ok {
+
+		t, err := expandWirelessControllerHotspot20HsProfileAdviceOfCharge(d, v, "advice_of_charge", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["advice-of-charge"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("osu_provider_nai"); ok {
+
+		t, err := expandWirelessControllerHotspot20HsProfileOsuProviderNai(d, v, "osu_provider_nai", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["osu-provider-nai"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("terms_and_conditions"); ok {
+
+		t, err := expandWirelessControllerHotspot20HsProfileTermsAndConditions(d, v, "terms_and_conditions", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["terms-and-conditions"] = t
 		}
 	}
 

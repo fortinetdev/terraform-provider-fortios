@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_ssoadmin
-Configure SSO admin users.
+Configure SSO admin users. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Example Usage
 

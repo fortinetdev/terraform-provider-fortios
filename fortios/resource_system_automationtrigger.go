@@ -42,6 +42,11 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"description": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"trigger_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -136,6 +141,21 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Optional:     true,
 			},
 			"faz_event_tags": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"serial": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"fabric_event_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"fabric_event_severity": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
@@ -274,6 +294,10 @@ func flattenSystemAutomationTriggerName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemAutomationTriggerDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationTriggerTriggerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -388,12 +412,30 @@ func flattenSystemAutomationTriggerFazEventTags(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemAutomationTriggerSerial(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationTriggerFabricEventName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationTriggerFabricEventSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if err = d.Set("name", flattenSystemAutomationTriggerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("description", flattenSystemAutomationTriggerDescription(o["description"], d, "description", sv)); err != nil {
+		if !fortiAPIPatch(o["description"]) {
+			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
@@ -497,6 +539,24 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("serial", flattenSystemAutomationTriggerSerial(o["serial"], d, "serial", sv)); err != nil {
+		if !fortiAPIPatch(o["serial"]) {
+			return fmt.Errorf("Error reading serial: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_event_name", flattenSystemAutomationTriggerFabricEventName(o["fabric-event-name"], d, "fabric_event_name", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-event-name"]) {
+			return fmt.Errorf("Error reading fabric_event_name: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_event_severity", flattenSystemAutomationTriggerFabricEventSeverity(o["fabric-event-severity"], d, "fabric_event_severity", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-event-severity"]) {
+			return fmt.Errorf("Error reading fabric_event_severity: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -507,6 +567,10 @@ func flattenSystemAutomationTriggerFortiTestDebug(d *schema.ResourceData, fosdeb
 }
 
 func expandSystemAutomationTriggerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -618,6 +682,18 @@ func expandSystemAutomationTriggerFazEventTags(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemAutomationTriggerSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerFabricEventName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerFabricEventSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -628,6 +704,16 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("description"); ok {
+
+		t, err := expandSystemAutomationTriggerDescription(d, v, "description", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["description"] = t
 		}
 	}
 
@@ -778,6 +864,36 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["faz-event-tags"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("serial"); ok {
+
+		t, err := expandSystemAutomationTriggerSerial(d, v, "serial", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["serial"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_event_name"); ok {
+
+		t, err := expandSystemAutomationTriggerFabricEventName(d, v, "fabric_event_name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-event-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_event_severity"); ok {
+
+		t, err := expandSystemAutomationTriggerFabricEventSeverity(d, v, "fabric_event_severity", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-event-severity"] = t
 		}
 	}
 

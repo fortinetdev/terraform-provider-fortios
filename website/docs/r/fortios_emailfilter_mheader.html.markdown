@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_mheader
-Configure AntiSpam MIME header.
+Configure AntiSpam MIME header. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

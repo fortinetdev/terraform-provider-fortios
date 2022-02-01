@@ -24,6 +24,7 @@ The following attributes are exported:
 * `proxy` - Enable/disable web proxy service group.
 * `comment` - Comment.
 * `color` - Color of icon on the GUI.
+* `fabric_object` - Security Fabric global object setting.
 
 The `member` block contains:
 

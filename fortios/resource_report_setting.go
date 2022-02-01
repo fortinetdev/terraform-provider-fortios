@@ -58,7 +58,7 @@ func resourceReportSetting() *schema.Resource {
 			},
 			"top_n": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(100, 4000),
+				ValidateFunc: validation.IntBetween(100, 20000),
 				Optional:     true,
 				Computed:     true,
 			},

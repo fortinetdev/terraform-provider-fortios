@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_snmpuser
-Configure FortiSwitch SNMP v3 users globally.
+Configure FortiSwitch SNMP v3 users globally. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 
@@ -17,9 +17,9 @@ The following arguments are supported:
 * `queries` - Enable/disable SNMP queries for this user. Valid values: `disable`, `enable`.
 * `query_port` - SNMPv3 query port (default = 161).
 * `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
-* `auth_proto` - Authentication protocol. Valid values: `md5`, `sha`.
+* `auth_proto` - Authentication protocol.
 * `auth_pwd` - Password for authentication protocol.
-* `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`.
+* `priv_proto` - Privacy (encryption) protocol.
 * `priv_pwd` - Password for privacy (encryption) protocol.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

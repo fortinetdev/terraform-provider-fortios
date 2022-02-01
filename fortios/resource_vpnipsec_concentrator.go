@@ -35,6 +35,12 @@ func resourceVpnIpsecConcentrator() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"fosid": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -191,6 +197,10 @@ func resourceVpnIpsecConcentratorRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
+func flattenVpnIpsecConcentratorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecConcentratorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -240,6 +250,12 @@ func flattenVpnIpsecConcentratorMemberName(v interface{}, d *schema.ResourceData
 func refreshObjectVpnIpsecConcentrator(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
+	if err = d.Set("fosid", flattenVpnIpsecConcentratorId(o["id"], d, "fosid", sv)); err != nil {
+		if !fortiAPIPatch(o["id"]) {
+			return fmt.Errorf("Error reading fosid: %v", err)
+		}
+	}
+
 	if err = d.Set("name", flattenVpnIpsecConcentratorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
@@ -275,6 +291,10 @@ func flattenVpnIpsecConcentratorFortiTestDebug(d *schema.ResourceData, fosdebugs
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
+}
+
+func expandVpnIpsecConcentratorId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandVpnIpsecConcentratorName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -319,6 +339,16 @@ func expandVpnIpsecConcentratorMemberName(d *schema.ResourceData, v interface{},
 
 func getObjectVpnIpsecConcentrator(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("fosid"); ok {
+
+		t, err := expandVpnIpsecConcentratorId(d, v, "fosid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["id"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("name"); ok {
 

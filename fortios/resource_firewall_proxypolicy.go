@@ -56,6 +56,34 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"access_proxy": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"access_proxy6": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"srcintf": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -125,6 +153,30 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 						},
 					},
 				},
+			},
+			"ztna_ems_tag": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"ztna_tags_match_logic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"device_ownership": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
@@ -256,7 +308,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"session_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: intBetweenWithZero(300, 604800),
+				ValidateFunc: intBetweenWithZero(300, 2764800),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -422,6 +474,18 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"voip_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"sctp_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -429,6 +493,12 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -490,6 +560,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
+			},
+			"block_notification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"redirect_url": &schema.Schema{
 				Type:         schema.TypeString,
@@ -645,6 +720,82 @@ func flattenFirewallProxyPolicyName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallProxyPolicyProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyAccessProxy(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallProxyPolicyAccessProxyName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyPolicyAccessProxyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyAccessProxy6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallProxyPolicyAccessProxy6Name(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyPolicyAccessProxy6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -835,6 +986,52 @@ func flattenFirewallProxyPolicyDstaddr(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallProxyPolicyDstaddrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallProxyPolicyZtnaEmsTagName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyPolicyZtnaEmsTagName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyZtnaTagsMatchLogic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyDeviceOwnership(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1334,11 +1531,23 @@ func flattenFirewallProxyPolicyApplicationList(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenFirewallProxyPolicyVoipProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicySctpFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyIcapProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallProxyPolicyCifsProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyVideofilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1382,6 +1591,10 @@ func flattenFirewallProxyPolicyComments(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallProxyPolicyBlockNotification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyRedirectUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1414,6 +1627,38 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("proxy", flattenFirewallProxyPolicyProxy(o["proxy"], d, "proxy", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy"]) {
 			return fmt.Errorf("Error reading proxy: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("access_proxy", flattenFirewallProxyPolicyAccessProxy(o["access-proxy"], d, "access_proxy", sv)); err != nil {
+			if !fortiAPIPatch(o["access-proxy"]) {
+				return fmt.Errorf("Error reading access_proxy: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("access_proxy"); ok {
+			if err = d.Set("access_proxy", flattenFirewallProxyPolicyAccessProxy(o["access-proxy"], d, "access_proxy", sv)); err != nil {
+				if !fortiAPIPatch(o["access-proxy"]) {
+					return fmt.Errorf("Error reading access_proxy: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("access_proxy6", flattenFirewallProxyPolicyAccessProxy6(o["access-proxy6"], d, "access_proxy6", sv)); err != nil {
+			if !fortiAPIPatch(o["access-proxy6"]) {
+				return fmt.Errorf("Error reading access_proxy6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("access_proxy6"); ok {
+			if err = d.Set("access_proxy6", flattenFirewallProxyPolicyAccessProxy6(o["access-proxy6"], d, "access_proxy6", sv)); err != nil {
+				if !fortiAPIPatch(o["access-proxy6"]) {
+					return fmt.Errorf("Error reading access_proxy6: %v", err)
+				}
+			}
 		}
 	}
 
@@ -1494,6 +1739,34 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 					return fmt.Errorf("Error reading dstaddr: %v", err)
 				}
 			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("ztna_ems_tag", flattenFirewallProxyPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag", sv)); err != nil {
+			if !fortiAPIPatch(o["ztna-ems-tag"]) {
+				return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ztna_ems_tag"); ok {
+			if err = d.Set("ztna_ems_tag", flattenFirewallProxyPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag", sv)); err != nil {
+				if !fortiAPIPatch(o["ztna-ems-tag"]) {
+					return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("ztna_tags_match_logic", flattenFirewallProxyPolicyZtnaTagsMatchLogic(o["ztna-tags-match-logic"], d, "ztna_tags_match_logic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-tags-match-logic"]) {
+			return fmt.Errorf("Error reading ztna_tags_match_logic: %v", err)
+		}
+	}
+
+	if err = d.Set("device_ownership", flattenFirewallProxyPolicyDeviceOwnership(o["device-ownership"], d, "device_ownership", sv)); err != nil {
+		if !fortiAPIPatch(o["device-ownership"]) {
+			return fmt.Errorf("Error reading device_ownership: %v", err)
 		}
 	}
 
@@ -1831,6 +2104,18 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("voip_profile", flattenFirewallProxyPolicyVoipProfile(o["voip-profile"], d, "voip_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["voip-profile"]) {
+			return fmt.Errorf("Error reading voip_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("sctp_filter_profile", flattenFirewallProxyPolicySctpFilterProfile(o["sctp-filter-profile"], d, "sctp_filter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["sctp-filter-profile"]) {
+			return fmt.Errorf("Error reading sctp_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", flattenFirewallProxyPolicyIcapProfile(o["icap-profile"], d, "icap_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -1840,6 +2125,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("cifs_profile", flattenFirewallProxyPolicyCifsProfile(o["cifs-profile"], d, "cifs_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["cifs-profile"]) {
 			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("videofilter_profile", flattenFirewallProxyPolicyVideofilterProfile(o["videofilter-profile"], d, "videofilter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["videofilter-profile"]) {
+			return fmt.Errorf("Error reading videofilter_profile: %v", err)
 		}
 	}
 
@@ -1903,6 +2194,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("block_notification", flattenFirewallProxyPolicyBlockNotification(o["block-notification"], d, "block_notification", sv)); err != nil {
+		if !fortiAPIPatch(o["block-notification"]) {
+			return fmt.Errorf("Error reading block_notification: %v", err)
+		}
+	}
+
 	if err = d.Set("redirect_url", flattenFirewallProxyPolicyRedirectUrl(o["redirect-url"], d, "redirect_url", sv)); err != nil {
 		if !fortiAPIPatch(o["redirect-url"]) {
 			return fmt.Errorf("Error reading redirect_url: %v", err)
@@ -1937,6 +2234,70 @@ func expandFirewallProxyPolicyName(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandFirewallProxyPolicyProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyAccessProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallProxyPolicyAccessProxyName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyPolicyAccessProxyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyAccessProxy6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallProxyPolicyAccessProxy6Name(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyPolicyAccessProxy6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2097,6 +2458,46 @@ func expandFirewallProxyPolicyDstaddr(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandFirewallProxyPolicyDstaddrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyZtnaEmsTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallProxyPolicyZtnaEmsTagName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyPolicyZtnaEmsTagName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyZtnaTagsMatchLogic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyDeviceOwnership(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2536,11 +2937,23 @@ func expandFirewallProxyPolicyApplicationList(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandFirewallProxyPolicyVoipProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicySctpFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyPolicyIcapProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandFirewallProxyPolicyCifsProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyVideofilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2581,6 +2994,10 @@ func expandFirewallProxyPolicyScanBotnetConnections(d *schema.ResourceData, v in
 }
 
 func expandFirewallProxyPolicyComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyBlockNotification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2635,6 +3052,26 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
+	if v, ok := d.GetOk("access_proxy"); ok {
+
+		t, err := expandFirewallProxyPolicyAccessProxy(d, v, "access_proxy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["access-proxy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("access_proxy6"); ok {
+
+		t, err := expandFirewallProxyPolicyAccessProxy6(d, v, "access_proxy6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["access-proxy6"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("srcintf"); ok {
 
 		t, err := expandFirewallProxyPolicySrcintf(d, v, "srcintf", sv)
@@ -2682,6 +3119,36 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["dstaddr"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_ems_tag"); ok {
+
+		t, err := expandFirewallProxyPolicyZtnaEmsTag(d, v, "ztna_ems_tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-ems-tag"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_tags_match_logic"); ok {
+
+		t, err := expandFirewallProxyPolicyZtnaTagsMatchLogic(d, v, "ztna_tags_match_logic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-tags-match-logic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("device_ownership"); ok {
+
+		t, err := expandFirewallProxyPolicyDeviceOwnership(d, v, "device_ownership", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["device-ownership"] = t
 		}
 	}
 
@@ -3075,6 +3542,26 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
+	if v, ok := d.GetOk("voip_profile"); ok {
+
+		t, err := expandFirewallProxyPolicyVoipProfile(d, v, "voip_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["voip-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sctp_filter_profile"); ok {
+
+		t, err := expandFirewallProxyPolicySctpFilterProfile(d, v, "sctp_filter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sctp-filter-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("icap_profile"); ok {
 
 		t, err := expandFirewallProxyPolicyIcapProfile(d, v, "icap_profile", sv)
@@ -3092,6 +3579,16 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["cifs-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("videofilter_profile"); ok {
+
+		t, err := expandFirewallProxyPolicyVideofilterProfile(d, v, "videofilter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["videofilter-profile"] = t
 		}
 	}
 
@@ -3192,6 +3689,16 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["comments"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("block_notification"); ok {
+
+		t, err := expandFirewallProxyPolicyBlockNotification(d, v, "block_notification", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["block-notification"] = t
 		}
 	}
 

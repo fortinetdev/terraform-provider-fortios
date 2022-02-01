@@ -37,7 +37,7 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 15),
+				ValidateFunc: validation.StringLenBetween(0, 35),
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
@@ -71,6 +71,11 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 						},
 					},
 				},
+			},
+			"dynamic_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"update_inbandwidth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -290,6 +295,10 @@ func flattenSystemSpeedTestScheduleSchedulesName(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenSystemSpeedTestScheduleDynamicServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSpeedTestScheduleUpdateInbandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -354,6 +363,12 @@ func refreshObjectSystemSpeedTestSchedule(d *schema.ResourceData, o map[string]i
 					return fmt.Errorf("Error reading schedules: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("dynamic_server", flattenSystemSpeedTestScheduleDynamicServer(o["dynamic-server"], d, "dynamic_server", sv)); err != nil {
+		if !fortiAPIPatch(o["dynamic-server"]) {
+			return fmt.Errorf("Error reading dynamic_server: %v", err)
 		}
 	}
 
@@ -450,6 +465,10 @@ func expandSystemSpeedTestScheduleSchedulesName(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandSystemSpeedTestScheduleDynamicServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSpeedTestScheduleUpdateInbandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -524,6 +543,16 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["schedules"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dynamic_server"); ok {
+
+		t, err := expandSystemSpeedTestScheduleDynamicServer(d, v, "dynamic_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dynamic-server"] = t
 		}
 	}
 

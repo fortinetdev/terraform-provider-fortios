@@ -35,6 +35,22 @@ func dataSourceSystemDdns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ddns_server_addr": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"addr": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"ddns_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -78,6 +94,10 @@ func dataSourceSystemDdns() *schema.Resource {
 				Computed:  true,
 			},
 			"use_public_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -164,6 +184,46 @@ func dataSourceFlattenSystemDdnsDdnsServer(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemDdnsServerType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDdnsDdnsServerAddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
+		if _, ok := i["addr"]; ok {
+			tmp["addr"] = dataSourceFlattenSystemDdnsDdnsServerAddrAddr(i["addr"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDdnsDdnsServerAddrAddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemDdnsDdnsServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -205,6 +265,10 @@ func dataSourceFlattenSystemDdnsDdnsPassword(v interface{}, d *schema.ResourceDa
 }
 
 func dataSourceFlattenSystemDdnsUsePublicIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDdnsAddrType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -275,6 +339,18 @@ func dataSourceRefreshObjectSystemDdns(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("server_type", dataSourceFlattenSystemDdnsServerType(o["server-type"], d, "server_type")); err != nil {
+		if !fortiAPIPatch(o["server-type"]) {
+			return fmt.Errorf("Error reading server_type: %v", err)
+		}
+	}
+
+	if err = d.Set("ddns_server_addr", dataSourceFlattenSystemDdnsDdnsServerAddr(o["ddns-server-addr"], d, "ddns_server_addr")); err != nil {
+		if !fortiAPIPatch(o["ddns-server-addr"]) {
+			return fmt.Errorf("Error reading ddns_server_addr: %v", err)
+		}
+	}
+
 	if err = d.Set("ddns_server_ip", dataSourceFlattenSystemDdnsDdnsServerIp(o["ddns-server-ip"], d, "ddns_server_ip")); err != nil {
 		if !fortiAPIPatch(o["ddns-server-ip"]) {
 			return fmt.Errorf("Error reading ddns_server_ip: %v", err)
@@ -326,6 +402,12 @@ func dataSourceRefreshObjectSystemDdns(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("use_public_ip", dataSourceFlattenSystemDdnsUsePublicIp(o["use-public-ip"], d, "use_public_ip")); err != nil {
 		if !fortiAPIPatch(o["use-public-ip"]) {
 			return fmt.Errorf("Error reading use_public_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("addr_type", dataSourceFlattenSystemDdnsAddrType(o["addr-type"], d, "addr_type")); err != nil {
+		if !fortiAPIPatch(o["addr-type"]) {
+			return fmt.Errorf("Error reading addr_type: %v", err)
 		}
 	}
 

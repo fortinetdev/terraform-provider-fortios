@@ -408,6 +408,26 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 					},
 				},
 			},
+			"conditional_advertise6": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"advertise_routemap": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"condition_routemap": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"condition_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -866,6 +886,60 @@ func dataSourceFlattenRouterbgpNeighborConditionalAdvertiseConditionRoutemap(v i
 }
 
 func dataSourceFlattenRouterbgpNeighborConditionalAdvertiseConditionType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborConditionalAdvertise6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+		if _, ok := i["advertise-routemap"]; ok {
+			tmp["advertise_routemap"] = dataSourceFlattenRouterbgpNeighborConditionalAdvertise6AdvertiseRoutemap(i["advertise-routemap"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+		if _, ok := i["condition-routemap"]; ok {
+			tmp["condition_routemap"] = dataSourceFlattenRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(i["condition-routemap"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+		if _, ok := i["condition-type"]; ok {
+			tmp["condition_type"] = dataSourceFlattenRouterbgpNeighborConditionalAdvertise6ConditionType(i["condition-type"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterbgpNeighborConditionalAdvertise6AdvertiseRoutemap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborConditionalAdvertise6ConditionType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1409,6 +1483,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("conditional_advertise", dataSourceFlattenRouterbgpNeighborConditionalAdvertise(o["conditional-advertise"], d, "conditional_advertise")); err != nil {
 		if !fortiAPIPatch(o["conditional-advertise"]) {
 			return fmt.Errorf("Error reading conditional_advertise: %v", err)
+		}
+	}
+
+	if err = d.Set("conditional_advertise6", dataSourceFlattenRouterbgpNeighborConditionalAdvertise6(o["conditional-advertise6"], d, "conditional_advertise6")); err != nil {
+		if !fortiAPIPatch(o["conditional-advertise6"]) {
+			return fmt.Errorf("Error reading conditional_advertise6: %v", err)
 		}
 	}
 

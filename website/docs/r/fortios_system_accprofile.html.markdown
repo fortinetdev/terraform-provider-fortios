@@ -118,6 +118,7 @@ The `fwgrp_permission` block supports:
 * `address` - Address Configuration. Valid values: `none`, `read`, `read-write`.
 * `service` - Service Configuration. Valid values: `none`, `read`, `read-write`.
 * `schedule` - Schedule Configuration. Valid values: `none`, `read`, `read-write`.
+* `others` - Other Firewall Configuration. Valid values: `none`, `read`, `read-write`.
 
 The `loggrp_permission` block supports:
 

@@ -22,6 +22,7 @@ The following attributes are exported:
 * `name` - Schedule group name.
 * `member` - Schedules added to the schedule group. The structure of `member` block is documented below.
 * `color` - Color of icon on the GUI.
+* `fabric_object` - Security Fabric global object setting.
 
 The `member` block contains:
 

@@ -86,6 +86,12 @@ func resourceCertificateCa() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ca_identifier": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -256,6 +262,10 @@ func flattenCertificateCaSourceIp(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenCertificateCaCaIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -323,6 +333,12 @@ func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("ca_identifier", flattenCertificateCaCaIdentifier(o["ca-identifier"], d, "ca_identifier", sv)); err != nil {
+		if !fortiAPIPatch(o["ca-identifier"]) {
+			return fmt.Errorf("Error reading ca_identifier: %v", err)
+		}
+	}
+
 	if err = d.Set("last_updated", flattenCertificateCaLastUpdated(o["last-updated"], d, "last_updated", sv)); err != nil {
 		if !fortiAPIPatch(o["last-updated"]) {
 			return fmt.Errorf("Error reading last_updated: %v", err)
@@ -375,6 +391,10 @@ func expandCertificateCaAutoUpdateDaysWarning(d *schema.ResourceData, v interfac
 }
 
 func expandCertificateCaSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateCaCaIdentifier(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -482,6 +502,16 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["source-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ca_identifier"); ok {
+
+		t, err := expandCertificateCaCaIdentifier(d, v, "ca_identifier", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ca-identifier"] = t
 		}
 	}
 

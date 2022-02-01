@@ -316,6 +316,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"h323_direct_model": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -372,7 +377,7 @@ func resourceSystemSettings() *schema.Resource {
 			},
 			"ecmp_max_paths": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 100),
+				ValidateFunc: validation.IntBetween(1, 255),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -592,6 +597,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_videofilter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_dnsfilter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -637,6 +647,16 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_ztna": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"location_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_per_policy_disclaimer": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -673,6 +693,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ike_policy_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ike_natt_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1024, 65535),
@@ -680,6 +705,11 @@ func resourceSystemSettings() *schema.Resource {
 				Computed:     true,
 			},
 			"block_land_attack": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"application_bandwidth_tracking": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1028,6 +1058,10 @@ func flattenSystemSettingsSipNatTrace(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSystemSettingsH323DirectModel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1244,6 +1278,10 @@ func flattenSystemSettingsGuiWebfilter(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemSettingsGuiVideofilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsGuiDnsfilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1280,6 +1318,14 @@ func flattenSystemSettingsGuiPolicyDisclaimer(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemSettingsGuiZtna(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsLocationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsGuiPerPolicyDisclaimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1308,11 +1354,19 @@ func flattenSystemSettingsIkePort(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemSettingsIkePolicyRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsIkeNattPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemSettingsBlockLandAttack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsApplicationBandwidthTracking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1647,6 +1701,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("h323_direct_model", flattenSystemSettingsH323DirectModel(o["h323-direct-model"], d, "h323_direct_model", sv)); err != nil {
+		if !fortiAPIPatch(o["h323-direct-model"]) {
+			return fmt.Errorf("Error reading h323_direct_model: %v", err)
+		}
+	}
+
 	if err = d.Set("status", flattenSystemSettingsStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
@@ -1971,6 +2031,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_videofilter", flattenSystemSettingsGuiVideofilter(o["gui-videofilter"], d, "gui_videofilter", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-videofilter"]) {
+			return fmt.Errorf("Error reading gui_videofilter: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_dnsfilter", flattenSystemSettingsGuiDnsfilter(o["gui-dnsfilter"], d, "gui_dnsfilter", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-dnsfilter"]) {
 			return fmt.Errorf("Error reading gui_dnsfilter: %v", err)
@@ -2025,6 +2091,18 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_ztna", flattenSystemSettingsGuiZtna(o["gui-ztna"], d, "gui_ztna", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-ztna"]) {
+			return fmt.Errorf("Error reading gui_ztna: %v", err)
+		}
+	}
+
+	if err = d.Set("location_id", flattenSystemSettingsLocationId(o["location-id"], d, "location_id", sv)); err != nil {
+		if !fortiAPIPatch(o["location-id"]) {
+			return fmt.Errorf("Error reading location_id: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_per_policy_disclaimer", flattenSystemSettingsGuiPerPolicyDisclaimer(o["gui-per-policy-disclaimer"], d, "gui_per_policy_disclaimer", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-per-policy-disclaimer"]) {
 			return fmt.Errorf("Error reading gui_per_policy_disclaimer: %v", err)
@@ -2067,6 +2145,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("ike_policy_route", flattenSystemSettingsIkePolicyRoute(o["ike-policy-route"], d, "ike_policy_route", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-policy-route"]) {
+			return fmt.Errorf("Error reading ike_policy_route: %v", err)
+		}
+	}
+
 	if err = d.Set("ike_natt_port", flattenSystemSettingsIkeNattPort(o["ike-natt-port"], d, "ike_natt_port", sv)); err != nil {
 		if !fortiAPIPatch(o["ike-natt-port"]) {
 			return fmt.Errorf("Error reading ike_natt_port: %v", err)
@@ -2076,6 +2160,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("block_land_attack", flattenSystemSettingsBlockLandAttack(o["block-land-attack"], d, "block_land_attack", sv)); err != nil {
 		if !fortiAPIPatch(o["block-land-attack"]) {
 			return fmt.Errorf("Error reading block_land_attack: %v", err)
+		}
+	}
+
+	if err = d.Set("application_bandwidth_tracking", flattenSystemSettingsApplicationBandwidthTracking(o["application-bandwidth-tracking"], d, "application_bandwidth_tracking", sv)); err != nil {
+		if !fortiAPIPatch(o["application-bandwidth-tracking"]) {
+			return fmt.Errorf("Error reading application_bandwidth_tracking: %v", err)
 		}
 	}
 
@@ -2328,6 +2418,10 @@ func expandSystemSettingsSipNatTrace(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandSystemSettingsH323DirectModel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2544,6 +2638,10 @@ func expandSystemSettingsGuiWebfilter(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemSettingsGuiVideofilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsGuiDnsfilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2580,6 +2678,14 @@ func expandSystemSettingsGuiPolicyDisclaimer(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemSettingsGuiZtna(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsLocationId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsGuiPerPolicyDisclaimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2608,11 +2714,19 @@ func expandSystemSettingsIkePort(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemSettingsIkePolicyRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsIkeNattPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandSystemSettingsBlockLandAttack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsApplicationBandwidthTracking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3146,6 +3260,16 @@ func getObjectSystemSettings(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["sip-nat-trace"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("h323_direct_model"); ok {
+
+		t, err := expandSystemSettingsH323DirectModel(d, v, "h323_direct_model", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["h323-direct-model"] = t
 		}
 	}
 
@@ -3689,6 +3813,16 @@ func getObjectSystemSettings(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("gui_videofilter"); ok {
+
+		t, err := expandSystemSettingsGuiVideofilter(d, v, "gui_videofilter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-videofilter"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("gui_dnsfilter"); ok {
 
 		t, err := expandSystemSettingsGuiDnsfilter(d, v, "gui_dnsfilter", sv)
@@ -3779,6 +3913,26 @@ func getObjectSystemSettings(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("gui_ztna"); ok {
+
+		t, err := expandSystemSettingsGuiZtna(d, v, "gui_ztna", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-ztna"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("location_id"); ok {
+
+		t, err := expandSystemSettingsLocationId(d, v, "location_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["location-id"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("gui_per_policy_disclaimer"); ok {
 
 		t, err := expandSystemSettingsGuiPerPolicyDisclaimer(d, v, "gui_per_policy_disclaimer", sv)
@@ -3849,6 +4003,16 @@ func getObjectSystemSettings(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("ike_policy_route"); ok {
+
+		t, err := expandSystemSettingsIkePolicyRoute(d, v, "ike_policy_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ike-policy-route"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ike_natt_port"); ok {
 
 		t, err := expandSystemSettingsIkeNattPort(d, v, "ike_natt_port", sv)
@@ -3866,6 +4030,16 @@ func getObjectSystemSettings(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["block-land-attack"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("application_bandwidth_tracking"); ok {
+
+		t, err := expandSystemSettingsApplicationBandwidthTracking(d, v, "application_bandwidth_tracking", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["application-bandwidth-tracking"] = t
 		}
 	}
 

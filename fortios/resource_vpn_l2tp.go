@@ -72,6 +72,12 @@ func resourceVpnL2Tp() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"hello_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"compress": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -198,6 +204,10 @@ func flattenVpnL2TpLcpMaxEchoFails(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenVpnL2TpHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnL2TpCompress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -247,6 +257,12 @@ func refreshObjectVpnL2Tp(d *schema.ResourceData, o map[string]interface{}, sv s
 		}
 	}
 
+	if err = d.Set("hello_interval", flattenVpnL2TpHelloInterval(o["hello-interval"], d, "hello_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["hello-interval"]) {
+			return fmt.Errorf("Error reading hello_interval: %v", err)
+		}
+	}
+
 	if err = d.Set("compress", flattenVpnL2TpCompress(o["compress"], d, "compress", sv)); err != nil {
 		if !fortiAPIPatch(o["compress"]) {
 			return fmt.Errorf("Error reading compress: %v", err)
@@ -287,6 +303,10 @@ func expandVpnL2TpLcpEchoInterval(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandVpnL2TpLcpMaxEchoFails(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnL2TpHelloInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -364,6 +384,16 @@ func getObjectVpnL2Tp(d *schema.ResourceData, sv string) (*map[string]interface{
 			return &obj, err
 		} else if t != nil {
 			obj["lcp-max-echo-fails"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("hello_interval"); ok {
+
+		t, err := expandVpnL2TpHelloInterval(d, v, "hello_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["hello-interval"] = t
 		}
 	}
 

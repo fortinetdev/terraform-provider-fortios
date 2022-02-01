@@ -165,6 +165,36 @@ func resourceCertificateLocal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"acme_ca_url": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"acme_domain": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"acme_email": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"acme_rsa_key_size": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(2048, 4096),
+				Optional:     true,
+				Computed:     true,
+			},
+			"acme_renew_window": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 60),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -386,6 +416,26 @@ func flattenCertificateLocalCmpRegenerationMethod(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenCertificateLocalAcmeCaUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCertificateLocalAcmeDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCertificateLocalAcmeEmail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCertificateLocalAcmeRsaKeySize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCertificateLocalAcmeRenewWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -515,6 +565,36 @@ func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("acme_ca_url", flattenCertificateLocalAcmeCaUrl(o["acme-ca-url"], d, "acme_ca_url", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-ca-url"]) {
+			return fmt.Errorf("Error reading acme_ca_url: %v", err)
+		}
+	}
+
+	if err = d.Set("acme_domain", flattenCertificateLocalAcmeDomain(o["acme-domain"], d, "acme_domain", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-domain"]) {
+			return fmt.Errorf("Error reading acme_domain: %v", err)
+		}
+	}
+
+	if err = d.Set("acme_email", flattenCertificateLocalAcmeEmail(o["acme-email"], d, "acme_email", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-email"]) {
+			return fmt.Errorf("Error reading acme_email: %v", err)
+		}
+	}
+
+	if err = d.Set("acme_rsa_key_size", flattenCertificateLocalAcmeRsaKeySize(o["acme-rsa-key-size"], d, "acme_rsa_key_size", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-rsa-key-size"]) {
+			return fmt.Errorf("Error reading acme_rsa_key_size: %v", err)
+		}
+	}
+
+	if err = d.Set("acme_renew_window", flattenCertificateLocalAcmeRenewWindow(o["acme-renew-window"], d, "acme_renew_window", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-renew-window"]) {
+			return fmt.Errorf("Error reading acme_renew_window: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -617,6 +697,26 @@ func expandCertificateLocalCmpServerCert(d *schema.ResourceData, v interface{}, 
 }
 
 func expandCertificateLocalCmpRegenerationMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeCaUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeRsaKeySize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeRenewWindow(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -860,6 +960,56 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["cmp-regeneration-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("acme_ca_url"); ok {
+
+		t, err := expandCertificateLocalAcmeCaUrl(d, v, "acme_ca_url", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-ca-url"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("acme_domain"); ok {
+
+		t, err := expandCertificateLocalAcmeDomain(d, v, "acme_domain", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-domain"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("acme_email"); ok {
+
+		t, err := expandCertificateLocalAcmeEmail(d, v, "acme_email", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-email"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("acme_rsa_key_size"); ok {
+
+		t, err := expandCertificateLocalAcmeRsaKeySize(d, v, "acme_rsa_key_size", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-rsa-key-size"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("acme_renew_window"); ok {
+
+		t, err := expandCertificateLocalAcmeRenewWindow(d, v, "acme_renew_window", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-renew-window"] = t
 		}
 	}
 

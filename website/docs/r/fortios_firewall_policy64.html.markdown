@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_policy64
-Configure IPv6 to IPv4 policies.
+Configure IPv6 to IPv4 policies. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

@@ -35,6 +35,10 @@ func dataSourceFirewallServiceCategory() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -90,6 +94,10 @@ func dataSourceFlattenFirewallServiceCategoryComment(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenFirewallServiceCategoryFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -102,6 +110,12 @@ func dataSourceRefreshObjectFirewallServiceCategory(d *schema.ResourceData, o ma
 	if err = d.Set("comment", dataSourceFlattenFirewallServiceCategoryComment(o["comment"], d, "comment")); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallServiceCategoryFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

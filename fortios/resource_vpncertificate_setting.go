@@ -82,10 +82,44 @@ func resourceVpnCertificateSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"subject_set": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cn_match": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"cn_allow_multi": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"crl_verification": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"expiry": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"leaf_crl_absence": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"chain_crl_absence": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"strict_crl_check": &schema.Schema{
 				Type:     schema.TypeString,
@@ -295,7 +329,58 @@ func flattenVpnCertificateSettingSubjectMatch(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenVpnCertificateSettingSubjectSet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateSettingCnMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingCnAllowMulti(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingCrlVerification(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "expiry"
+	if _, ok := i["expiry"]; ok {
+
+		result["expiry"] = flattenVpnCertificateSettingCrlVerificationExpiry(i["expiry"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "leaf_crl_absence"
+	if _, ok := i["leaf-crl-absence"]; ok {
+
+		result["leaf_crl_absence"] = flattenVpnCertificateSettingCrlVerificationLeafCrlAbsence(i["leaf-crl-absence"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "chain_crl_absence"
+	if _, ok := i["chain-crl-absence"]; ok {
+
+		result["chain_crl_absence"] = flattenVpnCertificateSettingCrlVerificationChainCrlAbsence(i["chain-crl-absence"], d, pre_append, sv)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func flattenVpnCertificateSettingCrlVerificationExpiry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingCrlVerificationLeafCrlAbsence(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingCrlVerificationChainCrlAbsence(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -416,9 +501,37 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("subject_set", flattenVpnCertificateSettingSubjectSet(o["subject-set"], d, "subject_set", sv)); err != nil {
+		if !fortiAPIPatch(o["subject-set"]) {
+			return fmt.Errorf("Error reading subject_set: %v", err)
+		}
+	}
+
 	if err = d.Set("cn_match", flattenVpnCertificateSettingCnMatch(o["cn-match"], d, "cn_match", sv)); err != nil {
 		if !fortiAPIPatch(o["cn-match"]) {
 			return fmt.Errorf("Error reading cn_match: %v", err)
+		}
+	}
+
+	if err = d.Set("cn_allow_multi", flattenVpnCertificateSettingCnAllowMulti(o["cn-allow-multi"], d, "cn_allow_multi", sv)); err != nil {
+		if !fortiAPIPatch(o["cn-allow-multi"]) {
+			return fmt.Errorf("Error reading cn_allow_multi: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("crl_verification", flattenVpnCertificateSettingCrlVerification(o["crl-verification"], d, "crl_verification", sv)); err != nil {
+			if !fortiAPIPatch(o["crl-verification"]) {
+				return fmt.Errorf("Error reading crl_verification: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("crl_verification"); ok {
+			if err = d.Set("crl_verification", flattenVpnCertificateSettingCrlVerification(o["crl-verification"], d, "crl_verification", sv)); err != nil {
+				if !fortiAPIPatch(o["crl-verification"]) {
+					return fmt.Errorf("Error reading crl_verification: %v", err)
+				}
+			}
 		}
 	}
 
@@ -557,7 +670,56 @@ func expandVpnCertificateSettingSubjectMatch(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandVpnCertificateSettingSubjectSet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnCertificateSettingCnMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingCnAllowMulti(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	i := l[0].(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "expiry"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["expiry"], _ = expandVpnCertificateSettingCrlVerificationExpiry(d, i["expiry"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "leaf_crl_absence"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["leaf-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationLeafCrlAbsence(d, i["leaf_crl_absence"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "chain_crl_absence"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["chain-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationChainCrlAbsence(d, i["chain_crl_absence"], pre_append, sv)
+	}
+
+	return result, nil
+}
+
+func expandVpnCertificateSettingCrlVerificationExpiry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingCrlVerificationLeafCrlAbsence(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingCrlVerificationChainCrlAbsence(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -714,6 +876,16 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("subject_set"); ok {
+
+		t, err := expandVpnCertificateSettingSubjectSet(d, v, "subject_set", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["subject-set"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("cn_match"); ok {
 
 		t, err := expandVpnCertificateSettingCnMatch(d, v, "cn_match", sv)
@@ -721,6 +893,26 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["cn-match"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cn_allow_multi"); ok {
+
+		t, err := expandVpnCertificateSettingCnAllowMulti(d, v, "cn_allow_multi", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cn-allow-multi"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("crl_verification"); ok {
+
+		t, err := expandVpnCertificateSettingCrlVerification(d, v, "crl_verification", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["crl-verification"] = t
 		}
 	}
 

@@ -81,13 +81,16 @@ The following arguments are supported:
 * `fosid` - Custom defined ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
-* `type` - Configure a static NAT, load balance, server load balance, DNS translation, or FQDN VIP. Valid values: `static-nat`, `load-balance`, `server-load-balance`, `dns-translation`, `fqdn`.
+* `type` - Configure a static NAT, load balance, server load balance, DNS translation, or FQDN VIP.
 * `dns_mapping_ttl` - DNS mapping TTL (Set to zero to use TTL in DNS response, default = 0).
 * `ldb_method` - Method used to distribute sessions to real servers. Valid values: `static`, `round-robin`, `weighted`, `least-session`, `least-rtt`, `first-alive`, `http-host`.
 * `src_filter` - Source address filter. Each address must be either an IP/subnet (x.x.x.x/n) or a range (x.x.x.x-y.y.y.y). Separate addresses with spaces. The structure of `src_filter` block is documented below.
 * `service` - Service name. The structure of `service` block is documented below.
 * `extip` - IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `extaddr` - External FQDN address name. The structure of `extaddr` block is documented below.
+* `nat44` - Enable/disable NAT44. Valid values: `disable`, `enable`.
+* `nat46` - Enable/disable NAT46. Valid values: `disable`, `enable`.
+* `add_nat46_route` - Enable/disable adding NAT46 route. Valid values: `disable`, `enable`.
 * `mappedip` - IP address or address range on the destination network to which the external IP address is mapped. The structure of `mappedip` block is documented below.
 * `mapped_addr` - Mapped FQDN address name.
 * `extintf` - Interface connected to the source network that receives the packets that will be forwarded to the destination network.
@@ -97,6 +100,7 @@ The following arguments are supported:
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`, `ssl-session-id`.
 * `nat_source_vip` - Enable/disable forcing the source NAT mapped IP to the external IP for all traffic. Valid values: `disable`, `enable`.
 * `portforward` - Enable/disable port forwarding. Valid values: `disable`, `enable`.
+* `status` - Enable/disable VIP. Valid values: `disable`, `enable`.
 * `protocol` - Protocol to use when forwarding packets. Valid values: `tcp`, `udp`, `sctp`, `icmp`.
 * `extport` - Incoming port number range that you want to map to a port number range on the destination network.
 * `mappedport` - Port number range on the destination network to which the external port number range is mapped.
@@ -129,6 +133,7 @@ The following arguments are supported:
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a client.
 * `ssl_server_min_version` - Lowest SSL/TLS version acceptable from a server. Use the client setting by default.
 * `ssl_server_max_version` - Highest SSL/TLS version acceptable from a server. Use the client setting by default.
+* `ssl_accept_ffdhe_groups` - Enable/disable FFDHE cipher suite for SSL key exchange. Valid values: `enable`, `disable`.
 * `ssl_send_empty_frags` - Enable/disable sending empty fragments to avoid CBC IV attacks (SSL 3.0 & TLS 1.0 only). May need to be disabled for compatibility with older systems. Valid values: `enable`, `disable`.
 * `ssl_client_fallback` - Enable/disable support for preventing Downgrade Attacks on client connections (RFC 7507). Valid values: `disable`, `enable`.
 * `ssl_client_renegotiation` - Allow, deny, or require secure renegotiation of client sessions to comply with RFC 5746. Valid values: `allow`, `deny`, `secure`.
@@ -153,6 +158,8 @@ The following arguments are supported:
 * `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status. The structure of `monitor` block is documented below.
 * `max_embryonic_connections` - Maximum number of incomplete connections.
 * `color` - Color of icon on the GUI.
+* `ipv6_mappedip` - Start-mapped-IPv6-address [-end mapped-IPv6-address].
+* `ipv6_mappedport` - IPv6 port number range on the destination network to which the external port number range is mapped.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

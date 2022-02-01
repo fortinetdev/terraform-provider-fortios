@@ -42,6 +42,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"description": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"action_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -242,9 +247,14 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional:     true,
 				Sensitive:    true,
 			},
+			"message_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"message": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 1023),
+				ValidateFunc: validation.StringLenBetween(0, 4095),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -252,6 +262,12 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"replacemsg_group": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -270,7 +286,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 			},
 			"http_body": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 1023),
+				ValidateFunc: validation.StringLenBetween(0, 4095),
 				Optional:     true,
 			},
 			"port": &schema.Schema{
@@ -293,10 +309,20 @@ func resourceSystemAutomationAction() *schema.Resource {
 					},
 				},
 			},
+			"verify_host_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"script": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
+			},
+			"execute_security_fabric": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"accprofile": &schema.Schema{
 				Type:         schema.TypeString,
@@ -455,6 +481,10 @@ func resourceSystemAutomationActionRead(d *schema.ResourceData, m interface{}) e
 }
 
 func flattenSystemAutomationActionName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -624,11 +654,19 @@ func flattenSystemAutomationActionAlicloudAccessKeySecret(v interface{}, d *sche
 	return v
 }
 
+func flattenSystemAutomationActionMessageType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionMessage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemAutomationActionReplacementMessage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionReplacemsgGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -690,7 +728,15 @@ func flattenSystemAutomationActionHeadersHeader(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemAutomationActionVerifyHostCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionScript(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -746,6 +792,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	if err = d.Set("name", flattenSystemAutomationActionName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("description", flattenSystemAutomationActionDescription(o["description"], d, "description", sv)); err != nil {
+		if !fortiAPIPatch(o["description"]) {
+			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
@@ -939,6 +991,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("message_type", flattenSystemAutomationActionMessageType(o["message-type"], d, "message_type", sv)); err != nil {
+		if !fortiAPIPatch(o["message-type"]) {
+			return fmt.Errorf("Error reading message_type: %v", err)
+		}
+	}
+
 	if err = d.Set("message", flattenSystemAutomationActionMessage(o["message"], d, "message", sv)); err != nil {
 		if !fortiAPIPatch(o["message"]) {
 			return fmt.Errorf("Error reading message: %v", err)
@@ -948,6 +1006,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	if err = d.Set("replacement_message", flattenSystemAutomationActionReplacementMessage(o["replacement-message"], d, "replacement_message", sv)); err != nil {
 		if !fortiAPIPatch(o["replacement-message"]) {
 			return fmt.Errorf("Error reading replacement_message: %v", err)
+		}
+	}
+
+	if err = d.Set("replacemsg_group", flattenSystemAutomationActionReplacemsgGroup(o["replacemsg-group"], d, "replacemsg_group", sv)); err != nil {
+		if !fortiAPIPatch(o["replacemsg-group"]) {
+			return fmt.Errorf("Error reading replacemsg_group: %v", err)
 		}
 	}
 
@@ -997,9 +1061,21 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("verify_host_cert", flattenSystemAutomationActionVerifyHostCert(o["verify-host-cert"], d, "verify_host_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["verify-host-cert"]) {
+			return fmt.Errorf("Error reading verify_host_cert: %v", err)
+		}
+	}
+
 	if err = d.Set("script", flattenSystemAutomationActionScript(o["script"], d, "script", sv)); err != nil {
 		if !fortiAPIPatch(o["script"]) {
 			return fmt.Errorf("Error reading script: %v", err)
+		}
+	}
+
+	if err = d.Set("execute_security_fabric", flattenSystemAutomationActionExecuteSecurityFabric(o["execute-security-fabric"], d, "execute_security_fabric", sv)); err != nil {
+		if !fortiAPIPatch(o["execute-security-fabric"]) {
+			return fmt.Errorf("Error reading execute_security_fabric: %v", err)
 		}
 	}
 
@@ -1041,6 +1117,10 @@ func flattenSystemAutomationActionFortiTestDebug(d *schema.ResourceData, fosdebu
 }
 
 func expandSystemAutomationActionName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1204,11 +1284,19 @@ func expandSystemAutomationActionAlicloudAccessKeySecret(d *schema.ResourceData,
 	return v, nil
 }
 
+func expandSystemAutomationActionMessageType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionMessage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandSystemAutomationActionReplacementMessage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionReplacemsgGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1264,7 +1352,15 @@ func expandSystemAutomationActionHeadersHeader(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemAutomationActionVerifyHostCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionScript(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionExecuteSecurityFabric(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1318,6 +1414,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("description"); ok {
+
+		t, err := expandSystemAutomationActionDescription(d, v, "description", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["description"] = t
 		}
 	}
 
@@ -1651,6 +1757,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("message_type"); ok {
+
+		t, err := expandSystemAutomationActionMessageType(d, v, "message_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["message-type"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("message"); ok {
 
 		t, err := expandSystemAutomationActionMessage(d, v, "message", sv)
@@ -1668,6 +1784,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["replacement-message"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("replacemsg_group"); ok {
+
+		t, err := expandSystemAutomationActionReplacemsgGroup(d, v, "replacemsg_group", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["replacemsg-group"] = t
 		}
 	}
 
@@ -1731,6 +1857,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("verify_host_cert"); ok {
+
+		t, err := expandSystemAutomationActionVerifyHostCert(d, v, "verify_host_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["verify-host-cert"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("script"); ok {
 
 		t, err := expandSystemAutomationActionScript(d, v, "script", sv)
@@ -1738,6 +1874,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["script"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("execute_security_fabric"); ok {
+
+		t, err := expandSystemAutomationActionExecuteSecurityFabric(d, v, "execute_security_fabric", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["execute-security-fabric"] = t
 		}
 	}
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_vip64
-Configure IPv6 to IPv4 virtual IPs.
+Configure IPv6 to IPv4 virtual IPs. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

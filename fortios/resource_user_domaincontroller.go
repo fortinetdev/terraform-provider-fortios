@@ -42,13 +42,62 @@ func resourceUserDomainController() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"hostname": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"username": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
+				Computed:     true,
+			},
+			"password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+			},
 			"ip_address": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"source_ip_address": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -74,6 +123,17 @@ func resourceUserDomainController() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"source_ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"source_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
 					},
 				},
 			},
@@ -83,10 +143,48 @@ func resourceUserDomainController() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"replication_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
+			},
+			"dns_srv_lookup": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ad_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"adlds_dn": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"adlds_ip_address": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"adlds_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"adlds_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -222,11 +320,47 @@ func flattenUserDomainControllerName(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenUserDomainControllerHostname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserDomainControllerIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenUserDomainControllerIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserDomainControllerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerSourceIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerSourceIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -267,6 +401,18 @@ func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceDat
 			tmp["port"] = flattenUserDomainControllerExtraServerPort(i["port"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_address"
+		if _, ok := i["source-ip-address"]; ok {
+
+			tmp["source_ip_address"] = flattenUserDomainControllerExtraServerSourceIpAddress(i["source-ip-address"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
+		if _, ok := i["source-port"]; ok {
+
+			tmp["source_port"] = flattenUserDomainControllerExtraServerSourcePort(i["source-port"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -288,11 +434,47 @@ func flattenUserDomainControllerExtraServerPort(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenUserDomainControllerExtraServerSourceIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerExtraServerSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserDomainControllerDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenUserDomainControllerReplicationPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserDomainControllerLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerDnsSrvLookup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerAdMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerAdldsDn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerAdldsIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerAdldsIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerAdldsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -305,15 +487,69 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("hostname", flattenUserDomainControllerHostname(o["hostname"], d, "hostname", sv)); err != nil {
+		if !fortiAPIPatch(o["hostname"]) {
+			return fmt.Errorf("Error reading hostname: %v", err)
+		}
+	}
+
+	if err = d.Set("username", flattenUserDomainControllerUsername(o["username"], d, "username", sv)); err != nil {
+		if !fortiAPIPatch(o["username"]) {
+			return fmt.Errorf("Error reading username: %v", err)
+		}
+	}
+
+	if err = d.Set("password", flattenUserDomainControllerPassword(o["password"], d, "password", sv)); err != nil {
+		if !fortiAPIPatch(o["password"]) {
+			return fmt.Errorf("Error reading password: %v", err)
+		}
+	}
+
 	if err = d.Set("ip_address", flattenUserDomainControllerIpAddress(o["ip-address"], d, "ip_address", sv)); err != nil {
 		if !fortiAPIPatch(o["ip-address"]) {
 			return fmt.Errorf("Error reading ip_address: %v", err)
 		}
 	}
 
+	if err = d.Set("ip6", flattenUserDomainControllerIp6(o["ip6"], d, "ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["ip6"]) {
+			return fmt.Errorf("Error reading ip6: %v", err)
+		}
+	}
+
 	if err = d.Set("port", flattenUserDomainControllerPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_address", flattenUserDomainControllerSourceIpAddress(o["source-ip-address"], d, "source_ip_address", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-address"]) {
+			return fmt.Errorf("Error reading source_ip_address: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip6", flattenUserDomainControllerSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip6"]) {
+			return fmt.Errorf("Error reading source_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("source_port", flattenUserDomainControllerSourcePort(o["source-port"], d, "source_port", sv)); err != nil {
+		if !fortiAPIPatch(o["source-port"]) {
+			return fmt.Errorf("Error reading source_port: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenUserDomainControllerInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenUserDomainControllerInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -336,6 +572,12 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("domain_name", flattenUserDomainControllerDomainName(o["domain-name"], d, "domain_name", sv)); err != nil {
 		if !fortiAPIPatch(o["domain-name"]) {
 			return fmt.Errorf("Error reading domain_name: %v", err)
+		}
+	}
+
+	if err = d.Set("replication_port", flattenUserDomainControllerReplicationPort(o["replication-port"], d, "replication_port", sv)); err != nil {
+		if !fortiAPIPatch(o["replication-port"]) {
+			return fmt.Errorf("Error reading replication_port: %v", err)
 		}
 	}
 
@@ -375,6 +617,42 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("dns_srv_lookup", flattenUserDomainControllerDnsSrvLookup(o["dns-srv-lookup"], d, "dns_srv_lookup", sv)); err != nil {
+		if !fortiAPIPatch(o["dns-srv-lookup"]) {
+			return fmt.Errorf("Error reading dns_srv_lookup: %v", err)
+		}
+	}
+
+	if err = d.Set("ad_mode", flattenUserDomainControllerAdMode(o["ad-mode"], d, "ad_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["ad-mode"]) {
+			return fmt.Errorf("Error reading ad_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("adlds_dn", flattenUserDomainControllerAdldsDn(o["adlds-dn"], d, "adlds_dn", sv)); err != nil {
+		if !fortiAPIPatch(o["adlds-dn"]) {
+			return fmt.Errorf("Error reading adlds_dn: %v", err)
+		}
+	}
+
+	if err = d.Set("adlds_ip_address", flattenUserDomainControllerAdldsIpAddress(o["adlds-ip-address"], d, "adlds_ip_address", sv)); err != nil {
+		if !fortiAPIPatch(o["adlds-ip-address"]) {
+			return fmt.Errorf("Error reading adlds_ip_address: %v", err)
+		}
+	}
+
+	if err = d.Set("adlds_ip6", flattenUserDomainControllerAdldsIp6(o["adlds-ip6"], d, "adlds_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["adlds-ip6"]) {
+			return fmt.Errorf("Error reading adlds_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("adlds_port", flattenUserDomainControllerAdldsPort(o["adlds-port"], d, "adlds_port", sv)); err != nil {
+		if !fortiAPIPatch(o["adlds-port"]) {
+			return fmt.Errorf("Error reading adlds_port: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -388,11 +666,47 @@ func expandUserDomainControllerName(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandUserDomainControllerHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserDomainControllerIpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
+func expandUserDomainControllerIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserDomainControllerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerSourceIpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerSourceIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -428,6 +742,18 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 			tmp["port"], _ = expandUserDomainControllerExtraServerPort(d, i["port"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_address"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["source-ip-address"], _ = expandUserDomainControllerExtraServerSourceIpAddress(d, i["source_ip_address"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["source-port"], _ = expandUserDomainControllerExtraServerSourcePort(d, i["source_port"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -448,11 +774,47 @@ func expandUserDomainControllerExtraServerPort(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandUserDomainControllerExtraServerSourceIpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerExtraServerSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserDomainControllerDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
+func expandUserDomainControllerReplicationPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserDomainControllerLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerDnsSrvLookup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerAdMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerAdldsDn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerAdldsIpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerAdldsIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerAdldsPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -469,6 +831,36 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("hostname"); ok {
+
+		t, err := expandUserDomainControllerHostname(d, v, "hostname", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["hostname"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("username"); ok {
+
+		t, err := expandUserDomainControllerUsername(d, v, "username", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["username"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("password"); ok {
+
+		t, err := expandUserDomainControllerPassword(d, v, "password", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["password"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ip_address"); ok {
 
 		t, err := expandUserDomainControllerIpAddress(d, v, "ip_address", sv)
@@ -479,6 +871,16 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("ip6"); ok {
+
+		t, err := expandUserDomainControllerIp6(d, v, "ip6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ip6"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("port"); ok {
 
 		t, err := expandUserDomainControllerPort(d, v, "port", sv)
@@ -486,6 +888,56 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip_address"); ok {
+
+		t, err := expandUserDomainControllerSourceIpAddress(d, v, "source_ip_address", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip-address"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip6"); ok {
+
+		t, err := expandUserDomainControllerSourceIp6(d, v, "source_ip6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("source_port"); ok {
+
+		t, err := expandUserDomainControllerSourcePort(d, v, "source_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandUserDomainControllerInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandUserDomainControllerInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
 		}
 	}
 
@@ -506,6 +958,16 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["domain-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("replication_port"); ok {
+
+		t, err := expandUserDomainControllerReplicationPort(d, v, "replication_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["replication-port"] = t
 		}
 	}
 
@@ -532,6 +994,66 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 			} else {
 				obj["ldap-server"] = t
 			}
+		}
+	}
+
+	if v, ok := d.GetOk("dns_srv_lookup"); ok {
+
+		t, err := expandUserDomainControllerDnsSrvLookup(d, v, "dns_srv_lookup", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dns-srv-lookup"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ad_mode"); ok {
+
+		t, err := expandUserDomainControllerAdMode(d, v, "ad_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ad-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("adlds_dn"); ok {
+
+		t, err := expandUserDomainControllerAdldsDn(d, v, "adlds_dn", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adlds-dn"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("adlds_ip_address"); ok {
+
+		t, err := expandUserDomainControllerAdldsIpAddress(d, v, "adlds_ip_address", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adlds-ip-address"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("adlds_ip6"); ok {
+
+		t, err := expandUserDomainControllerAdldsIp6(d, v, "adlds_ip6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adlds-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("adlds_port"); ok {
+
+		t, err := expandUserDomainControllerAdldsPort(d, v, "adlds_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adlds-port"] = t
 		}
 	}
 

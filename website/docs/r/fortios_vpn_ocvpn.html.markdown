@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_vpn_ocvpn
-Configure Overlay Controller VPN settings.
+Configure Overlay Controller VPN settings. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 
@@ -17,10 +17,12 @@ The following arguments are supported:
 * `role` - Set device role. Valid values: `spoke`, `primary-hub`, `secondary-hub`.
 * `multipath` - Enable/disable multipath redundancy. Valid values: `enable`, `disable`.
 * `sdwan` - Enable/disable adding OCVPN tunnels to SDWAN. Valid values: `enable`, `disable`.
+* `sdwan_zone` - Set SD-WAN zone.
 * `wan_interface` - FortiGate WAN interfaces to use with OCVPN. The structure of `wan_interface` block is documented below.
 * `ip_allocation_block` - Class B subnet reserved for private IP address assignment.
 * `poll_interval` - Overlay Controller VPN polling interval.
 * `auto_discovery` - Enable/disable auto-discovery shortcuts. Valid values: `enable`, `disable`.
+* `auto_discovery_shortcut_mode` - Control deletion of child short-cut tunnels when the parent tunnel goes down. Valid values: `independent`, `dependent`.
 * `eap` - Enable/disable EAP client authentication. Valid values: `enable`, `disable`.
 * `eap_users` - EAP authentication user group.
 * `nat` - Enable/disable inter-overlay source NAT. Valid values: `enable`, `disable`.

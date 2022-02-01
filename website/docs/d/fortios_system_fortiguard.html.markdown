@@ -26,6 +26,11 @@ The following attributes are exported:
 * `auto_join_forticloud` - Automatically connect to and login to FortiCloud.
 * `update_server_location` - Signature update server location.
 * `sandbox_region` - Cloud sandbox region.
+* `update_ffdb` - Enable/disable Internet Service Database update.
+* `update_uwdb` - Enable/disable allowlist update.
+* `update_extdb` - Enable/disable external resource update.
+* `update_build_proxy` - Enable/disable proxy dictionary rebuild.
+* `persistent_connection` - Enable/disable use of persistent connection to receive update notification from FortiGuard.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service.
@@ -59,7 +64,10 @@ The following attributes are exported:
 * `proxy_server_port` - Port used to communicate with the proxy server.
 * `proxy_username` - Proxy user name.
 * `proxy_password` - Proxy user password.
+* `videofilter_license` - Interval of time between license checks for the FortiGuard video filter contract.
+* `videofilter_expiration` - Expiration date of the FortiGuard video filter contract.
 * `ddns_server_ip` - IP address of the FortiDDNS server.
+* `ddns_server_ip6` - IPv6 address of the FortiDDNS server.
 * `ddns_server_port` - Port used to communicate with FortiDDNS servers.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.

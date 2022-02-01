@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_trafficsniffer
-Configure FortiSwitch RSPAN/ERSPAN traffic sniffing parameters.
+Configure FortiSwitch RSPAN/ERSPAN traffic sniffing parameters. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

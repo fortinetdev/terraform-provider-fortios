@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_wirelesscontroller_log
-Configure wireless controller event log filters.
+Configure wireless controller event log filters. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_geneve
-Configure GENEVE devices.
+Configure GENEVE devices. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Example Usage
 
@@ -30,6 +30,7 @@ The following arguments are supported:
 * `name` - GENEVE device or interface name. Must be an unique interface name.
 * `interface` - (Required) Outgoing interface for GENEVE encapsulated traffic.
 * `vni` - (Required) GENEVE network ID.
+* `type` - GENEVE type. Valid values: `ethernet`, `ppp`.
 * `ip_version` - (Required) IP version to use for the GENEVE interface and so for communication over the GENEVE. IPv4 or IPv6 unicast. Valid values: `ipv4-unicast`, `ipv6-unicast`.
 * `remote_ip` - (Required) IPv4 address of the GENEVE interface on the device at the remote end of the GENEVE.
 * `remote_ip6` - IPv6 IP address of the GENEVE interface on the device at the remote end of the GENEVE.

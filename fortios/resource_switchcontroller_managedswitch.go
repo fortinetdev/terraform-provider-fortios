@@ -91,6 +91,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_server_access_list": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"poe_detection_type": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -204,6 +209,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
+			},
+			"firmware_provision_latest": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ports": &schema.Schema{
 				Type:     schema.TypeList,
@@ -328,6 +338,18 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"poe_standard": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"poe_max_power": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
 						"flags": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -418,6 +440,18 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"matched_dpp_policy": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"matched_dpp_intf_tags": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
 						"dhcp_snooping": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -503,7 +537,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						},
 						"sflow_counter_interval": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 255),
+							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -549,6 +583,12 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"port_policy": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
 						"qos_policy": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
@@ -572,6 +612,20 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
 							Computed:     true,
+						},
+						"interface_tags": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"tag_name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 63),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
 						},
 						"export_tags": &schema.Schema{
 							Type:     schema.TypeList,
@@ -1323,6 +1377,41 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"vlans": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vlan_name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 15),
+										Optional:     true,
+										Computed:     true,
+									},
+									"proxy": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"querier": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"querier_addr": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"version": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(2, 3),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -1344,7 +1433,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						},
 						"reauth_period": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 1440),
+							ValidateFunc: validation.IntBetween(0, 1440),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1533,6 +1622,10 @@ func flattenSwitchControllerManagedSwitchPoePreStandardDetection(v interface{}, 
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchDhcpServerAccessList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPoeDetectionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1610,6 +1703,10 @@ func flattenSwitchControllerManagedSwitchFirmwareProvision(v interface{}, d *sch
 }
 
 func flattenSwitchControllerManagedSwitchFirmwareProvisionVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchFirmwareProvisionLatest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1758,6 +1855,18 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 			tmp["media_type"] = flattenSwitchControllerManagedSwitchPortsMediaType(i["media-type"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_standard"
+		if _, ok := i["poe-standard"]; ok {
+
+			tmp["poe_standard"] = flattenSwitchControllerManagedSwitchPortsPoeStandard(i["poe-standard"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_max_power"
+		if _, ok := i["poe-max-power"]; ok {
+
+			tmp["poe_max_power"] = flattenSwitchControllerManagedSwitchPortsPoeMaxPower(i["poe-max-power"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := i["flags"]; ok {
 
@@ -1834,6 +1943,18 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		if _, ok := i["access-mode"]; ok {
 
 			tmp["access_mode"] = flattenSwitchControllerManagedSwitchPortsAccessMode(i["access-mode"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_policy"
+		if _, ok := i["matched-dpp-policy"]; ok {
+
+			tmp["matched_dpp_policy"] = flattenSwitchControllerManagedSwitchPortsMatchedDppPolicy(i["matched-dpp-policy"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_intf_tags"
+		if _, ok := i["matched-dpp-intf-tags"]; ok {
+
+			tmp["matched_dpp_intf_tags"] = flattenSwitchControllerManagedSwitchPortsMatchedDppIntfTags(i["matched-dpp-intf-tags"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snooping"
@@ -1986,6 +2107,12 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 			tmp["loop_guard_timeout"] = flattenSwitchControllerManagedSwitchPortsLoopGuardTimeout(i["loop-guard-timeout"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_policy"
+		if _, ok := i["port-policy"]; ok {
+
+			tmp["port_policy"] = flattenSwitchControllerManagedSwitchPortsPortPolicy(i["port-policy"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := i["qos-policy"]; ok {
 
@@ -2008,6 +2135,12 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		if _, ok := i["export-to-pool"]; ok {
 
 			tmp["export_to_pool"] = flattenSwitchControllerManagedSwitchPortsExportToPool(i["export-to-pool"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
+		if _, ok := i["interface-tags"]; ok {
+
+			tmp["interface_tags"] = flattenSwitchControllerManagedSwitchPortsInterfaceTags(i["interface-tags"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_tags"
@@ -2211,6 +2344,14 @@ func flattenSwitchControllerManagedSwitchPortsMediaType(v interface{}, d *schema
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsPoeStandard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsPoeMaxPower(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2329,6 +2470,14 @@ func flattenSwitchControllerManagedSwitchPortsAccessMode(v interface{}, d *schem
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsMatchedDppPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsMatchedDppIntfTags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsDhcpSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2429,6 +2578,10 @@ func flattenSwitchControllerManagedSwitchPortsLoopGuardTimeout(v interface{}, d 
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsPortPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsQosPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2442,6 +2595,43 @@ func flattenSwitchControllerManagedSwitchPortsPortSecurityPolicy(v interface{}, 
 }
 
 func flattenSwitchControllerManagedSwitchPortsExportToPool(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsInterfaceTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
+		if _, ok := i["tag-name"]; ok {
+
+			tmp["tag_name"] = flattenSwitchControllerManagedSwitchPortsInterfaceTagsTagName(i["tag-name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchPortsInterfaceTagsTagName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3856,6 +4046,12 @@ func flattenSwitchControllerManagedSwitchIgmpSnooping(v interface{}, d *schema.R
 		result["flood_unknown_multicast"] = flattenSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(i["flood-unknown-multicast"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "vlans"
+	if _, ok := i["vlans"]; ok {
+
+		result["vlans"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlans(i["vlans"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -3869,6 +4065,83 @@ func flattenSwitchControllerManagedSwitchIgmpSnoopingAgingTime(v interface{}, d 
 }
 
 func flattenSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchIgmpSnoopingVlans(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
+		if _, ok := i["vlan-name"]; ok {
+
+			tmp["vlan_name"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVlanName(i["vlan-name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy"
+		if _, ok := i["proxy"]; ok {
+
+			tmp["proxy"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansProxy(i["proxy"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier"
+		if _, ok := i["querier"]; ok {
+
+			tmp["querier"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerier(i["querier"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier_addr"
+		if _, ok := i["querier-addr"]; ok {
+
+			tmp["querier_addr"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(i["querier-addr"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
+		if _, ok := i["version"]; ok {
+
+			tmp["version"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(i["version"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVlanName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3995,6 +4268,12 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 	if err = d.Set("poe_pre_standard_detection", flattenSwitchControllerManagedSwitchPoePreStandardDetection(o["poe-pre-standard-detection"], d, "poe_pre_standard_detection", sv)); err != nil {
 		if !fortiAPIPatch(o["poe-pre-standard-detection"]) {
 			return fmt.Errorf("Error reading poe_pre_standard_detection: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_server_access_list", flattenSwitchControllerManagedSwitchDhcpServerAccessList(o["dhcp-server-access-list"], d, "dhcp_server_access_list", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-server-access-list"]) {
+			return fmt.Errorf("Error reading dhcp_server_access_list: %v", err)
 		}
 	}
 
@@ -4127,6 +4406,12 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 	if err = d.Set("firmware_provision_version", flattenSwitchControllerManagedSwitchFirmwareProvisionVersion(o["firmware-provision-version"], d, "firmware_provision_version", sv)); err != nil {
 		if !fortiAPIPatch(o["firmware-provision-version"]) {
 			return fmt.Errorf("Error reading firmware_provision_version: %v", err)
+		}
+	}
+
+	if err = d.Set("firmware_provision_latest", flattenSwitchControllerManagedSwitchFirmwareProvisionLatest(o["firmware-provision-latest"], d, "firmware_provision_latest", sv)); err != nil {
+		if !fortiAPIPatch(o["firmware-provision-latest"]) {
+			return fmt.Errorf("Error reading firmware_provision_latest: %v", err)
 		}
 	}
 
@@ -4423,15 +4708,15 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 	}
 
 	if isImportTable() {
-		if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1X-settings"], d, "n802_1x_settings", sv)); err != nil {
-			if !fortiAPIPatch(o["802-1X-settings"]) {
+		if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1x-settings"], d, "n802_1x_settings", sv)); err != nil {
+			if !fortiAPIPatch(o["802-1x-settings"]) {
 				return fmt.Errorf("Error reading n802_1x_settings: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("n802_1x_settings"); ok {
-			if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1X-settings"], d, "n802_1x_settings", sv)); err != nil {
-				if !fortiAPIPatch(o["802-1X-settings"]) {
+			if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1x-settings"], d, "n802_1x_settings", sv)); err != nil {
+				if !fortiAPIPatch(o["802-1x-settings"]) {
 					return fmt.Errorf("Error reading n802_1x_settings: %v", err)
 				}
 			}
@@ -4484,6 +4769,10 @@ func expandSwitchControllerManagedSwitchFswWan2Admin(d *schema.ResourceData, v i
 }
 
 func expandSwitchControllerManagedSwitchPoePreStandardDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchDhcpServerAccessList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4564,6 +4853,10 @@ func expandSwitchControllerManagedSwitchFirmwareProvision(d *schema.ResourceData
 }
 
 func expandSwitchControllerManagedSwitchFirmwareProvisionVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchFirmwareProvisionLatest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4707,6 +5000,18 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["media-type"], _ = expandSwitchControllerManagedSwitchPortsMediaType(d, i["media_type"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_standard"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["poe-standard"], _ = expandSwitchControllerManagedSwitchPortsPoeStandard(d, i["poe_standard"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_max_power"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["poe-max-power"], _ = expandSwitchControllerManagedSwitchPortsPoeMaxPower(d, i["poe_max_power"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -4787,6 +5092,18 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["access-mode"], _ = expandSwitchControllerManagedSwitchPortsAccessMode(d, i["access_mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_policy"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["matched-dpp-policy"], _ = expandSwitchControllerManagedSwitchPortsMatchedDppPolicy(d, i["matched_dpp_policy"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_intf_tags"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["matched-dpp-intf-tags"], _ = expandSwitchControllerManagedSwitchPortsMatchedDppIntfTags(d, i["matched_dpp_intf_tags"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snooping"
@@ -4939,6 +5256,12 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["loop-guard-timeout"], _ = expandSwitchControllerManagedSwitchPortsLoopGuardTimeout(d, i["loop_guard_timeout"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_policy"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["port-policy"], _ = expandSwitchControllerManagedSwitchPortsPortPolicy(d, i["port_policy"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -4961,6 +5284,14 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["export-to-pool"], _ = expandSwitchControllerManagedSwitchPortsExportToPool(d, i["export_to_pool"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["interface-tags"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTags(d, i["interface_tags"], pre_append, sv)
+		} else {
+			tmp["interface-tags"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_tags"
@@ -5167,6 +5498,14 @@ func expandSwitchControllerManagedSwitchPortsMediaType(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsPoeStandard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsPoeMaxPower(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsFlags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5275,6 +5614,14 @@ func expandSwitchControllerManagedSwitchPortsAccessMode(d *schema.ResourceData, 
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsMatchedDppPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsMatchedDppIntfTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsDhcpSnooping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5375,6 +5722,10 @@ func expandSwitchControllerManagedSwitchPortsLoopGuardTimeout(d *schema.Resource
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsPortPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsQosPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5388,6 +5739,38 @@ func expandSwitchControllerManagedSwitchPortsPortSecurityPolicy(d *schema.Resour
 }
 
 func expandSwitchControllerManagedSwitchPortsExportToPool(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsInterfaceTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d, i["tag_name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6702,6 +7085,13 @@ func expandSwitchControllerManagedSwitchIgmpSnooping(d *schema.ResourceData, v i
 
 		result["flood-unknown-multicast"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(d, i["flood_unknown_multicast"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "vlans"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["vlans"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlans(d, i["vlans"], pre_append, sv)
+	} else {
+		result["vlans"] = make([]string, 0)
+	}
 
 	return result, nil
 }
@@ -6715,6 +7105,78 @@ func expandSwitchControllerManagedSwitchIgmpSnoopingAgingTime(d *schema.Resource
 }
 
 func expandSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchIgmpSnoopingVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansVlanName(d, i["vlan_name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["proxy"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansProxy(d, i["proxy"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["querier"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansQuerier(d, i["querier"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier_addr"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["querier-addr"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(d, i["querier_addr"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["version"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(d, i["version"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchIgmpSnoopingVlansVlanName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchIgmpSnoopingVlansProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchIgmpSnoopingVlansQuerier(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6877,6 +7339,16 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["poe-pre-standard-detection"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_server_access_list"); ok {
+
+		t, err := expandSwitchControllerManagedSwitchDhcpServerAccessList(d, v, "dhcp_server_access_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-server-access-list"] = t
 		}
 	}
 
@@ -7081,6 +7553,16 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["firmware-provision-version"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("firmware_provision_latest"); ok {
+
+		t, err := expandSwitchControllerManagedSwitchFirmwareProvisionLatest(d, v, "firmware_provision_latest", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["firmware-provision-latest"] = t
 		}
 	}
 
@@ -7310,7 +7792,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["802-1X-settings"] = t
+			obj["802-1x-settings"] = t
 		}
 	}
 

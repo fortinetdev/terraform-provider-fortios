@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_dpdk_global
-Configure global DPDK options.
+Configure global DPDK options. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

@@ -122,8 +122,15 @@ The following attributes are exported:
 * `adv_additional_path6` - Number of IPv6 additional paths that can be advertised to this neighbor.
 * `password` - Password used in MD5 authentication.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
+* `conditional_advertise6` - IPv6 conditional advertisement. The structure of `conditional_advertise6` block is documented below.
 
 The `conditional_advertise` block contains:
+
+* `advertise_routemap` - Name of advertising route map.
+* `condition_routemap` - Name of condition route map.
+* `condition_type` - Type of condition.
+
+The `conditional_advertise6` block contains:
 
 * `advertise_routemap` - Name of advertising route map.
 * `condition_routemap` - Name of condition route map.

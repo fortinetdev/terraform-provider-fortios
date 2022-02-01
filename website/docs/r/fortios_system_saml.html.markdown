@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_saml
-Global settings for SAML authentication.
+Global settings for SAML authentication. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Example Usage
 
@@ -31,6 +31,7 @@ The following arguments are supported:
 * `default_login_page` - Choose default login page. Valid values: `normal`, `sso`.
 * `default_profile` - Default profile for new SSO admin.
 * `cert` - Certificate to sign SAML messages.
+* `binding_protocol` - IdP Binding protocol. Valid values: `post`, `redirect`.
 * `portal_url` - SP portal URL.
 * `entity_id` - SP entity ID.
 * `single_sign_on_url` - SP single sign-on URL.
@@ -50,6 +51,7 @@ The `service_providers` block supports:
 
 * `name` - Name.
 * `prefix` - Prefix.
+* `sp_binding_protocol` - SP binding protocol. Valid values: `post`, `redirect`.
 * `sp_cert` - SP certificate name.
 * `sp_entity_id` - SP entity ID.
 * `sp_single_sign_on_url` - SP single sign-on URL.

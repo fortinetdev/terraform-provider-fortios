@@ -130,6 +130,16 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rest_api_set": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"rest_api_get": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"custom_log_fields": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -143,6 +153,12 @@ func resourceLogSetting() *schema.Resource {
 						},
 					},
 				},
+			},
+			"anonymization_hash": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 32),
+				Optional:     true,
+				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -318,6 +334,14 @@ func flattenLogSettingSyslogOverride(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenLogSettingRestApiSet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSettingRestApiGet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -353,6 +377,10 @@ func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenLogSettingCustomLogFieldsFieldId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSettingAnonymizationHash(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -473,6 +501,18 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("rest_api_set", flattenLogSettingRestApiSet(o["rest-api-set"], d, "rest_api_set", sv)); err != nil {
+		if !fortiAPIPatch(o["rest-api-set"]) {
+			return fmt.Errorf("Error reading rest_api_set: %v", err)
+		}
+	}
+
+	if err = d.Set("rest_api_get", flattenLogSettingRestApiGet(o["rest-api-get"], d, "rest_api_get", sv)); err != nil {
+		if !fortiAPIPatch(o["rest-api-get"]) {
+			return fmt.Errorf("Error reading rest_api_get: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-log-fields"]) {
@@ -486,6 +526,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 					return fmt.Errorf("Error reading custom_log_fields: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("anonymization_hash", flattenLogSettingAnonymizationHash(o["anonymization-hash"], d, "anonymization_hash", sv)); err != nil {
+		if !fortiAPIPatch(o["anonymization-hash"]) {
+			return fmt.Errorf("Error reading anonymization_hash: %v", err)
 		}
 	}
 
@@ -574,6 +620,14 @@ func expandLogSettingSyslogOverride(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandLogSettingRestApiSet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingRestApiGet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSettingCustomLogFields(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -603,6 +657,10 @@ func expandLogSettingCustomLogFields(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandLogSettingCustomLogFieldsFieldId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingAnonymizationHash(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -799,6 +857,26 @@ func getObjectLogSetting(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
+	if v, ok := d.GetOk("rest_api_set"); ok {
+
+		t, err := expandLogSettingRestApiSet(d, v, "rest_api_set", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rest-api-set"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rest_api_get"); ok {
+
+		t, err := expandLogSettingRestApiGet(d, v, "rest_api_get", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rest-api-get"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("custom_log_fields"); ok {
 
 		t, err := expandLogSettingCustomLogFields(d, v, "custom_log_fields", sv)
@@ -806,6 +884,16 @@ func getObjectLogSetting(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["custom-log-fields"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("anonymization_hash"); ok {
+
+		t, err := expandLogSettingAnonymizationHash(d, v, "anonymization_hash", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["anonymization-hash"] = t
 		}
 	}
 

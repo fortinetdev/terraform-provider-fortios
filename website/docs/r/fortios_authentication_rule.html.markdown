@@ -33,6 +33,7 @@ The following arguments are supported:
 * `srcaddr` - Select an IPv4 source address from available options. Required for web proxy authentication. The structure of `srcaddr` block is documented below.
 * `dstaddr` - Select an IPv4 destination address from available options. Required for web proxy authentication. The structure of `dstaddr` block is documented below.
 * `srcaddr6` - Select an IPv6 source address. Required for web proxy authentication. The structure of `srcaddr6` block is documented below.
+* `dstaddr6` - Select an IPv6 destination address from available options. Required for web proxy authentication. The structure of `dstaddr6` block is documented below.
 * `ip_based` - Enable/disable IP-based authentication. Once a user authenticates all traffic from the IP address the user authenticated from is allowed. Valid values: `enable`, `disable`.
 * `active_auth_method` - Select an active authentication method.
 * `sso_auth_method` - Select a single-sign on (SSO) authentication method.
@@ -56,6 +57,10 @@ The `dstaddr` block supports:
 * `name` - Address name.
 
 The `srcaddr6` block supports:
+
+* `name` - Address name.
+
+The `dstaddr6` block supports:
 
 * `name` - Address name.
 

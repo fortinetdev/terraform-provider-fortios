@@ -74,6 +74,28 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"cert_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cert_captive_portal": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"cert_captive_portal_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cert_captive_portal_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"captive_portal_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -90,6 +112,39 @@ func resourceAuthenticationSetting() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
 				Computed:     true,
+			},
+			"user_cert_ca": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"dev_range": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -212,6 +267,22 @@ func flattenAuthenticationSettingCaptivePortal6(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenAuthenticationSettingCertAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingCertCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingCertCaptivePortalIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingCertCaptivePortalPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationSettingCaptivePortalPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -221,6 +292,82 @@ func flattenAuthenticationSettingAuthHttps(v interface{}, d *schema.ResourceData
 }
 
 func flattenAuthenticationSettingCaptivePortalSslPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingUserCertCa(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenAuthenticationSettingUserCertCaName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenAuthenticationSettingUserCertCaName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingDevRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenAuthenticationSettingDevRangeName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenAuthenticationSettingDevRangeName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -269,6 +416,30 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("cert_auth", flattenAuthenticationSettingCertAuth(o["cert-auth"], d, "cert_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-auth"]) {
+			return fmt.Errorf("Error reading cert_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_captive_portal", flattenAuthenticationSettingCertCaptivePortal(o["cert-captive-portal"], d, "cert_captive_portal", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-captive-portal"]) {
+			return fmt.Errorf("Error reading cert_captive_portal: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_captive_portal_ip", flattenAuthenticationSettingCertCaptivePortalIp(o["cert-captive-portal-ip"], d, "cert_captive_portal_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-captive-portal-ip"]) {
+			return fmt.Errorf("Error reading cert_captive_portal_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_captive_portal_port", flattenAuthenticationSettingCertCaptivePortalPort(o["cert-captive-portal-port"], d, "cert_captive_portal_port", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-captive-portal-port"]) {
+			return fmt.Errorf("Error reading cert_captive_portal_port: %v", err)
+		}
+	}
+
 	if err = d.Set("captive_portal_port", flattenAuthenticationSettingCaptivePortalPort(o["captive-portal-port"], d, "captive_portal_port", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-port"]) {
 			return fmt.Errorf("Error reading captive_portal_port: %v", err)
@@ -284,6 +455,38 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 	if err = d.Set("captive_portal_ssl_port", flattenAuthenticationSettingCaptivePortalSslPort(o["captive-portal-ssl-port"], d, "captive_portal_ssl_port", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-ssl-port"]) {
 			return fmt.Errorf("Error reading captive_portal_ssl_port: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("user_cert_ca", flattenAuthenticationSettingUserCertCa(o["user-cert-ca"], d, "user_cert_ca", sv)); err != nil {
+			if !fortiAPIPatch(o["user-cert-ca"]) {
+				return fmt.Errorf("Error reading user_cert_ca: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("user_cert_ca"); ok {
+			if err = d.Set("user_cert_ca", flattenAuthenticationSettingUserCertCa(o["user-cert-ca"], d, "user_cert_ca", sv)); err != nil {
+				if !fortiAPIPatch(o["user-cert-ca"]) {
+					return fmt.Errorf("Error reading user_cert_ca: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("dev_range", flattenAuthenticationSettingDevRange(o["dev-range"], d, "dev_range", sv)); err != nil {
+			if !fortiAPIPatch(o["dev-range"]) {
+				return fmt.Errorf("Error reading dev_range: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dev_range"); ok {
+			if err = d.Set("dev_range", flattenAuthenticationSettingDevRange(o["dev-range"], d, "dev_range", sv)); err != nil {
+				if !fortiAPIPatch(o["dev-range"]) {
+					return fmt.Errorf("Error reading dev_range: %v", err)
+				}
+			}
 		}
 	}
 
@@ -324,6 +527,22 @@ func expandAuthenticationSettingCaptivePortal6(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandAuthenticationSettingCertAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingCertCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingCertCaptivePortalIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingCertCaptivePortalPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAuthenticationSettingCaptivePortalPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -333,6 +552,70 @@ func expandAuthenticationSettingAuthHttps(d *schema.ResourceData, v interface{},
 }
 
 func expandAuthenticationSettingCaptivePortalSslPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingUserCertCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandAuthenticationSettingUserCertCaName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandAuthenticationSettingUserCertCaName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingDevRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandAuthenticationSettingDevRangeName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandAuthenticationSettingDevRangeName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -409,6 +692,46 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("cert_auth"); ok {
+
+		t, err := expandAuthenticationSettingCertAuth(d, v, "cert_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cert_captive_portal"); ok {
+
+		t, err := expandAuthenticationSettingCertCaptivePortal(d, v, "cert_captive_portal", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-captive-portal"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cert_captive_portal_ip"); ok {
+
+		t, err := expandAuthenticationSettingCertCaptivePortalIp(d, v, "cert_captive_portal_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-captive-portal-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cert_captive_portal_port"); ok {
+
+		t, err := expandAuthenticationSettingCertCaptivePortalPort(d, v, "cert_captive_portal_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-captive-portal-port"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("captive_portal_port"); ok {
 
 		t, err := expandAuthenticationSettingCaptivePortalPort(d, v, "captive_portal_port", sv)
@@ -436,6 +759,26 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["captive-portal-ssl-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_cert_ca"); ok {
+
+		t, err := expandAuthenticationSettingUserCertCa(d, v, "user_cert_ca", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-cert-ca"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dev_range"); ok {
+
+		t, err := expandAuthenticationSettingDevRange(d, v, "dev_range", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dev-range"] = t
 		}
 	}
 

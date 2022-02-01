@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_vipgrp64
-Configure IPv6 to IPv4 virtual IP groups.
+Configure IPv6 to IPv4 virtual IP groups. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

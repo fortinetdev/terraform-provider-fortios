@@ -41,6 +41,11 @@ func resourceVoipProfile() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"feature_set": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -87,8 +92,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"register_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"invite_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"invite_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -229,8 +244,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"subscribe_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"message_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"message_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -239,8 +264,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"notify_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"refer_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"refer_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -249,8 +284,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"update_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"options_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"options_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -259,8 +304,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"ack_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"prack_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"prack_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -269,8 +324,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"info_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"publish_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"publish_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -279,8 +344,18 @@ func resourceVoipProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"bye_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"cancel_rate": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"cancel_rate_track": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -410,6 +485,16 @@ func resourceVoipProfile() *schema.Resource {
 							Computed: true,
 						},
 						"malformed_header_p_asserted_identity": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"malformed_header_no_require": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"malformed_header_no_proxy_require": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -587,6 +672,36 @@ func resourceVoipProfile() *schema.Resource {
 					},
 				},
 			},
+			"msrp": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"log_violations": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"max_msg_size": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"max_msg_size_action": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -716,6 +831,10 @@ func flattenVoipProfileName(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenVoipProfileFeatureSet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -771,10 +890,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["register_rate"] = flattenVoipProfileSipRegisterRate(i["register-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "register_rate_track"
+	if _, ok := i["register-rate-track"]; ok {
+
+		result["register_rate_track"] = flattenVoipProfileSipRegisterRateTrack(i["register-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "invite_rate"
 	if _, ok := i["invite-rate"]; ok {
 
 		result["invite_rate"] = flattenVoipProfileSipInviteRate(i["invite-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "invite_rate_track"
+	if _, ok := i["invite-rate-track"]; ok {
+
+		result["invite_rate_track"] = flattenVoipProfileSipInviteRateTrack(i["invite-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_dialogs"
@@ -939,10 +1070,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["subscribe_rate"] = flattenVoipProfileSipSubscribeRate(i["subscribe-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "subscribe_rate_track"
+	if _, ok := i["subscribe-rate-track"]; ok {
+
+		result["subscribe_rate_track"] = flattenVoipProfileSipSubscribeRateTrack(i["subscribe-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "message_rate"
 	if _, ok := i["message-rate"]; ok {
 
 		result["message_rate"] = flattenVoipProfileSipMessageRate(i["message-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "message_rate_track"
+	if _, ok := i["message-rate-track"]; ok {
+
+		result["message_rate_track"] = flattenVoipProfileSipMessageRateTrack(i["message-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "notify_rate"
@@ -951,10 +1094,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["notify_rate"] = flattenVoipProfileSipNotifyRate(i["notify-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "notify_rate_track"
+	if _, ok := i["notify-rate-track"]; ok {
+
+		result["notify_rate_track"] = flattenVoipProfileSipNotifyRateTrack(i["notify-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "refer_rate"
 	if _, ok := i["refer-rate"]; ok {
 
 		result["refer_rate"] = flattenVoipProfileSipReferRate(i["refer-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "refer_rate_track"
+	if _, ok := i["refer-rate-track"]; ok {
+
+		result["refer_rate_track"] = flattenVoipProfileSipReferRateTrack(i["refer-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "update_rate"
@@ -963,10 +1118,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["update_rate"] = flattenVoipProfileSipUpdateRate(i["update-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "update_rate_track"
+	if _, ok := i["update-rate-track"]; ok {
+
+		result["update_rate_track"] = flattenVoipProfileSipUpdateRateTrack(i["update-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "options_rate"
 	if _, ok := i["options-rate"]; ok {
 
 		result["options_rate"] = flattenVoipProfileSipOptionsRate(i["options-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "options_rate_track"
+	if _, ok := i["options-rate-track"]; ok {
+
+		result["options_rate_track"] = flattenVoipProfileSipOptionsRateTrack(i["options-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ack_rate"
@@ -975,10 +1142,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["ack_rate"] = flattenVoipProfileSipAckRate(i["ack-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "ack_rate_track"
+	if _, ok := i["ack-rate-track"]; ok {
+
+		result["ack_rate_track"] = flattenVoipProfileSipAckRateTrack(i["ack-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "prack_rate"
 	if _, ok := i["prack-rate"]; ok {
 
 		result["prack_rate"] = flattenVoipProfileSipPrackRate(i["prack-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "prack_rate_track"
+	if _, ok := i["prack-rate-track"]; ok {
+
+		result["prack_rate_track"] = flattenVoipProfileSipPrackRateTrack(i["prack-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "info_rate"
@@ -987,10 +1166,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["info_rate"] = flattenVoipProfileSipInfoRate(i["info-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "info_rate_track"
+	if _, ok := i["info-rate-track"]; ok {
+
+		result["info_rate_track"] = flattenVoipProfileSipInfoRateTrack(i["info-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "publish_rate"
 	if _, ok := i["publish-rate"]; ok {
 
 		result["publish_rate"] = flattenVoipProfileSipPublishRate(i["publish-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "publish_rate_track"
+	if _, ok := i["publish-rate-track"]; ok {
+
+		result["publish_rate_track"] = flattenVoipProfileSipPublishRateTrack(i["publish-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "bye_rate"
@@ -999,10 +1190,22 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 		result["bye_rate"] = flattenVoipProfileSipByeRate(i["bye-rate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "bye_rate_track"
+	if _, ok := i["bye-rate-track"]; ok {
+
+		result["bye_rate_track"] = flattenVoipProfileSipByeRateTrack(i["bye-rate-track"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "cancel_rate"
 	if _, ok := i["cancel-rate"]; ok {
 
 		result["cancel_rate"] = flattenVoipProfileSipCancelRate(i["cancel-rate"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cancel_rate_track"
+	if _, ok := i["cancel-rate-track"]; ok {
+
+		result["cancel_rate_track"] = flattenVoipProfileSipCancelRateTrack(i["cancel-rate-track"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "preserve_override"
@@ -1159,6 +1362,18 @@ func flattenVoipProfileSip(v interface{}, d *schema.ResourceData, pre string, sv
 	if _, ok := i["malformed-header-p-asserted-identity"]; ok {
 
 		result["malformed_header_p_asserted_identity"] = flattenVoipProfileSipMalformedHeaderPAssertedIdentity(i["malformed-header-p-asserted-identity"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "malformed_header_no_require"
+	if _, ok := i["malformed-header-no-require"]; ok {
+
+		result["malformed_header_no_require"] = flattenVoipProfileSipMalformedHeaderNoRequire(i["malformed-header-no-require"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "malformed_header_no_proxy_require"
+	if _, ok := i["malformed-header-no-proxy-require"]; ok {
+
+		result["malformed_header_no_proxy_require"] = flattenVoipProfileSipMalformedHeaderNoProxyRequire(i["malformed-header-no-proxy-require"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "malformed_header_sdp_v"
@@ -1343,7 +1558,15 @@ func flattenVoipProfileSipRegisterRate(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenVoipProfileSipRegisterRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipInviteRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipInviteRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1455,7 +1678,15 @@ func flattenVoipProfileSipSubscribeRate(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenVoipProfileSipSubscribeRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipMessageRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipMessageRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1463,7 +1694,15 @@ func flattenVoipProfileSipNotifyRate(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenVoipProfileSipNotifyRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipReferRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipReferRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1471,7 +1710,15 @@ func flattenVoipProfileSipUpdateRate(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenVoipProfileSipUpdateRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipOptionsRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipOptionsRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1479,7 +1726,15 @@ func flattenVoipProfileSipAckRate(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenVoipProfileSipAckRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipPrackRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipPrackRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1487,7 +1742,15 @@ func flattenVoipProfileSipInfoRate(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenVoipProfileSipInfoRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipPublishRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipPublishRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1495,7 +1758,15 @@ func flattenVoipProfileSipByeRate(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenVoipProfileSipByeRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVoipProfileSipCancelRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipCancelRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1600,6 +1871,14 @@ func flattenVoipProfileSipMalformedHeaderAllow(v interface{}, d *schema.Resource
 }
 
 func flattenVoipProfileSipMalformedHeaderPAssertedIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipMalformedHeaderNoRequire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileSipMalformedHeaderNoProxyRequire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1776,12 +2055,71 @@ func flattenVoipProfileSccpMaxCalls(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenVoipProfileMsrp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
+	if _, ok := i["status"]; ok {
+
+		result["status"] = flattenVoipProfileMsrpStatus(i["status"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "log_violations"
+	if _, ok := i["log-violations"]; ok {
+
+		result["log_violations"] = flattenVoipProfileMsrpLogViolations(i["log-violations"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "max_msg_size"
+	if _, ok := i["max-msg-size"]; ok {
+
+		result["max_msg_size"] = flattenVoipProfileMsrpMaxMsgSize(i["max-msg-size"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "max_msg_size_action"
+	if _, ok := i["max-msg-size-action"]; ok {
+
+		result["max_msg_size_action"] = flattenVoipProfileMsrpMaxMsgSizeAction(i["max-msg-size-action"], d, pre_append, sv)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func flattenVoipProfileMsrpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileMsrpLogViolations(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileMsrpMaxMsgSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVoipProfileMsrpMaxMsgSizeAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVoipProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if err = d.Set("name", flattenVoipProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("feature_set", flattenVoipProfileFeatureSet(o["feature-set"], d, "feature_set", sv)); err != nil {
+		if !fortiAPIPatch(o["feature-set"]) {
+			return fmt.Errorf("Error reading feature_set: %v", err)
 		}
 	}
 
@@ -1823,6 +2161,22 @@ func refreshObjectVoipProfile(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("msrp", flattenVoipProfileMsrp(o["msrp"], d, "msrp", sv)); err != nil {
+			if !fortiAPIPatch(o["msrp"]) {
+				return fmt.Errorf("Error reading msrp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("msrp"); ok {
+			if err = d.Set("msrp", flattenVoipProfileMsrp(o["msrp"], d, "msrp", sv)); err != nil {
+				if !fortiAPIPatch(o["msrp"]) {
+					return fmt.Errorf("Error reading msrp: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -1833,6 +2187,10 @@ func flattenVoipProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 }
 
 func expandVoipProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileFeatureSet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1885,10 +2243,20 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		result["register-rate"], _ = expandVoipProfileSipRegisterRate(d, i["register_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "register_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["register-rate-track"], _ = expandVoipProfileSipRegisterRateTrack(d, i["register_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "invite_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["invite-rate"], _ = expandVoipProfileSipInviteRate(d, i["invite_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "invite_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["invite-rate-track"], _ = expandVoipProfileSipInviteRateTrack(d, i["invite_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_dialogs"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2025,60 +2393,120 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		result["subscribe-rate"], _ = expandVoipProfileSipSubscribeRate(d, i["subscribe_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "subscribe_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["subscribe-rate-track"], _ = expandVoipProfileSipSubscribeRateTrack(d, i["subscribe_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "message_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["message-rate"], _ = expandVoipProfileSipMessageRate(d, i["message_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "message_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["message-rate-track"], _ = expandVoipProfileSipMessageRateTrack(d, i["message_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "notify_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["notify-rate"], _ = expandVoipProfileSipNotifyRate(d, i["notify_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "notify_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["notify-rate-track"], _ = expandVoipProfileSipNotifyRateTrack(d, i["notify_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "refer_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["refer-rate"], _ = expandVoipProfileSipReferRate(d, i["refer_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "refer_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["refer-rate-track"], _ = expandVoipProfileSipReferRateTrack(d, i["refer_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "update_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["update-rate"], _ = expandVoipProfileSipUpdateRate(d, i["update_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "update_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["update-rate-track"], _ = expandVoipProfileSipUpdateRateTrack(d, i["update_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "options_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["options-rate"], _ = expandVoipProfileSipOptionsRate(d, i["options_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "options_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["options-rate-track"], _ = expandVoipProfileSipOptionsRateTrack(d, i["options_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ack_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["ack-rate"], _ = expandVoipProfileSipAckRate(d, i["ack_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "ack_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["ack-rate-track"], _ = expandVoipProfileSipAckRateTrack(d, i["ack_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "prack_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["prack-rate"], _ = expandVoipProfileSipPrackRate(d, i["prack_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "prack_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["prack-rate-track"], _ = expandVoipProfileSipPrackRateTrack(d, i["prack_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "info_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["info-rate"], _ = expandVoipProfileSipInfoRate(d, i["info_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "info_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["info-rate-track"], _ = expandVoipProfileSipInfoRateTrack(d, i["info_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "publish_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["publish-rate"], _ = expandVoipProfileSipPublishRate(d, i["publish_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "publish_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["publish-rate-track"], _ = expandVoipProfileSipPublishRateTrack(d, i["publish_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "bye_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["bye-rate"], _ = expandVoipProfileSipByeRate(d, i["bye_rate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "bye_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["bye-rate-track"], _ = expandVoipProfileSipByeRateTrack(d, i["bye_rate_track"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "cancel_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["cancel-rate"], _ = expandVoipProfileSipCancelRate(d, i["cancel_rate"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cancel_rate_track"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["cancel-rate-track"], _ = expandVoipProfileSipCancelRateTrack(d, i["cancel_rate_track"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "preserve_override"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2209,6 +2637,16 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["malformed-header-p-asserted-identity"], _ = expandVoipProfileSipMalformedHeaderPAssertedIdentity(d, i["malformed_header_p_asserted_identity"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "malformed_header_no_require"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["malformed-header-no-require"], _ = expandVoipProfileSipMalformedHeaderNoRequire(d, i["malformed_header_no_require"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "malformed_header_no_proxy_require"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["malformed-header-no-proxy-require"], _ = expandVoipProfileSipMalformedHeaderNoProxyRequire(d, i["malformed_header_no_proxy_require"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "malformed_header_sdp_v"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2367,7 +2805,15 @@ func expandVoipProfileSipRegisterRate(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandVoipProfileSipRegisterRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipInviteRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipInviteRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2479,7 +2925,15 @@ func expandVoipProfileSipSubscribeRate(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandVoipProfileSipSubscribeRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipMessageRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipMessageRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2487,7 +2941,15 @@ func expandVoipProfileSipNotifyRate(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandVoipProfileSipNotifyRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipReferRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipReferRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2495,7 +2957,15 @@ func expandVoipProfileSipUpdateRate(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandVoipProfileSipUpdateRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipOptionsRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipOptionsRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2503,7 +2973,15 @@ func expandVoipProfileSipAckRate(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandVoipProfileSipAckRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipPrackRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipPrackRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2511,7 +2989,15 @@ func expandVoipProfileSipInfoRate(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandVoipProfileSipInfoRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipPublishRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipPublishRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2519,7 +3005,15 @@ func expandVoipProfileSipByeRate(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandVoipProfileSipByeRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVoipProfileSipCancelRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipCancelRateTrack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2624,6 +3118,14 @@ func expandVoipProfileSipMalformedHeaderAllow(d *schema.ResourceData, v interfac
 }
 
 func expandVoipProfileSipMalformedHeaderPAssertedIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipMalformedHeaderNoRequire(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileSipMalformedHeaderNoProxyRequire(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2795,6 +3297,56 @@ func expandVoipProfileSccpMaxCalls(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandVoipProfileMsrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	i := l[0].(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["status"], _ = expandVoipProfileMsrpStatus(d, i["status"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "log_violations"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["log-violations"], _ = expandVoipProfileMsrpLogViolations(d, i["log_violations"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "max_msg_size"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["max-msg-size"], _ = expandVoipProfileMsrpMaxMsgSize(d, i["max_msg_size"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "max_msg_size_action"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["max-msg-size-action"], _ = expandVoipProfileMsrpMaxMsgSizeAction(d, i["max_msg_size_action"], pre_append, sv)
+	}
+
+	return result, nil
+}
+
+func expandVoipProfileMsrpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileMsrpLogViolations(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileMsrpMaxMsgSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVoipProfileMsrpMaxMsgSizeAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectVoipProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -2805,6 +3357,16 @@ func getObjectVoipProfile(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("feature_set"); ok {
+
+		t, err := expandVoipProfileFeatureSet(d, v, "feature_set", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["feature-set"] = t
 		}
 	}
 
@@ -2835,6 +3397,16 @@ func getObjectVoipProfile(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["sccp"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("msrp"); ok {
+
+		t, err := expandVoipProfileMsrp(d, v, "msrp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["msrp"] = t
 		}
 	}
 

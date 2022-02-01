@@ -170,6 +170,10 @@ func fortiAPIErrorFormat(result map[string]interface{}, body string) (err error)
 					err = fmt.Errorf("Unknow Error (%.0f)", result["http_status"])
 				}
 
+				if result["cli_error"] != nil {
+					err = fmt.Errorf(err.Error() + "\nCli response: \n%v", result["cli_error"])
+				}
+
 				return
 			}
 

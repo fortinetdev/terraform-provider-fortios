@@ -48,7 +48,7 @@ The `filter` block supports:
 * `severity` - Select the severity or threat level that matches this filter. Valid values: `info`, `low`, `medium`, `high`, `critical`.
 * `type` - Select whether to check the content of messages (an email message) or files (downloaded files or email attachments).  Valid values: `file`, `message`.
 * `proto` - Check messages or files over one or more of these protocols.
-* `filter_by` - Select the type of content to match. Valid values: `credit-card`, `ssn`, `regexp`, `file-type`, `file-size`, `fingerprint`, `watermark`, `encrypted`.
+* `filter_by` - Select the type of content to match.
 * `file_size` - Match files this size or larger (0 - 4294967295 kbytes).
 * `company_identifier` - Enter a company identifier watermark to match. Only watermarks that your company has placed on the files are matched.
 * `sensitivity` - Select a DLP file pattern sensitivity to match. The structure of `sensitivity` block is documented below.

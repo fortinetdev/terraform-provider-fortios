@@ -26,6 +26,7 @@ The following attributes are exported:
 * `local_gw6` - IPv6 address of the local gateway.
 * `remote_gw` - IP address of the remote gateway.
 * `local_gw` - IP address of the local gateway.
+* `use_sdwan` - Enable/disable use of SD-WAN to reach remote gateway.
 * `sequence_number_transmission` - Enable/disable including of sequence numbers in transmitted GRE packets.
 * `sequence_number_reception` - Enable/disable validating sequence numbers in received GRE packets.
 * `checksum_transmission` - Enable/disable including checksums in transmitted GRE packets.

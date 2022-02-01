@@ -282,6 +282,12 @@ func resourceWebfilterProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"vimeo_restrict": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
 						"log_search": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -509,6 +515,12 @@ func resourceWebfilterProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"ldap": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
 						"default_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -520,6 +532,11 @@ func resourceWebfilterProfile() *schema.Resource {
 							Computed: true,
 						},
 						"check_basic_auth": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"check_username_only": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -569,8 +586,18 @@ func resourceWebfilterProfile() *schema.Resource {
 										Optional: true,
 										Computed: true,
 									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
 								},
 							},
+						},
+						"authentication": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -1267,6 +1294,12 @@ func flattenWebfilterProfileWeb(v interface{}, d *schema.ResourceData, pre strin
 		result["youtube_restrict"] = flattenWebfilterProfileWebYoutubeRestrict(i["youtube-restrict"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "vimeo_restrict"
+	if _, ok := i["vimeo-restrict"]; ok {
+
+		result["vimeo_restrict"] = flattenWebfilterProfileWebVimeoRestrict(i["vimeo-restrict"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "log_search"
 	if _, ok := i["log-search"]; ok {
 
@@ -1320,6 +1353,10 @@ func flattenWebfilterProfileWebSafeSearch(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWebfilterProfileWebYoutubeRestrict(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileWebVimeoRestrict(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1799,6 +1836,12 @@ func flattenWebfilterProfileAntiphish(v interface{}, d *schema.ResourceData, pre
 		result["domain_controller"] = flattenWebfilterProfileAntiphishDomainController(i["domain-controller"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "ldap"
+	if _, ok := i["ldap"]; ok {
+
+		result["ldap"] = flattenWebfilterProfileAntiphishLdap(i["ldap"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "default_action"
 	if _, ok := i["default-action"]; ok {
 
@@ -1815,6 +1858,12 @@ func flattenWebfilterProfileAntiphish(v interface{}, d *schema.ResourceData, pre
 	if _, ok := i["check-basic-auth"]; ok {
 
 		result["check_basic_auth"] = flattenWebfilterProfileAntiphishCheckBasicAuth(i["check-basic-auth"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "check_username_only"
+	if _, ok := i["check-username-only"]; ok {
+
+		result["check_username_only"] = flattenWebfilterProfileAntiphishCheckUsernameOnly(i["check-username-only"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_body_len"
@@ -1835,6 +1884,12 @@ func flattenWebfilterProfileAntiphish(v interface{}, d *schema.ResourceData, pre
 		result["custom_patterns"] = flattenWebfilterProfileAntiphishCustomPatterns(i["custom-patterns"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "authentication"
+	if _, ok := i["authentication"]; ok {
+
+		result["authentication"] = flattenWebfilterProfileAntiphishAuthentication(i["authentication"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -1847,6 +1902,10 @@ func flattenWebfilterProfileAntiphishDomainController(v interface{}, d *schema.R
 	return v
 }
 
+func flattenWebfilterProfileAntiphishLdap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebfilterProfileAntiphishDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1856,6 +1915,10 @@ func flattenWebfilterProfileAntiphishCheckUri(v interface{}, d *schema.ResourceD
 }
 
 func flattenWebfilterProfileAntiphishCheckBasicAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileAntiphishCheckUsernameOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1951,6 +2014,12 @@ func flattenWebfilterProfileAntiphishCustomPatterns(v interface{}, d *schema.Res
 			tmp["category"] = flattenWebfilterProfileAntiphishCustomPatternsCategory(i["category"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := i["type"]; ok {
+
+			tmp["type"] = flattenWebfilterProfileAntiphishCustomPatternsType(i["type"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1964,6 +2033,14 @@ func flattenWebfilterProfileAntiphishCustomPatternsPattern(v interface{}, d *sch
 }
 
 func flattenWebfilterProfileAntiphishCustomPatternsCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileAntiphishCustomPatternsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileAntiphishAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2811,6 +2888,11 @@ func expandWebfilterProfileWeb(d *schema.ResourceData, v interface{}, pre string
 
 		result["youtube-restrict"], _ = expandWebfilterProfileWebYoutubeRestrict(d, i["youtube_restrict"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "vimeo_restrict"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["vimeo-restrict"], _ = expandWebfilterProfileWebVimeoRestrict(d, i["vimeo_restrict"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "log_search"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2864,6 +2946,10 @@ func expandWebfilterProfileWebSafeSearch(d *schema.ResourceData, v interface{}, 
 }
 
 func expandWebfilterProfileWebYoutubeRestrict(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileWebVimeoRestrict(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3313,6 +3399,11 @@ func expandWebfilterProfileAntiphish(d *schema.ResourceData, v interface{}, pre 
 
 		result["domain-controller"], _ = expandWebfilterProfileAntiphishDomainController(d, i["domain_controller"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "ldap"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["ldap"], _ = expandWebfilterProfileAntiphishLdap(d, i["ldap"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "default_action"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -3327,6 +3418,11 @@ func expandWebfilterProfileAntiphish(d *schema.ResourceData, v interface{}, pre 
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["check-basic-auth"], _ = expandWebfilterProfileAntiphishCheckBasicAuth(d, i["check_basic_auth"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "check_username_only"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["check-username-only"], _ = expandWebfilterProfileAntiphishCheckUsernameOnly(d, i["check_username_only"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_body_len"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3347,6 +3443,11 @@ func expandWebfilterProfileAntiphish(d *schema.ResourceData, v interface{}, pre 
 	} else {
 		result["custom-patterns"] = make([]string, 0)
 	}
+	pre_append = pre + ".0." + "authentication"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["authentication"], _ = expandWebfilterProfileAntiphishAuthentication(d, i["authentication"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -3359,6 +3460,10 @@ func expandWebfilterProfileAntiphishDomainController(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandWebfilterProfileAntiphishLdap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebfilterProfileAntiphishDefaultAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3368,6 +3473,10 @@ func expandWebfilterProfileAntiphishCheckUri(d *schema.ResourceData, v interface
 }
 
 func expandWebfilterProfileAntiphishCheckBasicAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileAntiphishCheckUsernameOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3453,6 +3562,12 @@ func expandWebfilterProfileAntiphishCustomPatterns(d *schema.ResourceData, v int
 			tmp["category"], _ = expandWebfilterProfileAntiphishCustomPatternsCategory(d, i["category"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["type"], _ = expandWebfilterProfileAntiphishCustomPatternsType(d, i["type"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3466,6 +3581,14 @@ func expandWebfilterProfileAntiphishCustomPatternsPattern(d *schema.ResourceData
 }
 
 func expandWebfilterProfileAntiphishCustomPatternsCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileAntiphishCustomPatternsType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileAntiphishAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

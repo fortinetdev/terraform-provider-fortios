@@ -35,6 +35,7 @@ The following attributes are exported:
 * `tcp_halfclose_timer` - Wait time to close a TCP session waiting for an unanswered FIN packet (1 - 86400 sec, 0 = default).
 * `tcp_halfopen_timer` - Wait time to close a TCP session waiting for an unanswered open session packet (1 - 86400 sec, 0 = default).
 * `tcp_timewait_timer` - Set the length of the TCP TIME-WAIT state in seconds (1 - 300 sec, 0 = default).
+* `tcp_rst_timer` - Set the length of the TCP CLOSE state in seconds (5 - 300 sec, 0 = default).
 * `udp_idle_timer` - UDP half close timeout (0 - 86400 sec, 0 = default).
 * `session_ttl` - Session TTL (300 - 604800, 0 = default).
 * `check_reset_range` - Configure the type of ICMP error message verification.
@@ -44,6 +45,7 @@ The following attributes are exported:
 * `app_service_type` - Application service type.
 * `app_category` - Application category ID. The structure of `app_category` block is documented below.
 * `application` - Application ID. The structure of `application` block is documented below.
+* `fabric_object` - Security Fabric global object setting.
 
 The `app_category` block contains:
 

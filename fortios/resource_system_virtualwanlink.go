@@ -271,7 +271,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						},
 						"interval": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 3600),
+							ValidateFunc: validation.IntBetween(1, 3600000),
 							Optional:     true,
 							Computed:     true,
 						},

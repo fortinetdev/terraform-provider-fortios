@@ -23,6 +23,7 @@ The following arguments are supported:
 * `auto_update_days` - Number of days to wait before requesting an updated CA certificate (0 - 4294967295, 0 = disabled).
 * `auto_update_days_warning` - Number of days before an expiry-warning message is generated (0 - 4294967295, 0 = disabled).
 * `source_ip` - Source IP address for communications to the SCEP server.
+* `ca_identifier` - CA identifier of the SCEP server.
 * `last_updated` - Time at which CA was last updated.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

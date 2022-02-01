@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_wirelesscontroller_wagprofile
-Configure wireless access gateway (WAG) profiles used for tunnels on AP.
+Configure wireless access gateway (WAG) profiles used for tunnels on AP. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

@@ -39,6 +39,7 @@ The following attributes are exported:
 * `encryption` - Enable/disable heartbeat message encryption.
 * `authentication` - Enable/disable heartbeat message authentication.
 * `hb_interval` - Time between sending heartbeat packets (1 - 20 (100*ms)). Increase to reduce false positives.
+* `hb_interval_in_milliseconds` - Number of milliseconds for each heartbeat interval: 100ms or 10ms.
 * `hb_lost_threshold` - Number of lost heartbeats to signal a failure (1 - 60). Increase to reduce false positives.
 * `hello_holddown` - Time to wait before changing from hello to work state (5 - 300 sec).
 * `gratuitous_arps` - Enable/disable gratuitous ARPs. Disable if link-failed-signal enabled.
@@ -51,6 +52,7 @@ The following attributes are exported:
 * `session_pickup_delay` - Enable to sync sessions longer than 30 sec. Only longer lived sessions need to be synced.
 * `link_failed_signal` - Enable to shut down all interfaces for 1 sec after a failover. Use if gratuitous ARPs do not update network.
 * `uninterruptible_upgrade` - Enable to upgrade a cluster without blocking network traffic.
+* `uninterruptible_primary_wait` - Number of minutes the primary HA unit waits before the secondary HA unit is considered upgraded and the system is started before starting its own upgrade (1 - 300, default = 30).
 * `standalone_mgmt_vdom` - Enable/disable standalone management VDOM.
 * `ha_mgmt_status` - Enable to reserve interfaces to manage individual cluster units.
 * `ha_mgmt_interfaces` - Reserve interfaces to manage individual cluster units. The structure of `ha_mgmt_interfaces` block is documented below.
@@ -59,6 +61,9 @@ The following attributes are exported:
 * `l2ep_eth_type` - Telnet session HA heartbeat packet Ethertype (4-digit hex).
 * `ha_uptime_diff_margin` - Normally you would only reduce this value for failover testing.
 * `standalone_config_sync` - Enable/disable FGSP configuration synchronization.
+* `unicast_status` - Enable/disable unicast connection.
+* `unicast_gateway` - Default route gateway for unicast interface.
+* `unicast_peers` - Number of unicast peers. The structure of `unicast_peers` block is documented below.
 * `logical_sn` - Enable/disable usage of the logical serial number.
 * `vcluster2` - Enable/disable virtual cluster 2 for virtual clustering.
 * `vcluster_id` - Cluster ID.
@@ -86,6 +91,12 @@ The following attributes are exported:
 * `ha_direct` - Enable/disable using ha-mgmt interface for syslog, SNMP, remote authentication (RADIUS), FortiAnalyzer, and FortiSandbox.
 * `ssd_failover` - Enable/disable automatic HA failover on SSD disk failure.
 * `memory_compatible_mode` - Enable/disable memory compatible mode.
+* `memory_based_failover` - Enable/disable memory based failover.
+* `memory_failover_threshold` - Memory usage threshold to trigger memory based failover (0 means using conserve mode threshold in system.global).
+* `memory_failover_monitor_period` - Duration of high memory usage before memory based failover is triggered in seconds (1 - 300, default = 60).
+* `memory_failover_sample_rate` - Rate at which memory usage is sampled in order to measure memory usage in seconds (1 - 60, default = 1).
+* `memory_failover_flip_timeout` - Time to wait between subsequent memory based failovers in minutes (6 - 2147483647, default = 6).
+* `failover_hold_time` - Time to wait before failover (0 - 300 sec, default = 0), to avoid flip.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters.
 
 The `ha_mgmt_interfaces` block contains:
@@ -95,6 +106,11 @@ The `ha_mgmt_interfaces` block contains:
 * `dst` - Default route destination for reserved HA management interface.
 * `gateway` - Default route gateway for reserved HA management interface.
 * `gateway6` - Default IPv6 gateway for reserved HA management interface.
+
+The `unicast_peers` block contains:
+
+* `id` - Table ID.
+* `peer_ip` - Unicast peer IP.
 
 The `secondary_vcluster` block contains:
 

@@ -35,6 +35,8 @@ The following arguments are supported:
 * `store_infected` - Quarantine infected files found in sessions using the selected protocols.
 * `drop_blocked` - Do not quarantine dropped files found in sessions using the selected protocols. Dropped files are deleted instead of being quarantined.
 * `store_blocked` - Quarantine blocked files found in sessions using the selected protocols.
+* `drop_machine_learning` - Do not quarantine files detected by machine learning found in sessions using the selected protocols. Dropped files are deleted instead of being quarantined. Valid values: `imap`, `smtp`, `pop3`, `http`, `ftp`, `nntp`, `imaps`, `smtps`, `pop3s`, `https`, `ftps`, `mapi`, `cifs`, `ssh`.
+* `store_machine_learning` - Quarantine files detected by machine learning found in sessions using the selected protocols. Valid values: `imap`, `smtp`, `pop3`, `http`, `ftp`, `nntp`, `imaps`, `smtps`, `pop3s`, `https`, `ftps`, `mapi`, `cifs`, `ssh`.
 * `drop_heuristic` - Do not quarantine files detected by heuristics found in sessions using the selected protocols. Dropped files are deleted instead of being quarantined.
 * `store_heuristic` - Quarantine files detected by heuristics found in sessions using the selected protocols.
 * `lowspace` - Select the method for handling additional files when running low on disk space. Valid values: `drop-new`, `ovrw-old`.

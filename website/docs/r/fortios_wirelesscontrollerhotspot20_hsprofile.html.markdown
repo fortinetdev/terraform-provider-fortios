@@ -14,6 +14,7 @@ Configure hotspot profile.
 The following arguments are supported:
 
 * `name` - Hotspot profile name.
+* `release` - Hotspot 2.0 Release number (1, 2, 3, default = 2).
 * `access_network_type` - Access network type. Valid values: `private-network`, `private-network-with-guest-access`, `chargeable-public-network`, `free-public-network`, `personal-device-network`, `emergency-services-only-network`, `test-or-experimental`, `wildcard`.
 * `access_network_internet` - Enable/disable connectivity to the Internet. Valid values: `enable`, `disable`.
 * `access_network_asra` - Enable/disable additional step required for access (ASRA). Valid values: `enable`, `disable`.
@@ -35,9 +36,14 @@ The following arguments are supported:
 * `wnm_sleep_mode` - Enable/disable wireless network management (WNM) sleep mode. Valid values: `enable`, `disable`.
 * `bss_transition` - Enable/disable basic service set (BSS) transition Support. Valid values: `enable`, `disable`.
 * `venue_name` - Venue name.
+* `venue_url` - Venue name.
 * `roaming_consortium` - Roaming consortium list name.
 * `nai_realm` - NAI realm list name.
 * `oper_friendly_name` - Operator friendly name.
+* `oper_icon` - Operator icon.
+* `advice_of_charge` - Advice of charge.
+* `osu_provider_nai` - OSU Provider NAI.
+* `terms_and_conditions` - Terms and conditions.
 * `osu_provider` - Manually selected list of OSU provider(s). The structure of `osu_provider` block is documented below.
 * `wan_metrics` - WAN metric name.
 * `network_auth` - Network authentication name.

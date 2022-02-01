@@ -22,6 +22,7 @@ The following attributes are exported:
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
+* `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.
 * `sdn` - SDN.
@@ -41,6 +42,11 @@ The following attributes are exported:
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
 * `host_type` - Host type.
 * `host` - Host Address.
+* `fabric_object` - Security Fabric global object setting.
+
+The `macaddr` block contains:
+
+* `macaddr` - MAC address ranges <start>[-<end>] separated by space.
 
 The `list` block contains:
 

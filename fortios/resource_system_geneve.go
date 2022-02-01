@@ -52,6 +52,11 @@ func resourceSystemGeneve() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 16777215),
 				Required:     true,
 			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ip_version": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -208,6 +213,10 @@ func flattenSystemGeneveVni(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenSystemGeneveType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGeneveIpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -242,6 +251,12 @@ func refreshObjectSystemGeneve(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("vni", flattenSystemGeneveVni(o["vni"], d, "vni", sv)); err != nil {
 		if !fortiAPIPatch(o["vni"]) {
 			return fmt.Errorf("Error reading vni: %v", err)
+		}
+	}
+
+	if err = d.Set("type", flattenSystemGeneveType(o["type"], d, "type", sv)); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
@@ -287,6 +302,10 @@ func expandSystemGeneveInterface(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemGeneveVni(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGeneveType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -336,6 +355,16 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["vni"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("type"); ok {
+
+		t, err := expandSystemGeneveType(d, v, "type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["type"] = t
 		}
 	}
 

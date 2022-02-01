@@ -151,6 +151,10 @@ func dataSourceSystemAccprofile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"others": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -473,6 +477,11 @@ func dataSourceFlattenSystemAccprofileFwgrpPermission(v interface{}, d *schema.R
 		result["schedule"] = dataSourceFlattenSystemAccprofileFwgrpPermissionSchedule(i["schedule"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "others"
+	if _, ok := i["others"]; ok {
+		result["others"] = dataSourceFlattenSystemAccprofileFwgrpPermissionOthers(i["others"], d, pre_append)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -490,6 +499,10 @@ func dataSourceFlattenSystemAccprofileFwgrpPermissionService(v interface{}, d *s
 }
 
 func dataSourceFlattenSystemAccprofileFwgrpPermissionSchedule(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileFwgrpPermissionOthers(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

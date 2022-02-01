@@ -156,6 +156,11 @@ func resourceRouterBgp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tag_resolve_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cluster_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -280,13 +285,13 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"additional_path_select": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(2, 3),
+				ValidateFunc: validation.IntBetween(2, 255),
 				Optional:     true,
 				Computed:     true,
 			},
 			"additional_path_select6": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(2, 3),
+				ValidateFunc: validation.IntBetween(2, 255),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -359,7 +364,7 @@ func resourceRouterBgp() *schema.Resource {
 						},
 						"advertisement_interval": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 600),
+							ValidateFunc: validation.IntBetween(0, 600),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -826,13 +831,13 @@ func resourceRouterBgp() *schema.Resource {
 						},
 						"adv_additional_path": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(2, 3),
+							ValidateFunc: validation.IntBetween(2, 255),
 							Optional:     true,
 							Computed:     true,
 						},
 						"adv_additional_path6": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(2, 3),
+							ValidateFunc: validation.IntBetween(2, 255),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -843,6 +848,31 @@ func resourceRouterBgp() *schema.Resource {
 							Sensitive:    true,
 						},
 						"conditional_advertise": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"advertise_routemap": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
+									},
+									"condition_routemap": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
+									},
+									"condition_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"conditional_advertise6": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
@@ -883,7 +913,7 @@ func resourceRouterBgp() *schema.Resource {
 						},
 						"advertisement_interval": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 600),
+							ValidateFunc: validation.IntBetween(0, 600),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1350,13 +1380,13 @@ func resourceRouterBgp() *schema.Resource {
 						},
 						"adv_additional_path": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(2, 3),
+							ValidateFunc: validation.IntBetween(2, 255),
 							Optional:     true,
 							Computed:     true,
 						},
 						"adv_additional_path6": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(2, 3),
+							ValidateFunc: validation.IntBetween(2, 255),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1438,6 +1468,11 @@ func resourceRouterBgp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"network_import_check": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"backdoor": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1463,6 +1498,11 @@ func resourceRouterBgp() *schema.Resource {
 							Computed: true,
 						},
 						"prefix6": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"network_import_check": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1562,6 +1602,46 @@ func resourceRouterBgp() *schema.Resource {
 				},
 			},
 			"vrf_leak": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vrf": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
+						"target": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vrf": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 7),
+										Optional:     true,
+										Computed:     true,
+									},
+									"route_map": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
+									},
+									"interface": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 15),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"vrf_leak6": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
@@ -1797,6 +1877,10 @@ func flattenRouterBgpMultipathRecursiveDistance(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterBgpRecursiveNextHop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpTagResolveMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2634,6 +2718,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			tmp["conditional_advertise"] = flattenRouterBgpNeighborConditionalAdvertise(i["conditional-advertise"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise6"
+		if _, ok := i["conditional-advertise6"]; ok {
+
+			tmp["conditional_advertise6"] = flattenRouterBgpNeighborConditionalAdvertise6(i["conditional-advertise6"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3057,6 +3147,63 @@ func flattenRouterBgpNeighborConditionalAdvertiseConditionRoutemap(v interface{}
 }
 
 func flattenRouterBgpNeighborConditionalAdvertiseConditionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborConditionalAdvertise6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+		if _, ok := i["advertise-routemap"]; ok {
+
+			tmp["advertise_routemap"] = flattenRouterBgpNeighborConditionalAdvertise6AdvertiseRoutemap(i["advertise-routemap"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+		if _, ok := i["condition-routemap"]; ok {
+
+			tmp["condition_routemap"] = flattenRouterBgpNeighborConditionalAdvertise6ConditionRoutemap(i["condition-routemap"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+		if _, ok := i["condition-type"]; ok {
+
+			tmp["condition_type"] = flattenRouterBgpNeighborConditionalAdvertise6ConditionType(i["condition-type"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenRouterBgpNeighborConditionalAdvertise6AdvertiseRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborConditionalAdvertise6ConditionRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborConditionalAdvertise6ConditionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4152,6 +4299,12 @@ func flattenRouterBgpNetwork(v interface{}, d *schema.ResourceData, pre string, 
 			tmp["prefix"] = flattenRouterBgpNetworkPrefix(i["prefix"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
+		if _, ok := i["network-import-check"]; ok {
+
+			tmp["network_import_check"] = flattenRouterBgpNetworkNetworkImportCheck(i["network-import-check"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
 		if _, ok := i["backdoor"]; ok {
 
@@ -4185,6 +4338,10 @@ func flattenRouterBgpNetworkPrefix(v interface{}, d *schema.ResourceData, pre st
 		}
 	}
 
+	return v
+}
+
+func flattenRouterBgpNetworkNetworkImportCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4227,6 +4384,12 @@ func flattenRouterBgpNetwork6(v interface{}, d *schema.ResourceData, pre string,
 			tmp["prefix6"] = flattenRouterBgpNetwork6Prefix6(i["prefix6"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
+		if _, ok := i["network-import-check"]; ok {
+
+			tmp["network_import_check"] = flattenRouterBgpNetwork6NetworkImportCheck(i["network-import-check"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
 		if _, ok := i["backdoor"]; ok {
 
@@ -4253,6 +4416,10 @@ func flattenRouterBgpNetwork6Id(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterBgpNetwork6Prefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNetwork6NetworkImportCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4556,6 +4723,107 @@ func flattenRouterBgpVrfLeakTargetInterface(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenRouterBgpVrfLeak6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := i["vrf"]; ok {
+
+			tmp["vrf"] = flattenRouterBgpVrfLeak6Vrf(i["vrf"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := i["target"]; ok {
+
+			tmp["target"] = flattenRouterBgpVrfLeak6Target(i["target"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vrf", d)
+	return result
+}
+
+func flattenRouterBgpVrfLeak6Vrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpVrfLeak6Target(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := i["vrf"]; ok {
+
+			tmp["vrf"] = flattenRouterBgpVrfLeak6TargetVrf(i["vrf"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+		if _, ok := i["route-map"]; ok {
+
+			tmp["route_map"] = flattenRouterBgpVrfLeak6TargetRouteMap(i["route-map"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+
+			tmp["interface"] = flattenRouterBgpVrfLeak6TargetInterface(i["interface"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenRouterBgpVrfLeak6TargetVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpVrfLeak6TargetRouteMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpVrfLeak6TargetInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -4700,6 +4968,12 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("recursive_next_hop", flattenRouterBgpRecursiveNextHop(o["recursive-next-hop"], d, "recursive_next_hop", sv)); err != nil {
 		if !fortiAPIPatch(o["recursive-next-hop"]) {
 			return fmt.Errorf("Error reading recursive_next_hop: %v", err)
+		}
+	}
+
+	if err = d.Set("tag_resolve_mode", flattenRouterBgpTagResolveMode(o["tag-resolve-mode"], d, "tag_resolve_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["tag-resolve-mode"]) {
+			return fmt.Errorf("Error reading tag_resolve_mode: %v", err)
 		}
 	}
 
@@ -5037,6 +5311,22 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("vrf_leak6", flattenRouterBgpVrfLeak6(o["vrf-leak6"], d, "vrf_leak6", sv)); err != nil {
+			if !fortiAPIPatch(o["vrf-leak6"]) {
+				return fmt.Errorf("Error reading vrf_leak6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vrf_leak6"); ok {
+			if err = d.Set("vrf_leak6", flattenRouterBgpVrfLeak6(o["vrf-leak6"], d, "vrf_leak6", sv)); err != nil {
+				if !fortiAPIPatch(o["vrf-leak6"]) {
+					return fmt.Errorf("Error reading vrf_leak6: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -5139,6 +5429,10 @@ func expandRouterBgpMultipathRecursiveDistance(d *schema.ResourceData, v interfa
 }
 
 func expandRouterBgpRecursiveNextHop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpTagResolveMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5944,6 +6238,14 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["conditional-advertise"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise6"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["conditional-advertise6"], _ = expandRouterBgpNeighborConditionalAdvertise6(d, i["conditional_advertise6"], pre_append, sv)
+		} else {
+			tmp["conditional-advertise6"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -6361,6 +6663,58 @@ func expandRouterBgpNeighborConditionalAdvertiseConditionRoutemap(d *schema.Reso
 }
 
 func expandRouterBgpNeighborConditionalAdvertiseConditionType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborConditionalAdvertise6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["advertise-routemap"], _ = expandRouterBgpNeighborConditionalAdvertise6AdvertiseRoutemap(d, i["advertise_routemap"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["condition-routemap"], _ = expandRouterBgpNeighborConditionalAdvertise6ConditionRoutemap(d, i["condition_routemap"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["condition-type"], _ = expandRouterBgpNeighborConditionalAdvertise6ConditionType(d, i["condition_type"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterBgpNeighborConditionalAdvertise6AdvertiseRoutemap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborConditionalAdvertise6ConditionRoutemap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborConditionalAdvertise6ConditionType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7426,6 +7780,12 @@ func expandRouterBgpNetwork(d *schema.ResourceData, v interface{}, pre string, s
 			tmp["prefix"], _ = expandRouterBgpNetworkPrefix(d, i["prefix"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["network-import-check"], _ = expandRouterBgpNetworkNetworkImportCheck(d, i["network_import_check"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -7451,6 +7811,10 @@ func expandRouterBgpNetworkId(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandRouterBgpNetworkPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNetworkNetworkImportCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7488,6 +7852,12 @@ func expandRouterBgpNetwork6(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["prefix6"], _ = expandRouterBgpNetwork6Prefix6(d, i["prefix6"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["network-import-check"], _ = expandRouterBgpNetwork6NetworkImportCheck(d, i["network_import_check"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -7513,6 +7883,10 @@ func expandRouterBgpNetwork6Id(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandRouterBgpNetwork6Prefix6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNetwork6NetworkImportCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7782,6 +8156,98 @@ func expandRouterBgpVrfLeakTargetInterface(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandRouterBgpVrfLeak6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vrf"], _ = expandRouterBgpVrfLeak6Vrf(d, i["vrf"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["target"], _ = expandRouterBgpVrfLeak6Target(d, i["target"], pre_append, sv)
+		} else {
+			tmp["target"] = make([]string, 0)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterBgpVrfLeak6Vrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpVrfLeak6Target(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vrf"], _ = expandRouterBgpVrfLeak6TargetVrf(d, i["vrf"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["route-map"], _ = expandRouterBgpVrfLeak6TargetRouteMap(d, i["route_map"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["interface"], _ = expandRouterBgpVrfLeak6TargetInterface(d, i["interface"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterBgpVrfLeak6TargetVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpVrfLeak6TargetRouteMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpVrfLeak6TargetInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -8022,6 +8488,16 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 			return &obj, err
 		} else if t != nil {
 			obj["recursive-next-hop"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tag_resolve_mode"); ok {
+
+		t, err := expandRouterBgpTagResolveMode(d, v, "tag_resolve_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tag-resolve-mode"] = t
 		}
 	}
 
@@ -8413,6 +8889,20 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["vrf-leak"] = t
+			}
+		}
+	}
+
+	if bemptysontable {
+		obj["vrf-leak6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("vrf_leak6"); ok {
+
+			t, err := expandRouterBgpVrfLeak6(d, v, "vrf_leak6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-leak6"] = t
 			}
 		}
 	}

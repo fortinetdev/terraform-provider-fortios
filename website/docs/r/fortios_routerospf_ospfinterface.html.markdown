@@ -18,10 +18,12 @@ OSPF interface configuration.
 The following arguments are supported:
 
 * `name` - Interface entry name.
+* `comments` - Comment.
 * `interface` - Configuration interface name.
 * `ip` - IP address.
-* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
+* `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
+* `keychain` - Message-digest key-chain name.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
 * `prefix_length` - Prefix length.

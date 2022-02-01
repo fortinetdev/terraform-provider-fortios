@@ -104,6 +104,11 @@ func resourceLogThreatWeight() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"fortiai": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"file_blocked": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -155,6 +160,11 @@ func resourceLogThreatWeight() *schema.Resource {
 							Computed: true,
 						},
 						"malware_list": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"ems_threat_feed": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -472,6 +482,12 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 		result["virus_infected"] = flattenLogThreatWeightMalwareVirusInfected(i["virus-infected"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := i["fortiai"]; ok {
+
+		result["fortiai"] = flattenLogThreatWeightMalwareFortiai(i["fortiai"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "file_blocked"
 	if _, ok := i["file-blocked"]; ok {
 
@@ -538,6 +554,12 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 		result["malware_list"] = flattenLogThreatWeightMalwareMalwareList(i["malware-list"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "ems_threat_feed"
+	if _, ok := i["ems-threat-feed"]; ok {
+
+		result["ems_threat_feed"] = flattenLogThreatWeightMalwareEmsThreatFeed(i["ems-threat-feed"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fsa_malicious"
 	if _, ok := i["fsa-malicious"]; ok {
 
@@ -561,6 +583,10 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogThreatWeightMalwareVirusInfected(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogThreatWeightMalwareFortiai(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -605,6 +631,10 @@ func flattenLogThreatWeightMalwareContentDisarm(v interface{}, d *schema.Resourc
 }
 
 func flattenLogThreatWeightMalwareMalwareList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogThreatWeightMalwareEmsThreatFeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1080,6 +1110,11 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 
 		result["virus-infected"], _ = expandLogThreatWeightMalwareVirusInfected(d, i["virus_infected"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "fortiai"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["fortiai"], _ = expandLogThreatWeightMalwareFortiai(d, i["fortiai"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "file_blocked"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -1135,6 +1170,11 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 
 		result["malware-list"], _ = expandLogThreatWeightMalwareMalwareList(d, i["malware_list"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "ems_threat_feed"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["ems-threat-feed"], _ = expandLogThreatWeightMalwareEmsThreatFeed(d, i["ems_threat_feed"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fsa_malicious"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -1155,6 +1195,10 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandLogThreatWeightMalwareVirusInfected(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogThreatWeightMalwareFortiai(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1199,6 +1243,10 @@ func expandLogThreatWeightMalwareContentDisarm(d *schema.ResourceData, v interfa
 }
 
 func expandLogThreatWeightMalwareMalwareList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogThreatWeightMalwareEmsThreatFeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

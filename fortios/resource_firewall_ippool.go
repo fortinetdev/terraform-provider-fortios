@@ -126,6 +126,16 @@ func resourceFirewallIppool() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"nat64": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"add_nat64_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -319,6 +329,14 @@ func flattenFirewallIppoolComments(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenFirewallIppoolNat64(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppoolAddNat64Route(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -424,6 +442,18 @@ func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("nat64", flattenFirewallIppoolNat64(o["nat64"], d, "nat64", sv)); err != nil {
+		if !fortiAPIPatch(o["nat64"]) {
+			return fmt.Errorf("Error reading nat64: %v", err)
+		}
+	}
+
+	if err = d.Set("add_nat64_route", flattenFirewallIppoolAddNat64Route(o["add-nat64-route"], d, "add_nat64_route", sv)); err != nil {
+		if !fortiAPIPatch(o["add-nat64-route"]) {
+			return fmt.Errorf("Error reading add_nat64_route: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -498,6 +528,14 @@ func expandFirewallIppoolAssociatedInterface(d *schema.ResourceData, v interface
 }
 
 func expandFirewallIppoolComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolNat64(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolAddNat64Route(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -671,6 +709,26 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["comments"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat64"); ok {
+
+		t, err := expandFirewallIppoolNat64(d, v, "nat64", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat64"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("add_nat64_route"); ok {
+
+		t, err := expandFirewallIppoolAddNat64Route(d, v, "add_nat64_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["add-nat64-route"] = t
 		}
 	}
 

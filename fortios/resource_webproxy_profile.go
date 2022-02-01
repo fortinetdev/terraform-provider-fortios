@@ -62,6 +62,11 @@ func resourceWebProxyProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"header_x_forwarded_client_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"header_front_end_https": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -138,7 +143,7 @@ func resourceWebProxyProfile() *schema.Resource {
 						},
 						"content": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 255),
+							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -307,6 +312,10 @@ func flattenWebProxyProfileHeaderViaResponse(v interface{}, d *schema.ResourceDa
 }
 
 func flattenWebProxyProfileHeaderXForwardedFor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyProfileHeaderXForwardedClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -547,6 +556,12 @@ func refreshObjectWebProxyProfile(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("header_x_forwarded_client_cert", flattenWebProxyProfileHeaderXForwardedClientCert(o["header-x-forwarded-client-cert"], d, "header_x_forwarded_client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["header-x-forwarded-client-cert"]) {
+			return fmt.Errorf("Error reading header_x_forwarded_client_cert: %v", err)
+		}
+	}
+
 	if err = d.Set("header_front_end_https", flattenWebProxyProfileHeaderFrontEndHttps(o["header-front-end-https"], d, "header_front_end_https", sv)); err != nil {
 		if !fortiAPIPatch(o["header-front-end-https"]) {
 			return fmt.Errorf("Error reading header_front_end_https: %v", err)
@@ -619,6 +634,10 @@ func expandWebProxyProfileHeaderViaResponse(d *schema.ResourceData, v interface{
 }
 
 func expandWebProxyProfileHeaderXForwardedFor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyProfileHeaderXForwardedClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -864,6 +883,16 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["header-x-forwarded-for"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("header_x_forwarded_client_cert"); ok {
+
+		t, err := expandWebProxyProfileHeaderXForwardedClientCert(d, v, "header_x_forwarded_client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["header-x-forwarded-client-cert"] = t
 		}
 	}
 

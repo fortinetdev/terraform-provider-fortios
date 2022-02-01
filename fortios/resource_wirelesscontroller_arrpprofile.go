@@ -147,6 +147,36 @@ func resourceWirelessControllerArrpProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"override_darrp_optimize": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"darrp_optimize": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 86400),
+				Optional:     true,
+				Computed:     true,
+			},
+			"darrp_optimize_schedules": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -348,6 +378,52 @@ func flattenWirelessControllerArrpProfileIncludeDfsChannel(v interface{}, d *sch
 	return v
 }
 
+func flattenWirelessControllerArrpProfileOverrideDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerArrpProfileDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerArrpProfileDarrpOptimizeSchedules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenWirelessControllerArrpProfileDarrpOptimizeSchedulesName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenWirelessControllerArrpProfileDarrpOptimizeSchedulesName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWirelessControllerArrpProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -465,6 +541,34 @@ func refreshObjectWirelessControllerArrpProfile(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("override_darrp_optimize", flattenWirelessControllerArrpProfileOverrideDarrpOptimize(o["override-darrp-optimize"], d, "override_darrp_optimize", sv)); err != nil {
+		if !fortiAPIPatch(o["override-darrp-optimize"]) {
+			return fmt.Errorf("Error reading override_darrp_optimize: %v", err)
+		}
+	}
+
+	if err = d.Set("darrp_optimize", flattenWirelessControllerArrpProfileDarrpOptimize(o["darrp-optimize"], d, "darrp_optimize", sv)); err != nil {
+		if !fortiAPIPatch(o["darrp-optimize"]) {
+			return fmt.Errorf("Error reading darrp_optimize: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("darrp_optimize_schedules", flattenWirelessControllerArrpProfileDarrpOptimizeSchedules(o["darrp-optimize-schedules"], d, "darrp_optimize_schedules", sv)); err != nil {
+			if !fortiAPIPatch(o["darrp-optimize-schedules"]) {
+				return fmt.Errorf("Error reading darrp_optimize_schedules: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("darrp_optimize_schedules"); ok {
+			if err = d.Set("darrp_optimize_schedules", flattenWirelessControllerArrpProfileDarrpOptimizeSchedules(o["darrp-optimize-schedules"], d, "darrp_optimize_schedules", sv)); err != nil {
+				if !fortiAPIPatch(o["darrp-optimize-schedules"]) {
+					return fmt.Errorf("Error reading darrp_optimize_schedules: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -547,6 +651,46 @@ func expandWirelessControllerArrpProfileIncludeWeatherChannel(d *schema.Resource
 }
 
 func expandWirelessControllerArrpProfileIncludeDfsChannel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerArrpProfileOverrideDarrpOptimize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerArrpProfileDarrpOptimize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerArrpProfileDarrpOptimizeSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandWirelessControllerArrpProfileDarrpOptimizeSchedulesName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandWirelessControllerArrpProfileDarrpOptimizeSchedulesName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -740,6 +884,36 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["include-dfs-channel"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("override_darrp_optimize"); ok {
+
+		t, err := expandWirelessControllerArrpProfileOverrideDarrpOptimize(d, v, "override_darrp_optimize", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["override-darrp-optimize"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("darrp_optimize"); ok {
+
+		t, err := expandWirelessControllerArrpProfileDarrpOptimize(d, v, "darrp_optimize", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["darrp-optimize"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("darrp_optimize_schedules"); ok {
+
+		t, err := expandWirelessControllerArrpProfileDarrpOptimizeSchedules(d, v, "darrp_optimize_schedules", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["darrp-optimize-schedules"] = t
 		}
 	}
 

@@ -58,6 +58,11 @@ func resourceSystemVneTunnel() *schema.Resource {
 				Optional:     true,
 				Sensitive:    true,
 			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ipv4_address": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -188,6 +193,10 @@ func flattenSystemVneTunnelBmrHostname(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemVneTunnelAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVneTunnelIpv4Address(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -222,6 +231,12 @@ func refreshObjectSystemVneTunnel(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("ssl_certificate", flattenSystemVneTunnelSslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-certificate"]) {
 			return fmt.Errorf("Error reading ssl_certificate: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", flattenSystemVneTunnelAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
 		}
 	}
 
@@ -271,6 +286,10 @@ func expandSystemVneTunnelSslCertificate(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemVneTunnelBmrHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVneTunnelAutoAsicOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -330,6 +349,16 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["bmr-hostname"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_asic_offload"); ok {
+
+		t, err := expandSystemVneTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-asic-offload"] = t
 		}
 	}
 

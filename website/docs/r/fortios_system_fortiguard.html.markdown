@@ -55,8 +55,13 @@ The following arguments are supported:
 * `service_account_id` - Service account ID.
 * `load_balance_servers` - Number of servers to alternate between as first FortiGuard option.
 * `auto_join_forticloud` - Automatically connect to and login to FortiCloud. Valid values: `enable`, `disable`.
-* `update_server_location` - Signature update server location. Valid values: `usa`, `any`.
+* `update_server_location` - Signature update server location.
 * `sandbox_region` - Cloud sandbox region.
+* `update_ffdb` - Enable/disable Internet Service Database update. Valid values: `enable`, `disable`.
+* `update_uwdb` - Enable/disable allowlist update. Valid values: `enable`, `disable`.
+* `update_extdb` - Enable/disable external resource update. Valid values: `enable`, `disable`.
+* `update_build_proxy` - Enable/disable proxy dictionary rebuild. Valid values: `enable`, `disable`.
+* `persistent_connection` - Enable/disable use of persistent connection to receive update notification from FortiGuard. Valid values: `enable`, `disable`.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network. Valid values: `enable`, `disable`.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet. Valid values: `fortinet`, `aws`, `debug`.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service. Valid values: `enable`, `disable`.
@@ -90,7 +95,10 @@ The following arguments are supported:
 * `proxy_server_port` - Port used to communicate with the proxy server.
 * `proxy_username` - Proxy user name.
 * `proxy_password` - Proxy user password.
+* `videofilter_license` - Interval of time between license checks for the FortiGuard video filter contract.
+* `videofilter_expiration` - Expiration date of the FortiGuard video filter contract.
 * `ddns_server_ip` - IP address of the FortiDDNS server.
+* `ddns_server_ip6` - IPv6 address of the FortiDDNS server.
 * `ddns_server_port` - Port used to communicate with FortiDDNS servers.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.

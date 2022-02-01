@@ -22,5 +22,6 @@ The following attributes are exported:
 * `server_port` - Port to communicate with FortiToken Mobile push services server (1 - 65535, default = 4433).
 * `server_cert` - Name of the server certificate to be used for SSL (default = Fortinet_Factory).
 * `server_ip` - IPv4 address of FortiToken Mobile push services server (format: xxx.xxx.xxx.xxx).
+* `server` - IPv4 address or domain name of FortiToken Mobile push services server.
 * `status` - Enable/disable the use of FortiToken Mobile push services.
 

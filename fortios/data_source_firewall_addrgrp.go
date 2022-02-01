@@ -35,6 +35,10 @@ func dataSourceFirewallAddrgrp() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"category": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -111,6 +115,10 @@ func dataSourceFirewallAddrgrp() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -163,6 +171,10 @@ func dataSourceFlattenFirewallAddrgrpName(v interface{}, d *schema.ResourceData,
 }
 
 func dataSourceFlattenFirewallAddrgrpType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddrgrpCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -348,6 +360,10 @@ func dataSourceFlattenFirewallAddrgrpAllowRouting(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallAddrgrpFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -360,6 +376,12 @@ func dataSourceRefreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string
 	if err = d.Set("type", dataSourceFlattenFirewallAddrgrpType(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("category", dataSourceFlattenFirewallAddrgrpCategory(o["category"], d, "category")); err != nil {
+		if !fortiAPIPatch(o["category"]) {
+			return fmt.Errorf("Error reading category: %v", err)
 		}
 	}
 
@@ -414,6 +436,12 @@ func dataSourceRefreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string
 	if err = d.Set("allow_routing", dataSourceFlattenFirewallAddrgrpAllowRouting(o["allow-routing"], d, "allow_routing")); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddrgrpFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

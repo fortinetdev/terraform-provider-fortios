@@ -429,10 +429,9 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"class_id": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 255),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"diffserv_forward": &schema.Schema{
 				Type:     schema.TypeString,

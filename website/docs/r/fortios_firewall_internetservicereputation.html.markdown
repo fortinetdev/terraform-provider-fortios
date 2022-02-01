@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_firewall_internetservicereputation
-Show Internet Service reputation.
+Show Internet Service reputation. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

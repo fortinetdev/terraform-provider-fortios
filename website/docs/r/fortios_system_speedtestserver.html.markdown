@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_speedtestserver
-Configure speed test server list.
+Configure speed test server list. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

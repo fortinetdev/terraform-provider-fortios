@@ -42,6 +42,11 @@ func resourceWirelessControllerApcfgProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ap_family": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -99,7 +104,7 @@ func resourceWirelessControllerApcfgProfile() *schema.Resource {
 						},
 						"passwd_value": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 123),
+							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
 							Sensitive:    true,
 						},
@@ -240,6 +245,10 @@ func flattenWirelessControllerApcfgProfileName(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenWirelessControllerApcfgProfileApFamily(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerApcfgProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -351,6 +360,12 @@ func refreshObjectWirelessControllerApcfgProfile(d *schema.ResourceData, o map[s
 		}
 	}
 
+	if err = d.Set("ap_family", flattenWirelessControllerApcfgProfileApFamily(o["ap-family"], d, "ap_family", sv)); err != nil {
+		if !fortiAPIPatch(o["ap-family"]) {
+			return fmt.Errorf("Error reading ap_family: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenWirelessControllerApcfgProfileComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -407,6 +422,10 @@ func flattenWirelessControllerApcfgProfileFortiTestDebug(d *schema.ResourceData,
 }
 
 func expandWirelessControllerApcfgProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerApcfgProfileApFamily(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -512,6 +531,16 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ap_family"); ok {
+
+		t, err := expandWirelessControllerApcfgProfileApFamily(d, v, "ap_family", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ap-family"] = t
 		}
 	}
 

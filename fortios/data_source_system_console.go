@@ -43,6 +43,10 @@ func dataSourceSystemConsole() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fortiexplorer": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -97,6 +101,10 @@ func dataSourceFlattenSystemConsoleLogin(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenSystemConsoleFortiexplorer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -121,6 +129,12 @@ func dataSourceRefreshObjectSystemConsole(d *schema.ResourceData, o map[string]i
 	if err = d.Set("login", dataSourceFlattenSystemConsoleLogin(o["login"], d, "login")); err != nil {
 		if !fortiAPIPatch(o["login"]) {
 			return fmt.Errorf("Error reading login: %v", err)
+		}
+	}
+
+	if err = d.Set("fortiexplorer", dataSourceFlattenSystemConsoleFortiexplorer(o["fortiexplorer"], d, "fortiexplorer")); err != nil {
+		if !fortiAPIPatch(o["fortiexplorer"]) {
+			return fmt.Errorf("Error reading fortiexplorer: %v", err)
 		}
 	}
 

@@ -51,6 +51,18 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"macaddr": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"macaddr": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"start_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -139,6 +151,14 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"tag_detection_level": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"tag_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -212,6 +232,10 @@ func dataSourceFirewallAddress() *schema.Resource {
 				},
 			},
 			"allow_routing": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -290,6 +314,42 @@ func dataSourceFlattenFirewallAddressSubType(v interface{}, d *schema.ResourceDa
 }
 
 func dataSourceFlattenFirewallAddressClearpassSpt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressMacaddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
+		if _, ok := i["macaddr"]; ok {
+			tmp["macaddr"] = dataSourceFlattenFirewallAddressMacaddrMacaddr(i["macaddr"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddressMacaddrMacaddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -409,6 +469,14 @@ func dataSourceFlattenFirewallAddressObjTag(v interface{}, d *schema.ResourceDat
 }
 
 func dataSourceFlattenFirewallAddressObjType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressTagDetectionLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressTagType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -570,6 +638,10 @@ func dataSourceFlattenFirewallAddressAllowRouting(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallAddressFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -606,6 +678,12 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 	if err = d.Set("clearpass_spt", dataSourceFlattenFirewallAddressClearpassSpt(o["clearpass-spt"], d, "clearpass_spt")); err != nil {
 		if !fortiAPIPatch(o["clearpass-spt"]) {
 			return fmt.Errorf("Error reading clearpass_spt: %v", err)
+		}
+	}
+
+	if err = d.Set("macaddr", dataSourceFlattenFirewallAddressMacaddr(o["macaddr"], d, "macaddr")); err != nil {
+		if !fortiAPIPatch(o["macaddr"]) {
+			return fmt.Errorf("Error reading macaddr: %v", err)
 		}
 	}
 
@@ -729,6 +807,18 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("tag_detection_level", dataSourceFlattenFirewallAddressTagDetectionLevel(o["tag-detection-level"], d, "tag_detection_level")); err != nil {
+		if !fortiAPIPatch(o["tag-detection-level"]) {
+			return fmt.Errorf("Error reading tag_detection_level: %v", err)
+		}
+	}
+
+	if err = d.Set("tag_type", dataSourceFlattenFirewallAddressTagType(o["tag-type"], d, "tag_type")); err != nil {
+		if !fortiAPIPatch(o["tag-type"]) {
+			return fmt.Errorf("Error reading tag_type: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", dataSourceFlattenFirewallAddressComment(o["comment"], d, "comment")); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -792,6 +882,12 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 	if err = d.Set("allow_routing", dataSourceFlattenFirewallAddressAllowRouting(o["allow-routing"], d, "allow_routing")); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddressFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
 		}
 	}
 

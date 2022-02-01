@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_bwl
-Configure anti-spam black/white list. Applies to FortiOS Version `<= 6.4.2`.
+Configure anti-spam black/white list. Applies to FortiOS Version `6.2.4,6.2.6,6.4.0,6.4.2`.
 
 ## Argument Reference
 

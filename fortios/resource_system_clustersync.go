@@ -36,11 +36,10 @@ func resourceSystemClusterSync() *schema.Resource {
 				ForceNew: true,
 			},
 			"sync_id": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 255),
-				ForceNew:     true,
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 			"peervd": &schema.Schema{
 				Type:         schema.TypeString,
@@ -94,6 +93,28 @@ func resourceSystemClusterSync() *schema.Resource {
 				Computed:     true,
 			},
 			"ipsec_tunnel_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ike_monitor": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ike_monitor_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 300),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ike_heartbeat_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 60),
+				Optional:     true,
+				Computed:     true,
+			},
+			"secondary_add_ipsec_routes": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -397,6 +418,22 @@ func flattenSystemClusterSyncIpsecTunnelSync(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemClusterSyncIkeMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemClusterSyncIkeMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemClusterSyncIkeHeartbeatInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemClusterSyncSecondaryAddIpsecRoutes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemClusterSyncSlaveAddIkeRoutes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -622,6 +659,30 @@ func refreshObjectSystemClusterSync(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("ike_monitor", flattenSystemClusterSyncIkeMonitor(o["ike-monitor"], d, "ike_monitor", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-monitor"]) {
+			return fmt.Errorf("Error reading ike_monitor: %v", err)
+		}
+	}
+
+	if err = d.Set("ike_monitor_interval", flattenSystemClusterSyncIkeMonitorInterval(o["ike-monitor-interval"], d, "ike_monitor_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-monitor-interval"]) {
+			return fmt.Errorf("Error reading ike_monitor_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("ike_heartbeat_interval", flattenSystemClusterSyncIkeHeartbeatInterval(o["ike-heartbeat-interval"], d, "ike_heartbeat_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-heartbeat-interval"]) {
+			return fmt.Errorf("Error reading ike_heartbeat_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("secondary_add_ipsec_routes", flattenSystemClusterSyncSecondaryAddIpsecRoutes(o["secondary-add-ipsec-routes"], d, "secondary_add_ipsec_routes", sv)); err != nil {
+		if !fortiAPIPatch(o["secondary-add-ipsec-routes"]) {
+			return fmt.Errorf("Error reading secondary_add_ipsec_routes: %v", err)
+		}
+	}
+
 	if err = d.Set("slave_add_ike_routes", flattenSystemClusterSyncSlaveAddIkeRoutes(o["slave-add-ike-routes"], d, "slave_add_ike_routes", sv)); err != nil {
 		if !fortiAPIPatch(o["slave-add-ike-routes"]) {
 			return fmt.Errorf("Error reading slave_add_ike_routes: %v", err)
@@ -738,6 +799,22 @@ func expandSystemClusterSyncHbLostThreshold(d *schema.ResourceData, v interface{
 }
 
 func expandSystemClusterSyncIpsecTunnelSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemClusterSyncIkeMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemClusterSyncIkeMonitorInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemClusterSyncIkeHeartbeatInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemClusterSyncSecondaryAddIpsecRoutes(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -952,6 +1029,46 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["ipsec-tunnel-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ike_monitor"); ok {
+
+		t, err := expandSystemClusterSyncIkeMonitor(d, v, "ike_monitor", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ike-monitor"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ike_monitor_interval"); ok {
+
+		t, err := expandSystemClusterSyncIkeMonitorInterval(d, v, "ike_monitor_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ike-monitor-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ike_heartbeat_interval"); ok {
+
+		t, err := expandSystemClusterSyncIkeHeartbeatInterval(d, v, "ike_heartbeat_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ike-heartbeat-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("secondary_add_ipsec_routes"); ok {
+
+		t, err := expandSystemClusterSyncSecondaryAddIpsecRoutes(d, v, "secondary_add_ipsec_routes", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["secondary-add-ipsec-routes"] = t
 		}
 	}
 

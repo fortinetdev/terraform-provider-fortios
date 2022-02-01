@@ -57,6 +57,16 @@ func resourceSystemIpv6Tunnel() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"use_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -198,6 +208,14 @@ func flattenSystemIpv6TunnelInterface(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSystemIpv6TunnelUseSdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpv6TunnelAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemIpv6Tunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -225,6 +243,18 @@ func refreshObjectSystemIpv6Tunnel(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("use_sdwan", flattenSystemIpv6TunnelUseSdwan(o["use-sdwan"], d, "use_sdwan", sv)); err != nil {
+		if !fortiAPIPatch(o["use-sdwan"]) {
+			return fmt.Errorf("Error reading use_sdwan: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", flattenSystemIpv6TunnelAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -247,6 +277,14 @@ func expandSystemIpv6TunnelDestination(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemIpv6TunnelInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpv6TunnelUseSdwan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpv6TunnelAutoAsicOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -290,6 +328,26 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("use_sdwan"); ok {
+
+		t, err := expandSystemIpv6TunnelUseSdwan(d, v, "use_sdwan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["use-sdwan"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_asic_offload"); ok {
+
+		t, err := expandSystemIpv6TunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-asic-offload"] = t
 		}
 	}
 

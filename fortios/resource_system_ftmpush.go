@@ -52,6 +52,12 @@ func resourceSystemFtmPush() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+				Computed:     true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -162,6 +168,10 @@ func flattenSystemFtmPushServerIp(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemFtmPushServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFtmPushStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -184,6 +194,12 @@ func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("server_ip", flattenSystemFtmPushServerIp(o["server-ip"], d, "server_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["server-ip"]) {
 			return fmt.Errorf("Error reading server_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("server", flattenSystemFtmPushServer(o["server"], d, "server", sv)); err != nil {
+		if !fortiAPIPatch(o["server"]) {
+			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 
@@ -211,6 +227,10 @@ func expandSystemFtmPushServerCert(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemFtmPushServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFtmPushServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -248,6 +268,16 @@ func getObjectSystemFtmPush(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["server-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server"); ok {
+
+		t, err := expandSystemFtmPushServer(d, v, "server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server"] = t
 		}
 	}
 

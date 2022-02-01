@@ -63,6 +63,12 @@ func resourceVpnSslWebRealm() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"virtual_host_server_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"radius_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -225,6 +231,10 @@ func flattenVpnSslWebRealmVirtualHostOnly(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenVpnSslWebRealmVirtualHostServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnSslWebRealmRadiusServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -267,6 +277,12 @@ func refreshObjectVpnSslWebRealm(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("virtual_host_only", flattenVpnSslWebRealmVirtualHostOnly(o["virtual-host-only"], d, "virtual_host_only", sv)); err != nil {
 		if !fortiAPIPatch(o["virtual-host-only"]) {
 			return fmt.Errorf("Error reading virtual_host_only: %v", err)
+		}
+	}
+
+	if err = d.Set("virtual_host_server_cert", flattenVpnSslWebRealmVirtualHostServerCert(o["virtual-host-server-cert"], d, "virtual_host_server_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["virtual-host-server-cert"]) {
+			return fmt.Errorf("Error reading virtual_host_server_cert: %v", err)
 		}
 	}
 
@@ -314,6 +330,10 @@ func expandVpnSslWebRealmVirtualHost(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandVpnSslWebRealmVirtualHostOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslWebRealmVirtualHostServerCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -379,6 +399,16 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["virtual-host-only"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("virtual_host_server_cert"); ok {
+
+		t, err := expandVpnSslWebRealmVirtualHostServerCert(d, v, "virtual_host_server_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["virtual-host-server-cert"] = t
 		}
 	}
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_snmpsysinfo
-Configure FortiSwitch SNMP system information globally.
+Configure FortiSwitch SNMP system information globally. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

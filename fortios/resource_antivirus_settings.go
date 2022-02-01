@@ -35,6 +35,11 @@ func resourceAntivirusSettings() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"machine_learning_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"use_extreme_db": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -55,6 +60,16 @@ func resourceAntivirusSettings() *schema.Resource {
 				ValidateFunc: validation.IntBetween(30, 3600),
 				Optional:     true,
 				Computed:     true,
+			},
+			"cache_infected_result": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cache_clean_result": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -149,6 +164,10 @@ func resourceAntivirusSettingsRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
+func flattenAntivirusSettingsMachineLearningDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAntivirusSettingsUseExtremeDb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -165,8 +184,22 @@ func flattenAntivirusSettingsOverrideTimeout(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenAntivirusSettingsCacheInfectedResult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusSettingsCacheCleanResult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("machine_learning_detection", flattenAntivirusSettingsMachineLearningDetection(o["machine-learning-detection"], d, "machine_learning_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["machine-learning-detection"]) {
+			return fmt.Errorf("Error reading machine_learning_detection: %v", err)
+		}
+	}
 
 	if err = d.Set("use_extreme_db", flattenAntivirusSettingsUseExtremeDb(o["use-extreme-db"], d, "use_extreme_db", sv)); err != nil {
 		if !fortiAPIPatch(o["use-extreme-db"]) {
@@ -192,6 +225,18 @@ func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("cache_infected_result", flattenAntivirusSettingsCacheInfectedResult(o["cache-infected-result"], d, "cache_infected_result", sv)); err != nil {
+		if !fortiAPIPatch(o["cache-infected-result"]) {
+			return fmt.Errorf("Error reading cache_infected_result: %v", err)
+		}
+	}
+
+	if err = d.Set("cache_clean_result", flattenAntivirusSettingsCacheCleanResult(o["cache-clean-result"], d, "cache_clean_result", sv)); err != nil {
+		if !fortiAPIPatch(o["cache-clean-result"]) {
+			return fmt.Errorf("Error reading cache_clean_result: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -199,6 +244,10 @@ func flattenAntivirusSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
+}
+
+func expandAntivirusSettingsMachineLearningDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusSettingsUseExtremeDb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -217,8 +266,26 @@ func expandAntivirusSettingsOverrideTimeout(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandAntivirusSettingsCacheInfectedResult(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusSettingsCacheCleanResult(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectAntivirusSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("machine_learning_detection"); ok {
+
+		t, err := expandAntivirusSettingsMachineLearningDetection(d, v, "machine_learning_detection", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["machine-learning-detection"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("use_extreme_db"); ok {
 
@@ -257,6 +324,26 @@ func getObjectAntivirusSettings(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["override-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cache_infected_result"); ok {
+
+		t, err := expandAntivirusSettingsCacheInfectedResult(d, v, "cache_infected_result", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cache-infected-result"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cache_clean_result"); ok {
+
+		t, err := expandAntivirusSettingsCacheCleanResult(d, v, "cache_clean_result", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cache-clean-result"] = t
 		}
 	}
 

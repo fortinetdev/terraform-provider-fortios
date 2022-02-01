@@ -76,6 +76,14 @@ func dataSourceSystemEmailServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -162,6 +170,14 @@ func dataSourceFlattenSystemEmailServerSslMinProtoVersion(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemEmailServerInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemEmailServerInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -228,6 +244,18 @@ func dataSourceRefreshObjectSystemEmailServer(d *schema.ResourceData, o map[stri
 	if err = d.Set("ssl_min_proto_version", dataSourceFlattenSystemEmailServerSslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version")); err != nil {
 		if !fortiAPIPatch(o["ssl-min-proto-version"]) {
 			return fmt.Errorf("Error reading ssl_min_proto_version: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", dataSourceFlattenSystemEmailServerInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method")); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemEmailServerInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 

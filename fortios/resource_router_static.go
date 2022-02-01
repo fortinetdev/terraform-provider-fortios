@@ -99,6 +99,20 @@ func resourceRouterStatic() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"sdwan_zone": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"sdwan": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -141,6 +155,11 @@ func resourceRouterStatic() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -329,6 +348,44 @@ func flattenRouterStaticDynamicGateway(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenRouterStaticSdwanZone(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenRouterStaticSdwanZoneName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenRouterStaticSdwanZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterStaticSdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -436,6 +493,22 @@ func refreshObjectRouterStatic(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("sdwan_zone", flattenRouterStaticSdwanZone(o["sdwan-zone"], d, "sdwan_zone", sv)); err != nil {
+			if !fortiAPIPatch(o["sdwan-zone"]) {
+				return fmt.Errorf("Error reading sdwan_zone: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sdwan_zone"); ok {
+			if err = d.Set("sdwan_zone", flattenRouterStaticSdwanZone(o["sdwan-zone"], d, "sdwan_zone", sv)); err != nil {
+				if !fortiAPIPatch(o["sdwan-zone"]) {
+					return fmt.Errorf("Error reading sdwan_zone: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("sdwan", flattenRouterStaticSdwan(o["sdwan"], d, "sdwan", sv)); err != nil {
 		if !fortiAPIPatch(o["sdwan"]) {
 			return fmt.Errorf("Error reading sdwan: %v", err)
@@ -538,6 +611,38 @@ func expandRouterStaticBlackhole(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandRouterStaticDynamicGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStaticSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandRouterStaticSdwanZoneName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterStaticSdwanZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -693,6 +798,16 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["dynamic-gateway"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sdwan_zone"); ok {
+
+		t, err := expandRouterStaticSdwanZone(d, v, "sdwan_zone", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sdwan-zone"] = t
 		}
 	}
 

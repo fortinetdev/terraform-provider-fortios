@@ -78,6 +78,7 @@ The following arguments are supported:
 * `sip_expectation` - Enable/disable the SIP kernel session helper to create an expectation for port 5060. Valid values: `enable`, `disable`.
 * `sip_helper` - Enable/disable the SIP session helper to process SIP sessions unless SIP sessions are accepted by the SIP application layer gateway (ALG). Valid values: `enable`, `disable`.
 * `sip_nat_trace` - Enable/disable recording the original SIP source IP address when NAT is used. Valid values: `enable`, `disable`.
+* `h323_direct_model` - Enable/disable H323 direct model. Valid values: `disable`, `enable`.
 * `status` - Enable/disable this VDOM. Valid values: `enable`, `disable`.
 * `sip_tcp_port` - TCP port the SIP proxy monitors for SIP traffic (0 - 65535, default = 5060).
 * `sip_udp_port` - UDP port the SIP proxy monitors for SIP traffic (0 - 65535, default = 5060).
@@ -132,6 +133,7 @@ The following arguments are supported:
 * `gui_wan_load_balancing` - Enable/disable SD-WAN on the GUI. Valid values: `enable`, `disable`.
 * `gui_antivirus` - Enable/disable AntiVirus on the GUI. Valid values: `enable`, `disable`.
 * `gui_webfilter` - Enable/disable Web filtering on the GUI. Valid values: `enable`, `disable`.
+* `gui_videofilter` - Enable/disable Video filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_dnsfilter` - Enable/disable DNS Filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_waf_profile` - Enable/disable Web Application Firewall on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortiextender_controller` - Enable/disable FortiExtender on the GUI. Valid values: `enable`, `disable`.
@@ -141,6 +143,8 @@ The following arguments are supported:
 * `gui_domain_ip_reputation` - Enable/disable Domain and IP Reputation on the GUI. Valid values: `enable`, `disable`.
 * `gui_multiple_interface_policy` - Enable/disable adding multiple interfaces to a policy on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
+* `gui_ztna` - Enable/disable Zero Trust Network Access features on the GUI. Valid values: `enable`, `disable`.
+* `location_id` - Local location ID in the form of an IPv4 address.
 * `gui_per_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_learning` - Enable/disable firewall policy learning mode on the GUI. Valid values: `enable`, `disable`.
 * `compliance_check` - Enable/disable PCI DSS compliance checking. Valid values: `enable`, `disable`.
@@ -148,8 +152,10 @@ The following arguments are supported:
 * `ike_quick_crash_detect` - Enable/disable IKE quick crash detection (RFC 6290). Valid values: `enable`, `disable`.
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions. Valid values: `with-space`, `no-space`.
 * `ike_port` - UDP port for IKE/IPsec traffic (default 500).
+* `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks. Valid values: `disable`, `enable`.
+* `application_bandwidth_tracking` - Enable/disable application bandwidth tracking. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

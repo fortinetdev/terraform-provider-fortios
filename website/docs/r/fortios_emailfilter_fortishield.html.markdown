@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_fortishield
-Configure FortiGuard - AntiSpam.
+Configure FortiGuard - AntiSpam. Applies to FortiOS Version `>= 6.2.4`.
 
 ## Argument Reference
 

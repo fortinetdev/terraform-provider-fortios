@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_report_dataset
-Report dataset configuration.
+Report dataset configuration. Applies to FortiOS Version `<= 7.0.0`.
 
 ## Example Usage
 

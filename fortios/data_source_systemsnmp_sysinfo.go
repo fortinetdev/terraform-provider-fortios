@@ -31,6 +31,10 @@ func dataSourceSystemSnmpSysinfo() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"engine_id_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"engine_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -101,6 +105,10 @@ func dataSourceFlattenSystemSnmpSysinfoStatus(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func dataSourceFlattenSystemSnmpSysinfoEngineIdType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSnmpSysinfoEngineId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -135,6 +143,12 @@ func dataSourceRefreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[stri
 	if err = d.Set("status", dataSourceFlattenSystemSnmpSysinfoStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("engine_id_type", dataSourceFlattenSystemSnmpSysinfoEngineIdType(o["engine-id-type"], d, "engine_id_type")); err != nil {
+		if !fortiAPIPatch(o["engine-id-type"]) {
+			return fmt.Errorf("Error reading engine_id_type: %v", err)
 		}
 	}
 

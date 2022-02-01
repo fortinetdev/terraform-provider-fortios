@@ -82,13 +82,13 @@ func resourceExtenderControllerDataplan() *schema.Resource {
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 31),
+				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 27),
+				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
 				Sensitive:    true,
 			},
@@ -134,7 +134,7 @@ func resourceExtenderControllerDataplan() *schema.Resource {
 			},
 			"preferred_subnet": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(8, 32),
+				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -713,7 +713,7 @@ func getObjectExtenderControllerDataplan(d *schema.ResourceData, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("preferred_subnet"); ok {
+	if v, ok := d.GetOkExists("preferred_subnet"); ok {
 
 		t, err := expandExtenderControllerDataplanPreferredSubnet(d, v, "preferred_subnet", sv)
 		if err != nil {

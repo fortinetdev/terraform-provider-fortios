@@ -28,6 +28,8 @@ The following arguments are supported:
 * `source` - Local IPv6 address of the tunnel.
 * `destination` - (Required) Remote IPv6 address of the tunnel.
 * `interface` - Interface name.
+* `use_sdwan` - Enable/disable use of SD-WAN to reach remote gateway. Valid values: `disable`, `enable`.
+* `auto_asic_offload` - Enable/disable tunnel ASIC offloading. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

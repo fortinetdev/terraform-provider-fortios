@@ -23,4 +23,5 @@ The following attributes are exported:
 * `baudrate` - Console baud rate.
 * `output` - Console output mode.
 * `login` - Enable/disable serial console and FortiExplorer.
+* `fortiexplorer` - Enable/disable access for FortiExplorer.
 

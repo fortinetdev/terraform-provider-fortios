@@ -27,6 +27,10 @@ The following attributes are exported:
 * `hb_interval` - Heartbeat interval (1 - 10 sec).
 * `hb_lost_threshold` - Lost heartbeat threshold (1 - 10).
 * `ipsec_tunnel_sync` - Enable/disable IPsec tunnel synchronization.
+* `ike_monitor` - Enable/disable IKE HA monitor.
+* `ike_monitor_interval` - IKE HA monitor interval (10 - 300 secs).
+* `ike_heartbeat_interval` - IKE heartbeat interval (1 - 60 secs).
+* `secondary_add_ipsec_routes` - Enable/disable IKE route announcement on the backup unit.
 * `slave_add_ike_routes` - Enable/disable IKE route announcement on the backup unit.
 * `session_sync_filter` - Add one or more filters if you only want to synchronize some sessions. Use the filter to configure the types of sessions to synchronize. The structure of `session_sync_filter` block is documented below.
 

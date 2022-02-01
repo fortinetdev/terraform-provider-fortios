@@ -55,6 +55,12 @@ func resourceVpnOcvpn() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"sdwan_zone": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"wan_interface": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -81,6 +87,11 @@ func resourceVpnOcvpn() *schema.Resource {
 				Computed:     true,
 			},
 			"auto_discovery": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auto_discovery_shortcut_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -342,6 +353,10 @@ func flattenVpnOcvpnSdwan(v interface{}, d *schema.ResourceData, pre string, sv 
 	return v
 }
 
+func flattenVpnOcvpnSdwanZone(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnOcvpnWanInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -396,6 +411,10 @@ func flattenVpnOcvpnPollInterval(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenVpnOcvpnAutoDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnOcvpnAutoDiscoveryShortcutMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -749,6 +768,12 @@ func refreshObjectVpnOcvpn(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("sdwan_zone", flattenVpnOcvpnSdwanZone(o["sdwan-zone"], d, "sdwan_zone", sv)); err != nil {
+		if !fortiAPIPatch(o["sdwan-zone"]) {
+			return fmt.Errorf("Error reading sdwan_zone: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("wan_interface", flattenVpnOcvpnWanInterface(o["wan-interface"], d, "wan_interface", sv)); err != nil {
 			if !fortiAPIPatch(o["wan-interface"]) {
@@ -780,6 +805,12 @@ func refreshObjectVpnOcvpn(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("auto_discovery", flattenVpnOcvpnAutoDiscovery(o["auto-discovery"], d, "auto_discovery", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-discovery"]) {
 			return fmt.Errorf("Error reading auto_discovery: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_discovery_shortcut_mode", flattenVpnOcvpnAutoDiscoveryShortcutMode(o["auto-discovery-shortcut-mode"], d, "auto_discovery_shortcut_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-discovery-shortcut-mode"]) {
+			return fmt.Errorf("Error reading auto_discovery_shortcut_mode: %v", err)
 		}
 	}
 
@@ -858,6 +889,10 @@ func expandVpnOcvpnSdwan(d *schema.ResourceData, v interface{}, pre string, sv s
 	return v, nil
 }
 
+func expandVpnOcvpnSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnOcvpnWanInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -899,6 +934,10 @@ func expandVpnOcvpnPollInterval(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandVpnOcvpnAutoDiscovery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnOcvpnAutoDiscoveryShortcutMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1240,6 +1279,16 @@ func getObjectVpnOcvpn(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
+	if v, ok := d.GetOk("sdwan_zone"); ok {
+
+		t, err := expandVpnOcvpnSdwanZone(d, v, "sdwan_zone", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sdwan-zone"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("wan_interface"); ok {
 
 		t, err := expandVpnOcvpnWanInterface(d, v, "wan_interface", sv)
@@ -1277,6 +1326,16 @@ func getObjectVpnOcvpn(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["auto-discovery"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_discovery_shortcut_mode"); ok {
+
+		t, err := expandVpnOcvpnAutoDiscoveryShortcutMode(d, v, "auto_discovery_shortcut_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-discovery-shortcut-mode"] = t
 		}
 	}
 

@@ -62,6 +62,11 @@ func resourceSystemSaml() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"binding_protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"portal_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -142,6 +147,11 @@ func resourceSystemSaml() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
 							Computed:     true,
+						},
+						"sp_binding_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"sp_cert": &schema.Schema{
 							Type:         schema.TypeString,
@@ -336,6 +346,10 @@ func flattenSystemSamlCert(v interface{}, d *schema.ResourceData, pre string, sv
 	return v
 }
 
+func flattenSystemSamlBindingProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSamlPortalUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -411,6 +425,12 @@ func flattenSystemSamlServiceProviders(v interface{}, d *schema.ResourceData, pr
 			tmp["prefix"] = flattenSystemSamlServiceProvidersPrefix(i["prefix"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
+		if _, ok := i["sp-binding-protocol"]; ok {
+
+			tmp["sp_binding_protocol"] = flattenSystemSamlServiceProvidersSpBindingProtocol(i["sp-binding-protocol"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
 		if _, ok := i["sp-cert"]; ok {
 
@@ -479,6 +499,10 @@ func flattenSystemSamlServiceProvidersName(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSamlServiceProvidersPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSamlServiceProvidersSpBindingProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -594,6 +618,12 @@ func refreshObjectSystemSaml(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("binding_protocol", flattenSystemSamlBindingProtocol(o["binding-protocol"], d, "binding_protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["binding-protocol"]) {
+			return fmt.Errorf("Error reading binding_protocol: %v", err)
+		}
+	}
+
 	if err = d.Set("portal_url", flattenSystemSamlPortalUrl(o["portal-url"], d, "portal_url", sv)); err != nil {
 		if !fortiAPIPatch(o["portal-url"]) {
 			return fmt.Errorf("Error reading portal_url: %v", err)
@@ -705,6 +735,10 @@ func expandSystemSamlCert(d *schema.ResourceData, v interface{}, pre string, sv 
 	return v, nil
 }
 
+func expandSystemSamlBindingProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSamlPortalUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -773,6 +807,12 @@ func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["prefix"], _ = expandSystemSamlServiceProvidersPrefix(d, i["prefix"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["sp-binding-protocol"], _ = expandSystemSamlServiceProvidersSpBindingProtocol(d, i["sp_binding_protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
@@ -844,6 +884,10 @@ func expandSystemSamlServiceProvidersName(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemSamlServiceProvidersPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSamlServiceProvidersSpBindingProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -971,6 +1015,16 @@ func getObjectSystemSaml(d *schema.ResourceData, bemptysontable bool, sv string)
 			return &obj, err
 		} else if t != nil {
 			obj["cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("binding_protocol"); ok {
+
+		t, err := expandSystemSamlBindingProtocol(d, v, "binding_protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["binding-protocol"] = t
 		}
 	}
 

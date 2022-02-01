@@ -74,7 +74,7 @@ The following arguments are supported:
 * `fosid` - Custom defined ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
-* `type` - Configure a static NAT or server load balance VIP. Valid values: `static-nat`, `server-load-balance`.
+* `type` - Configure a static NAT or server load balance VIP.
 * `src_filter` - Source IP6 filter (x:x:x:x:x:x:x:x/x). Separate addresses with spaces. The structure of `src_filter` block is documented below.
 * `extip` - (Required) IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `mappedip` - (Required) Mapped IP address range in the format startIP-endIP.
@@ -89,6 +89,9 @@ The following arguments are supported:
 * `server_type` - Protocol to be load balanced by the virtual server (also called the server load balance virtual IP). Valid values: `http`, `https`, `imaps`, `pop3s`, `smtps`, `ssl`, `tcp`, `udp`, `ip`.
 * `http_redirect` - Enable/disable redirection of HTTP to HTTPS Valid values: `enable`, `disable`.
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`, `ssl-session-id`.
+* `nat66` - Enable/disable DNAT66. Valid values: `disable`, `enable`.
+* `nat64` - Enable/disable DNAT64. Valid values: `disable`, `enable`.
+* `add_nat64_route` - Enable/disable adding NAT64 route. Valid values: `disable`, `enable`.
 * `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to. The structure of `realservers` block is documented below.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP. Valid values: `disable`, `enable`.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.
@@ -115,6 +118,7 @@ The following arguments are supported:
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a client.
 * `ssl_server_min_version` - Lowest SSL/TLS version acceptable from a server. Use the client setting by default.
 * `ssl_server_max_version` - Highest SSL/TLS version acceptable from a server. Use the client setting by default.
+* `ssl_accept_ffdhe_groups` - Enable/disable FFDHE cipher suite for SSL key exchange. Valid values: `enable`, `disable`.
 * `ssl_send_empty_frags` - Enable/disable sending empty fragments to avoid CBC IV attacks (SSL 3.0 & TLS 1.0 only). May need to be disabled for compatibility with older systems. Valid values: `enable`, `disable`.
 * `ssl_client_fallback` - Enable/disable support for preventing Downgrade Attacks on client connections (RFC 7507). Valid values: `disable`, `enable`.
 * `ssl_client_renegotiation` - Allow, deny, or require secure renegotiation of client sessions to comply with RFC 5746. Valid values: `allow`, `deny`, `secure`.
@@ -138,6 +142,9 @@ The following arguments are supported:
 * `ssl_hsts_include_subdomains` - Indicate that HSTS header applies to all subdomains. Valid values: `disable`, `enable`.
 * `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status. The structure of `monitor` block is documented below.
 * `max_embryonic_connections` - Maximum number of incomplete connections.
+* `embedded_ipv4_address` - Enable/disable embedded IPv4 address. Valid values: `disable`, `enable`.
+* `ipv4_mappedip` - Start-mapped-IPv4-address [-end mapped-IPv4-address].
+* `ipv4_mappedport` - IPv4 port number range on the destination network to which the external port number range is mapped.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

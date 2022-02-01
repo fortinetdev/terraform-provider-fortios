@@ -55,6 +55,10 @@ func dataSourceSystemPasswordPolicy() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"min_change_characters": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"change_4_characters": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -137,6 +141,10 @@ func dataSourceFlattenSystemPasswordPolicyMinNumber(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemPasswordPolicyMinChangeCharacters(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemPasswordPolicyChange4Characters(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -195,6 +203,12 @@ func dataSourceRefreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[s
 	if err = d.Set("min_number", dataSourceFlattenSystemPasswordPolicyMinNumber(o["min-number"], d, "min_number")); err != nil {
 		if !fortiAPIPatch(o["min-number"]) {
 			return fmt.Errorf("Error reading min_number: %v", err)
+		}
+	}
+
+	if err = d.Set("min_change_characters", dataSourceFlattenSystemPasswordPolicyMinChangeCharacters(o["min-change-characters"], d, "min_change_characters")); err != nil {
+		if !fortiAPIPatch(o["min-change-characters"]) {
+			return fmt.Errorf("Error reading min_change_characters: %v", err)
 		}
 	}
 

@@ -77,7 +77,7 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 			},
 			"mac_retention_period": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 168),
+				ValidateFunc: validation.IntBetween(0, 168),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -86,6 +86,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dhcp_server_access_list": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"log_mac_limit_violations": &schema.Schema{
 				Type:     schema.TypeString,
@@ -141,6 +146,16 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 						},
 					},
 				},
+			},
+			"fips_enforce": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"firmware_provision_on_authorization": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -306,6 +321,10 @@ func flattenSwitchControllerGlobalDefaultVirtualSwitchVlan(v interface{}, d *sch
 	return v
 }
 
+func flattenSwitchControllerGlobalDhcpServerAccessList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerGlobalLogMacLimitViolations(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -382,6 +401,14 @@ func flattenSwitchControllerGlobalCustomCommandCommandName(v interface{}, d *sch
 	return v
 }
 
+func flattenSwitchControllerGlobalFipsEnforce(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalFirmwareProvisionOnAuthorization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -443,6 +470,12 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("dhcp_server_access_list", flattenSwitchControllerGlobalDhcpServerAccessList(o["dhcp-server-access-list"], d, "dhcp_server_access_list", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-server-access-list"]) {
+			return fmt.Errorf("Error reading dhcp_server_access_list: %v", err)
+		}
+	}
+
 	if err = d.Set("log_mac_limit_violations", flattenSwitchControllerGlobalLogMacLimitViolations(o["log-mac-limit-violations"], d, "log_mac_limit_violations", sv)); err != nil {
 		if !fortiAPIPatch(o["log-mac-limit-violations"]) {
 			return fmt.Errorf("Error reading log_mac_limit_violations: %v", err)
@@ -498,6 +531,18 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 					return fmt.Errorf("Error reading custom_command: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("fips_enforce", flattenSwitchControllerGlobalFipsEnforce(o["fips-enforce"], d, "fips_enforce", sv)); err != nil {
+		if !fortiAPIPatch(o["fips-enforce"]) {
+			return fmt.Errorf("Error reading fips_enforce: %v", err)
+		}
+	}
+
+	if err = d.Set("firmware_provision_on_authorization", flattenSwitchControllerGlobalFirmwareProvisionOnAuthorization(o["firmware-provision-on-authorization"], d, "firmware_provision_on_authorization", sv)); err != nil {
+		if !fortiAPIPatch(o["firmware-provision-on-authorization"]) {
+			return fmt.Errorf("Error reading firmware_provision_on_authorization: %v", err)
 		}
 	}
 
@@ -567,6 +612,10 @@ func expandSwitchControllerGlobalMacRetentionPeriod(d *schema.ResourceData, v in
 }
 
 func expandSwitchControllerGlobalDefaultVirtualSwitchVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpServerAccessList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -640,6 +689,14 @@ func expandSwitchControllerGlobalCustomCommandCommandName(d *schema.ResourceData
 	return v, nil
 }
 
+func expandSwitchControllerGlobalFipsEnforce(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSwitchControllerGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -703,7 +760,7 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("mac_retention_period"); ok {
+	if v, ok := d.GetOkExists("mac_retention_period"); ok {
 
 		t, err := expandSwitchControllerGlobalMacRetentionPeriod(d, v, "mac_retention_period", sv)
 		if err != nil {
@@ -720,6 +777,16 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["default-virtual-switch-vlan"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_server_access_list"); ok {
+
+		t, err := expandSwitchControllerGlobalDhcpServerAccessList(d, v, "dhcp_server_access_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-server-access-list"] = t
 		}
 	}
 
@@ -800,6 +867,26 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["custom-command"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fips_enforce"); ok {
+
+		t, err := expandSwitchControllerGlobalFipsEnforce(d, v, "fips_enforce", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fips-enforce"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("firmware_provision_on_authorization"); ok {
+
+		t, err := expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["firmware-provision-on-authorization"] = t
 		}
 	}
 

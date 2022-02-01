@@ -55,6 +55,14 @@ func dataSourceSystemNetflow() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -121,6 +129,14 @@ func dataSourceFlattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemNetflowInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -163,6 +179,18 @@ func dataSourceRefreshObjectSystemNetflow(d *schema.ResourceData, o map[string]i
 	if err = d.Set("template_tx_counter", dataSourceFlattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter")); err != nil {
 		if !fortiAPIPatch(o["template-tx-counter"]) {
 			return fmt.Errorf("Error reading template_tx_counter: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", dataSourceFlattenSystemNetflowInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method")); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemNetflowInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
