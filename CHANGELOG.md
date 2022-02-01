@@ -1,5 +1,59 @@
-## 1.14.0 (Unreleased)
+## 1.15.0 (Unreleased)
 
+
+## 1.14.0 (Feb 1, 2022)
+
+BUG FIXES:
+
+* Fix parameter value's range limitation issue #190, #195
+* Fix argument trailing space issue #184
+
+IMPROVEMENTS:
+
+* Support FortiOS v7.0.1 - v7.0.4 #201
+* Add helpful error information from HTTP response to Terraform output #193
+
+FEATURES:
+
+* **New Resource:** `fortios_extendercontroller_extenderprofile`
+* **New Resource:** `fortios_firewall_accessproxy`
+* **New Resource:** `fortios_firewall_accessproxysshclientcert`
+* **New Resource:** `fortios_firewall_accessproxyvirtualhost`
+* **New Resource:** `fortios_firewall_accessproxy6`
+* **New Resource:** `fortios_logtacacsaccounting_filter`
+* **New Resource:** `fortios_logtacacsaccounting_setting`
+* **New Resource:** `fortios_logtacacsaccounting2_filter`
+* **New Resource:** `fortios_logtacacsaccounting2_setting`
+* **New Resource:** `fortios_logtacacsaccounting3_filter"`
+* **New Resource:** `fortios_logtacacsaccounting3_setting`
+* **New Resource:** `fortios_sctpfilter_profile`
+* **New Resource:** `fortios_switchcontroller_dynamicportpolicy`
+* **New Resource:** `fortios_switchcontroller_fortilinksettings`
+* **New Resource:** `fortios_system_acme`
+* **New Resource:** `fortios_system_dns64`
+* **New Resource:** `fortios_system_fortiai`
+* **New Resource:** `fortios_system_ike`
+* **New Resource:** `fortios_system_ipam`
+* **New Resource:** `fortios_system_ltemodem`
+* **New Resource:** `fortios_system_modem`
+* **New Resource:** `fortios_system_npu`
+* **New Resource:** `fortios_system_physicalswitch`
+* **New Resource:** `fortios_system_ssoforticloudadmin`
+* **New Resource:** `fortios_system_stp`
+* **New Resource:** `fortios_system3gmodem_custom`
+* **New Resource:** `fortios_user_certificate`
+* **New Resource:** `fortios_videofilter_profile`
+* **New Resource:** `fortios_videofilter_youtubechannelfilter`
+* **New Resource:** `fortios_videofilter_youtubekey`
+* **New Resource:** `fortios_vpnipsec_fec`
+* **New Resource:** `fortios_vpnssl_client`
+* **New Resource:** `fortios_wirelesscontroller_nacprofile`
+* **New Resource:** `fortios_wirelesscontroller_ssidpolicy`
+* **New Resource:** `fortios_wirelesscontroller_syslogprofile`
+* **New Resource:** `fortios_wirelesscontrollerhotspot20_anqpvenueurl`
+* **New Resource:** `fortios_wirelesscontrollerhotspot20_h2qpadviceofcharge`
+* **New Resource:** `fortios_wirelesscontrollerhotspot20_h2qposuprovidernai`
+* **New Resource:** `fortios_wirelesscontrollerhotspot20_h2qptermsandconditions`
 
 ## 1.13.2 (Sep 28, 2021)
 
