@@ -905,7 +905,7 @@ func flattenFirewallAccessProxy6ApiGateway(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -1442,7 +1442,7 @@ func flattenFirewallAccessProxy6ApiGateway6(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

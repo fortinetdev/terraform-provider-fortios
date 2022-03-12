@@ -324,7 +324,7 @@ func flattenSwitchControllerQosQueuePolicyCosQueue(v interface{}, d *schema.Reso
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

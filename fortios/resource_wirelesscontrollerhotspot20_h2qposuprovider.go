@@ -292,7 +292,7 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyName(v interface{}
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "index", d)
+	dynamic_sort_subtable_natural(result, "index", d)
 	return result
 }
 
@@ -362,7 +362,7 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescription(v inter
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "service_id", d)
+	dynamic_sort_subtable_natural(result, "service_id", d)
 	return result
 }
 

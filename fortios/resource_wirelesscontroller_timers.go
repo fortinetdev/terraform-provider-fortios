@@ -294,7 +294,7 @@ func flattenWirelessControllerTimersDarrpTime(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "time", d)
+	dynamic_sort_subtable_natural(result, "time", d)
 	return result
 }
 

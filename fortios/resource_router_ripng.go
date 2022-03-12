@@ -471,7 +471,7 @@ func flattenRouterRipngDistance(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -545,7 +545,7 @@ func flattenRouterRipngDistributeList(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -611,7 +611,7 @@ func flattenRouterRipngNeighbor(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -663,7 +663,7 @@ func flattenRouterRipngNetwork(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -711,7 +711,7 @@ func flattenRouterRipngAggregateAddress(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -783,7 +783,7 @@ func flattenRouterRipngOffsetList(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -841,7 +841,7 @@ func flattenRouterRipngPassiveInterface(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -897,7 +897,7 @@ func flattenRouterRipngRedistribute(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -977,7 +977,7 @@ func flattenRouterRipngInterface(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

@@ -401,7 +401,7 @@ func flattenFirewallAddress6Macaddr(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "macaddr", d)
+	dynamic_sort_subtable_natural(result, "macaddr", d)
 	return result
 }
 
@@ -487,7 +487,7 @@ func flattenFirewallAddress6List(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip", d)
+	dynamic_sort_subtable_natural(result, "ip", d)
 	return result
 }
 
@@ -537,7 +537,7 @@ func flattenFirewallAddress6Tagging(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -636,7 +636,7 @@ func flattenFirewallAddress6SubnetSegment(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

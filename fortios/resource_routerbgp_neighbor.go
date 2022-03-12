@@ -1108,7 +1108,7 @@ func flattenRouterbgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "advertise_routemap", d)
+	dynamic_sort_subtable_natural(result, "advertise_routemap", d)
 	return result
 }
 
@@ -1166,7 +1166,7 @@ func flattenRouterbgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "advertise_routemap", d)
+	dynamic_sort_subtable_natural(result, "advertise_routemap", d)
 	return result
 }
 

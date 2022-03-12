@@ -753,7 +753,7 @@ func flattenFirewallProxyPolicyAccessProxy(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -791,7 +791,7 @@ func flattenFirewallProxyPolicyAccessProxy6(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -829,7 +829,7 @@ func flattenFirewallProxyPolicySrcintf(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -867,7 +867,7 @@ func flattenFirewallProxyPolicyDstintf(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -905,7 +905,7 @@ func flattenFirewallProxyPolicySrcaddr(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -943,7 +943,7 @@ func flattenFirewallProxyPolicyPoolname(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -981,7 +981,7 @@ func flattenFirewallProxyPolicyDstaddr(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1019,7 +1019,7 @@ func flattenFirewallProxyPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1073,7 +1073,7 @@ func flattenFirewallProxyPolicyInternetServiceName(v interface{}, d *schema.Reso
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1111,7 +1111,7 @@ func flattenFirewallProxyPolicyInternetServiceId(v interface{}, d *schema.Resour
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -1149,7 +1149,7 @@ func flattenFirewallProxyPolicyInternetServiceGroup(v interface{}, d *schema.Res
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1187,7 +1187,7 @@ func flattenFirewallProxyPolicyInternetServiceCustom(v interface{}, d *schema.Re
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1225,7 +1225,7 @@ func flattenFirewallProxyPolicyInternetServiceCustomGroup(v interface{}, d *sche
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1263,7 +1263,7 @@ func flattenFirewallProxyPolicyService(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1333,7 +1333,7 @@ func flattenFirewallProxyPolicySrcaddr6(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1371,7 +1371,7 @@ func flattenFirewallProxyPolicyDstaddr6(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1409,7 +1409,7 @@ func flattenFirewallProxyPolicyGroups(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1447,7 +1447,7 @@ func flattenFirewallProxyPolicyUsers(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

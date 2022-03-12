@@ -310,7 +310,7 @@ func flattenSystemDnsServerHostname(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "hostname", d)
+	dynamic_sort_subtable_natural(result, "hostname", d)
 	return result
 }
 
@@ -348,7 +348,7 @@ func flattenSystemDnsDomain(v interface{}, d *schema.ResourceData, pre string, s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "domain", d)
+	dynamic_sort_subtable_natural(result, "domain", d)
 	return result
 }
 

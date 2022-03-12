@@ -229,7 +229,7 @@ func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "wtp_id", d)
+	dynamic_sort_subtable_natural(result, "wtp_id", d)
 	return result
 }
 

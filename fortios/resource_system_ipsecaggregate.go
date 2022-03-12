@@ -225,7 +225,7 @@ func flattenSystemIpsecAggregateMember(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "tunnel_name", d)
+	dynamic_sort_subtable_natural(result, "tunnel_name", d)
 	return result
 }
 

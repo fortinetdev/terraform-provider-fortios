@@ -442,7 +442,7 @@ func flattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "address", d)
+	dynamic_sort_subtable_natural(result, "address", d)
 	return result
 }
 
@@ -496,7 +496,7 @@ func flattenSystemLinkMonitorRoute(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "subnet", d)
+	dynamic_sort_subtable_natural(result, "subnet", d)
 	return result
 }
 
@@ -646,7 +646,7 @@ func flattenSystemLinkMonitorServerList(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

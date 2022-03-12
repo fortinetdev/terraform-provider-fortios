@@ -462,7 +462,7 @@ func flattenCifsProfileServerKeytab(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "principal", d)
+	dynamic_sort_subtable_natural(result, "principal", d)
 	return result
 }
 

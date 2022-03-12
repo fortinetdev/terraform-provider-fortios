@@ -1388,7 +1388,7 @@ func flattenWirelessControllerVapRadiusMacAuthUsergroups(v interface{}, d *schem
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1494,7 +1494,7 @@ func flattenWirelessControllerVapUsergroup(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1593,7 +1593,7 @@ func flattenWirelessControllerVapSelectedUsergroups(v interface{}, d *schema.Res
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1723,7 +1723,7 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "key_name", d)
+	dynamic_sort_subtable_natural(result, "key_name", d)
 	return result
 }
 
@@ -1928,7 +1928,7 @@ func flattenWirelessControllerVapVlanName(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1980,7 +1980,7 @@ func flattenWirelessControllerVapVlanPool(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -2178,7 +2178,7 @@ func flattenWirelessControllerVapMacFilterList(v interface{}, d *schema.Resource
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

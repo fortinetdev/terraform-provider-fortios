@@ -272,7 +272,7 @@ func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip", d)
+	dynamic_sort_subtable_natural(result, "ip", d)
 	return result
 }
 
@@ -310,7 +310,7 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip6", d)
+	dynamic_sort_subtable_natural(result, "ip6", d)
 	return result
 }
 

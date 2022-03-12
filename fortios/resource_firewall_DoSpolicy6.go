@@ -339,7 +339,7 @@ func flattenFirewallDosPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -377,7 +377,7 @@ func flattenFirewallDosPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -415,7 +415,7 @@ func flattenFirewallDosPolicy6Service(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -501,7 +501,7 @@ func flattenFirewallDosPolicy6Anomaly(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

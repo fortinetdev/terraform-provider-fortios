@@ -273,7 +273,7 @@ func flattenSystemVdomDnsServerHostname(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "hostname", d)
+	dynamic_sort_subtable_natural(result, "hostname", d)
 	return result
 }
 

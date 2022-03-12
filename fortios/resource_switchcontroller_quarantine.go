@@ -228,7 +228,7 @@ func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "mac", d)
+	dynamic_sort_subtable_natural(result, "mac", d)
 	return result
 }
 

@@ -2684,7 +2684,7 @@ func flattenWirelessControllerWtpProfileLedSchedules(v interface{}, d *schema.Re
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -2752,7 +2752,7 @@ func flattenWirelessControllerWtpProfileDenyMacList(v interface{}, d *schema.Res
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -2824,7 +2824,7 @@ func flattenWirelessControllerWtpProfileSplitTunnelingAcl(v interface{}, d *sche
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

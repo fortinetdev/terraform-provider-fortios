@@ -824,7 +824,7 @@ func flattenFirewallVipSrcFilter(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "range", d)
+	dynamic_sort_subtable_natural(result, "range", d)
 	return result
 }
 
@@ -862,7 +862,7 @@ func flattenFirewallVipService(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -904,7 +904,7 @@ func flattenFirewallVipExtaddr(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -954,7 +954,7 @@ func flattenFirewallVipMappedip(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "range", d)
+	dynamic_sort_subtable_natural(result, "range", d)
 	return result
 }
 
@@ -1044,7 +1044,7 @@ func flattenFirewallVipSrcintfFilter(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "interface_name", d)
+	dynamic_sort_subtable_natural(result, "interface_name", d)
 	return result
 }
 
@@ -1182,7 +1182,7 @@ func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -1348,7 +1348,7 @@ func flattenFirewallVipSslCipherSuites(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "priority", d)
+	dynamic_sort_subtable_natural(result, "priority", d)
 	return result
 }
 
@@ -1410,7 +1410,7 @@ func flattenFirewallVipSslServerCipherSuites(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "priority", d)
+	dynamic_sort_subtable_natural(result, "priority", d)
 	return result
 }
 
@@ -1564,7 +1564,7 @@ func flattenFirewallVipMonitor(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

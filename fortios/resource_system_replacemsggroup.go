@@ -792,7 +792,7 @@ func flattenSystemReplacemsgGroupMail(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -860,7 +860,7 @@ func flattenSystemReplacemsgGroupHttp(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -928,7 +928,7 @@ func flattenSystemReplacemsgGroupWebproxy(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -996,7 +996,7 @@ func flattenSystemReplacemsgGroupFtp(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1064,7 +1064,7 @@ func flattenSystemReplacemsgGroupNntp(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1132,7 +1132,7 @@ func flattenSystemReplacemsgGroupFortiguardWf(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1200,7 +1200,7 @@ func flattenSystemReplacemsgGroupSpam(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1268,7 +1268,7 @@ func flattenSystemReplacemsgGroupAlertmail(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1336,7 +1336,7 @@ func flattenSystemReplacemsgGroupAdmin(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1404,7 +1404,7 @@ func flattenSystemReplacemsgGroupAuth(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1472,7 +1472,7 @@ func flattenSystemReplacemsgGroupSslvpn(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1540,7 +1540,7 @@ func flattenSystemReplacemsgGroupEc(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1608,7 +1608,7 @@ func flattenSystemReplacemsgGroupDeviceDetectionPortal(v interface{}, d *schema.
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1676,7 +1676,7 @@ func flattenSystemReplacemsgGroupNacQuar(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1744,7 +1744,7 @@ func flattenSystemReplacemsgGroupTrafficQuota(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1812,7 +1812,7 @@ func flattenSystemReplacemsgGroupUtm(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1880,7 +1880,7 @@ func flattenSystemReplacemsgGroupCustomMessage(v interface{}, d *schema.Resource
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -1948,7 +1948,7 @@ func flattenSystemReplacemsgGroupIcap(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 
@@ -2016,7 +2016,7 @@ func flattenSystemReplacemsgGroupAutomation(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "msg_type", d)
+	dynamic_sort_subtable_natural(result, "msg_type", d)
 	return result
 }
 

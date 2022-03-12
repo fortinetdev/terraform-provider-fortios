@@ -323,7 +323,7 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemList(v interface{}, d *schema.Res
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

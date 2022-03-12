@@ -279,7 +279,7 @@ func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "interface_name", d)
+	dynamic_sort_subtable_natural(result, "interface_name", d)
 	return result
 }
 
@@ -317,7 +317,7 @@ func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "interface_name", d)
+	dynamic_sort_subtable_natural(result, "interface_name", d)
 	return result
 }
 

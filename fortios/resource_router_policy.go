@@ -384,7 +384,7 @@ func flattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -426,7 +426,7 @@ func flattenRouterPolicySrc(v interface{}, d *schema.ResourceData, pre string, s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "subnet", d)
+	dynamic_sort_subtable_natural(result, "subnet", d)
 	return result
 }
 
@@ -464,7 +464,7 @@ func flattenRouterPolicySrcaddr(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -506,7 +506,7 @@ func flattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string, s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "subnet", d)
+	dynamic_sort_subtable_natural(result, "subnet", d)
 	return result
 }
 
@@ -544,7 +544,7 @@ func flattenRouterPolicyDstaddr(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -634,7 +634,7 @@ func flattenRouterPolicyInternetServiceId(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -672,7 +672,7 @@ func flattenRouterPolicyInternetServiceCustom(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

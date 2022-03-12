@@ -295,7 +295,7 @@ func flattenFirewallInternetServiceDefinitionEntry(v interface{}, d *schema.Reso
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "seq_num", d)
+	dynamic_sort_subtable_natural(result, "seq_num", d)
 	return result
 }
 

@@ -298,7 +298,7 @@ func flattenWanoptCacheServiceDstPeer(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "device_id", d)
+	dynamic_sort_subtable_natural(result, "device_id", d)
 	return result
 }
 
@@ -376,7 +376,7 @@ func flattenWanoptCacheServiceSrcPeer(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "device_id", d)
+	dynamic_sort_subtable_natural(result, "device_id", d)
 	return result
 }
 

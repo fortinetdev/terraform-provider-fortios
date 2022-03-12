@@ -193,7 +193,7 @@ func flattenRouterBfd6Neighbor(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip6_address", d)
+	dynamic_sort_subtable_natural(result, "ip6_address", d)
 	return result
 }
 

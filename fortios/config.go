@@ -73,7 +73,7 @@ func sortStringwithNumber(v string) string {
 	return v[:i] + string(b64)
 }
 
-func dynamic_sort_subtable(result []map[string]interface{}, fieldname string, d *schema.ResourceData) {
+func dynamic_sort_subtable_natural(result []map[string]interface{}, fieldname string, d *schema.ResourceData) {
 	if v, ok := d.GetOk("dynamic_sort_subtable"); ok {
 		if v.(string) == "true" {
 			sort.Slice(result, func(i, j int) bool {
@@ -81,6 +81,19 @@ func dynamic_sort_subtable(result []map[string]interface{}, fieldname string, d 
 				v2 := fmt.Sprintf("%v", result[j][fieldname])
 
 				return sortStringwithNumber(v1) < sortStringwithNumber(v2)
+			})
+		}
+	}
+}
+
+func dynamic_sort_subtable(result []map[string]interface{}, fieldname string, d *schema.ResourceData) {
+	if v, ok := d.GetOk("dynamic_sort_subtable"); ok {
+		if v.(string) == "true" {
+			sort.Slice(result, func(i, j int) bool {
+				v1 := fmt.Sprintf("%v", result[i][fieldname])
+				v2 := fmt.Sprintf("%v", result[j][fieldname])
+
+				return v1 < v2
 			})
 		}
 	}

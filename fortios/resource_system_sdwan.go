@@ -1254,7 +1254,7 @@ func flattenSystemSdwanFailAlertInterfaces(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1298,7 +1298,7 @@ func flattenSystemSdwanZone(v interface{}, d *schema.ResourceData, pre string, s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1430,7 +1430,7 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "seq_num", d)
+	dynamic_sort_subtable_natural(result, "seq_num", d)
 	return result
 }
 
@@ -1760,7 +1760,7 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -2086,7 +2086,7 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip", d)
+	dynamic_sort_subtable_natural(result, "ip", d)
 	return result
 }
 
@@ -2462,7 +2462,7 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -3343,7 +3343,7 @@ func flattenSystemSdwanDuplication(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

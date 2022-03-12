@@ -501,7 +501,7 @@ func flattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "serial", d)
+	dynamic_sort_subtable_natural(result, "serial", d)
 	return result
 }
 
@@ -575,7 +575,7 @@ func flattenSystemCsfFabricConnector(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "serial", d)
+	dynamic_sort_subtable_natural(result, "serial", d)
 	return result
 }
 
@@ -669,7 +669,7 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 

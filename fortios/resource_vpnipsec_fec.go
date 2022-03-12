@@ -300,7 +300,7 @@ func flattenVpnIpsecFecMappings(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "seqno", d)
+	dynamic_sort_subtable_natural(result, "seqno", d)
 	return result
 }
 

@@ -288,7 +288,7 @@ func flattenApplicationGroupApplication(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -326,7 +326,7 @@ func flattenApplicationGroupCategory(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -364,7 +364,7 @@ func flattenApplicationGroupRisk(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "level", d)
+	dynamic_sort_subtable_natural(result, "level", d)
 	return result
 }
 

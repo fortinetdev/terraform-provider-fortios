@@ -220,7 +220,7 @@ func flattenSwitchControllerStpInstanceVlanRange(v interface{}, d *schema.Resour
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "vlan_name", d)
+	dynamic_sort_subtable_natural(result, "vlan_name", d)
 	return result
 }
 

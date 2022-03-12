@@ -273,7 +273,7 @@ func flattenSwitchControllerTrafficSnifferTargetMac(v interface{}, d *schema.Res
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "mac", d)
+	dynamic_sort_subtable_natural(result, "mac", d)
 	return result
 }
 
@@ -321,7 +321,7 @@ func flattenSwitchControllerTrafficSnifferTargetIp(v interface{}, d *schema.Reso
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip", d)
+	dynamic_sort_subtable_natural(result, "ip", d)
 	return result
 }
 
@@ -381,7 +381,7 @@ func flattenSwitchControllerTrafficSnifferTargetPort(v interface{}, d *schema.Re
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "switch_id", d)
+	dynamic_sort_subtable_natural(result, "switch_id", d)
 	return result
 }
 

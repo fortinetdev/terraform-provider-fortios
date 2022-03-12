@@ -244,7 +244,7 @@ func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiList(v interface{}
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "index", d)
+	dynamic_sort_subtable_natural(result, "index", d)
 	return result
 }
 

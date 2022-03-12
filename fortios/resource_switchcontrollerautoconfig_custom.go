@@ -231,7 +231,7 @@ func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *sche
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "switch_id", d)
+	dynamic_sort_subtable_natural(result, "switch_id", d)
 	return result
 }
 

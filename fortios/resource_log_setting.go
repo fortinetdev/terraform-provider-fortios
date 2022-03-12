@@ -372,7 +372,7 @@ func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "field_id", d)
+	dynamic_sort_subtable_natural(result, "field_id", d)
 	return result
 }
 

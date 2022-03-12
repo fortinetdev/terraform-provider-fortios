@@ -510,7 +510,7 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "policyid", d)
+	dynamic_sort_subtable_natural(result, "policyid", d)
 	return result
 }
 

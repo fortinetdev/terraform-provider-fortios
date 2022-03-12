@@ -434,7 +434,7 @@ func flattenRouterospf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "spi", d)
+	dynamic_sort_subtable_natural(result, "spi", d)
 	return result
 }
 
@@ -498,7 +498,7 @@ func flattenRouterospf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip6", d)
+	dynamic_sort_subtable_natural(result, "ip6", d)
 	return result
 }
 

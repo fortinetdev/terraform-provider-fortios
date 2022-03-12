@@ -258,7 +258,7 @@ func flattenDlpFilepatternEntries(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "pattern", d)
+	dynamic_sort_subtable_natural(result, "pattern", d)
 	return result
 }
 

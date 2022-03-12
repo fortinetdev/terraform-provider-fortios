@@ -364,7 +364,7 @@ func flattenWirelessControllerAccessControlListLayer3Ipv4Rules(v interface{}, d 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "rule_id", d)
+	dynamic_sort_subtable_natural(result, "rule_id", d)
 	return result
 }
 
@@ -472,7 +472,7 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6Rules(v interface{}, d 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "rule_id", d)
+	dynamic_sort_subtable_natural(result, "rule_id", d)
 	return result
 }
 

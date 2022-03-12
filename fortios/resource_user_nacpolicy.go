@@ -420,7 +420,7 @@ func flattenUserNacPolicySwitchGroup(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -458,7 +458,7 @@ func flattenUserNacPolicySwitchScope(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "switch_id", d)
+	dynamic_sort_subtable_natural(result, "switch_id", d)
 	return result
 }
 

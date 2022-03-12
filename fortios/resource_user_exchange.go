@@ -323,7 +323,7 @@ func flattenUserExchangeKdcIp(v interface{}, d *schema.ResourceData, pre string,
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ipv4", d)
+	dynamic_sort_subtable_natural(result, "ipv4", d)
 	return result
 }
 

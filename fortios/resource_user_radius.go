@@ -561,7 +561,7 @@ func flattenUserRadiusClass(v interface{}, d *schema.ResourceData, pre string, s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -733,7 +733,7 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 

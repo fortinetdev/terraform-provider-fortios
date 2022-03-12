@@ -291,7 +291,7 @@ func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "serial", d)
+	dynamic_sort_subtable_natural(result, "serial", d)
 	return result
 }
 

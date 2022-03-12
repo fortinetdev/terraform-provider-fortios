@@ -665,7 +665,7 @@ func flattenSystemSdnConnectorServerList(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "ip", d)
+	dynamic_sort_subtable_natural(result, "ip", d)
 	return result
 }
 
@@ -749,7 +749,7 @@ func flattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.Resou
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "role_arn", d)
+	dynamic_sort_subtable_natural(result, "role_arn", d)
 	return result
 }
 
@@ -862,7 +862,7 @@ func flattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -975,7 +975,7 @@ func flattenSystemSdnConnectorRouteTable(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1092,7 +1092,7 @@ func flattenSystemSdnConnectorExternalIp(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1130,7 +1130,7 @@ func flattenSystemSdnConnectorRoute(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1174,7 +1174,7 @@ func flattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -1255,7 +1255,7 @@ func flattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "rule_name", d)
+	dynamic_sort_subtable_natural(result, "rule_name", d)
 	return result
 }
 

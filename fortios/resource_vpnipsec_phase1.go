@@ -908,7 +908,7 @@ func flattenVpnIpsecPhase1Certificate(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
+	dynamic_sort_subtable_natural(result, "name", d)
 	return result
 }
 
@@ -1046,7 +1046,7 @@ func flattenVpnIpsecPhase1Ipv4ExcludeRange(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -1140,7 +1140,7 @@ func flattenVpnIpsecPhase1Ipv6ExcludeRange(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "id", d)
+	dynamic_sort_subtable_natural(result, "id", d)
 	return result
 }
 
@@ -1234,7 +1234,7 @@ func flattenVpnIpsecPhase1BackupGateway(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "address", d)
+	dynamic_sort_subtable_natural(result, "address", d)
 	return result
 }
 

@@ -340,7 +340,7 @@ func flattenSystemDdnsDdnsServerAddr(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "addr", d)
+	dynamic_sort_subtable_natural(result, "addr", d)
 	return result
 }
 
@@ -442,7 +442,7 @@ func flattenSystemDdnsMonitorInterface(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "interface_name", d)
+	dynamic_sort_subtable_natural(result, "interface_name", d)
 	return result
 }
 

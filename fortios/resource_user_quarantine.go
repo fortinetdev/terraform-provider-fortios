@@ -259,7 +259,7 @@ func flattenUserQuarantineTargets(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "entry", d)
+	dynamic_sort_subtable_natural(result, "entry", d)
 	return result
 }
 
