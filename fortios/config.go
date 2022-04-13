@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -43,13 +44,34 @@ func fortiIntValue(t interface{}) int {
 }
 
 func escapeFilter(filter string) string {
-	filter = strings.ReplaceAll(filter, "_", "-")
-	filter = strings.ReplaceAll(filter, "fosid", "id")
-	filter = strings.ReplaceAll(filter, "&", "&filter=")
-	filter = strings.ReplaceAll(filter, ".", "\\.")
-	filter = strings.ReplaceAll(filter, "\\", "\\\\")
-	filter = "filter=" + filter
-	return filter
+	var rstSb strings.Builder
+	andSlice := strings.Split(filter, "&")
+
+	for i := 0; i < len(andSlice); i++ {
+		orSlice := strings.Split(andSlice[i], ",")
+		if i > 0 {
+			rstSb.WriteString("&")
+		}
+		rstSb.WriteString("filter=")
+		for j := 0; j < len(orSlice); j++ {
+			reg := regexp.MustCompile(`([^=*!@><]+)([=*!@><]+)([^=*!@><]+)`)
+			match := reg.FindStringSubmatch(orSlice[j])
+			if j > 0 {
+				rstSb.WriteString(",")
+			}
+			if match != nil {
+				argName := match[1]
+				argName = strings.ReplaceAll(argName, "_", "-")
+				argName = strings.ReplaceAll(argName, "fosid", "id")
+				argName = strings.ReplaceAll(argName, ".", "\\.")
+				argName = strings.ReplaceAll(argName, "\\", "\\\\")
+				rstSb.WriteString(argName)
+				rstSb.WriteString(match[2])
+				rstSb.WriteString(match[3])
+			}
+		}
+	}
+	return rstSb.String()
 }
 
 func sortStringwithNumber(v string) string {
