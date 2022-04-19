@@ -67,7 +67,7 @@ func resourceLogGuiDisplayUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectLogGuiDisplay(d, c.Fv)
+	obj, err := getObjectLogGuiDisplay(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogGuiDisplay resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceLogGuiDisplayUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceLogGuiDisplayDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceLogGuiDisplayDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteLogGuiDisplay(mkey, vdomparam)
+	obj, err := getObjectLogGuiDisplay(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogGuiDisplay resource: %v", err)
+		return fmt.Errorf("Error updating LogGuiDisplay resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogGuiDisplay(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogGuiDisplay resource: %v", err)
 	}
 
 	d.SetId("")
@@ -197,36 +202,48 @@ func expandLogGuiDisplayFortiviewUnscannedApps(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-func getObjectLogGuiDisplay(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogGuiDisplay(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("resolve_hosts"); ok {
+		if setArgNil {
+			obj["resolve-hosts"] = nil
+		} else {
 
-		t, err := expandLogGuiDisplayResolveHosts(d, v, "resolve_hosts", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["resolve-hosts"] = t
+			t, err := expandLogGuiDisplayResolveHosts(d, v, "resolve_hosts", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["resolve-hosts"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("resolve_apps"); ok {
+		if setArgNil {
+			obj["resolve-apps"] = nil
+		} else {
 
-		t, err := expandLogGuiDisplayResolveApps(d, v, "resolve_apps", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["resolve-apps"] = t
+			t, err := expandLogGuiDisplayResolveApps(d, v, "resolve_apps", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["resolve-apps"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiview_unscanned_apps"); ok {
+		if setArgNil {
+			obj["fortiview-unscanned-apps"] = nil
+		} else {
 
-		t, err := expandLogGuiDisplayFortiviewUnscannedApps(d, v, "fortiview_unscanned_apps", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiview-unscanned-apps"] = t
+			t, err := expandLogGuiDisplayFortiviewUnscannedApps(d, v, "fortiview_unscanned_apps", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiview-unscanned-apps"] = t
+			}
 		}
 	}
 

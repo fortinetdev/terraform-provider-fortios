@@ -191,7 +191,7 @@ func resourceSystemAlarmUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemAlarm(d, c.Fv)
+	obj, err := getObjectSystemAlarm(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAlarm resource while getting object: %v", err)
 	}
@@ -213,7 +213,6 @@ func resourceSystemAlarmUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemAlarmDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -225,9 +224,15 @@ func resourceSystemAlarmDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemAlarm(mkey, vdomparam)
+	obj, err := getObjectSystemAlarm(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemAlarm resource: %v", err)
+		return fmt.Errorf("Error updating SystemAlarm resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemAlarm(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemAlarm resource: %v", err)
 	}
 
 	d.SetId("")
@@ -816,36 +821,48 @@ func expandSystemAlarmGroupsFwPolicyIdThreshold(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-func getObjectSystemAlarm(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemAlarm(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemAlarmStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemAlarmStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("audible"); ok {
+		if setArgNil {
+			obj["audible"] = nil
+		} else {
 
-		t, err := expandSystemAlarmAudible(d, v, "audible", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["audible"] = t
+			t, err := expandSystemAlarmAudible(d, v, "audible", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["audible"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("groups"); ok {
+		if setArgNil {
+			obj["groups"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemAlarmGroups(d, v, "groups", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["groups"] = t
+			t, err := expandSystemAlarmGroups(d, v, "groups", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["groups"] = t
+			}
 		}
 	}
 

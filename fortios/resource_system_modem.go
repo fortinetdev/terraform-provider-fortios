@@ -303,7 +303,7 @@ func resourceSystemModemUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemModem(d, c.Fv)
+	obj, err := getObjectSystemModem(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemModem resource while getting object: %v", err)
 	}
@@ -325,7 +325,6 @@ func resourceSystemModemUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemModemDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -337,9 +336,15 @@ func resourceSystemModemDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemModem(mkey, vdomparam)
+	obj, err := getObjectSystemModem(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemModem resource: %v", err)
+		return fmt.Errorf("Error updating SystemModem resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemModem(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemModem resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1035,466 +1040,650 @@ func expandSystemModemPriority(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-func getObjectSystemModem(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemModemStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemModemStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pin_init"); ok {
+		if setArgNil {
+			obj["pin-init"] = nil
+		} else {
 
-		t, err := expandSystemModemPinInit(d, v, "pin_init", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pin-init"] = t
+			t, err := expandSystemModemPinInit(d, v, "pin_init", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pin-init"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("network_init"); ok {
+		if setArgNil {
+			obj["network-init"] = nil
+		} else {
 
-		t, err := expandSystemModemNetworkInit(d, v, "network_init", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["network-init"] = t
+			t, err := expandSystemModemNetworkInit(d, v, "network_init", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["network-init"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lockdown_lac"); ok {
+		if setArgNil {
+			obj["lockdown-lac"] = nil
+		} else {
 
-		t, err := expandSystemModemLockdownLac(d, v, "lockdown_lac", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lockdown-lac"] = t
+			t, err := expandSystemModemLockdownLac(d, v, "lockdown_lac", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lockdown-lac"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemModemMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemModemMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_dial"); ok {
+		if setArgNil {
+			obj["auto-dial"] = nil
+		} else {
 
-		t, err := expandSystemModemAutoDial(d, v, "auto_dial", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-dial"] = t
+			t, err := expandSystemModemAutoDial(d, v, "auto_dial", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-dial"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dial_on_demand"); ok {
+		if setArgNil {
+			obj["dial-on-demand"] = nil
+		} else {
 
-		t, err := expandSystemModemDialOnDemand(d, v, "dial_on_demand", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dial-on-demand"] = t
+			t, err := expandSystemModemDialOnDemand(d, v, "dial_on_demand", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dial-on-demand"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("idle_timer"); ok {
+		if setArgNil {
+			obj["idle-timer"] = nil
+		} else {
 
-		t, err := expandSystemModemIdleTimer(d, v, "idle_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["idle-timer"] = t
+			t, err := expandSystemModemIdleTimer(d, v, "idle_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["idle-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redial"); ok {
+		if setArgNil {
+			obj["redial"] = nil
+		} else {
 
-		t, err := expandSystemModemRedial(d, v, "redial", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redial"] = t
+			t, err := expandSystemModemRedial(d, v, "redial", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redial"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("reset"); ok {
+		if setArgNil {
+			obj["reset"] = nil
+		} else {
 
-		t, err := expandSystemModemReset(d, v, "reset", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reset"] = t
+			t, err := expandSystemModemReset(d, v, "reset", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reset"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("holddown_timer"); ok {
+		if setArgNil {
+			obj["holddown-timer"] = nil
+		} else {
 
-		t, err := expandSystemModemHolddownTimer(d, v, "holddown_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["holddown-timer"] = t
+			t, err := expandSystemModemHolddownTimer(d, v, "holddown_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["holddown-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("connect_timeout"); ok {
+		if setArgNil {
+			obj["connect-timeout"] = nil
+		} else {
 
-		t, err := expandSystemModemConnectTimeout(d, v, "connect_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["connect-timeout"] = t
+			t, err := expandSystemModemConnectTimeout(d, v, "connect_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["connect-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemModemInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemModemInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("wireless_port"); ok {
+		if setArgNil {
+			obj["wireless-port"] = nil
+		} else {
 
-		t, err := expandSystemModemWirelessPort(d, v, "wireless_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wireless-port"] = t
+			t, err := expandSystemModemWirelessPort(d, v, "wireless_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wireless-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dont_send_cr1"); ok {
+		if setArgNil {
+			obj["dont-send-cr1"] = nil
+		} else {
 
-		t, err := expandSystemModemDontSendCr1(d, v, "dont_send_cr1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dont-send-cr1"] = t
+			t, err := expandSystemModemDontSendCr1(d, v, "dont_send_cr1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dont-send-cr1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("phone1"); ok {
+		if setArgNil {
+			obj["phone1"] = nil
+		} else {
 
-		t, err := expandSystemModemPhone1(d, v, "phone1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["phone1"] = t
+			t, err := expandSystemModemPhone1(d, v, "phone1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["phone1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dial_cmd1"); ok {
+		if setArgNil {
+			obj["dial-cmd1"] = nil
+		} else {
 
-		t, err := expandSystemModemDialCmd1(d, v, "dial_cmd1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dial-cmd1"] = t
+			t, err := expandSystemModemDialCmd1(d, v, "dial_cmd1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dial-cmd1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("username1"); ok {
+		if setArgNil {
+			obj["username1"] = nil
+		} else {
 
-		t, err := expandSystemModemUsername1(d, v, "username1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["username1"] = t
+			t, err := expandSystemModemUsername1(d, v, "username1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["username1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("passwd1"); ok {
+		if setArgNil {
+			obj["passwd1"] = nil
+		} else {
 
-		t, err := expandSystemModemPasswd1(d, v, "passwd1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["passwd1"] = t
+			t, err := expandSystemModemPasswd1(d, v, "passwd1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["passwd1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("extra_init1"); ok {
+		if setArgNil {
+			obj["extra-init1"] = nil
+		} else {
 
-		t, err := expandSystemModemExtraInit1(d, v, "extra_init1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extra-init1"] = t
+			t, err := expandSystemModemExtraInit1(d, v, "extra_init1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extra-init1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("peer_modem1"); ok {
+		if setArgNil {
+			obj["peer-modem1"] = nil
+		} else {
 
-		t, err := expandSystemModemPeerModem1(d, v, "peer_modem1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["peer-modem1"] = t
+			t, err := expandSystemModemPeerModem1(d, v, "peer_modem1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["peer-modem1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ppp_echo_request1"); ok {
+		if setArgNil {
+			obj["ppp-echo-request1"] = nil
+		} else {
 
-		t, err := expandSystemModemPppEchoRequest1(d, v, "ppp_echo_request1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ppp-echo-request1"] = t
+			t, err := expandSystemModemPppEchoRequest1(d, v, "ppp_echo_request1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ppp-echo-request1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authtype1"); ok {
+		if setArgNil {
+			obj["authtype1"] = nil
+		} else {
 
-		t, err := expandSystemModemAuthtype1(d, v, "authtype1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authtype1"] = t
+			t, err := expandSystemModemAuthtype1(d, v, "authtype1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authtype1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dont_send_cr2"); ok {
+		if setArgNil {
+			obj["dont-send-cr2"] = nil
+		} else {
 
-		t, err := expandSystemModemDontSendCr2(d, v, "dont_send_cr2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dont-send-cr2"] = t
+			t, err := expandSystemModemDontSendCr2(d, v, "dont_send_cr2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dont-send-cr2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("phone2"); ok {
+		if setArgNil {
+			obj["phone2"] = nil
+		} else {
 
-		t, err := expandSystemModemPhone2(d, v, "phone2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["phone2"] = t
+			t, err := expandSystemModemPhone2(d, v, "phone2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["phone2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dial_cmd2"); ok {
+		if setArgNil {
+			obj["dial-cmd2"] = nil
+		} else {
 
-		t, err := expandSystemModemDialCmd2(d, v, "dial_cmd2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dial-cmd2"] = t
+			t, err := expandSystemModemDialCmd2(d, v, "dial_cmd2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dial-cmd2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("username2"); ok {
+		if setArgNil {
+			obj["username2"] = nil
+		} else {
 
-		t, err := expandSystemModemUsername2(d, v, "username2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["username2"] = t
+			t, err := expandSystemModemUsername2(d, v, "username2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["username2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("passwd2"); ok {
+		if setArgNil {
+			obj["passwd2"] = nil
+		} else {
 
-		t, err := expandSystemModemPasswd2(d, v, "passwd2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["passwd2"] = t
+			t, err := expandSystemModemPasswd2(d, v, "passwd2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["passwd2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("extra_init2"); ok {
+		if setArgNil {
+			obj["extra-init2"] = nil
+		} else {
 
-		t, err := expandSystemModemExtraInit2(d, v, "extra_init2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extra-init2"] = t
+			t, err := expandSystemModemExtraInit2(d, v, "extra_init2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extra-init2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("peer_modem2"); ok {
+		if setArgNil {
+			obj["peer-modem2"] = nil
+		} else {
 
-		t, err := expandSystemModemPeerModem2(d, v, "peer_modem2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["peer-modem2"] = t
+			t, err := expandSystemModemPeerModem2(d, v, "peer_modem2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["peer-modem2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ppp_echo_request2"); ok {
+		if setArgNil {
+			obj["ppp-echo-request2"] = nil
+		} else {
 
-		t, err := expandSystemModemPppEchoRequest2(d, v, "ppp_echo_request2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ppp-echo-request2"] = t
+			t, err := expandSystemModemPppEchoRequest2(d, v, "ppp_echo_request2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ppp-echo-request2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authtype2"); ok {
+		if setArgNil {
+			obj["authtype2"] = nil
+		} else {
 
-		t, err := expandSystemModemAuthtype2(d, v, "authtype2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authtype2"] = t
+			t, err := expandSystemModemAuthtype2(d, v, "authtype2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authtype2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dont_send_cr3"); ok {
+		if setArgNil {
+			obj["dont-send-cr3"] = nil
+		} else {
 
-		t, err := expandSystemModemDontSendCr3(d, v, "dont_send_cr3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dont-send-cr3"] = t
+			t, err := expandSystemModemDontSendCr3(d, v, "dont_send_cr3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dont-send-cr3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("phone3"); ok {
+		if setArgNil {
+			obj["phone3"] = nil
+		} else {
 
-		t, err := expandSystemModemPhone3(d, v, "phone3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["phone3"] = t
+			t, err := expandSystemModemPhone3(d, v, "phone3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["phone3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dial_cmd3"); ok {
+		if setArgNil {
+			obj["dial-cmd3"] = nil
+		} else {
 
-		t, err := expandSystemModemDialCmd3(d, v, "dial_cmd3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dial-cmd3"] = t
+			t, err := expandSystemModemDialCmd3(d, v, "dial_cmd3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dial-cmd3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("username3"); ok {
+		if setArgNil {
+			obj["username3"] = nil
+		} else {
 
-		t, err := expandSystemModemUsername3(d, v, "username3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["username3"] = t
+			t, err := expandSystemModemUsername3(d, v, "username3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["username3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("passwd3"); ok {
+		if setArgNil {
+			obj["passwd3"] = nil
+		} else {
 
-		t, err := expandSystemModemPasswd3(d, v, "passwd3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["passwd3"] = t
+			t, err := expandSystemModemPasswd3(d, v, "passwd3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["passwd3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("extra_init3"); ok {
+		if setArgNil {
+			obj["extra-init3"] = nil
+		} else {
 
-		t, err := expandSystemModemExtraInit3(d, v, "extra_init3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extra-init3"] = t
+			t, err := expandSystemModemExtraInit3(d, v, "extra_init3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extra-init3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("peer_modem3"); ok {
+		if setArgNil {
+			obj["peer-modem3"] = nil
+		} else {
 
-		t, err := expandSystemModemPeerModem3(d, v, "peer_modem3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["peer-modem3"] = t
+			t, err := expandSystemModemPeerModem3(d, v, "peer_modem3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["peer-modem3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ppp_echo_request3"); ok {
+		if setArgNil {
+			obj["ppp-echo-request3"] = nil
+		} else {
 
-		t, err := expandSystemModemPppEchoRequest3(d, v, "ppp_echo_request3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ppp-echo-request3"] = t
+			t, err := expandSystemModemPppEchoRequest3(d, v, "ppp_echo_request3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ppp-echo-request3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("altmode"); ok {
+		if setArgNil {
+			obj["altmode"] = nil
+		} else {
 
-		t, err := expandSystemModemAltmode(d, v, "altmode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["altmode"] = t
+			t, err := expandSystemModemAltmode(d, v, "altmode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["altmode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authtype3"); ok {
+		if setArgNil {
+			obj["authtype3"] = nil
+		} else {
 
-		t, err := expandSystemModemAuthtype3(d, v, "authtype3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authtype3"] = t
+			t, err := expandSystemModemAuthtype3(d, v, "authtype3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authtype3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("traffic_check"); ok {
+		if setArgNil {
+			obj["traffic-check"] = nil
+		} else {
 
-		t, err := expandSystemModemTrafficCheck(d, v, "traffic_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["traffic-check"] = t
+			t, err := expandSystemModemTrafficCheck(d, v, "traffic_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["traffic-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("action"); ok {
+		if setArgNil {
+			obj["action"] = nil
+		} else {
 
-		t, err := expandSystemModemAction(d, v, "action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["action"] = t
+			t, err := expandSystemModemAction(d, v, "action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["action"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
+		if setArgNil {
+			obj["distance"] = nil
+		} else {
 
-		t, err := expandSystemModemDistance(d, v, "distance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance"] = t
+			t, err := expandSystemModemDistance(d, v, "distance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandSystemModemPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandSystemModemPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 

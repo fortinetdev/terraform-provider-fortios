@@ -152,7 +152,7 @@ func resourceWanoptCacheServiceUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectWanoptCacheService(d, c.Fv)
+	obj, err := getObjectWanoptCacheService(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptCacheService resource while getting object: %v", err)
 	}
@@ -174,7 +174,6 @@ func resourceWanoptCacheServiceUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceWanoptCacheServiceDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -186,9 +185,15 @@ func resourceWanoptCacheServiceDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteWanoptCacheService(mkey, vdomparam)
+	obj, err := getObjectWanoptCacheService(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WanoptCacheService resource: %v", err)
+		return fmt.Errorf("Error updating WanoptCacheService resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWanoptCacheService(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WanoptCacheService resource: %v", err)
 	}
 
 	d.SetId("")
@@ -628,66 +633,90 @@ func expandWanoptCacheServiceSrcPeerIp(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-func getObjectWanoptCacheService(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWanoptCacheService(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("prefer_scenario"); ok {
+		if setArgNil {
+			obj["prefer-scenario"] = nil
+		} else {
 
-		t, err := expandWanoptCacheServicePreferScenario(d, v, "prefer_scenario", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["prefer-scenario"] = t
+			t, err := expandWanoptCacheServicePreferScenario(d, v, "prefer_scenario", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["prefer-scenario"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("collaboration"); ok {
+		if setArgNil {
+			obj["collaboration"] = nil
+		} else {
 
-		t, err := expandWanoptCacheServiceCollaboration(d, v, "collaboration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collaboration"] = t
+			t, err := expandWanoptCacheServiceCollaboration(d, v, "collaboration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collaboration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("device_id"); ok {
+		if setArgNil {
+			obj["device-id"] = nil
+		} else {
 
-		t, err := expandWanoptCacheServiceDeviceId(d, v, "device_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-id"] = t
+			t, err := expandWanoptCacheServiceDeviceId(d, v, "device_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("acceptable_connections"); ok {
+		if setArgNil {
+			obj["acceptable-connections"] = nil
+		} else {
 
-		t, err := expandWanoptCacheServiceAcceptableConnections(d, v, "acceptable_connections", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["acceptable-connections"] = t
+			t, err := expandWanoptCacheServiceAcceptableConnections(d, v, "acceptable_connections", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["acceptable-connections"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dst_peer"); ok {
+		if setArgNil {
+			obj["dst-peer"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWanoptCacheServiceDstPeer(d, v, "dst_peer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dst-peer"] = t
+			t, err := expandWanoptCacheServiceDstPeer(d, v, "dst_peer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dst-peer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("src_peer"); ok {
+		if setArgNil {
+			obj["src-peer"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWanoptCacheServiceSrcPeer(d, v, "src_peer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["src-peer"] = t
+			t, err := expandWanoptCacheServiceSrcPeer(d, v, "src_peer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["src-peer"] = t
+			}
 		}
 	}
 

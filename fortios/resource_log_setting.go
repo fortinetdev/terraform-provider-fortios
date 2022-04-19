@@ -182,7 +182,7 @@ func resourceLogSettingUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectLogSetting(d, c.Fv)
+	obj, err := getObjectLogSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogSetting resource while getting object: %v", err)
 	}
@@ -204,7 +204,6 @@ func resourceLogSettingUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceLogSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -216,9 +215,15 @@ func resourceLogSettingDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteLogSetting(mkey, vdomparam)
+	obj, err := getObjectLogSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -664,236 +669,328 @@ func expandLogSettingAnonymizationHash(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-func getObjectLogSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("resolve_ip"); ok {
+		if setArgNil {
+			obj["resolve-ip"] = nil
+		} else {
 
-		t, err := expandLogSettingResolveIp(d, v, "resolve_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["resolve-ip"] = t
+			t, err := expandLogSettingResolveIp(d, v, "resolve_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["resolve-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("resolve_port"); ok {
+		if setArgNil {
+			obj["resolve-port"] = nil
+		} else {
 
-		t, err := expandLogSettingResolvePort(d, v, "resolve_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["resolve-port"] = t
+			t, err := expandLogSettingResolvePort(d, v, "resolve_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["resolve-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_user_in_upper"); ok {
+		if setArgNil {
+			obj["log-user-in-upper"] = nil
+		} else {
 
-		t, err := expandLogSettingLogUserInUpper(d, v, "log_user_in_upper", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-user-in-upper"] = t
+			t, err := expandLogSettingLogUserInUpper(d, v, "log_user_in_upper", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-user-in-upper"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fwpolicy_implicit_log"); ok {
+		if setArgNil {
+			obj["fwpolicy-implicit-log"] = nil
+		} else {
 
-		t, err := expandLogSettingFwpolicyImplicitLog(d, v, "fwpolicy_implicit_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fwpolicy-implicit-log"] = t
+			t, err := expandLogSettingFwpolicyImplicitLog(d, v, "fwpolicy_implicit_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fwpolicy-implicit-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fwpolicy6_implicit_log"); ok {
+		if setArgNil {
+			obj["fwpolicy6-implicit-log"] = nil
+		} else {
 
-		t, err := expandLogSettingFwpolicy6ImplicitLog(d, v, "fwpolicy6_implicit_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fwpolicy6-implicit-log"] = t
+			t, err := expandLogSettingFwpolicy6ImplicitLog(d, v, "fwpolicy6_implicit_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fwpolicy6-implicit-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_invalid_packet"); ok {
+		if setArgNil {
+			obj["log-invalid-packet"] = nil
+		} else {
 
-		t, err := expandLogSettingLogInvalidPacket(d, v, "log_invalid_packet", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-invalid-packet"] = t
+			t, err := expandLogSettingLogInvalidPacket(d, v, "log_invalid_packet", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-invalid-packet"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_in_allow"); ok {
+		if setArgNil {
+			obj["local-in-allow"] = nil
+		} else {
 
-		t, err := expandLogSettingLocalInAllow(d, v, "local_in_allow", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-in-allow"] = t
+			t, err := expandLogSettingLocalInAllow(d, v, "local_in_allow", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-in-allow"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_in_deny_unicast"); ok {
+		if setArgNil {
+			obj["local-in-deny-unicast"] = nil
+		} else {
 
-		t, err := expandLogSettingLocalInDenyUnicast(d, v, "local_in_deny_unicast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-in-deny-unicast"] = t
+			t, err := expandLogSettingLocalInDenyUnicast(d, v, "local_in_deny_unicast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-in-deny-unicast"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_in_deny_broadcast"); ok {
+		if setArgNil {
+			obj["local-in-deny-broadcast"] = nil
+		} else {
 
-		t, err := expandLogSettingLocalInDenyBroadcast(d, v, "local_in_deny_broadcast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-in-deny-broadcast"] = t
+			t, err := expandLogSettingLocalInDenyBroadcast(d, v, "local_in_deny_broadcast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-in-deny-broadcast"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_out"); ok {
+		if setArgNil {
+			obj["local-out"] = nil
+		} else {
 
-		t, err := expandLogSettingLocalOut(d, v, "local_out", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-out"] = t
+			t, err := expandLogSettingLocalOut(d, v, "local_out", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-out"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("daemon_log"); ok {
+		if setArgNil {
+			obj["daemon-log"] = nil
+		} else {
 
-		t, err := expandLogSettingDaemonLog(d, v, "daemon_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["daemon-log"] = t
+			t, err := expandLogSettingDaemonLog(d, v, "daemon_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["daemon-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("neighbor_event"); ok {
+		if setArgNil {
+			obj["neighbor-event"] = nil
+		} else {
 
-		t, err := expandLogSettingNeighborEvent(d, v, "neighbor_event", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-event"] = t
+			t, err := expandLogSettingNeighborEvent(d, v, "neighbor_event", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-event"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("brief_traffic_format"); ok {
+		if setArgNil {
+			obj["brief-traffic-format"] = nil
+		} else {
 
-		t, err := expandLogSettingBriefTrafficFormat(d, v, "brief_traffic_format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["brief-traffic-format"] = t
+			t, err := expandLogSettingBriefTrafficFormat(d, v, "brief_traffic_format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["brief-traffic-format"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_anonymize"); ok {
+		if setArgNil {
+			obj["user-anonymize"] = nil
+		} else {
 
-		t, err := expandLogSettingUserAnonymize(d, v, "user_anonymize", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-anonymize"] = t
+			t, err := expandLogSettingUserAnonymize(d, v, "user_anonymize", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-anonymize"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("expolicy_implicit_log"); ok {
+		if setArgNil {
+			obj["expolicy-implicit-log"] = nil
+		} else {
 
-		t, err := expandLogSettingExpolicyImplicitLog(d, v, "expolicy_implicit_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["expolicy-implicit-log"] = t
+			t, err := expandLogSettingExpolicyImplicitLog(d, v, "expolicy_implicit_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["expolicy-implicit-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_policy_comment"); ok {
+		if setArgNil {
+			obj["log-policy-comment"] = nil
+		} else {
 
-		t, err := expandLogSettingLogPolicyComment(d, v, "log_policy_comment", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-policy-comment"] = t
+			t, err := expandLogSettingLogPolicyComment(d, v, "log_policy_comment", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-policy-comment"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_policy_name"); ok {
+		if setArgNil {
+			obj["log-policy-name"] = nil
+		} else {
 
-		t, err := expandLogSettingLogPolicyName(d, v, "log_policy_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-policy-name"] = t
+			t, err := expandLogSettingLogPolicyName(d, v, "log_policy_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-policy-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("faz_override"); ok {
+		if setArgNil {
+			obj["faz-override"] = nil
+		} else {
 
-		t, err := expandLogSettingFazOverride(d, v, "faz_override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["faz-override"] = t
+			t, err := expandLogSettingFazOverride(d, v, "faz_override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["faz-override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("syslog_override"); ok {
+		if setArgNil {
+			obj["syslog-override"] = nil
+		} else {
 
-		t, err := expandLogSettingSyslogOverride(d, v, "syslog_override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["syslog-override"] = t
+			t, err := expandLogSettingSyslogOverride(d, v, "syslog_override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["syslog-override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rest_api_set"); ok {
+		if setArgNil {
+			obj["rest-api-set"] = nil
+		} else {
 
-		t, err := expandLogSettingRestApiSet(d, v, "rest_api_set", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rest-api-set"] = t
+			t, err := expandLogSettingRestApiSet(d, v, "rest_api_set", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rest-api-set"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rest_api_get"); ok {
+		if setArgNil {
+			obj["rest-api-get"] = nil
+		} else {
 
-		t, err := expandLogSettingRestApiGet(d, v, "rest_api_get", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rest-api-get"] = t
+			t, err := expandLogSettingRestApiGet(d, v, "rest_api_get", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rest-api-get"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("custom_log_fields"); ok {
+		if setArgNil {
+			obj["custom-log-fields"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogSettingCustomLogFields(d, v, "custom_log_fields", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["custom-log-fields"] = t
+			t, err := expandLogSettingCustomLogFields(d, v, "custom_log_fields", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["custom-log-fields"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anonymization_hash"); ok {
+		if setArgNil {
+			obj["anonymization-hash"] = nil
+		} else {
 
-		t, err := expandLogSettingAnonymizationHash(d, v, "anonymization_hash", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anonymization-hash"] = t
+			t, err := expandLogSettingAnonymizationHash(d, v, "anonymization_hash", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anonymization-hash"] = t
+			}
 		}
 	}
 

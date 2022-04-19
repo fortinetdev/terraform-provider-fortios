@@ -687,183 +687,251 @@ func expandUserSettingAuthSslSigalgs(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectUserSetting(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("auth_type"); ok {
+		if setArgNil {
+			obj["auth-type"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthType(d, v, "auth_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-type"] = t
+			t, err := expandUserSettingAuthType(d, v, "auth_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_cert"); ok {
+		if setArgNil {
+			obj["auth-cert"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthCert(d, v, "auth_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-cert"] = t
+			t, err := expandUserSettingAuthCert(d, v, "auth_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_ca_cert"); ok {
+		if setArgNil {
+			obj["auth-ca-cert"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthCaCert(d, v, "auth_ca_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-ca-cert"] = t
+			t, err := expandUserSettingAuthCaCert(d, v, "auth_ca_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ca-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_secure_http"); ok {
+		if setArgNil {
+			obj["auth-secure-http"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthSecureHttp(d, v, "auth_secure_http", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-secure-http"] = t
+			t, err := expandUserSettingAuthSecureHttp(d, v, "auth_secure_http", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-secure-http"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_http_basic"); ok {
+		if setArgNil {
+			obj["auth-http-basic"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthHttpBasic(d, v, "auth_http_basic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-http-basic"] = t
+			t, err := expandUserSettingAuthHttpBasic(d, v, "auth_http_basic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-http-basic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_ssl_allow_renegotiation"); ok {
+		if setArgNil {
+			obj["auth-ssl-allow-renegotiation"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthSslAllowRenegotiation(d, v, "auth_ssl_allow_renegotiation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-ssl-allow-renegotiation"] = t
+			t, err := expandUserSettingAuthSslAllowRenegotiation(d, v, "auth_ssl_allow_renegotiation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ssl-allow-renegotiation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_src_mac"); ok {
+		if setArgNil {
+			obj["auth-src-mac"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthSrcMac(d, v, "auth_src_mac", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-src-mac"] = t
+			t, err := expandUserSettingAuthSrcMac(d, v, "auth_src_mac", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-src-mac"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_on_demand"); ok {
+		if setArgNil {
+			obj["auth-on-demand"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthOnDemand(d, v, "auth_on_demand", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-on-demand"] = t
+			t, err := expandUserSettingAuthOnDemand(d, v, "auth_on_demand", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-on-demand"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_timeout"); ok {
+		if setArgNil {
+			obj["auth-timeout"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthTimeout(d, v, "auth_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-timeout"] = t
+			t, err := expandUserSettingAuthTimeout(d, v, "auth_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_timeout_type"); ok {
+		if setArgNil {
+			obj["auth-timeout-type"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthTimeoutType(d, v, "auth_timeout_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-timeout-type"] = t
+			t, err := expandUserSettingAuthTimeoutType(d, v, "auth_timeout_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-timeout-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_portal_timeout"); ok {
+		if setArgNil {
+			obj["auth-portal-timeout"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthPortalTimeout(d, v, "auth_portal_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-portal-timeout"] = t
+			t, err := expandUserSettingAuthPortalTimeout(d, v, "auth_portal_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-portal-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("radius_ses_timeout_act"); ok {
+		if setArgNil {
+			obj["radius-ses-timeout-act"] = nil
+		} else {
 
-		t, err := expandUserSettingRadiusSesTimeoutAct(d, v, "radius_ses_timeout_act", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["radius-ses-timeout-act"] = t
+			t, err := expandUserSettingRadiusSesTimeoutAct(d, v, "radius_ses_timeout_act", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["radius-ses-timeout-act"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("auth_blackout_time"); ok {
+		if setArgNil {
+			obj["auth-blackout-time"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthBlackoutTime(d, v, "auth_blackout_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-blackout-time"] = t
+			t, err := expandUserSettingAuthBlackoutTime(d, v, "auth_blackout_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-blackout-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_invalid_max"); ok {
+		if setArgNil {
+			obj["auth-invalid-max"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthInvalidMax(d, v, "auth_invalid_max", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-invalid-max"] = t
+			t, err := expandUserSettingAuthInvalidMax(d, v, "auth_invalid_max", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-invalid-max"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_lockout_threshold"); ok {
+		if setArgNil {
+			obj["auth-lockout-threshold"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthLockoutThreshold(d, v, "auth_lockout_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-lockout-threshold"] = t
+			t, err := expandUserSettingAuthLockoutThreshold(d, v, "auth_lockout_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-lockout-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("auth_lockout_duration"); ok {
+		if setArgNil {
+			obj["auth-lockout-duration"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthLockoutDuration(d, v, "auth_lockout_duration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-lockout-duration"] = t
+			t, err := expandUserSettingAuthLockoutDuration(d, v, "auth_lockout_duration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-lockout-duration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("per_policy_disclaimer"); ok {
+		if setArgNil {
+			obj["per-policy-disclaimer"] = nil
+		} else {
 
-		t, err := expandUserSettingPerPolicyDisclaimer(d, v, "per_policy_disclaimer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["per-policy-disclaimer"] = t
+			t, err := expandUserSettingPerPolicyDisclaimer(d, v, "per_policy_disclaimer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["per-policy-disclaimer"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["auth-ports"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("auth_ports"); ok {
+	if v, ok := d.GetOk("auth_ports"); ok {
+		if setArgNil {
+			obj["auth-ports"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandUserSettingAuthPorts(d, v, "auth_ports", sv)
 			if err != nil {
@@ -875,32 +943,44 @@ func getObjectUserSetting(d *schema.ResourceData, bemptysontable bool, sv string
 	}
 
 	if v, ok := d.GetOk("auth_ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["auth-ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthSslMinProtoVersion(d, v, "auth_ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-ssl-min-proto-version"] = t
+			t, err := expandUserSettingAuthSslMinProtoVersion(d, v, "auth_ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_ssl_max_proto_version"); ok {
+		if setArgNil {
+			obj["auth-ssl-max-proto-version"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthSslMaxProtoVersion(d, v, "auth_ssl_max_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-ssl-max-proto-version"] = t
+			t, err := expandUserSettingAuthSslMaxProtoVersion(d, v, "auth_ssl_max_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ssl-max-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_ssl_sigalgs"); ok {
+		if setArgNil {
+			obj["auth-ssl-sigalgs"] = nil
+		} else {
 
-		t, err := expandUserSettingAuthSslSigalgs(d, v, "auth_ssl_sigalgs", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-ssl-sigalgs"] = t
+			t, err := expandUserSettingAuthSslSigalgs(d, v, "auth_ssl_sigalgs", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ssl-sigalgs"] = t
+			}
 		}
 	}
 

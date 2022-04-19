@@ -74,7 +74,7 @@ func resourceSystemAutoInstallUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectSystemAutoInstall(d, c.Fv)
+	obj, err := getObjectSystemAutoInstall(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoInstall resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceSystemAutoInstallUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceSystemAutoInstallDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceSystemAutoInstallDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteSystemAutoInstall(mkey, vdomparam)
+	obj, err := getObjectSystemAutoInstall(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemAutoInstall resource: %v", err)
+		return fmt.Errorf("Error updating SystemAutoInstall resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemAutoInstall(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemAutoInstall resource: %v", err)
 	}
 
 	d.SetId("")
@@ -218,46 +223,62 @@ func expandSystemAutoInstallDefaultImageFile(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectSystemAutoInstall(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemAutoInstall(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("auto_install_config"); ok {
+		if setArgNil {
+			obj["auto-install-config"] = nil
+		} else {
 
-		t, err := expandSystemAutoInstallAutoInstallConfig(d, v, "auto_install_config", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-install-config"] = t
+			t, err := expandSystemAutoInstallAutoInstallConfig(d, v, "auto_install_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-install-config"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_install_image"); ok {
+		if setArgNil {
+			obj["auto-install-image"] = nil
+		} else {
 
-		t, err := expandSystemAutoInstallAutoInstallImage(d, v, "auto_install_image", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-install-image"] = t
+			t, err := expandSystemAutoInstallAutoInstallImage(d, v, "auto_install_image", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-install-image"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_config_file"); ok {
+		if setArgNil {
+			obj["default-config-file"] = nil
+		} else {
 
-		t, err := expandSystemAutoInstallDefaultConfigFile(d, v, "default_config_file", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-config-file"] = t
+			t, err := expandSystemAutoInstallDefaultConfigFile(d, v, "default_config_file", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-config-file"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_image_file"); ok {
+		if setArgNil {
+			obj["default-image-file"] = nil
+		} else {
 
-		t, err := expandSystemAutoInstallDefaultImageFile(d, v, "default_image_file", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-image-file"] = t
+			t, err := expandSystemAutoInstallDefaultImageFile(d, v, "default_image_file", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-image-file"] = t
+			}
 		}
 	}
 

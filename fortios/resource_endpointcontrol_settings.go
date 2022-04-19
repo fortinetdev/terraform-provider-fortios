@@ -136,7 +136,7 @@ func resourceEndpointControlSettingsUpdate(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	obj, err := getObjectEndpointControlSettings(d, c.Fv)
+	obj, err := getObjectEndpointControlSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlSettings resource while getting object: %v", err)
 	}
@@ -158,7 +158,6 @@ func resourceEndpointControlSettingsUpdate(d *schema.ResourceData, m interface{}
 
 func resourceEndpointControlSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -170,9 +169,15 @@ func resourceEndpointControlSettingsDelete(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	err := c.DeleteEndpointControlSettings(mkey, vdomparam)
+	obj, err := getObjectEndpointControlSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting EndpointControlSettings resource: %v", err)
+		return fmt.Errorf("Error updating EndpointControlSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateEndpointControlSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing EndpointControlSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -428,156 +433,216 @@ func expandEndpointControlSettingsForticlientEmsRestApiCallTimeout(d *schema.Res
 	return v, nil
 }
 
-func getObjectEndpointControlSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("forticlient_reg_key_enforce"); ok {
+		if setArgNil {
+			obj["forticlient-reg-key-enforce"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientRegKeyEnforce(d, v, "forticlient_reg_key_enforce", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-reg-key-enforce"] = t
+			t, err := expandEndpointControlSettingsForticlientRegKeyEnforce(d, v, "forticlient_reg_key_enforce", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-reg-key-enforce"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_reg_key"); ok {
+		if setArgNil {
+			obj["forticlient-reg-key"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientRegKey(d, v, "forticlient_reg_key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-reg-key"] = t
+			t, err := expandEndpointControlSettingsForticlientRegKey(d, v, "forticlient_reg_key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-reg-key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("forticlient_reg_timeout"); ok {
+		if setArgNil {
+			obj["forticlient-reg-timeout"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientRegTimeout(d, v, "forticlient_reg_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-reg-timeout"] = t
+			t, err := expandEndpointControlSettingsForticlientRegTimeout(d, v, "forticlient_reg_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-reg-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("download_custom_link"); ok {
+		if setArgNil {
+			obj["download-custom-link"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsDownloadCustomLink(d, v, "download_custom_link", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["download-custom-link"] = t
+			t, err := expandEndpointControlSettingsDownloadCustomLink(d, v, "download_custom_link", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["download-custom-link"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("download_location"); ok {
+		if setArgNil {
+			obj["download-location"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsDownloadLocation(d, v, "download_location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["download-location"] = t
+			t, err := expandEndpointControlSettingsDownloadLocation(d, v, "download_location", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["download-location"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_offline_grace"); ok {
+		if setArgNil {
+			obj["forticlient-offline-grace"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientOfflineGrace(d, v, "forticlient_offline_grace", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-offline-grace"] = t
+			t, err := expandEndpointControlSettingsForticlientOfflineGrace(d, v, "forticlient_offline_grace", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-offline-grace"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_offline_grace_interval"); ok {
+		if setArgNil {
+			obj["forticlient-offline-grace-interval"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientOfflineGraceInterval(d, v, "forticlient_offline_grace_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-offline-grace-interval"] = t
+			t, err := expandEndpointControlSettingsForticlientOfflineGraceInterval(d, v, "forticlient_offline_grace_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-offline-grace-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_keepalive_interval"); ok {
+		if setArgNil {
+			obj["forticlient-keepalive-interval"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientKeepaliveInterval(d, v, "forticlient_keepalive_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-keepalive-interval"] = t
+			t, err := expandEndpointControlSettingsForticlientKeepaliveInterval(d, v, "forticlient_keepalive_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-keepalive-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_sys_update_interval"); ok {
+		if setArgNil {
+			obj["forticlient-sys-update-interval"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientSysUpdateInterval(d, v, "forticlient_sys_update_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-sys-update-interval"] = t
+			t, err := expandEndpointControlSettingsForticlientSysUpdateInterval(d, v, "forticlient_sys_update_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-sys-update-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("forticlient_avdb_update_interval"); ok {
+		if setArgNil {
+			obj["forticlient-avdb-update-interval"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientAvdbUpdateInterval(d, v, "forticlient_avdb_update_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-avdb-update-interval"] = t
+			t, err := expandEndpointControlSettingsForticlientAvdbUpdateInterval(d, v, "forticlient_avdb_update_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-avdb-update-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("forticlient_warning_interval"); ok {
+		if setArgNil {
+			obj["forticlient-warning-interval"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientWarningInterval(d, v, "forticlient_warning_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-warning-interval"] = t
+			t, err := expandEndpointControlSettingsForticlientWarningInterval(d, v, "forticlient_warning_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-warning-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_user_avatar"); ok {
+		if setArgNil {
+			obj["forticlient-user-avatar"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientUserAvatar(d, v, "forticlient_user_avatar", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-user-avatar"] = t
+			t, err := expandEndpointControlSettingsForticlientUserAvatar(d, v, "forticlient_user_avatar", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-user-avatar"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_disconnect_unsupported_client"); ok {
+		if setArgNil {
+			obj["forticlient-disconnect-unsupported-client"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientDisconnectUnsupportedClient(d, v, "forticlient_disconnect_unsupported_client", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-disconnect-unsupported-client"] = t
+			t, err := expandEndpointControlSettingsForticlientDisconnectUnsupportedClient(d, v, "forticlient_disconnect_unsupported_client", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-disconnect-unsupported-client"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_dereg_unsupported_client"); ok {
+		if setArgNil {
+			obj["forticlient-dereg-unsupported-client"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientDeregUnsupportedClient(d, v, "forticlient_dereg_unsupported_client", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-dereg-unsupported-client"] = t
+			t, err := expandEndpointControlSettingsForticlientDeregUnsupportedClient(d, v, "forticlient_dereg_unsupported_client", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-dereg-unsupported-client"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_ems_rest_api_call_timeout"); ok {
+		if setArgNil {
+			obj["forticlient-ems-rest-api-call-timeout"] = nil
+		} else {
 
-		t, err := expandEndpointControlSettingsForticlientEmsRestApiCallTimeout(d, v, "forticlient_ems_rest_api_call_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticlient-ems-rest-api-call-timeout"] = t
+			t, err := expandEndpointControlSettingsForticlientEmsRestApiCallTimeout(d, v, "forticlient_ems_rest_api_call_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticlient-ems-rest-api-call-timeout"] = t
+			}
 		}
 	}
 

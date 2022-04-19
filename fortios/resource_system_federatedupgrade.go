@@ -129,7 +129,7 @@ func resourceSystemFederatedUpgradeUpdate(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	obj, err := getObjectSystemFederatedUpgrade(d, c.Fv)
+	obj, err := getObjectSystemFederatedUpgrade(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFederatedUpgrade resource while getting object: %v", err)
 	}
@@ -151,7 +151,6 @@ func resourceSystemFederatedUpgradeUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSystemFederatedUpgradeDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -163,9 +162,15 @@ func resourceSystemFederatedUpgradeDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteSystemFederatedUpgrade(mkey, vdomparam)
+	obj, err := getObjectSystemFederatedUpgrade(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFederatedUpgrade resource: %v", err)
+		return fmt.Errorf("Error updating SystemFederatedUpgrade resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFederatedUpgrade(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFederatedUpgrade resource: %v", err)
 	}
 
 	d.SetId("")
@@ -493,66 +498,90 @@ func expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d *schema.Resourc
 	return v, nil
 }
 
-func getObjectSystemFederatedUpgrade(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFederatedUpgradeStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFederatedUpgradeStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("failure_reason"); ok {
+		if setArgNil {
+			obj["failure-reason"] = nil
+		} else {
 
-		t, err := expandSystemFederatedUpgradeFailureReason(d, v, "failure_reason", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["failure-reason"] = t
+			t, err := expandSystemFederatedUpgradeFailureReason(d, v, "failure_reason", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["failure-reason"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("failure_device"); ok {
+		if setArgNil {
+			obj["failure-device"] = nil
+		} else {
 
-		t, err := expandSystemFederatedUpgradeFailureDevice(d, v, "failure_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["failure-device"] = t
+			t, err := expandSystemFederatedUpgradeFailureDevice(d, v, "failure_device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["failure-device"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("upgrade_id"); ok {
+		if setArgNil {
+			obj["upgrade-id"] = nil
+		} else {
 
-		t, err := expandSystemFederatedUpgradeUpgradeId(d, v, "upgrade_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upgrade-id"] = t
+			t, err := expandSystemFederatedUpgradeUpgradeId(d, v, "upgrade_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upgrade-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("next_path_index"); ok {
+		if setArgNil {
+			obj["next-path-index"] = nil
+		} else {
 
-		t, err := expandSystemFederatedUpgradeNextPathIndex(d, v, "next_path_index", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["next-path-index"] = t
+			t, err := expandSystemFederatedUpgradeNextPathIndex(d, v, "next_path_index", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["next-path-index"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("node_list"); ok {
+		if setArgNil {
+			obj["node-list"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemFederatedUpgradeNodeList(d, v, "node_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["node-list"] = t
+			t, err := expandSystemFederatedUpgradeNodeList(d, v, "node_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["node-list"] = t
+			}
 		}
 	}
 

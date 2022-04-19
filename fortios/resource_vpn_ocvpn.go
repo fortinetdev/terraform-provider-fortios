@@ -261,7 +261,7 @@ func resourceVpnOcvpnUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectVpnOcvpn(d, c.Fv)
+	obj, err := getObjectVpnOcvpn(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnOcvpn resource while getting object: %v", err)
 	}
@@ -283,7 +283,6 @@ func resourceVpnOcvpnUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceVpnOcvpnDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -295,9 +294,15 @@ func resourceVpnOcvpnDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteVpnOcvpn(mkey, vdomparam)
+	obj, err := getObjectVpnOcvpn(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting VpnOcvpn resource: %v", err)
+		return fmt.Errorf("Error updating VpnOcvpn resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateVpnOcvpn(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing VpnOcvpn resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1115,7 +1120,7 @@ func expandVpnOcvpnOverlaysSubnetsInterface(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1127,18 +1132,30 @@ func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["status"] = nil
+		} else {
 
-		result["status"], _ = expandVpnOcvpnForticlientAccessStatus(d, i["status"], pre_append, sv)
+			result["status"], _ = expandVpnOcvpnForticlientAccessStatus(d, i["status"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "psksecret"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["psksecret"] = nil
+		} else {
 
-		result["psksecret"], _ = expandVpnOcvpnForticlientAccessPsksecret(d, i["psksecret"], pre_append, sv)
+			result["psksecret"], _ = expandVpnOcvpnForticlientAccessPsksecret(d, i["psksecret"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "auth_groups"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["auth-groups"] = make([]struct{}, 0)
+		} else {
 
-		result["auth-groups"], _ = expandVpnOcvpnForticlientAccessAuthGroups(d, i["auth_groups"], pre_append, sv)
+			result["auth-groups"], _ = expandVpnOcvpnForticlientAccessAuthGroups(d, i["auth_groups"], pre_append, sv)
+		}
 	} else {
 		result["auth-groups"] = make([]string, 0)
 	}
@@ -1236,152 +1253,208 @@ func expandVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(d *schema.Reso
 	return v, nil
 }
 
-func getObjectVpnOcvpn(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandVpnOcvpnStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("role"); ok {
+		if setArgNil {
+			obj["role"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnRole(d, v, "role", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["role"] = t
+			t, err := expandVpnOcvpnRole(d, v, "role", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["role"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multipath"); ok {
+		if setArgNil {
+			obj["multipath"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnMultipath(d, v, "multipath", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multipath"] = t
+			t, err := expandVpnOcvpnMultipath(d, v, "multipath", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multipath"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sdwan"); ok {
+		if setArgNil {
+			obj["sdwan"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnSdwan(d, v, "sdwan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sdwan"] = t
+			t, err := expandVpnOcvpnSdwan(d, v, "sdwan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sdwan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sdwan_zone"); ok {
+		if setArgNil {
+			obj["sdwan-zone"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnSdwanZone(d, v, "sdwan_zone", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sdwan-zone"] = t
+			t, err := expandVpnOcvpnSdwanZone(d, v, "sdwan_zone", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sdwan-zone"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wan_interface"); ok {
+		if setArgNil {
+			obj["wan-interface"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandVpnOcvpnWanInterface(d, v, "wan_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wan-interface"] = t
+			t, err := expandVpnOcvpnWanInterface(d, v, "wan_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wan-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip_allocation_block"); ok {
+		if setArgNil {
+			obj["ip-allocation-block"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnIpAllocationBlock(d, v, "ip_allocation_block", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip-allocation-block"] = t
+			t, err := expandVpnOcvpnIpAllocationBlock(d, v, "ip_allocation_block", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip-allocation-block"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("poll_interval"); ok {
+		if setArgNil {
+			obj["poll-interval"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnPollInterval(d, v, "poll_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["poll-interval"] = t
+			t, err := expandVpnOcvpnPollInterval(d, v, "poll_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["poll-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_discovery"); ok {
+		if setArgNil {
+			obj["auto-discovery"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnAutoDiscovery(d, v, "auto_discovery", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-discovery"] = t
+			t, err := expandVpnOcvpnAutoDiscovery(d, v, "auto_discovery", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-discovery"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_discovery_shortcut_mode"); ok {
+		if setArgNil {
+			obj["auto-discovery-shortcut-mode"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnAutoDiscoveryShortcutMode(d, v, "auto_discovery_shortcut_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-discovery-shortcut-mode"] = t
+			t, err := expandVpnOcvpnAutoDiscoveryShortcutMode(d, v, "auto_discovery_shortcut_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-discovery-shortcut-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("eap"); ok {
+		if setArgNil {
+			obj["eap"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnEap(d, v, "eap", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["eap"] = t
+			t, err := expandVpnOcvpnEap(d, v, "eap", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["eap"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("eap_users"); ok {
+		if setArgNil {
+			obj["eap-users"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnEapUsers(d, v, "eap_users", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["eap-users"] = t
+			t, err := expandVpnOcvpnEapUsers(d, v, "eap_users", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["eap-users"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nat"); ok {
+		if setArgNil {
+			obj["nat"] = nil
+		} else {
 
-		t, err := expandVpnOcvpnNat(d, v, "nat", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nat"] = t
+			t, err := expandVpnOcvpnNat(d, v, "nat", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("overlays"); ok {
+		if setArgNil {
+			obj["overlays"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandVpnOcvpnOverlays(d, v, "overlays", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["overlays"] = t
+			t, err := expandVpnOcvpnOverlays(d, v, "overlays", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["overlays"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticlient_access"); ok {
 
-		t, err := expandVpnOcvpnForticlientAccess(d, v, "forticlient_access", sv)
+		t, err := expandVpnOcvpnForticlientAccess(d, v, "forticlient_access", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {

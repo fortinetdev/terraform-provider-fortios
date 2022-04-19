@@ -67,7 +67,7 @@ func resourceSystemDns64Update(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemDns64(d, c.Fv)
+	obj, err := getObjectSystemDns64(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDns64 resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceSystemDns64Update(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemDns64Delete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceSystemDns64Delete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemDns64(mkey, vdomparam)
+	obj, err := getObjectSystemDns64(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemDns64 resource: %v", err)
+		return fmt.Errorf("Error updating SystemDns64 resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemDns64(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemDns64 resource: %v", err)
 	}
 
 	d.SetId("")
@@ -197,36 +202,48 @@ func expandSystemDns64AlwaysSynthesizeAaaaRecord(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectSystemDns64(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemDns64(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemDns64Status(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemDns64Status(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns64_prefix"); ok {
+		if setArgNil {
+			obj["dns64-prefix"] = nil
+		} else {
 
-		t, err := expandSystemDns64Dns64Prefix(d, v, "dns64_prefix", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns64-prefix"] = t
+			t, err := expandSystemDns64Dns64Prefix(d, v, "dns64_prefix", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns64-prefix"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("always_synthesize_aaaa_record"); ok {
+		if setArgNil {
+			obj["always-synthesize-aaaa-record"] = nil
+		} else {
 
-		t, err := expandSystemDns64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["always-synthesize-aaaa-record"] = t
+			t, err := expandSystemDns64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["always-synthesize-aaaa-record"] = t
+			}
 		}
 	}
 

@@ -79,7 +79,7 @@ func resourceReportSettingUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectReportSetting(d, c.Fv)
+	obj, err := getObjectReportSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportSetting resource while getting object: %v", err)
 	}
@@ -101,7 +101,6 @@ func resourceReportSettingUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceReportSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -113,9 +112,15 @@ func resourceReportSettingDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteReportSetting(mkey, vdomparam)
+	obj, err := getObjectReportSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting ReportSetting resource: %v", err)
+		return fmt.Errorf("Error updating ReportSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateReportSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing ReportSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -237,56 +242,76 @@ func expandReportSettingTopN(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
-func getObjectReportSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectReportSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("pdf_report"); ok {
+		if setArgNil {
+			obj["pdf-report"] = nil
+		} else {
 
-		t, err := expandReportSettingPdfReport(d, v, "pdf_report", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pdf-report"] = t
+			t, err := expandReportSettingPdfReport(d, v, "pdf_report", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pdf-report"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiview"); ok {
+		if setArgNil {
+			obj["fortiview"] = nil
+		} else {
 
-		t, err := expandReportSettingFortiview(d, v, "fortiview", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiview"] = t
+			t, err := expandReportSettingFortiview(d, v, "fortiview", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiview"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("report_source"); ok {
+		if setArgNil {
+			obj["report-source"] = nil
+		} else {
 
-		t, err := expandReportSettingReportSource(d, v, "report_source", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["report-source"] = t
+			t, err := expandReportSettingReportSource(d, v, "report_source", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["report-source"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("web_browsing_threshold"); ok {
+		if setArgNil {
+			obj["web-browsing-threshold"] = nil
+		} else {
 
-		t, err := expandReportSettingWebBrowsingThreshold(d, v, "web_browsing_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["web-browsing-threshold"] = t
+			t, err := expandReportSettingWebBrowsingThreshold(d, v, "web_browsing_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["web-browsing-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("top_n"); ok {
+		if setArgNil {
+			obj["top-n"] = nil
+		} else {
 
-		t, err := expandReportSettingTopN(d, v, "top_n", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["top-n"] = t
+			t, err := expandReportSettingTopN(d, v, "top_n", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["top-n"] = t
+			}
 		}
 	}
 

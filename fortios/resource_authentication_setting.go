@@ -163,7 +163,7 @@ func resourceAuthenticationSettingUpdate(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	obj, err := getObjectAuthenticationSetting(d, c.Fv)
+	obj, err := getObjectAuthenticationSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AuthenticationSetting resource while getting object: %v", err)
 	}
@@ -185,7 +185,6 @@ func resourceAuthenticationSettingUpdate(d *schema.ResourceData, m interface{}) 
 
 func resourceAuthenticationSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -197,9 +196,15 @@ func resourceAuthenticationSettingDelete(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	err := c.DeleteAuthenticationSetting(mkey, vdomparam)
+	obj, err := getObjectAuthenticationSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting AuthenticationSetting resource: %v", err)
+		return fmt.Errorf("Error updating AuthenticationSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateAuthenticationSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing AuthenticationSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -619,166 +624,230 @@ func expandAuthenticationSettingDevRangeName(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectAuthenticationSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("active_auth_scheme"); ok {
+		if setArgNil {
+			obj["active-auth-scheme"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingActiveAuthScheme(d, v, "active_auth_scheme", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["active-auth-scheme"] = t
+			t, err := expandAuthenticationSettingActiveAuthScheme(d, v, "active_auth_scheme", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["active-auth-scheme"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sso_auth_scheme"); ok {
+		if setArgNil {
+			obj["sso-auth-scheme"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingSsoAuthScheme(d, v, "sso_auth_scheme", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sso-auth-scheme"] = t
+			t, err := expandAuthenticationSettingSsoAuthScheme(d, v, "sso_auth_scheme", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sso-auth-scheme"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal_type"); ok {
+		if setArgNil {
+			obj["captive-portal-type"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortalType(d, v, "captive_portal_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal-type"] = t
+			t, err := expandAuthenticationSettingCaptivePortalType(d, v, "captive_portal_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal_ip"); ok {
+		if setArgNil {
+			obj["captive-portal-ip"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortalIp(d, v, "captive_portal_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal-ip"] = t
+			t, err := expandAuthenticationSettingCaptivePortalIp(d, v, "captive_portal_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal_ip6"); ok {
+		if setArgNil {
+			obj["captive-portal-ip6"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortalIp6(d, v, "captive_portal_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal-ip6"] = t
+			t, err := expandAuthenticationSettingCaptivePortalIp6(d, v, "captive_portal_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal"); ok {
+		if setArgNil {
+			obj["captive-portal"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortal(d, v, "captive_portal", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal"] = t
+			t, err := expandAuthenticationSettingCaptivePortal(d, v, "captive_portal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal6"); ok {
+		if setArgNil {
+			obj["captive-portal6"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortal6(d, v, "captive_portal6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal6"] = t
+			t, err := expandAuthenticationSettingCaptivePortal6(d, v, "captive_portal6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert_auth"); ok {
+		if setArgNil {
+			obj["cert-auth"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCertAuth(d, v, "cert_auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-auth"] = t
+			t, err := expandAuthenticationSettingCertAuth(d, v, "cert_auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert_captive_portal"); ok {
+		if setArgNil {
+			obj["cert-captive-portal"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCertCaptivePortal(d, v, "cert_captive_portal", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-captive-portal"] = t
+			t, err := expandAuthenticationSettingCertCaptivePortal(d, v, "cert_captive_portal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-captive-portal"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert_captive_portal_ip"); ok {
+		if setArgNil {
+			obj["cert-captive-portal-ip"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCertCaptivePortalIp(d, v, "cert_captive_portal_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-captive-portal-ip"] = t
+			t, err := expandAuthenticationSettingCertCaptivePortalIp(d, v, "cert_captive_portal_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-captive-portal-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert_captive_portal_port"); ok {
+		if setArgNil {
+			obj["cert-captive-portal-port"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCertCaptivePortalPort(d, v, "cert_captive_portal_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-captive-portal-port"] = t
+			t, err := expandAuthenticationSettingCertCaptivePortalPort(d, v, "cert_captive_portal_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-captive-portal-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal_port"); ok {
+		if setArgNil {
+			obj["captive-portal-port"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortalPort(d, v, "captive_portal_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal-port"] = t
+			t, err := expandAuthenticationSettingCaptivePortalPort(d, v, "captive_portal_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_https"); ok {
+		if setArgNil {
+			obj["auth-https"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingAuthHttps(d, v, "auth_https", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-https"] = t
+			t, err := expandAuthenticationSettingAuthHttps(d, v, "auth_https", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-https"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("captive_portal_ssl_port"); ok {
+		if setArgNil {
+			obj["captive-portal-ssl-port"] = nil
+		} else {
 
-		t, err := expandAuthenticationSettingCaptivePortalSslPort(d, v, "captive_portal_ssl_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["captive-portal-ssl-port"] = t
+			t, err := expandAuthenticationSettingCaptivePortalSslPort(d, v, "captive_portal_ssl_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["captive-portal-ssl-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_cert_ca"); ok {
+		if setArgNil {
+			obj["user-cert-ca"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandAuthenticationSettingUserCertCa(d, v, "user_cert_ca", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-cert-ca"] = t
+			t, err := expandAuthenticationSettingUserCertCa(d, v, "user_cert_ca", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-cert-ca"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dev_range"); ok {
+		if setArgNil {
+			obj["dev-range"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandAuthenticationSettingDevRange(d, v, "dev_range", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dev-range"] = t
+			t, err := expandAuthenticationSettingDevRange(d, v, "dev_range", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dev-range"] = t
+			}
 		}
 	}
 

@@ -67,7 +67,7 @@ func resourceFirewallIpmacbindingSettingUpdate(d *schema.ResourceData, m interfa
 		}
 	}
 
-	obj, err := getObjectFirewallIpmacbindingSetting(d, c.Fv)
+	obj, err := getObjectFirewallIpmacbindingSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpmacbindingSetting resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceFirewallIpmacbindingSettingUpdate(d *schema.ResourceData, m interfa
 
 func resourceFirewallIpmacbindingSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceFirewallIpmacbindingSettingDelete(d *schema.ResourceData, m interfa
 		}
 	}
 
-	err := c.DeleteFirewallIpmacbindingSetting(mkey, vdomparam)
+	obj, err := getObjectFirewallIpmacbindingSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FirewallIpmacbindingSetting resource: %v", err)
+		return fmt.Errorf("Error updating FirewallIpmacbindingSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFirewallIpmacbindingSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FirewallIpmacbindingSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -197,36 +202,48 @@ func expandFirewallIpmacbindingSettingUndefinedhost(d *schema.ResourceData, v in
 	return v, nil
 }
 
-func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("bindthroughfw"); ok {
+		if setArgNil {
+			obj["bindthroughfw"] = nil
+		} else {
 
-		t, err := expandFirewallIpmacbindingSettingBindthroughfw(d, v, "bindthroughfw", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bindthroughfw"] = t
+			t, err := expandFirewallIpmacbindingSettingBindthroughfw(d, v, "bindthroughfw", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bindthroughfw"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bindtofw"); ok {
+		if setArgNil {
+			obj["bindtofw"] = nil
+		} else {
 
-		t, err := expandFirewallIpmacbindingSettingBindtofw(d, v, "bindtofw", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bindtofw"] = t
+			t, err := expandFirewallIpmacbindingSettingBindtofw(d, v, "bindtofw", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bindtofw"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("undefinedhost"); ok {
+		if setArgNil {
+			obj["undefinedhost"] = nil
+		} else {
 
-		t, err := expandFirewallIpmacbindingSettingUndefinedhost(d, v, "undefinedhost", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["undefinedhost"] = t
+			t, err := expandFirewallIpmacbindingSettingUndefinedhost(d, v, "undefinedhost", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["undefinedhost"] = t
+			}
 		}
 	}
 

@@ -62,7 +62,7 @@ func resourceSwitchControllerSflowUpdate(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	obj, err := getObjectSwitchControllerSflow(d, c.Fv)
+	obj, err := getObjectSwitchControllerSflow(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSflow resource while getting object: %v", err)
 	}
@@ -84,7 +84,6 @@ func resourceSwitchControllerSflowUpdate(d *schema.ResourceData, m interface{}) 
 
 func resourceSwitchControllerSflowDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -96,9 +95,15 @@ func resourceSwitchControllerSflowDelete(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	err := c.DeleteSwitchControllerSflow(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerSflow(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerSflow resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerSflow resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerSflow(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerSflow resource: %v", err)
 	}
 
 	d.SetId("")
@@ -178,26 +183,34 @@ func expandSwitchControllerSflowCollectorPort(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func getObjectSwitchControllerSflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSflow(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("collector_ip"); ok {
+		if setArgNil {
+			obj["collector-ip"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSflowCollectorIp(d, v, "collector_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-ip"] = t
+			t, err := expandSwitchControllerSflowCollectorIp(d, v, "collector_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
+		if setArgNil {
+			obj["collector-port"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSflowCollectorPort(d, v, "collector_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-port"] = t
+			t, err := expandSwitchControllerSflowCollectorPort(d, v, "collector_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-port"] = t
+			}
 		}
 	}
 

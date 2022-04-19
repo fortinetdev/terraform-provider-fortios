@@ -100,7 +100,7 @@ func resourceVpnL2TpUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectVpnL2Tp(d, c.Fv)
+	obj, err := getObjectVpnL2Tp(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnL2Tp resource while getting object: %v", err)
 	}
@@ -122,7 +122,6 @@ func resourceVpnL2TpUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceVpnL2TpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -134,9 +133,15 @@ func resourceVpnL2TpDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteVpnL2Tp(mkey, vdomparam)
+	obj, err := getObjectVpnL2Tp(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting VpnL2Tp resource: %v", err)
+		return fmt.Errorf("Error updating VpnL2Tp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateVpnL2Tp(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing VpnL2Tp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -314,96 +319,132 @@ func expandVpnL2TpCompress(d *schema.ResourceData, v interface{}, pre string, sv
 	return v, nil
 }
 
-func getObjectVpnL2Tp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("eip"); ok {
+		if setArgNil {
+			obj["eip"] = nil
+		} else {
 
-		t, err := expandVpnL2TpEip(d, v, "eip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["eip"] = t
+			t, err := expandVpnL2TpEip(d, v, "eip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["eip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip"); ok {
+		if setArgNil {
+			obj["sip"] = nil
+		} else {
 
-		t, err := expandVpnL2TpSip(d, v, "sip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip"] = t
+			t, err := expandVpnL2TpSip(d, v, "sip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandVpnL2TpStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandVpnL2TpStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("usrgrp"); ok {
+		if setArgNil {
+			obj["usrgrp"] = nil
+		} else {
 
-		t, err := expandVpnL2TpUsrgrp(d, v, "usrgrp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["usrgrp"] = t
+			t, err := expandVpnL2TpUsrgrp(d, v, "usrgrp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["usrgrp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enforce_ipsec"); ok {
+		if setArgNil {
+			obj["enforce-ipsec"] = nil
+		} else {
 
-		t, err := expandVpnL2TpEnforceIpsec(d, v, "enforce_ipsec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enforce-ipsec"] = t
+			t, err := expandVpnL2TpEnforceIpsec(d, v, "enforce_ipsec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enforce-ipsec"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {
+		if setArgNil {
+			obj["lcp-echo-interval"] = nil
+		} else {
 
-		t, err := expandVpnL2TpLcpEchoInterval(d, v, "lcp_echo_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lcp-echo-interval"] = t
+			t, err := expandVpnL2TpLcpEchoInterval(d, v, "lcp_echo_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lcp-echo-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("lcp_max_echo_fails"); ok {
+		if setArgNil {
+			obj["lcp-max-echo-fails"] = nil
+		} else {
 
-		t, err := expandVpnL2TpLcpMaxEchoFails(d, v, "lcp_max_echo_fails", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lcp-max-echo-fails"] = t
+			t, err := expandVpnL2TpLcpMaxEchoFails(d, v, "lcp_max_echo_fails", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lcp-max-echo-fails"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("hello_interval"); ok {
+		if setArgNil {
+			obj["hello-interval"] = nil
+		} else {
 
-		t, err := expandVpnL2TpHelloInterval(d, v, "hello_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hello-interval"] = t
+			t, err := expandVpnL2TpHelloInterval(d, v, "hello_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hello-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("compress"); ok {
+		if setArgNil {
+			obj["compress"] = nil
+		} else {
 
-		t, err := expandVpnL2TpCompress(d, v, "compress", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["compress"] = t
+			t, err := expandVpnL2TpCompress(d, v, "compress", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["compress"] = t
+			}
 		}
 	}
 

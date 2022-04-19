@@ -164,7 +164,7 @@ func resourceLogSyslogdSettingUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectLogSyslogdSetting(d, c.Fv)
+	obj, err := getObjectLogSyslogdSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogSyslogdSetting resource while getting object: %v", err)
 	}
@@ -186,7 +186,6 @@ func resourceLogSyslogdSettingUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceLogSyslogdSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -198,9 +197,15 @@ func resourceLogSyslogdSettingDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteLogSyslogdSetting(mkey, vdomparam)
+	obj, err := getObjectLogSyslogdSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogSyslogdSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogSyslogdSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogSyslogdSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogSyslogdSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -588,166 +593,230 @@ func expandLogSyslogdSettingSyslogType(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-func getObjectLogSyslogdSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogSyslogdSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogSyslogdSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandLogSyslogdSettingServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandLogSyslogdSettingMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingPort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandLogSyslogdSettingPort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("facility"); ok {
+		if setArgNil {
+			obj["facility"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingFacility(d, v, "facility", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["facility"] = t
+			t, err := expandLogSyslogdSettingFacility(d, v, "facility", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["facility"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandLogSyslogdSettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("format"); ok {
+		if setArgNil {
+			obj["format"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingFormat(d, v, "format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["format"] = t
+			t, err := expandLogSyslogdSettingFormat(d, v, "format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["format"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandLogSyslogdSettingPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_log_rate"); ok {
+		if setArgNil {
+			obj["max-log-rate"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingMaxLogRate(d, v, "max_log_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-log-rate"] = t
+			t, err := expandLogSyslogdSettingMaxLogRate(d, v, "max_log_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-log-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
+		if setArgNil {
+			obj["enc-algorithm"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingEncAlgorithm(d, v, "enc_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enc-algorithm"] = t
+			t, err := expandLogSyslogdSettingEncAlgorithm(d, v, "enc_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enc-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandLogSyslogdSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
+		if setArgNil {
+			obj["certificate"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingCertificate(d, v, "certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certificate"] = t
+			t, err := expandLogSyslogdSettingCertificate(d, v, "certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("custom_field_name"); ok {
+		if setArgNil {
+			obj["custom-field-name"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogSyslogdSettingCustomFieldName(d, v, "custom_field_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["custom-field-name"] = t
+			t, err := expandLogSyslogdSettingCustomFieldName(d, v, "custom_field_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["custom-field-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandLogSyslogdSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandLogSyslogdSettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("syslog_type"); ok {
+		if setArgNil {
+			obj["syslog-type"] = nil
+		} else {
 
-		t, err := expandLogSyslogdSettingSyslogType(d, v, "syslog_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["syslog-type"] = t
+			t, err := expandLogSyslogdSettingSyslogType(d, v, "syslog_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["syslog-type"] = t
+			}
 		}
 	}
 

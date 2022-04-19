@@ -155,7 +155,7 @@ func resourceWirelessControllerGlobalUpdate(d *schema.ResourceData, m interface{
 		}
 	}
 
-	obj, err := getObjectWirelessControllerGlobal(d, c.Fv)
+	obj, err := getObjectWirelessControllerGlobal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerGlobal resource while getting object: %v", err)
 	}
@@ -177,7 +177,6 @@ func resourceWirelessControllerGlobalUpdate(d *schema.ResourceData, m interface{
 
 func resourceWirelessControllerGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -189,9 +188,15 @@ func resourceWirelessControllerGlobalDelete(d *schema.ResourceData, m interface{
 		}
 	}
 
-	err := c.DeleteWirelessControllerGlobal(mkey, vdomparam)
+	obj, err := getObjectWirelessControllerGlobal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WirelessControllerGlobal resource: %v", err)
+		return fmt.Errorf("Error updating WirelessControllerGlobal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWirelessControllerGlobal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WirelessControllerGlobal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -509,196 +514,272 @@ func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func getObjectWirelessControllerGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
+		if setArgNil {
+			obj["name"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalName(d, v, "name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["name"] = t
+			t, err := expandWirelessControllerGlobalName(d, v, "name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("location"); ok {
+		if setArgNil {
+			obj["location"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalLocation(d, v, "location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["location"] = t
+			t, err := expandWirelessControllerGlobalLocation(d, v, "location", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["location"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("image_download"); ok {
+		if setArgNil {
+			obj["image-download"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalImageDownload(d, v, "image_download", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["image-download"] = t
+			t, err := expandWirelessControllerGlobalImageDownload(d, v, "image_download", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["image-download"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_retransmit"); ok {
+		if setArgNil {
+			obj["max-retransmit"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalMaxRetransmit(d, v, "max_retransmit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-retransmit"] = t
+			t, err := expandWirelessControllerGlobalMaxRetransmit(d, v, "max_retransmit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-retransmit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("control_message_offload"); ok {
+		if setArgNil {
+			obj["control-message-offload"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalControlMessageOffload(d, v, "control_message_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["control-message-offload"] = t
+			t, err := expandWirelessControllerGlobalControlMessageOffload(d, v, "control_message_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["control-message-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("data_ethernet_ii"); ok {
+		if setArgNil {
+			obj["data-ethernet-ii"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalDataEthernetIi(d, v, "data_ethernet_ii", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["data-ethernet-ii"] = t
+			t, err := expandWirelessControllerGlobalDataEthernetIi(d, v, "data_ethernet_ii", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["data-ethernet-ii"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("link_aggregation"); ok {
+		if setArgNil {
+			obj["link-aggregation"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalLinkAggregation(d, v, "link_aggregation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["link-aggregation"] = t
+			t, err := expandWirelessControllerGlobalLinkAggregation(d, v, "link_aggregation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["link-aggregation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("mesh_eth_type"); ok {
+		if setArgNil {
+			obj["mesh-eth-type"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalMeshEthType(d, v, "mesh_eth_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mesh-eth-type"] = t
+			t, err := expandWirelessControllerGlobalMeshEthType(d, v, "mesh_eth_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mesh-eth-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("fiapp_eth_type"); ok {
+		if setArgNil {
+			obj["fiapp-eth-type"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalFiappEthType(d, v, "fiapp_eth_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fiapp-eth-type"] = t
+			t, err := expandWirelessControllerGlobalFiappEthType(d, v, "fiapp_eth_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fiapp-eth-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("discovery_mc_addr"); ok {
+		if setArgNil {
+			obj["discovery-mc-addr"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalDiscoveryMcAddr(d, v, "discovery_mc_addr", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["discovery-mc-addr"] = t
+			t, err := expandWirelessControllerGlobalDiscoveryMcAddr(d, v, "discovery_mc_addr", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["discovery-mc-addr"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_clients"); ok {
+		if setArgNil {
+			obj["max-clients"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalMaxClients(d, v, "max_clients", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-clients"] = t
+			t, err := expandWirelessControllerGlobalMaxClients(d, v, "max_clients", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-clients"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("rogue_scan_mac_adjacency"); ok {
+		if setArgNil {
+			obj["rogue-scan-mac-adjacency"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalRogueScanMacAdjacency(d, v, "rogue_scan_mac_adjacency", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rogue-scan-mac-adjacency"] = t
+			t, err := expandWirelessControllerGlobalRogueScanMacAdjacency(d, v, "rogue_scan_mac_adjacency", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rogue-scan-mac-adjacency"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_base_ip"); ok {
+		if setArgNil {
+			obj["ipsec-base-ip"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalIpsecBaseIp(d, v, "ipsec_base_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-base-ip"] = t
+			t, err := expandWirelessControllerGlobalIpsecBaseIp(d, v, "ipsec_base_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-base-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wtp_share"); ok {
+		if setArgNil {
+			obj["wtp-share"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalWtpShare(d, v, "wtp_share", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wtp-share"] = t
+			t, err := expandWirelessControllerGlobalWtpShare(d, v, "wtp_share", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wtp-share"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_mode"); ok {
+		if setArgNil {
+			obj["tunnel-mode"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalTunnelMode(d, v, "tunnel_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-mode"] = t
+			t, err := expandWirelessControllerGlobalTunnelMode(d, v, "tunnel_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nac_interval"); ok {
+		if setArgNil {
+			obj["nac-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalNacInterval(d, v, "nac_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nac-interval"] = t
+			t, err := expandWirelessControllerGlobalNacInterval(d, v, "nac_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nac-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ap_log_server"); ok {
+		if setArgNil {
+			obj["ap-log-server"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalApLogServer(d, v, "ap_log_server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ap-log-server"] = t
+			t, err := expandWirelessControllerGlobalApLogServer(d, v, "ap_log_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ap-log-server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ap_log_server_ip"); ok {
+		if setArgNil {
+			obj["ap-log-server-ip"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalApLogServerIp(d, v, "ap_log_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ap-log-server-ip"] = t
+			t, err := expandWirelessControllerGlobalApLogServerIp(d, v, "ap_log_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ap-log-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ap_log_server_port"); ok {
+		if setArgNil {
+			obj["ap-log-server-port"] = nil
+		} else {
 
-		t, err := expandWirelessControllerGlobalApLogServerPort(d, v, "ap_log_server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ap-log-server-port"] = t
+			t, err := expandWirelessControllerGlobalApLogServerPort(d, v, "ap_log_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ap-log-server-port"] = t
+			}
 		}
 	}
 

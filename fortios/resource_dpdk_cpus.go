@@ -82,7 +82,7 @@ func resourceDpdkCpusUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectDpdkCpus(d, c.Fv)
+	obj, err := getObjectDpdkCpus(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DpdkCpus resource while getting object: %v", err)
 	}
@@ -104,7 +104,6 @@ func resourceDpdkCpusUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceDpdkCpusDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -116,9 +115,15 @@ func resourceDpdkCpusDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteDpdkCpus(mkey, vdomparam)
+	obj, err := getObjectDpdkCpus(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting DpdkCpus resource: %v", err)
+		return fmt.Errorf("Error updating DpdkCpus resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateDpdkCpus(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing DpdkCpus resource: %v", err)
 	}
 
 	d.SetId("")
@@ -240,56 +245,76 @@ func expandDpdkCpusIsolatedCpus(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-func getObjectDpdkCpus(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("rx_cpus"); ok {
+		if setArgNil {
+			obj["rx-cpus"] = nil
+		} else {
 
-		t, err := expandDpdkCpusRxCpus(d, v, "rx_cpus", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rx-cpus"] = t
+			t, err := expandDpdkCpusRxCpus(d, v, "rx_cpus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rx-cpus"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vnp_cpus"); ok {
+		if setArgNil {
+			obj["vnp-cpus"] = nil
+		} else {
 
-		t, err := expandDpdkCpusVnpCpus(d, v, "vnp_cpus", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vnp-cpus"] = t
+			t, err := expandDpdkCpusVnpCpus(d, v, "vnp_cpus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vnp-cpus"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ips_cpus"); ok {
+		if setArgNil {
+			obj["ips-cpus"] = nil
+		} else {
 
-		t, err := expandDpdkCpusIpsCpus(d, v, "ips_cpus", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-cpus"] = t
+			t, err := expandDpdkCpusIpsCpus(d, v, "ips_cpus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-cpus"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tx_cpus"); ok {
+		if setArgNil {
+			obj["tx-cpus"] = nil
+		} else {
 
-		t, err := expandDpdkCpusTxCpus(d, v, "tx_cpus", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tx-cpus"] = t
+			t, err := expandDpdkCpusTxCpus(d, v, "tx_cpus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tx-cpus"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("isolated_cpus"); ok {
+		if setArgNil {
+			obj["isolated-cpus"] = nil
+		} else {
 
-		t, err := expandDpdkCpusIsolatedCpus(d, v, "isolated_cpus", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["isolated-cpus"] = t
+			t, err := expandDpdkCpusIsolatedCpus(d, v, "isolated_cpus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["isolated-cpus"] = t
+			}
 		}
 	}
 

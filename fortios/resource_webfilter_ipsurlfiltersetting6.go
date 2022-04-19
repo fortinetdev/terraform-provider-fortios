@@ -74,7 +74,7 @@ func resourceWebfilterIpsUrlfilterSetting6Update(d *schema.ResourceData, m inter
 		}
 	}
 
-	obj, err := getObjectWebfilterIpsUrlfilterSetting6(d, c.Fv)
+	obj, err := getObjectWebfilterIpsUrlfilterSetting6(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterSetting6 resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceWebfilterIpsUrlfilterSetting6Update(d *schema.ResourceData, m inter
 
 func resourceWebfilterIpsUrlfilterSetting6Delete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceWebfilterIpsUrlfilterSetting6Delete(d *schema.ResourceData, m inter
 		}
 	}
 
-	err := c.DeleteWebfilterIpsUrlfilterSetting6(mkey, vdomparam)
+	obj, err := getObjectWebfilterIpsUrlfilterSetting6(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WebfilterIpsUrlfilterSetting6 resource: %v", err)
+		return fmt.Errorf("Error updating WebfilterIpsUrlfilterSetting6 resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWebfilterIpsUrlfilterSetting6(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WebfilterIpsUrlfilterSetting6 resource: %v", err)
 	}
 
 	d.SetId("")
@@ -218,46 +223,62 @@ func expandWebfilterIpsUrlfilterSetting6GeoFilter(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("device"); ok {
+		if setArgNil {
+			obj["device"] = nil
+		} else {
 
-		t, err := expandWebfilterIpsUrlfilterSetting6Device(d, v, "device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device"] = t
+			t, err := expandWebfilterIpsUrlfilterSetting6Device(d, v, "device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
+		if setArgNil {
+			obj["distance"] = nil
+		} else {
 
-		t, err := expandWebfilterIpsUrlfilterSetting6Distance(d, v, "distance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance"] = t
+			t, err := expandWebfilterIpsUrlfilterSetting6Distance(d, v, "distance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gateway6"); ok {
+		if setArgNil {
+			obj["gateway6"] = nil
+		} else {
 
-		t, err := expandWebfilterIpsUrlfilterSetting6Gateway6(d, v, "gateway6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gateway6"] = t
+			t, err := expandWebfilterIpsUrlfilterSetting6Gateway6(d, v, "gateway6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gateway6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("geo_filter"); ok {
+		if setArgNil {
+			obj["geo-filter"] = nil
+		} else {
 
-		t, err := expandWebfilterIpsUrlfilterSetting6GeoFilter(d, v, "geo_filter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["geo-filter"] = t
+			t, err := expandWebfilterIpsUrlfilterSetting6GeoFilter(d, v, "geo_filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["geo-filter"] = t
+			}
 		}
 	}
 

@@ -184,7 +184,7 @@ func resourceLogFortianalyzerCloudSettingUpdate(d *schema.ResourceData, m interf
 		}
 	}
 
-	obj, err := getObjectLogFortianalyzerCloudSetting(d, c.Fv)
+	obj, err := getObjectLogFortianalyzerCloudSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerCloudSetting resource while getting object: %v", err)
 	}
@@ -206,7 +206,6 @@ func resourceLogFortianalyzerCloudSettingUpdate(d *schema.ResourceData, m interf
 
 func resourceLogFortianalyzerCloudSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -218,9 +217,15 @@ func resourceLogFortianalyzerCloudSettingDelete(d *schema.ResourceData, m interf
 		}
 	}
 
-	err := c.DeleteLogFortianalyzerCloudSetting(mkey, vdomparam)
+	obj, err := getObjectLogFortianalyzerCloudSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogFortianalyzerCloudSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogFortianalyzerCloudSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogFortianalyzerCloudSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogFortianalyzerCloudSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -652,226 +657,314 @@ func expandLogFortianalyzerCloudSettingInterface(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogFortianalyzerCloudSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ips_archive"); ok {
+		if setArgNil {
+			obj["ips-archive"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingIpsArchive(d, v, "ips_archive", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-archive"] = t
+			t, err := expandLogFortianalyzerCloudSettingIpsArchive(d, v, "ips_archive", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-archive"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certificate_verification"); ok {
+		if setArgNil {
+			obj["certificate-verification"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingCertificateVerification(d, v, "certificate_verification", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certificate-verification"] = t
+			t, err := expandLogFortianalyzerCloudSettingCertificateVerification(d, v, "certificate_verification", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate-verification"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("serial"); ok {
+		if setArgNil {
+			obj["serial"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingSerial(d, v, "serial", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["serial"] = t
+			t, err := expandLogFortianalyzerCloudSettingSerial(d, v, "serial", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["serial"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("preshared_key"); ok {
+		if setArgNil {
+			obj["preshared-key"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingPresharedKey(d, v, "preshared_key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["preshared-key"] = t
+			t, err := expandLogFortianalyzerCloudSettingPresharedKey(d, v, "preshared_key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["preshared-key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {
+		if setArgNil {
+			obj["access-config"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingAccessConfig(d, v, "access_config", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["access-config"] = t
+			t, err := expandLogFortianalyzerCloudSettingAccessConfig(d, v, "access_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["access-config"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hmac_algorithm"); ok {
+		if setArgNil {
+			obj["hmac-algorithm"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hmac-algorithm"] = t
+			t, err := expandLogFortianalyzerCloudSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hmac-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
+		if setArgNil {
+			obj["enc-algorithm"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingEncAlgorithm(d, v, "enc_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enc-algorithm"] = t
+			t, err := expandLogFortianalyzerCloudSettingEncAlgorithm(d, v, "enc_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enc-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandLogFortianalyzerCloudSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("conn_timeout"); ok {
+		if setArgNil {
+			obj["conn-timeout"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingConnTimeout(d, v, "conn_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["conn-timeout"] = t
+			t, err := expandLogFortianalyzerCloudSettingConnTimeout(d, v, "conn_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["conn-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("monitor_keepalive_period"); ok {
+		if setArgNil {
+			obj["monitor-keepalive-period"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["monitor-keepalive-period"] = t
+			t, err := expandLogFortianalyzerCloudSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor-keepalive-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("monitor_failure_retry_period"); ok {
+		if setArgNil {
+			obj["monitor-failure-retry-period"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["monitor-failure-retry-period"] = t
+			t, err := expandLogFortianalyzerCloudSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor-failure-retry-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
+		if setArgNil {
+			obj["certificate"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingCertificate(d, v, "certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certificate"] = t
+			t, err := expandLogFortianalyzerCloudSettingCertificate(d, v, "certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandLogFortianalyzerCloudSettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
+		if setArgNil {
+			obj["upload-option"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingUploadOption(d, v, "upload_option", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-option"] = t
+			t, err := expandLogFortianalyzerCloudSettingUploadOption(d, v, "upload_option", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-option"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_interval"); ok {
+		if setArgNil {
+			obj["upload-interval"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingUploadInterval(d, v, "upload_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-interval"] = t
+			t, err := expandLogFortianalyzerCloudSettingUploadInterval(d, v, "upload_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_day"); ok {
+		if setArgNil {
+			obj["upload-day"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingUploadDay(d, v, "upload_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-day"] = t
+			t, err := expandLogFortianalyzerCloudSettingUploadDay(d, v, "upload_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
+		if setArgNil {
+			obj["upload-time"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingUploadTime(d, v, "upload_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-time"] = t
+			t, err := expandLogFortianalyzerCloudSettingUploadTime(d, v, "upload_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandLogFortianalyzerCloudSettingPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_log_rate"); ok {
+		if setArgNil {
+			obj["max-log-rate"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingMaxLogRate(d, v, "max_log_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-log-rate"] = t
+			t, err := expandLogFortianalyzerCloudSettingMaxLogRate(d, v, "max_log_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-log-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandLogFortianalyzerCloudSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudSettingInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandLogFortianalyzerCloudSettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

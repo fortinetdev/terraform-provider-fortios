@@ -160,7 +160,7 @@ func resourceWirelessControllerTimersUpdate(d *schema.ResourceData, m interface{
 		}
 	}
 
-	obj, err := getObjectWirelessControllerTimers(d, c.Fv)
+	obj, err := getObjectWirelessControllerTimers(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerTimers resource while getting object: %v", err)
 	}
@@ -182,7 +182,6 @@ func resourceWirelessControllerTimersUpdate(d *schema.ResourceData, m interface{
 
 func resourceWirelessControllerTimersDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -194,9 +193,15 @@ func resourceWirelessControllerTimersDelete(d *schema.ResourceData, m interface{
 		}
 	}
 
-	err := c.DeleteWirelessControllerTimers(mkey, vdomparam)
+	obj, err := getObjectWirelessControllerTimers(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WirelessControllerTimers resource: %v", err)
+		return fmt.Errorf("Error updating WirelessControllerTimers resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWirelessControllerTimers(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WirelessControllerTimers resource: %v", err)
 	}
 
 	d.SetId("")
@@ -544,166 +549,230 @@ func expandWirelessControllerTimersDrmaInterval(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-func getObjectWirelessControllerTimers(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("echo_interval"); ok {
+		if setArgNil {
+			obj["echo-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersEchoInterval(d, v, "echo_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["echo-interval"] = t
+			t, err := expandWirelessControllerTimersEchoInterval(d, v, "echo_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["echo-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("discovery_interval"); ok {
+		if setArgNil {
+			obj["discovery-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersDiscoveryInterval(d, v, "discovery_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["discovery-interval"] = t
+			t, err := expandWirelessControllerTimersDiscoveryInterval(d, v, "discovery_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["discovery-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("client_idle_timeout"); ok {
+		if setArgNil {
+			obj["client-idle-timeout"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersClientIdleTimeout(d, v, "client_idle_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["client-idle-timeout"] = t
+			t, err := expandWirelessControllerTimersClientIdleTimeout(d, v, "client_idle_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["client-idle-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("rogue_ap_log"); ok {
+		if setArgNil {
+			obj["rogue-ap-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersRogueApLog(d, v, "rogue_ap_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rogue-ap-log"] = t
+			t, err := expandWirelessControllerTimersRogueApLog(d, v, "rogue_ap_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rogue-ap-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fake_ap_log"); ok {
+		if setArgNil {
+			obj["fake-ap-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersFakeApLog(d, v, "fake_ap_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fake-ap-log"] = t
+			t, err := expandWirelessControllerTimersFakeApLog(d, v, "fake_ap_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fake-ap-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("darrp_optimize"); ok {
+		if setArgNil {
+			obj["darrp-optimize"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersDarrpOptimize(d, v, "darrp_optimize", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["darrp-optimize"] = t
+			t, err := expandWirelessControllerTimersDarrpOptimize(d, v, "darrp_optimize", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["darrp-optimize"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("darrp_day"); ok {
+		if setArgNil {
+			obj["darrp-day"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersDarrpDay(d, v, "darrp_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["darrp-day"] = t
+			t, err := expandWirelessControllerTimersDarrpDay(d, v, "darrp_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["darrp-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("darrp_time"); ok {
+		if setArgNil {
+			obj["darrp-time"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWirelessControllerTimersDarrpTime(d, v, "darrp_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["darrp-time"] = t
+			t, err := expandWirelessControllerTimersDarrpTime(d, v, "darrp_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["darrp-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sta_stats_interval"); ok {
+		if setArgNil {
+			obj["sta-stats-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersStaStatsInterval(d, v, "sta_stats_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sta-stats-interval"] = t
+			t, err := expandWirelessControllerTimersStaStatsInterval(d, v, "sta_stats_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-stats-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vap_stats_interval"); ok {
+		if setArgNil {
+			obj["vap-stats-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersVapStatsInterval(d, v, "vap_stats_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vap-stats-interval"] = t
+			t, err := expandWirelessControllerTimersVapStatsInterval(d, v, "vap_stats_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vap-stats-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("radio_stats_interval"); ok {
+		if setArgNil {
+			obj["radio-stats-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersRadioStatsInterval(d, v, "radio_stats_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["radio-stats-interval"] = t
+			t, err := expandWirelessControllerTimersRadioStatsInterval(d, v, "radio_stats_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["radio-stats-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sta_capability_interval"); ok {
+		if setArgNil {
+			obj["sta-capability-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersStaCapabilityInterval(d, v, "sta_capability_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sta-capability-interval"] = t
+			t, err := expandWirelessControllerTimersStaCapabilityInterval(d, v, "sta_capability_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-capability-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sta_locate_timer"); ok {
+		if setArgNil {
+			obj["sta-locate-timer"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersStaLocateTimer(d, v, "sta_locate_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sta-locate-timer"] = t
+			t, err := expandWirelessControllerTimersStaLocateTimer(d, v, "sta_locate_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-locate-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_intf_cleanup"); ok {
+		if setArgNil {
+			obj["ipsec-intf-cleanup"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersIpsecIntfCleanup(d, v, "ipsec_intf_cleanup", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-intf-cleanup"] = t
+			t, err := expandWirelessControllerTimersIpsecIntfCleanup(d, v, "ipsec_intf_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-intf-cleanup"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ble_scan_report_intv"); ok {
+		if setArgNil {
+			obj["ble-scan-report-intv"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersBleScanReportIntv(d, v, "ble_scan_report_intv", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ble-scan-report-intv"] = t
+			t, err := expandWirelessControllerTimersBleScanReportIntv(d, v, "ble_scan_report_intv", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ble-scan-report-intv"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("drma_interval"); ok {
+		if setArgNil {
+			obj["drma-interval"] = nil
+		} else {
 
-		t, err := expandWirelessControllerTimersDrmaInterval(d, v, "drma_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["drma-interval"] = t
+			t, err := expandWirelessControllerTimersDrmaInterval(d, v, "drma_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["drma-interval"] = t
+			}
 		}
 	}
 

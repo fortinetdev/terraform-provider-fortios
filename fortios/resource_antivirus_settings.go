@@ -88,7 +88,7 @@ func resourceAntivirusSettingsUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectAntivirusSettings(d, c.Fv)
+	obj, err := getObjectAntivirusSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusSettings resource while getting object: %v", err)
 	}
@@ -110,7 +110,6 @@ func resourceAntivirusSettingsUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceAntivirusSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -122,9 +121,15 @@ func resourceAntivirusSettingsDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteAntivirusSettings(mkey, vdomparam)
+	obj, err := getObjectAntivirusSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting AntivirusSettings resource: %v", err)
+		return fmt.Errorf("Error updating AntivirusSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateAntivirusSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing AntivirusSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -274,76 +279,104 @@ func expandAntivirusSettingsCacheCleanResult(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectAntivirusSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("machine_learning_detection"); ok {
+		if setArgNil {
+			obj["machine-learning-detection"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsMachineLearningDetection(d, v, "machine_learning_detection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["machine-learning-detection"] = t
+			t, err := expandAntivirusSettingsMachineLearningDetection(d, v, "machine_learning_detection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["machine-learning-detection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("use_extreme_db"); ok {
+		if setArgNil {
+			obj["use-extreme-db"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsUseExtremeDb(d, v, "use_extreme_db", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["use-extreme-db"] = t
+			t, err := expandAntivirusSettingsUseExtremeDb(d, v, "use_extreme_db", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["use-extreme-db"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_db"); ok {
+		if setArgNil {
+			obj["default-db"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsDefaultDb(d, v, "default_db", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-db"] = t
+			t, err := expandAntivirusSettingsDefaultDb(d, v, "default_db", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-db"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("grayware"); ok {
+		if setArgNil {
+			obj["grayware"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsGrayware(d, v, "grayware", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["grayware"] = t
+			t, err := expandAntivirusSettingsGrayware(d, v, "grayware", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["grayware"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("override_timeout"); ok {
+		if setArgNil {
+			obj["override-timeout"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsOverrideTimeout(d, v, "override_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["override-timeout"] = t
+			t, err := expandAntivirusSettingsOverrideTimeout(d, v, "override_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_infected_result"); ok {
+		if setArgNil {
+			obj["cache-infected-result"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsCacheInfectedResult(d, v, "cache_infected_result", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-infected-result"] = t
+			t, err := expandAntivirusSettingsCacheInfectedResult(d, v, "cache_infected_result", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-infected-result"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_clean_result"); ok {
+		if setArgNil {
+			obj["cache-clean-result"] = nil
+		} else {
 
-		t, err := expandAntivirusSettingsCacheCleanResult(d, v, "cache_clean_result", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-clean-result"] = t
+			t, err := expandAntivirusSettingsCacheCleanResult(d, v, "cache_clean_result", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-clean-result"] = t
+			}
 		}
 	}
 

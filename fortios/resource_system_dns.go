@@ -184,7 +184,7 @@ func resourceSystemDnsUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemDns(d, c.Fv)
+	obj, err := getObjectSystemDns(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDns resource while getting object: %v", err)
 	}
@@ -206,7 +206,6 @@ func resourceSystemDnsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemDnsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -218,9 +217,15 @@ func resourceSystemDnsDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemDns(mkey, vdomparam)
+	obj, err := getObjectSystemDns(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemDns resource: %v", err)
+		return fmt.Errorf("Error updating SystemDns resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemDns(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemDns resource: %v", err)
 	}
 
 	d.SetId("")
@@ -710,216 +715,300 @@ func expandSystemDnsLog(d *schema.ResourceData, v interface{}, pre string, sv st
 	return v, nil
 }
 
-func getObjectSystemDns(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("primary"); ok {
+		if setArgNil {
+			obj["primary"] = nil
+		} else {
 
-		t, err := expandSystemDnsPrimary(d, v, "primary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["primary"] = t
+			t, err := expandSystemDnsPrimary(d, v, "primary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["primary"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("secondary"); ok {
+		if setArgNil {
+			obj["secondary"] = nil
+		} else {
 
-		t, err := expandSystemDnsSecondary(d, v, "secondary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["secondary"] = t
+			t, err := expandSystemDnsSecondary(d, v, "secondary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["secondary"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
+		if setArgNil {
+			obj["protocol"] = nil
+		} else {
 
-		t, err := expandSystemDnsProtocol(d, v, "protocol", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["protocol"] = t
+			t, err := expandSystemDnsProtocol(d, v, "protocol", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["protocol"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns_over_tls"); ok {
+		if setArgNil {
+			obj["dns-over-tls"] = nil
+		} else {
 
-		t, err := expandSystemDnsDnsOverTls(d, v, "dns_over_tls", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-over-tls"] = t
+			t, err := expandSystemDnsDnsOverTls(d, v, "dns_over_tls", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-over-tls"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_certificate"); ok {
+		if setArgNil {
+			obj["ssl-certificate"] = nil
+		} else {
 
-		t, err := expandSystemDnsSslCertificate(d, v, "ssl_certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-certificate"] = t
+			t, err := expandSystemDnsSslCertificate(d, v, "ssl_certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_hostname"); ok {
+		if setArgNil {
+			obj["server-hostname"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemDnsServerHostname(d, v, "server_hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-hostname"] = t
+			t, err := expandSystemDnsServerHostname(d, v, "server_hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("domain"); ok {
+		if setArgNil {
+			obj["domain"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemDnsDomain(d, v, "domain", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["domain"] = t
+			t, err := expandSystemDnsDomain(d, v, "domain", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["domain"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip6_primary"); ok {
+		if setArgNil {
+			obj["ip6-primary"] = nil
+		} else {
 
-		t, err := expandSystemDnsIp6Primary(d, v, "ip6_primary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip6-primary"] = t
+			t, err := expandSystemDnsIp6Primary(d, v, "ip6_primary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip6-primary"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip6_secondary"); ok {
+		if setArgNil {
+			obj["ip6-secondary"] = nil
+		} else {
 
-		t, err := expandSystemDnsIp6Secondary(d, v, "ip6_secondary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip6-secondary"] = t
+			t, err := expandSystemDnsIp6Secondary(d, v, "ip6_secondary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip6-secondary"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {
+		if setArgNil {
+			obj["timeout"] = nil
+		} else {
 
-		t, err := expandSystemDnsTimeout(d, v, "timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout"] = t
+			t, err := expandSystemDnsTimeout(d, v, "timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("retry"); ok {
+		if setArgNil {
+			obj["retry"] = nil
+		} else {
 
-		t, err := expandSystemDnsRetry(d, v, "retry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["retry"] = t
+			t, err := expandSystemDnsRetry(d, v, "retry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["retry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("dns_cache_limit"); ok {
+		if setArgNil {
+			obj["dns-cache-limit"] = nil
+		} else {
 
-		t, err := expandSystemDnsDnsCacheLimit(d, v, "dns_cache_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-cache-limit"] = t
+			t, err := expandSystemDnsDnsCacheLimit(d, v, "dns_cache_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-cache-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns_cache_ttl"); ok {
+		if setArgNil {
+			obj["dns-cache-ttl"] = nil
+		} else {
 
-		t, err := expandSystemDnsDnsCacheTtl(d, v, "dns_cache_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-cache-ttl"] = t
+			t, err := expandSystemDnsDnsCacheTtl(d, v, "dns_cache_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-cache-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_notfound_responses"); ok {
+		if setArgNil {
+			obj["cache-notfound-responses"] = nil
+		} else {
 
-		t, err := expandSystemDnsCacheNotfoundResponses(d, v, "cache_notfound_responses", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-notfound-responses"] = t
+			t, err := expandSystemDnsCacheNotfoundResponses(d, v, "cache_notfound_responses", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-notfound-responses"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemDnsSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemDnsSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemDnsInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemDnsInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemDnsInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemDnsInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_select_method"); ok {
+		if setArgNil {
+			obj["server-select-method"] = nil
+		} else {
 
-		t, err := expandSystemDnsServerSelectMethod(d, v, "server_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-select-method"] = t
+			t, err := expandSystemDnsServerSelectMethod(d, v, "server_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("alt_primary"); ok {
+		if setArgNil {
+			obj["alt-primary"] = nil
+		} else {
 
-		t, err := expandSystemDnsAltPrimary(d, v, "alt_primary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["alt-primary"] = t
+			t, err := expandSystemDnsAltPrimary(d, v, "alt_primary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["alt-primary"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("alt_secondary"); ok {
+		if setArgNil {
+			obj["alt-secondary"] = nil
+		} else {
 
-		t, err := expandSystemDnsAltSecondary(d, v, "alt_secondary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["alt-secondary"] = t
+			t, err := expandSystemDnsAltSecondary(d, v, "alt_secondary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["alt-secondary"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log"); ok {
+		if setArgNil {
+			obj["log"] = nil
+		} else {
 
-		t, err := expandSystemDnsLog(d, v, "log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log"] = t
+			t, err := expandSystemDnsLog(d, v, "log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log"] = t
+			}
 		}
 	}
 

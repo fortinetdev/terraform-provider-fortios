@@ -101,7 +101,7 @@ func resourceSystemVneTunnelUpdate(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	obj, err := getObjectSystemVneTunnel(d, c.Fv)
+	obj, err := getObjectSystemVneTunnel(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVneTunnel resource while getting object: %v", err)
 	}
@@ -123,7 +123,6 @@ func resourceSystemVneTunnelUpdate(d *schema.ResourceData, m interface{}) error 
 
 func resourceSystemVneTunnelDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -135,9 +134,15 @@ func resourceSystemVneTunnelDelete(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	err := c.DeleteSystemVneTunnel(mkey, vdomparam)
+	obj, err := getObjectSystemVneTunnel(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemVneTunnel resource: %v", err)
+		return fmt.Errorf("Error updating SystemVneTunnel resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemVneTunnel(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemVneTunnel resource: %v", err)
 	}
 
 	d.SetId("")
@@ -309,96 +314,132 @@ func expandSystemVneTunnelMode(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-func getObjectSystemVneTunnel(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemVneTunnelStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemVneTunnelInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_certificate"); ok {
+		if setArgNil {
+			obj["ssl-certificate"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelSslCertificate(d, v, "ssl_certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-certificate"] = t
+			t, err := expandSystemVneTunnelSslCertificate(d, v, "ssl_certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bmr_hostname"); ok {
+		if setArgNil {
+			obj["bmr-hostname"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelBmrHostname(d, v, "bmr_hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bmr-hostname"] = t
+			t, err := expandSystemVneTunnelBmrHostname(d, v, "bmr_hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bmr-hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
+		if setArgNil {
+			obj["auto-asic-offload"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-asic-offload"] = t
+			t, err := expandSystemVneTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-asic-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv4_address"); ok {
+		if setArgNil {
+			obj["ipv4-address"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelIpv4Address(d, v, "ipv4_address", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv4-address"] = t
+			t, err := expandSystemVneTunnelIpv4Address(d, v, "ipv4_address", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv4-address"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("br"); ok {
+		if setArgNil {
+			obj["br"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelBr(d, v, "br", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["br"] = t
+			t, err := expandSystemVneTunnelBr(d, v, "br", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["br"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_url"); ok {
+		if setArgNil {
+			obj["update-url"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelUpdateUrl(d, v, "update_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-url"] = t
+			t, err := expandSystemVneTunnelUpdateUrl(d, v, "update_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemVneTunnelMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemVneTunnelMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 

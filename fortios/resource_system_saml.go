@@ -965,183 +965,251 @@ func expandSystemSamlServiceProvidersAssertionAttributesType(d *schema.ResourceD
 	return v, nil
 }
 
-func getObjectSystemSaml(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemSamlStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemSamlStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("role"); ok {
+		if setArgNil {
+			obj["role"] = nil
+		} else {
 
-		t, err := expandSystemSamlRole(d, v, "role", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["role"] = t
+			t, err := expandSystemSamlRole(d, v, "role", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["role"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_login_page"); ok {
+		if setArgNil {
+			obj["default-login-page"] = nil
+		} else {
 
-		t, err := expandSystemSamlDefaultLoginPage(d, v, "default_login_page", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-login-page"] = t
+			t, err := expandSystemSamlDefaultLoginPage(d, v, "default_login_page", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-login-page"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_profile"); ok {
+		if setArgNil {
+			obj["default-profile"] = nil
+		} else {
 
-		t, err := expandSystemSamlDefaultProfile(d, v, "default_profile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-profile"] = t
+			t, err := expandSystemSamlDefaultProfile(d, v, "default_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-profile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
+		if setArgNil {
+			obj["cert"] = nil
+		} else {
 
-		t, err := expandSystemSamlCert(d, v, "cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert"] = t
+			t, err := expandSystemSamlCert(d, v, "cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("binding_protocol"); ok {
+		if setArgNil {
+			obj["binding-protocol"] = nil
+		} else {
 
-		t, err := expandSystemSamlBindingProtocol(d, v, "binding_protocol", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["binding-protocol"] = t
+			t, err := expandSystemSamlBindingProtocol(d, v, "binding_protocol", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["binding-protocol"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("portal_url"); ok {
+		if setArgNil {
+			obj["portal-url"] = nil
+		} else {
 
-		t, err := expandSystemSamlPortalUrl(d, v, "portal_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["portal-url"] = t
+			t, err := expandSystemSamlPortalUrl(d, v, "portal_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["portal-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("entity_id"); ok {
+		if setArgNil {
+			obj["entity-id"] = nil
+		} else {
 
-		t, err := expandSystemSamlEntityId(d, v, "entity_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["entity-id"] = t
+			t, err := expandSystemSamlEntityId(d, v, "entity_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["entity-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("single_sign_on_url"); ok {
+		if setArgNil {
+			obj["single-sign-on-url"] = nil
+		} else {
 
-		t, err := expandSystemSamlSingleSignOnUrl(d, v, "single_sign_on_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["single-sign-on-url"] = t
+			t, err := expandSystemSamlSingleSignOnUrl(d, v, "single_sign_on_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["single-sign-on-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("single_logout_url"); ok {
+		if setArgNil {
+			obj["single-logout-url"] = nil
+		} else {
 
-		t, err := expandSystemSamlSingleLogoutUrl(d, v, "single_logout_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["single-logout-url"] = t
+			t, err := expandSystemSamlSingleLogoutUrl(d, v, "single_logout_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["single-logout-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("idp_entity_id"); ok {
+		if setArgNil {
+			obj["idp-entity-id"] = nil
+		} else {
 
-		t, err := expandSystemSamlIdpEntityId(d, v, "idp_entity_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["idp-entity-id"] = t
+			t, err := expandSystemSamlIdpEntityId(d, v, "idp_entity_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["idp-entity-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("idp_single_sign_on_url"); ok {
+		if setArgNil {
+			obj["idp-single-sign-on-url"] = nil
+		} else {
 
-		t, err := expandSystemSamlIdpSingleSignOnUrl(d, v, "idp_single_sign_on_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["idp-single-sign-on-url"] = t
+			t, err := expandSystemSamlIdpSingleSignOnUrl(d, v, "idp_single_sign_on_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["idp-single-sign-on-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("idp_single_logout_url"); ok {
+		if setArgNil {
+			obj["idp-single-logout-url"] = nil
+		} else {
 
-		t, err := expandSystemSamlIdpSingleLogoutUrl(d, v, "idp_single_logout_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["idp-single-logout-url"] = t
+			t, err := expandSystemSamlIdpSingleLogoutUrl(d, v, "idp_single_logout_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["idp-single-logout-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("idp_cert"); ok {
+		if setArgNil {
+			obj["idp-cert"] = nil
+		} else {
 
-		t, err := expandSystemSamlIdpCert(d, v, "idp_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["idp-cert"] = t
+			t, err := expandSystemSamlIdpCert(d, v, "idp_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["idp-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_address"); ok {
+		if setArgNil {
+			obj["server-address"] = nil
+		} else {
 
-		t, err := expandSystemSamlServerAddress(d, v, "server_address", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-address"] = t
+			t, err := expandSystemSamlServerAddress(d, v, "server_address", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-address"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("tolerance"); ok {
+		if setArgNil {
+			obj["tolerance"] = nil
+		} else {
 
-		t, err := expandSystemSamlTolerance(d, v, "tolerance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tolerance"] = t
+			t, err := expandSystemSamlTolerance(d, v, "tolerance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tolerance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("life"); ok {
+		if setArgNil {
+			obj["life"] = nil
+		} else {
 
-		t, err := expandSystemSamlLife(d, v, "life", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["life"] = t
+			t, err := expandSystemSamlLife(d, v, "life", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["life"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["service-providers"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("service_providers"); ok {
+	if v, ok := d.GetOk("service_providers"); ok {
+		if setArgNil {
+			obj["service-providers"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandSystemSamlServiceProviders(d, v, "service_providers", sv)
 			if err != nil {

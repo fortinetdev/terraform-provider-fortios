@@ -75,7 +75,7 @@ func resourceIpsSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectIpsSettings(d, c.Fv)
+	obj, err := getObjectIpsSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsSettings resource while getting object: %v", err)
 	}
@@ -97,7 +97,6 @@ func resourceIpsSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceIpsSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -109,9 +108,15 @@ func resourceIpsSettingsDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteIpsSettings(mkey, vdomparam)
+	obj, err := getObjectIpsSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting IpsSettings resource: %v", err)
+		return fmt.Errorf("Error updating IpsSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateIpsSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing IpsSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -219,46 +224,62 @@ func expandIpsSettingsIpsPacketQuota(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectIpsSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("packet_log_history"); ok {
+		if setArgNil {
+			obj["packet-log-history"] = nil
+		} else {
 
-		t, err := expandIpsSettingsPacketLogHistory(d, v, "packet_log_history", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["packet-log-history"] = t
+			t, err := expandIpsSettingsPacketLogHistory(d, v, "packet_log_history", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["packet-log-history"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("packet_log_post_attack"); ok {
+		if setArgNil {
+			obj["packet-log-post-attack"] = nil
+		} else {
 
-		t, err := expandIpsSettingsPacketLogPostAttack(d, v, "packet_log_post_attack", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["packet-log-post-attack"] = t
+			t, err := expandIpsSettingsPacketLogPostAttack(d, v, "packet_log_post_attack", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["packet-log-post-attack"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("packet_log_memory"); ok {
+		if setArgNil {
+			obj["packet-log-memory"] = nil
+		} else {
 
-		t, err := expandIpsSettingsPacketLogMemory(d, v, "packet_log_memory", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["packet-log-memory"] = t
+			t, err := expandIpsSettingsPacketLogMemory(d, v, "packet_log_memory", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["packet-log-memory"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ips_packet_quota"); ok {
+		if setArgNil {
+			obj["ips-packet-quota"] = nil
+		} else {
 
-		t, err := expandIpsSettingsIpsPacketQuota(d, v, "ips_packet_quota", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-packet-quota"] = t
+			t, err := expandIpsSettingsIpsPacketQuota(d, v, "ips_packet_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-packet-quota"] = t
+			}
 		}
 	}
 

@@ -98,7 +98,7 @@ func resourceLogFortiguardOverrideSettingUpdate(d *schema.ResourceData, m interf
 		}
 	}
 
-	obj, err := getObjectLogFortiguardOverrideSetting(d, c.Fv)
+	obj, err := getObjectLogFortiguardOverrideSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortiguardOverrideSetting resource while getting object: %v", err)
 	}
@@ -120,7 +120,6 @@ func resourceLogFortiguardOverrideSettingUpdate(d *schema.ResourceData, m interf
 
 func resourceLogFortiguardOverrideSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -132,9 +131,15 @@ func resourceLogFortiguardOverrideSettingDelete(d *schema.ResourceData, m interf
 		}
 	}
 
-	err := c.DeleteLogFortiguardOverrideSetting(mkey, vdomparam)
+	obj, err := getObjectLogFortiguardOverrideSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogFortiguardOverrideSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogFortiguardOverrideSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogFortiguardOverrideSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogFortiguardOverrideSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -312,96 +317,132 @@ func expandLogFortiguardOverrideSettingAccessConfig(d *schema.ResourceData, v in
 	return v, nil
 }
 
-func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("override"); ok {
+		if setArgNil {
+			obj["override"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingOverride(d, v, "override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["override"] = t
+			t, err := expandLogFortiguardOverrideSettingOverride(d, v, "override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogFortiguardOverrideSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
+		if setArgNil {
+			obj["upload-option"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingUploadOption(d, v, "upload_option", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-option"] = t
+			t, err := expandLogFortiguardOverrideSettingUploadOption(d, v, "upload_option", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-option"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_interval"); ok {
+		if setArgNil {
+			obj["upload-interval"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingUploadInterval(d, v, "upload_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-interval"] = t
+			t, err := expandLogFortiguardOverrideSettingUploadInterval(d, v, "upload_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_day"); ok {
+		if setArgNil {
+			obj["upload-day"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingUploadDay(d, v, "upload_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-day"] = t
+			t, err := expandLogFortiguardOverrideSettingUploadDay(d, v, "upload_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
+		if setArgNil {
+			obj["upload-time"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingUploadTime(d, v, "upload_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-time"] = t
+			t, err := expandLogFortiguardOverrideSettingUploadTime(d, v, "upload_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandLogFortiguardOverrideSettingPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_log_rate"); ok {
+		if setArgNil {
+			obj["max-log-rate"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingMaxLogRate(d, v, "max_log_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-log-rate"] = t
+			t, err := expandLogFortiguardOverrideSettingMaxLogRate(d, v, "max_log_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-log-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {
+		if setArgNil {
+			obj["access-config"] = nil
+		} else {
 
-		t, err := expandLogFortiguardOverrideSettingAccessConfig(d, v, "access_config", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["access-config"] = t
+			t, err := expandLogFortiguardOverrideSettingAccessConfig(d, v, "access_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["access-config"] = t
+			}
 		}
 	}
 

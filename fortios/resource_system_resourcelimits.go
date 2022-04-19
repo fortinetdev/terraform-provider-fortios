@@ -142,7 +142,7 @@ func resourceSystemResourceLimitsUpdate(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	obj, err := getObjectSystemResourceLimits(d, c.Fv)
+	obj, err := getObjectSystemResourceLimits(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemResourceLimits resource while getting object: %v", err)
 	}
@@ -164,7 +164,6 @@ func resourceSystemResourceLimitsUpdate(d *schema.ResourceData, m interface{}) e
 
 func resourceSystemResourceLimitsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -176,9 +175,15 @@ func resourceSystemResourceLimitsDelete(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	err := c.DeleteSystemResourceLimits(mkey, vdomparam)
+	obj, err := getObjectSystemResourceLimits(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemResourceLimits resource: %v", err)
+		return fmt.Errorf("Error updating SystemResourceLimits resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemResourceLimits(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemResourceLimits resource: %v", err)
 	}
 
 	d.SetId("")
@@ -482,186 +487,258 @@ func expandSystemResourceLimitsLogDiskQuota(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectSystemResourceLimits(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("session"); ok {
+		if setArgNil {
+			obj["session"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsSession(d, v, "session", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session"] = t
+			t, err := expandSystemResourceLimitsSession(d, v, "session", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase1"); ok {
+		if setArgNil {
+			obj["ipsec-phase1"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsIpsecPhase1(d, v, "ipsec_phase1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-phase1"] = t
+			t, err := expandSystemResourceLimitsIpsecPhase1(d, v, "ipsec_phase1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-phase1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase2"); ok {
+		if setArgNil {
+			obj["ipsec-phase2"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsIpsecPhase2(d, v, "ipsec_phase2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-phase2"] = t
+			t, err := expandSystemResourceLimitsIpsecPhase2(d, v, "ipsec_phase2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-phase2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase1_interface"); ok {
+		if setArgNil {
+			obj["ipsec-phase1-interface"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsIpsecPhase1Interface(d, v, "ipsec_phase1_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-phase1-interface"] = t
+			t, err := expandSystemResourceLimitsIpsecPhase1Interface(d, v, "ipsec_phase1_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-phase1-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase2_interface"); ok {
+		if setArgNil {
+			obj["ipsec-phase2-interface"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsIpsecPhase2Interface(d, v, "ipsec_phase2_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-phase2-interface"] = t
+			t, err := expandSystemResourceLimitsIpsecPhase2Interface(d, v, "ipsec_phase2_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-phase2-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("dialup_tunnel"); ok {
+		if setArgNil {
+			obj["dialup-tunnel"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsDialupTunnel(d, v, "dialup_tunnel", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dialup-tunnel"] = t
+			t, err := expandSystemResourceLimitsDialupTunnel(d, v, "dialup_tunnel", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dialup-tunnel"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("firewall_policy"); ok {
+		if setArgNil {
+			obj["firewall-policy"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsFirewallPolicy(d, v, "firewall_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firewall-policy"] = t
+			t, err := expandSystemResourceLimitsFirewallPolicy(d, v, "firewall_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firewall-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("firewall_address"); ok {
+		if setArgNil {
+			obj["firewall-address"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsFirewallAddress(d, v, "firewall_address", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firewall-address"] = t
+			t, err := expandSystemResourceLimitsFirewallAddress(d, v, "firewall_address", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firewall-address"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("firewall_addrgrp"); ok {
+		if setArgNil {
+			obj["firewall-addrgrp"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsFirewallAddrgrp(d, v, "firewall_addrgrp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firewall-addrgrp"] = t
+			t, err := expandSystemResourceLimitsFirewallAddrgrp(d, v, "firewall_addrgrp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firewall-addrgrp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("custom_service"); ok {
+		if setArgNil {
+			obj["custom-service"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsCustomService(d, v, "custom_service", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["custom-service"] = t
+			t, err := expandSystemResourceLimitsCustomService(d, v, "custom_service", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["custom-service"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("service_group"); ok {
+		if setArgNil {
+			obj["service-group"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsServiceGroup(d, v, "service_group", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service-group"] = t
+			t, err := expandSystemResourceLimitsServiceGroup(d, v, "service_group", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service-group"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("onetime_schedule"); ok {
+		if setArgNil {
+			obj["onetime-schedule"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsOnetimeSchedule(d, v, "onetime_schedule", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["onetime-schedule"] = t
+			t, err := expandSystemResourceLimitsOnetimeSchedule(d, v, "onetime_schedule", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["onetime-schedule"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("recurring_schedule"); ok {
+		if setArgNil {
+			obj["recurring-schedule"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsRecurringSchedule(d, v, "recurring_schedule", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["recurring-schedule"] = t
+			t, err := expandSystemResourceLimitsRecurringSchedule(d, v, "recurring_schedule", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["recurring-schedule"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("user"); ok {
+		if setArgNil {
+			obj["user"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsUser(d, v, "user", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user"] = t
+			t, err := expandSystemResourceLimitsUser(d, v, "user", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("user_group"); ok {
+		if setArgNil {
+			obj["user-group"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsUserGroup(d, v, "user_group", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-group"] = t
+			t, err := expandSystemResourceLimitsUserGroup(d, v, "user_group", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-group"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sslvpn"); ok {
+		if setArgNil {
+			obj["sslvpn"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsSslvpn(d, v, "sslvpn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn"] = t
+			t, err := expandSystemResourceLimitsSslvpn(d, v, "sslvpn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("proxy"); ok {
+		if setArgNil {
+			obj["proxy"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsProxy(d, v, "proxy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy"] = t
+			t, err := expandSystemResourceLimitsProxy(d, v, "proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("log_disk_quota"); ok {
+		if setArgNil {
+			obj["log-disk-quota"] = nil
+		} else {
 
-		t, err := expandSystemResourceLimitsLogDiskQuota(d, v, "log_disk_quota", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-disk-quota"] = t
+			t, err := expandSystemResourceLimitsLogDiskQuota(d, v, "log_disk_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-disk-quota"] = t
+			}
 		}
 	}
 

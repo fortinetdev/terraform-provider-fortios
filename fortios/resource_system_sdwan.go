@@ -1116,7 +1116,7 @@ func resourceSystemSdwanUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemSdwan(d, c.Fv)
+	obj, err := getObjectSystemSdwan(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSdwan resource while getting object: %v", err)
 	}
@@ -1138,7 +1138,6 @@ func resourceSystemSdwanUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemSdwanDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -1150,9 +1149,15 @@ func resourceSystemSdwanDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemSdwan(mkey, vdomparam)
+	obj, err := getObjectSystemSdwan(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemSdwan resource: %v", err)
+		return fmt.Errorf("Error updating SystemSdwan resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemSdwan(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemSdwan resource: %v", err)
 	}
 
 	d.SetId("")
@@ -6163,156 +6168,216 @@ func expandSystemSdwanDuplicationPacketDeDuplication(d *schema.ResourceData, v i
 	return v, nil
 }
 
-func getObjectSystemSdwan(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemSdwanStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemSdwanStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("load_balance_mode"); ok {
+		if setArgNil {
+			obj["load-balance-mode"] = nil
+		} else {
 
-		t, err := expandSystemSdwanLoadBalanceMode(d, v, "load_balance_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["load-balance-mode"] = t
+			t, err := expandSystemSdwanLoadBalanceMode(d, v, "load_balance_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["load-balance-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("speedtest_bypass_routing"); ok {
+		if setArgNil {
+			obj["speedtest-bypass-routing"] = nil
+		} else {
 
-		t, err := expandSystemSdwanSpeedtestBypassRouting(d, v, "speedtest_bypass_routing", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["speedtest-bypass-routing"] = t
+			t, err := expandSystemSdwanSpeedtestBypassRouting(d, v, "speedtest_bypass_routing", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["speedtest-bypass-routing"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("duplication_max_num"); ok {
+		if setArgNil {
+			obj["duplication-max-num"] = nil
+		} else {
 
-		t, err := expandSystemSdwanDuplicationMaxNum(d, v, "duplication_max_num", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["duplication-max-num"] = t
+			t, err := expandSystemSdwanDuplicationMaxNum(d, v, "duplication_max_num", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["duplication-max-num"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("neighbor_hold_down"); ok {
+		if setArgNil {
+			obj["neighbor-hold-down"] = nil
+		} else {
 
-		t, err := expandSystemSdwanNeighborHoldDown(d, v, "neighbor_hold_down", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-hold-down"] = t
+			t, err := expandSystemSdwanNeighborHoldDown(d, v, "neighbor_hold_down", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-hold-down"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_down_time"); ok {
+		if setArgNil {
+			obj["neighbor-hold-down-time"] = nil
+		} else {
 
-		t, err := expandSystemSdwanNeighborHoldDownTime(d, v, "neighbor_hold_down_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-hold-down-time"] = t
+			t, err := expandSystemSdwanNeighborHoldDownTime(d, v, "neighbor_hold_down_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-hold-down-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_boot_time"); ok {
+		if setArgNil {
+			obj["neighbor-hold-boot-time"] = nil
+		} else {
 
-		t, err := expandSystemSdwanNeighborHoldBootTime(d, v, "neighbor_hold_boot_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-hold-boot-time"] = t
+			t, err := expandSystemSdwanNeighborHoldBootTime(d, v, "neighbor_hold_boot_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-hold-boot-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fail_detect"); ok {
+		if setArgNil {
+			obj["fail-detect"] = nil
+		} else {
 
-		t, err := expandSystemSdwanFailDetect(d, v, "fail_detect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fail-detect"] = t
+			t, err := expandSystemSdwanFailDetect(d, v, "fail_detect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fail-detect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fail_alert_interfaces"); ok {
+		if setArgNil {
+			obj["fail-alert-interfaces"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanFailAlertInterfaces(d, v, "fail_alert_interfaces", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fail-alert-interfaces"] = t
+			t, err := expandSystemSdwanFailAlertInterfaces(d, v, "fail_alert_interfaces", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fail-alert-interfaces"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("zone"); ok {
+		if setArgNil {
+			obj["zone"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanZone(d, v, "zone", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["zone"] = t
+			t, err := expandSystemSdwanZone(d, v, "zone", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["zone"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("members"); ok {
+		if setArgNil {
+			obj["members"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanMembers(d, v, "members", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["members"] = t
+			t, err := expandSystemSdwanMembers(d, v, "members", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["members"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("health_check"); ok {
+		if setArgNil {
+			obj["health-check"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanHealthCheck(d, v, "health_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["health-check"] = t
+			t, err := expandSystemSdwanHealthCheck(d, v, "health_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["health-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("neighbor"); ok {
+		if setArgNil {
+			obj["neighbor"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanNeighbor(d, v, "neighbor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor"] = t
+			t, err := expandSystemSdwanNeighbor(d, v, "neighbor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("service"); ok {
+		if setArgNil {
+			obj["service"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanService(d, v, "service", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service"] = t
+			t, err := expandSystemSdwanService(d, v, "service", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("duplication"); ok {
+		if setArgNil {
+			obj["duplication"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSdwanDuplication(d, v, "duplication", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["duplication"] = t
+			t, err := expandSystemSdwanDuplication(d, v, "duplication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["duplication"] = t
+			}
 		}
 	}
 

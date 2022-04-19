@@ -161,7 +161,7 @@ func resourceWirelessControllerSettingUpdate(d *schema.ResourceData, m interface
 		}
 	}
 
-	obj, err := getObjectWirelessControllerSetting(d, c.Fv)
+	obj, err := getObjectWirelessControllerSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerSetting resource while getting object: %v", err)
 	}
@@ -183,7 +183,6 @@ func resourceWirelessControllerSettingUpdate(d *schema.ResourceData, m interface
 
 func resourceWirelessControllerSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -195,9 +194,15 @@ func resourceWirelessControllerSettingDelete(d *schema.ResourceData, m interface
 		}
 	}
 
-	err := c.DeleteWirelessControllerSetting(mkey, vdomparam)
+	obj, err := getObjectWirelessControllerSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WirelessControllerSetting resource: %v", err)
+		return fmt.Errorf("Error updating WirelessControllerSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWirelessControllerSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WirelessControllerSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -629,146 +634,202 @@ func expandWirelessControllerSettingDarrpOptimizeSchedulesName(d *schema.Resourc
 	return v, nil
 }
 
-func getObjectWirelessControllerSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("account_id"); ok {
+		if setArgNil {
+			obj["account-id"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingAccountId(d, v, "account_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["account-id"] = t
+			t, err := expandWirelessControllerSettingAccountId(d, v, "account_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["account-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("country"); ok {
+		if setArgNil {
+			obj["country"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingCountry(d, v, "country", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["country"] = t
+			t, err := expandWirelessControllerSettingCountry(d, v, "country", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["country"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("duplicate_ssid"); ok {
+		if setArgNil {
+			obj["duplicate-ssid"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingDuplicateSsid(d, v, "duplicate_ssid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["duplicate-ssid"] = t
+			t, err := expandWirelessControllerSettingDuplicateSsid(d, v, "duplicate_ssid", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["duplicate-ssid"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fapc_compatibility"); ok {
+		if setArgNil {
+			obj["fapc-compatibility"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingFapcCompatibility(d, v, "fapc_compatibility", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fapc-compatibility"] = t
+			t, err := expandWirelessControllerSettingFapcCompatibility(d, v, "fapc_compatibility", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fapc-compatibility"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wfa_compatibility"); ok {
+		if setArgNil {
+			obj["wfa-compatibility"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingWfaCompatibility(d, v, "wfa_compatibility", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wfa-compatibility"] = t
+			t, err := expandWirelessControllerSettingWfaCompatibility(d, v, "wfa_compatibility", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wfa-compatibility"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("phishing_ssid_detect"); ok {
+		if setArgNil {
+			obj["phishing-ssid-detect"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingPhishingSsidDetect(d, v, "phishing_ssid_detect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["phishing-ssid-detect"] = t
+			t, err := expandWirelessControllerSettingPhishingSsidDetect(d, v, "phishing_ssid_detect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["phishing-ssid-detect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fake_ssid_action"); ok {
+		if setArgNil {
+			obj["fake-ssid-action"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingFakeSsidAction(d, v, "fake_ssid_action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fake-ssid-action"] = t
+			t, err := expandWirelessControllerSettingFakeSsidAction(d, v, "fake_ssid_action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fake-ssid-action"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("offending_ssid"); ok {
+		if setArgNil {
+			obj["offending-ssid"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWirelessControllerSettingOffendingSsid(d, v, "offending_ssid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["offending-ssid"] = t
+			t, err := expandWirelessControllerSettingOffendingSsid(d, v, "offending_ssid", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["offending-ssid"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("device_weight"); ok {
+		if setArgNil {
+			obj["device-weight"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingDeviceWeight(d, v, "device_weight", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-weight"] = t
+			t, err := expandWirelessControllerSettingDeviceWeight(d, v, "device_weight", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-weight"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("device_holdoff"); ok {
+		if setArgNil {
+			obj["device-holdoff"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingDeviceHoldoff(d, v, "device_holdoff", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-holdoff"] = t
+			t, err := expandWirelessControllerSettingDeviceHoldoff(d, v, "device_holdoff", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-holdoff"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("device_idle"); ok {
+		if setArgNil {
+			obj["device-idle"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingDeviceIdle(d, v, "device_idle", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-idle"] = t
+			t, err := expandWirelessControllerSettingDeviceIdle(d, v, "device_idle", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-idle"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("firmware_provision_on_authorization"); ok {
+		if setArgNil {
+			obj["firmware-provision-on-authorization"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firmware-provision-on-authorization"] = t
+			t, err := expandWirelessControllerSettingFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firmware-provision-on-authorization"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("darrp_optimize"); ok {
+		if setArgNil {
+			obj["darrp-optimize"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSettingDarrpOptimize(d, v, "darrp_optimize", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["darrp-optimize"] = t
+			t, err := expandWirelessControllerSettingDarrpOptimize(d, v, "darrp_optimize", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["darrp-optimize"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("darrp_optimize_schedules"); ok {
+		if setArgNil {
+			obj["darrp-optimize-schedules"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWirelessControllerSettingDarrpOptimizeSchedules(d, v, "darrp_optimize_schedules", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["darrp-optimize-schedules"] = t
+			t, err := expandWirelessControllerSettingDarrpOptimizeSchedules(d, v, "darrp_optimize_schedules", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["darrp-optimize-schedules"] = t
+			}
 		}
 	}
 

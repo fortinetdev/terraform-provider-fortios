@@ -106,7 +106,7 @@ func resourceSwitchControllerSystemUpdate(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	obj, err := getObjectSwitchControllerSystem(d, c.Fv)
+	obj, err := getObjectSwitchControllerSystem(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSystem resource while getting object: %v", err)
 	}
@@ -128,7 +128,6 @@ func resourceSwitchControllerSystemUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSwitchControllerSystemDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -140,9 +139,15 @@ func resourceSwitchControllerSystemDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteSwitchControllerSystem(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerSystem(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerSystem resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerSystem resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerSystem(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerSystem resource: %v", err)
 	}
 
 	d.SetId("")
@@ -334,106 +339,146 @@ func expandSwitchControllerSystemTunnelMode(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectSwitchControllerSystem(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("parallel_process_override"); ok {
+		if setArgNil {
+			obj["parallel-process-override"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemParallelProcessOverride(d, v, "parallel_process_override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["parallel-process-override"] = t
+			t, err := expandSwitchControllerSystemParallelProcessOverride(d, v, "parallel_process_override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["parallel-process-override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("parallel_process"); ok {
+		if setArgNil {
+			obj["parallel-process"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemParallelProcess(d, v, "parallel_process", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["parallel-process"] = t
+			t, err := expandSwitchControllerSystemParallelProcess(d, v, "parallel_process", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["parallel-process"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("data_sync_interval"); ok {
+		if setArgNil {
+			obj["data-sync-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemDataSyncInterval(d, v, "data_sync_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["data-sync-interval"] = t
+			t, err := expandSwitchControllerSystemDataSyncInterval(d, v, "data_sync_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["data-sync-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("iot_weight_threshold"); ok {
+		if setArgNil {
+			obj["iot-weight-threshold"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemIotWeightThreshold(d, v, "iot_weight_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["iot-weight-threshold"] = t
+			t, err := expandSwitchControllerSystemIotWeightThreshold(d, v, "iot_weight_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["iot-weight-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("iot_scan_interval"); ok {
+		if setArgNil {
+			obj["iot-scan-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemIotScanInterval(d, v, "iot_scan_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["iot-scan-interval"] = t
+			t, err := expandSwitchControllerSystemIotScanInterval(d, v, "iot_scan_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["iot-scan-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("iot_holdoff"); ok {
+		if setArgNil {
+			obj["iot-holdoff"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemIotHoldoff(d, v, "iot_holdoff", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["iot-holdoff"] = t
+			t, err := expandSwitchControllerSystemIotHoldoff(d, v, "iot_holdoff", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["iot-holdoff"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("iot_mac_idle"); ok {
+		if setArgNil {
+			obj["iot-mac-idle"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemIotMacIdle(d, v, "iot_mac_idle", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["iot-mac-idle"] = t
+			t, err := expandSwitchControllerSystemIotMacIdle(d, v, "iot_mac_idle", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["iot-mac-idle"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nac_periodic_interval"); ok {
+		if setArgNil {
+			obj["nac-periodic-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemNacPeriodicInterval(d, v, "nac_periodic_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nac-periodic-interval"] = t
+			t, err := expandSwitchControllerSystemNacPeriodicInterval(d, v, "nac_periodic_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nac-periodic-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dynamic_periodic_interval"); ok {
+		if setArgNil {
+			obj["dynamic-periodic-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemDynamicPeriodicInterval(d, v, "dynamic_periodic_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dynamic-periodic-interval"] = t
+			t, err := expandSwitchControllerSystemDynamicPeriodicInterval(d, v, "dynamic_periodic_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dynamic-periodic-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_mode"); ok {
+		if setArgNil {
+			obj["tunnel-mode"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSystemTunnelMode(d, v, "tunnel_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-mode"] = t
+			t, err := expandSwitchControllerSystemTunnelMode(d, v, "tunnel_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-mode"] = t
+			}
 		}
 	}
 

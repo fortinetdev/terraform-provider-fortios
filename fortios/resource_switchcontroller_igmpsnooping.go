@@ -63,7 +63,7 @@ func resourceSwitchControllerIgmpSnoopingUpdate(d *schema.ResourceData, m interf
 		}
 	}
 
-	obj, err := getObjectSwitchControllerIgmpSnooping(d, c.Fv)
+	obj, err := getObjectSwitchControllerIgmpSnooping(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerIgmpSnooping resource while getting object: %v", err)
 	}
@@ -85,7 +85,6 @@ func resourceSwitchControllerIgmpSnoopingUpdate(d *schema.ResourceData, m interf
 
 func resourceSwitchControllerIgmpSnoopingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -97,9 +96,15 @@ func resourceSwitchControllerIgmpSnoopingDelete(d *schema.ResourceData, m interf
 		}
 	}
 
-	err := c.DeleteSwitchControllerIgmpSnooping(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerIgmpSnooping(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerIgmpSnooping resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerIgmpSnooping resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerIgmpSnooping(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerIgmpSnooping resource: %v", err)
 	}
 
 	d.SetId("")
@@ -179,26 +184,34 @@ func expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d *schema.ResourceD
 	return v, nil
 }
 
-func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("aging_time"); ok {
+		if setArgNil {
+			obj["aging-time"] = nil
+		} else {
 
-		t, err := expandSwitchControllerIgmpSnoopingAgingTime(d, v, "aging_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["aging-time"] = t
+			t, err := expandSwitchControllerIgmpSnoopingAgingTime(d, v, "aging_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["aging-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("flood_unknown_multicast"); ok {
+		if setArgNil {
+			obj["flood-unknown-multicast"] = nil
+		} else {
 
-		t, err := expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d, v, "flood_unknown_multicast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["flood-unknown-multicast"] = t
+			t, err := expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d, v, "flood_unknown_multicast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["flood-unknown-multicast"] = t
+			}
 		}
 	}
 

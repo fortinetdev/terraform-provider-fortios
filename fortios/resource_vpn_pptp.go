@@ -82,7 +82,7 @@ func resourceVpnPptpUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectVpnPptp(d, c.Fv)
+	obj, err := getObjectVpnPptp(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnPptp resource while getting object: %v", err)
 	}
@@ -104,7 +104,6 @@ func resourceVpnPptpUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceVpnPptpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -116,9 +115,15 @@ func resourceVpnPptpDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteVpnPptp(mkey, vdomparam)
+	obj, err := getObjectVpnPptp(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting VpnPptp resource: %v", err)
+		return fmt.Errorf("Error updating VpnPptp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateVpnPptp(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing VpnPptp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -254,66 +259,90 @@ func expandVpnPptpUsrgrp(d *schema.ResourceData, v interface{}, pre string, sv s
 	return v, nil
 }
 
-func getObjectVpnPptp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandVpnPptpStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandVpnPptpStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip_mode"); ok {
+		if setArgNil {
+			obj["ip-mode"] = nil
+		} else {
 
-		t, err := expandVpnPptpIpMode(d, v, "ip_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip-mode"] = t
+			t, err := expandVpnPptpIpMode(d, v, "ip_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("eip"); ok {
+		if setArgNil {
+			obj["eip"] = nil
+		} else {
 
-		t, err := expandVpnPptpEip(d, v, "eip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["eip"] = t
+			t, err := expandVpnPptpEip(d, v, "eip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["eip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip"); ok {
+		if setArgNil {
+			obj["sip"] = nil
+		} else {
 
-		t, err := expandVpnPptpSip(d, v, "sip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip"] = t
+			t, err := expandVpnPptpSip(d, v, "sip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_ip"); ok {
+		if setArgNil {
+			obj["local-ip"] = nil
+		} else {
 
-		t, err := expandVpnPptpLocalIp(d, v, "local_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-ip"] = t
+			t, err := expandVpnPptpLocalIp(d, v, "local_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("usrgrp"); ok {
+		if setArgNil {
+			obj["usrgrp"] = nil
+		} else {
 
-		t, err := expandVpnPptpUsrgrp(d, v, "usrgrp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["usrgrp"] = t
+			t, err := expandVpnPptpUsrgrp(d, v, "usrgrp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["usrgrp"] = t
+			}
 		}
 	}
 

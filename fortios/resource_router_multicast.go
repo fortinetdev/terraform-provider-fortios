@@ -1313,7 +1313,7 @@ func expandRouterMulticastMulticastRouting(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func expandRouterMulticastPimSmGlobal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterMulticastPimSmGlobal(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1325,133 +1325,237 @@ func expandRouterMulticastPimSmGlobal(d *schema.ResourceData, v interface{}, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "message_interval"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["message-interval"] = nil
+		} else {
 
-		result["message-interval"], _ = expandRouterMulticastPimSmGlobalMessageInterval(d, i["message_interval"], pre_append, sv)
+			result["message-interval"], _ = expandRouterMulticastPimSmGlobalMessageInterval(d, i["message_interval"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "join_prune_holdtime"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["join-prune-holdtime"] = nil
+		} else {
 
-		result["join-prune-holdtime"], _ = expandRouterMulticastPimSmGlobalJoinPruneHoldtime(d, i["join_prune_holdtime"], pre_append, sv)
+			result["join-prune-holdtime"], _ = expandRouterMulticastPimSmGlobalJoinPruneHoldtime(d, i["join_prune_holdtime"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "accept_register_list"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["accept-register-list"] = nil
+		} else {
 
-		result["accept-register-list"], _ = expandRouterMulticastPimSmGlobalAcceptRegisterList(d, i["accept_register_list"], pre_append, sv)
+			result["accept-register-list"], _ = expandRouterMulticastPimSmGlobalAcceptRegisterList(d, i["accept_register_list"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "accept_source_list"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["accept-source-list"] = nil
+		} else {
 
-		result["accept-source-list"], _ = expandRouterMulticastPimSmGlobalAcceptSourceList(d, i["accept_source_list"], pre_append, sv)
+			result["accept-source-list"], _ = expandRouterMulticastPimSmGlobalAcceptSourceList(d, i["accept_source_list"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "bsr_candidate"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bsr-candidate"] = nil
+		} else {
 
-		result["bsr-candidate"], _ = expandRouterMulticastPimSmGlobalBsrCandidate(d, i["bsr_candidate"], pre_append, sv)
+			result["bsr-candidate"], _ = expandRouterMulticastPimSmGlobalBsrCandidate(d, i["bsr_candidate"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "bsr_interface"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bsr-interface"] = nil
+		} else {
 
-		result["bsr-interface"], _ = expandRouterMulticastPimSmGlobalBsrInterface(d, i["bsr_interface"], pre_append, sv)
+			result["bsr-interface"], _ = expandRouterMulticastPimSmGlobalBsrInterface(d, i["bsr_interface"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "bsr_priority"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bsr-priority"] = nil
+		} else {
 
-		result["bsr-priority"], _ = expandRouterMulticastPimSmGlobalBsrPriority(d, i["bsr_priority"], pre_append, sv)
+			result["bsr-priority"], _ = expandRouterMulticastPimSmGlobalBsrPriority(d, i["bsr_priority"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "bsr_hash"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bsr-hash"] = nil
+		} else {
 
-		result["bsr-hash"], _ = expandRouterMulticastPimSmGlobalBsrHash(d, i["bsr_hash"], pre_append, sv)
+			result["bsr-hash"], _ = expandRouterMulticastPimSmGlobalBsrHash(d, i["bsr_hash"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "bsr_allow_quick_refresh"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bsr-allow-quick-refresh"] = nil
+		} else {
 
-		result["bsr-allow-quick-refresh"], _ = expandRouterMulticastPimSmGlobalBsrAllowQuickRefresh(d, i["bsr_allow_quick_refresh"], pre_append, sv)
+			result["bsr-allow-quick-refresh"], _ = expandRouterMulticastPimSmGlobalBsrAllowQuickRefresh(d, i["bsr_allow_quick_refresh"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "cisco_register_checksum"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["cisco-register-checksum"] = nil
+		} else {
 
-		result["cisco-register-checksum"], _ = expandRouterMulticastPimSmGlobalCiscoRegisterChecksum(d, i["cisco_register_checksum"], pre_append, sv)
+			result["cisco-register-checksum"], _ = expandRouterMulticastPimSmGlobalCiscoRegisterChecksum(d, i["cisco_register_checksum"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "cisco_register_checksum_group"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["cisco-register-checksum-group"] = nil
+		} else {
 
-		result["cisco-register-checksum-group"], _ = expandRouterMulticastPimSmGlobalCiscoRegisterChecksumGroup(d, i["cisco_register_checksum_group"], pre_append, sv)
+			result["cisco-register-checksum-group"], _ = expandRouterMulticastPimSmGlobalCiscoRegisterChecksumGroup(d, i["cisco_register_checksum_group"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "cisco_crp_prefix"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["cisco-crp-prefix"] = nil
+		} else {
 
-		result["cisco-crp-prefix"], _ = expandRouterMulticastPimSmGlobalCiscoCrpPrefix(d, i["cisco_crp_prefix"], pre_append, sv)
+			result["cisco-crp-prefix"], _ = expandRouterMulticastPimSmGlobalCiscoCrpPrefix(d, i["cisco_crp_prefix"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "cisco_ignore_rp_set_priority"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["cisco-ignore-rp-set-priority"] = nil
+		} else {
 
-		result["cisco-ignore-rp-set-priority"], _ = expandRouterMulticastPimSmGlobalCiscoIgnoreRpSetPriority(d, i["cisco_ignore_rp_set_priority"], pre_append, sv)
+			result["cisco-ignore-rp-set-priority"], _ = expandRouterMulticastPimSmGlobalCiscoIgnoreRpSetPriority(d, i["cisco_ignore_rp_set_priority"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "register_rp_reachability"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-rp-reachability"] = nil
+		} else {
 
-		result["register-rp-reachability"], _ = expandRouterMulticastPimSmGlobalRegisterRpReachability(d, i["register_rp_reachability"], pre_append, sv)
+			result["register-rp-reachability"], _ = expandRouterMulticastPimSmGlobalRegisterRpReachability(d, i["register_rp_reachability"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "register_source"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-source"] = nil
+		} else {
 
-		result["register-source"], _ = expandRouterMulticastPimSmGlobalRegisterSource(d, i["register_source"], pre_append, sv)
+			result["register-source"], _ = expandRouterMulticastPimSmGlobalRegisterSource(d, i["register_source"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "register_source_interface"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-source-interface"] = nil
+		} else {
 
-		result["register-source-interface"], _ = expandRouterMulticastPimSmGlobalRegisterSourceInterface(d, i["register_source_interface"], pre_append, sv)
+			result["register-source-interface"], _ = expandRouterMulticastPimSmGlobalRegisterSourceInterface(d, i["register_source_interface"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "register_source_ip"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-source-ip"] = nil
+		} else {
 
-		result["register-source-ip"], _ = expandRouterMulticastPimSmGlobalRegisterSourceIp(d, i["register_source_ip"], pre_append, sv)
+			result["register-source-ip"], _ = expandRouterMulticastPimSmGlobalRegisterSourceIp(d, i["register_source_ip"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "register_supression"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-supression"] = nil
+		} else {
 
-		result["register-supression"], _ = expandRouterMulticastPimSmGlobalRegisterSupression(d, i["register_supression"], pre_append, sv)
+			result["register-supression"], _ = expandRouterMulticastPimSmGlobalRegisterSupression(d, i["register_supression"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "null_register_retries"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["null-register-retries"] = nil
+		} else {
 
-		result["null-register-retries"], _ = expandRouterMulticastPimSmGlobalNullRegisterRetries(d, i["null_register_retries"], pre_append, sv)
+			result["null-register-retries"], _ = expandRouterMulticastPimSmGlobalNullRegisterRetries(d, i["null_register_retries"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "rp_register_keepalive"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["rp-register-keepalive"] = nil
+		} else {
 
-		result["rp-register-keepalive"], _ = expandRouterMulticastPimSmGlobalRpRegisterKeepalive(d, i["rp_register_keepalive"], pre_append, sv)
+			result["rp-register-keepalive"], _ = expandRouterMulticastPimSmGlobalRpRegisterKeepalive(d, i["rp_register_keepalive"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "spt_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["spt-threshold"] = nil
+		} else {
 
-		result["spt-threshold"], _ = expandRouterMulticastPimSmGlobalSptThreshold(d, i["spt_threshold"], pre_append, sv)
+			result["spt-threshold"], _ = expandRouterMulticastPimSmGlobalSptThreshold(d, i["spt_threshold"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "spt_threshold_group"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["spt-threshold-group"] = nil
+		} else {
 
-		result["spt-threshold-group"], _ = expandRouterMulticastPimSmGlobalSptThresholdGroup(d, i["spt_threshold_group"], pre_append, sv)
+			result["spt-threshold-group"], _ = expandRouterMulticastPimSmGlobalSptThresholdGroup(d, i["spt_threshold_group"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "ssm"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["ssm"] = nil
+		} else {
 
-		result["ssm"], _ = expandRouterMulticastPimSmGlobalSsm(d, i["ssm"], pre_append, sv)
+			result["ssm"], _ = expandRouterMulticastPimSmGlobalSsm(d, i["ssm"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "ssm_range"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["ssm-range"] = nil
+		} else {
 
-		result["ssm-range"], _ = expandRouterMulticastPimSmGlobalSsmRange(d, i["ssm_range"], pre_append, sv)
+			result["ssm-range"], _ = expandRouterMulticastPimSmGlobalSsmRange(d, i["ssm_range"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "register_rate_limit"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-rate-limit"] = nil
+		} else {
 
-		result["register-rate-limit"], _ = expandRouterMulticastPimSmGlobalRegisterRateLimit(d, i["register_rate_limit"], pre_append, sv)
+			result["register-rate-limit"], _ = expandRouterMulticastPimSmGlobalRegisterRateLimit(d, i["register_rate_limit"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "rp_address"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["rp-address"] = make([]struct{}, 0)
+		} else {
 
-		result["rp-address"], _ = expandRouterMulticastPimSmGlobalRpAddress(d, i["rp_address"], pre_append, sv)
+			result["rp-address"], _ = expandRouterMulticastPimSmGlobalRpAddress(d, i["rp_address"], pre_append, sv)
+		}
 	} else {
 		result["rp-address"] = make([]string, 0)
 	}
@@ -1976,42 +2080,54 @@ func expandRouterMulticastInterfaceIgmpRouterAlertCheck(d *schema.ResourceData, 
 	return v, nil
 }
 
-func getObjectRouterMulticast(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterMulticast(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("route_threshold"); ok {
+		if setArgNil {
+			obj["route-threshold"] = nil
+		} else {
 
-		t, err := expandRouterMulticastRouteThreshold(d, v, "route_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["route-threshold"] = t
+			t, err := expandRouterMulticastRouteThreshold(d, v, "route_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["route-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("route_limit"); ok {
+		if setArgNil {
+			obj["route-limit"] = nil
+		} else {
 
-		t, err := expandRouterMulticastRouteLimit(d, v, "route_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["route-limit"] = t
+			t, err := expandRouterMulticastRouteLimit(d, v, "route_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["route-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_routing"); ok {
+		if setArgNil {
+			obj["multicast-routing"] = nil
+		} else {
 
-		t, err := expandRouterMulticastMulticastRouting(d, v, "multicast_routing", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-routing"] = t
+			t, err := expandRouterMulticastMulticastRouting(d, v, "multicast_routing", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-routing"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pim_sm_global"); ok {
 
-		t, err := expandRouterMulticastPimSmGlobal(d, v, "pim_sm_global", sv)
+		t, err := expandRouterMulticastPimSmGlobal(d, v, "pim_sm_global", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2019,10 +2135,10 @@ func getObjectRouterMulticast(d *schema.ResourceData, bemptysontable bool, sv st
 		}
 	}
 
-	if bemptysontable {
-		obj["interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterMulticastInterface(d, v, "interface", sv)
 			if err != nil {

@@ -108,7 +108,7 @@ func resourceSystemLteModemUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemLteModem(d, c.Fv)
+	obj, err := getObjectSystemLteModem(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemLteModem resource while getting object: %v", err)
 	}
@@ -130,7 +130,6 @@ func resourceSystemLteModemUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemLteModemDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -142,9 +141,15 @@ func resourceSystemLteModemDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemLteModem(mkey, vdomparam)
+	obj, err := getObjectSystemLteModem(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemLteModem resource: %v", err)
+		return fmt.Errorf("Error updating SystemLteModem resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemLteModem(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemLteModem resource: %v", err)
 	}
 
 	d.SetId("")
@@ -336,106 +341,146 @@ func expandSystemLteModemInterface(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-func getObjectSystemLteModem(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemLteModemStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemLteModemStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("extra_init"); ok {
+		if setArgNil {
+			obj["extra-init"] = nil
+		} else {
 
-		t, err := expandSystemLteModemExtraInit(d, v, "extra_init", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extra-init"] = t
+			t, err := expandSystemLteModemExtraInit(d, v, "extra_init", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extra-init"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authtype"); ok {
+		if setArgNil {
+			obj["authtype"] = nil
+		} else {
 
-		t, err := expandSystemLteModemAuthtype(d, v, "authtype", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authtype"] = t
+			t, err := expandSystemLteModemAuthtype(d, v, "authtype", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authtype"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("username"); ok {
+		if setArgNil {
+			obj["username"] = nil
+		} else {
 
-		t, err := expandSystemLteModemUsername(d, v, "username", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["username"] = t
+			t, err := expandSystemLteModemUsername(d, v, "username", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["username"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("passwd"); ok {
+		if setArgNil {
+			obj["passwd"] = nil
+		} else {
 
-		t, err := expandSystemLteModemPasswd(d, v, "passwd", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["passwd"] = t
+			t, err := expandSystemLteModemPasswd(d, v, "passwd", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["passwd"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("apn"); ok {
+		if setArgNil {
+			obj["apn"] = nil
+		} else {
 
-		t, err := expandSystemLteModemApn(d, v, "apn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["apn"] = t
+			t, err := expandSystemLteModemApn(d, v, "apn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["apn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("modem_port"); ok {
+		if setArgNil {
+			obj["modem-port"] = nil
+		} else {
 
-		t, err := expandSystemLteModemModemPort(d, v, "modem_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["modem-port"] = t
+			t, err := expandSystemLteModemModemPort(d, v, "modem_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["modem-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemLteModemMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemLteModemMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("holddown_timer"); ok {
+		if setArgNil {
+			obj["holddown-timer"] = nil
+		} else {
 
-		t, err := expandSystemLteModemHolddownTimer(d, v, "holddown_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["holddown-timer"] = t
+			t, err := expandSystemLteModemHolddownTimer(d, v, "holddown_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["holddown-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemLteModemInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemLteModemInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

@@ -67,7 +67,7 @@ func resourceSwitchControllerSnmpTrapThresholdUpdate(d *schema.ResourceData, m i
 		}
 	}
 
-	obj, err := getObjectSwitchControllerSnmpTrapThreshold(d, c.Fv)
+	obj, err := getObjectSwitchControllerSnmpTrapThreshold(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpTrapThreshold resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceSwitchControllerSnmpTrapThresholdUpdate(d *schema.ResourceData, m i
 
 func resourceSwitchControllerSnmpTrapThresholdDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceSwitchControllerSnmpTrapThresholdDelete(d *schema.ResourceData, m i
 		}
 	}
 
-	err := c.DeleteSwitchControllerSnmpTrapThreshold(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerSnmpTrapThreshold(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerSnmpTrapThreshold resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerSnmpTrapThreshold resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerSnmpTrapThreshold(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerSnmpTrapThreshold resource: %v", err)
 	}
 
 	d.SetId("")
@@ -197,36 +202,48 @@ func expandSwitchControllerSnmpTrapThresholdTrapLogFullThreshold(d *schema.Resou
 	return v, nil
 }
 
-func getObjectSwitchControllerSnmpTrapThreshold(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSnmpTrapThreshold(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("trap_high_cpu_threshold"); ok {
+		if setArgNil {
+			obj["trap-high-cpu-threshold"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSnmpTrapThresholdTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-high-cpu-threshold"] = t
+			t, err := expandSwitchControllerSnmpTrapThresholdTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-high-cpu-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("trap_low_memory_threshold"); ok {
+		if setArgNil {
+			obj["trap-low-memory-threshold"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSnmpTrapThresholdTrapLowMemoryThreshold(d, v, "trap_low_memory_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-low-memory-threshold"] = t
+			t, err := expandSwitchControllerSnmpTrapThresholdTrapLowMemoryThreshold(d, v, "trap_low_memory_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-low-memory-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("trap_log_full_threshold"); ok {
+		if setArgNil {
+			obj["trap-log-full-threshold"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSnmpTrapThresholdTrapLogFullThreshold(d, v, "trap_log_full_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-log-full-threshold"] = t
+			t, err := expandSwitchControllerSnmpTrapThresholdTrapLogFullThreshold(d, v, "trap_log_full_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-log-full-threshold"] = t
+			}
 		}
 	}
 

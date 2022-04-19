@@ -69,7 +69,7 @@ func resourceSystemHaMonitorUpdate(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	obj, err := getObjectSystemHaMonitor(d, c.Fv)
+	obj, err := getObjectSystemHaMonitor(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemHaMonitor resource while getting object: %v", err)
 	}
@@ -91,7 +91,6 @@ func resourceSystemHaMonitorUpdate(d *schema.ResourceData, m interface{}) error 
 
 func resourceSystemHaMonitorDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -103,9 +102,15 @@ func resourceSystemHaMonitorDelete(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	err := c.DeleteSystemHaMonitor(mkey, vdomparam)
+	obj, err := getObjectSystemHaMonitor(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemHaMonitor resource: %v", err)
+		return fmt.Errorf("Error updating SystemHaMonitor resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemHaMonitor(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemHaMonitor resource: %v", err)
 	}
 
 	d.SetId("")
@@ -199,36 +204,48 @@ func expandSystemHaMonitorVlanHbLostThreshold(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func getObjectSystemHaMonitor(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemHaMonitor(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("monitor_vlan"); ok {
+		if setArgNil {
+			obj["monitor-vlan"] = nil
+		} else {
 
-		t, err := expandSystemHaMonitorMonitorVlan(d, v, "monitor_vlan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["monitor-vlan"] = t
+			t, err := expandSystemHaMonitorMonitorVlan(d, v, "monitor_vlan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor-vlan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vlan_hb_interval"); ok {
+		if setArgNil {
+			obj["vlan-hb-interval"] = nil
+		} else {
 
-		t, err := expandSystemHaMonitorVlanHbInterval(d, v, "vlan_hb_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vlan-hb-interval"] = t
+			t, err := expandSystemHaMonitorVlanHbInterval(d, v, "vlan_hb_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vlan-hb-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vlan_hb_lost_threshold"); ok {
+		if setArgNil {
+			obj["vlan-hb-lost-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaMonitorVlanHbLostThreshold(d, v, "vlan_hb_lost_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vlan-hb-lost-threshold"] = t
+			t, err := expandSystemHaMonitorVlanHbLostThreshold(d, v, "vlan_hb_lost_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vlan-hb-lost-threshold"] = t
+			}
 		}
 	}
 

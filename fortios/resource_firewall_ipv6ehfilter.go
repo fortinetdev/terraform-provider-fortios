@@ -94,7 +94,7 @@ func resourceFirewallIpv6EhFilterUpdate(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	obj, err := getObjectFirewallIpv6EhFilter(d, c.Fv)
+	obj, err := getObjectFirewallIpv6EhFilter(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpv6EhFilter resource while getting object: %v", err)
 	}
@@ -116,7 +116,6 @@ func resourceFirewallIpv6EhFilterUpdate(d *schema.ResourceData, m interface{}) e
 
 func resourceFirewallIpv6EhFilterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -128,9 +127,15 @@ func resourceFirewallIpv6EhFilterDelete(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	err := c.DeleteFirewallIpv6EhFilter(mkey, vdomparam)
+	obj, err := getObjectFirewallIpv6EhFilter(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FirewallIpv6EhFilter resource: %v", err)
+		return fmt.Errorf("Error updating FirewallIpv6EhFilter resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFirewallIpv6EhFilter(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FirewallIpv6EhFilter resource: %v", err)
 	}
 
 	d.SetId("")
@@ -294,86 +299,118 @@ func expandFirewallIpv6EhFilterNoNext(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("hop_opt"); ok {
+		if setArgNil {
+			obj["hop-opt"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterHopOpt(d, v, "hop_opt", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hop-opt"] = t
+			t, err := expandFirewallIpv6EhFilterHopOpt(d, v, "hop_opt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hop-opt"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dest_opt"); ok {
+		if setArgNil {
+			obj["dest-opt"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterDestOpt(d, v, "dest_opt", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dest-opt"] = t
+			t, err := expandFirewallIpv6EhFilterDestOpt(d, v, "dest_opt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dest-opt"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("hdopt_type"); ok {
+		if setArgNil {
+			obj["hdopt-type"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterHdoptType(d, v, "hdopt_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hdopt-type"] = t
+			t, err := expandFirewallIpv6EhFilterHdoptType(d, v, "hdopt_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hdopt-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("routing"); ok {
+		if setArgNil {
+			obj["routing"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterRouting(d, v, "routing", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["routing"] = t
+			t, err := expandFirewallIpv6EhFilterRouting(d, v, "routing", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["routing"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("routing_type"); ok {
+		if setArgNil {
+			obj["routing-type"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterRoutingType(d, v, "routing_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["routing-type"] = t
+			t, err := expandFirewallIpv6EhFilterRoutingType(d, v, "routing_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["routing-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fragment"); ok {
+		if setArgNil {
+			obj["fragment"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterFragment(d, v, "fragment", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fragment"] = t
+			t, err := expandFirewallIpv6EhFilterFragment(d, v, "fragment", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fragment"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth"); ok {
+		if setArgNil {
+			obj["auth"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterAuth(d, v, "auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth"] = t
+			t, err := expandFirewallIpv6EhFilterAuth(d, v, "auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("no_next"); ok {
+		if setArgNil {
+			obj["no-next"] = nil
+		} else {
 
-		t, err := expandFirewallIpv6EhFilterNoNext(d, v, "no_next", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["no-next"] = t
+			t, err := expandFirewallIpv6EhFilterNoNext(d, v, "no_next", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["no-next"] = t
+			}
 		}
 	}
 

@@ -1326,7 +1326,7 @@ func resourceSystemGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemGlobal(d, c.Fv)
+	obj, err := getObjectSystemGlobal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGlobal resource while getting object: %v", err)
 	}
@@ -1348,7 +1348,6 @@ func resourceSystemGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -1360,9 +1359,15 @@ func resourceSystemGlobalDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemGlobal(mkey, vdomparam)
+	obj, err := getObjectSystemGlobal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemGlobal resource: %v", err)
+		return fmt.Errorf("Error updating SystemGlobal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemGlobal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemGlobal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -4753,2386 +4758,3338 @@ func expandSystemGlobalInternetServiceDatabase(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-func getObjectSystemGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("language"); ok {
+		if setArgNil {
+			obj["language"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLanguage(d, v, "language", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["language"] = t
+			t, err := expandSystemGlobalLanguage(d, v, "language", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["language"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_ipv6"); ok {
+		if setArgNil {
+			obj["gui-ipv6"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiIpv6(d, v, "gui_ipv6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-ipv6"] = t
+			t, err := expandSystemGlobalGuiIpv6(d, v, "gui_ipv6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-ipv6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_replacement_message_groups"); ok {
+		if setArgNil {
+			obj["gui-replacement-message-groups"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiReplacementMessageGroups(d, v, "gui_replacement_message_groups", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-replacement-message-groups"] = t
+			t, err := expandSystemGlobalGuiReplacementMessageGroups(d, v, "gui_replacement_message_groups", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-replacement-message-groups"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_local_out"); ok {
+		if setArgNil {
+			obj["gui-local-out"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiLocalOut(d, v, "gui_local_out", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-local-out"] = t
+			t, err := expandSystemGlobalGuiLocalOut(d, v, "gui_local_out", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-local-out"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_certificates"); ok {
+		if setArgNil {
+			obj["gui-certificates"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiCertificates(d, v, "gui_certificates", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-certificates"] = t
+			t, err := expandSystemGlobalGuiCertificates(d, v, "gui_certificates", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-certificates"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_custom_language"); ok {
+		if setArgNil {
+			obj["gui-custom-language"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiCustomLanguage(d, v, "gui_custom_language", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-custom-language"] = t
+			t, err := expandSystemGlobalGuiCustomLanguage(d, v, "gui_custom_language", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-custom-language"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_wireless_opensecurity"); ok {
+		if setArgNil {
+			obj["gui-wireless-opensecurity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiWirelessOpensecurity(d, v, "gui_wireless_opensecurity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-wireless-opensecurity"] = t
+			t, err := expandSystemGlobalGuiWirelessOpensecurity(d, v, "gui_wireless_opensecurity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-wireless-opensecurity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_display_hostname"); ok {
+		if setArgNil {
+			obj["gui-display-hostname"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiDisplayHostname(d, v, "gui_display_hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-display-hostname"] = t
+			t, err := expandSystemGlobalGuiDisplayHostname(d, v, "gui_display_hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-display-hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_fortigate_cloud_sandbox"); ok {
+		if setArgNil {
+			obj["gui-fortigate-cloud-sandbox"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiFortigateCloudSandbox(d, v, "gui_fortigate_cloud_sandbox", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-fortigate-cloud-sandbox"] = t
+			t, err := expandSystemGlobalGuiFortigateCloudSandbox(d, v, "gui_fortigate_cloud_sandbox", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-fortigate-cloud-sandbox"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_fortisandbox_cloud"); ok {
+		if setArgNil {
+			obj["gui-fortisandbox-cloud"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiFortisandboxCloud(d, v, "gui_fortisandbox_cloud", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-fortisandbox-cloud"] = t
+			t, err := expandSystemGlobalGuiFortisandboxCloud(d, v, "gui_fortisandbox_cloud", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-fortisandbox-cloud"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_firmware_upgrade_warning"); ok {
+		if setArgNil {
+			obj["gui-firmware-upgrade-warning"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiFirmwareUpgradeWarning(d, v, "gui_firmware_upgrade_warning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-firmware-upgrade-warning"] = t
+			t, err := expandSystemGlobalGuiFirmwareUpgradeWarning(d, v, "gui_firmware_upgrade_warning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-firmware-upgrade-warning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_firmware_upgrade_setup_warning"); ok {
+		if setArgNil {
+			obj["gui-firmware-upgrade-setup-warning"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiFirmwareUpgradeSetupWarning(d, v, "gui_firmware_upgrade_setup_warning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-firmware-upgrade-setup-warning"] = t
+			t, err := expandSystemGlobalGuiFirmwareUpgradeSetupWarning(d, v, "gui_firmware_upgrade_setup_warning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-firmware-upgrade-setup-warning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_lines_per_page"); ok {
+		if setArgNil {
+			obj["gui-lines-per-page"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiLinesPerPage(d, v, "gui_lines_per_page", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-lines-per-page"] = t
+			t, err := expandSystemGlobalGuiLinesPerPage(d, v, "gui_lines_per_page", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-lines-per-page"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_https_ssl_versions"); ok {
+		if setArgNil {
+			obj["admin-https-ssl-versions"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminHttpsSslVersions(d, v, "admin_https_ssl_versions", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-https-ssl-versions"] = t
+			t, err := expandSystemGlobalAdminHttpsSslVersions(d, v, "admin_https_ssl_versions", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-https-ssl-versions"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_https_ssl_ciphersuites"); ok {
+		if setArgNil {
+			obj["admin-https-ssl-ciphersuites"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminHttpsSslCiphersuites(d, v, "admin_https_ssl_ciphersuites", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-https-ssl-ciphersuites"] = t
+			t, err := expandSystemGlobalAdminHttpsSslCiphersuites(d, v, "admin_https_ssl_ciphersuites", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-https-ssl-ciphersuites"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_https_ssl_banned_ciphers"); ok {
+		if setArgNil {
+			obj["admin-https-ssl-banned-ciphers"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminHttpsSslBannedCiphers(d, v, "admin_https_ssl_banned_ciphers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-https-ssl-banned-ciphers"] = t
+			t, err := expandSystemGlobalAdminHttpsSslBannedCiphers(d, v, "admin_https_ssl_banned_ciphers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-https-ssl-banned-ciphers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admintimeout"); ok {
+		if setArgNil {
+			obj["admintimeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdmintimeout(d, v, "admintimeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admintimeout"] = t
+			t, err := expandSystemGlobalAdmintimeout(d, v, "admintimeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admintimeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_console_timeout"); ok {
+		if setArgNil {
+			obj["admin-console-timeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminConsoleTimeout(d, v, "admin_console_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-console-timeout"] = t
+			t, err := expandSystemGlobalAdminConsoleTimeout(d, v, "admin_console_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-console-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssd_trim_freq"); ok {
+		if setArgNil {
+			obj["ssd-trim-freq"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSsdTrimFreq(d, v, "ssd_trim_freq", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssd-trim-freq"] = t
+			t, err := expandSystemGlobalSsdTrimFreq(d, v, "ssd_trim_freq", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssd-trim-freq"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ssd_trim_hour"); ok {
+		if setArgNil {
+			obj["ssd-trim-hour"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSsdTrimHour(d, v, "ssd_trim_hour", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssd-trim-hour"] = t
+			t, err := expandSystemGlobalSsdTrimHour(d, v, "ssd_trim_hour", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssd-trim-hour"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ssd_trim_min"); ok {
+		if setArgNil {
+			obj["ssd-trim-min"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSsdTrimMin(d, v, "ssd_trim_min", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssd-trim-min"] = t
+			t, err := expandSystemGlobalSsdTrimMin(d, v, "ssd_trim_min", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssd-trim-min"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssd_trim_weekday"); ok {
+		if setArgNil {
+			obj["ssd-trim-weekday"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSsdTrimWeekday(d, v, "ssd_trim_weekday", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssd-trim-weekday"] = t
+			t, err := expandSystemGlobalSsdTrimWeekday(d, v, "ssd_trim_weekday", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssd-trim-weekday"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssd_trim_date"); ok {
+		if setArgNil {
+			obj["ssd-trim-date"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSsdTrimDate(d, v, "ssd_trim_date", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssd-trim-date"] = t
+			t, err := expandSystemGlobalSsdTrimDate(d, v, "ssd_trim_date", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssd-trim-date"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_concurrent"); ok {
+		if setArgNil {
+			obj["admin-concurrent"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminConcurrent(d, v, "admin_concurrent", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-concurrent"] = t
+			t, err := expandSystemGlobalAdminConcurrent(d, v, "admin_concurrent", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-concurrent"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_lockout_threshold"); ok {
+		if setArgNil {
+			obj["admin-lockout-threshold"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminLockoutThreshold(d, v, "admin_lockout_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-lockout-threshold"] = t
+			t, err := expandSystemGlobalAdminLockoutThreshold(d, v, "admin_lockout_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-lockout-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_lockout_duration"); ok {
+		if setArgNil {
+			obj["admin-lockout-duration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminLockoutDuration(d, v, "admin_lockout_duration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-lockout-duration"] = t
+			t, err := expandSystemGlobalAdminLockoutDuration(d, v, "admin_lockout_duration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-lockout-duration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("refresh"); ok {
+		if setArgNil {
+			obj["refresh"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRefresh(d, v, "refresh", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["refresh"] = t
+			t, err := expandSystemGlobalRefresh(d, v, "refresh", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["refresh"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("interval"); ok {
+		if setArgNil {
+			obj["interval"] = nil
+		} else {
 
-		t, err := expandSystemGlobalInterval(d, v, "interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interval"] = t
+			t, err := expandSystemGlobalInterval(d, v, "interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("failtime"); ok {
+		if setArgNil {
+			obj["failtime"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFailtime(d, v, "failtime", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["failtime"] = t
+			t, err := expandSystemGlobalFailtime(d, v, "failtime", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["failtime"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("daily_restart"); ok {
+		if setArgNil {
+			obj["daily-restart"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDailyRestart(d, v, "daily_restart", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["daily-restart"] = t
+			t, err := expandSystemGlobalDailyRestart(d, v, "daily_restart", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["daily-restart"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("restart_time"); ok {
+		if setArgNil {
+			obj["restart-time"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRestartTime(d, v, "restart_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["restart-time"] = t
+			t, err := expandSystemGlobalRestartTime(d, v, "restart_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("radius_port"); ok {
+		if setArgNil {
+			obj["radius-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRadiusPort(d, v, "radius_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["radius-port"] = t
+			t, err := expandSystemGlobalRadiusPort(d, v, "radius_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["radius-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_login_max"); ok {
+		if setArgNil {
+			obj["admin-login-max"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminLoginMax(d, v, "admin_login_max", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-login-max"] = t
+			t, err := expandSystemGlobalAdminLoginMax(d, v, "admin_login_max", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-login-max"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("remoteauthtimeout"); ok {
+		if setArgNil {
+			obj["remoteauthtimeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRemoteauthtimeout(d, v, "remoteauthtimeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["remoteauthtimeout"] = t
+			t, err := expandSystemGlobalRemoteauthtimeout(d, v, "remoteauthtimeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["remoteauthtimeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ldapconntimeout"); ok {
+		if setArgNil {
+			obj["ldapconntimeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLdapconntimeout(d, v, "ldapconntimeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ldapconntimeout"] = t
+			t, err := expandSystemGlobalLdapconntimeout(d, v, "ldapconntimeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ldapconntimeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("batch_cmdb"); ok {
+		if setArgNil {
+			obj["batch-cmdb"] = nil
+		} else {
 
-		t, err := expandSystemGlobalBatchCmdb(d, v, "batch_cmdb", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["batch-cmdb"] = t
+			t, err := expandSystemGlobalBatchCmdb(d, v, "batch_cmdb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["batch-cmdb"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_dlpstat_memory"); ok {
+		if setArgNil {
+			obj["max-dlpstat-memory"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMaxDlpstatMemory(d, v, "max_dlpstat_memory", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-dlpstat-memory"] = t
+			t, err := expandSystemGlobalMaxDlpstatMemory(d, v, "max_dlpstat_memory", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-dlpstat-memory"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multi_factor_authentication"); ok {
+		if setArgNil {
+			obj["multi-factor-authentication"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMultiFactorAuthentication(d, v, "multi_factor_authentication", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multi-factor-authentication"] = t
+			t, err := expandSystemGlobalMultiFactorAuthentication(d, v, "multi_factor_authentication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multi-factor-authentication"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandSystemGlobalSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("autorun_log_fsck"); ok {
+		if setArgNil {
+			obj["autorun-log-fsck"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAutorunLogFsck(d, v, "autorun_log_fsck", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["autorun-log-fsck"] = t
+			t, err := expandSystemGlobalAutorunLogFsck(d, v, "autorun_log_fsck", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["autorun-log-fsck"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dst"); ok {
+		if setArgNil {
+			obj["dst"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDst(d, v, "dst", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dst"] = t
+			t, err := expandSystemGlobalDst(d, v, "dst", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dst"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timezone"); ok {
+		if setArgNil {
+			obj["timezone"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTimezone(d, v, "timezone", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timezone"] = t
+			t, err := expandSystemGlobalTimezone(d, v, "timezone", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timezone"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("traffic_priority"); ok {
+		if setArgNil {
+			obj["traffic-priority"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTrafficPriority(d, v, "traffic_priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["traffic-priority"] = t
+			t, err := expandSystemGlobalTrafficPriority(d, v, "traffic_priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["traffic-priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("traffic_priority_level"); ok {
+		if setArgNil {
+			obj["traffic-priority-level"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTrafficPriorityLevel(d, v, "traffic_priority_level", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["traffic-priority-level"] = t
+			t, err := expandSystemGlobalTrafficPriorityLevel(d, v, "traffic_priority_level", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["traffic-priority-level"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anti_replay"); ok {
+		if setArgNil {
+			obj["anti-replay"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAntiReplay(d, v, "anti_replay", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anti-replay"] = t
+			t, err := expandSystemGlobalAntiReplay(d, v, "anti_replay", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anti-replay"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("send_pmtu_icmp"); ok {
+		if setArgNil {
+			obj["send-pmtu-icmp"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSendPmtuIcmp(d, v, "send_pmtu_icmp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["send-pmtu-icmp"] = t
+			t, err := expandSystemGlobalSendPmtuIcmp(d, v, "send_pmtu_icmp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["send-pmtu-icmp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("honor_df"); ok {
+		if setArgNil {
+			obj["honor-df"] = nil
+		} else {
 
-		t, err := expandSystemGlobalHonorDf(d, v, "honor_df", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["honor-df"] = t
+			t, err := expandSystemGlobalHonorDf(d, v, "honor_df", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["honor-df"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pmtu_discovery"); ok {
+		if setArgNil {
+			obj["pmtu-discovery"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPmtuDiscovery(d, v, "pmtu_discovery", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pmtu-discovery"] = t
+			t, err := expandSystemGlobalPmtuDiscovery(d, v, "pmtu_discovery", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pmtu-discovery"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("virtual_switch_vlan"); ok {
+		if setArgNil {
+			obj["virtual-switch-vlan"] = nil
+		} else {
 
-		t, err := expandSystemGlobalVirtualSwitchVlan(d, v, "virtual_switch_vlan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["virtual-switch-vlan"] = t
+			t, err := expandSystemGlobalVirtualSwitchVlan(d, v, "virtual_switch_vlan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["virtual-switch-vlan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("split_port"); ok {
+		if setArgNil {
+			obj["split-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSplitPort(d, v, "split_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["split-port"] = t
+			t, err := expandSystemGlobalSplitPort(d, v, "split_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["split-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("revision_image_auto_backup"); ok {
+		if setArgNil {
+			obj["revision-image-auto-backup"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRevisionImageAutoBackup(d, v, "revision_image_auto_backup", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["revision-image-auto-backup"] = t
+			t, err := expandSystemGlobalRevisionImageAutoBackup(d, v, "revision_image_auto_backup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["revision-image-auto-backup"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("revision_backup_on_logout"); ok {
+		if setArgNil {
+			obj["revision-backup-on-logout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRevisionBackupOnLogout(d, v, "revision_backup_on_logout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["revision-backup-on-logout"] = t
+			t, err := expandSystemGlobalRevisionBackupOnLogout(d, v, "revision_backup_on_logout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["revision-backup-on-logout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("management_vdom"); ok {
+		if setArgNil {
+			obj["management-vdom"] = nil
+		} else {
 
-		t, err := expandSystemGlobalManagementVdom(d, v, "management_vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-vdom"] = t
+			t, err := expandSystemGlobalManagementVdom(d, v, "management_vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
+		if setArgNil {
+			obj["hostname"] = nil
+		} else {
 
-		t, err := expandSystemGlobalHostname(d, v, "hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostname"] = t
+			t, err := expandSystemGlobalHostname(d, v, "hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_allow_default_hostname"); ok {
+		if setArgNil {
+			obj["gui-allow-default-hostname"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiAllowDefaultHostname(d, v, "gui_allow_default_hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-allow-default-hostname"] = t
+			t, err := expandSystemGlobalGuiAllowDefaultHostname(d, v, "gui_allow_default_hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-allow-default-hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_forticare_registration_setup_warning"); ok {
+		if setArgNil {
+			obj["gui-forticare-registration-setup-warning"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiForticareRegistrationSetupWarning(d, v, "gui_forticare_registration_setup_warning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-forticare-registration-setup-warning"] = t
+			t, err := expandSystemGlobalGuiForticareRegistrationSetupWarning(d, v, "gui_forticare_registration_setup_warning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-forticare-registration-setup-warning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_cdn_usage"); ok {
+		if setArgNil {
+			obj["gui-cdn-usage"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiCdnUsage(d, v, "gui_cdn_usage", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-cdn-usage"] = t
+			t, err := expandSystemGlobalGuiCdnUsage(d, v, "gui_cdn_usage", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-cdn-usage"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("alias"); ok {
+		if setArgNil {
+			obj["alias"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAlias(d, v, "alias", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["alias"] = t
+			t, err := expandSystemGlobalAlias(d, v, "alias", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["alias"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strong_crypto"); ok {
+		if setArgNil {
+			obj["strong-crypto"] = nil
+		} else {
 
-		t, err := expandSystemGlobalStrongCrypto(d, v, "strong_crypto", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strong-crypto"] = t
+			t, err := expandSystemGlobalStrongCrypto(d, v, "strong_crypto", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strong-crypto"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_cbc_cipher"); ok {
+		if setArgNil {
+			obj["ssh-cbc-cipher"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshCbcCipher(d, v, "ssh_cbc_cipher", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-cbc-cipher"] = t
+			t, err := expandSystemGlobalSshCbcCipher(d, v, "ssh_cbc_cipher", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-cbc-cipher"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_hmac_md5"); ok {
+		if setArgNil {
+			obj["ssh-hmac-md5"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshHmacMd5(d, v, "ssh_hmac_md5", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-hmac-md5"] = t
+			t, err := expandSystemGlobalSshHmacMd5(d, v, "ssh_hmac_md5", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-hmac-md5"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_kex_sha1"); ok {
+		if setArgNil {
+			obj["ssh-kex-sha1"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshKexSha1(d, v, "ssh_kex_sha1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-kex-sha1"] = t
+			t, err := expandSystemGlobalSshKexSha1(d, v, "ssh_kex_sha1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-kex-sha1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_mac_weak"); ok {
+		if setArgNil {
+			obj["ssh-mac-weak"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshMacWeak(d, v, "ssh_mac_weak", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-mac-weak"] = t
+			t, err := expandSystemGlobalSshMacWeak(d, v, "ssh_mac_weak", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-mac-weak"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_static_key_ciphers"); ok {
+		if setArgNil {
+			obj["ssl-static-key-ciphers"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslStaticKeyCiphers(d, v, "ssl_static_key_ciphers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-static-key-ciphers"] = t
+			t, err := expandSystemGlobalSslStaticKeyCiphers(d, v, "ssl_static_key_ciphers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-static-key-ciphers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_kex_algo"); ok {
+		if setArgNil {
+			obj["ssh-kex-algo"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshKexAlgo(d, v, "ssh_kex_algo", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-kex-algo"] = t
+			t, err := expandSystemGlobalSshKexAlgo(d, v, "ssh_kex_algo", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-kex-algo"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_enc_algo"); ok {
+		if setArgNil {
+			obj["ssh-enc-algo"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshEncAlgo(d, v, "ssh_enc_algo", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-enc-algo"] = t
+			t, err := expandSystemGlobalSshEncAlgo(d, v, "ssh_enc_algo", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-enc-algo"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh_mac_algo"); ok {
+		if setArgNil {
+			obj["ssh-mac-algo"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSshMacAlgo(d, v, "ssh_mac_algo", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh-mac-algo"] = t
+			t, err := expandSystemGlobalSshMacAlgo(d, v, "ssh_mac_algo", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-mac-algo"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("snat_route_change"); ok {
+		if setArgNil {
+			obj["snat-route-change"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSnatRouteChange(d, v, "snat_route_change", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["snat-route-change"] = t
+			t, err := expandSystemGlobalSnatRouteChange(d, v, "snat_route_change", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["snat-route-change"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("speedtest_server"); ok {
+		if setArgNil {
+			obj["speedtest-server"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSpeedtestServer(d, v, "speedtest_server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["speedtest-server"] = t
+			t, err := expandSystemGlobalSpeedtestServer(d, v, "speedtest_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["speedtest-server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cli_audit_log"); ok {
+		if setArgNil {
+			obj["cli-audit-log"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCliAuditLog(d, v, "cli_audit_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cli-audit-log"] = t
+			t, err := expandSystemGlobalCliAuditLog(d, v, "cli_audit_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cli-audit-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_params"); ok {
+		if setArgNil {
+			obj["dh-params"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDhParams(d, v, "dh_params", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-params"] = t
+			t, err := expandSystemGlobalDhParams(d, v, "dh_params", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-params"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fds_statistics"); ok {
+		if setArgNil {
+			obj["fds-statistics"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFdsStatistics(d, v, "fds_statistics", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fds-statistics"] = t
+			t, err := expandSystemGlobalFdsStatistics(d, v, "fds_statistics", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fds-statistics"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fds_statistics_period"); ok {
+		if setArgNil {
+			obj["fds-statistics-period"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFdsStatisticsPeriod(d, v, "fds_statistics_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fds-statistics-period"] = t
+			t, err := expandSystemGlobalFdsStatisticsPeriod(d, v, "fds_statistics_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fds-statistics-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_forward"); ok {
+		if setArgNil {
+			obj["multicast-forward"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMulticastForward(d, v, "multicast_forward", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-forward"] = t
+			t, err := expandSystemGlobalMulticastForward(d, v, "multicast_forward", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-forward"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mc_ttl_notchange"); ok {
+		if setArgNil {
+			obj["mc-ttl-notchange"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMcTtlNotchange(d, v, "mc_ttl_notchange", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mc-ttl-notchange"] = t
+			t, err := expandSystemGlobalMcTtlNotchange(d, v, "mc_ttl_notchange", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mc-ttl-notchange"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("asymroute"); ok {
+		if setArgNil {
+			obj["asymroute"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAsymroute(d, v, "asymroute", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["asymroute"] = t
+			t, err := expandSystemGlobalAsymroute(d, v, "asymroute", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["asymroute"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tcp_option"); ok {
+		if setArgNil {
+			obj["tcp-option"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTcpOption(d, v, "tcp_option", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tcp-option"] = t
+			t, err := expandSystemGlobalTcpOption(d, v, "tcp_option", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-option"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lldp_transmission"); ok {
+		if setArgNil {
+			obj["lldp-transmission"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLldpTransmission(d, v, "lldp_transmission", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lldp-transmission"] = t
+			t, err := expandSystemGlobalLldpTransmission(d, v, "lldp_transmission", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lldp-transmission"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lldp_reception"); ok {
+		if setArgNil {
+			obj["lldp-reception"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLldpReception(d, v, "lldp_reception", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lldp-reception"] = t
+			t, err := expandSystemGlobalLldpReception(d, v, "lldp_reception", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lldp-reception"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_auth_timeout"); ok {
+		if setArgNil {
+			obj["proxy-auth-timeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyAuthTimeout(d, v, "proxy_auth_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-auth-timeout"] = t
+			t, err := expandSystemGlobalProxyAuthTimeout(d, v, "proxy_auth_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-auth-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_re_authentication_mode"); ok {
+		if setArgNil {
+			obj["proxy-re-authentication-mode"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyReAuthenticationMode(d, v, "proxy_re_authentication_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-re-authentication-mode"] = t
+			t, err := expandSystemGlobalProxyReAuthenticationMode(d, v, "proxy_re_authentication_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-re-authentication-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_auth_lifetime"); ok {
+		if setArgNil {
+			obj["proxy-auth-lifetime"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyAuthLifetime(d, v, "proxy_auth_lifetime", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-auth-lifetime"] = t
+			t, err := expandSystemGlobalProxyAuthLifetime(d, v, "proxy_auth_lifetime", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-auth-lifetime"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_auth_lifetime_timeout"); ok {
+		if setArgNil {
+			obj["proxy-auth-lifetime-timeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyAuthLifetimeTimeout(d, v, "proxy_auth_lifetime_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-auth-lifetime-timeout"] = t
+			t, err := expandSystemGlobalProxyAuthLifetimeTimeout(d, v, "proxy_auth_lifetime_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-auth-lifetime-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_resource_mode"); ok {
+		if setArgNil {
+			obj["proxy-resource-mode"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyResourceMode(d, v, "proxy_resource_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-resource-mode"] = t
+			t, err := expandSystemGlobalProxyResourceMode(d, v, "proxy_resource_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-resource-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_cert_use_mgmt_vdom"); ok {
+		if setArgNil {
+			obj["proxy-cert-use-mgmt-vdom"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyCertUseMgmtVdom(d, v, "proxy_cert_use_mgmt_vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-cert-use-mgmt-vdom"] = t
+			t, err := expandSystemGlobalProxyCertUseMgmtVdom(d, v, "proxy_cert_use_mgmt_vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-cert-use-mgmt-vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sys_perf_log_interval"); ok {
+		if setArgNil {
+			obj["sys-perf-log-interval"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSysPerfLogInterval(d, v, "sys_perf_log_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sys-perf-log-interval"] = t
+			t, err := expandSystemGlobalSysPerfLogInterval(d, v, "sys_perf_log_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sys-perf-log-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("check_protocol_header"); ok {
+		if setArgNil {
+			obj["check-protocol-header"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCheckProtocolHeader(d, v, "check_protocol_header", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["check-protocol-header"] = t
+			t, err := expandSystemGlobalCheckProtocolHeader(d, v, "check_protocol_header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["check-protocol-header"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vip_arp_range"); ok {
+		if setArgNil {
+			obj["vip-arp-range"] = nil
+		} else {
 
-		t, err := expandSystemGlobalVipArpRange(d, v, "vip_arp_range", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vip-arp-range"] = t
+			t, err := expandSystemGlobalVipArpRange(d, v, "vip_arp_range", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vip-arp-range"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reset_sessionless_tcp"); ok {
+		if setArgNil {
+			obj["reset-sessionless-tcp"] = nil
+		} else {
 
-		t, err := expandSystemGlobalResetSessionlessTcp(d, v, "reset_sessionless_tcp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reset-sessionless-tcp"] = t
+			t, err := expandSystemGlobalResetSessionlessTcp(d, v, "reset_sessionless_tcp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reset-sessionless-tcp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_traffic_redirect"); ok {
+		if setArgNil {
+			obj["allow-traffic-redirect"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAllowTrafficRedirect(d, v, "allow_traffic_redirect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-traffic-redirect"] = t
+			t, err := expandSystemGlobalAllowTrafficRedirect(d, v, "allow_traffic_redirect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-traffic-redirect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_allow_traffic_redirect"); ok {
+		if setArgNil {
+			obj["ipv6-allow-traffic-redirect"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpv6AllowTrafficRedirect(d, v, "ipv6_allow_traffic_redirect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-allow-traffic-redirect"] = t
+			t, err := expandSystemGlobalIpv6AllowTrafficRedirect(d, v, "ipv6_allow_traffic_redirect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-allow-traffic-redirect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strict_dirty_session_check"); ok {
+		if setArgNil {
+			obj["strict-dirty-session-check"] = nil
+		} else {
 
-		t, err := expandSystemGlobalStrictDirtySessionCheck(d, v, "strict_dirty_session_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strict-dirty-session-check"] = t
+			t, err := expandSystemGlobalStrictDirtySessionCheck(d, v, "strict_dirty_session_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strict-dirty-session-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tcp_halfclose_timer"); ok {
+		if setArgNil {
+			obj["tcp-halfclose-timer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTcpHalfcloseTimer(d, v, "tcp_halfclose_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tcp-halfclose-timer"] = t
+			t, err := expandSystemGlobalTcpHalfcloseTimer(d, v, "tcp_halfclose_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-halfclose-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tcp_halfopen_timer"); ok {
+		if setArgNil {
+			obj["tcp-halfopen-timer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTcpHalfopenTimer(d, v, "tcp_halfopen_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tcp-halfopen-timer"] = t
+			t, err := expandSystemGlobalTcpHalfopenTimer(d, v, "tcp_halfopen_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-halfopen-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("tcp_timewait_timer"); ok {
+		if setArgNil {
+			obj["tcp-timewait-timer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTcpTimewaitTimer(d, v, "tcp_timewait_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tcp-timewait-timer"] = t
+			t, err := expandSystemGlobalTcpTimewaitTimer(d, v, "tcp_timewait_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-timewait-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tcp_rst_timer"); ok {
+		if setArgNil {
+			obj["tcp-rst-timer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTcpRstTimer(d, v, "tcp_rst_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tcp-rst-timer"] = t
+			t, err := expandSystemGlobalTcpRstTimer(d, v, "tcp_rst_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-rst-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("udp_idle_timer"); ok {
+		if setArgNil {
+			obj["udp-idle-timer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUdpIdleTimer(d, v, "udp_idle_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["udp-idle-timer"] = t
+			t, err := expandSystemGlobalUdpIdleTimer(d, v, "udp_idle_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["udp-idle-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("block_session_timer"); ok {
+		if setArgNil {
+			obj["block-session-timer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalBlockSessionTimer(d, v, "block_session_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["block-session-timer"] = t
+			t, err := expandSystemGlobalBlockSessionTimer(d, v, "block_session_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["block-session-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip_src_port_range"); ok {
+		if setArgNil {
+			obj["ip-src-port-range"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpSrcPortRange(d, v, "ip_src_port_range", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip-src-port-range"] = t
+			t, err := expandSystemGlobalIpSrcPortRange(d, v, "ip_src_port_range", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip-src-port-range"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pre_login_banner"); ok {
+		if setArgNil {
+			obj["pre-login-banner"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPreLoginBanner(d, v, "pre_login_banner", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pre-login-banner"] = t
+			t, err := expandSystemGlobalPreLoginBanner(d, v, "pre_login_banner", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pre-login-banner"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("post_login_banner"); ok {
+		if setArgNil {
+			obj["post-login-banner"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPostLoginBanner(d, v, "post_login_banner", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["post-login-banner"] = t
+			t, err := expandSystemGlobalPostLoginBanner(d, v, "post_login_banner", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["post-login-banner"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tftp"); ok {
+		if setArgNil {
+			obj["tftp"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTftp(d, v, "tftp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tftp"] = t
+			t, err := expandSystemGlobalTftp(d, v, "tftp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tftp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("av_failopen"); ok {
+		if setArgNil {
+			obj["av-failopen"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAvFailopen(d, v, "av_failopen", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["av-failopen"] = t
+			t, err := expandSystemGlobalAvFailopen(d, v, "av_failopen", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["av-failopen"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("av_failopen_session"); ok {
+		if setArgNil {
+			obj["av-failopen-session"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAvFailopenSession(d, v, "av_failopen_session", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["av-failopen-session"] = t
+			t, err := expandSystemGlobalAvFailopenSession(d, v, "av_failopen_session", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["av-failopen-session"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_use_threshold_extreme"); ok {
+		if setArgNil {
+			obj["memory-use-threshold-extreme"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMemoryUseThresholdExtreme(d, v, "memory_use_threshold_extreme", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-use-threshold-extreme"] = t
+			t, err := expandSystemGlobalMemoryUseThresholdExtreme(d, v, "memory_use_threshold_extreme", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-use-threshold-extreme"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_use_threshold_red"); ok {
+		if setArgNil {
+			obj["memory-use-threshold-red"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMemoryUseThresholdRed(d, v, "memory_use_threshold_red", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-use-threshold-red"] = t
+			t, err := expandSystemGlobalMemoryUseThresholdRed(d, v, "memory_use_threshold_red", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-use-threshold-red"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_use_threshold_green"); ok {
+		if setArgNil {
+			obj["memory-use-threshold-green"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMemoryUseThresholdGreen(d, v, "memory_use_threshold_green", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-use-threshold-green"] = t
+			t, err := expandSystemGlobalMemoryUseThresholdGreen(d, v, "memory_use_threshold_green", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-use-threshold-green"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cpu_use_threshold"); ok {
+		if setArgNil {
+			obj["cpu-use-threshold"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCpuUseThreshold(d, v, "cpu_use_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cpu-use-threshold"] = t
+			t, err := expandSystemGlobalCpuUseThreshold(d, v, "cpu_use_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cpu-use-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("check_reset_range"); ok {
+		if setArgNil {
+			obj["check-reset-range"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCheckResetRange(d, v, "check_reset_range", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["check-reset-range"] = t
+			t, err := expandSystemGlobalCheckResetRange(d, v, "check_reset_range", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["check-reset-range"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vdom_mode"); ok {
+		if setArgNil {
+			obj["vdom-mode"] = nil
+		} else {
 
-		t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom-mode"] = t
+			t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vdom_admin"); ok {
+		if setArgNil {
+			obj["vdom-admin"] = nil
+		} else {
 
-		t, err := expandSystemGlobalVdomAdmin(d, v, "vdom_admin", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom-admin"] = t
+			t, err := expandSystemGlobalVdomAdmin(d, v, "vdom_admin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom-admin"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("long_vdom_name"); ok {
+		if setArgNil {
+			obj["long-vdom-name"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLongVdomName(d, v, "long_vdom_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["long-vdom-name"] = t
+			t, err := expandSystemGlobalLongVdomName(d, v, "long_vdom_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["long-vdom-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("edit_vdom_prompt"); ok {
+		if setArgNil {
+			obj["edit-vdom-prompt"] = nil
+		} else {
 
-		t, err := expandSystemGlobalEditVdomPrompt(d, v, "edit_vdom_prompt", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["edit-vdom-prompt"] = t
+			t, err := expandSystemGlobalEditVdomPrompt(d, v, "edit_vdom_prompt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["edit-vdom-prompt"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_port"); ok {
+		if setArgNil {
+			obj["admin-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminPort(d, v, "admin_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-port"] = t
+			t, err := expandSystemGlobalAdminPort(d, v, "admin_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_sport"); ok {
+		if setArgNil {
+			obj["admin-sport"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminSport(d, v, "admin_sport", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-sport"] = t
+			t, err := expandSystemGlobalAdminSport(d, v, "admin_sport", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-sport"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_https_redirect"); ok {
+		if setArgNil {
+			obj["admin-https-redirect"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminHttpsRedirect(d, v, "admin_https_redirect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-https-redirect"] = t
+			t, err := expandSystemGlobalAdminHttpsRedirect(d, v, "admin_https_redirect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-https-redirect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("admin_hsts_max_age"); ok {
+		if setArgNil {
+			obj["admin-hsts-max-age"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminHstsMaxAge(d, v, "admin_hsts_max_age", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-hsts-max-age"] = t
+			t, err := expandSystemGlobalAdminHstsMaxAge(d, v, "admin_hsts_max_age", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-hsts-max-age"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_ssh_password"); ok {
+		if setArgNil {
+			obj["admin-ssh-password"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminSshPassword(d, v, "admin_ssh_password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-ssh-password"] = t
+			t, err := expandSystemGlobalAdminSshPassword(d, v, "admin_ssh_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-ssh-password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_restrict_local"); ok {
+		if setArgNil {
+			obj["admin-restrict-local"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminRestrictLocal(d, v, "admin_restrict_local", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-restrict-local"] = t
+			t, err := expandSystemGlobalAdminRestrictLocal(d, v, "admin_restrict_local", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-restrict-local"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_ssh_port"); ok {
+		if setArgNil {
+			obj["admin-ssh-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminSshPort(d, v, "admin_ssh_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-ssh-port"] = t
+			t, err := expandSystemGlobalAdminSshPort(d, v, "admin_ssh_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-ssh-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_ssh_grace_time"); ok {
+		if setArgNil {
+			obj["admin-ssh-grace-time"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminSshGraceTime(d, v, "admin_ssh_grace_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-ssh-grace-time"] = t
+			t, err := expandSystemGlobalAdminSshGraceTime(d, v, "admin_ssh_grace_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-ssh-grace-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_ssh_v1"); ok {
+		if setArgNil {
+			obj["admin-ssh-v1"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminSshV1(d, v, "admin_ssh_v1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-ssh-v1"] = t
+			t, err := expandSystemGlobalAdminSshV1(d, v, "admin_ssh_v1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-ssh-v1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_telnet"); ok {
+		if setArgNil {
+			obj["admin-telnet"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminTelnet(d, v, "admin_telnet", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-telnet"] = t
+			t, err := expandSystemGlobalAdminTelnet(d, v, "admin_telnet", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-telnet"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_telnet_port"); ok {
+		if setArgNil {
+			obj["admin-telnet-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminTelnetPort(d, v, "admin_telnet_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-telnet-port"] = t
+			t, err := expandSystemGlobalAdminTelnetPort(d, v, "admin_telnet_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-telnet-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_forticloud_sso_login"); ok {
+		if setArgNil {
+			obj["admin-forticloud-sso-login"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminForticloudSsoLogin(d, v, "admin_forticloud_sso_login", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-forticloud-sso-login"] = t
+			t, err := expandSystemGlobalAdminForticloudSsoLogin(d, v, "admin_forticloud_sso_login", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-forticloud-sso-login"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_service_source_port"); ok {
+		if setArgNil {
+			obj["default-service-source-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDefaultServiceSourcePort(d, v, "default_service_source_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-service-source-port"] = t
+			t, err := expandSystemGlobalDefaultServiceSourcePort(d, v, "default_service_source_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-service-source-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_maintainer"); ok {
+		if setArgNil {
+			obj["admin-maintainer"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminMaintainer(d, v, "admin_maintainer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-maintainer"] = t
+			t, err := expandSystemGlobalAdminMaintainer(d, v, "admin_maintainer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-maintainer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_server_cert"); ok {
+		if setArgNil {
+			obj["admin-server-cert"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminServerCert(d, v, "admin_server_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-server-cert"] = t
+			t, err := expandSystemGlobalAdminServerCert(d, v, "admin_server_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-server-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_server_cert"); ok {
+		if setArgNil {
+			obj["user-server-cert"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUserServerCert(d, v, "user_server_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-server-cert"] = t
+			t, err := expandSystemGlobalUserServerCert(d, v, "user_server_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-server-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_https_pki_required"); ok {
+		if setArgNil {
+			obj["admin-https-pki-required"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminHttpsPkiRequired(d, v, "admin_https_pki_required", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-https-pki-required"] = t
+			t, err := expandSystemGlobalAdminHttpsPkiRequired(d, v, "admin_https_pki_required", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-https-pki-required"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wifi_certificate"); ok {
+		if setArgNil {
+			obj["wifi-certificate"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWifiCertificate(d, v, "wifi_certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wifi-certificate"] = t
+			t, err := expandSystemGlobalWifiCertificate(d, v, "wifi_certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wifi-certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wifi_ca_certificate"); ok {
+		if setArgNil {
+			obj["wifi-ca-certificate"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWifiCaCertificate(d, v, "wifi_ca_certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wifi-ca-certificate"] = t
+			t, err := expandSystemGlobalWifiCaCertificate(d, v, "wifi_ca_certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wifi-ca-certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_http_port"); ok {
+		if setArgNil {
+			obj["auth-http-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAuthHttpPort(d, v, "auth_http_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-http-port"] = t
+			t, err := expandSystemGlobalAuthHttpPort(d, v, "auth_http_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-http-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_https_port"); ok {
+		if setArgNil {
+			obj["auth-https-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAuthHttpsPort(d, v, "auth_https_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-https-port"] = t
+			t, err := expandSystemGlobalAuthHttpsPort(d, v, "auth_https_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-https-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_keepalive"); ok {
+		if setArgNil {
+			obj["auth-keepalive"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAuthKeepalive(d, v, "auth_keepalive", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-keepalive"] = t
+			t, err := expandSystemGlobalAuthKeepalive(d, v, "auth_keepalive", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-keepalive"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("policy_auth_concurrent"); ok {
+		if setArgNil {
+			obj["policy-auth-concurrent"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPolicyAuthConcurrent(d, v, "policy_auth_concurrent", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["policy-auth-concurrent"] = t
+			t, err := expandSystemGlobalPolicyAuthConcurrent(d, v, "policy_auth_concurrent", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["policy-auth-concurrent"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_session_limit"); ok {
+		if setArgNil {
+			obj["auth-session-limit"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAuthSessionLimit(d, v, "auth_session_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-session-limit"] = t
+			t, err := expandSystemGlobalAuthSessionLimit(d, v, "auth_session_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-session-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_cert"); ok {
+		if setArgNil {
+			obj["auth-cert"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAuthCert(d, v, "auth_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-cert"] = t
+			t, err := expandSystemGlobalAuthCert(d, v, "auth_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("clt_cert_req"); ok {
+		if setArgNil {
+			obj["clt-cert-req"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCltCertReq(d, v, "clt_cert_req", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["clt-cert-req"] = t
+			t, err := expandSystemGlobalCltCertReq(d, v, "clt_cert_req", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["clt-cert-req"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiservice_port"); ok {
+		if setArgNil {
+			obj["fortiservice-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortiservicePort(d, v, "fortiservice_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiservice-port"] = t
+			t, err := expandSystemGlobalFortiservicePort(d, v, "fortiservice_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiservice-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("endpoint_control_portal_port"); ok {
+		if setArgNil {
+			obj["endpoint-control-portal-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalEndpointControlPortalPort(d, v, "endpoint_control_portal_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["endpoint-control-portal-port"] = t
+			t, err := expandSystemGlobalEndpointControlPortalPort(d, v, "endpoint_control_portal_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["endpoint-control-portal-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("endpoint_control_fds_access"); ok {
+		if setArgNil {
+			obj["endpoint-control-fds-access"] = nil
+		} else {
 
-		t, err := expandSystemGlobalEndpointControlFdsAccess(d, v, "endpoint_control_fds_access", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["endpoint-control-fds-access"] = t
+			t, err := expandSystemGlobalEndpointControlFdsAccess(d, v, "endpoint_control_fds_access", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["endpoint-control-fds-access"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tp_mc_skip_policy"); ok {
+		if setArgNil {
+			obj["tp-mc-skip-policy"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTpMcSkipPolicy(d, v, "tp_mc_skip_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tp-mc-skip-policy"] = t
+			t, err := expandSystemGlobalTpMcSkipPolicy(d, v, "tp_mc_skip_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tp-mc-skip-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cfg_save"); ok {
+		if setArgNil {
+			obj["cfg-save"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCfgSave(d, v, "cfg_save", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cfg-save"] = t
+			t, err := expandSystemGlobalCfgSave(d, v, "cfg_save", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cfg-save"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cfg_revert_timeout"); ok {
+		if setArgNil {
+			obj["cfg-revert-timeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCfgRevertTimeout(d, v, "cfg_revert_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cfg-revert-timeout"] = t
+			t, err := expandSystemGlobalCfgRevertTimeout(d, v, "cfg_revert_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cfg-revert-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reboot_upon_config_restore"); ok {
+		if setArgNil {
+			obj["reboot-upon-config-restore"] = nil
+		} else {
 
-		t, err := expandSystemGlobalRebootUponConfigRestore(d, v, "reboot_upon_config_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reboot-upon-config-restore"] = t
+			t, err := expandSystemGlobalRebootUponConfigRestore(d, v, "reboot_upon_config_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reboot-upon-config-restore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin_scp"); ok {
+		if setArgNil {
+			obj["admin-scp"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAdminScp(d, v, "admin_scp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-scp"] = t
+			t, err := expandSystemGlobalAdminScp(d, v, "admin_scp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-scp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("security_rating_result_submission"); ok {
+		if setArgNil {
+			obj["security-rating-result-submission"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSecurityRatingResultSubmission(d, v, "security_rating_result_submission", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["security-rating-result-submission"] = t
+			t, err := expandSystemGlobalSecurityRatingResultSubmission(d, v, "security_rating_result_submission", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["security-rating-result-submission"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("security_rating_run_on_schedule"); ok {
+		if setArgNil {
+			obj["security-rating-run-on-schedule"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSecurityRatingRunOnSchedule(d, v, "security_rating_run_on_schedule", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["security-rating-run-on-schedule"] = t
+			t, err := expandSystemGlobalSecurityRatingRunOnSchedule(d, v, "security_rating_run_on_schedule", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["security-rating-run-on-schedule"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wireless_controller"); ok {
+		if setArgNil {
+			obj["wireless-controller"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWirelessController(d, v, "wireless_controller", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wireless-controller"] = t
+			t, err := expandSystemGlobalWirelessController(d, v, "wireless_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wireless-controller"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wireless_controller_port"); ok {
+		if setArgNil {
+			obj["wireless-controller-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWirelessControllerPort(d, v, "wireless_controller_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wireless-controller-port"] = t
+			t, err := expandSystemGlobalWirelessControllerPort(d, v, "wireless_controller_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wireless-controller-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiextender_data_port"); ok {
+		if setArgNil {
+			obj["fortiextender-data-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortiextenderDataPort(d, v, "fortiextender_data_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiextender-data-port"] = t
+			t, err := expandSystemGlobalFortiextenderDataPort(d, v, "fortiextender_data_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiextender-data-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiextender"); ok {
+		if setArgNil {
+			obj["fortiextender"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortiextender(d, v, "fortiextender", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiextender"] = t
+			t, err := expandSystemGlobalFortiextender(d, v, "fortiextender", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiextender"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("extender_controller_reserved_network"); ok {
+		if setArgNil {
+			obj["extender-controller-reserved-network"] = nil
+		} else {
 
-		t, err := expandSystemGlobalExtenderControllerReservedNetwork(d, v, "extender_controller_reserved_network", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extender-controller-reserved-network"] = t
+			t, err := expandSystemGlobalExtenderControllerReservedNetwork(d, v, "extender_controller_reserved_network", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extender-controller-reserved-network"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiextender_discovery_lockdown"); ok {
+		if setArgNil {
+			obj["fortiextender-discovery-lockdown"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortiextenderDiscoveryLockdown(d, v, "fortiextender_discovery_lockdown", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiextender-discovery-lockdown"] = t
+			t, err := expandSystemGlobalFortiextenderDiscoveryLockdown(d, v, "fortiextender_discovery_lockdown", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiextender-discovery-lockdown"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiextender_vlan_mode"); ok {
+		if setArgNil {
+			obj["fortiextender-vlan-mode"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortiextenderVlanMode(d, v, "fortiextender_vlan_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiextender-vlan-mode"] = t
+			t, err := expandSystemGlobalFortiextenderVlanMode(d, v, "fortiextender_vlan_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiextender-vlan-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("switch_controller"); ok {
+		if setArgNil {
+			obj["switch-controller"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSwitchController(d, v, "switch_controller", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["switch-controller"] = t
+			t, err := expandSystemGlobalSwitchController(d, v, "switch_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["switch-controller"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("switch_controller_reserved_network"); ok {
+		if setArgNil {
+			obj["switch-controller-reserved-network"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSwitchControllerReservedNetwork(d, v, "switch_controller_reserved_network", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["switch-controller-reserved-network"] = t
+			t, err := expandSystemGlobalSwitchControllerReservedNetwork(d, v, "switch_controller_reserved_network", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["switch-controller-reserved-network"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dnsproxy_worker_count"); ok {
+		if setArgNil {
+			obj["dnsproxy-worker-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDnsproxyWorkerCount(d, v, "dnsproxy_worker_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dnsproxy-worker-count"] = t
+			t, err := expandSystemGlobalDnsproxyWorkerCount(d, v, "dnsproxy_worker_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dnsproxy-worker-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("url_filter_count"); ok {
+		if setArgNil {
+			obj["url-filter-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUrlFilterCount(d, v, "url_filter_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url-filter-count"] = t
+			t, err := expandSystemGlobalUrlFilterCount(d, v, "url_filter_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["url-filter-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("proxy_worker_count"); ok {
+		if setArgNil {
+			obj["proxy-worker-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyWorkerCount(d, v, "proxy_worker_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-worker-count"] = t
+			t, err := expandSystemGlobalProxyWorkerCount(d, v, "proxy_worker_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-worker-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("scanunit_count"); ok {
+		if setArgNil {
+			obj["scanunit-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalScanunitCount(d, v, "scanunit_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["scanunit-count"] = t
+			t, err := expandSystemGlobalScanunitCount(d, v, "scanunit_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["scanunit-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_hardware_acceleration"); ok {
+		if setArgNil {
+			obj["proxy-hardware-acceleration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyHardwareAcceleration(d, v, "proxy_hardware_acceleration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-hardware-acceleration"] = t
+			t, err := expandSystemGlobalProxyHardwareAcceleration(d, v, "proxy_hardware_acceleration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-hardware-acceleration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_kxp_hardware_acceleration"); ok {
+		if setArgNil {
+			obj["proxy-kxp-hardware-acceleration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyKxpHardwareAcceleration(d, v, "proxy_kxp_hardware_acceleration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-kxp-hardware-acceleration"] = t
+			t, err := expandSystemGlobalProxyKxpHardwareAcceleration(d, v, "proxy_kxp_hardware_acceleration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-kxp-hardware-acceleration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_cipher_hardware_acceleration"); ok {
+		if setArgNil {
+			obj["proxy-cipher-hardware-acceleration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalProxyCipherHardwareAcceleration(d, v, "proxy_cipher_hardware_acceleration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-cipher-hardware-acceleration"] = t
+			t, err := expandSystemGlobalProxyCipherHardwareAcceleration(d, v, "proxy_cipher_hardware_acceleration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-cipher-hardware-acceleration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fgd_alert_subscription"); ok {
+		if setArgNil {
+			obj["fgd-alert-subscription"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFgdAlertSubscription(d, v, "fgd_alert_subscription", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fgd-alert-subscription"] = t
+			t, err := expandSystemGlobalFgdAlertSubscription(d, v, "fgd_alert_subscription", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fgd-alert-subscription"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_hmac_offload"); ok {
+		if setArgNil {
+			obj["ipsec-hmac-offload"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpsecHmacOffload(d, v, "ipsec_hmac_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-hmac-offload"] = t
+			t, err := expandSystemGlobalIpsecHmacOffload(d, v, "ipsec_hmac_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-hmac-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ipv6_accept_dad"); ok {
+		if setArgNil {
+			obj["ipv6-accept-dad"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpv6AcceptDad(d, v, "ipv6_accept_dad", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-accept-dad"] = t
+			t, err := expandSystemGlobalIpv6AcceptDad(d, v, "ipv6_accept_dad", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-accept-dad"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_allow_anycast_probe"); ok {
+		if setArgNil {
+			obj["ipv6-allow-anycast-probe"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpv6AllowAnycastProbe(d, v, "ipv6_allow_anycast_probe", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-allow-anycast-probe"] = t
+			t, err := expandSystemGlobalIpv6AllowAnycastProbe(d, v, "ipv6_allow_anycast_probe", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-allow-anycast-probe"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("csr_ca_attribute"); ok {
+		if setArgNil {
+			obj["csr-ca-attribute"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCsrCaAttribute(d, v, "csr_ca_attribute", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["csr-ca-attribute"] = t
+			t, err := expandSystemGlobalCsrCaAttribute(d, v, "csr_ca_attribute", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["csr-ca-attribute"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wimax_4g_usb"); ok {
+		if setArgNil {
+			obj["wimax-4g-usb"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWimax4GUsb(d, v, "wimax_4g_usb", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wimax-4g-usb"] = t
+			t, err := expandSystemGlobalWimax4GUsb(d, v, "wimax_4g_usb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wimax-4g-usb"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert_chain_max"); ok {
+		if setArgNil {
+			obj["cert-chain-max"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCertChainMax(d, v, "cert_chain_max", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-chain-max"] = t
+			t, err := expandSystemGlobalCertChainMax(d, v, "cert_chain_max", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-chain-max"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sslvpn_max_worker_count"); ok {
+		if setArgNil {
+			obj["sslvpn-max-worker-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslvpnMaxWorkerCount(d, v, "sslvpn_max_worker_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-max-worker-count"] = t
+			t, err := expandSystemGlobalSslvpnMaxWorkerCount(d, v, "sslvpn_max_worker_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-max-worker-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_ems_sn_check"); ok {
+		if setArgNil {
+			obj["sslvpn-ems-sn-check"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslvpnEmsSnCheck(d, v, "sslvpn_ems_sn_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-ems-sn-check"] = t
+			t, err := expandSystemGlobalSslvpnEmsSnCheck(d, v, "sslvpn_ems_sn_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-ems-sn-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_kxp_hardware_acceleration"); ok {
+		if setArgNil {
+			obj["sslvpn-kxp-hardware-acceleration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslvpnKxpHardwareAcceleration(d, v, "sslvpn_kxp_hardware_acceleration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-kxp-hardware-acceleration"] = t
+			t, err := expandSystemGlobalSslvpnKxpHardwareAcceleration(d, v, "sslvpn_kxp_hardware_acceleration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-kxp-hardware-acceleration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_cipher_hardware_acceleration"); ok {
+		if setArgNil {
+			obj["sslvpn-cipher-hardware-acceleration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslvpnCipherHardwareAcceleration(d, v, "sslvpn_cipher_hardware_acceleration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-cipher-hardware-acceleration"] = t
+			t, err := expandSystemGlobalSslvpnCipherHardwareAcceleration(d, v, "sslvpn_cipher_hardware_acceleration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-cipher-hardware-acceleration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_plugin_version_check"); ok {
+		if setArgNil {
+			obj["sslvpn-plugin-version-check"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSslvpnPluginVersionCheck(d, v, "sslvpn_plugin_version_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-plugin-version-check"] = t
+			t, err := expandSystemGlobalSslvpnPluginVersionCheck(d, v, "sslvpn_plugin_version_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-plugin-version-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("two_factor_ftk_expiry"); ok {
+		if setArgNil {
+			obj["two-factor-ftk-expiry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTwoFactorFtkExpiry(d, v, "two_factor_ftk_expiry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["two-factor-ftk-expiry"] = t
+			t, err := expandSystemGlobalTwoFactorFtkExpiry(d, v, "two_factor_ftk_expiry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["two-factor-ftk-expiry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("two_factor_email_expiry"); ok {
+		if setArgNil {
+			obj["two-factor-email-expiry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTwoFactorEmailExpiry(d, v, "two_factor_email_expiry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["two-factor-email-expiry"] = t
+			t, err := expandSystemGlobalTwoFactorEmailExpiry(d, v, "two_factor_email_expiry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["two-factor-email-expiry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("two_factor_sms_expiry"); ok {
+		if setArgNil {
+			obj["two-factor-sms-expiry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTwoFactorSmsExpiry(d, v, "two_factor_sms_expiry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["two-factor-sms-expiry"] = t
+			t, err := expandSystemGlobalTwoFactorSmsExpiry(d, v, "two_factor_sms_expiry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["two-factor-sms-expiry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("two_factor_fac_expiry"); ok {
+		if setArgNil {
+			obj["two-factor-fac-expiry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTwoFactorFacExpiry(d, v, "two_factor_fac_expiry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["two-factor-fac-expiry"] = t
+			t, err := expandSystemGlobalTwoFactorFacExpiry(d, v, "two_factor_fac_expiry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["two-factor-fac-expiry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("two_factor_ftm_expiry"); ok {
+		if setArgNil {
+			obj["two-factor-ftm-expiry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalTwoFactorFtmExpiry(d, v, "two_factor_ftm_expiry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["two-factor-ftm-expiry"] = t
+			t, err := expandSystemGlobalTwoFactorFtmExpiry(d, v, "two_factor_ftm_expiry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["two-factor-ftm-expiry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("per_user_bal"); ok {
+		if setArgNil {
+			obj["per-user-bal"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPerUserBal(d, v, "per_user_bal", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["per-user-bal"] = t
+			t, err := expandSystemGlobalPerUserBal(d, v, "per_user_bal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["per-user-bal"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("per_user_bwl"); ok {
+		if setArgNil {
+			obj["per-user-bwl"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPerUserBwl(d, v, "per_user_bwl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["per-user-bwl"] = t
+			t, err := expandSystemGlobalPerUserBwl(d, v, "per_user_bwl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["per-user-bwl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("virtual_server_count"); ok {
+		if setArgNil {
+			obj["virtual-server-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalVirtualServerCount(d, v, "virtual_server_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["virtual-server-count"] = t
+			t, err := expandSystemGlobalVirtualServerCount(d, v, "virtual_server_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["virtual-server-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("virtual_server_hardware_acceleration"); ok {
+		if setArgNil {
+			obj["virtual-server-hardware-acceleration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalVirtualServerHardwareAcceleration(d, v, "virtual_server_hardware_acceleration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["virtual-server-hardware-acceleration"] = t
+			t, err := expandSystemGlobalVirtualServerHardwareAcceleration(d, v, "virtual_server_hardware_acceleration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["virtual-server-hardware-acceleration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("wad_worker_count"); ok {
+		if setArgNil {
+			obj["wad-worker-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWadWorkerCount(d, v, "wad_worker_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wad-worker-count"] = t
+			t, err := expandSystemGlobalWadWorkerCount(d, v, "wad_worker_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-worker-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wad_csvc_cs_count"); ok {
+		if setArgNil {
+			obj["wad-csvc-cs-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWadCsvcCsCount(d, v, "wad_csvc_cs_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wad-csvc-cs-count"] = t
+			t, err := expandSystemGlobalWadCsvcCsCount(d, v, "wad_csvc_cs_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-csvc-cs-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("wad_csvc_db_count"); ok {
+		if setArgNil {
+			obj["wad-csvc-db-count"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWadCsvcDbCount(d, v, "wad_csvc_db_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wad-csvc-db-count"] = t
+			t, err := expandSystemGlobalWadCsvcDbCount(d, v, "wad_csvc_db_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-csvc-db-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wad_source_affinity"); ok {
+		if setArgNil {
+			obj["wad-source-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWadSourceAffinity(d, v, "wad_source_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wad-source-affinity"] = t
+			t, err := expandSystemGlobalWadSourceAffinity(d, v, "wad_source_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-source-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wad_memory_change_granularity"); ok {
+		if setArgNil {
+			obj["wad-memory-change-granularity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWadMemoryChangeGranularity(d, v, "wad_memory_change_granularity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wad-memory-change-granularity"] = t
+			t, err := expandSystemGlobalWadMemoryChangeGranularity(d, v, "wad_memory_change_granularity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-memory-change-granularity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("login_timestamp"); ok {
+		if setArgNil {
+			obj["login-timestamp"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLoginTimestamp(d, v, "login_timestamp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["login-timestamp"] = t
+			t, err := expandSystemGlobalLoginTimestamp(d, v, "login_timestamp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login-timestamp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("miglogd_children"); ok {
+		if setArgNil {
+			obj["miglogd-children"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMiglogdChildren(d, v, "miglogd_children", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["miglogd-children"] = t
+			t, err := expandSystemGlobalMiglogdChildren(d, v, "miglogd_children", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["miglogd-children"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("special_file_23_support"); ok {
+		if setArgNil {
+			obj["special-file-23-support"] = nil
+		} else {
 
-		t, err := expandSystemGlobalSpecialFile23Support(d, v, "special_file_23_support", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["special-file-23-support"] = t
+			t, err := expandSystemGlobalSpecialFile23Support(d, v, "special_file_23_support", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["special-file-23-support"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_uuid_policy"); ok {
+		if setArgNil {
+			obj["log-uuid-policy"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLogUuidPolicy(d, v, "log_uuid_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-uuid-policy"] = t
+			t, err := expandSystemGlobalLogUuidPolicy(d, v, "log_uuid_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-uuid-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_uuid_address"); ok {
+		if setArgNil {
+			obj["log-uuid-address"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLogUuidAddress(d, v, "log_uuid_address", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-uuid-address"] = t
+			t, err := expandSystemGlobalLogUuidAddress(d, v, "log_uuid_address", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-uuid-address"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_ssl_connection"); ok {
+		if setArgNil {
+			obj["log-ssl-connection"] = nil
+		} else {
 
-		t, err := expandSystemGlobalLogSslConnection(d, v, "log_ssl_connection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-ssl-connection"] = t
+			t, err := expandSystemGlobalLogSslConnection(d, v, "log_ssl_connection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-ssl-connection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_rest_api_cache"); ok {
+		if setArgNil {
+			obj["gui-rest-api-cache"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiRestApiCache(d, v, "gui_rest_api_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-rest-api-cache"] = t
+			t, err := expandSystemGlobalGuiRestApiCache(d, v, "gui_rest_api_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-rest-api-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("arp_max_entry"); ok {
+		if setArgNil {
+			obj["arp-max-entry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalArpMaxEntry(d, v, "arp_max_entry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["arp-max-entry"] = t
+			t, err := expandSystemGlobalArpMaxEntry(d, v, "arp_max_entry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["arp-max-entry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha_affinity"); ok {
+		if setArgNil {
+			obj["ha-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalHaAffinity(d, v, "ha_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha-affinity"] = t
+			t, err := expandSystemGlobalHaAffinity(d, v, "ha_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cmdbsvr_affinity"); ok {
+		if setArgNil {
+			obj["cmdbsvr-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCmdbsvrAffinity(d, v, "cmdbsvr_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cmdbsvr-affinity"] = t
+			t, err := expandSystemGlobalCmdbsvrAffinity(d, v, "cmdbsvr_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cmdbsvr-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("av_affinity"); ok {
+		if setArgNil {
+			obj["av-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAvAffinity(d, v, "av_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["av-affinity"] = t
+			t, err := expandSystemGlobalAvAffinity(d, v, "av_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["av-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wad_affinity"); ok {
+		if setArgNil {
+			obj["wad-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalWadAffinity(d, v, "wad_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wad-affinity"] = t
+			t, err := expandSystemGlobalWadAffinity(d, v, "wad_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ips_affinity"); ok {
+		if setArgNil {
+			obj["ips-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpsAffinity(d, v, "ips_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-affinity"] = t
+			t, err := expandSystemGlobalIpsAffinity(d, v, "ips_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("miglog_affinity"); ok {
+		if setArgNil {
+			obj["miglog-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMiglogAffinity(d, v, "miglog_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["miglog-affinity"] = t
+			t, err := expandSystemGlobalMiglogAffinity(d, v, "miglog_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["miglog-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("url_filter_affinity"); ok {
+		if setArgNil {
+			obj["url-filter-affinity"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUrlFilterAffinity(d, v, "url_filter_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url-filter-affinity"] = t
+			t, err := expandSystemGlobalUrlFilterAffinity(d, v, "url_filter_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["url-filter-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ndp_max_entry"); ok {
+		if setArgNil {
+			obj["ndp-max-entry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalNdpMaxEntry(d, v, "ndp_max_entry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ndp-max-entry"] = t
+			t, err := expandSystemGlobalNdpMaxEntry(d, v, "ndp_max_entry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ndp-max-entry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("br_fdb_max_entry"); ok {
+		if setArgNil {
+			obj["br-fdb-max-entry"] = nil
+		} else {
 
-		t, err := expandSystemGlobalBrFdbMaxEntry(d, v, "br_fdb_max_entry", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["br-fdb-max-entry"] = t
+			t, err := expandSystemGlobalBrFdbMaxEntry(d, v, "br_fdb_max_entry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["br-fdb-max-entry"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_route_cache_size"); ok {
+		if setArgNil {
+			obj["max-route-cache-size"] = nil
+		} else {
 
-		t, err := expandSystemGlobalMaxRouteCacheSize(d, v, "max_route_cache_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-route-cache-size"] = t
+			t, err := expandSystemGlobalMaxRouteCacheSize(d, v, "max_route_cache_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-route-cache-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_asic_offload"); ok {
+		if setArgNil {
+			obj["ipsec-asic-offload"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpsecAsicOffload(d, v, "ipsec_asic_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-asic-offload"] = t
+			t, err := expandSystemGlobalIpsecAsicOffload(d, v, "ipsec_asic_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-asic-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_soft_dec_async"); ok {
+		if setArgNil {
+			obj["ipsec-soft-dec-async"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpsecSoftDecAsync(d, v, "ipsec_soft_dec_async", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-soft-dec-async"] = t
+			t, err := expandSystemGlobalIpsecSoftDecAsync(d, v, "ipsec_soft_dec_async", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-soft-dec-async"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_embryonic_limit"); ok {
+		if setArgNil {
+			obj["ike-embryonic-limit"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIkeEmbryonicLimit(d, v, "ike_embryonic_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-embryonic-limit"] = t
+			t, err := expandSystemGlobalIkeEmbryonicLimit(d, v, "ike_embryonic_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-embryonic-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("device_idle_timeout"); ok {
+		if setArgNil {
+			obj["device-idle-timeout"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDeviceIdleTimeout(d, v, "device_idle_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-idle-timeout"] = t
+			t, err := expandSystemGlobalDeviceIdleTimeout(d, v, "device_idle_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-idle-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_device_store_max_devices"); ok {
+		if setArgNil {
+			obj["user-device-store-max-devices"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUserDeviceStoreMaxDevices(d, v, "user_device_store_max_devices", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-device-store-max-devices"] = t
+			t, err := expandSystemGlobalUserDeviceStoreMaxDevices(d, v, "user_device_store_max_devices", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-device-store-max-devices"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_device_store_max_users"); ok {
+		if setArgNil {
+			obj["user-device-store-max-users"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUserDeviceStoreMaxUsers(d, v, "user_device_store_max_users", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-device-store-max-users"] = t
+			t, err := expandSystemGlobalUserDeviceStoreMaxUsers(d, v, "user_device_store_max_users", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-device-store-max-users"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_device_store_max_unified_mem"); ok {
+		if setArgNil {
+			obj["user-device-store-max-unified-mem"] = nil
+		} else {
 
-		t, err := expandSystemGlobalUserDeviceStoreMaxUnifiedMem(d, v, "user_device_store_max_unified_mem", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-device-store-max-unified-mem"] = t
+			t, err := expandSystemGlobalUserDeviceStoreMaxUnifiedMem(d, v, "user_device_store_max_unified_mem", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-device-store-max-unified-mem"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("device_identification_active_scan_delay"); ok {
+		if setArgNil {
+			obj["device-identification-active-scan-delay"] = nil
+		} else {
 
-		t, err := expandSystemGlobalDeviceIdentificationActiveScanDelay(d, v, "device_identification_active_scan_delay", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-identification-active-scan-delay"] = t
+			t, err := expandSystemGlobalDeviceIdentificationActiveScanDelay(d, v, "device_identification_active_scan_delay", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-identification-active-scan-delay"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("compliance_check"); ok {
+		if setArgNil {
+			obj["compliance-check"] = nil
+		} else {
 
-		t, err := expandSystemGlobalComplianceCheck(d, v, "compliance_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["compliance-check"] = t
+			t, err := expandSystemGlobalComplianceCheck(d, v, "compliance_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["compliance-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("compliance_check_time"); ok {
+		if setArgNil {
+			obj["compliance-check-time"] = nil
+		} else {
 
-		t, err := expandSystemGlobalComplianceCheckTime(d, v, "compliance_check_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["compliance-check-time"] = t
+			t, err := expandSystemGlobalComplianceCheckTime(d, v, "compliance_check_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["compliance-check-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_device_latitude"); ok {
+		if setArgNil {
+			obj["gui-device-latitude"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiDeviceLatitude(d, v, "gui_device_latitude", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-device-latitude"] = t
+			t, err := expandSystemGlobalGuiDeviceLatitude(d, v, "gui_device_latitude", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-device-latitude"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_device_longitude"); ok {
+		if setArgNil {
+			obj["gui-device-longitude"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiDeviceLongitude(d, v, "gui_device_longitude", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-device-longitude"] = t
+			t, err := expandSystemGlobalGuiDeviceLongitude(d, v, "gui_device_longitude", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-device-longitude"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("private_data_encryption"); ok {
+		if setArgNil {
+			obj["private-data-encryption"] = nil
+		} else {
 
-		t, err := expandSystemGlobalPrivateDataEncryption(d, v, "private_data_encryption", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["private-data-encryption"] = t
+			t, err := expandSystemGlobalPrivateDataEncryption(d, v, "private_data_encryption", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["private-data-encryption"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_auth_extension_device"); ok {
+		if setArgNil {
+			obj["auto-auth-extension-device"] = nil
+		} else {
 
-		t, err := expandSystemGlobalAutoAuthExtensionDevice(d, v, "auto_auth_extension_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-auth-extension-device"] = t
+			t, err := expandSystemGlobalAutoAuthExtensionDevice(d, v, "auto_auth_extension_device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-auth-extension-device"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_theme"); ok {
+		if setArgNil {
+			obj["gui-theme"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiTheme(d, v, "gui_theme", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-theme"] = t
+			t, err := expandSystemGlobalGuiTheme(d, v, "gui_theme", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-theme"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_date_format"); ok {
+		if setArgNil {
+			obj["gui-date-format"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiDateFormat(d, v, "gui_date_format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-date-format"] = t
+			t, err := expandSystemGlobalGuiDateFormat(d, v, "gui_date_format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-date-format"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_date_time_source"); ok {
+		if setArgNil {
+			obj["gui-date-time-source"] = nil
+		} else {
 
-		t, err := expandSystemGlobalGuiDateTimeSource(d, v, "gui_date_time_source", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-date-time-source"] = t
+			t, err := expandSystemGlobalGuiDateTimeSource(d, v, "gui_date_time_source", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-date-time-source"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("igmp_state_limit"); ok {
+		if setArgNil {
+			obj["igmp-state-limit"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIgmpStateLimit(d, v, "igmp_state_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["igmp-state-limit"] = t
+			t, err := expandSystemGlobalIgmpStateLimit(d, v, "igmp_state_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["igmp-state-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cloud_communication"); ok {
+		if setArgNil {
+			obj["cloud-communication"] = nil
+		} else {
 
-		t, err := expandSystemGlobalCloudCommunication(d, v, "cloud_communication", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cloud-communication"] = t
+			t, err := expandSystemGlobalCloudCommunication(d, v, "cloud_communication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cloud-communication"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fec_port"); ok {
+		if setArgNil {
+			obj["fec-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFecPort(d, v, "fec_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fec-port"] = t
+			t, err := expandSystemGlobalFecPort(d, v, "fec_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fec-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_ha_seqjump_rate"); ok {
+		if setArgNil {
+			obj["ipsec-ha-seqjump-rate"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIpsecHaSeqjumpRate(d, v, "ipsec_ha_seqjump_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-ha-seqjump-rate"] = t
+			t, err := expandSystemGlobalIpsecHaSeqjumpRate(d, v, "ipsec_ha_seqjump_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-ha-seqjump-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortitoken_cloud"); ok {
+		if setArgNil {
+			obj["fortitoken-cloud"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortitokenCloud(d, v, "fortitoken_cloud", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortitoken-cloud"] = t
+			t, err := expandSystemGlobalFortitokenCloud(d, v, "fortitoken_cloud", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortitoken-cloud"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("faz_disk_buffer_size"); ok {
+		if setArgNil {
+			obj["faz-disk-buffer-size"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFazDiskBufferSize(d, v, "faz_disk_buffer_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["faz-disk-buffer-size"] = t
+			t, err := expandSystemGlobalFazDiskBufferSize(d, v, "faz_disk_buffer_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["faz-disk-buffer-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("irq_time_accounting"); ok {
+		if setArgNil {
+			obj["irq-time-accounting"] = nil
+		} else {
 
-		t, err := expandSystemGlobalIrqTimeAccounting(d, v, "irq_time_accounting", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["irq-time-accounting"] = t
+			t, err := expandSystemGlobalIrqTimeAccounting(d, v, "irq_time_accounting", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["irq-time-accounting"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiipam_integration"); ok {
+		if setArgNil {
+			obj["fortiipam-integration"] = nil
+		} else {
 
-		t, err := expandSystemGlobalFortiipamIntegration(d, v, "fortiipam_integration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiipam-integration"] = t
+			t, err := expandSystemGlobalFortiipamIntegration(d, v, "fortiipam_integration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiipam-integration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("management_ip"); ok {
+		if setArgNil {
+			obj["management-ip"] = nil
+		} else {
 
-		t, err := expandSystemGlobalManagementIp(d, v, "management_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-ip"] = t
+			t, err := expandSystemGlobalManagementIp(d, v, "management_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("management_port"); ok {
+		if setArgNil {
+			obj["management-port"] = nil
+		} else {
 
-		t, err := expandSystemGlobalManagementPort(d, v, "management_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-port"] = t
+			t, err := expandSystemGlobalManagementPort(d, v, "management_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("management_port_use_admin_sport"); ok {
+		if setArgNil {
+			obj["management-port-use-admin-sport"] = nil
+		} else {
 
-		t, err := expandSystemGlobalManagementPortUseAdminSport(d, v, "management_port_use_admin_sport", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-port-use-admin-sport"] = t
+			t, err := expandSystemGlobalManagementPortUseAdminSport(d, v, "management_port_use_admin_sport", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-port-use-admin-sport"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("internet_service_database"); ok {
+		if setArgNil {
+			obj["internet-service-database"] = nil
+		} else {
 
-		t, err := expandSystemGlobalInternetServiceDatabase(d, v, "internet_service_database", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["internet-service-database"] = t
+			t, err := expandSystemGlobalInternetServiceDatabase(d, v, "internet_service_database", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["internet-service-database"] = t
+			}
 		}
 	}
 

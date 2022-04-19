@@ -100,7 +100,7 @@ func resourceSwitchControllerQuarantineUpdate(d *schema.ResourceData, m interfac
 		}
 	}
 
-	obj, err := getObjectSwitchControllerQuarantine(d, c.Fv)
+	obj, err := getObjectSwitchControllerQuarantine(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQuarantine resource while getting object: %v", err)
 	}
@@ -122,7 +122,6 @@ func resourceSwitchControllerQuarantineUpdate(d *schema.ResourceData, m interfac
 
 func resourceSwitchControllerQuarantineDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -134,9 +133,15 @@ func resourceSwitchControllerQuarantineDelete(d *schema.ResourceData, m interfac
 		}
 	}
 
-	err := c.DeleteSwitchControllerQuarantine(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerQuarantine(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerQuarantine resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerQuarantine resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerQuarantine(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerQuarantine resource: %v", err)
 	}
 
 	d.SetId("")
@@ -411,26 +416,34 @@ func expandSwitchControllerQuarantineTargetsTagTags(d *schema.ResourceData, v in
 	return v, nil
 }
 
-func getObjectSwitchControllerQuarantine(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerQuarantine(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("quarantine"); ok {
+		if setArgNil {
+			obj["quarantine"] = nil
+		} else {
 
-		t, err := expandSwitchControllerQuarantineQuarantine(d, v, "quarantine", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["quarantine"] = t
+			t, err := expandSwitchControllerQuarantineQuarantine(d, v, "quarantine", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["quarantine"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("targets"); ok {
+		if setArgNil {
+			obj["targets"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerQuarantineTargets(d, v, "targets", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["targets"] = t
+			t, err := expandSwitchControllerQuarantineTargets(d, v, "targets", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["targets"] = t
+			}
 		}
 	}
 

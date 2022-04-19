@@ -1721,43 +1721,55 @@ func expandRouterRipngInterfaceFlags(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("default_information_originate"); ok {
+		if setArgNil {
+			obj["default-information-originate"] = nil
+		} else {
 
-		t, err := expandRouterRipngDefaultInformationOriginate(d, v, "default_information_originate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-information-originate"] = t
+			t, err := expandRouterRipngDefaultInformationOriginate(d, v, "default_information_originate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-information-originate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_metric"); ok {
+		if setArgNil {
+			obj["default-metric"] = nil
+		} else {
 
-		t, err := expandRouterRipngDefaultMetric(d, v, "default_metric", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-metric"] = t
+			t, err := expandRouterRipngDefaultMetric(d, v, "default_metric", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-metric"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_out_metric"); ok {
+		if setArgNil {
+			obj["max-out-metric"] = nil
+		} else {
 
-		t, err := expandRouterRipngMaxOutMetric(d, v, "max_out_metric", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-out-metric"] = t
+			t, err := expandRouterRipngMaxOutMetric(d, v, "max_out_metric", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-out-metric"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["distance"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("distance"); ok {
+	if v, ok := d.GetOk("distance"); ok {
+		if setArgNil {
+			obj["distance"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngDistance(d, v, "distance", sv)
 			if err != nil {
@@ -1768,10 +1780,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["distribute-list"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("distribute_list"); ok {
+	if v, ok := d.GetOk("distribute_list"); ok {
+		if setArgNil {
+			obj["distribute-list"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngDistributeList(d, v, "distribute_list", sv)
 			if err != nil {
@@ -1782,10 +1794,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["neighbor"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok {
+		if setArgNil {
+			obj["neighbor"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngNeighbor(d, v, "neighbor", sv)
 			if err != nil {
@@ -1796,10 +1808,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["network"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("network"); ok {
+	if v, ok := d.GetOk("network"); ok {
+		if setArgNil {
+			obj["network"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngNetwork(d, v, "network", sv)
 			if err != nil {
@@ -1810,10 +1822,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["aggregate-address"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("aggregate_address"); ok {
+	if v, ok := d.GetOk("aggregate_address"); ok {
+		if setArgNil {
+			obj["aggregate-address"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngAggregateAddress(d, v, "aggregate_address", sv)
 			if err != nil {
@@ -1824,10 +1836,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["offset-list"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("offset_list"); ok {
+	if v, ok := d.GetOk("offset_list"); ok {
+		if setArgNil {
+			obj["offset-list"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngOffsetList(d, v, "offset_list", sv)
 			if err != nil {
@@ -1838,10 +1850,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["passive-interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("passive_interface"); ok {
+	if v, ok := d.GetOk("passive_interface"); ok {
+		if setArgNil {
+			obj["passive-interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngPassiveInterface(d, v, "passive_interface", sv)
 			if err != nil {
@@ -1852,10 +1864,10 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 		}
 	}
 
-	if bemptysontable {
-		obj["redistribute"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok {
+		if setArgNil {
+			obj["redistribute"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngRedistribute(d, v, "redistribute", sv)
 			if err != nil {
@@ -1867,39 +1879,51 @@ func getObjectRouterRipng(d *schema.ResourceData, bemptysontable bool, sv string
 	}
 
 	if v, ok := d.GetOk("update_timer"); ok {
+		if setArgNil {
+			obj["update-timer"] = nil
+		} else {
 
-		t, err := expandRouterRipngUpdateTimer(d, v, "update_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-timer"] = t
+			t, err := expandRouterRipngUpdateTimer(d, v, "update_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_timer"); ok {
+		if setArgNil {
+			obj["timeout-timer"] = nil
+		} else {
 
-		t, err := expandRouterRipngTimeoutTimer(d, v, "timeout_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-timer"] = t
+			t, err := expandRouterRipngTimeoutTimer(d, v, "timeout_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("garbage_timer"); ok {
+		if setArgNil {
+			obj["garbage-timer"] = nil
+		} else {
 
-		t, err := expandRouterRipngGarbageTimer(d, v, "garbage_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["garbage-timer"] = t
+			t, err := expandRouterRipngGarbageTimer(d, v, "garbage_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["garbage-timer"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterRipngInterface(d, v, "interface", sv)
 			if err != nil {

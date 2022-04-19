@@ -84,7 +84,7 @@ func resourceSystemVdomNetflowUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectSystemVdomNetflow(d, c.Fv)
+	obj, err := getObjectSystemVdomNetflow(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomNetflow resource while getting object: %v", err)
 	}
@@ -106,7 +106,6 @@ func resourceSystemVdomNetflowUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceSystemVdomNetflowDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -118,9 +117,15 @@ func resourceSystemVdomNetflowDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteSystemVdomNetflow(mkey, vdomparam)
+	obj, err := getObjectSystemVdomNetflow(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemVdomNetflow resource: %v", err)
+		return fmt.Errorf("Error updating SystemVdomNetflow resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemVdomNetflow(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemVdomNetflow resource: %v", err)
 	}
 
 	d.SetId("")
@@ -256,66 +261,90 @@ func expandSystemVdomNetflowInterface(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectSystemVdomNetflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemVdomNetflow(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("vdom_netflow"); ok {
+		if setArgNil {
+			obj["vdom-netflow"] = nil
+		} else {
 
-		t, err := expandSystemVdomNetflowVdomNetflow(d, v, "vdom_netflow", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom-netflow"] = t
+			t, err := expandSystemVdomNetflowVdomNetflow(d, v, "vdom_netflow", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom-netflow"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("collector_ip"); ok {
+		if setArgNil {
+			obj["collector-ip"] = nil
+		} else {
 
-		t, err := expandSystemVdomNetflowCollectorIp(d, v, "collector_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-ip"] = t
+			t, err := expandSystemVdomNetflowCollectorIp(d, v, "collector_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
+		if setArgNil {
+			obj["collector-port"] = nil
+		} else {
 
-		t, err := expandSystemVdomNetflowCollectorPort(d, v, "collector_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-port"] = t
+			t, err := expandSystemVdomNetflowCollectorPort(d, v, "collector_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemVdomNetflowSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemVdomNetflowSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemVdomNetflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemVdomNetflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemVdomNetflowInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemVdomNetflowInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

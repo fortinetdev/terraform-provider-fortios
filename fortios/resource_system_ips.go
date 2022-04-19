@@ -62,7 +62,7 @@ func resourceSystemIpsUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemIps(d, c.Fv)
+	obj, err := getObjectSystemIps(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIps resource while getting object: %v", err)
 	}
@@ -84,7 +84,6 @@ func resourceSystemIpsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemIpsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -96,9 +95,15 @@ func resourceSystemIpsDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemIps(mkey, vdomparam)
+	obj, err := getObjectSystemIps(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemIps resource: %v", err)
+		return fmt.Errorf("Error updating SystemIps resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemIps(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemIps resource: %v", err)
 	}
 
 	d.SetId("")
@@ -178,26 +183,34 @@ func expandSystemIpsOverrideSignatureHoldById(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func getObjectSystemIps(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemIps(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("signature_hold_time"); ok {
+		if setArgNil {
+			obj["signature-hold-time"] = nil
+		} else {
 
-		t, err := expandSystemIpsSignatureHoldTime(d, v, "signature_hold_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["signature-hold-time"] = t
+			t, err := expandSystemIpsSignatureHoldTime(d, v, "signature_hold_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["signature-hold-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("override_signature_hold_by_id"); ok {
+		if setArgNil {
+			obj["override-signature-hold-by-id"] = nil
+		} else {
 
-		t, err := expandSystemIpsOverrideSignatureHoldById(d, v, "override_signature_hold_by_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["override-signature-hold-by-id"] = t
+			t, err := expandSystemIpsOverrideSignatureHoldById(d, v, "override_signature_hold_by_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override-signature-hold-by-id"] = t
+			}
 		}
 	}
 

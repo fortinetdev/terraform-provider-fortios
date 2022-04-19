@@ -8248,283 +8248,391 @@ func expandRouterBgpVrfLeak6TargetInterface(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("as"); ok {
+		if setArgNil {
+			obj["as"] = nil
+		} else {
 
-		t, err := expandRouterBgpAs(d, v, "as", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["as"] = t
+			t, err := expandRouterBgpAs(d, v, "as", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["as"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("router_id"); ok {
+		if setArgNil {
+			obj["router-id"] = nil
+		} else {
 
-		t, err := expandRouterBgpRouterId(d, v, "router_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["router-id"] = t
+			t, err := expandRouterBgpRouterId(d, v, "router_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["router-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("keepalive_timer"); ok {
+		if setArgNil {
+			obj["keepalive-timer"] = nil
+		} else {
 
-		t, err := expandRouterBgpKeepaliveTimer(d, v, "keepalive_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["keepalive-timer"] = t
+			t, err := expandRouterBgpKeepaliveTimer(d, v, "keepalive_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["keepalive-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("holdtime_timer"); ok {
+		if setArgNil {
+			obj["holdtime-timer"] = nil
+		} else {
 
-		t, err := expandRouterBgpHoldtimeTimer(d, v, "holdtime_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["holdtime-timer"] = t
+			t, err := expandRouterBgpHoldtimeTimer(d, v, "holdtime_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["holdtime-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("always_compare_med"); ok {
+		if setArgNil {
+			obj["always-compare-med"] = nil
+		} else {
 
-		t, err := expandRouterBgpAlwaysCompareMed(d, v, "always_compare_med", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["always-compare-med"] = t
+			t, err := expandRouterBgpAlwaysCompareMed(d, v, "always_compare_med", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["always-compare-med"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bestpath_as_path_ignore"); ok {
+		if setArgNil {
+			obj["bestpath-as-path-ignore"] = nil
+		} else {
 
-		t, err := expandRouterBgpBestpathAsPathIgnore(d, v, "bestpath_as_path_ignore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bestpath-as-path-ignore"] = t
+			t, err := expandRouterBgpBestpathAsPathIgnore(d, v, "bestpath_as_path_ignore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bestpath-as-path-ignore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bestpath_cmp_confed_aspath"); ok {
+		if setArgNil {
+			obj["bestpath-cmp-confed-aspath"] = nil
+		} else {
 
-		t, err := expandRouterBgpBestpathCmpConfedAspath(d, v, "bestpath_cmp_confed_aspath", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bestpath-cmp-confed-aspath"] = t
+			t, err := expandRouterBgpBestpathCmpConfedAspath(d, v, "bestpath_cmp_confed_aspath", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bestpath-cmp-confed-aspath"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bestpath_cmp_routerid"); ok {
+		if setArgNil {
+			obj["bestpath-cmp-routerid"] = nil
+		} else {
 
-		t, err := expandRouterBgpBestpathCmpRouterid(d, v, "bestpath_cmp_routerid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bestpath-cmp-routerid"] = t
+			t, err := expandRouterBgpBestpathCmpRouterid(d, v, "bestpath_cmp_routerid", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bestpath-cmp-routerid"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bestpath_med_confed"); ok {
+		if setArgNil {
+			obj["bestpath-med-confed"] = nil
+		} else {
 
-		t, err := expandRouterBgpBestpathMedConfed(d, v, "bestpath_med_confed", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bestpath-med-confed"] = t
+			t, err := expandRouterBgpBestpathMedConfed(d, v, "bestpath_med_confed", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bestpath-med-confed"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bestpath_med_missing_as_worst"); ok {
+		if setArgNil {
+			obj["bestpath-med-missing-as-worst"] = nil
+		} else {
 
-		t, err := expandRouterBgpBestpathMedMissingAsWorst(d, v, "bestpath_med_missing_as_worst", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bestpath-med-missing-as-worst"] = t
+			t, err := expandRouterBgpBestpathMedMissingAsWorst(d, v, "bestpath_med_missing_as_worst", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bestpath-med-missing-as-worst"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("client_to_client_reflection"); ok {
+		if setArgNil {
+			obj["client-to-client-reflection"] = nil
+		} else {
 
-		t, err := expandRouterBgpClientToClientReflection(d, v, "client_to_client_reflection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["client-to-client-reflection"] = t
+			t, err := expandRouterBgpClientToClientReflection(d, v, "client_to_client_reflection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["client-to-client-reflection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dampening"); ok {
+		if setArgNil {
+			obj["dampening"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampening(d, v, "dampening", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening"] = t
+			t, err := expandRouterBgpDampening(d, v, "dampening", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("deterministic_med"); ok {
+		if setArgNil {
+			obj["deterministic-med"] = nil
+		} else {
 
-		t, err := expandRouterBgpDeterministicMed(d, v, "deterministic_med", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["deterministic-med"] = t
+			t, err := expandRouterBgpDeterministicMed(d, v, "deterministic_med", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["deterministic-med"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ebgp_multipath"); ok {
+		if setArgNil {
+			obj["ebgp-multipath"] = nil
+		} else {
 
-		t, err := expandRouterBgpEbgpMultipath(d, v, "ebgp_multipath", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ebgp-multipath"] = t
+			t, err := expandRouterBgpEbgpMultipath(d, v, "ebgp_multipath", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ebgp-multipath"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ibgp_multipath"); ok {
+		if setArgNil {
+			obj["ibgp-multipath"] = nil
+		} else {
 
-		t, err := expandRouterBgpIbgpMultipath(d, v, "ibgp_multipath", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ibgp-multipath"] = t
+			t, err := expandRouterBgpIbgpMultipath(d, v, "ibgp_multipath", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ibgp-multipath"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enforce_first_as"); ok {
+		if setArgNil {
+			obj["enforce-first-as"] = nil
+		} else {
 
-		t, err := expandRouterBgpEnforceFirstAs(d, v, "enforce_first_as", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enforce-first-as"] = t
+			t, err := expandRouterBgpEnforceFirstAs(d, v, "enforce_first_as", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enforce-first-as"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fast_external_failover"); ok {
+		if setArgNil {
+			obj["fast-external-failover"] = nil
+		} else {
 
-		t, err := expandRouterBgpFastExternalFailover(d, v, "fast_external_failover", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fast-external-failover"] = t
+			t, err := expandRouterBgpFastExternalFailover(d, v, "fast_external_failover", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fast-external-failover"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_neighbour_changes"); ok {
+		if setArgNil {
+			obj["log-neighbour-changes"] = nil
+		} else {
 
-		t, err := expandRouterBgpLogNeighbourChanges(d, v, "log_neighbour_changes", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-neighbour-changes"] = t
+			t, err := expandRouterBgpLogNeighbourChanges(d, v, "log_neighbour_changes", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-neighbour-changes"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("network_import_check"); ok {
+		if setArgNil {
+			obj["network-import-check"] = nil
+		} else {
 
-		t, err := expandRouterBgpNetworkImportCheck(d, v, "network_import_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["network-import-check"] = t
+			t, err := expandRouterBgpNetworkImportCheck(d, v, "network_import_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["network-import-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ignore_optional_capability"); ok {
+		if setArgNil {
+			obj["ignore-optional-capability"] = nil
+		} else {
 
-		t, err := expandRouterBgpIgnoreOptionalCapability(d, v, "ignore_optional_capability", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ignore-optional-capability"] = t
+			t, err := expandRouterBgpIgnoreOptionalCapability(d, v, "ignore_optional_capability", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-optional-capability"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("additional_path"); ok {
+		if setArgNil {
+			obj["additional-path"] = nil
+		} else {
 
-		t, err := expandRouterBgpAdditionalPath(d, v, "additional_path", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["additional-path"] = t
+			t, err := expandRouterBgpAdditionalPath(d, v, "additional_path", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["additional-path"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("additional_path6"); ok {
+		if setArgNil {
+			obj["additional-path6"] = nil
+		} else {
 
-		t, err := expandRouterBgpAdditionalPath6(d, v, "additional_path6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["additional-path6"] = t
+			t, err := expandRouterBgpAdditionalPath6(d, v, "additional_path6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["additional-path6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multipath_recursive_distance"); ok {
+		if setArgNil {
+			obj["multipath-recursive-distance"] = nil
+		} else {
 
-		t, err := expandRouterBgpMultipathRecursiveDistance(d, v, "multipath_recursive_distance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multipath-recursive-distance"] = t
+			t, err := expandRouterBgpMultipathRecursiveDistance(d, v, "multipath_recursive_distance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multipath-recursive-distance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("recursive_next_hop"); ok {
+		if setArgNil {
+			obj["recursive-next-hop"] = nil
+		} else {
 
-		t, err := expandRouterBgpRecursiveNextHop(d, v, "recursive_next_hop", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["recursive-next-hop"] = t
+			t, err := expandRouterBgpRecursiveNextHop(d, v, "recursive_next_hop", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["recursive-next-hop"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tag_resolve_mode"); ok {
+		if setArgNil {
+			obj["tag-resolve-mode"] = nil
+		} else {
 
-		t, err := expandRouterBgpTagResolveMode(d, v, "tag_resolve_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tag-resolve-mode"] = t
+			t, err := expandRouterBgpTagResolveMode(d, v, "tag_resolve_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tag-resolve-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cluster_id"); ok {
+		if setArgNil {
+			obj["cluster-id"] = nil
+		} else {
 
-		t, err := expandRouterBgpClusterId(d, v, "cluster_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cluster-id"] = t
+			t, err := expandRouterBgpClusterId(d, v, "cluster_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cluster-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("confederation_identifier"); ok {
+		if setArgNil {
+			obj["confederation-identifier"] = nil
+		} else {
 
-		t, err := expandRouterBgpConfederationIdentifier(d, v, "confederation_identifier", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["confederation-identifier"] = t
+			t, err := expandRouterBgpConfederationIdentifier(d, v, "confederation_identifier", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["confederation-identifier"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["confederation-peers"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("confederation_peers"); ok {
+	if v, ok := d.GetOk("confederation_peers"); ok {
+		if setArgNil {
+			obj["confederation-peers"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpConfederationPeers(d, v, "confederation_peers", sv)
 			if err != nil {
@@ -8536,199 +8644,275 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 	}
 
 	if v, ok := d.GetOk("dampening_route_map"); ok {
+		if setArgNil {
+			obj["dampening-route-map"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampeningRouteMap(d, v, "dampening_route_map", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening-route-map"] = t
+			t, err := expandRouterBgpDampeningRouteMap(d, v, "dampening_route_map", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening-route-map"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dampening_reachability_half_life"); ok {
+		if setArgNil {
+			obj["dampening-reachability-half-life"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampeningReachabilityHalfLife(d, v, "dampening_reachability_half_life", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening-reachability-half-life"] = t
+			t, err := expandRouterBgpDampeningReachabilityHalfLife(d, v, "dampening_reachability_half_life", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening-reachability-half-life"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dampening_reuse"); ok {
+		if setArgNil {
+			obj["dampening-reuse"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampeningReuse(d, v, "dampening_reuse", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening-reuse"] = t
+			t, err := expandRouterBgpDampeningReuse(d, v, "dampening_reuse", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening-reuse"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dampening_suppress"); ok {
+		if setArgNil {
+			obj["dampening-suppress"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampeningSuppress(d, v, "dampening_suppress", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening-suppress"] = t
+			t, err := expandRouterBgpDampeningSuppress(d, v, "dampening_suppress", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening-suppress"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dampening_max_suppress_time"); ok {
+		if setArgNil {
+			obj["dampening-max-suppress-time"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampeningMaxSuppressTime(d, v, "dampening_max_suppress_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening-max-suppress-time"] = t
+			t, err := expandRouterBgpDampeningMaxSuppressTime(d, v, "dampening_max_suppress_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening-max-suppress-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dampening_unreachability_half_life"); ok {
+		if setArgNil {
+			obj["dampening-unreachability-half-life"] = nil
+		} else {
 
-		t, err := expandRouterBgpDampeningUnreachabilityHalfLife(d, v, "dampening_unreachability_half_life", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dampening-unreachability-half-life"] = t
+			t, err := expandRouterBgpDampeningUnreachabilityHalfLife(d, v, "dampening_unreachability_half_life", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dampening-unreachability-half-life"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("default_local_preference"); ok {
+		if setArgNil {
+			obj["default-local-preference"] = nil
+		} else {
 
-		t, err := expandRouterBgpDefaultLocalPreference(d, v, "default_local_preference", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-local-preference"] = t
+			t, err := expandRouterBgpDefaultLocalPreference(d, v, "default_local_preference", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-local-preference"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("scan_time"); ok {
+		if setArgNil {
+			obj["scan-time"] = nil
+		} else {
 
-		t, err := expandRouterBgpScanTime(d, v, "scan_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["scan-time"] = t
+			t, err := expandRouterBgpScanTime(d, v, "scan_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["scan-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance_external"); ok {
+		if setArgNil {
+			obj["distance-external"] = nil
+		} else {
 
-		t, err := expandRouterBgpDistanceExternal(d, v, "distance_external", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance-external"] = t
+			t, err := expandRouterBgpDistanceExternal(d, v, "distance_external", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance-external"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance_internal"); ok {
+		if setArgNil {
+			obj["distance-internal"] = nil
+		} else {
 
-		t, err := expandRouterBgpDistanceInternal(d, v, "distance_internal", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance-internal"] = t
+			t, err := expandRouterBgpDistanceInternal(d, v, "distance_internal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance-internal"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance_local"); ok {
+		if setArgNil {
+			obj["distance-local"] = nil
+		} else {
 
-		t, err := expandRouterBgpDistanceLocal(d, v, "distance_local", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance-local"] = t
+			t, err := expandRouterBgpDistanceLocal(d, v, "distance_local", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance-local"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("synchronization"); ok {
+		if setArgNil {
+			obj["synchronization"] = nil
+		} else {
 
-		t, err := expandRouterBgpSynchronization(d, v, "synchronization", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["synchronization"] = t
+			t, err := expandRouterBgpSynchronization(d, v, "synchronization", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["synchronization"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("graceful_restart"); ok {
+		if setArgNil {
+			obj["graceful-restart"] = nil
+		} else {
 
-		t, err := expandRouterBgpGracefulRestart(d, v, "graceful_restart", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["graceful-restart"] = t
+			t, err := expandRouterBgpGracefulRestart(d, v, "graceful_restart", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["graceful-restart"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("graceful_restart_time"); ok {
+		if setArgNil {
+			obj["graceful-restart-time"] = nil
+		} else {
 
-		t, err := expandRouterBgpGracefulRestartTime(d, v, "graceful_restart_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["graceful-restart-time"] = t
+			t, err := expandRouterBgpGracefulRestartTime(d, v, "graceful_restart_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["graceful-restart-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("graceful_stalepath_time"); ok {
+		if setArgNil {
+			obj["graceful-stalepath-time"] = nil
+		} else {
 
-		t, err := expandRouterBgpGracefulStalepathTime(d, v, "graceful_stalepath_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["graceful-stalepath-time"] = t
+			t, err := expandRouterBgpGracefulStalepathTime(d, v, "graceful_stalepath_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["graceful-stalepath-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("graceful_update_delay"); ok {
+		if setArgNil {
+			obj["graceful-update-delay"] = nil
+		} else {
 
-		t, err := expandRouterBgpGracefulUpdateDelay(d, v, "graceful_update_delay", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["graceful-update-delay"] = t
+			t, err := expandRouterBgpGracefulUpdateDelay(d, v, "graceful_update_delay", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["graceful-update-delay"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("graceful_end_on_timer"); ok {
+		if setArgNil {
+			obj["graceful-end-on-timer"] = nil
+		} else {
 
-		t, err := expandRouterBgpGracefulEndOnTimer(d, v, "graceful_end_on_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["graceful-end-on-timer"] = t
+			t, err := expandRouterBgpGracefulEndOnTimer(d, v, "graceful_end_on_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["graceful-end-on-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("additional_path_select"); ok {
+		if setArgNil {
+			obj["additional-path-select"] = nil
+		} else {
 
-		t, err := expandRouterBgpAdditionalPathSelect(d, v, "additional_path_select", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["additional-path-select"] = t
+			t, err := expandRouterBgpAdditionalPathSelect(d, v, "additional_path_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["additional-path-select"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("additional_path_select6"); ok {
+		if setArgNil {
+			obj["additional-path-select6"] = nil
+		} else {
 
-		t, err := expandRouterBgpAdditionalPathSelect6(d, v, "additional_path_select6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["additional-path-select6"] = t
+			t, err := expandRouterBgpAdditionalPathSelect6(d, v, "additional_path_select6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["additional-path-select6"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["aggregate-address"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("aggregate_address"); ok {
+	if v, ok := d.GetOk("aggregate_address"); ok {
+		if setArgNil {
+			obj["aggregate-address"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpAggregateAddress(d, v, "aggregate_address", sv)
 			if err != nil {
@@ -8739,10 +8923,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["aggregate-address6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("aggregate_address6"); ok {
+	if v, ok := d.GetOk("aggregate_address6"); ok {
+		if setArgNil {
+			obj["aggregate-address6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpAggregateAddress6(d, v, "aggregate_address6", sv)
 			if err != nil {
@@ -8753,10 +8937,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["neighbor"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok {
+		if setArgNil {
+			obj["neighbor"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpNeighbor(d, v, "neighbor", sv)
 			if err != nil {
@@ -8767,10 +8951,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["neighbor-group"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor_group"); ok {
+	if v, ok := d.GetOk("neighbor_group"); ok {
+		if setArgNil {
+			obj["neighbor-group"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpNeighborGroup(d, v, "neighbor_group", sv)
 			if err != nil {
@@ -8781,10 +8965,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["neighbor-range"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor_range"); ok {
+	if v, ok := d.GetOk("neighbor_range"); ok {
+		if setArgNil {
+			obj["neighbor-range"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpNeighborRange(d, v, "neighbor_range", sv)
 			if err != nil {
@@ -8795,10 +8979,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["neighbor-range6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor_range6"); ok {
+	if v, ok := d.GetOk("neighbor_range6"); ok {
+		if setArgNil {
+			obj["neighbor-range6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpNeighborRange6(d, v, "neighbor_range6", sv)
 			if err != nil {
@@ -8809,10 +8993,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["network"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("network"); ok {
+	if v, ok := d.GetOk("network"); ok {
+		if setArgNil {
+			obj["network"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpNetwork(d, v, "network", sv)
 			if err != nil {
@@ -8823,10 +9007,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["network6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("network6"); ok {
+	if v, ok := d.GetOk("network6"); ok {
+		if setArgNil {
+			obj["network6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpNetwork6(d, v, "network6", sv)
 			if err != nil {
@@ -8837,10 +9021,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["redistribute"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok {
+		if setArgNil {
+			obj["redistribute"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpRedistribute(d, v, "redistribute", sv)
 			if err != nil {
@@ -8851,10 +9035,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["redistribute6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("redistribute6"); ok {
+	if v, ok := d.GetOk("redistribute6"); ok {
+		if setArgNil {
+			obj["redistribute6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpRedistribute6(d, v, "redistribute6", sv)
 			if err != nil {
@@ -8865,10 +9049,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["admin-distance"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("admin_distance"); ok {
+	if v, ok := d.GetOk("admin_distance"); ok {
+		if setArgNil {
+			obj["admin-distance"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpAdminDistance(d, v, "admin_distance", sv)
 			if err != nil {
@@ -8879,10 +9063,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["vrf-leak"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("vrf_leak"); ok {
+	if v, ok := d.GetOk("vrf_leak"); ok {
+		if setArgNil {
+			obj["vrf-leak"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpVrfLeak(d, v, "vrf_leak", sv)
 			if err != nil {
@@ -8893,10 +9077,10 @@ func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool, sv string) 
 		}
 	}
 
-	if bemptysontable {
-		obj["vrf-leak6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("vrf_leak6"); ok {
+	if v, ok := d.GetOk("vrf_leak6"); ok {
+		if setArgNil {
+			obj["vrf-leak6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBgpVrfLeak6(d, v, "vrf_leak6", sv)
 			if err != nil {

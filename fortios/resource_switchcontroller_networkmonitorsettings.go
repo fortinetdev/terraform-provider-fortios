@@ -57,7 +57,7 @@ func resourceSwitchControllerNetworkMonitorSettingsUpdate(d *schema.ResourceData
 		}
 	}
 
-	obj, err := getObjectSwitchControllerNetworkMonitorSettings(d, c.Fv)
+	obj, err := getObjectSwitchControllerNetworkMonitorSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerNetworkMonitorSettings resource while getting object: %v", err)
 	}
@@ -79,7 +79,6 @@ func resourceSwitchControllerNetworkMonitorSettingsUpdate(d *schema.ResourceData
 
 func resourceSwitchControllerNetworkMonitorSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -91,9 +90,15 @@ func resourceSwitchControllerNetworkMonitorSettingsDelete(d *schema.ResourceData
 		}
 	}
 
-	err := c.DeleteSwitchControllerNetworkMonitorSettings(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerNetworkMonitorSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerNetworkMonitorSettings resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerNetworkMonitorSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerNetworkMonitorSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerNetworkMonitorSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -159,16 +164,20 @@ func expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d *schema.Res
 	return v, nil
 }
 
-func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("network_monitoring"); ok {
+		if setArgNil {
+			obj["network-monitoring"] = nil
+		} else {
 
-		t, err := expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d, v, "network_monitoring", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["network-monitoring"] = t
+			t, err := expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d, v, "network_monitoring", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["network-monitoring"] = t
+			}
 		}
 	}
 

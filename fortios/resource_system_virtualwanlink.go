@@ -912,7 +912,7 @@ func resourceSystemVirtualWanLinkUpdate(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	obj, err := getObjectSystemVirtualWanLink(d, c.Fv)
+	obj, err := getObjectSystemVirtualWanLink(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualWanLink resource while getting object: %v", err)
 	}
@@ -934,7 +934,6 @@ func resourceSystemVirtualWanLinkUpdate(d *schema.ResourceData, m interface{}) e
 
 func resourceSystemVirtualWanLinkDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -946,9 +945,15 @@ func resourceSystemVirtualWanLinkDelete(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	err := c.DeleteSystemVirtualWanLink(mkey, vdomparam)
+	obj, err := getObjectSystemVirtualWanLink(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemVirtualWanLink resource: %v", err)
+		return fmt.Errorf("Error updating SystemVirtualWanLink resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemVirtualWanLink(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemVirtualWanLink resource: %v", err)
 	}
 
 	d.SetId("")
@@ -5013,126 +5018,174 @@ func expandSystemVirtualWanLinkServiceSlaCompareMethod(d *schema.ResourceData, v
 	return v, nil
 }
 
-func getObjectSystemVirtualWanLink(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemVirtualWanLinkStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemVirtualWanLinkStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("load_balance_mode"); ok {
+		if setArgNil {
+			obj["load-balance-mode"] = nil
+		} else {
 
-		t, err := expandSystemVirtualWanLinkLoadBalanceMode(d, v, "load_balance_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["load-balance-mode"] = t
+			t, err := expandSystemVirtualWanLinkLoadBalanceMode(d, v, "load_balance_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["load-balance-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("neighbor_hold_down"); ok {
+		if setArgNil {
+			obj["neighbor-hold-down"] = nil
+		} else {
 
-		t, err := expandSystemVirtualWanLinkNeighborHoldDown(d, v, "neighbor_hold_down", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-hold-down"] = t
+			t, err := expandSystemVirtualWanLinkNeighborHoldDown(d, v, "neighbor_hold_down", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-hold-down"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_down_time"); ok {
+		if setArgNil {
+			obj["neighbor-hold-down-time"] = nil
+		} else {
 
-		t, err := expandSystemVirtualWanLinkNeighborHoldDownTime(d, v, "neighbor_hold_down_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-hold-down-time"] = t
+			t, err := expandSystemVirtualWanLinkNeighborHoldDownTime(d, v, "neighbor_hold_down_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-hold-down-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_boot_time"); ok {
+		if setArgNil {
+			obj["neighbor-hold-boot-time"] = nil
+		} else {
 
-		t, err := expandSystemVirtualWanLinkNeighborHoldBootTime(d, v, "neighbor_hold_boot_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-hold-boot-time"] = t
+			t, err := expandSystemVirtualWanLinkNeighborHoldBootTime(d, v, "neighbor_hold_boot_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-hold-boot-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fail_detect"); ok {
+		if setArgNil {
+			obj["fail-detect"] = nil
+		} else {
 
-		t, err := expandSystemVirtualWanLinkFailDetect(d, v, "fail_detect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fail-detect"] = t
+			t, err := expandSystemVirtualWanLinkFailDetect(d, v, "fail_detect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fail-detect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fail_alert_interfaces"); ok {
+		if setArgNil {
+			obj["fail-alert-interfaces"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemVirtualWanLinkFailAlertInterfaces(d, v, "fail_alert_interfaces", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fail-alert-interfaces"] = t
+			t, err := expandSystemVirtualWanLinkFailAlertInterfaces(d, v, "fail_alert_interfaces", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fail-alert-interfaces"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("zone"); ok {
+		if setArgNil {
+			obj["zone"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemVirtualWanLinkZone(d, v, "zone", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["zone"] = t
+			t, err := expandSystemVirtualWanLinkZone(d, v, "zone", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["zone"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("members"); ok {
+		if setArgNil {
+			obj["members"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemVirtualWanLinkMembers(d, v, "members", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["members"] = t
+			t, err := expandSystemVirtualWanLinkMembers(d, v, "members", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["members"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("health_check"); ok {
+		if setArgNil {
+			obj["health-check"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemVirtualWanLinkHealthCheck(d, v, "health_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["health-check"] = t
+			t, err := expandSystemVirtualWanLinkHealthCheck(d, v, "health_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["health-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("neighbor"); ok {
+		if setArgNil {
+			obj["neighbor"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemVirtualWanLinkNeighbor(d, v, "neighbor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor"] = t
+			t, err := expandSystemVirtualWanLinkNeighbor(d, v, "neighbor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("service"); ok {
+		if setArgNil {
+			obj["service"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemVirtualWanLinkService(d, v, "service", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service"] = t
+			t, err := expandSystemVirtualWanLinkService(d, v, "service", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service"] = t
+			}
 		}
 	}
 

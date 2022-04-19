@@ -160,7 +160,7 @@ func resourceSwitchControllerFlowTrackingUpdate(d *schema.ResourceData, m interf
 		}
 	}
 
-	obj, err := getObjectSwitchControllerFlowTracking(d, c.Fv)
+	obj, err := getObjectSwitchControllerFlowTracking(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerFlowTracking resource while getting object: %v", err)
 	}
@@ -182,7 +182,6 @@ func resourceSwitchControllerFlowTrackingUpdate(d *schema.ResourceData, m interf
 
 func resourceSwitchControllerFlowTrackingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -194,9 +193,15 @@ func resourceSwitchControllerFlowTrackingDelete(d *schema.ResourceData, m interf
 		}
 	}
 
-	err := c.DeleteSwitchControllerFlowTracking(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerFlowTracking(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerFlowTracking resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerFlowTracking resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerFlowTracking(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerFlowTracking resource: %v", err)
 	}
 
 	d.SetId("")
@@ -571,166 +576,230 @@ func expandSwitchControllerFlowTrackingAggregatesIp(d *schema.ResourceData, v in
 	return v, nil
 }
 
-func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("sample_mode"); ok {
+		if setArgNil {
+			obj["sample-mode"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingSampleMode(d, v, "sample_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sample-mode"] = t
+			t, err := expandSwitchControllerFlowTrackingSampleMode(d, v, "sample_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sample-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sample_rate"); ok {
+		if setArgNil {
+			obj["sample-rate"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingSampleRate(d, v, "sample_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sample-rate"] = t
+			t, err := expandSwitchControllerFlowTrackingSampleRate(d, v, "sample_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sample-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("format"); ok {
+		if setArgNil {
+			obj["format"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingFormat(d, v, "format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["format"] = t
+			t, err := expandSwitchControllerFlowTrackingFormat(d, v, "format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["format"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("collector_ip"); ok {
+		if setArgNil {
+			obj["collector-ip"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingCollectorIp(d, v, "collector_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-ip"] = t
+			t, err := expandSwitchControllerFlowTrackingCollectorIp(d, v, "collector_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
+		if setArgNil {
+			obj["collector-port"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingCollectorPort(d, v, "collector_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-port"] = t
+			t, err := expandSwitchControllerFlowTrackingCollectorPort(d, v, "collector_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("transport"); ok {
+		if setArgNil {
+			obj["transport"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTransport(d, v, "transport", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["transport"] = t
+			t, err := expandSwitchControllerFlowTrackingTransport(d, v, "transport", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["transport"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("level"); ok {
+		if setArgNil {
+			obj["level"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingLevel(d, v, "level", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["level"] = t
+			t, err := expandSwitchControllerFlowTrackingLevel(d, v, "level", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["level"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_export_pkt_size"); ok {
+		if setArgNil {
+			obj["max-export-pkt-size"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingMaxExportPktSize(d, v, "max_export_pkt_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-export-pkt-size"] = t
+			t, err := expandSwitchControllerFlowTrackingMaxExportPktSize(d, v, "max_export_pkt_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-export-pkt-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_general"); ok {
+		if setArgNil {
+			obj["timeout-general"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutGeneral(d, v, "timeout_general", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-general"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutGeneral(d, v, "timeout_general", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-general"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_icmp"); ok {
+		if setArgNil {
+			obj["timeout-icmp"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutIcmp(d, v, "timeout_icmp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-icmp"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutIcmp(d, v, "timeout_icmp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-icmp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_max"); ok {
+		if setArgNil {
+			obj["timeout-max"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutMax(d, v, "timeout_max", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-max"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutMax(d, v, "timeout_max", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-max"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_tcp"); ok {
+		if setArgNil {
+			obj["timeout-tcp"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutTcp(d, v, "timeout_tcp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-tcp"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutTcp(d, v, "timeout_tcp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-tcp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_tcp_fin"); ok {
+		if setArgNil {
+			obj["timeout-tcp-fin"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutTcpFin(d, v, "timeout_tcp_fin", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-tcp-fin"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutTcpFin(d, v, "timeout_tcp_fin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-tcp-fin"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_tcp_rst"); ok {
+		if setArgNil {
+			obj["timeout-tcp-rst"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutTcpRst(d, v, "timeout_tcp_rst", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-tcp-rst"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutTcpRst(d, v, "timeout_tcp_rst", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-tcp-rst"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout_udp"); ok {
+		if setArgNil {
+			obj["timeout-udp"] = nil
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingTimeoutUdp(d, v, "timeout_udp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout-udp"] = t
+			t, err := expandSwitchControllerFlowTrackingTimeoutUdp(d, v, "timeout_udp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout-udp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("aggregates"); ok {
+		if setArgNil {
+			obj["aggregates"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerFlowTrackingAggregates(d, v, "aggregates", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["aggregates"] = t
+			t, err := expandSwitchControllerFlowTrackingAggregates(d, v, "aggregates", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["aggregates"] = t
+			}
 		}
 	}
 

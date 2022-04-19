@@ -63,7 +63,7 @@ func resourceLogWebtrendsSettingUpdate(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	obj, err := getObjectLogWebtrendsSetting(d, c.Fv)
+	obj, err := getObjectLogWebtrendsSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogWebtrendsSetting resource while getting object: %v", err)
 	}
@@ -85,7 +85,6 @@ func resourceLogWebtrendsSettingUpdate(d *schema.ResourceData, m interface{}) er
 
 func resourceLogWebtrendsSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -97,9 +96,15 @@ func resourceLogWebtrendsSettingDelete(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	err := c.DeleteLogWebtrendsSetting(mkey, vdomparam)
+	obj, err := getObjectLogWebtrendsSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogWebtrendsSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogWebtrendsSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogWebtrendsSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogWebtrendsSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -179,26 +184,34 @@ func expandLogWebtrendsSettingServer(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectLogWebtrendsSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogWebtrendsSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogWebtrendsSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsSettingServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandLogWebtrendsSettingServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 

@@ -88,7 +88,7 @@ func resourceSystemDedicatedMgmtUpdate(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	obj, err := getObjectSystemDedicatedMgmt(d, c.Fv)
+	obj, err := getObjectSystemDedicatedMgmt(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDedicatedMgmt resource while getting object: %v", err)
 	}
@@ -110,7 +110,6 @@ func resourceSystemDedicatedMgmtUpdate(d *schema.ResourceData, m interface{}) er
 
 func resourceSystemDedicatedMgmtDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -122,9 +121,15 @@ func resourceSystemDedicatedMgmtDelete(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	err := c.DeleteSystemDedicatedMgmt(mkey, vdomparam)
+	obj, err := getObjectSystemDedicatedMgmt(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemDedicatedMgmt resource: %v", err)
+		return fmt.Errorf("Error updating SystemDedicatedMgmt resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemDedicatedMgmt(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemDedicatedMgmt resource: %v", err)
 	}
 
 	d.SetId("")
@@ -274,76 +279,104 @@ func expandSystemDedicatedMgmtDhcpEndIp(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectSystemDedicatedMgmt(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemDedicatedMgmtStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemDedicatedMgmtInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_gateway"); ok {
+		if setArgNil {
+			obj["default-gateway"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtDefaultGateway(d, v, "default_gateway", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-gateway"] = t
+			t, err := expandSystemDedicatedMgmtDefaultGateway(d, v, "default_gateway", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-gateway"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_server"); ok {
+		if setArgNil {
+			obj["dhcp-server"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtDhcpServer(d, v, "dhcp_server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-server"] = t
+			t, err := expandSystemDedicatedMgmtDhcpServer(d, v, "dhcp_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_netmask"); ok {
+		if setArgNil {
+			obj["dhcp-netmask"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtDhcpNetmask(d, v, "dhcp_netmask", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-netmask"] = t
+			t, err := expandSystemDedicatedMgmtDhcpNetmask(d, v, "dhcp_netmask", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-netmask"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_start_ip"); ok {
+		if setArgNil {
+			obj["dhcp-start-ip"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtDhcpStartIp(d, v, "dhcp_start_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-start-ip"] = t
+			t, err := expandSystemDedicatedMgmtDhcpStartIp(d, v, "dhcp_start_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-start-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_end_ip"); ok {
+		if setArgNil {
+			obj["dhcp-end-ip"] = nil
+		} else {
 
-		t, err := expandSystemDedicatedMgmtDhcpEndIp(d, v, "dhcp_end_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-end-ip"] = t
+			t, err := expandSystemDedicatedMgmtDhcpEndIp(d, v, "dhcp_end_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-end-ip"] = t
+			}
 		}
 	}
 

@@ -106,7 +106,7 @@ func resourceFirewallSslSettingUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectFirewallSslSetting(d, c.Fv)
+	obj, err := getObjectFirewallSslSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSslSetting resource while getting object: %v", err)
 	}
@@ -128,7 +128,6 @@ func resourceFirewallSslSettingUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceFirewallSslSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -140,9 +139,15 @@ func resourceFirewallSslSettingDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteFirewallSslSetting(mkey, vdomparam)
+	obj, err := getObjectFirewallSslSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FirewallSslSetting resource: %v", err)
+		return fmt.Errorf("Error updating FirewallSslSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFirewallSslSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FirewallSslSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -348,116 +353,160 @@ func expandFirewallSslSettingAbbreviateHandshake(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectFirewallSslSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("proxy_connect_timeout"); ok {
+		if setArgNil {
+			obj["proxy-connect-timeout"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingProxyConnectTimeout(d, v, "proxy_connect_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-connect-timeout"] = t
+			t, err := expandFirewallSslSettingProxyConnectTimeout(d, v, "proxy_connect_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-connect-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
+		if setArgNil {
+			obj["ssl-dh-bits"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingSslDhBits(d, v, "ssl_dh_bits", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-dh-bits"] = t
+			t, err := expandFirewallSslSettingSslDhBits(d, v, "ssl_dh_bits", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-dh-bits"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_send_empty_frags"); ok {
+		if setArgNil {
+			obj["ssl-send-empty-frags"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-send-empty-frags"] = t
+			t, err := expandFirewallSslSettingSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-send-empty-frags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("no_matching_cipher_action"); ok {
+		if setArgNil {
+			obj["no-matching-cipher-action"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingNoMatchingCipherAction(d, v, "no_matching_cipher_action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["no-matching-cipher-action"] = t
+			t, err := expandFirewallSslSettingNoMatchingCipherAction(d, v, "no_matching_cipher_action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["no-matching-cipher-action"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("cert_cache_capacity"); ok {
+		if setArgNil {
+			obj["cert-cache-capacity"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingCertCacheCapacity(d, v, "cert_cache_capacity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-cache-capacity"] = t
+			t, err := expandFirewallSslSettingCertCacheCapacity(d, v, "cert_cache_capacity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-cache-capacity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cert_cache_timeout"); ok {
+		if setArgNil {
+			obj["cert-cache-timeout"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingCertCacheTimeout(d, v, "cert_cache_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cert-cache-timeout"] = t
+			t, err := expandFirewallSslSettingCertCacheTimeout(d, v, "cert_cache_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-cache-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("session_cache_capacity"); ok {
+		if setArgNil {
+			obj["session-cache-capacity"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingSessionCacheCapacity(d, v, "session_cache_capacity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-cache-capacity"] = t
+			t, err := expandFirewallSslSettingSessionCacheCapacity(d, v, "session_cache_capacity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-cache-capacity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_cache_timeout"); ok {
+		if setArgNil {
+			obj["session-cache-timeout"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingSessionCacheTimeout(d, v, "session_cache_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-cache-timeout"] = t
+			t, err := expandFirewallSslSettingSessionCacheTimeout(d, v, "session_cache_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-cache-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("kxp_queue_threshold"); ok {
+		if setArgNil {
+			obj["kxp-queue-threshold"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingKxpQueueThreshold(d, v, "kxp_queue_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["kxp-queue-threshold"] = t
+			t, err := expandFirewallSslSettingKxpQueueThreshold(d, v, "kxp_queue_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["kxp-queue-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ssl_queue_threshold"); ok {
+		if setArgNil {
+			obj["ssl-queue-threshold"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingSslQueueThreshold(d, v, "ssl_queue_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-queue-threshold"] = t
+			t, err := expandFirewallSslSettingSslQueueThreshold(d, v, "ssl_queue_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-queue-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("abbreviate_handshake"); ok {
+		if setArgNil {
+			obj["abbreviate-handshake"] = nil
+		} else {
 
-		t, err := expandFirewallSslSettingAbbreviateHandshake(d, v, "abbreviate_handshake", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["abbreviate-handshake"] = t
+			t, err := expandFirewallSslSettingAbbreviateHandshake(d, v, "abbreviate_handshake", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["abbreviate-handshake"] = t
+			}
 		}
 	}
 

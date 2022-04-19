@@ -119,7 +119,7 @@ func resourceAntivirusQuarantineUpdate(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	obj, err := getObjectAntivirusQuarantine(d, c.Fv)
+	obj, err := getObjectAntivirusQuarantine(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusQuarantine resource while getting object: %v", err)
 	}
@@ -141,7 +141,6 @@ func resourceAntivirusQuarantineUpdate(d *schema.ResourceData, m interface{}) er
 
 func resourceAntivirusQuarantineDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -153,9 +152,15 @@ func resourceAntivirusQuarantineDelete(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	err := c.DeleteAntivirusQuarantine(mkey, vdomparam)
+	obj, err := getObjectAntivirusQuarantine(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting AntivirusQuarantine resource: %v", err)
+		return fmt.Errorf("Error updating AntivirusQuarantine resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateAntivirusQuarantine(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing AntivirusQuarantine resource: %v", err)
 	}
 
 	d.SetId("")
@@ -389,136 +394,188 @@ func expandAntivirusQuarantineDestination(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectAntivirusQuarantine(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("agelimit"); ok {
+		if setArgNil {
+			obj["agelimit"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineAgelimit(d, v, "agelimit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["agelimit"] = t
+			t, err := expandAntivirusQuarantineAgelimit(d, v, "agelimit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["agelimit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("maxfilesize"); ok {
+		if setArgNil {
+			obj["maxfilesize"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineMaxfilesize(d, v, "maxfilesize", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["maxfilesize"] = t
+			t, err := expandAntivirusQuarantineMaxfilesize(d, v, "maxfilesize", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["maxfilesize"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("quarantine_quota"); ok {
+		if setArgNil {
+			obj["quarantine-quota"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineQuarantineQuota(d, v, "quarantine_quota", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["quarantine-quota"] = t
+			t, err := expandAntivirusQuarantineQuarantineQuota(d, v, "quarantine_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["quarantine-quota"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("drop_infected"); ok {
+		if setArgNil {
+			obj["drop-infected"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineDropInfected(d, v, "drop_infected", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["drop-infected"] = t
+			t, err := expandAntivirusQuarantineDropInfected(d, v, "drop_infected", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["drop-infected"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("store_infected"); ok {
+		if setArgNil {
+			obj["store-infected"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineStoreInfected(d, v, "store_infected", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["store-infected"] = t
+			t, err := expandAntivirusQuarantineStoreInfected(d, v, "store_infected", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["store-infected"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("drop_blocked"); ok {
+		if setArgNil {
+			obj["drop-blocked"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineDropBlocked(d, v, "drop_blocked", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["drop-blocked"] = t
+			t, err := expandAntivirusQuarantineDropBlocked(d, v, "drop_blocked", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["drop-blocked"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("store_blocked"); ok {
+		if setArgNil {
+			obj["store-blocked"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineStoreBlocked(d, v, "store_blocked", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["store-blocked"] = t
+			t, err := expandAntivirusQuarantineStoreBlocked(d, v, "store_blocked", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["store-blocked"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("drop_machine_learning"); ok {
+		if setArgNil {
+			obj["drop-machine-learning"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineDropMachineLearning(d, v, "drop_machine_learning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["drop-machine-learning"] = t
+			t, err := expandAntivirusQuarantineDropMachineLearning(d, v, "drop_machine_learning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["drop-machine-learning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("store_machine_learning"); ok {
+		if setArgNil {
+			obj["store-machine-learning"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineStoreMachineLearning(d, v, "store_machine_learning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["store-machine-learning"] = t
+			t, err := expandAntivirusQuarantineStoreMachineLearning(d, v, "store_machine_learning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["store-machine-learning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("drop_heuristic"); ok {
+		if setArgNil {
+			obj["drop-heuristic"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineDropHeuristic(d, v, "drop_heuristic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["drop-heuristic"] = t
+			t, err := expandAntivirusQuarantineDropHeuristic(d, v, "drop_heuristic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["drop-heuristic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("store_heuristic"); ok {
+		if setArgNil {
+			obj["store-heuristic"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineStoreHeuristic(d, v, "store_heuristic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["store-heuristic"] = t
+			t, err := expandAntivirusQuarantineStoreHeuristic(d, v, "store_heuristic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["store-heuristic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lowspace"); ok {
+		if setArgNil {
+			obj["lowspace"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineLowspace(d, v, "lowspace", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lowspace"] = t
+			t, err := expandAntivirusQuarantineLowspace(d, v, "lowspace", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lowspace"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("destination"); ok {
+		if setArgNil {
+			obj["destination"] = nil
+		} else {
 
-		t, err := expandAntivirusQuarantineDestination(d, v, "destination", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["destination"] = t
+			t, err := expandAntivirusQuarantineDestination(d, v, "destination", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["destination"] = t
+			}
 		}
 	}
 

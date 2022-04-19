@@ -129,7 +129,7 @@ func resourceUserQuarantineUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectUserQuarantine(d, c.Fv)
+	obj, err := getObjectUserQuarantine(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserQuarantine resource while getting object: %v", err)
 	}
@@ -151,7 +151,6 @@ func resourceUserQuarantineUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceUserQuarantineDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -163,9 +162,15 @@ func resourceUserQuarantineDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteUserQuarantine(mkey, vdomparam)
+	obj, err := getObjectUserQuarantine(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting UserQuarantine resource: %v", err)
+		return fmt.Errorf("Error updating UserQuarantine resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateUserQuarantine(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing UserQuarantine resource: %v", err)
 	}
 
 	d.SetId("")
@@ -528,46 +533,62 @@ func expandUserQuarantineTargetsMacsParent(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectUserQuarantine(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("quarantine"); ok {
+		if setArgNil {
+			obj["quarantine"] = nil
+		} else {
 
-		t, err := expandUserQuarantineQuarantine(d, v, "quarantine", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["quarantine"] = t
+			t, err := expandUserQuarantineQuarantine(d, v, "quarantine", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["quarantine"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("traffic_policy"); ok {
+		if setArgNil {
+			obj["traffic-policy"] = nil
+		} else {
 
-		t, err := expandUserQuarantineTrafficPolicy(d, v, "traffic_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["traffic-policy"] = t
+			t, err := expandUserQuarantineTrafficPolicy(d, v, "traffic_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["traffic-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("firewall_groups"); ok {
+		if setArgNil {
+			obj["firewall-groups"] = nil
+		} else {
 
-		t, err := expandUserQuarantineFirewallGroups(d, v, "firewall_groups", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firewall-groups"] = t
+			t, err := expandUserQuarantineFirewallGroups(d, v, "firewall_groups", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firewall-groups"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("targets"); ok {
+		if setArgNil {
+			obj["targets"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandUserQuarantineTargets(d, v, "targets", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["targets"] = t
+			t, err := expandUserQuarantineTargets(d, v, "targets", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["targets"] = t
+			}
 		}
 	}
 

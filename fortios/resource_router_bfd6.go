@@ -275,13 +275,13 @@ func expandRouterBfd6NeighborInterface(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-func getObjectRouterBfd6(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterBfd6(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if bemptysontable {
-		obj["neighbor"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok {
+		if setArgNil {
+			obj["neighbor"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterBfd6Neighbor(d, v, "neighbor", sv)
 			if err != nil {

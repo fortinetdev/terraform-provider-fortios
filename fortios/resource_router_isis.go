@@ -2547,363 +2547,503 @@ func expandRouterIsisRedistribute6Routemap(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("is_type"); ok {
+		if setArgNil {
+			obj["is-type"] = nil
+		} else {
 
-		t, err := expandRouterIsisIsType(d, v, "is_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["is-type"] = t
+			t, err := expandRouterIsisIsType(d, v, "is_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["is-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("adv_passive_only"); ok {
+		if setArgNil {
+			obj["adv-passive-only"] = nil
+		} else {
 
-		t, err := expandRouterIsisAdvPassiveOnly(d, v, "adv_passive_only", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["adv-passive-only"] = t
+			t, err := expandRouterIsisAdvPassiveOnly(d, v, "adv_passive_only", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["adv-passive-only"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("adv_passive_only6"); ok {
+		if setArgNil {
+			obj["adv-passive-only6"] = nil
+		} else {
 
-		t, err := expandRouterIsisAdvPassiveOnly6(d, v, "adv_passive_only6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["adv-passive-only6"] = t
+			t, err := expandRouterIsisAdvPassiveOnly6(d, v, "adv_passive_only6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["adv-passive-only6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_mode_l1"); ok {
+		if setArgNil {
+			obj["auth-mode-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthModeL1(d, v, "auth_mode_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-mode-l1"] = t
+			t, err := expandRouterIsisAuthModeL1(d, v, "auth_mode_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-mode-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_mode_l2"); ok {
+		if setArgNil {
+			obj["auth-mode-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthModeL2(d, v, "auth_mode_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-mode-l2"] = t
+			t, err := expandRouterIsisAuthModeL2(d, v, "auth_mode_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-mode-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_password_l1"); ok {
+		if setArgNil {
+			obj["auth-password-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthPasswordL1(d, v, "auth_password_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-password-l1"] = t
+			t, err := expandRouterIsisAuthPasswordL1(d, v, "auth_password_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-password-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_password_l2"); ok {
+		if setArgNil {
+			obj["auth-password-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthPasswordL2(d, v, "auth_password_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-password-l2"] = t
+			t, err := expandRouterIsisAuthPasswordL2(d, v, "auth_password_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-password-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_keychain_l1"); ok {
+		if setArgNil {
+			obj["auth-keychain-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthKeychainL1(d, v, "auth_keychain_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-keychain-l1"] = t
+			t, err := expandRouterIsisAuthKeychainL1(d, v, "auth_keychain_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-keychain-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_keychain_l2"); ok {
+		if setArgNil {
+			obj["auth-keychain-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthKeychainL2(d, v, "auth_keychain_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-keychain-l2"] = t
+			t, err := expandRouterIsisAuthKeychainL2(d, v, "auth_keychain_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-keychain-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_sendonly_l1"); ok {
+		if setArgNil {
+			obj["auth-sendonly-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthSendonlyL1(d, v, "auth_sendonly_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-sendonly-l1"] = t
+			t, err := expandRouterIsisAuthSendonlyL1(d, v, "auth_sendonly_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-sendonly-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_sendonly_l2"); ok {
+		if setArgNil {
+			obj["auth-sendonly-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisAuthSendonlyL2(d, v, "auth_sendonly_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-sendonly-l2"] = t
+			t, err := expandRouterIsisAuthSendonlyL2(d, v, "auth_sendonly_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-sendonly-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ignore_lsp_errors"); ok {
+		if setArgNil {
+			obj["ignore-lsp-errors"] = nil
+		} else {
 
-		t, err := expandRouterIsisIgnoreLspErrors(d, v, "ignore_lsp_errors", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ignore-lsp-errors"] = t
+			t, err := expandRouterIsisIgnoreLspErrors(d, v, "ignore_lsp_errors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-lsp-errors"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lsp_gen_interval_l1"); ok {
+		if setArgNil {
+			obj["lsp-gen-interval-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisLspGenIntervalL1(d, v, "lsp_gen_interval_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lsp-gen-interval-l1"] = t
+			t, err := expandRouterIsisLspGenIntervalL1(d, v, "lsp_gen_interval_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lsp-gen-interval-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lsp_gen_interval_l2"); ok {
+		if setArgNil {
+			obj["lsp-gen-interval-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisLspGenIntervalL2(d, v, "lsp_gen_interval_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lsp-gen-interval-l2"] = t
+			t, err := expandRouterIsisLspGenIntervalL2(d, v, "lsp_gen_interval_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lsp-gen-interval-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lsp_refresh_interval"); ok {
+		if setArgNil {
+			obj["lsp-refresh-interval"] = nil
+		} else {
 
-		t, err := expandRouterIsisLspRefreshInterval(d, v, "lsp_refresh_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lsp-refresh-interval"] = t
+			t, err := expandRouterIsisLspRefreshInterval(d, v, "lsp_refresh_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lsp-refresh-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_lsp_lifetime"); ok {
+		if setArgNil {
+			obj["max-lsp-lifetime"] = nil
+		} else {
 
-		t, err := expandRouterIsisMaxLspLifetime(d, v, "max_lsp_lifetime", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-lsp-lifetime"] = t
+			t, err := expandRouterIsisMaxLspLifetime(d, v, "max_lsp_lifetime", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-lsp-lifetime"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("spf_interval_exp_l1"); ok {
+		if setArgNil {
+			obj["spf-interval-exp-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisSpfIntervalExpL1(d, v, "spf_interval_exp_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["spf-interval-exp-l1"] = t
+			t, err := expandRouterIsisSpfIntervalExpL1(d, v, "spf_interval_exp_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["spf-interval-exp-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("spf_interval_exp_l2"); ok {
+		if setArgNil {
+			obj["spf-interval-exp-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisSpfIntervalExpL2(d, v, "spf_interval_exp_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["spf-interval-exp-l2"] = t
+			t, err := expandRouterIsisSpfIntervalExpL2(d, v, "spf_interval_exp_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["spf-interval-exp-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dynamic_hostname"); ok {
+		if setArgNil {
+			obj["dynamic-hostname"] = nil
+		} else {
 
-		t, err := expandRouterIsisDynamicHostname(d, v, "dynamic_hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dynamic-hostname"] = t
+			t, err := expandRouterIsisDynamicHostname(d, v, "dynamic_hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dynamic-hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("adjacency_check"); ok {
+		if setArgNil {
+			obj["adjacency-check"] = nil
+		} else {
 
-		t, err := expandRouterIsisAdjacencyCheck(d, v, "adjacency_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["adjacency-check"] = t
+			t, err := expandRouterIsisAdjacencyCheck(d, v, "adjacency_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["adjacency-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("adjacency_check6"); ok {
+		if setArgNil {
+			obj["adjacency-check6"] = nil
+		} else {
 
-		t, err := expandRouterIsisAdjacencyCheck6(d, v, "adjacency_check6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["adjacency-check6"] = t
+			t, err := expandRouterIsisAdjacencyCheck6(d, v, "adjacency_check6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["adjacency-check6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("overload_bit"); ok {
+		if setArgNil {
+			obj["overload-bit"] = nil
+		} else {
 
-		t, err := expandRouterIsisOverloadBit(d, v, "overload_bit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["overload-bit"] = t
+			t, err := expandRouterIsisOverloadBit(d, v, "overload_bit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["overload-bit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("overload_bit_suppress"); ok {
+		if setArgNil {
+			obj["overload-bit-suppress"] = nil
+		} else {
 
-		t, err := expandRouterIsisOverloadBitSuppress(d, v, "overload_bit_suppress", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["overload-bit-suppress"] = t
+			t, err := expandRouterIsisOverloadBitSuppress(d, v, "overload_bit_suppress", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["overload-bit-suppress"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("overload_bit_on_startup"); ok {
+		if setArgNil {
+			obj["overload-bit-on-startup"] = nil
+		} else {
 
-		t, err := expandRouterIsisOverloadBitOnStartup(d, v, "overload_bit_on_startup", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["overload-bit-on-startup"] = t
+			t, err := expandRouterIsisOverloadBitOnStartup(d, v, "overload_bit_on_startup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["overload-bit-on-startup"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_originate"); ok {
+		if setArgNil {
+			obj["default-originate"] = nil
+		} else {
 
-		t, err := expandRouterIsisDefaultOriginate(d, v, "default_originate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-originate"] = t
+			t, err := expandRouterIsisDefaultOriginate(d, v, "default_originate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-originate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_originate6"); ok {
+		if setArgNil {
+			obj["default-originate6"] = nil
+		} else {
 
-		t, err := expandRouterIsisDefaultOriginate6(d, v, "default_originate6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-originate6"] = t
+			t, err := expandRouterIsisDefaultOriginate6(d, v, "default_originate6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-originate6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("metric_style"); ok {
+		if setArgNil {
+			obj["metric-style"] = nil
+		} else {
 
-		t, err := expandRouterIsisMetricStyle(d, v, "metric_style", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["metric-style"] = t
+			t, err := expandRouterIsisMetricStyle(d, v, "metric_style", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["metric-style"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute_l1"); ok {
+		if setArgNil {
+			obj["redistribute-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistributeL1(d, v, "redistribute_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute-l1"] = t
+			t, err := expandRouterIsisRedistributeL1(d, v, "redistribute_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute_l1_list"); ok {
+		if setArgNil {
+			obj["redistribute-l1-list"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistributeL1List(d, v, "redistribute_l1_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute-l1-list"] = t
+			t, err := expandRouterIsisRedistributeL1List(d, v, "redistribute_l1_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute-l1-list"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute_l2"); ok {
+		if setArgNil {
+			obj["redistribute-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistributeL2(d, v, "redistribute_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute-l2"] = t
+			t, err := expandRouterIsisRedistributeL2(d, v, "redistribute_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute_l2_list"); ok {
+		if setArgNil {
+			obj["redistribute-l2-list"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistributeL2List(d, v, "redistribute_l2_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute-l2-list"] = t
+			t, err := expandRouterIsisRedistributeL2List(d, v, "redistribute_l2_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute-l2-list"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute6_l1"); ok {
+		if setArgNil {
+			obj["redistribute6-l1"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistribute6L1(d, v, "redistribute6_l1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute6-l1"] = t
+			t, err := expandRouterIsisRedistribute6L1(d, v, "redistribute6_l1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute6-l1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute6_l1_list"); ok {
+		if setArgNil {
+			obj["redistribute6-l1-list"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistribute6L1List(d, v, "redistribute6_l1_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute6-l1-list"] = t
+			t, err := expandRouterIsisRedistribute6L1List(d, v, "redistribute6_l1_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute6-l1-list"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute6_l2"); ok {
+		if setArgNil {
+			obj["redistribute6-l2"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistribute6L2(d, v, "redistribute6_l2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute6-l2"] = t
+			t, err := expandRouterIsisRedistribute6L2(d, v, "redistribute6_l2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute6-l2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute6_l2_list"); ok {
+		if setArgNil {
+			obj["redistribute6-l2-list"] = nil
+		} else {
 
-		t, err := expandRouterIsisRedistribute6L2List(d, v, "redistribute6_l2_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute6-l2-list"] = t
+			t, err := expandRouterIsisRedistribute6L2List(d, v, "redistribute6_l2_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute6-l2-list"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["isis-net"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("isis_net"); ok {
+	if v, ok := d.GetOk("isis_net"); ok {
+		if setArgNil {
+			obj["isis-net"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterIsisIsisNet(d, v, "isis_net", sv)
 			if err != nil {
@@ -2914,10 +3054,10 @@ func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["isis-interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("isis_interface"); ok {
+	if v, ok := d.GetOk("isis_interface"); ok {
+		if setArgNil {
+			obj["isis-interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterIsisIsisInterface(d, v, "isis_interface", sv)
 			if err != nil {
@@ -2928,10 +3068,10 @@ func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["summary-address"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("summary_address"); ok {
+	if v, ok := d.GetOk("summary_address"); ok {
+		if setArgNil {
+			obj["summary-address"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterIsisSummaryAddress(d, v, "summary_address", sv)
 			if err != nil {
@@ -2942,10 +3082,10 @@ func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["summary-address6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("summary_address6"); ok {
+	if v, ok := d.GetOk("summary_address6"); ok {
+		if setArgNil {
+			obj["summary-address6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterIsisSummaryAddress6(d, v, "summary_address6", sv)
 			if err != nil {
@@ -2956,10 +3096,10 @@ func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["redistribute"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok {
+		if setArgNil {
+			obj["redistribute"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterIsisRedistribute(d, v, "redistribute", sv)
 			if err != nil {
@@ -2970,10 +3110,10 @@ func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["redistribute6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("redistribute6"); ok {
+	if v, ok := d.GetOk("redistribute6"); ok {
+		if setArgNil {
+			obj["redistribute6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterIsisRedistribute6(d, v, "redistribute6", sv)
 			if err != nil {

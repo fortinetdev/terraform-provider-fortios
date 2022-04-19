@@ -101,7 +101,7 @@ func resourceSystemFortisandboxUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectSystemFortisandbox(d, c.Fv)
+	obj, err := getObjectSystemFortisandbox(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortisandbox resource while getting object: %v", err)
 	}
@@ -123,7 +123,6 @@ func resourceSystemFortisandboxUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceSystemFortisandboxDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -135,9 +134,15 @@ func resourceSystemFortisandboxDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteSystemFortisandbox(mkey, vdomparam)
+	obj, err := getObjectSystemFortisandbox(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFortisandbox resource: %v", err)
+		return fmt.Errorf("Error updating SystemFortisandbox resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFortisandbox(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFortisandbox resource: %v", err)
 	}
 
 	d.SetId("")
@@ -315,96 +320,132 @@ func expandSystemFortisandboxEmail(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-func getObjectSystemFortisandbox(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFortisandboxStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticloud"); ok {
+		if setArgNil {
+			obj["forticloud"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxForticloud(d, v, "forticloud", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticloud"] = t
+			t, err := expandSystemFortisandboxForticloud(d, v, "forticloud", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticloud"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandSystemFortisandboxServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemFortisandboxSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemFortisandboxInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemFortisandboxInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
+		if setArgNil {
+			obj["enc-algorithm"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxEncAlgorithm(d, v, "enc_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enc-algorithm"] = t
+			t, err := expandSystemFortisandboxEncAlgorithm(d, v, "enc_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enc-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandSystemFortisandboxSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("email"); ok {
+		if setArgNil {
+			obj["email"] = nil
+		} else {
 
-		t, err := expandSystemFortisandboxEmail(d, v, "email", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["email"] = t
+			t, err := expandSystemFortisandboxEmail(d, v, "email", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["email"] = t
+			}
 		}
 	}
 

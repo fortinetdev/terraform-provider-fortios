@@ -81,7 +81,7 @@ func resourceSystemStpUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemStp(d, c.Fv)
+	obj, err := getObjectSystemStp(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemStp resource while getting object: %v", err)
 	}
@@ -103,7 +103,6 @@ func resourceSystemStpUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemStpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -115,9 +114,15 @@ func resourceSystemStpDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemStp(mkey, vdomparam)
+	obj, err := getObjectSystemStp(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemStp resource: %v", err)
+		return fmt.Errorf("Error updating SystemStp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemStp(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemStp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -239,56 +244,76 @@ func expandSystemStpMaxHops(d *schema.ResourceData, v interface{}, pre string, s
 	return v, nil
 }
 
-func getObjectSystemStp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemStp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("switch_priority"); ok {
+		if setArgNil {
+			obj["switch-priority"] = nil
+		} else {
 
-		t, err := expandSystemStpSwitchPriority(d, v, "switch_priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["switch-priority"] = t
+			t, err := expandSystemStpSwitchPriority(d, v, "switch_priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["switch-priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hello_time"); ok {
+		if setArgNil {
+			obj["hello-time"] = nil
+		} else {
 
-		t, err := expandSystemStpHelloTime(d, v, "hello_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hello-time"] = t
+			t, err := expandSystemStpHelloTime(d, v, "hello_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hello-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_delay"); ok {
+		if setArgNil {
+			obj["forward-delay"] = nil
+		} else {
 
-		t, err := expandSystemStpForwardDelay(d, v, "forward_delay", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-delay"] = t
+			t, err := expandSystemStpForwardDelay(d, v, "forward_delay", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-delay"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_age"); ok {
+		if setArgNil {
+			obj["max-age"] = nil
+		} else {
 
-		t, err := expandSystemStpMaxAge(d, v, "max_age", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-age"] = t
+			t, err := expandSystemStpMaxAge(d, v, "max_age", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-age"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_hops"); ok {
+		if setArgNil {
+			obj["max-hops"] = nil
+		} else {
 
-		t, err := expandSystemStpMaxHops(d, v, "max_hops", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-hops"] = t
+			t, err := expandSystemStpMaxHops(d, v, "max_hops", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-hops"] = t
+			}
 		}
 	}
 

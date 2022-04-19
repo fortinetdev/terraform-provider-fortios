@@ -112,7 +112,7 @@ func resourceSystemPtpUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemPtp(d, c.Fv)
+	obj, err := getObjectSystemPtp(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPtp resource while getting object: %v", err)
 	}
@@ -134,7 +134,6 @@ func resourceSystemPtpUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemPtpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -146,9 +145,15 @@ func resourceSystemPtpDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemPtp(mkey, vdomparam)
+	obj, err := getObjectSystemPtp(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemPtp resource: %v", err)
+		return fmt.Errorf("Error updating SystemPtp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemPtp(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemPtp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -410,76 +415,104 @@ func expandSystemPtpServerInterfaceDelayMechanism(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func getObjectSystemPtp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemPtpStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemPtpStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemPtpMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemPtpMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("delay_mechanism"); ok {
+		if setArgNil {
+			obj["delay-mechanism"] = nil
+		} else {
 
-		t, err := expandSystemPtpDelayMechanism(d, v, "delay_mechanism", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["delay-mechanism"] = t
+			t, err := expandSystemPtpDelayMechanism(d, v, "delay_mechanism", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["delay-mechanism"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("request_interval"); ok {
+		if setArgNil {
+			obj["request-interval"] = nil
+		} else {
 
-		t, err := expandSystemPtpRequestInterval(d, v, "request_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["request-interval"] = t
+			t, err := expandSystemPtpRequestInterval(d, v, "request_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["request-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemPtpInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemPtpInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_mode"); ok {
+		if setArgNil {
+			obj["server-mode"] = nil
+		} else {
 
-		t, err := expandSystemPtpServerMode(d, v, "server_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-mode"] = t
+			t, err := expandSystemPtpServerMode(d, v, "server_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_interface"); ok {
+		if setArgNil {
+			obj["server-interface"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemPtpServerInterface(d, v, "server_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-interface"] = t
+			t, err := expandSystemPtpServerInterface(d, v, "server_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-interface"] = t
+			}
 		}
 	}
 

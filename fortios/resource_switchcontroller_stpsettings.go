@@ -99,7 +99,7 @@ func resourceSwitchControllerStpSettingsUpdate(d *schema.ResourceData, m interfa
 		}
 	}
 
-	obj, err := getObjectSwitchControllerStpSettings(d, c.Fv)
+	obj, err := getObjectSwitchControllerStpSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStpSettings resource while getting object: %v", err)
 	}
@@ -121,7 +121,6 @@ func resourceSwitchControllerStpSettingsUpdate(d *schema.ResourceData, m interfa
 
 func resourceSwitchControllerStpSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -133,9 +132,15 @@ func resourceSwitchControllerStpSettingsDelete(d *schema.ResourceData, m interfa
 		}
 	}
 
-	err := c.DeleteSwitchControllerStpSettings(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerStpSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerStpSettings resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerStpSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerStpSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerStpSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -299,86 +304,118 @@ func expandSwitchControllerStpSettingsPendingTimer(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func getObjectSwitchControllerStpSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
+		if setArgNil {
+			obj["name"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsName(d, v, "name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["name"] = t
+			t, err := expandSwitchControllerStpSettingsName(d, v, "name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSwitchControllerStpSettingsStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("revision"); ok {
+		if setArgNil {
+			obj["revision"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsRevision(d, v, "revision", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["revision"] = t
+			t, err := expandSwitchControllerStpSettingsRevision(d, v, "revision", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["revision"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hello_time"); ok {
+		if setArgNil {
+			obj["hello-time"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsHelloTime(d, v, "hello_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hello-time"] = t
+			t, err := expandSwitchControllerStpSettingsHelloTime(d, v, "hello_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hello-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_time"); ok {
+		if setArgNil {
+			obj["forward-time"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsForwardTime(d, v, "forward_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-time"] = t
+			t, err := expandSwitchControllerStpSettingsForwardTime(d, v, "forward_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_age"); ok {
+		if setArgNil {
+			obj["max-age"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsMaxAge(d, v, "max_age", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-age"] = t
+			t, err := expandSwitchControllerStpSettingsMaxAge(d, v, "max_age", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-age"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_hops"); ok {
+		if setArgNil {
+			obj["max-hops"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsMaxHops(d, v, "max_hops", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-hops"] = t
+			t, err := expandSwitchControllerStpSettingsMaxHops(d, v, "max_hops", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-hops"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pending_timer"); ok {
+		if setArgNil {
+			obj["pending-timer"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStpSettingsPendingTimer(d, v, "pending_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pending-timer"] = t
+			t, err := expandSwitchControllerStpSettingsPendingTimer(d, v, "pending_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pending-timer"] = t
+			}
 		}
 	}
 

@@ -204,7 +204,7 @@ func resourceWirelessControllerSnmpUpdate(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	obj, err := getObjectWirelessControllerSnmp(d, c.Fv)
+	obj, err := getObjectWirelessControllerSnmp(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerSnmp resource while getting object: %v", err)
 	}
@@ -226,7 +226,6 @@ func resourceWirelessControllerSnmpUpdate(d *schema.ResourceData, m interface{})
 
 func resourceWirelessControllerSnmpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -238,9 +237,15 @@ func resourceWirelessControllerSnmpDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteWirelessControllerSnmp(mkey, vdomparam)
+	obj, err := getObjectWirelessControllerSnmp(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WirelessControllerSnmp resource: %v", err)
+		return fmt.Errorf("Error updating WirelessControllerSnmp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWirelessControllerSnmp(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WirelessControllerSnmp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -931,66 +936,90 @@ func expandWirelessControllerSnmpUserNotifyHosts(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectWirelessControllerSnmp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("engine_id"); ok {
+		if setArgNil {
+			obj["engine-id"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSnmpEngineId(d, v, "engine_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["engine-id"] = t
+			t, err := expandWirelessControllerSnmpEngineId(d, v, "engine_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["engine-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("contact_info"); ok {
+		if setArgNil {
+			obj["contact-info"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSnmpContactInfo(d, v, "contact_info", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["contact-info"] = t
+			t, err := expandWirelessControllerSnmpContactInfo(d, v, "contact_info", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["contact-info"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trap_high_cpu_threshold"); ok {
+		if setArgNil {
+			obj["trap-high-cpu-threshold"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSnmpTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-high-cpu-threshold"] = t
+			t, err := expandWirelessControllerSnmpTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-high-cpu-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trap_high_mem_threshold"); ok {
+		if setArgNil {
+			obj["trap-high-mem-threshold"] = nil
+		} else {
 
-		t, err := expandWirelessControllerSnmpTrapHighMemThreshold(d, v, "trap_high_mem_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-high-mem-threshold"] = t
+			t, err := expandWirelessControllerSnmpTrapHighMemThreshold(d, v, "trap_high_mem_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-high-mem-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("community"); ok {
+		if setArgNil {
+			obj["community"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWirelessControllerSnmpCommunity(d, v, "community", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["community"] = t
+			t, err := expandWirelessControllerSnmpCommunity(d, v, "community", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["community"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user"); ok {
+		if setArgNil {
+			obj["user"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWirelessControllerSnmpUser(d, v, "user", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user"] = t
+			t, err := expandWirelessControllerSnmpUser(d, v, "user", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user"] = t
+			}
 		}
 	}
 

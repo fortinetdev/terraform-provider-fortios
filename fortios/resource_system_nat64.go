@@ -105,7 +105,7 @@ func resourceSystemNat64Update(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemNat64(d, c.Fv)
+	obj, err := getObjectSystemNat64(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNat64 resource while getting object: %v", err)
 	}
@@ -127,7 +127,6 @@ func resourceSystemNat64Update(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemNat64Delete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -139,9 +138,15 @@ func resourceSystemNat64Delete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemNat64(mkey, vdomparam)
+	obj, err := getObjectSystemNat64(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemNat64 resource: %v", err)
+		return fmt.Errorf("Error updating SystemNat64 resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemNat64(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemNat64 resource: %v", err)
 	}
 
 	d.SetId("")
@@ -383,76 +388,104 @@ func expandSystemNat64Nat46ForceIpv4PacketForwarding(d *schema.ResourceData, v i
 	return v, nil
 }
 
-func getObjectSystemNat64(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemNat64Status(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemNat64Status(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nat64_prefix"); ok {
+		if setArgNil {
+			obj["nat64-prefix"] = nil
+		} else {
 
-		t, err := expandSystemNat64Nat64Prefix(d, v, "nat64_prefix", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nat64-prefix"] = t
+			t, err := expandSystemNat64Nat64Prefix(d, v, "nat64_prefix", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat64-prefix"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("secondary_prefix_status"); ok {
+		if setArgNil {
+			obj["secondary-prefix-status"] = nil
+		} else {
 
-		t, err := expandSystemNat64SecondaryPrefixStatus(d, v, "secondary_prefix_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["secondary-prefix-status"] = t
+			t, err := expandSystemNat64SecondaryPrefixStatus(d, v, "secondary_prefix_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["secondary-prefix-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("secondary_prefix"); ok {
+		if setArgNil {
+			obj["secondary-prefix"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemNat64SecondaryPrefix(d, v, "secondary_prefix", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["secondary-prefix"] = t
+			t, err := expandSystemNat64SecondaryPrefix(d, v, "secondary_prefix", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["secondary-prefix"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("always_synthesize_aaaa_record"); ok {
+		if setArgNil {
+			obj["always-synthesize-aaaa-record"] = nil
+		} else {
 
-		t, err := expandSystemNat64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["always-synthesize-aaaa-record"] = t
+			t, err := expandSystemNat64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["always-synthesize-aaaa-record"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("generate_ipv6_fragment_header"); ok {
+		if setArgNil {
+			obj["generate-ipv6-fragment-header"] = nil
+		} else {
 
-		t, err := expandSystemNat64GenerateIpv6FragmentHeader(d, v, "generate_ipv6_fragment_header", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["generate-ipv6-fragment-header"] = t
+			t, err := expandSystemNat64GenerateIpv6FragmentHeader(d, v, "generate_ipv6_fragment_header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["generate-ipv6-fragment-header"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nat46_force_ipv4_packet_forwarding"); ok {
+		if setArgNil {
+			obj["nat46-force-ipv4-packet-forwarding"] = nil
+		} else {
 
-		t, err := expandSystemNat64Nat46ForceIpv4PacketForwarding(d, v, "nat46_force_ipv4_packet_forwarding", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nat46-force-ipv4-packet-forwarding"] = t
+			t, err := expandSystemNat64Nat46ForceIpv4PacketForwarding(d, v, "nat46_force_ipv4_packet_forwarding", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat46-force-ipv4-packet-forwarding"] = t
+			}
 		}
 	}
 

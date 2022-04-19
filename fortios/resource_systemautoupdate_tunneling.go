@@ -81,7 +81,7 @@ func resourceSystemAutoupdateTunnelingUpdate(d *schema.ResourceData, m interface
 		}
 	}
 
-	obj, err := getObjectSystemAutoupdateTunneling(d, c.Fv)
+	obj, err := getObjectSystemAutoupdateTunneling(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdateTunneling resource while getting object: %v", err)
 	}
@@ -103,7 +103,6 @@ func resourceSystemAutoupdateTunnelingUpdate(d *schema.ResourceData, m interface
 
 func resourceSystemAutoupdateTunnelingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -115,9 +114,15 @@ func resourceSystemAutoupdateTunnelingDelete(d *schema.ResourceData, m interface
 		}
 	}
 
-	err := c.DeleteSystemAutoupdateTunneling(mkey, vdomparam)
+	obj, err := getObjectSystemAutoupdateTunneling(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemAutoupdateTunneling resource: %v", err)
+		return fmt.Errorf("Error updating SystemAutoupdateTunneling resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemAutoupdateTunneling(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemAutoupdateTunneling resource: %v", err)
 	}
 
 	d.SetId("")
@@ -233,56 +238,76 @@ func expandSystemAutoupdateTunnelingPassword(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdateTunnelingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemAutoupdateTunnelingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("address"); ok {
+		if setArgNil {
+			obj["address"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdateTunnelingAddress(d, v, "address", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["address"] = t
+			t, err := expandSystemAutoupdateTunnelingAddress(d, v, "address", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["address"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdateTunnelingPort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandSystemAutoupdateTunnelingPort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("username"); ok {
+		if setArgNil {
+			obj["username"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdateTunnelingUsername(d, v, "username", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["username"] = t
+			t, err := expandSystemAutoupdateTunnelingUsername(d, v, "username", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["username"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("password"); ok {
+		if setArgNil {
+			obj["password"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdateTunnelingPassword(d, v, "password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["password"] = t
+			t, err := expandSystemAutoupdateTunnelingPassword(d, v, "password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["password"] = t
+			}
 		}
 	}
 

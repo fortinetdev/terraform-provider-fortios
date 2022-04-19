@@ -162,7 +162,7 @@ func resourceLogSyslogdOverrideFilterUpdate(d *schema.ResourceData, m interface{
 		}
 	}
 
-	obj, err := getObjectLogSyslogdOverrideFilter(d, c.Fv)
+	obj, err := getObjectLogSyslogdOverrideFilter(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogSyslogdOverrideFilter resource while getting object: %v", err)
 	}
@@ -184,7 +184,6 @@ func resourceLogSyslogdOverrideFilterUpdate(d *schema.ResourceData, m interface{
 
 func resourceLogSyslogdOverrideFilterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -196,9 +195,15 @@ func resourceLogSyslogdOverrideFilterDelete(d *schema.ResourceData, m interface{
 		}
 	}
 
-	err := c.DeleteLogSyslogdOverrideFilter(mkey, vdomparam)
+	obj, err := getObjectLogSyslogdOverrideFilter(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogSyslogdOverrideFilter resource: %v", err)
+		return fmt.Errorf("Error updating LogSyslogdOverrideFilter resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogSyslogdOverrideFilter(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogSyslogdOverrideFilter resource: %v", err)
 	}
 
 	d.SetId("")
@@ -606,166 +611,230 @@ func expandLogSyslogdOverrideFilterFilterType(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func getObjectLogSyslogdOverrideFilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogSyslogdOverrideFilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("severity"); ok {
+		if setArgNil {
+			obj["severity"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterSeverity(d, v, "severity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["severity"] = t
+			t, err := expandLogSyslogdOverrideFilterSeverity(d, v, "severity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["severity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_traffic"); ok {
+		if setArgNil {
+			obj["forward-traffic"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterForwardTraffic(d, v, "forward_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-traffic"] = t
+			t, err := expandLogSyslogdOverrideFilterForwardTraffic(d, v, "forward_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_traffic"); ok {
+		if setArgNil {
+			obj["local-traffic"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterLocalTraffic(d, v, "local_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-traffic"] = t
+			t, err := expandLogSyslogdOverrideFilterLocalTraffic(d, v, "local_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_traffic"); ok {
+		if setArgNil {
+			obj["multicast-traffic"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterMulticastTraffic(d, v, "multicast_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-traffic"] = t
+			t, err := expandLogSyslogdOverrideFilterMulticastTraffic(d, v, "multicast_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sniffer_traffic"); ok {
+		if setArgNil {
+			obj["sniffer-traffic"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sniffer-traffic"] = t
+			t, err := expandLogSyslogdOverrideFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sniffer-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ztna_traffic"); ok {
+		if setArgNil {
+			obj["ztna-traffic"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterZtnaTraffic(d, v, "ztna_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ztna-traffic"] = t
+			t, err := expandLogSyslogdOverrideFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ztna-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anomaly"); ok {
+		if setArgNil {
+			obj["anomaly"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterAnomaly(d, v, "anomaly", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anomaly"] = t
+			t, err := expandLogSyslogdOverrideFilterAnomaly(d, v, "anomaly", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anomaly"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("netscan_discovery"); ok {
+		if setArgNil {
+			obj["netscan-discovery"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["netscan-discovery"] = t
+			t, err := expandLogSyslogdOverrideFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["netscan-discovery"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
+		if setArgNil {
+			obj["netscan-vulnerability"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["netscan-vulnerability"] = t
+			t, err := expandLogSyslogdOverrideFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["netscan-vulnerability"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
+		if setArgNil {
+			obj["voip"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterVoip(d, v, "voip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["voip"] = t
+			t, err := expandLogSyslogdOverrideFilterVoip(d, v, "voip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["voip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gtp"); ok {
+		if setArgNil {
+			obj["gtp"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterGtp(d, v, "gtp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gtp"] = t
+			t, err := expandLogSyslogdOverrideFilterGtp(d, v, "gtp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gtp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("free_style"); ok {
+		if setArgNil {
+			obj["free-style"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterFreeStyle(d, v, "free_style", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["free-style"] = t
+			t, err := expandLogSyslogdOverrideFilterFreeStyle(d, v, "free_style", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["free-style"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns"); ok {
+		if setArgNil {
+			obj["dns"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterDns(d, v, "dns", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns"] = t
+			t, err := expandLogSyslogdOverrideFilterDns(d, v, "dns", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
+		if setArgNil {
+			obj["ssh"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterSsh(d, v, "ssh", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh"] = t
+			t, err := expandLogSyslogdOverrideFilterSsh(d, v, "ssh", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
+		if setArgNil {
+			obj["filter"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterFilter(d, v, "filter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["filter"] = t
+			t, err := expandLogSyslogdOverrideFilterFilter(d, v, "filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["filter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {
+		if setArgNil {
+			obj["filter-type"] = nil
+		} else {
 
-		t, err := expandLogSyslogdOverrideFilterFilterType(d, v, "filter_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["filter-type"] = t
+			t, err := expandLogSyslogdOverrideFilterFilterType(d, v, "filter_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["filter-type"] = t
+			}
 		}
 	}
 

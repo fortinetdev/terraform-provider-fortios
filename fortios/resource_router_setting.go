@@ -184,7 +184,7 @@ func resourceRouterSettingUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectRouterSetting(d, c.Fv)
+	obj, err := getObjectRouterSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterSetting resource while getting object: %v", err)
 	}
@@ -206,7 +206,6 @@ func resourceRouterSettingUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -218,9 +217,15 @@ func resourceRouterSettingDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteRouterSetting(mkey, vdomparam)
+	obj, err := getObjectRouterSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterSetting resource: %v", err)
+		return fmt.Errorf("Error updating RouterSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -636,266 +641,370 @@ func expandRouterSettingRipng_Debug_Flags(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectRouterSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("show_filter"); ok {
+		if setArgNil {
+			obj["show-filter"] = nil
+		} else {
 
-		t, err := expandRouterSettingShowFilter(d, v, "show_filter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["show-filter"] = t
+			t, err := expandRouterSettingShowFilter(d, v, "show_filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["show-filter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
+		if setArgNil {
+			obj["hostname"] = nil
+		} else {
 
-		t, err := expandRouterSettingHostname(d, v, "hostname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostname"] = t
+			t, err := expandRouterSettingHostname(d, v, "hostname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_lsa_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_lsa_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Lsa_Flags(d, v, "ospf_debug_lsa_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_lsa_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Lsa_Flags(d, v, "ospf_debug_lsa_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_lsa_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_nfsm_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_nfsm_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Nfsm_Flags(d, v, "ospf_debug_nfsm_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_nfsm_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Nfsm_Flags(d, v, "ospf_debug_nfsm_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_nfsm_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_packet_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_packet_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Packet_Flags(d, v, "ospf_debug_packet_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_packet_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Packet_Flags(d, v, "ospf_debug_packet_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_packet_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_events_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_events_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Events_Flags(d, v, "ospf_debug_events_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_events_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Events_Flags(d, v, "ospf_debug_events_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_events_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_route_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_route_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Route_Flags(d, v, "ospf_debug_route_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_route_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Route_Flags(d, v, "ospf_debug_route_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_route_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_ifsm_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_ifsm_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Ifsm_Flags(d, v, "ospf_debug_ifsm_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_ifsm_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Ifsm_Flags(d, v, "ospf_debug_ifsm_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_ifsm_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf_debug_nsm_flags"); ok {
+		if setArgNil {
+			obj["ospf_debug_nsm_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf_Debug_Nsm_Flags(d, v, "ospf_debug_nsm_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf_debug_nsm_flags"] = t
+			t, err := expandRouterSettingOspf_Debug_Nsm_Flags(d, v, "ospf_debug_nsm_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf_debug_nsm_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rip_debug_flags"); ok {
+		if setArgNil {
+			obj["rip_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingRip_Debug_Flags(d, v, "rip_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rip_debug_flags"] = t
+			t, err := expandRouterSettingRip_Debug_Flags(d, v, "rip_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rip_debug_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bgp_debug_flags"); ok {
+		if setArgNil {
+			obj["bgp_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingBgp_Debug_Flags(d, v, "bgp_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bgp_debug_flags"] = t
+			t, err := expandRouterSettingBgp_Debug_Flags(d, v, "bgp_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bgp_debug_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("igmp_debug_flags"); ok {
+		if setArgNil {
+			obj["igmp_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingIgmp_Debug_Flags(d, v, "igmp_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["igmp_debug_flags"] = t
+			t, err := expandRouterSettingIgmp_Debug_Flags(d, v, "igmp_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["igmp_debug_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pimdm_debug_flags"); ok {
+		if setArgNil {
+			obj["pimdm_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingPimdm_Debug_Flags(d, v, "pimdm_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pimdm_debug_flags"] = t
+			t, err := expandRouterSettingPimdm_Debug_Flags(d, v, "pimdm_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pimdm_debug_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pimsm_debug_simple_flags"); ok {
+		if setArgNil {
+			obj["pimsm_debug_simple_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingPimsm_Debug_Simple_Flags(d, v, "pimsm_debug_simple_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pimsm_debug_simple_flags"] = t
+			t, err := expandRouterSettingPimsm_Debug_Simple_Flags(d, v, "pimsm_debug_simple_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pimsm_debug_simple_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pimsm_debug_timer_flags"); ok {
+		if setArgNil {
+			obj["pimsm_debug_timer_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingPimsm_Debug_Timer_Flags(d, v, "pimsm_debug_timer_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pimsm_debug_timer_flags"] = t
+			t, err := expandRouterSettingPimsm_Debug_Timer_Flags(d, v, "pimsm_debug_timer_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pimsm_debug_timer_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pimsm_debug_joinprune_flags"); ok {
+		if setArgNil {
+			obj["pimsm_debug_joinprune_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingPimsm_Debug_Joinprune_Flags(d, v, "pimsm_debug_joinprune_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pimsm_debug_joinprune_flags"] = t
+			t, err := expandRouterSettingPimsm_Debug_Joinprune_Flags(d, v, "pimsm_debug_joinprune_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pimsm_debug_joinprune_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("imi_debug_flags"); ok {
+		if setArgNil {
+			obj["imi_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingImi_Debug_Flags(d, v, "imi_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["imi_debug_flags"] = t
+			t, err := expandRouterSettingImi_Debug_Flags(d, v, "imi_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["imi_debug_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("isis_debug_flags"); ok {
+		if setArgNil {
+			obj["isis_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingIsis_Debug_Flags(d, v, "isis_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["isis_debug_flags"] = t
+			t, err := expandRouterSettingIsis_Debug_Flags(d, v, "isis_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["isis_debug_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_lsa_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_lsa_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Lsa_Flags(d, v, "ospf6_debug_lsa_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_lsa_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Lsa_Flags(d, v, "ospf6_debug_lsa_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_lsa_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_nfsm_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_nfsm_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Nfsm_Flags(d, v, "ospf6_debug_nfsm_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_nfsm_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Nfsm_Flags(d, v, "ospf6_debug_nfsm_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_nfsm_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_packet_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_packet_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Packet_Flags(d, v, "ospf6_debug_packet_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_packet_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Packet_Flags(d, v, "ospf6_debug_packet_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_packet_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_events_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_events_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Events_Flags(d, v, "ospf6_debug_events_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_events_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Events_Flags(d, v, "ospf6_debug_events_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_events_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_route_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_route_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Route_Flags(d, v, "ospf6_debug_route_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_route_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Route_Flags(d, v, "ospf6_debug_route_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_route_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_ifsm_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_ifsm_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Ifsm_Flags(d, v, "ospf6_debug_ifsm_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_ifsm_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Ifsm_Flags(d, v, "ospf6_debug_ifsm_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_ifsm_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_nsm_flags"); ok {
+		if setArgNil {
+			obj["ospf6_debug_nsm_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingOspf6_Debug_Nsm_Flags(d, v, "ospf6_debug_nsm_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf6_debug_nsm_flags"] = t
+			t, err := expandRouterSettingOspf6_Debug_Nsm_Flags(d, v, "ospf6_debug_nsm_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf6_debug_nsm_flags"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ripng_debug_flags"); ok {
+		if setArgNil {
+			obj["ripng_debug_flags"] = nil
+		} else {
 
-		t, err := expandRouterSettingRipng_Debug_Flags(d, v, "ripng_debug_flags", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ripng_debug_flags"] = t
+			t, err := expandRouterSettingRipng_Debug_Flags(d, v, "ripng_debug_flags", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ripng_debug_flags"] = t
+			}
 		}
 	}
 

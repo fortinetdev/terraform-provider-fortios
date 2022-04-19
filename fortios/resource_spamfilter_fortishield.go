@@ -68,7 +68,7 @@ func resourceSpamfilterFortishieldUpdate(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	obj, err := getObjectSpamfilterFortishield(d, c.Fv)
+	obj, err := getObjectSpamfilterFortishield(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterFortishield resource while getting object: %v", err)
 	}
@@ -90,7 +90,6 @@ func resourceSpamfilterFortishieldUpdate(d *schema.ResourceData, m interface{}) 
 
 func resourceSpamfilterFortishieldDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -102,9 +101,15 @@ func resourceSpamfilterFortishieldDelete(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	err := c.DeleteSpamfilterFortishield(mkey, vdomparam)
+	obj, err := getObjectSpamfilterFortishield(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SpamfilterFortishield resource: %v", err)
+		return fmt.Errorf("Error updating SpamfilterFortishield resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSpamfilterFortishield(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SpamfilterFortishield resource: %v", err)
 	}
 
 	d.SetId("")
@@ -198,36 +203,48 @@ func expandSpamfilterFortishieldSpamSubmitTxt2Htm(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func getObjectSpamfilterFortishield(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSpamfilterFortishield(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("spam_submit_srv"); ok {
+		if setArgNil {
+			obj["spam-submit-srv"] = nil
+		} else {
 
-		t, err := expandSpamfilterFortishieldSpamSubmitSrv(d, v, "spam_submit_srv", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["spam-submit-srv"] = t
+			t, err := expandSpamfilterFortishieldSpamSubmitSrv(d, v, "spam_submit_srv", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["spam-submit-srv"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("spam_submit_force"); ok {
+		if setArgNil {
+			obj["spam-submit-force"] = nil
+		} else {
 
-		t, err := expandSpamfilterFortishieldSpamSubmitForce(d, v, "spam_submit_force", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["spam-submit-force"] = t
+			t, err := expandSpamfilterFortishieldSpamSubmitForce(d, v, "spam_submit_force", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["spam-submit-force"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("spam_submit_txt2htm"); ok {
+		if setArgNil {
+			obj["spam-submit-txt2htm"] = nil
+		} else {
 
-		t, err := expandSpamfilterFortishieldSpamSubmitTxt2Htm(d, v, "spam_submit_txt2htm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["spam-submit-txt2htm"] = t
+			t, err := expandSpamfilterFortishieldSpamSubmitTxt2Htm(d, v, "spam_submit_txt2htm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["spam-submit-txt2htm"] = t
+			}
 		}
 	}
 

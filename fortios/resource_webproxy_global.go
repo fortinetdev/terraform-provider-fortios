@@ -182,7 +182,7 @@ func resourceWebProxyGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectWebProxyGlobal(d, c.Fv)
+	obj, err := getObjectWebProxyGlobal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyGlobal resource while getting object: %v", err)
 	}
@@ -204,7 +204,6 @@ func resourceWebProxyGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceWebProxyGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -216,9 +215,15 @@ func resourceWebProxyGlobalDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteWebProxyGlobal(mkey, vdomparam)
+	obj, err := getObjectWebProxyGlobal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WebProxyGlobal resource: %v", err)
+		return fmt.Errorf("Error updating WebProxyGlobal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWebProxyGlobal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WebProxyGlobal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -694,206 +699,286 @@ func expandWebProxyGlobalSrcAffinityExemptAddr6(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-func getObjectWebProxyGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("ssl_cert"); ok {
+		if setArgNil {
+			obj["ssl-cert"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalSslCert(d, v, "ssl_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-cert"] = t
+			t, err := expandWebProxyGlobalSslCert(d, v, "ssl_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_ca_cert"); ok {
+		if setArgNil {
+			obj["ssl-ca-cert"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalSslCaCert(d, v, "ssl_ca_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-ca-cert"] = t
+			t, err := expandWebProxyGlobalSslCaCert(d, v, "ssl_ca_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-ca-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fast_policy_match"); ok {
+		if setArgNil {
+			obj["fast-policy-match"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalFastPolicyMatch(d, v, "fast_policy_match", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fast-policy-match"] = t
+			t, err := expandWebProxyGlobalFastPolicyMatch(d, v, "fast_policy_match", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fast-policy-match"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ldap_user_cache"); ok {
+		if setArgNil {
+			obj["ldap-user-cache"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalLdapUserCache(d, v, "ldap_user_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ldap-user-cache"] = t
+			t, err := expandWebProxyGlobalLdapUserCache(d, v, "ldap_user_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ldap-user-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_fqdn"); ok {
+		if setArgNil {
+			obj["proxy-fqdn"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalProxyFqdn(d, v, "proxy_fqdn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-fqdn"] = t
+			t, err := expandWebProxyGlobalProxyFqdn(d, v, "proxy_fqdn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-fqdn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_request_length"); ok {
+		if setArgNil {
+			obj["max-request-length"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalMaxRequestLength(d, v, "max_request_length", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-request-length"] = t
+			t, err := expandWebProxyGlobalMaxRequestLength(d, v, "max_request_length", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-request-length"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_message_length"); ok {
+		if setArgNil {
+			obj["max-message-length"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalMaxMessageLength(d, v, "max_message_length", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-message-length"] = t
+			t, err := expandWebProxyGlobalMaxMessageLength(d, v, "max_message_length", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-message-length"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strict_web_check"); ok {
+		if setArgNil {
+			obj["strict-web-check"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalStrictWebCheck(d, v, "strict_web_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strict-web-check"] = t
+			t, err := expandWebProxyGlobalStrictWebCheck(d, v, "strict_web_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strict-web-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_proxy_auth"); ok {
+		if setArgNil {
+			obj["forward-proxy-auth"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalForwardProxyAuth(d, v, "forward_proxy_auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-proxy-auth"] = t
+			t, err := expandWebProxyGlobalForwardProxyAuth(d, v, "forward_proxy_auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-proxy-auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_non_http"); ok {
+		if setArgNil {
+			obj["tunnel-non-http"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalTunnelNonHttp(d, v, "tunnel_non_http", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-non-http"] = t
+			t, err := expandWebProxyGlobalTunnelNonHttp(d, v, "tunnel_non_http", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-non-http"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unknown_http_version"); ok {
+		if setArgNil {
+			obj["unknown-http-version"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalUnknownHttpVersion(d, v, "unknown_http_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unknown-http-version"] = t
+			t, err := expandWebProxyGlobalUnknownHttpVersion(d, v, "unknown_http_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unknown-http-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_server_affinity_timeout"); ok {
+		if setArgNil {
+			obj["forward-server-affinity-timeout"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalForwardServerAffinityTimeout(d, v, "forward_server_affinity_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-server-affinity-timeout"] = t
+			t, err := expandWebProxyGlobalForwardServerAffinityTimeout(d, v, "forward_server_affinity_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-server-affinity-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_waf_body_cache_length"); ok {
+		if setArgNil {
+			obj["max-waf-body-cache-length"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalMaxWafBodyCacheLength(d, v, "max_waf_body_cache_length", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-waf-body-cache-length"] = t
+			t, err := expandWebProxyGlobalMaxWafBodyCacheLength(d, v, "max_waf_body_cache_length", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-waf-body-cache-length"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("webproxy_profile"); ok {
+		if setArgNil {
+			obj["webproxy-profile"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalWebproxyProfile(d, v, "webproxy_profile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webproxy-profile"] = t
+			t, err := expandWebProxyGlobalWebproxyProfile(d, v, "webproxy_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webproxy-profile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("learn_client_ip"); ok {
+		if setArgNil {
+			obj["learn-client-ip"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalLearnClientIp(d, v, "learn_client_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["learn-client-ip"] = t
+			t, err := expandWebProxyGlobalLearnClientIp(d, v, "learn_client_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["learn-client-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("learn_client_ip_from_header"); ok {
+		if setArgNil {
+			obj["learn-client-ip-from-header"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalLearnClientIpFromHeader(d, v, "learn_client_ip_from_header", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["learn-client-ip-from-header"] = t
+			t, err := expandWebProxyGlobalLearnClientIpFromHeader(d, v, "learn_client_ip_from_header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["learn-client-ip-from-header"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("learn_client_ip_srcaddr"); ok {
+		if setArgNil {
+			obj["learn-client-ip-srcaddr"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWebProxyGlobalLearnClientIpSrcaddr(d, v, "learn_client_ip_srcaddr", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["learn-client-ip-srcaddr"] = t
+			t, err := expandWebProxyGlobalLearnClientIpSrcaddr(d, v, "learn_client_ip_srcaddr", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["learn-client-ip-srcaddr"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("learn_client_ip_srcaddr6"); ok {
+		if setArgNil {
+			obj["learn-client-ip-srcaddr6"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWebProxyGlobalLearnClientIpSrcaddr6(d, v, "learn_client_ip_srcaddr6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["learn-client-ip-srcaddr6"] = t
+			t, err := expandWebProxyGlobalLearnClientIpSrcaddr6(d, v, "learn_client_ip_srcaddr6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["learn-client-ip-srcaddr6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("src_affinity_exempt_addr"); ok {
+		if setArgNil {
+			obj["src-affinity-exempt-addr"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalSrcAffinityExemptAddr(d, v, "src_affinity_exempt_addr", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["src-affinity-exempt-addr"] = t
+			t, err := expandWebProxyGlobalSrcAffinityExemptAddr(d, v, "src_affinity_exempt_addr", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["src-affinity-exempt-addr"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("src_affinity_exempt_addr6"); ok {
+		if setArgNil {
+			obj["src-affinity-exempt-addr6"] = nil
+		} else {
 
-		t, err := expandWebProxyGlobalSrcAffinityExemptAddr6(d, v, "src_affinity_exempt_addr6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["src-affinity-exempt-addr6"] = t
+			t, err := expandWebProxyGlobalSrcAffinityExemptAddr6(d, v, "src_affinity_exempt_addr6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["src-affinity-exempt-addr6"] = t
+			}
 		}
 	}
 

@@ -179,7 +179,7 @@ func resourceSwitchControllerGlobalUpdate(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	obj, err := getObjectSwitchControllerGlobal(d, c.Fv)
+	obj, err := getObjectSwitchControllerGlobal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerGlobal resource while getting object: %v", err)
 	}
@@ -201,7 +201,6 @@ func resourceSwitchControllerGlobalUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSwitchControllerGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -213,9 +212,15 @@ func resourceSwitchControllerGlobalDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteSwitchControllerGlobal(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerGlobal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerGlobal resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerGlobal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerGlobal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerGlobal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -697,196 +702,272 @@ func expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d *schema.Reso
 	return v, nil
 }
 
-func getObjectSwitchControllerGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mac_aging_interval"); ok {
+		if setArgNil {
+			obj["mac-aging-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalMacAgingInterval(d, v, "mac_aging_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-aging-interval"] = t
+			t, err := expandSwitchControllerGlobalMacAgingInterval(d, v, "mac_aging_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-aging-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_multiple_interfaces"); ok {
+		if setArgNil {
+			obj["allow-multiple-interfaces"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalAllowMultipleInterfaces(d, v, "allow_multiple_interfaces", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-multiple-interfaces"] = t
+			t, err := expandSwitchControllerGlobalAllowMultipleInterfaces(d, v, "allow_multiple_interfaces", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-multiple-interfaces"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("https_image_push"); ok {
+		if setArgNil {
+			obj["https-image-push"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalHttpsImagePush(d, v, "https_image_push", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["https-image-push"] = t
+			t, err := expandSwitchControllerGlobalHttpsImagePush(d, v, "https_image_push", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["https-image-push"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vlan_all_mode"); ok {
+		if setArgNil {
+			obj["vlan-all-mode"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalVlanAllMode(d, v, "vlan_all_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vlan-all-mode"] = t
+			t, err := expandSwitchControllerGlobalVlanAllMode(d, v, "vlan_all_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vlan-all-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vlan_optimization"); ok {
+		if setArgNil {
+			obj["vlan-optimization"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalVlanOptimization(d, v, "vlan_optimization", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vlan-optimization"] = t
+			t, err := expandSwitchControllerGlobalVlanOptimization(d, v, "vlan_optimization", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vlan-optimization"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("disable_discovery"); ok {
+		if setArgNil {
+			obj["disable-discovery"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerGlobalDisableDiscovery(d, v, "disable_discovery", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["disable-discovery"] = t
+			t, err := expandSwitchControllerGlobalDisableDiscovery(d, v, "disable_discovery", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["disable-discovery"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("mac_retention_period"); ok {
+		if setArgNil {
+			obj["mac-retention-period"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalMacRetentionPeriod(d, v, "mac_retention_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-retention-period"] = t
+			t, err := expandSwitchControllerGlobalMacRetentionPeriod(d, v, "mac_retention_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-retention-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_virtual_switch_vlan"); ok {
+		if setArgNil {
+			obj["default-virtual-switch-vlan"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalDefaultVirtualSwitchVlan(d, v, "default_virtual_switch_vlan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-virtual-switch-vlan"] = t
+			t, err := expandSwitchControllerGlobalDefaultVirtualSwitchVlan(d, v, "default_virtual_switch_vlan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-virtual-switch-vlan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_server_access_list"); ok {
+		if setArgNil {
+			obj["dhcp-server-access-list"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalDhcpServerAccessList(d, v, "dhcp_server_access_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-server-access-list"] = t
+			t, err := expandSwitchControllerGlobalDhcpServerAccessList(d, v, "dhcp_server_access_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-server-access-list"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_mac_limit_violations"); ok {
+		if setArgNil {
+			obj["log-mac-limit-violations"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalLogMacLimitViolations(d, v, "log_mac_limit_violations", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-mac-limit-violations"] = t
+			t, err := expandSwitchControllerGlobalLogMacLimitViolations(d, v, "log_mac_limit_violations", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-mac-limit-violations"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("mac_violation_timer"); ok {
+		if setArgNil {
+			obj["mac-violation-timer"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalMacViolationTimer(d, v, "mac_violation_timer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-violation-timer"] = t
+			t, err := expandSwitchControllerGlobalMacViolationTimer(d, v, "mac_violation_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-violation-timer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sn_dns_resolution"); ok {
+		if setArgNil {
+			obj["sn-dns-resolution"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalSnDnsResolution(d, v, "sn_dns_resolution", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sn-dns-resolution"] = t
+			t, err := expandSwitchControllerGlobalSnDnsResolution(d, v, "sn_dns_resolution", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sn-dns-resolution"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mac_event_logging"); ok {
+		if setArgNil {
+			obj["mac-event-logging"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalMacEventLogging(d, v, "mac_event_logging", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-event-logging"] = t
+			t, err := expandSwitchControllerGlobalMacEventLogging(d, v, "mac_event_logging", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-event-logging"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bounce_quarantined_link"); ok {
+		if setArgNil {
+			obj["bounce-quarantined-link"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalBounceQuarantinedLink(d, v, "bounce_quarantined_link", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bounce-quarantined-link"] = t
+			t, err := expandSwitchControllerGlobalBounceQuarantinedLink(d, v, "bounce_quarantined_link", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bounce-quarantined-link"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("quarantine_mode"); ok {
+		if setArgNil {
+			obj["quarantine-mode"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalQuarantineMode(d, v, "quarantine_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["quarantine-mode"] = t
+			t, err := expandSwitchControllerGlobalQuarantineMode(d, v, "quarantine_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["quarantine-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_user_device"); ok {
+		if setArgNil {
+			obj["update-user-device"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalUpdateUserDevice(d, v, "update_user_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-user-device"] = t
+			t, err := expandSwitchControllerGlobalUpdateUserDevice(d, v, "update_user_device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-user-device"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("custom_command"); ok {
+		if setArgNil {
+			obj["custom-command"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerGlobalCustomCommand(d, v, "custom_command", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["custom-command"] = t
+			t, err := expandSwitchControllerGlobalCustomCommand(d, v, "custom_command", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["custom-command"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fips_enforce"); ok {
+		if setArgNil {
+			obj["fips-enforce"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalFipsEnforce(d, v, "fips_enforce", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fips-enforce"] = t
+			t, err := expandSwitchControllerGlobalFipsEnforce(d, v, "fips_enforce", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fips-enforce"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("firmware_provision_on_authorization"); ok {
+		if setArgNil {
+			obj["firmware-provision-on-authorization"] = nil
+		} else {
 
-		t, err := expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firmware-provision-on-authorization"] = t
+			t, err := expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firmware-provision-on-authorization"] = t
+			}
 		}
 	}
 

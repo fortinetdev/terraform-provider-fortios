@@ -327,7 +327,7 @@ func resourceSystemFortiguardUpdate(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	obj, err := getObjectSystemFortiguard(d, c.Fv)
+	obj, err := getObjectSystemFortiguard(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortiguard resource while getting object: %v", err)
 	}
@@ -349,7 +349,6 @@ func resourceSystemFortiguardUpdate(d *schema.ResourceData, m interface{}) error
 
 func resourceSystemFortiguardDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -361,9 +360,15 @@ func resourceSystemFortiguardDelete(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	err := c.DeleteSystemFortiguard(mkey, vdomparam)
+	obj, err := getObjectSystemFortiguard(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFortiguard resource: %v", err)
+		return fmt.Errorf("Error updating SystemFortiguard resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFortiguard(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFortiguard resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1137,526 +1142,734 @@ func expandSystemFortiguardInterface(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectSystemFortiguard(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("protocol"); ok {
+		if setArgNil {
+			obj["protocol"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardProtocol(d, v, "protocol", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["protocol"] = t
+			t, err := expandSystemFortiguardProtocol(d, v, "protocol", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["protocol"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardPort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandSystemFortiguardPort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("service_account_id"); ok {
+		if setArgNil {
+			obj["service-account-id"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardServiceAccountId(d, v, "service_account_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service-account-id"] = t
+			t, err := expandSystemFortiguardServiceAccountId(d, v, "service_account_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service-account-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("load_balance_servers"); ok {
+		if setArgNil {
+			obj["load-balance-servers"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardLoadBalanceServers(d, v, "load_balance_servers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["load-balance-servers"] = t
+			t, err := expandSystemFortiguardLoadBalanceServers(d, v, "load_balance_servers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["load-balance-servers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_join_forticloud"); ok {
+		if setArgNil {
+			obj["auto-join-forticloud"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAutoJoinForticloud(d, v, "auto_join_forticloud", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-join-forticloud"] = t
+			t, err := expandSystemFortiguardAutoJoinForticloud(d, v, "auto_join_forticloud", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-join-forticloud"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_server_location"); ok {
+		if setArgNil {
+			obj["update-server-location"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardUpdateServerLocation(d, v, "update_server_location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-server-location"] = t
+			t, err := expandSystemFortiguardUpdateServerLocation(d, v, "update_server_location", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-server-location"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sandbox_region"); ok {
+		if setArgNil {
+			obj["sandbox-region"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardSandboxRegion(d, v, "sandbox_region", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sandbox-region"] = t
+			t, err := expandSystemFortiguardSandboxRegion(d, v, "sandbox_region", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sandbox-region"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_ffdb"); ok {
+		if setArgNil {
+			obj["update-ffdb"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardUpdateFfdb(d, v, "update_ffdb", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-ffdb"] = t
+			t, err := expandSystemFortiguardUpdateFfdb(d, v, "update_ffdb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-ffdb"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_uwdb"); ok {
+		if setArgNil {
+			obj["update-uwdb"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardUpdateUwdb(d, v, "update_uwdb", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-uwdb"] = t
+			t, err := expandSystemFortiguardUpdateUwdb(d, v, "update_uwdb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-uwdb"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_extdb"); ok {
+		if setArgNil {
+			obj["update-extdb"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardUpdateExtdb(d, v, "update_extdb", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-extdb"] = t
+			t, err := expandSystemFortiguardUpdateExtdb(d, v, "update_extdb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-extdb"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("update_build_proxy"); ok {
+		if setArgNil {
+			obj["update-build-proxy"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardUpdateBuildProxy(d, v, "update_build_proxy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["update-build-proxy"] = t
+			t, err := expandSystemFortiguardUpdateBuildProxy(d, v, "update_build_proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-build-proxy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("persistent_connection"); ok {
+		if setArgNil {
+			obj["persistent-connection"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardPersistentConnection(d, v, "persistent_connection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["persistent-connection"] = t
+			t, err := expandSystemFortiguardPersistentConnection(d, v, "persistent_connection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["persistent-connection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiguard_anycast"); ok {
+		if setArgNil {
+			obj["fortiguard-anycast"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardFortiguardAnycast(d, v, "fortiguard_anycast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiguard-anycast"] = t
+			t, err := expandSystemFortiguardFortiguardAnycast(d, v, "fortiguard_anycast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiguard-anycast"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiguard_anycast_source"); ok {
+		if setArgNil {
+			obj["fortiguard-anycast-source"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardFortiguardAnycastSource(d, v, "fortiguard_anycast_source", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiguard-anycast-source"] = t
+			t, err := expandSystemFortiguardFortiguardAnycastSource(d, v, "fortiguard_anycast_source", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiguard-anycast-source"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("antispam_force_off"); ok {
+		if setArgNil {
+			obj["antispam-force-off"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamForceOff(d, v, "antispam_force_off", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-force-off"] = t
+			t, err := expandSystemFortiguardAntispamForceOff(d, v, "antispam_force_off", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-force-off"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("antispam_cache"); ok {
+		if setArgNil {
+			obj["antispam-cache"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamCache(d, v, "antispam_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-cache"] = t
+			t, err := expandSystemFortiguardAntispamCache(d, v, "antispam_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("antispam_cache_ttl"); ok {
+		if setArgNil {
+			obj["antispam-cache-ttl"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamCacheTtl(d, v, "antispam_cache_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-cache-ttl"] = t
+			t, err := expandSystemFortiguardAntispamCacheTtl(d, v, "antispam_cache_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-cache-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("antispam_cache_mpercent"); ok {
+		if setArgNil {
+			obj["antispam-cache-mpercent"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamCacheMpercent(d, v, "antispam_cache_mpercent", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-cache-mpercent"] = t
+			t, err := expandSystemFortiguardAntispamCacheMpercent(d, v, "antispam_cache_mpercent", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-cache-mpercent"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("antispam_license"); ok {
+		if setArgNil {
+			obj["antispam-license"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamLicense(d, v, "antispam_license", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-license"] = t
+			t, err := expandSystemFortiguardAntispamLicense(d, v, "antispam_license", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-license"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("antispam_expiration"); ok {
+		if setArgNil {
+			obj["antispam-expiration"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamExpiration(d, v, "antispam_expiration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-expiration"] = t
+			t, err := expandSystemFortiguardAntispamExpiration(d, v, "antispam_expiration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-expiration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("antispam_timeout"); ok {
+		if setArgNil {
+			obj["antispam-timeout"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAntispamTimeout(d, v, "antispam_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["antispam-timeout"] = t
+			t, err := expandSystemFortiguardAntispamTimeout(d, v, "antispam_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outbreak_prevention_force_off"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-force-off"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionForceOff(d, v, "outbreak_prevention_force_off", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-force-off"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionForceOff(d, v, "outbreak_prevention_force_off", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-force-off"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outbreak_prevention_cache"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-cache"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionCache(d, v, "outbreak_prevention_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-cache"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionCache(d, v, "outbreak_prevention_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outbreak_prevention_cache_ttl"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-cache-ttl"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionCacheTtl(d, v, "outbreak_prevention_cache_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-cache-ttl"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionCacheTtl(d, v, "outbreak_prevention_cache_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-cache-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outbreak_prevention_cache_mpercent"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-cache-mpercent"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionCacheMpercent(d, v, "outbreak_prevention_cache_mpercent", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-cache-mpercent"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionCacheMpercent(d, v, "outbreak_prevention_cache_mpercent", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-cache-mpercent"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("outbreak_prevention_license"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-license"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionLicense(d, v, "outbreak_prevention_license", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-license"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionLicense(d, v, "outbreak_prevention_license", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-license"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("outbreak_prevention_expiration"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-expiration"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionExpiration(d, v, "outbreak_prevention_expiration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-expiration"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionExpiration(d, v, "outbreak_prevention_expiration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-expiration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outbreak_prevention_timeout"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-timeout"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardOutbreakPreventionTimeout(d, v, "outbreak_prevention_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outbreak-prevention-timeout"] = t
+			t, err := expandSystemFortiguardOutbreakPreventionTimeout(d, v, "outbreak_prevention_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("webfilter_force_off"); ok {
+		if setArgNil {
+			obj["webfilter-force-off"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardWebfilterForceOff(d, v, "webfilter_force_off", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webfilter-force-off"] = t
+			t, err := expandSystemFortiguardWebfilterForceOff(d, v, "webfilter_force_off", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webfilter-force-off"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("webfilter_cache"); ok {
+		if setArgNil {
+			obj["webfilter-cache"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardWebfilterCache(d, v, "webfilter_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webfilter-cache"] = t
+			t, err := expandSystemFortiguardWebfilterCache(d, v, "webfilter_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webfilter-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("webfilter_cache_ttl"); ok {
+		if setArgNil {
+			obj["webfilter-cache-ttl"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardWebfilterCacheTtl(d, v, "webfilter_cache_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webfilter-cache-ttl"] = t
+			t, err := expandSystemFortiguardWebfilterCacheTtl(d, v, "webfilter_cache_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webfilter-cache-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("webfilter_license"); ok {
+		if setArgNil {
+			obj["webfilter-license"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardWebfilterLicense(d, v, "webfilter_license", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webfilter-license"] = t
+			t, err := expandSystemFortiguardWebfilterLicense(d, v, "webfilter_license", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webfilter-license"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("webfilter_expiration"); ok {
+		if setArgNil {
+			obj["webfilter-expiration"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardWebfilterExpiration(d, v, "webfilter_expiration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webfilter-expiration"] = t
+			t, err := expandSystemFortiguardWebfilterExpiration(d, v, "webfilter_expiration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webfilter-expiration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("webfilter_timeout"); ok {
+		if setArgNil {
+			obj["webfilter-timeout"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardWebfilterTimeout(d, v, "webfilter_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["webfilter-timeout"] = t
+			t, err := expandSystemFortiguardWebfilterTimeout(d, v, "webfilter_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webfilter-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sdns_server_ip"); ok {
+		if setArgNil {
+			obj["sdns-server-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardSdnsServerIp(d, v, "sdns_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sdns-server-ip"] = t
+			t, err := expandSystemFortiguardSdnsServerIp(d, v, "sdns_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sdns-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sdns_server_port"); ok {
+		if setArgNil {
+			obj["sdns-server-port"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardSdnsServerPort(d, v, "sdns_server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sdns-server-port"] = t
+			t, err := expandSystemFortiguardSdnsServerPort(d, v, "sdns_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sdns-server-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anycast_sdns_server_ip"); ok {
+		if setArgNil {
+			obj["anycast-sdns-server-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAnycastSdnsServerIp(d, v, "anycast_sdns_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anycast-sdns-server-ip"] = t
+			t, err := expandSystemFortiguardAnycastSdnsServerIp(d, v, "anycast_sdns_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anycast-sdns-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anycast_sdns_server_port"); ok {
+		if setArgNil {
+			obj["anycast-sdns-server-port"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardAnycastSdnsServerPort(d, v, "anycast_sdns_server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anycast-sdns-server-port"] = t
+			t, err := expandSystemFortiguardAnycastSdnsServerPort(d, v, "anycast_sdns_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anycast-sdns-server-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sdns_options"); ok {
+		if setArgNil {
+			obj["sdns-options"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardSdnsOptions(d, v, "sdns_options", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sdns-options"] = t
+			t, err := expandSystemFortiguardSdnsOptions(d, v, "sdns_options", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sdns-options"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemFortiguardSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
+		if setArgNil {
+			obj["source-ip6"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardSourceIp6(d, v, "source_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip6"] = t
+			t, err := expandSystemFortiguardSourceIp6(d, v, "source_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_server_ip"); ok {
+		if setArgNil {
+			obj["proxy-server-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardProxyServerIp(d, v, "proxy_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-server-ip"] = t
+			t, err := expandSystemFortiguardProxyServerIp(d, v, "proxy_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("proxy_server_port"); ok {
+		if setArgNil {
+			obj["proxy-server-port"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardProxyServerPort(d, v, "proxy_server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-server-port"] = t
+			t, err := expandSystemFortiguardProxyServerPort(d, v, "proxy_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-server-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_username"); ok {
+		if setArgNil {
+			obj["proxy-username"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardProxyUsername(d, v, "proxy_username", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-username"] = t
+			t, err := expandSystemFortiguardProxyUsername(d, v, "proxy_username", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-username"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("proxy_password"); ok {
+		if setArgNil {
+			obj["proxy-password"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardProxyPassword(d, v, "proxy_password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["proxy-password"] = t
+			t, err := expandSystemFortiguardProxyPassword(d, v, "proxy_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("videofilter_license"); ok {
+		if setArgNil {
+			obj["videofilter-license"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardVideofilterLicense(d, v, "videofilter_license", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["videofilter-license"] = t
+			t, err := expandSystemFortiguardVideofilterLicense(d, v, "videofilter_license", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["videofilter-license"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("videofilter_expiration"); ok {
+		if setArgNil {
+			obj["videofilter-expiration"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardVideofilterExpiration(d, v, "videofilter_expiration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["videofilter-expiration"] = t
+			t, err := expandSystemFortiguardVideofilterExpiration(d, v, "videofilter_expiration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["videofilter-expiration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ddns_server_ip"); ok {
+		if setArgNil {
+			obj["ddns-server-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardDdnsServerIp(d, v, "ddns_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ddns-server-ip"] = t
+			t, err := expandSystemFortiguardDdnsServerIp(d, v, "ddns_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ddns-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ddns_server_ip6"); ok {
+		if setArgNil {
+			obj["ddns-server-ip6"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardDdnsServerIp6(d, v, "ddns_server_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ddns-server-ip6"] = t
+			t, err := expandSystemFortiguardDdnsServerIp6(d, v, "ddns_server_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ddns-server-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ddns_server_port"); ok {
+		if setArgNil {
+			obj["ddns-server-port"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardDdnsServerPort(d, v, "ddns_server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ddns-server-port"] = t
+			t, err := expandSystemFortiguardDdnsServerPort(d, v, "ddns_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ddns-server-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemFortiguardInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemFortiguardInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemFortiguardInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

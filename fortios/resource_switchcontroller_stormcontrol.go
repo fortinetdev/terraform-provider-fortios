@@ -73,7 +73,7 @@ func resourceSwitchControllerStormControlUpdate(d *schema.ResourceData, m interf
 		}
 	}
 
-	obj, err := getObjectSwitchControllerStormControl(d, c.Fv)
+	obj, err := getObjectSwitchControllerStormControl(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStormControl resource while getting object: %v", err)
 	}
@@ -95,7 +95,6 @@ func resourceSwitchControllerStormControlUpdate(d *schema.ResourceData, m interf
 
 func resourceSwitchControllerStormControlDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -107,9 +106,15 @@ func resourceSwitchControllerStormControlDelete(d *schema.ResourceData, m interf
 		}
 	}
 
-	err := c.DeleteSwitchControllerStormControl(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerStormControl(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerStormControl resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerStormControl resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerStormControl(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerStormControl resource: %v", err)
 	}
 
 	d.SetId("")
@@ -217,46 +222,62 @@ func expandSwitchControllerStormControlBroadcast(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectSwitchControllerStormControl(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerStormControl(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("rate"); ok {
+		if setArgNil {
+			obj["rate"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStormControlRate(d, v, "rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rate"] = t
+			t, err := expandSwitchControllerStormControlRate(d, v, "rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unknown_unicast"); ok {
+		if setArgNil {
+			obj["unknown-unicast"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStormControlUnknownUnicast(d, v, "unknown_unicast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unknown-unicast"] = t
+			t, err := expandSwitchControllerStormControlUnknownUnicast(d, v, "unknown_unicast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unknown-unicast"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unknown_multicast"); ok {
+		if setArgNil {
+			obj["unknown-multicast"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStormControlUnknownMulticast(d, v, "unknown_multicast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unknown-multicast"] = t
+			t, err := expandSwitchControllerStormControlUnknownMulticast(d, v, "unknown_multicast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unknown-multicast"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("broadcast"); ok {
+		if setArgNil {
+			obj["broadcast"] = nil
+		} else {
 
-		t, err := expandSwitchControllerStormControlBroadcast(d, v, "broadcast", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["broadcast"] = t
+			t, err := expandSwitchControllerStormControlBroadcast(d, v, "broadcast", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["broadcast"] = t
+			}
 		}
 	}
 

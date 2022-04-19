@@ -80,7 +80,7 @@ func resourceDlpSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectDlpSettings(d, c.Fv)
+	obj, err := getObjectDlpSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSettings resource while getting object: %v", err)
 	}
@@ -102,7 +102,6 @@ func resourceDlpSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceDlpSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -114,9 +113,15 @@ func resourceDlpSettingsDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteDlpSettings(mkey, vdomparam)
+	obj, err := getObjectDlpSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting DlpSettings resource: %v", err)
+		return fmt.Errorf("Error updating DlpSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateDlpSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing DlpSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -238,56 +243,76 @@ func expandDlpSettingsChunkSize(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-func getObjectDlpSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("storage_device"); ok {
+		if setArgNil {
+			obj["storage-device"] = nil
+		} else {
 
-		t, err := expandDlpSettingsStorageDevice(d, v, "storage_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["storage-device"] = t
+			t, err := expandDlpSettingsStorageDevice(d, v, "storage_device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["storage-device"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("size"); ok {
+		if setArgNil {
+			obj["size"] = nil
+		} else {
 
-		t, err := expandDlpSettingsSize(d, v, "size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["size"] = t
+			t, err := expandDlpSettingsSize(d, v, "size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("db_mode"); ok {
+		if setArgNil {
+			obj["db-mode"] = nil
+		} else {
 
-		t, err := expandDlpSettingsDbMode(d, v, "db_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["db-mode"] = t
+			t, err := expandDlpSettingsDbMode(d, v, "db_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["db-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_mem_percent"); ok {
+		if setArgNil {
+			obj["cache-mem-percent"] = nil
+		} else {
 
-		t, err := expandDlpSettingsCacheMemPercent(d, v, "cache_mem_percent", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-mem-percent"] = t
+			t, err := expandDlpSettingsCacheMemPercent(d, v, "cache_mem_percent", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-mem-percent"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("chunk_size"); ok {
+		if setArgNil {
+			obj["chunk-size"] = nil
+		} else {
 
-		t, err := expandDlpSettingsChunkSize(d, v, "chunk_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["chunk-size"] = t
+			t, err := expandDlpSettingsChunkSize(d, v, "chunk_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["chunk-size"] = t
+			}
 		}
 	}
 

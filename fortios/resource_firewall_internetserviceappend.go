@@ -64,7 +64,7 @@ func resourceFirewallInternetServiceAppendUpdate(d *schema.ResourceData, m inter
 		}
 	}
 
-	obj, err := getObjectFirewallInternetServiceAppend(d, c.Fv)
+	obj, err := getObjectFirewallInternetServiceAppend(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceAppend resource while getting object: %v", err)
 	}
@@ -86,7 +86,6 @@ func resourceFirewallInternetServiceAppendUpdate(d *schema.ResourceData, m inter
 
 func resourceFirewallInternetServiceAppendDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -98,9 +97,15 @@ func resourceFirewallInternetServiceAppendDelete(d *schema.ResourceData, m inter
 		}
 	}
 
-	err := c.DeleteFirewallInternetServiceAppend(mkey, vdomparam)
+	obj, err := getObjectFirewallInternetServiceAppend(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FirewallInternetServiceAppend resource: %v", err)
+		return fmt.Errorf("Error updating FirewallInternetServiceAppend resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFirewallInternetServiceAppend(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FirewallInternetServiceAppend resource: %v", err)
 	}
 
 	d.SetId("")
@@ -180,26 +185,34 @@ func expandFirewallInternetServiceAppendAppendPort(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func getObjectFirewallInternetServiceAppend(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFirewallInternetServiceAppend(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("match_port"); ok {
+		if setArgNil {
+			obj["match-port"] = nil
+		} else {
 
-		t, err := expandFirewallInternetServiceAppendMatchPort(d, v, "match_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["match-port"] = t
+			t, err := expandFirewallInternetServiceAppendMatchPort(d, v, "match_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["match-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("append_port"); ok {
+		if setArgNil {
+			obj["append-port"] = nil
+		} else {
 
-		t, err := expandFirewallInternetServiceAppendAppendPort(d, v, "append_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["append-port"] = t
+			t, err := expandFirewallInternetServiceAppendAppendPort(d, v, "append_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["append-port"] = t
+			}
 		}
 	}
 

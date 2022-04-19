@@ -119,7 +119,7 @@ func resourceWebfilterFortiguardUpdate(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	obj, err := getObjectWebfilterFortiguard(d, c.Fv)
+	obj, err := getObjectWebfilterFortiguard(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFortiguard resource while getting object: %v", err)
 	}
@@ -141,7 +141,6 @@ func resourceWebfilterFortiguardUpdate(d *schema.ResourceData, m interface{}) er
 
 func resourceWebfilterFortiguardDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -153,9 +152,15 @@ func resourceWebfilterFortiguardDelete(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	err := c.DeleteWebfilterFortiguard(mkey, vdomparam)
+	obj, err := getObjectWebfilterFortiguard(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WebfilterFortiguard resource: %v", err)
+		return fmt.Errorf("Error updating WebfilterFortiguard resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWebfilterFortiguard(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WebfilterFortiguard resource: %v", err)
 	}
 
 	d.SetId("")
@@ -375,126 +380,174 @@ func expandWebfilterFortiguardOvrdAuthPort(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectWebfilterFortiguard(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("cache_mode"); ok {
+		if setArgNil {
+			obj["cache-mode"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardCacheMode(d, v, "cache_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-mode"] = t
+			t, err := expandWebfilterFortiguardCacheMode(d, v, "cache_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_prefix_match"); ok {
+		if setArgNil {
+			obj["cache-prefix-match"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardCachePrefixMatch(d, v, "cache_prefix_match", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-prefix-match"] = t
+			t, err := expandWebfilterFortiguardCachePrefixMatch(d, v, "cache_prefix_match", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-prefix-match"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_mem_percent"); ok {
+		if setArgNil {
+			obj["cache-mem-percent"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardCacheMemPercent(d, v, "cache_mem_percent", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-mem-percent"] = t
+			t, err := expandWebfilterFortiguardCacheMemPercent(d, v, "cache_mem_percent", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-mem-percent"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ovrd_auth_port_http"); ok {
+		if setArgNil {
+			obj["ovrd-auth-port-http"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardOvrdAuthPortHttp(d, v, "ovrd_auth_port_http", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ovrd-auth-port-http"] = t
+			t, err := expandWebfilterFortiguardOvrdAuthPortHttp(d, v, "ovrd_auth_port_http", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ovrd-auth-port-http"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ovrd_auth_port_https"); ok {
+		if setArgNil {
+			obj["ovrd-auth-port-https"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardOvrdAuthPortHttps(d, v, "ovrd_auth_port_https", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ovrd-auth-port-https"] = t
+			t, err := expandWebfilterFortiguardOvrdAuthPortHttps(d, v, "ovrd_auth_port_https", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ovrd-auth-port-https"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ovrd_auth_port_https_flow"); ok {
+		if setArgNil {
+			obj["ovrd-auth-port-https-flow"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardOvrdAuthPortHttpsFlow(d, v, "ovrd_auth_port_https_flow", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ovrd-auth-port-https-flow"] = t
+			t, err := expandWebfilterFortiguardOvrdAuthPortHttpsFlow(d, v, "ovrd_auth_port_https_flow", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ovrd-auth-port-https-flow"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ovrd_auth_port_warning"); ok {
+		if setArgNil {
+			obj["ovrd-auth-port-warning"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardOvrdAuthPortWarning(d, v, "ovrd_auth_port_warning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ovrd-auth-port-warning"] = t
+			t, err := expandWebfilterFortiguardOvrdAuthPortWarning(d, v, "ovrd_auth_port_warning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ovrd-auth-port-warning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ovrd_auth_https"); ok {
+		if setArgNil {
+			obj["ovrd-auth-https"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardOvrdAuthHttps(d, v, "ovrd_auth_https", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ovrd-auth-https"] = t
+			t, err := expandWebfilterFortiguardOvrdAuthHttps(d, v, "ovrd_auth_https", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ovrd-auth-https"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("warn_auth_https"); ok {
+		if setArgNil {
+			obj["warn-auth-https"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardWarnAuthHttps(d, v, "warn_auth_https", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["warn-auth-https"] = t
+			t, err := expandWebfilterFortiguardWarnAuthHttps(d, v, "warn_auth_https", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["warn-auth-https"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("close_ports"); ok {
+		if setArgNil {
+			obj["close-ports"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardClosePorts(d, v, "close_ports", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["close-ports"] = t
+			t, err := expandWebfilterFortiguardClosePorts(d, v, "close_ports", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["close-ports"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("request_packet_size_limit"); ok {
+		if setArgNil {
+			obj["request-packet-size-limit"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardRequestPacketSizeLimit(d, v, "request_packet_size_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["request-packet-size-limit"] = t
+			t, err := expandWebfilterFortiguardRequestPacketSizeLimit(d, v, "request_packet_size_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["request-packet-size-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ovrd_auth_port"); ok {
+		if setArgNil {
+			obj["ovrd-auth-port"] = nil
+		} else {
 
-		t, err := expandWebfilterFortiguardOvrdAuthPort(d, v, "ovrd_auth_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ovrd-auth-port"] = t
+			t, err := expandWebfilterFortiguardOvrdAuthPort(d, v, "ovrd_auth_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ovrd-auth-port"] = t
+			}
 		}
 	}
 

@@ -88,7 +88,7 @@ func resourceSystemFortimanagerUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectSystemFortimanager(d, c.Fv)
+	obj, err := getObjectSystemFortimanager(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortimanager resource while getting object: %v", err)
 	}
@@ -110,7 +110,6 @@ func resourceSystemFortimanagerUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceSystemFortimanagerDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -122,9 +121,15 @@ func resourceSystemFortimanagerDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteSystemFortimanager(mkey, vdomparam)
+	obj, err := getObjectSystemFortimanager(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFortimanager resource: %v", err)
+		return fmt.Errorf("Error updating SystemFortimanager resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFortimanager(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFortimanager resource: %v", err)
 	}
 
 	d.SetId("")
@@ -274,76 +279,104 @@ func expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d *schema.Resource
 	return v, nil
 }
 
-func getObjectSystemFortimanager(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("ip"); ok {
+		if setArgNil {
+			obj["ip"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerIp(d, v, "ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip"] = t
+			t, err := expandSystemFortimanagerIp(d, v, "ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
+		if setArgNil {
+			obj["vdom"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerVdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
+			t, err := expandSystemFortimanagerVdom(d, v, "vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec"); ok {
+		if setArgNil {
+			obj["ipsec"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerIpsec(d, v, "ipsec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec"] = t
+			t, err := expandSystemFortimanagerIpsec(d, v, "ipsec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("central_management"); ok {
+		if setArgNil {
+			obj["central-management"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerCentralManagement(d, v, "central_management", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["central-management"] = t
+			t, err := expandSystemFortimanagerCentralManagement(d, v, "central_management", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["central-management"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("central_mgmt_auto_backup"); ok {
+		if setArgNil {
+			obj["central-mgmt-auto-backup"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerCentralMgmtAutoBackup(d, v, "central_mgmt_auto_backup", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["central-mgmt-auto-backup"] = t
+			t, err := expandSystemFortimanagerCentralMgmtAutoBackup(d, v, "central_mgmt_auto_backup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["central-mgmt-auto-backup"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("central_mgmt_schedule_config_restore"); ok {
+		if setArgNil {
+			obj["central-mgmt-schedule-config-restore"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d, v, "central_mgmt_schedule_config_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["central-mgmt-schedule-config-restore"] = t
+			t, err := expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d, v, "central_mgmt_schedule_config_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["central-mgmt-schedule-config-restore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("central_mgmt_schedule_script_restore"); ok {
+		if setArgNil {
+			obj["central-mgmt-schedule-script-restore"] = nil
+		} else {
 
-		t, err := expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d, v, "central_mgmt_schedule_script_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["central-mgmt-schedule-script-restore"] = t
+			t, err := expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d, v, "central_mgmt_schedule_script_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["central-mgmt-schedule-script-restore"] = t
+			}
 		}
 	}
 

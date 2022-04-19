@@ -67,7 +67,7 @@ func resourceSystemIpamUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemIpam(d, c.Fv)
+	obj, err := getObjectSystemIpam(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpam resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceSystemIpamUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemIpamDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceSystemIpamDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemIpam(mkey, vdomparam)
+	obj, err := getObjectSystemIpam(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemIpam resource: %v", err)
+		return fmt.Errorf("Error updating SystemIpam resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemIpam(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemIpam resource: %v", err)
 	}
 
 	d.SetId("")
@@ -204,36 +209,48 @@ func expandSystemIpamPoolSubnet(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-func getObjectSystemIpam(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemIpamStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemIpamStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
+		if setArgNil {
+			obj["server-type"] = nil
+		} else {
 
-		t, err := expandSystemIpamServerType(d, v, "server_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-type"] = t
+			t, err := expandSystemIpamServerType(d, v, "server_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pool_subnet"); ok {
+		if setArgNil {
+			obj["pool-subnet"] = nil
+		} else {
 
-		t, err := expandSystemIpamPoolSubnet(d, v, "pool_subnet", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pool-subnet"] = t
+			t, err := expandSystemIpamPoolSubnet(d, v, "pool_subnet", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pool-subnet"] = t
+			}
 		}
 	}
 

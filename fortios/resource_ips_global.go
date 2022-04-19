@@ -181,7 +181,7 @@ func resourceIpsGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectIpsGlobal(d, c.Fv)
+	obj, err := getObjectIpsGlobal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsGlobal resource while getting object: %v", err)
 	}
@@ -203,7 +203,6 @@ func resourceIpsGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceIpsGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -215,9 +214,15 @@ func resourceIpsGlobalDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteIpsGlobal(mkey, vdomparam)
+	obj, err := getObjectIpsGlobal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting IpsGlobal resource: %v", err)
+		return fmt.Errorf("Error updating IpsGlobal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateIpsGlobal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing IpsGlobal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -600,7 +605,7 @@ func expandIpsGlobalNgfwMaxScanRange(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -612,28 +617,48 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "interface_select_method"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["interface-select-method"] = nil
+		} else {
 
-		result["interface-select-method"], _ = expandIpsGlobalTlsActiveProbeInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+			result["interface-select-method"], _ = expandIpsGlobalTlsActiveProbeInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "interface"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["interface"] = nil
+		} else {
 
-		result["interface"], _ = expandIpsGlobalTlsActiveProbeInterface(d, i["interface"], pre_append, sv)
+			result["interface"], _ = expandIpsGlobalTlsActiveProbeInterface(d, i["interface"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "vdom"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["vdom"] = nil
+		} else {
 
-		result["vdom"], _ = expandIpsGlobalTlsActiveProbeVdom(d, i["vdom"], pre_append, sv)
+			result["vdom"], _ = expandIpsGlobalTlsActiveProbeVdom(d, i["vdom"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "source_ip"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["source-ip"] = nil
+		} else {
 
-		result["source-ip"], _ = expandIpsGlobalTlsActiveProbeSourceIp(d, i["source_ip"], pre_append, sv)
+			result["source-ip"], _ = expandIpsGlobalTlsActiveProbeSourceIp(d, i["source_ip"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "source_ip6"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["source-ip6"] = nil
+		} else {
 
-		result["source-ip6"], _ = expandIpsGlobalTlsActiveProbeSourceIp6(d, i["source_ip6"], pre_append, sv)
+			result["source-ip6"], _ = expandIpsGlobalTlsActiveProbeSourceIp6(d, i["source_ip6"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -659,192 +684,264 @@ func expandIpsGlobalTlsActiveProbeSourceIp6(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectIpsGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fail_open"); ok {
+		if setArgNil {
+			obj["fail-open"] = nil
+		} else {
 
-		t, err := expandIpsGlobalFailOpen(d, v, "fail_open", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fail-open"] = t
+			t, err := expandIpsGlobalFailOpen(d, v, "fail_open", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fail-open"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("database"); ok {
+		if setArgNil {
+			obj["database"] = nil
+		} else {
 
-		t, err := expandIpsGlobalDatabase(d, v, "database", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["database"] = t
+			t, err := expandIpsGlobalDatabase(d, v, "database", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["database"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("traffic_submit"); ok {
+		if setArgNil {
+			obj["traffic-submit"] = nil
+		} else {
 
-		t, err := expandIpsGlobalTrafficSubmit(d, v, "traffic_submit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["traffic-submit"] = t
+			t, err := expandIpsGlobalTrafficSubmit(d, v, "traffic_submit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["traffic-submit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anomaly_mode"); ok {
+		if setArgNil {
+			obj["anomaly-mode"] = nil
+		} else {
 
-		t, err := expandIpsGlobalAnomalyMode(d, v, "anomaly_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anomaly-mode"] = t
+			t, err := expandIpsGlobalAnomalyMode(d, v, "anomaly_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anomaly-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_limit_mode"); ok {
+		if setArgNil {
+			obj["session-limit-mode"] = nil
+		} else {
 
-		t, err := expandIpsGlobalSessionLimitMode(d, v, "session_limit_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-limit-mode"] = t
+			t, err := expandIpsGlobalSessionLimitMode(d, v, "session_limit_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-limit-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("intelligent_mode"); ok {
+		if setArgNil {
+			obj["intelligent-mode"] = nil
+		} else {
 
-		t, err := expandIpsGlobalIntelligentMode(d, v, "intelligent_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["intelligent-mode"] = t
+			t, err := expandIpsGlobalIntelligentMode(d, v, "intelligent_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["intelligent-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("socket_size"); ok {
+		if setArgNil {
+			obj["socket-size"] = nil
+		} else {
 
-		t, err := expandIpsGlobalSocketSize(d, v, "socket_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["socket-size"] = t
+			t, err := expandIpsGlobalSocketSize(d, v, "socket_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["socket-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("engine_count"); ok {
+		if setArgNil {
+			obj["engine-count"] = nil
+		} else {
 
-		t, err := expandIpsGlobalEngineCount(d, v, "engine_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["engine-count"] = t
+			t, err := expandIpsGlobalEngineCount(d, v, "engine_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["engine-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sync_session_ttl"); ok {
+		if setArgNil {
+			obj["sync-session-ttl"] = nil
+		} else {
 
-		t, err := expandIpsGlobalSyncSessionTtl(d, v, "sync_session_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sync-session-ttl"] = t
+			t, err := expandIpsGlobalSyncSessionTtl(d, v, "sync_session_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sync-session-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("np_accel_mode"); ok {
+		if setArgNil {
+			obj["np-accel-mode"] = nil
+		} else {
 
-		t, err := expandIpsGlobalNpAccelMode(d, v, "np_accel_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["np-accel-mode"] = t
+			t, err := expandIpsGlobalNpAccelMode(d, v, "np_accel_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["np-accel-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ips_reserve_cpu"); ok {
+		if setArgNil {
+			obj["ips-reserve-cpu"] = nil
+		} else {
 
-		t, err := expandIpsGlobalIpsReserveCpu(d, v, "ips_reserve_cpu", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-reserve-cpu"] = t
+			t, err := expandIpsGlobalIpsReserveCpu(d, v, "ips_reserve_cpu", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-reserve-cpu"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cp_accel_mode"); ok {
+		if setArgNil {
+			obj["cp-accel-mode"] = nil
+		} else {
 
-		t, err := expandIpsGlobalCpAccelMode(d, v, "cp_accel_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cp-accel-mode"] = t
+			t, err := expandIpsGlobalCpAccelMode(d, v, "cp_accel_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cp-accel-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("skype_client_public_ipaddr"); ok {
+		if setArgNil {
+			obj["skype-client-public-ipaddr"] = nil
+		} else {
 
-		t, err := expandIpsGlobalSkypeClientPublicIpaddr(d, v, "skype_client_public_ipaddr", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["skype-client-public-ipaddr"] = t
+			t, err := expandIpsGlobalSkypeClientPublicIpaddr(d, v, "skype_client_public_ipaddr", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["skype-client-public-ipaddr"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("deep_app_insp_timeout"); ok {
+		if setArgNil {
+			obj["deep-app-insp-timeout"] = nil
+		} else {
 
-		t, err := expandIpsGlobalDeepAppInspTimeout(d, v, "deep_app_insp_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["deep-app-insp-timeout"] = t
+			t, err := expandIpsGlobalDeepAppInspTimeout(d, v, "deep_app_insp_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["deep-app-insp-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("deep_app_insp_db_limit"); ok {
+		if setArgNil {
+			obj["deep-app-insp-db-limit"] = nil
+		} else {
 
-		t, err := expandIpsGlobalDeepAppInspDbLimit(d, v, "deep_app_insp_db_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["deep-app-insp-db-limit"] = t
+			t, err := expandIpsGlobalDeepAppInspDbLimit(d, v, "deep_app_insp_db_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["deep-app-insp-db-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("exclude_signatures"); ok {
+		if setArgNil {
+			obj["exclude-signatures"] = nil
+		} else {
 
-		t, err := expandIpsGlobalExcludeSignatures(d, v, "exclude_signatures", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["exclude-signatures"] = t
+			t, err := expandIpsGlobalExcludeSignatures(d, v, "exclude_signatures", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["exclude-signatures"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("packet_log_queue_depth"); ok {
+		if setArgNil {
+			obj["packet-log-queue-depth"] = nil
+		} else {
 
-		t, err := expandIpsGlobalPacketLogQueueDepth(d, v, "packet_log_queue_depth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["packet-log-queue-depth"] = t
+			t, err := expandIpsGlobalPacketLogQueueDepth(d, v, "packet_log_queue_depth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["packet-log-queue-depth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("ngfw_max_scan_range"); ok {
+		if setArgNil {
+			obj["ngfw-max-scan-range"] = nil
+		} else {
 
-		t, err := expandIpsGlobalNgfwMaxScanRange(d, v, "ngfw_max_scan_range", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ngfw-max-scan-range"] = t
+			t, err := expandIpsGlobalNgfwMaxScanRange(d, v, "ngfw_max_scan_range", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ngfw-max-scan-range"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tls_active_probe"); ok {
 
-		t, err := expandIpsGlobalTlsActiveProbe(d, v, "tls_active_probe", sv)
+		t, err := expandIpsGlobalTlsActiveProbe(d, v, "tls_active_probe", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {

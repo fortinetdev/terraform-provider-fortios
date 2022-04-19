@@ -736,7 +736,7 @@ func resourceSystemSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemSettings(d, c.Fv)
+	obj, err := getObjectSystemSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSettings resource while getting object: %v", err)
 	}
@@ -758,7 +758,6 @@ func resourceSystemSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -770,9 +769,15 @@ func resourceSystemSettingsDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemSettings(mkey, vdomparam)
+	obj, err := getObjectSystemSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemSettings resource: %v", err)
+		return fmt.Errorf("Error updating SystemSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -2730,1316 +2735,1840 @@ func expandSystemSettingsApplicationBandwidthTracking(d *schema.ResourceData, v 
 	return v, nil
 }
 
-func getObjectSystemSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("comments"); ok {
+		if setArgNil {
+			obj["comments"] = nil
+		} else {
 
-		t, err := expandSystemSettingsComments(d, v, "comments", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["comments"] = t
+			t, err := expandSystemSettingsComments(d, v, "comments", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["comments"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("opmode"); ok {
+		if setArgNil {
+			obj["opmode"] = nil
+		} else {
 
-		t, err := expandSystemSettingsOpmode(d, v, "opmode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["opmode"] = t
+			t, err := expandSystemSettingsOpmode(d, v, "opmode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["opmode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("inspection_mode"); ok {
+		if setArgNil {
+			obj["inspection-mode"] = nil
+		} else {
 
-		t, err := expandSystemSettingsInspectionMode(d, v, "inspection_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inspection-mode"] = t
+			t, err := expandSystemSettingsInspectionMode(d, v, "inspection_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inspection-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ngfw_mode"); ok {
+		if setArgNil {
+			obj["ngfw-mode"] = nil
+		} else {
 
-		t, err := expandSystemSettingsNgfwMode(d, v, "ngfw_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ngfw-mode"] = t
+			t, err := expandSystemSettingsNgfwMode(d, v, "ngfw_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ngfw-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("implicit_allow_dns"); ok {
+		if setArgNil {
+			obj["implicit-allow-dns"] = nil
+		} else {
 
-		t, err := expandSystemSettingsImplicitAllowDns(d, v, "implicit_allow_dns", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["implicit-allow-dns"] = t
+			t, err := expandSystemSettingsImplicitAllowDns(d, v, "implicit_allow_dns", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["implicit-allow-dns"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_ssh_profile"); ok {
+		if setArgNil {
+			obj["ssl-ssh-profile"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSslSshProfile(d, v, "ssl_ssh_profile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-ssh-profile"] = t
+			t, err := expandSystemSettingsSslSshProfile(d, v, "ssl_ssh_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-ssh-profile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("consolidated_firewall_mode"); ok {
+		if setArgNil {
+			obj["consolidated-firewall-mode"] = nil
+		} else {
 
-		t, err := expandSystemSettingsConsolidatedFirewallMode(d, v, "consolidated_firewall_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["consolidated-firewall-mode"] = t
+			t, err := expandSystemSettingsConsolidatedFirewallMode(d, v, "consolidated_firewall_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["consolidated-firewall-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("http_external_dest"); ok {
+		if setArgNil {
+			obj["http-external-dest"] = nil
+		} else {
 
-		t, err := expandSystemSettingsHttpExternalDest(d, v, "http_external_dest", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-external-dest"] = t
+			t, err := expandSystemSettingsHttpExternalDest(d, v, "http_external_dest", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-external-dest"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("firewall_session_dirty"); ok {
+		if setArgNil {
+			obj["firewall-session-dirty"] = nil
+		} else {
 
-		t, err := expandSystemSettingsFirewallSessionDirty(d, v, "firewall_session_dirty", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["firewall-session-dirty"] = t
+			t, err := expandSystemSettingsFirewallSessionDirty(d, v, "firewall_session_dirty", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firewall-session-dirty"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("manageip"); ok {
+		if setArgNil {
+			obj["manageip"] = nil
+		} else {
 
-		t, err := expandSystemSettingsManageip(d, v, "manageip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["manageip"] = t
+			t, err := expandSystemSettingsManageip(d, v, "manageip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["manageip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
+		if setArgNil {
+			obj["gateway"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGateway(d, v, "gateway", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gateway"] = t
+			t, err := expandSystemSettingsGateway(d, v, "gateway", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gateway"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
+		if setArgNil {
+			obj["ip"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIp(d, v, "ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip"] = t
+			t, err := expandSystemSettingsIp(d, v, "ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("manageip6"); ok {
+		if setArgNil {
+			obj["manageip6"] = nil
+		} else {
 
-		t, err := expandSystemSettingsManageip6(d, v, "manageip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["manageip6"] = t
+			t, err := expandSystemSettingsManageip6(d, v, "manageip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["manageip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gateway6"); ok {
+		if setArgNil {
+			obj["gateway6"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGateway6(d, v, "gateway6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gateway6"] = t
+			t, err := expandSystemSettingsGateway6(d, v, "gateway6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gateway6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
+		if setArgNil {
+			obj["ip6"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIp6(d, v, "ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip6"] = t
+			t, err := expandSystemSettingsIp6(d, v, "ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("device"); ok {
+		if setArgNil {
+			obj["device"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDevice(d, v, "device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device"] = t
+			t, err := expandSystemSettingsDevice(d, v, "device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {
+		if setArgNil {
+			obj["bfd"] = nil
+		} else {
 
-		t, err := expandSystemSettingsBfd(d, v, "bfd", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bfd"] = t
+			t, err := expandSystemSettingsBfd(d, v, "bfd", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bfd_desired_min_tx"); ok {
+		if setArgNil {
+			obj["bfd-desired-min-tx"] = nil
+		} else {
 
-		t, err := expandSystemSettingsBfdDesiredMinTx(d, v, "bfd_desired_min_tx", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bfd-desired-min-tx"] = t
+			t, err := expandSystemSettingsBfdDesiredMinTx(d, v, "bfd_desired_min_tx", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd-desired-min-tx"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bfd_required_min_rx"); ok {
+		if setArgNil {
+			obj["bfd-required-min-rx"] = nil
+		} else {
 
-		t, err := expandSystemSettingsBfdRequiredMinRx(d, v, "bfd_required_min_rx", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bfd-required-min-rx"] = t
+			t, err := expandSystemSettingsBfdRequiredMinRx(d, v, "bfd_required_min_rx", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd-required-min-rx"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bfd_detect_mult"); ok {
+		if setArgNil {
+			obj["bfd-detect-mult"] = nil
+		} else {
 
-		t, err := expandSystemSettingsBfdDetectMult(d, v, "bfd_detect_mult", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bfd-detect-mult"] = t
+			t, err := expandSystemSettingsBfdDetectMult(d, v, "bfd_detect_mult", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd-detect-mult"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bfd_dont_enforce_src_port"); ok {
+		if setArgNil {
+			obj["bfd-dont-enforce-src-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsBfdDontEnforceSrcPort(d, v, "bfd_dont_enforce_src_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bfd-dont-enforce-src-port"] = t
+			t, err := expandSystemSettingsBfdDontEnforceSrcPort(d, v, "bfd_dont_enforce_src_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd-dont-enforce-src-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("utf8_spam_tagging"); ok {
+		if setArgNil {
+			obj["utf8-spam-tagging"] = nil
+		} else {
 
-		t, err := expandSystemSettingsUtf8SpamTagging(d, v, "utf8_spam_tagging", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["utf8-spam-tagging"] = t
+			t, err := expandSystemSettingsUtf8SpamTagging(d, v, "utf8_spam_tagging", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["utf8-spam-tagging"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wccp_cache_engine"); ok {
+		if setArgNil {
+			obj["wccp-cache-engine"] = nil
+		} else {
 
-		t, err := expandSystemSettingsWccpCacheEngine(d, v, "wccp_cache_engine", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wccp-cache-engine"] = t
+			t, err := expandSystemSettingsWccpCacheEngine(d, v, "wccp_cache_engine", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wccp-cache-engine"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vpn_stats_log"); ok {
+		if setArgNil {
+			obj["vpn-stats-log"] = nil
+		} else {
 
-		t, err := expandSystemSettingsVpnStatsLog(d, v, "vpn_stats_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vpn-stats-log"] = t
+			t, err := expandSystemSettingsVpnStatsLog(d, v, "vpn_stats_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vpn-stats-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("vpn_stats_period"); ok {
+		if setArgNil {
+			obj["vpn-stats-period"] = nil
+		} else {
 
-		t, err := expandSystemSettingsVpnStatsPeriod(d, v, "vpn_stats_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vpn-stats-period"] = t
+			t, err := expandSystemSettingsVpnStatsPeriod(d, v, "vpn_stats_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vpn-stats-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("v4_ecmp_mode"); ok {
+		if setArgNil {
+			obj["v4-ecmp-mode"] = nil
+		} else {
 
-		t, err := expandSystemSettingsV4EcmpMode(d, v, "v4_ecmp_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["v4-ecmp-mode"] = t
+			t, err := expandSystemSettingsV4EcmpMode(d, v, "v4_ecmp_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["v4-ecmp-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mac_ttl"); ok {
+		if setArgNil {
+			obj["mac-ttl"] = nil
+		} else {
 
-		t, err := expandSystemSettingsMacTtl(d, v, "mac_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-ttl"] = t
+			t, err := expandSystemSettingsMacTtl(d, v, "mac_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fw_session_hairpin"); ok {
+		if setArgNil {
+			obj["fw-session-hairpin"] = nil
+		} else {
 
-		t, err := expandSystemSettingsFwSessionHairpin(d, v, "fw_session_hairpin", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fw-session-hairpin"] = t
+			t, err := expandSystemSettingsFwSessionHairpin(d, v, "fw_session_hairpin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fw-session-hairpin"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("prp_trailer_action"); ok {
+		if setArgNil {
+			obj["prp-trailer-action"] = nil
+		} else {
 
-		t, err := expandSystemSettingsPrpTrailerAction(d, v, "prp_trailer_action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["prp-trailer-action"] = t
+			t, err := expandSystemSettingsPrpTrailerAction(d, v, "prp_trailer_action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["prp-trailer-action"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("snat_hairpin_traffic"); ok {
+		if setArgNil {
+			obj["snat-hairpin-traffic"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSnatHairpinTraffic(d, v, "snat_hairpin_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["snat-hairpin-traffic"] = t
+			t, err := expandSystemSettingsSnatHairpinTraffic(d, v, "snat_hairpin_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["snat-hairpin-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_proxy"); ok {
+		if setArgNil {
+			obj["dhcp-proxy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDhcpProxy(d, v, "dhcp_proxy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-proxy"] = t
+			t, err := expandSystemSettingsDhcpProxy(d, v, "dhcp_proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-proxy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_proxy_interface_select_method"); ok {
+		if setArgNil {
+			obj["dhcp-proxy-interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDhcpProxyInterfaceSelectMethod(d, v, "dhcp_proxy_interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-proxy-interface-select-method"] = t
+			t, err := expandSystemSettingsDhcpProxyInterfaceSelectMethod(d, v, "dhcp_proxy_interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-proxy-interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_proxy_interface"); ok {
+		if setArgNil {
+			obj["dhcp-proxy-interface"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDhcpProxyInterface(d, v, "dhcp_proxy_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-proxy-interface"] = t
+			t, err := expandSystemSettingsDhcpProxyInterface(d, v, "dhcp_proxy_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-proxy-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_server_ip"); ok {
+		if setArgNil {
+			obj["dhcp-server-ip"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDhcpServerIp(d, v, "dhcp_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-server-ip"] = t
+			t, err := expandSystemSettingsDhcpServerIp(d, v, "dhcp_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp6_server_ip"); ok {
+		if setArgNil {
+			obj["dhcp6-server-ip"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDhcp6ServerIp(d, v, "dhcp6_server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp6-server-ip"] = t
+			t, err := expandSystemSettingsDhcp6ServerIp(d, v, "dhcp6_server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp6-server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("central_nat"); ok {
+		if setArgNil {
+			obj["central-nat"] = nil
+		} else {
 
-		t, err := expandSystemSettingsCentralNat(d, v, "central_nat", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["central-nat"] = t
+			t, err := expandSystemSettingsCentralNat(d, v, "central_nat", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["central-nat"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_default_policy_columns"); ok {
+		if setArgNil {
+			obj["gui-default-policy-columns"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemSettingsGuiDefaultPolicyColumns(d, v, "gui_default_policy_columns", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-default-policy-columns"] = t
+			t, err := expandSystemSettingsGuiDefaultPolicyColumns(d, v, "gui_default_policy_columns", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-default-policy-columns"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lldp_reception"); ok {
+		if setArgNil {
+			obj["lldp-reception"] = nil
+		} else {
 
-		t, err := expandSystemSettingsLldpReception(d, v, "lldp_reception", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lldp-reception"] = t
+			t, err := expandSystemSettingsLldpReception(d, v, "lldp_reception", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lldp-reception"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("lldp_transmission"); ok {
+		if setArgNil {
+			obj["lldp-transmission"] = nil
+		} else {
 
-		t, err := expandSystemSettingsLldpTransmission(d, v, "lldp_transmission", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["lldp-transmission"] = t
+			t, err := expandSystemSettingsLldpTransmission(d, v, "lldp_transmission", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lldp-transmission"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("link_down_access"); ok {
+		if setArgNil {
+			obj["link-down-access"] = nil
+		} else {
 
-		t, err := expandSystemSettingsLinkDownAccess(d, v, "link_down_access", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["link-down-access"] = t
+			t, err := expandSystemSettingsLinkDownAccess(d, v, "link_down_access", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["link-down-access"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auxiliary_session"); ok {
+		if setArgNil {
+			obj["auxiliary-session"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAuxiliarySession(d, v, "auxiliary_session", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auxiliary-session"] = t
+			t, err := expandSystemSettingsAuxiliarySession(d, v, "auxiliary_session", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auxiliary-session"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("asymroute"); ok {
+		if setArgNil {
+			obj["asymroute"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAsymroute(d, v, "asymroute", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["asymroute"] = t
+			t, err := expandSystemSettingsAsymroute(d, v, "asymroute", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["asymroute"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("asymroute_icmp"); ok {
+		if setArgNil {
+			obj["asymroute-icmp"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAsymrouteIcmp(d, v, "asymroute_icmp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["asymroute-icmp"] = t
+			t, err := expandSystemSettingsAsymrouteIcmp(d, v, "asymroute_icmp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["asymroute-icmp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tcp_session_without_syn"); ok {
+		if setArgNil {
+			obj["tcp-session-without-syn"] = nil
+		} else {
 
-		t, err := expandSystemSettingsTcpSessionWithoutSyn(d, v, "tcp_session_without_syn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tcp-session-without-syn"] = t
+			t, err := expandSystemSettingsTcpSessionWithoutSyn(d, v, "tcp_session_without_syn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-session-without-syn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ses_denied_traffic"); ok {
+		if setArgNil {
+			obj["ses-denied-traffic"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSesDeniedTraffic(d, v, "ses_denied_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ses-denied-traffic"] = t
+			t, err := expandSystemSettingsSesDeniedTraffic(d, v, "ses_denied_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ses-denied-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strict_src_check"); ok {
+		if setArgNil {
+			obj["strict-src-check"] = nil
+		} else {
 
-		t, err := expandSystemSettingsStrictSrcCheck(d, v, "strict_src_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strict-src-check"] = t
+			t, err := expandSystemSettingsStrictSrcCheck(d, v, "strict_src_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strict-src-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_linkdown_path"); ok {
+		if setArgNil {
+			obj["allow-linkdown-path"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAllowLinkdownPath(d, v, "allow_linkdown_path", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-linkdown-path"] = t
+			t, err := expandSystemSettingsAllowLinkdownPath(d, v, "allow_linkdown_path", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-linkdown-path"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("asymroute6"); ok {
+		if setArgNil {
+			obj["asymroute6"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAsymroute6(d, v, "asymroute6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["asymroute6"] = t
+			t, err := expandSystemSettingsAsymroute6(d, v, "asymroute6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["asymroute6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("asymroute6_icmp"); ok {
+		if setArgNil {
+			obj["asymroute6-icmp"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAsymroute6Icmp(d, v, "asymroute6_icmp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["asymroute6-icmp"] = t
+			t, err := expandSystemSettingsAsymroute6Icmp(d, v, "asymroute6_icmp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["asymroute6-icmp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sctp_session_without_init"); ok {
+		if setArgNil {
+			obj["sctp-session-without-init"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSctpSessionWithoutInit(d, v, "sctp_session_without_init", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sctp-session-without-init"] = t
+			t, err := expandSystemSettingsSctpSessionWithoutInit(d, v, "sctp_session_without_init", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sctp-session-without-init"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip_expectation"); ok {
+		if setArgNil {
+			obj["sip-expectation"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSipExpectation(d, v, "sip_expectation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip-expectation"] = t
+			t, err := expandSystemSettingsSipExpectation(d, v, "sip_expectation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip-expectation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip_helper"); ok {
+		if setArgNil {
+			obj["sip-helper"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSipHelper(d, v, "sip_helper", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip-helper"] = t
+			t, err := expandSystemSettingsSipHelper(d, v, "sip_helper", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip-helper"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip_nat_trace"); ok {
+		if setArgNil {
+			obj["sip-nat-trace"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSipNatTrace(d, v, "sip_nat_trace", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip-nat-trace"] = t
+			t, err := expandSystemSettingsSipNatTrace(d, v, "sip_nat_trace", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip-nat-trace"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("h323_direct_model"); ok {
+		if setArgNil {
+			obj["h323-direct-model"] = nil
+		} else {
 
-		t, err := expandSystemSettingsH323DirectModel(d, v, "h323_direct_model", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["h323-direct-model"] = t
+			t, err := expandSystemSettingsH323DirectModel(d, v, "h323_direct_model", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["h323-direct-model"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemSettingsStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemSettingsStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip_tcp_port"); ok {
+		if setArgNil {
+			obj["sip-tcp-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSipTcpPort(d, v, "sip_tcp_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip-tcp-port"] = t
+			t, err := expandSystemSettingsSipTcpPort(d, v, "sip_tcp_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip-tcp-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sip_udp_port"); ok {
+		if setArgNil {
+			obj["sip-udp-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSipUdpPort(d, v, "sip_udp_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip-udp-port"] = t
+			t, err := expandSystemSettingsSipUdpPort(d, v, "sip_udp_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip-udp-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sip_ssl_port"); ok {
+		if setArgNil {
+			obj["sip-ssl-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSipSslPort(d, v, "sip_ssl_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sip-ssl-port"] = t
+			t, err := expandSystemSettingsSipSslPort(d, v, "sip_ssl_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sip-ssl-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("sccp_port"); ok {
+		if setArgNil {
+			obj["sccp-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsSccpPort(d, v, "sccp_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sccp-port"] = t
+			t, err := expandSystemSettingsSccpPort(d, v, "sccp_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sccp-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_forward"); ok {
+		if setArgNil {
+			obj["multicast-forward"] = nil
+		} else {
 
-		t, err := expandSystemSettingsMulticastForward(d, v, "multicast_forward", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-forward"] = t
+			t, err := expandSystemSettingsMulticastForward(d, v, "multicast_forward", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-forward"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_ttl_notchange"); ok {
+		if setArgNil {
+			obj["multicast-ttl-notchange"] = nil
+		} else {
 
-		t, err := expandSystemSettingsMulticastTtlNotchange(d, v, "multicast_ttl_notchange", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-ttl-notchange"] = t
+			t, err := expandSystemSettingsMulticastTtlNotchange(d, v, "multicast_ttl_notchange", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-ttl-notchange"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_skip_policy"); ok {
+		if setArgNil {
+			obj["multicast-skip-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsMulticastSkipPolicy(d, v, "multicast_skip_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-skip-policy"] = t
+			t, err := expandSystemSettingsMulticastSkipPolicy(d, v, "multicast_skip_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-skip-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_subnet_overlap"); ok {
+		if setArgNil {
+			obj["allow-subnet-overlap"] = nil
+		} else {
 
-		t, err := expandSystemSettingsAllowSubnetOverlap(d, v, "allow_subnet_overlap", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-subnet-overlap"] = t
+			t, err := expandSystemSettingsAllowSubnetOverlap(d, v, "allow_subnet_overlap", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-subnet-overlap"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("deny_tcp_with_icmp"); ok {
+		if setArgNil {
+			obj["deny-tcp-with-icmp"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDenyTcpWithIcmp(d, v, "deny_tcp_with_icmp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["deny-tcp-with-icmp"] = t
+			t, err := expandSystemSettingsDenyTcpWithIcmp(d, v, "deny_tcp_with_icmp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["deny-tcp-with-icmp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ecmp_max_paths"); ok {
+		if setArgNil {
+			obj["ecmp-max-paths"] = nil
+		} else {
 
-		t, err := expandSystemSettingsEcmpMaxPaths(d, v, "ecmp_max_paths", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ecmp-max-paths"] = t
+			t, err := expandSystemSettingsEcmpMaxPaths(d, v, "ecmp_max_paths", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ecmp-max-paths"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("discovered_device_timeout"); ok {
+		if setArgNil {
+			obj["discovered-device-timeout"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDiscoveredDeviceTimeout(d, v, "discovered_device_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["discovered-device-timeout"] = t
+			t, err := expandSystemSettingsDiscoveredDeviceTimeout(d, v, "discovered_device_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["discovered-device-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("email_portal_check_dns"); ok {
+		if setArgNil {
+			obj["email-portal-check-dns"] = nil
+		} else {
 
-		t, err := expandSystemSettingsEmailPortalCheckDns(d, v, "email_portal_check_dns", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["email-portal-check-dns"] = t
+			t, err := expandSystemSettingsEmailPortalCheckDns(d, v, "email_portal_check_dns", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["email-portal-check-dns"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_voip_alg_mode"); ok {
+		if setArgNil {
+			obj["default-voip-alg-mode"] = nil
+		} else {
 
-		t, err := expandSystemSettingsDefaultVoipAlgMode(d, v, "default_voip_alg_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-voip-alg-mode"] = t
+			t, err := expandSystemSettingsDefaultVoipAlgMode(d, v, "default_voip_alg_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-voip-alg-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_icap"); ok {
+		if setArgNil {
+			obj["gui-icap"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiIcap(d, v, "gui_icap", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-icap"] = t
+			t, err := expandSystemSettingsGuiIcap(d, v, "gui_icap", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-icap"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_nat46_64"); ok {
+		if setArgNil {
+			obj["gui-nat46-64"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiNat4664(d, v, "gui_nat46_64", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-nat46-64"] = t
+			t, err := expandSystemSettingsGuiNat4664(d, v, "gui_nat46_64", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-nat46-64"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_implicit_policy"); ok {
+		if setArgNil {
+			obj["gui-implicit-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiImplicitPolicy(d, v, "gui_implicit_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-implicit-policy"] = t
+			t, err := expandSystemSettingsGuiImplicitPolicy(d, v, "gui_implicit_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-implicit-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dns_database"); ok {
+		if setArgNil {
+			obj["gui-dns-database"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDnsDatabase(d, v, "gui_dns_database", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dns-database"] = t
+			t, err := expandSystemSettingsGuiDnsDatabase(d, v, "gui_dns_database", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dns-database"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_load_balance"); ok {
+		if setArgNil {
+			obj["gui-load-balance"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiLoadBalance(d, v, "gui_load_balance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-load-balance"] = t
+			t, err := expandSystemSettingsGuiLoadBalance(d, v, "gui_load_balance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-load-balance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_multicast_policy"); ok {
+		if setArgNil {
+			obj["gui-multicast-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiMulticastPolicy(d, v, "gui_multicast_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-multicast-policy"] = t
+			t, err := expandSystemSettingsGuiMulticastPolicy(d, v, "gui_multicast_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-multicast-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dos_policy"); ok {
+		if setArgNil {
+			obj["gui-dos-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDosPolicy(d, v, "gui_dos_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dos-policy"] = t
+			t, err := expandSystemSettingsGuiDosPolicy(d, v, "gui_dos_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dos-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_object_colors"); ok {
+		if setArgNil {
+			obj["gui-object-colors"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiObjectColors(d, v, "gui_object_colors", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-object-colors"] = t
+			t, err := expandSystemSettingsGuiObjectColors(d, v, "gui_object_colors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-object-colors"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_replacement_message_groups"); ok {
+		if setArgNil {
+			obj["gui-replacement-message-groups"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiReplacementMessageGroups(d, v, "gui_replacement_message_groups", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-replacement-message-groups"] = t
+			t, err := expandSystemSettingsGuiReplacementMessageGroups(d, v, "gui_replacement_message_groups", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-replacement-message-groups"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_voip_profile"); ok {
+		if setArgNil {
+			obj["gui-voip-profile"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiVoipProfile(d, v, "gui_voip_profile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-voip-profile"] = t
+			t, err := expandSystemSettingsGuiVoipProfile(d, v, "gui_voip_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-voip-profile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_ap_profile"); ok {
+		if setArgNil {
+			obj["gui-ap-profile"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiApProfile(d, v, "gui_ap_profile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-ap-profile"] = t
+			t, err := expandSystemSettingsGuiApProfile(d, v, "gui_ap_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-ap-profile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_security_profile_group"); ok {
+		if setArgNil {
+			obj["gui-security-profile-group"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiSecurityProfileGroup(d, v, "gui_security_profile_group", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-security-profile-group"] = t
+			t, err := expandSystemSettingsGuiSecurityProfileGroup(d, v, "gui_security_profile_group", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-security-profile-group"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dynamic_profile_display"); ok {
+		if setArgNil {
+			obj["gui-dynamic-profile-display"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDynamicProfileDisplay(d, v, "gui_dynamic_profile_display", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dynamic-profile-display"] = t
+			t, err := expandSystemSettingsGuiDynamicProfileDisplay(d, v, "gui_dynamic_profile_display", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dynamic-profile-display"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_local_in_policy"); ok {
+		if setArgNil {
+			obj["gui-local-in-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiLocalInPolicy(d, v, "gui_local_in_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-local-in-policy"] = t
+			t, err := expandSystemSettingsGuiLocalInPolicy(d, v, "gui_local_in_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-local-in-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_local_reports"); ok {
+		if setArgNil {
+			obj["gui-local-reports"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiLocalReports(d, v, "gui_local_reports", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-local-reports"] = t
+			t, err := expandSystemSettingsGuiLocalReports(d, v, "gui_local_reports", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-local-reports"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_wanopt_cache"); ok {
+		if setArgNil {
+			obj["gui-wanopt-cache"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiWanoptCache(d, v, "gui_wanopt_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-wanopt-cache"] = t
+			t, err := expandSystemSettingsGuiWanoptCache(d, v, "gui_wanopt_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-wanopt-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_explicit_proxy"); ok {
+		if setArgNil {
+			obj["gui-explicit-proxy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiExplicitProxy(d, v, "gui_explicit_proxy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-explicit-proxy"] = t
+			t, err := expandSystemSettingsGuiExplicitProxy(d, v, "gui_explicit_proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-explicit-proxy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dynamic_routing"); ok {
+		if setArgNil {
+			obj["gui-dynamic-routing"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDynamicRouting(d, v, "gui_dynamic_routing", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dynamic-routing"] = t
+			t, err := expandSystemSettingsGuiDynamicRouting(d, v, "gui_dynamic_routing", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dynamic-routing"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dlp"); ok {
+		if setArgNil {
+			obj["gui-dlp"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDlp(d, v, "gui_dlp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dlp"] = t
+			t, err := expandSystemSettingsGuiDlp(d, v, "gui_dlp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dlp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_sslvpn_personal_bookmarks"); ok {
+		if setArgNil {
+			obj["gui-sslvpn-personal-bookmarks"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiSslvpnPersonalBookmarks(d, v, "gui_sslvpn_personal_bookmarks", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-sslvpn-personal-bookmarks"] = t
+			t, err := expandSystemSettingsGuiSslvpnPersonalBookmarks(d, v, "gui_sslvpn_personal_bookmarks", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-sslvpn-personal-bookmarks"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_sslvpn_realms"); ok {
+		if setArgNil {
+			obj["gui-sslvpn-realms"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiSslvpnRealms(d, v, "gui_sslvpn_realms", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-sslvpn-realms"] = t
+			t, err := expandSystemSettingsGuiSslvpnRealms(d, v, "gui_sslvpn_realms", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-sslvpn-realms"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_policy_based_ipsec"); ok {
+		if setArgNil {
+			obj["gui-policy-based-ipsec"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiPolicyBasedIpsec(d, v, "gui_policy_based_ipsec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-policy-based-ipsec"] = t
+			t, err := expandSystemSettingsGuiPolicyBasedIpsec(d, v, "gui_policy_based_ipsec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-policy-based-ipsec"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_threat_weight"); ok {
+		if setArgNil {
+			obj["gui-threat-weight"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiThreatWeight(d, v, "gui_threat_weight", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-threat-weight"] = t
+			t, err := expandSystemSettingsGuiThreatWeight(d, v, "gui_threat_weight", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-threat-weight"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_multiple_utm_profiles"); ok {
+		if setArgNil {
+			obj["gui-multiple-utm-profiles"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiMultipleUtmProfiles(d, v, "gui_multiple_utm_profiles", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-multiple-utm-profiles"] = t
+			t, err := expandSystemSettingsGuiMultipleUtmProfiles(d, v, "gui_multiple_utm_profiles", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-multiple-utm-profiles"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_spamfilter"); ok {
+		if setArgNil {
+			obj["gui-spamfilter"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiSpamfilter(d, v, "gui_spamfilter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-spamfilter"] = t
+			t, err := expandSystemSettingsGuiSpamfilter(d, v, "gui_spamfilter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-spamfilter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_file_filter"); ok {
+		if setArgNil {
+			obj["gui-file-filter"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiFileFilter(d, v, "gui_file_filter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-file-filter"] = t
+			t, err := expandSystemSettingsGuiFileFilter(d, v, "gui_file_filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-file-filter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_application_control"); ok {
+		if setArgNil {
+			obj["gui-application-control"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiApplicationControl(d, v, "gui_application_control", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-application-control"] = t
+			t, err := expandSystemSettingsGuiApplicationControl(d, v, "gui_application_control", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-application-control"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_ips"); ok {
+		if setArgNil {
+			obj["gui-ips"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiIps(d, v, "gui_ips", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-ips"] = t
+			t, err := expandSystemSettingsGuiIps(d, v, "gui_ips", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-ips"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_endpoint_control"); ok {
+		if setArgNil {
+			obj["gui-endpoint-control"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiEndpointControl(d, v, "gui_endpoint_control", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-endpoint-control"] = t
+			t, err := expandSystemSettingsGuiEndpointControl(d, v, "gui_endpoint_control", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-endpoint-control"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_endpoint_control_advanced"); ok {
+		if setArgNil {
+			obj["gui-endpoint-control-advanced"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiEndpointControlAdvanced(d, v, "gui_endpoint_control_advanced", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-endpoint-control-advanced"] = t
+			t, err := expandSystemSettingsGuiEndpointControlAdvanced(d, v, "gui_endpoint_control_advanced", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-endpoint-control-advanced"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dhcp_advanced"); ok {
+		if setArgNil {
+			obj["gui-dhcp-advanced"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDhcpAdvanced(d, v, "gui_dhcp_advanced", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dhcp-advanced"] = t
+			t, err := expandSystemSettingsGuiDhcpAdvanced(d, v, "gui_dhcp_advanced", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dhcp-advanced"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_vpn"); ok {
+		if setArgNil {
+			obj["gui-vpn"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiVpn(d, v, "gui_vpn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-vpn"] = t
+			t, err := expandSystemSettingsGuiVpn(d, v, "gui_vpn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-vpn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_wireless_controller"); ok {
+		if setArgNil {
+			obj["gui-wireless-controller"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiWirelessController(d, v, "gui_wireless_controller", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-wireless-controller"] = t
+			t, err := expandSystemSettingsGuiWirelessController(d, v, "gui_wireless_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-wireless-controller"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_switch_controller"); ok {
+		if setArgNil {
+			obj["gui-switch-controller"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiSwitchController(d, v, "gui_switch_controller", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-switch-controller"] = t
+			t, err := expandSystemSettingsGuiSwitchController(d, v, "gui_switch_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-switch-controller"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_fortiap_split_tunneling"); ok {
+		if setArgNil {
+			obj["gui-fortiap-split-tunneling"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiFortiapSplitTunneling(d, v, "gui_fortiap_split_tunneling", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-fortiap-split-tunneling"] = t
+			t, err := expandSystemSettingsGuiFortiapSplitTunneling(d, v, "gui_fortiap_split_tunneling", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-fortiap-split-tunneling"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_webfilter_advanced"); ok {
+		if setArgNil {
+			obj["gui-webfilter-advanced"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiWebfilterAdvanced(d, v, "gui_webfilter_advanced", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-webfilter-advanced"] = t
+			t, err := expandSystemSettingsGuiWebfilterAdvanced(d, v, "gui_webfilter_advanced", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-webfilter-advanced"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_traffic_shaping"); ok {
+		if setArgNil {
+			obj["gui-traffic-shaping"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiTrafficShaping(d, v, "gui_traffic_shaping", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-traffic-shaping"] = t
+			t, err := expandSystemSettingsGuiTrafficShaping(d, v, "gui_traffic_shaping", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-traffic-shaping"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_wan_load_balancing"); ok {
+		if setArgNil {
+			obj["gui-wan-load-balancing"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiWanLoadBalancing(d, v, "gui_wan_load_balancing", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-wan-load-balancing"] = t
+			t, err := expandSystemSettingsGuiWanLoadBalancing(d, v, "gui_wan_load_balancing", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-wan-load-balancing"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_antivirus"); ok {
+		if setArgNil {
+			obj["gui-antivirus"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiAntivirus(d, v, "gui_antivirus", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-antivirus"] = t
+			t, err := expandSystemSettingsGuiAntivirus(d, v, "gui_antivirus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-antivirus"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_webfilter"); ok {
+		if setArgNil {
+			obj["gui-webfilter"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiWebfilter(d, v, "gui_webfilter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-webfilter"] = t
+			t, err := expandSystemSettingsGuiWebfilter(d, v, "gui_webfilter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-webfilter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_videofilter"); ok {
+		if setArgNil {
+			obj["gui-videofilter"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiVideofilter(d, v, "gui_videofilter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-videofilter"] = t
+			t, err := expandSystemSettingsGuiVideofilter(d, v, "gui_videofilter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-videofilter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_dnsfilter"); ok {
+		if setArgNil {
+			obj["gui-dnsfilter"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDnsfilter(d, v, "gui_dnsfilter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-dnsfilter"] = t
+			t, err := expandSystemSettingsGuiDnsfilter(d, v, "gui_dnsfilter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dnsfilter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_waf_profile"); ok {
+		if setArgNil {
+			obj["gui-waf-profile"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiWafProfile(d, v, "gui_waf_profile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-waf-profile"] = t
+			t, err := expandSystemSettingsGuiWafProfile(d, v, "gui_waf_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-waf-profile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_fortiextender_controller"); ok {
+		if setArgNil {
+			obj["gui-fortiextender-controller"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiFortiextenderController(d, v, "gui_fortiextender_controller", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-fortiextender-controller"] = t
+			t, err := expandSystemSettingsGuiFortiextenderController(d, v, "gui_fortiextender_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-fortiextender-controller"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_advanced_policy"); ok {
+		if setArgNil {
+			obj["gui-advanced-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiAdvancedPolicy(d, v, "gui_advanced_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-advanced-policy"] = t
+			t, err := expandSystemSettingsGuiAdvancedPolicy(d, v, "gui_advanced_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-advanced-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_allow_unnamed_policy"); ok {
+		if setArgNil {
+			obj["gui-allow-unnamed-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiAllowUnnamedPolicy(d, v, "gui_allow_unnamed_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-allow-unnamed-policy"] = t
+			t, err := expandSystemSettingsGuiAllowUnnamedPolicy(d, v, "gui_allow_unnamed_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-allow-unnamed-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_email_collection"); ok {
+		if setArgNil {
+			obj["gui-email-collection"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiEmailCollection(d, v, "gui_email_collection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-email-collection"] = t
+			t, err := expandSystemSettingsGuiEmailCollection(d, v, "gui_email_collection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-email-collection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_domain_ip_reputation"); ok {
+		if setArgNil {
+			obj["gui-domain-ip-reputation"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiDomainIpReputation(d, v, "gui_domain_ip_reputation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-domain-ip-reputation"] = t
+			t, err := expandSystemSettingsGuiDomainIpReputation(d, v, "gui_domain_ip_reputation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-domain-ip-reputation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_multiple_interface_policy"); ok {
+		if setArgNil {
+			obj["gui-multiple-interface-policy"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiMultipleInterfacePolicy(d, v, "gui_multiple_interface_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-multiple-interface-policy"] = t
+			t, err := expandSystemSettingsGuiMultipleInterfacePolicy(d, v, "gui_multiple_interface_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-multiple-interface-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_policy_disclaimer"); ok {
+		if setArgNil {
+			obj["gui-policy-disclaimer"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiPolicyDisclaimer(d, v, "gui_policy_disclaimer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-policy-disclaimer"] = t
+			t, err := expandSystemSettingsGuiPolicyDisclaimer(d, v, "gui_policy_disclaimer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-policy-disclaimer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_ztna"); ok {
+		if setArgNil {
+			obj["gui-ztna"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiZtna(d, v, "gui_ztna", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-ztna"] = t
+			t, err := expandSystemSettingsGuiZtna(d, v, "gui_ztna", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-ztna"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("location_id"); ok {
+		if setArgNil {
+			obj["location-id"] = nil
+		} else {
 
-		t, err := expandSystemSettingsLocationId(d, v, "location_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["location-id"] = t
+			t, err := expandSystemSettingsLocationId(d, v, "location_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["location-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_per_policy_disclaimer"); ok {
+		if setArgNil {
+			obj["gui-per-policy-disclaimer"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiPerPolicyDisclaimer(d, v, "gui_per_policy_disclaimer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-per-policy-disclaimer"] = t
+			t, err := expandSystemSettingsGuiPerPolicyDisclaimer(d, v, "gui_per_policy_disclaimer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-per-policy-disclaimer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gui_policy_learning"); ok {
+		if setArgNil {
+			obj["gui-policy-learning"] = nil
+		} else {
 
-		t, err := expandSystemSettingsGuiPolicyLearning(d, v, "gui_policy_learning", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gui-policy-learning"] = t
+			t, err := expandSystemSettingsGuiPolicyLearning(d, v, "gui_policy_learning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-policy-learning"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("compliance_check"); ok {
+		if setArgNil {
+			obj["compliance-check"] = nil
+		} else {
 
-		t, err := expandSystemSettingsComplianceCheck(d, v, "compliance_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["compliance-check"] = t
+			t, err := expandSystemSettingsComplianceCheck(d, v, "compliance_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["compliance-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_session_resume"); ok {
+		if setArgNil {
+			obj["ike-session-resume"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIkeSessionResume(d, v, "ike_session_resume", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-session-resume"] = t
+			t, err := expandSystemSettingsIkeSessionResume(d, v, "ike_session_resume", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-session-resume"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_quick_crash_detect"); ok {
+		if setArgNil {
+			obj["ike-quick-crash-detect"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIkeQuickCrashDetect(d, v, "ike_quick_crash_detect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-quick-crash-detect"] = t
+			t, err := expandSystemSettingsIkeQuickCrashDetect(d, v, "ike_quick_crash_detect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-quick-crash-detect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_dn_format"); ok {
+		if setArgNil {
+			obj["ike-dn-format"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIkeDnFormat(d, v, "ike_dn_format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-dn-format"] = t
+			t, err := expandSystemSettingsIkeDnFormat(d, v, "ike_dn_format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-dn-format"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_port"); ok {
+		if setArgNil {
+			obj["ike-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIkePort(d, v, "ike_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-port"] = t
+			t, err := expandSystemSettingsIkePort(d, v, "ike_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_policy_route"); ok {
+		if setArgNil {
+			obj["ike-policy-route"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIkePolicyRoute(d, v, "ike_policy_route", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-policy-route"] = t
+			t, err := expandSystemSettingsIkePolicyRoute(d, v, "ike_policy_route", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-policy-route"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ike_natt_port"); ok {
+		if setArgNil {
+			obj["ike-natt-port"] = nil
+		} else {
 
-		t, err := expandSystemSettingsIkeNattPort(d, v, "ike_natt_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ike-natt-port"] = t
+			t, err := expandSystemSettingsIkeNattPort(d, v, "ike_natt_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-natt-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("block_land_attack"); ok {
+		if setArgNil {
+			obj["block-land-attack"] = nil
+		} else {
 
-		t, err := expandSystemSettingsBlockLandAttack(d, v, "block_land_attack", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["block-land-attack"] = t
+			t, err := expandSystemSettingsBlockLandAttack(d, v, "block_land_attack", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["block-land-attack"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("application_bandwidth_tracking"); ok {
+		if setArgNil {
+			obj["application-bandwidth-tracking"] = nil
+		} else {
 
-		t, err := expandSystemSettingsApplicationBandwidthTracking(d, v, "application_bandwidth_tracking", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["application-bandwidth-tracking"] = t
+			t, err := expandSystemSettingsApplicationBandwidthTracking(d, v, "application_bandwidth_tracking", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["application-bandwidth-tracking"] = t
+			}
 		}
 	}
 

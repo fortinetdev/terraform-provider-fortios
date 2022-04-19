@@ -578,7 +578,7 @@ func resourceSystemHaUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemHa(d, c.Fv)
+	obj, err := getObjectSystemHa(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemHa resource while getting object: %v", err)
 	}
@@ -600,7 +600,6 @@ func resourceSystemHaUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemHaDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -612,9 +611,15 @@ func resourceSystemHaDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemHa(mkey, vdomparam)
+	obj, err := getObjectSystemHa(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemHa resource: %v", err)
+		return fmt.Errorf("Error updating SystemHa resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemHa(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemHa resource: %v", err)
 	}
 
 	d.SetId("")
@@ -2086,7 +2091,7 @@ func expandSystemHaVdom(d *schema.ResourceData, v interface{}, pre string, sv st
 	return v, nil
 }
 
-func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2098,53 +2103,93 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "vcluster_id"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["vcluster-id"] = nil
+		} else {
 
-		result["vcluster-id"], _ = expandSystemHaSecondaryVclusterVclusterId(d, i["vcluster_id"], pre_append, sv)
+			result["vcluster-id"], _ = expandSystemHaSecondaryVclusterVclusterId(d, i["vcluster_id"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "override"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["override"] = nil
+		} else {
 
-		result["override"], _ = expandSystemHaSecondaryVclusterOverride(d, i["override"], pre_append, sv)
+			result["override"], _ = expandSystemHaSecondaryVclusterOverride(d, i["override"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["priority"] = nil
+		} else {
 
-		result["priority"], _ = expandSystemHaSecondaryVclusterPriority(d, i["priority"], pre_append, sv)
+			result["priority"], _ = expandSystemHaSecondaryVclusterPriority(d, i["priority"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "override_wait_time"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["override-wait-time"] = nil
+		} else {
 
-		result["override-wait-time"], _ = expandSystemHaSecondaryVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append, sv)
+			result["override-wait-time"], _ = expandSystemHaSecondaryVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "monitor"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["monitor"] = nil
+		} else {
 
-		result["monitor"], _ = expandSystemHaSecondaryVclusterMonitor(d, i["monitor"], pre_append, sv)
+			result["monitor"], _ = expandSystemHaSecondaryVclusterMonitor(d, i["monitor"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "pingserver_monitor_interface"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["pingserver-monitor-interface"] = nil
+		} else {
 
-		result["pingserver-monitor-interface"], _ = expandSystemHaSecondaryVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append, sv)
+			result["pingserver-monitor-interface"], _ = expandSystemHaSecondaryVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "pingserver_failover_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["pingserver-failover-threshold"] = nil
+		} else {
 
-		result["pingserver-failover-threshold"], _ = expandSystemHaSecondaryVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
+			result["pingserver-failover-threshold"], _ = expandSystemHaSecondaryVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "pingserver_secondary_force_reset"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["pingserver-secondary-force-reset"] = nil
+		} else {
 
-		result["pingserver-secondary-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSecondaryForceReset(d, i["pingserver_secondary_force_reset"], pre_append, sv)
+			result["pingserver-secondary-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSecondaryForceReset(d, i["pingserver_secondary_force_reset"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "pingserver_slave_force_reset"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["pingserver-slave-force-reset"] = nil
+		} else {
 
-		result["pingserver-slave-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append, sv)
+			result["pingserver-slave-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "vdom"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["vdom"] = nil
+		} else {
 
-		result["vdom"], _ = expandSystemHaSecondaryVclusterVdom(d, i["vdom"], pre_append, sv)
+			result["vdom"], _ = expandSystemHaSecondaryVclusterVdom(d, i["vdom"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2230,692 +2275,964 @@ func expandSystemHaInterClusterSessionSync(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectSystemHa(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("group_id"); ok {
+		if setArgNil {
+			obj["group-id"] = nil
+		} else {
 
-		t, err := expandSystemHaGroupId(d, v, "group_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group-id"] = t
+			t, err := expandSystemHaGroupId(d, v, "group_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["group-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("group_name"); ok {
+		if setArgNil {
+			obj["group-name"] = nil
+		} else {
 
-		t, err := expandSystemHaGroupName(d, v, "group_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group-name"] = t
+			t, err := expandSystemHaGroupName(d, v, "group_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["group-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemHaMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemHaMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sync_packet_balance"); ok {
+		if setArgNil {
+			obj["sync-packet-balance"] = nil
+		} else {
 
-		t, err := expandSystemHaSyncPacketBalance(d, v, "sync_packet_balance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sync-packet-balance"] = t
+			t, err := expandSystemHaSyncPacketBalance(d, v, "sync_packet_balance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sync-packet-balance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("password"); ok {
+		if setArgNil {
+			obj["password"] = nil
+		} else {
 
-		t, err := expandSystemHaPassword(d, v, "password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["password"] = t
+			t, err := expandSystemHaPassword(d, v, "password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("key"); ok {
+		if setArgNil {
+			obj["key"] = nil
+		} else {
 
-		t, err := expandSystemHaKey(d, v, "key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["key"] = t
+			t, err := expandSystemHaKey(d, v, "key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hbdev"); ok {
+		if setArgNil {
+			obj["hbdev"] = nil
+		} else {
 
-		t, err := expandSystemHaHbdev(d, v, "hbdev", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hbdev"] = t
+			t, err := expandSystemHaHbdev(d, v, "hbdev", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hbdev"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unicast_hb"); ok {
+		if setArgNil {
+			obj["unicast-hb"] = nil
+		} else {
 
-		t, err := expandSystemHaUnicastHb(d, v, "unicast_hb", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unicast-hb"] = t
+			t, err := expandSystemHaUnicastHb(d, v, "unicast_hb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unicast-hb"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unicast_hb_peerip"); ok {
+		if setArgNil {
+			obj["unicast-hb-peerip"] = nil
+		} else {
 
-		t, err := expandSystemHaUnicastHbPeerip(d, v, "unicast_hb_peerip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unicast-hb-peerip"] = t
+			t, err := expandSystemHaUnicastHbPeerip(d, v, "unicast_hb_peerip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unicast-hb-peerip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unicast_hb_netmask"); ok {
+		if setArgNil {
+			obj["unicast-hb-netmask"] = nil
+		} else {
 
-		t, err := expandSystemHaUnicastHbNetmask(d, v, "unicast_hb_netmask", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unicast-hb-netmask"] = t
+			t, err := expandSystemHaUnicastHbNetmask(d, v, "unicast_hb_netmask", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unicast-hb-netmask"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_sync_dev"); ok {
+		if setArgNil {
+			obj["session-sync-dev"] = nil
+		} else {
 
-		t, err := expandSystemHaSessionSyncDev(d, v, "session_sync_dev", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-sync-dev"] = t
+			t, err := expandSystemHaSessionSyncDev(d, v, "session_sync_dev", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-sync-dev"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("route_ttl"); ok {
+		if setArgNil {
+			obj["route-ttl"] = nil
+		} else {
 
-		t, err := expandSystemHaRouteTtl(d, v, "route_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["route-ttl"] = t
+			t, err := expandSystemHaRouteTtl(d, v, "route_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["route-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("route_wait"); ok {
+		if setArgNil {
+			obj["route-wait"] = nil
+		} else {
 
-		t, err := expandSystemHaRouteWait(d, v, "route_wait", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["route-wait"] = t
+			t, err := expandSystemHaRouteWait(d, v, "route_wait", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["route-wait"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("route_hold"); ok {
+		if setArgNil {
+			obj["route-hold"] = nil
+		} else {
 
-		t, err := expandSystemHaRouteHold(d, v, "route_hold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["route-hold"] = t
+			t, err := expandSystemHaRouteHold(d, v, "route_hold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["route-hold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_ttl"); ok {
+		if setArgNil {
+			obj["multicast-ttl"] = nil
+		} else {
 
-		t, err := expandSystemHaMulticastTtl(d, v, "multicast_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-ttl"] = t
+			t, err := expandSystemHaMulticastTtl(d, v, "multicast_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("load_balance_all"); ok {
+		if setArgNil {
+			obj["load-balance-all"] = nil
+		} else {
 
-		t, err := expandSystemHaLoadBalanceAll(d, v, "load_balance_all", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["load-balance-all"] = t
+			t, err := expandSystemHaLoadBalanceAll(d, v, "load_balance_all", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["load-balance-all"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sync_config"); ok {
+		if setArgNil {
+			obj["sync-config"] = nil
+		} else {
 
-		t, err := expandSystemHaSyncConfig(d, v, "sync_config", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sync-config"] = t
+			t, err := expandSystemHaSyncConfig(d, v, "sync_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sync-config"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("encryption"); ok {
+		if setArgNil {
+			obj["encryption"] = nil
+		} else {
 
-		t, err := expandSystemHaEncryption(d, v, "encryption", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["encryption"] = t
+			t, err := expandSystemHaEncryption(d, v, "encryption", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["encryption"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
+		if setArgNil {
+			obj["authentication"] = nil
+		} else {
 
-		t, err := expandSystemHaAuthentication(d, v, "authentication", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authentication"] = t
+			t, err := expandSystemHaAuthentication(d, v, "authentication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authentication"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hb_interval"); ok {
+		if setArgNil {
+			obj["hb-interval"] = nil
+		} else {
 
-		t, err := expandSystemHaHbInterval(d, v, "hb_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hb-interval"] = t
+			t, err := expandSystemHaHbInterval(d, v, "hb_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hb-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hb_interval_in_milliseconds"); ok {
+		if setArgNil {
+			obj["hb-interval-in-milliseconds"] = nil
+		} else {
 
-		t, err := expandSystemHaHbIntervalInMilliseconds(d, v, "hb_interval_in_milliseconds", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hb-interval-in-milliseconds"] = t
+			t, err := expandSystemHaHbIntervalInMilliseconds(d, v, "hb_interval_in_milliseconds", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hb-interval-in-milliseconds"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hb_lost_threshold"); ok {
+		if setArgNil {
+			obj["hb-lost-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaHbLostThreshold(d, v, "hb_lost_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hb-lost-threshold"] = t
+			t, err := expandSystemHaHbLostThreshold(d, v, "hb_lost_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hb-lost-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hello_holddown"); ok {
+		if setArgNil {
+			obj["hello-holddown"] = nil
+		} else {
 
-		t, err := expandSystemHaHelloHolddown(d, v, "hello_holddown", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hello-holddown"] = t
+			t, err := expandSystemHaHelloHolddown(d, v, "hello_holddown", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hello-holddown"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gratuitous_arps"); ok {
+		if setArgNil {
+			obj["gratuitous-arps"] = nil
+		} else {
 
-		t, err := expandSystemHaGratuitousArps(d, v, "gratuitous_arps", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gratuitous-arps"] = t
+			t, err := expandSystemHaGratuitousArps(d, v, "gratuitous_arps", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gratuitous-arps"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("arps"); ok {
+		if setArgNil {
+			obj["arps"] = nil
+		} else {
 
-		t, err := expandSystemHaArps(d, v, "arps", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["arps"] = t
+			t, err := expandSystemHaArps(d, v, "arps", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["arps"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("arps_interval"); ok {
+		if setArgNil {
+			obj["arps-interval"] = nil
+		} else {
 
-		t, err := expandSystemHaArpsInterval(d, v, "arps_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["arps-interval"] = t
+			t, err := expandSystemHaArpsInterval(d, v, "arps_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["arps-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_pickup"); ok {
+		if setArgNil {
+			obj["session-pickup"] = nil
+		} else {
 
-		t, err := expandSystemHaSessionPickup(d, v, "session_pickup", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-pickup"] = t
+			t, err := expandSystemHaSessionPickup(d, v, "session_pickup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-pickup"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_pickup_connectionless"); ok {
+		if setArgNil {
+			obj["session-pickup-connectionless"] = nil
+		} else {
 
-		t, err := expandSystemHaSessionPickupConnectionless(d, v, "session_pickup_connectionless", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-pickup-connectionless"] = t
+			t, err := expandSystemHaSessionPickupConnectionless(d, v, "session_pickup_connectionless", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-pickup-connectionless"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_pickup_expectation"); ok {
+		if setArgNil {
+			obj["session-pickup-expectation"] = nil
+		} else {
 
-		t, err := expandSystemHaSessionPickupExpectation(d, v, "session_pickup_expectation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-pickup-expectation"] = t
+			t, err := expandSystemHaSessionPickupExpectation(d, v, "session_pickup_expectation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-pickup-expectation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_pickup_nat"); ok {
+		if setArgNil {
+			obj["session-pickup-nat"] = nil
+		} else {
 
-		t, err := expandSystemHaSessionPickupNat(d, v, "session_pickup_nat", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-pickup-nat"] = t
+			t, err := expandSystemHaSessionPickupNat(d, v, "session_pickup_nat", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-pickup-nat"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_pickup_delay"); ok {
+		if setArgNil {
+			obj["session-pickup-delay"] = nil
+		} else {
 
-		t, err := expandSystemHaSessionPickupDelay(d, v, "session_pickup_delay", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-pickup-delay"] = t
+			t, err := expandSystemHaSessionPickupDelay(d, v, "session_pickup_delay", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-pickup-delay"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("link_failed_signal"); ok {
+		if setArgNil {
+			obj["link-failed-signal"] = nil
+		} else {
 
-		t, err := expandSystemHaLinkFailedSignal(d, v, "link_failed_signal", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["link-failed-signal"] = t
+			t, err := expandSystemHaLinkFailedSignal(d, v, "link_failed_signal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["link-failed-signal"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uninterruptible_upgrade"); ok {
+		if setArgNil {
+			obj["uninterruptible-upgrade"] = nil
+		} else {
 
-		t, err := expandSystemHaUninterruptibleUpgrade(d, v, "uninterruptible_upgrade", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uninterruptible-upgrade"] = t
+			t, err := expandSystemHaUninterruptibleUpgrade(d, v, "uninterruptible_upgrade", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uninterruptible-upgrade"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uninterruptible_primary_wait"); ok {
+		if setArgNil {
+			obj["uninterruptible-primary-wait"] = nil
+		} else {
 
-		t, err := expandSystemHaUninterruptiblePrimaryWait(d, v, "uninterruptible_primary_wait", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uninterruptible-primary-wait"] = t
+			t, err := expandSystemHaUninterruptiblePrimaryWait(d, v, "uninterruptible_primary_wait", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uninterruptible-primary-wait"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("standalone_mgmt_vdom"); ok {
+		if setArgNil {
+			obj["standalone-mgmt-vdom"] = nil
+		} else {
 
-		t, err := expandSystemHaStandaloneMgmtVdom(d, v, "standalone_mgmt_vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["standalone-mgmt-vdom"] = t
+			t, err := expandSystemHaStandaloneMgmtVdom(d, v, "standalone_mgmt_vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["standalone-mgmt-vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha_mgmt_status"); ok {
+		if setArgNil {
+			obj["ha-mgmt-status"] = nil
+		} else {
 
-		t, err := expandSystemHaHaMgmtStatus(d, v, "ha_mgmt_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha-mgmt-status"] = t
+			t, err := expandSystemHaHaMgmtStatus(d, v, "ha_mgmt_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-mgmt-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha_mgmt_interfaces"); ok {
+		if setArgNil {
+			obj["ha-mgmt-interfaces"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemHaHaMgmtInterfaces(d, v, "ha_mgmt_interfaces", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha-mgmt-interfaces"] = t
+			t, err := expandSystemHaHaMgmtInterfaces(d, v, "ha_mgmt_interfaces", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-mgmt-interfaces"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha_eth_type"); ok {
+		if setArgNil {
+			obj["ha-eth-type"] = nil
+		} else {
 
-		t, err := expandSystemHaHaEthType(d, v, "ha_eth_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha-eth-type"] = t
+			t, err := expandSystemHaHaEthType(d, v, "ha_eth_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-eth-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hc_eth_type"); ok {
+		if setArgNil {
+			obj["hc-eth-type"] = nil
+		} else {
 
-		t, err := expandSystemHaHcEthType(d, v, "hc_eth_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hc-eth-type"] = t
+			t, err := expandSystemHaHcEthType(d, v, "hc_eth_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hc-eth-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("l2ep_eth_type"); ok {
+		if setArgNil {
+			obj["l2ep-eth-type"] = nil
+		} else {
 
-		t, err := expandSystemHaL2EpEthType(d, v, "l2ep_eth_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["l2ep-eth-type"] = t
+			t, err := expandSystemHaL2EpEthType(d, v, "l2ep_eth_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["l2ep-eth-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha_uptime_diff_margin"); ok {
+		if setArgNil {
+			obj["ha-uptime-diff-margin"] = nil
+		} else {
 
-		t, err := expandSystemHaHaUptimeDiffMargin(d, v, "ha_uptime_diff_margin", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha-uptime-diff-margin"] = t
+			t, err := expandSystemHaHaUptimeDiffMargin(d, v, "ha_uptime_diff_margin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-uptime-diff-margin"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("standalone_config_sync"); ok {
+		if setArgNil {
+			obj["standalone-config-sync"] = nil
+		} else {
 
-		t, err := expandSystemHaStandaloneConfigSync(d, v, "standalone_config_sync", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["standalone-config-sync"] = t
+			t, err := expandSystemHaStandaloneConfigSync(d, v, "standalone_config_sync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["standalone-config-sync"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unicast_status"); ok {
+		if setArgNil {
+			obj["unicast-status"] = nil
+		} else {
 
-		t, err := expandSystemHaUnicastStatus(d, v, "unicast_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unicast-status"] = t
+			t, err := expandSystemHaUnicastStatus(d, v, "unicast_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unicast-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unicast_gateway"); ok {
+		if setArgNil {
+			obj["unicast-gateway"] = nil
+		} else {
 
-		t, err := expandSystemHaUnicastGateway(d, v, "unicast_gateway", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unicast-gateway"] = t
+			t, err := expandSystemHaUnicastGateway(d, v, "unicast_gateway", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unicast-gateway"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unicast_peers"); ok {
+		if setArgNil {
+			obj["unicast-peers"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemHaUnicastPeers(d, v, "unicast_peers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unicast-peers"] = t
+			t, err := expandSystemHaUnicastPeers(d, v, "unicast_peers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unicast-peers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("logical_sn"); ok {
+		if setArgNil {
+			obj["logical-sn"] = nil
+		} else {
 
-		t, err := expandSystemHaLogicalSn(d, v, "logical_sn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["logical-sn"] = t
+			t, err := expandSystemHaLogicalSn(d, v, "logical_sn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["logical-sn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vcluster2"); ok {
+		if setArgNil {
+			obj["vcluster2"] = nil
+		} else {
 
-		t, err := expandSystemHaVcluster2(d, v, "vcluster2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vcluster2"] = t
+			t, err := expandSystemHaVcluster2(d, v, "vcluster2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vcluster2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("vcluster_id"); ok {
+		if setArgNil {
+			obj["vcluster-id"] = nil
+		} else {
 
-		t, err := expandSystemHaVclusterId(d, v, "vcluster_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vcluster-id"] = t
+			t, err := expandSystemHaVclusterId(d, v, "vcluster_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vcluster-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("override"); ok {
+		if setArgNil {
+			obj["override"] = nil
+		} else {
 
-		t, err := expandSystemHaOverride(d, v, "override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["override"] = t
+			t, err := expandSystemHaOverride(d, v, "override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandSystemHaPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandSystemHaPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("override_wait_time"); ok {
+		if setArgNil {
+			obj["override-wait-time"] = nil
+		} else {
 
-		t, err := expandSystemHaOverrideWaitTime(d, v, "override_wait_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["override-wait-time"] = t
+			t, err := expandSystemHaOverrideWaitTime(d, v, "override_wait_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override-wait-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
+		if setArgNil {
+			obj["schedule"] = nil
+		} else {
 
-		t, err := expandSystemHaSchedule(d, v, "schedule", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["schedule"] = t
+			t, err := expandSystemHaSchedule(d, v, "schedule", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["schedule"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("weight"); ok {
+		if setArgNil {
+			obj["weight"] = nil
+		} else {
 
-		t, err := expandSystemHaWeight(d, v, "weight", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["weight"] = t
+			t, err := expandSystemHaWeight(d, v, "weight", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["weight"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cpu_threshold"); ok {
+		if setArgNil {
+			obj["cpu-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaCpuThreshold(d, v, "cpu_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cpu-threshold"] = t
+			t, err := expandSystemHaCpuThreshold(d, v, "cpu_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cpu-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_threshold"); ok {
+		if setArgNil {
+			obj["memory-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryThreshold(d, v, "memory_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-threshold"] = t
+			t, err := expandSystemHaMemoryThreshold(d, v, "memory_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("http_proxy_threshold"); ok {
+		if setArgNil {
+			obj["http-proxy-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaHttpProxyThreshold(d, v, "http_proxy_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-proxy-threshold"] = t
+			t, err := expandSystemHaHttpProxyThreshold(d, v, "http_proxy_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-proxy-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ftp_proxy_threshold"); ok {
+		if setArgNil {
+			obj["ftp-proxy-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaFtpProxyThreshold(d, v, "ftp_proxy_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ftp-proxy-threshold"] = t
+			t, err := expandSystemHaFtpProxyThreshold(d, v, "ftp_proxy_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ftp-proxy-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("imap_proxy_threshold"); ok {
+		if setArgNil {
+			obj["imap-proxy-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaImapProxyThreshold(d, v, "imap_proxy_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["imap-proxy-threshold"] = t
+			t, err := expandSystemHaImapProxyThreshold(d, v, "imap_proxy_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["imap-proxy-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nntp_proxy_threshold"); ok {
+		if setArgNil {
+			obj["nntp-proxy-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaNntpProxyThreshold(d, v, "nntp_proxy_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nntp-proxy-threshold"] = t
+			t, err := expandSystemHaNntpProxyThreshold(d, v, "nntp_proxy_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nntp-proxy-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pop3_proxy_threshold"); ok {
+		if setArgNil {
+			obj["pop3-proxy-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaPop3ProxyThreshold(d, v, "pop3_proxy_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pop3-proxy-threshold"] = t
+			t, err := expandSystemHaPop3ProxyThreshold(d, v, "pop3_proxy_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pop3-proxy-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("smtp_proxy_threshold"); ok {
+		if setArgNil {
+			obj["smtp-proxy-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaSmtpProxyThreshold(d, v, "smtp_proxy_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["smtp-proxy-threshold"] = t
+			t, err := expandSystemHaSmtpProxyThreshold(d, v, "smtp_proxy_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["smtp-proxy-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("monitor"); ok {
+		if setArgNil {
+			obj["monitor"] = nil
+		} else {
 
-		t, err := expandSystemHaMonitor(d, v, "monitor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["monitor"] = t
+			t, err := expandSystemHaMonitor(d, v, "monitor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pingserver_monitor_interface"); ok {
+		if setArgNil {
+			obj["pingserver-monitor-interface"] = nil
+		} else {
 
-		t, err := expandSystemHaPingserverMonitorInterface(d, v, "pingserver_monitor_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pingserver-monitor-interface"] = t
+			t, err := expandSystemHaPingserverMonitorInterface(d, v, "pingserver_monitor_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pingserver-monitor-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("pingserver_failover_threshold"); ok {
+		if setArgNil {
+			obj["pingserver-failover-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaPingserverFailoverThreshold(d, v, "pingserver_failover_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pingserver-failover-threshold"] = t
+			t, err := expandSystemHaPingserverFailoverThreshold(d, v, "pingserver_failover_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pingserver-failover-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pingserver_secondary_force_reset"); ok {
+		if setArgNil {
+			obj["pingserver-secondary-force-reset"] = nil
+		} else {
 
-		t, err := expandSystemHaPingserverSecondaryForceReset(d, v, "pingserver_secondary_force_reset", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pingserver-secondary-force-reset"] = t
+			t, err := expandSystemHaPingserverSecondaryForceReset(d, v, "pingserver_secondary_force_reset", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pingserver-secondary-force-reset"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pingserver_slave_force_reset"); ok {
+		if setArgNil {
+			obj["pingserver-slave-force-reset"] = nil
+		} else {
 
-		t, err := expandSystemHaPingserverSlaveForceReset(d, v, "pingserver_slave_force_reset", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pingserver-slave-force-reset"] = t
+			t, err := expandSystemHaPingserverSlaveForceReset(d, v, "pingserver_slave_force_reset", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pingserver-slave-force-reset"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pingserver_flip_timeout"); ok {
+		if setArgNil {
+			obj["pingserver-flip-timeout"] = nil
+		} else {
 
-		t, err := expandSystemHaPingserverFlipTimeout(d, v, "pingserver_flip_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pingserver-flip-timeout"] = t
+			t, err := expandSystemHaPingserverFlipTimeout(d, v, "pingserver_flip_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pingserver-flip-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
+		if setArgNil {
+			obj["vdom"] = nil
+		} else {
 
-		t, err := expandSystemHaVdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
+			t, err := expandSystemHaVdom(d, v, "vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("secondary_vcluster"); ok {
 
-		t, err := expandSystemHaSecondaryVcluster(d, v, "secondary_vcluster", sv)
+		t, err := expandSystemHaSecondaryVcluster(d, v, "secondary_vcluster", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2924,102 +3241,142 @@ func getObjectSystemHa(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ha_direct"); ok {
+		if setArgNil {
+			obj["ha-direct"] = nil
+		} else {
 
-		t, err := expandSystemHaHaDirect(d, v, "ha_direct", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha-direct"] = t
+			t, err := expandSystemHaHaDirect(d, v, "ha_direct", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-direct"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssd_failover"); ok {
+		if setArgNil {
+			obj["ssd-failover"] = nil
+		} else {
 
-		t, err := expandSystemHaSsdFailover(d, v, "ssd_failover", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssd-failover"] = t
+			t, err := expandSystemHaSsdFailover(d, v, "ssd_failover", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssd-failover"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_compatible_mode"); ok {
+		if setArgNil {
+			obj["memory-compatible-mode"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryCompatibleMode(d, v, "memory_compatible_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-compatible-mode"] = t
+			t, err := expandSystemHaMemoryCompatibleMode(d, v, "memory_compatible_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-compatible-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_based_failover"); ok {
+		if setArgNil {
+			obj["memory-based-failover"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryBasedFailover(d, v, "memory_based_failover", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-based-failover"] = t
+			t, err := expandSystemHaMemoryBasedFailover(d, v, "memory_based_failover", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-based-failover"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("memory_failover_threshold"); ok {
+		if setArgNil {
+			obj["memory-failover-threshold"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryFailoverThreshold(d, v, "memory_failover_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-failover-threshold"] = t
+			t, err := expandSystemHaMemoryFailoverThreshold(d, v, "memory_failover_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-failover-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_failover_monitor_period"); ok {
+		if setArgNil {
+			obj["memory-failover-monitor-period"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryFailoverMonitorPeriod(d, v, "memory_failover_monitor_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-failover-monitor-period"] = t
+			t, err := expandSystemHaMemoryFailoverMonitorPeriod(d, v, "memory_failover_monitor_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-failover-monitor-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_failover_sample_rate"); ok {
+		if setArgNil {
+			obj["memory-failover-sample-rate"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryFailoverSampleRate(d, v, "memory_failover_sample_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-failover-sample-rate"] = t
+			t, err := expandSystemHaMemoryFailoverSampleRate(d, v, "memory_failover_sample_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-failover-sample-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("memory_failover_flip_timeout"); ok {
+		if setArgNil {
+			obj["memory-failover-flip-timeout"] = nil
+		} else {
 
-		t, err := expandSystemHaMemoryFailoverFlipTimeout(d, v, "memory_failover_flip_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["memory-failover-flip-timeout"] = t
+			t, err := expandSystemHaMemoryFailoverFlipTimeout(d, v, "memory_failover_flip_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["memory-failover-flip-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("failover_hold_time"); ok {
+		if setArgNil {
+			obj["failover-hold-time"] = nil
+		} else {
 
-		t, err := expandSystemHaFailoverHoldTime(d, v, "failover_hold_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["failover-hold-time"] = t
+			t, err := expandSystemHaFailoverHoldTime(d, v, "failover_hold_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["failover-hold-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("inter_cluster_session_sync"); ok {
+		if setArgNil {
+			obj["inter-cluster-session-sync"] = nil
+		} else {
 
-		t, err := expandSystemHaInterClusterSessionSync(d, v, "inter_cluster_session_sync", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inter-cluster-session-sync"] = t
+			t, err := expandSystemHaInterClusterSessionSync(d, v, "inter_cluster_session_sync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inter-cluster-session-sync"] = t
+			}
 		}
 	}
 

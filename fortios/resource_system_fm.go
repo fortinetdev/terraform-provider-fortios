@@ -89,7 +89,7 @@ func resourceSystemFmUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemFm(d, c.Fv)
+	obj, err := getObjectSystemFm(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFm resource while getting object: %v", err)
 	}
@@ -111,7 +111,6 @@ func resourceSystemFmUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemFmDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -123,9 +122,15 @@ func resourceSystemFmDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemFm(mkey, vdomparam)
+	obj, err := getObjectSystemFm(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFm resource: %v", err)
+		return fmt.Errorf("Error updating SystemFm resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFm(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFm resource: %v", err)
 	}
 
 	d.SetId("")
@@ -275,76 +280,104 @@ func expandSystemFmIpsec(d *schema.ResourceData, v interface{}, pre string, sv s
 	return v, nil
 }
 
-func getObjectSystemFm(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFmStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFmStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
+		if setArgNil {
+			obj["id"] = nil
+		} else {
 
-		t, err := expandSystemFmId(d, v, "fosid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["id"] = t
+			t, err := expandSystemFmId(d, v, "fosid", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
+		if setArgNil {
+			obj["ip"] = nil
+		} else {
 
-		t, err := expandSystemFmIp(d, v, "ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip"] = t
+			t, err := expandSystemFmIp(d, v, "ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
+		if setArgNil {
+			obj["vdom"] = nil
+		} else {
 
-		t, err := expandSystemFmVdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
+			t, err := expandSystemFmVdom(d, v, "vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_backup"); ok {
+		if setArgNil {
+			obj["auto-backup"] = nil
+		} else {
 
-		t, err := expandSystemFmAutoBackup(d, v, "auto_backup", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-backup"] = t
+			t, err := expandSystemFmAutoBackup(d, v, "auto_backup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-backup"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("scheduled_config_restore"); ok {
+		if setArgNil {
+			obj["scheduled-config-restore"] = nil
+		} else {
 
-		t, err := expandSystemFmScheduledConfigRestore(d, v, "scheduled_config_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["scheduled-config-restore"] = t
+			t, err := expandSystemFmScheduledConfigRestore(d, v, "scheduled_config_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["scheduled-config-restore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec"); ok {
+		if setArgNil {
+			obj["ipsec"] = nil
+		} else {
 
-		t, err := expandSystemFmIpsec(d, v, "ipsec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec"] = t
+			t, err := expandSystemFmIpsec(d, v, "ipsec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec"] = t
+			}
 		}
 	}
 

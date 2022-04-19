@@ -75,7 +75,7 @@ func resourceLogMemoryGlobalSettingUpdate(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	obj, err := getObjectLogMemoryGlobalSetting(d, c.Fv)
+	obj, err := getObjectLogMemoryGlobalSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemoryGlobalSetting resource while getting object: %v", err)
 	}
@@ -97,7 +97,6 @@ func resourceLogMemoryGlobalSettingUpdate(d *schema.ResourceData, m interface{})
 
 func resourceLogMemoryGlobalSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -109,9 +108,15 @@ func resourceLogMemoryGlobalSettingDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteLogMemoryGlobalSetting(mkey, vdomparam)
+	obj, err := getObjectLogMemoryGlobalSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogMemoryGlobalSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogMemoryGlobalSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogMemoryGlobalSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogMemoryGlobalSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -219,46 +224,62 @@ func expandLogMemoryGlobalSettingFullFinalWarningThreshold(d *schema.ResourceDat
 	return v, nil
 }
 
-func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("max_size"); ok {
+		if setArgNil {
+			obj["max-size"] = nil
+		} else {
 
-		t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-size"] = t
+			t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("full_first_warning_threshold"); ok {
+		if setArgNil {
+			obj["full-first-warning-threshold"] = nil
+		} else {
 
-		t, err := expandLogMemoryGlobalSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["full-first-warning-threshold"] = t
+			t, err := expandLogMemoryGlobalSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["full-first-warning-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("full_second_warning_threshold"); ok {
+		if setArgNil {
+			obj["full-second-warning-threshold"] = nil
+		} else {
 
-		t, err := expandLogMemoryGlobalSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["full-second-warning-threshold"] = t
+			t, err := expandLogMemoryGlobalSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["full-second-warning-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("full_final_warning_threshold"); ok {
+		if setArgNil {
+			obj["full-final-warning-threshold"] = nil
+		} else {
 
-		t, err := expandLogMemoryGlobalSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["full-final-warning-threshold"] = t
+			t, err := expandLogMemoryGlobalSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["full-final-warning-threshold"] = t
+			}
 		}
 	}
 

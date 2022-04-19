@@ -128,7 +128,7 @@ func resourceSystemEmailServerUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectSystemEmailServer(d, c.Fv)
+	obj, err := getObjectSystemEmailServer(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemEmailServer resource while getting object: %v", err)
 	}
@@ -150,7 +150,6 @@ func resourceSystemEmailServerUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceSystemEmailServerDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -162,9 +161,15 @@ func resourceSystemEmailServerDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteSystemEmailServer(mkey, vdomparam)
+	obj, err := getObjectSystemEmailServer(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemEmailServer resource: %v", err)
+		return fmt.Errorf("Error updating SystemEmailServer resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemEmailServer(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemEmailServer resource: %v", err)
 	}
 
 	d.SetId("")
@@ -406,146 +411,202 @@ func expandSystemEmailServerInterface(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectSystemEmailServer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("type"); ok {
+		if setArgNil {
+			obj["type"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerType(d, v, "type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["type"] = t
+			t, err := expandSystemEmailServerType(d, v, "type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reply_to"); ok {
+		if setArgNil {
+			obj["reply-to"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerReplyTo(d, v, "reply_to", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reply-to"] = t
+			t, err := expandSystemEmailServerReplyTo(d, v, "reply_to", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reply-to"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandSystemEmailServerServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerPort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandSystemEmailServerPort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemEmailServerSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
+		if setArgNil {
+			obj["source-ip6"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerSourceIp6(d, v, "source_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip6"] = t
+			t, err := expandSystemEmailServerSourceIp6(d, v, "source_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authenticate"); ok {
+		if setArgNil {
+			obj["authenticate"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerAuthenticate(d, v, "authenticate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authenticate"] = t
+			t, err := expandSystemEmailServerAuthenticate(d, v, "authenticate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authenticate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("validate_server"); ok {
+		if setArgNil {
+			obj["validate-server"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerValidateServer(d, v, "validate_server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["validate-server"] = t
+			t, err := expandSystemEmailServerValidateServer(d, v, "validate_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["validate-server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("username"); ok {
+		if setArgNil {
+			obj["username"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerUsername(d, v, "username", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["username"] = t
+			t, err := expandSystemEmailServerUsername(d, v, "username", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["username"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("password"); ok {
+		if setArgNil {
+			obj["password"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerPassword(d, v, "password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["password"] = t
+			t, err := expandSystemEmailServerPassword(d, v, "password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("security"); ok {
+		if setArgNil {
+			obj["security"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerSecurity(d, v, "security", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["security"] = t
+			t, err := expandSystemEmailServerSecurity(d, v, "security", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["security"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandSystemEmailServerSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemEmailServerInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemEmailServerInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemEmailServerInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

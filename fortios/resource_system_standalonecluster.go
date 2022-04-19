@@ -84,7 +84,7 @@ func resourceSystemStandaloneClusterUpdate(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	obj, err := getObjectSystemStandaloneCluster(d, c.Fv)
+	obj, err := getObjectSystemStandaloneCluster(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemStandaloneCluster resource while getting object: %v", err)
 	}
@@ -106,7 +106,6 @@ func resourceSystemStandaloneClusterUpdate(d *schema.ResourceData, m interface{}
 
 func resourceSystemStandaloneClusterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -118,9 +117,15 @@ func resourceSystemStandaloneClusterDelete(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	err := c.DeleteSystemStandaloneCluster(mkey, vdomparam)
+	obj, err := getObjectSystemStandaloneCluster(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemStandaloneCluster resource: %v", err)
+		return fmt.Errorf("Error updating SystemStandaloneCluster resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemStandaloneCluster(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemStandaloneCluster resource: %v", err)
 	}
 
 	d.SetId("")
@@ -250,66 +255,90 @@ func expandSystemStandaloneClusterPsksecret(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectSystemStandaloneCluster(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("standalone_group_id"); ok {
+		if setArgNil {
+			obj["standalone-group-id"] = nil
+		} else {
 
-		t, err := expandSystemStandaloneClusterStandaloneGroupId(d, v, "standalone_group_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["standalone-group-id"] = t
+			t, err := expandSystemStandaloneClusterStandaloneGroupId(d, v, "standalone_group_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["standalone-group-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("group_member_id"); ok {
+		if setArgNil {
+			obj["group-member-id"] = nil
+		} else {
 
-		t, err := expandSystemStandaloneClusterGroupMemberId(d, v, "group_member_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group-member-id"] = t
+			t, err := expandSystemStandaloneClusterGroupMemberId(d, v, "group_member_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["group-member-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("layer2_connection"); ok {
+		if setArgNil {
+			obj["layer2-connection"] = nil
+		} else {
 
-		t, err := expandSystemStandaloneClusterLayer2Connection(d, v, "layer2_connection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["layer2-connection"] = t
+			t, err := expandSystemStandaloneClusterLayer2Connection(d, v, "layer2_connection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["layer2-connection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_sync_dev"); ok {
+		if setArgNil {
+			obj["session-sync-dev"] = nil
+		} else {
 
-		t, err := expandSystemStandaloneClusterSessionSyncDev(d, v, "session_sync_dev", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-sync-dev"] = t
+			t, err := expandSystemStandaloneClusterSessionSyncDev(d, v, "session_sync_dev", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-sync-dev"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("encryption"); ok {
+		if setArgNil {
+			obj["encryption"] = nil
+		} else {
 
-		t, err := expandSystemStandaloneClusterEncryption(d, v, "encryption", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["encryption"] = t
+			t, err := expandSystemStandaloneClusterEncryption(d, v, "encryption", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["encryption"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("psksecret"); ok {
+		if setArgNil {
+			obj["psksecret"] = nil
+		} else {
 
-		t, err := expandSystemStandaloneClusterPsksecret(d, v, "psksecret", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["psksecret"] = t
+			t, err := expandSystemStandaloneClusterPsksecret(d, v, "psksecret", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["psksecret"] = t
+			}
 		}
 	}
 

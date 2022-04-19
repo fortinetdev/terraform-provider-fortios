@@ -62,7 +62,7 @@ func resourceLogMemorySettingUpdate(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	obj, err := getObjectLogMemorySetting(d, c.Fv)
+	obj, err := getObjectLogMemorySetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemorySetting resource while getting object: %v", err)
 	}
@@ -84,7 +84,6 @@ func resourceLogMemorySettingUpdate(d *schema.ResourceData, m interface{}) error
 
 func resourceLogMemorySettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -96,9 +95,15 @@ func resourceLogMemorySettingDelete(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	err := c.DeleteLogMemorySetting(mkey, vdomparam)
+	obj, err := getObjectLogMemorySetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogMemorySetting resource: %v", err)
+		return fmt.Errorf("Error updating LogMemorySetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogMemorySetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogMemorySetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -178,26 +183,34 @@ func expandLogMemorySettingDiskfull(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-func getObjectLogMemorySetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogMemorySetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogMemorySettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogMemorySettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("diskfull"); ok {
+		if setArgNil {
+			obj["diskfull"] = nil
+		} else {
 
-		t, err := expandLogMemorySettingDiskfull(d, v, "diskfull", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["diskfull"] = t
+			t, err := expandLogMemorySettingDiskfull(d, v, "diskfull", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["diskfull"] = t
+			}
 		}
 	}
 

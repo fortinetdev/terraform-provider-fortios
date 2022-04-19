@@ -67,7 +67,7 @@ func resourceLogTacacsAccountingFilterUpdate(d *schema.ResourceData, m interface
 		}
 	}
 
-	obj, err := getObjectLogTacacsAccountingFilter(d, c.Fv)
+	obj, err := getObjectLogTacacsAccountingFilter(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogTacacsAccountingFilter resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceLogTacacsAccountingFilterUpdate(d *schema.ResourceData, m interface
 
 func resourceLogTacacsAccountingFilterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceLogTacacsAccountingFilterDelete(d *schema.ResourceData, m interface
 		}
 	}
 
-	err := c.DeleteLogTacacsAccountingFilter(mkey, vdomparam)
+	obj, err := getObjectLogTacacsAccountingFilter(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogTacacsAccountingFilter resource: %v", err)
+		return fmt.Errorf("Error updating LogTacacsAccountingFilter resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogTacacsAccountingFilter(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogTacacsAccountingFilter resource: %v", err)
 	}
 
 	d.SetId("")
@@ -197,36 +202,48 @@ func expandLogTacacsAccountingFilterCliCmdAudit(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-func getObjectLogTacacsAccountingFilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogTacacsAccountingFilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("login_audit"); ok {
+		if setArgNil {
+			obj["login-audit"] = nil
+		} else {
 
-		t, err := expandLogTacacsAccountingFilterLoginAudit(d, v, "login_audit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["login-audit"] = t
+			t, err := expandLogTacacsAccountingFilterLoginAudit(d, v, "login_audit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login-audit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("config_change_audit"); ok {
+		if setArgNil {
+			obj["config-change-audit"] = nil
+		} else {
 
-		t, err := expandLogTacacsAccountingFilterConfigChangeAudit(d, v, "config_change_audit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["config-change-audit"] = t
+			t, err := expandLogTacacsAccountingFilterConfigChangeAudit(d, v, "config_change_audit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["config-change-audit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cli_cmd_audit"); ok {
+		if setArgNil {
+			obj["cli-cmd-audit"] = nil
+		} else {
 
-		t, err := expandLogTacacsAccountingFilterCliCmdAudit(d, v, "cli_cmd_audit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cli-cmd-audit"] = t
+			t, err := expandLogTacacsAccountingFilterCliCmdAudit(d, v, "cli_cmd_audit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cli-cmd-audit"] = t
+			}
 		}
 	}
 

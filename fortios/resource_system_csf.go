@@ -283,7 +283,7 @@ func resourceSystemCsfUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemCsf(d, c.Fv)
+	obj, err := getObjectSystemCsf(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCsf resource while getting object: %v", err)
 	}
@@ -305,7 +305,6 @@ func resourceSystemCsfUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemCsfDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -317,9 +316,15 @@ func resourceSystemCsfDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemCsf(mkey, vdomparam)
+	obj, err := getObjectSystemCsf(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemCsf resource: %v", err)
+		return fmt.Errorf("Error updating SystemCsf resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemCsf(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemCsf resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1185,236 +1190,328 @@ func expandSystemCsfFabricDevicePassword(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func getObjectSystemCsf(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemCsfStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemCsfStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upstream"); ok {
+		if setArgNil {
+			obj["upstream"] = nil
+		} else {
 
-		t, err := expandSystemCsfUpstream(d, v, "upstream", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upstream"] = t
+			t, err := expandSystemCsfUpstream(d, v, "upstream", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upstream"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upstream_ip"); ok {
+		if setArgNil {
+			obj["upstream-ip"] = nil
+		} else {
 
-		t, err := expandSystemCsfUpstreamIp(d, v, "upstream_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upstream-ip"] = t
+			t, err := expandSystemCsfUpstreamIp(d, v, "upstream_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upstream-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upstream_port"); ok {
+		if setArgNil {
+			obj["upstream-port"] = nil
+		} else {
 
-		t, err := expandSystemCsfUpstreamPort(d, v, "upstream_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upstream-port"] = t
+			t, err := expandSystemCsfUpstreamPort(d, v, "upstream_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upstream-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("group_name"); ok {
+		if setArgNil {
+			obj["group-name"] = nil
+		} else {
 
-		t, err := expandSystemCsfGroupName(d, v, "group_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group-name"] = t
+			t, err := expandSystemCsfGroupName(d, v, "group_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["group-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("group_password"); ok {
+		if setArgNil {
+			obj["group-password"] = nil
+		} else {
 
-		t, err := expandSystemCsfGroupPassword(d, v, "group_password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group-password"] = t
+			t, err := expandSystemCsfGroupPassword(d, v, "group_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["group-password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("accept_auth_by_cert"); ok {
+		if setArgNil {
+			obj["accept-auth-by-cert"] = nil
+		} else {
 
-		t, err := expandSystemCsfAcceptAuthByCert(d, v, "accept_auth_by_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["accept-auth-by-cert"] = t
+			t, err := expandSystemCsfAcceptAuthByCert(d, v, "accept_auth_by_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["accept-auth-by-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_unification"); ok {
+		if setArgNil {
+			obj["log-unification"] = nil
+		} else {
 
-		t, err := expandSystemCsfLogUnification(d, v, "log_unification", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-unification"] = t
+			t, err := expandSystemCsfLogUnification(d, v, "log_unification", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-unification"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("configuration_sync"); ok {
+		if setArgNil {
+			obj["configuration-sync"] = nil
+		} else {
 
-		t, err := expandSystemCsfConfigurationSync(d, v, "configuration_sync", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["configuration-sync"] = t
+			t, err := expandSystemCsfConfigurationSync(d, v, "configuration_sync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["configuration-sync"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fabric_object_unification"); ok {
+		if setArgNil {
+			obj["fabric-object-unification"] = nil
+		} else {
 
-		t, err := expandSystemCsfFabricObjectUnification(d, v, "fabric_object_unification", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fabric-object-unification"] = t
+			t, err := expandSystemCsfFabricObjectUnification(d, v, "fabric_object_unification", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fabric-object-unification"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("saml_configuration_sync"); ok {
+		if setArgNil {
+			obj["saml-configuration-sync"] = nil
+		} else {
 
-		t, err := expandSystemCsfSamlConfigurationSync(d, v, "saml_configuration_sync", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["saml-configuration-sync"] = t
+			t, err := expandSystemCsfSamlConfigurationSync(d, v, "saml_configuration_sync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["saml-configuration-sync"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("management_ip"); ok {
+		if setArgNil {
+			obj["management-ip"] = nil
+		} else {
 
-		t, err := expandSystemCsfManagementIp(d, v, "management_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-ip"] = t
+			t, err := expandSystemCsfManagementIp(d, v, "management_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("management_port"); ok {
+		if setArgNil {
+			obj["management-port"] = nil
+		} else {
 
-		t, err := expandSystemCsfManagementPort(d, v, "management_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-port"] = t
+			t, err := expandSystemCsfManagementPort(d, v, "management_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authorization_request_type"); ok {
+		if setArgNil {
+			obj["authorization-request-type"] = nil
+		} else {
 
-		t, err := expandSystemCsfAuthorizationRequestType(d, v, "authorization_request_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authorization-request-type"] = t
+			t, err := expandSystemCsfAuthorizationRequestType(d, v, "authorization_request_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authorization-request-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
+		if setArgNil {
+			obj["certificate"] = nil
+		} else {
 
-		t, err := expandSystemCsfCertificate(d, v, "certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certificate"] = t
+			t, err := expandSystemCsfCertificate(d, v, "certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fabric_workers"); ok {
+		if setArgNil {
+			obj["fabric-workers"] = nil
+		} else {
 
-		t, err := expandSystemCsfFabricWorkers(d, v, "fabric_workers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fabric-workers"] = t
+			t, err := expandSystemCsfFabricWorkers(d, v, "fabric_workers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fabric-workers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("downstream_access"); ok {
+		if setArgNil {
+			obj["downstream-access"] = nil
+		} else {
 
-		t, err := expandSystemCsfDownstreamAccess(d, v, "downstream_access", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["downstream-access"] = t
+			t, err := expandSystemCsfDownstreamAccess(d, v, "downstream_access", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["downstream-access"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("downstream_accprofile"); ok {
+		if setArgNil {
+			obj["downstream-accprofile"] = nil
+		} else {
 
-		t, err := expandSystemCsfDownstreamAccprofile(d, v, "downstream_accprofile", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["downstream-accprofile"] = t
+			t, err := expandSystemCsfDownstreamAccprofile(d, v, "downstream_accprofile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["downstream-accprofile"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fixed_key"); ok {
+		if setArgNil {
+			obj["fixed-key"] = nil
+		} else {
 
-		t, err := expandSystemCsfFixedKey(d, v, "fixed_key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fixed-key"] = t
+			t, err := expandSystemCsfFixedKey(d, v, "fixed_key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fixed-key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trusted_list"); ok {
+		if setArgNil {
+			obj["trusted-list"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemCsfTrustedList(d, v, "trusted_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trusted-list"] = t
+			t, err := expandSystemCsfTrustedList(d, v, "trusted_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trusted-list"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fabric_connector"); ok {
+		if setArgNil {
+			obj["fabric-connector"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemCsfFabricConnector(d, v, "fabric_connector", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fabric-connector"] = t
+			t, err := expandSystemCsfFabricConnector(d, v, "fabric_connector", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fabric-connector"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forticloud_account_enforcement"); ok {
+		if setArgNil {
+			obj["forticloud-account-enforcement"] = nil
+		} else {
 
-		t, err := expandSystemCsfForticloudAccountEnforcement(d, v, "forticloud_account_enforcement", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forticloud-account-enforcement"] = t
+			t, err := expandSystemCsfForticloudAccountEnforcement(d, v, "forticloud_account_enforcement", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticloud-account-enforcement"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fabric_device"); ok {
+		if setArgNil {
+			obj["fabric-device"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemCsfFabricDevice(d, v, "fabric_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fabric-device"] = t
+			t, err := expandSystemCsfFabricDevice(d, v, "fabric_device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fabric-device"] = t
+			}
 		}
 	}
 

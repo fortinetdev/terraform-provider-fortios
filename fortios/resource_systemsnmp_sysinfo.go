@@ -101,7 +101,7 @@ func resourceSystemSnmpSysinfoUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectSystemSnmpSysinfo(d, c.Fv)
+	obj, err := getObjectSystemSnmpSysinfo(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpSysinfo resource while getting object: %v", err)
 	}
@@ -123,7 +123,6 @@ func resourceSystemSnmpSysinfoUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceSystemSnmpSysinfoDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -135,9 +134,15 @@ func resourceSystemSnmpSysinfoDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteSystemSnmpSysinfo(mkey, vdomparam)
+	obj, err := getObjectSystemSnmpSysinfo(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemSnmpSysinfo resource: %v", err)
+		return fmt.Errorf("Error updating SystemSnmpSysinfo resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemSnmpSysinfo(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemSnmpSysinfo resource: %v", err)
 	}
 
 	d.SetId("")
@@ -315,96 +320,132 @@ func expandSystemSnmpSysinfoTrapLogFullThreshold(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectSystemSnmpSysinfo(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemSnmpSysinfoStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("engine_id_type"); ok {
+		if setArgNil {
+			obj["engine-id-type"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoEngineIdType(d, v, "engine_id_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["engine-id-type"] = t
+			t, err := expandSystemSnmpSysinfoEngineIdType(d, v, "engine_id_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["engine-id-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("engine_id"); ok {
+		if setArgNil {
+			obj["engine-id"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoEngineId(d, v, "engine_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["engine-id"] = t
+			t, err := expandSystemSnmpSysinfoEngineId(d, v, "engine_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["engine-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("description"); ok {
+		if setArgNil {
+			obj["description"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoDescription(d, v, "description", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["description"] = t
+			t, err := expandSystemSnmpSysinfoDescription(d, v, "description", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["description"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("contact_info"); ok {
+		if setArgNil {
+			obj["contact-info"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoContactInfo(d, v, "contact_info", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["contact-info"] = t
+			t, err := expandSystemSnmpSysinfoContactInfo(d, v, "contact_info", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["contact-info"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("location"); ok {
+		if setArgNil {
+			obj["location"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoLocation(d, v, "location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["location"] = t
+			t, err := expandSystemSnmpSysinfoLocation(d, v, "location", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["location"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trap_high_cpu_threshold"); ok {
+		if setArgNil {
+			obj["trap-high-cpu-threshold"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-high-cpu-threshold"] = t
+			t, err := expandSystemSnmpSysinfoTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-high-cpu-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trap_low_memory_threshold"); ok {
+		if setArgNil {
+			obj["trap-low-memory-threshold"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoTrapLowMemoryThreshold(d, v, "trap_low_memory_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-low-memory-threshold"] = t
+			t, err := expandSystemSnmpSysinfoTrapLowMemoryThreshold(d, v, "trap_low_memory_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-low-memory-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trap_log_full_threshold"); ok {
+		if setArgNil {
+			obj["trap-log-full-threshold"] = nil
+		} else {
 
-		t, err := expandSystemSnmpSysinfoTrapLogFullThreshold(d, v, "trap_log_full_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trap-log-full-threshold"] = t
+			t, err := expandSystemSnmpSysinfoTrapLogFullThreshold(d, v, "trap_log_full_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trap-log-full-threshold"] = t
+			}
 		}
 	}
 

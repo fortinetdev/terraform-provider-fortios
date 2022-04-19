@@ -91,7 +91,7 @@ func resourceSystemProbeResponseUpdate(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	obj, err := getObjectSystemProbeResponse(d, c.Fv)
+	obj, err := getObjectSystemProbeResponse(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemProbeResponse resource while getting object: %v", err)
 	}
@@ -113,7 +113,6 @@ func resourceSystemProbeResponseUpdate(d *schema.ResourceData, m interface{}) er
 
 func resourceSystemProbeResponseDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -125,9 +124,15 @@ func resourceSystemProbeResponseDelete(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	err := c.DeleteSystemProbeResponse(mkey, vdomparam)
+	obj, err := getObjectSystemProbeResponse(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemProbeResponse resource: %v", err)
+		return fmt.Errorf("Error updating SystemProbeResponse resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemProbeResponse(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemProbeResponse resource: %v", err)
 	}
 
 	d.SetId("")
@@ -271,76 +276,104 @@ func expandSystemProbeResponseTimeout(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectSystemProbeResponse(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponsePort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandSystemProbeResponsePort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("http_probe_value"); ok {
+		if setArgNil {
+			obj["http-probe-value"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponseHttpProbeValue(d, v, "http_probe_value", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-probe-value"] = t
+			t, err := expandSystemProbeResponseHttpProbeValue(d, v, "http_probe_value", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-probe-value"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ttl_mode"); ok {
+		if setArgNil {
+			obj["ttl-mode"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponseTtlMode(d, v, "ttl_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ttl-mode"] = t
+			t, err := expandSystemProbeResponseTtlMode(d, v, "ttl_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ttl-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponseMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemProbeResponseMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("security_mode"); ok {
+		if setArgNil {
+			obj["security-mode"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponseSecurityMode(d, v, "security_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["security-mode"] = t
+			t, err := expandSystemProbeResponseSecurityMode(d, v, "security_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["security-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("password"); ok {
+		if setArgNil {
+			obj["password"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponsePassword(d, v, "password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["password"] = t
+			t, err := expandSystemProbeResponsePassword(d, v, "password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {
+		if setArgNil {
+			obj["timeout"] = nil
+		} else {
 
-		t, err := expandSystemProbeResponseTimeout(d, v, "timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["timeout"] = t
+			t, err := expandSystemProbeResponseTimeout(d, v, "timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout"] = t
+			}
 		}
 	}
 

@@ -119,7 +119,7 @@ func resourceSystemPasswordPolicyGuestAdminUpdate(d *schema.ResourceData, m inte
 		}
 	}
 
-	obj, err := getObjectSystemPasswordPolicyGuestAdmin(d, c.Fv)
+	obj, err := getObjectSystemPasswordPolicyGuestAdmin(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPasswordPolicyGuestAdmin resource while getting object: %v", err)
 	}
@@ -141,7 +141,6 @@ func resourceSystemPasswordPolicyGuestAdminUpdate(d *schema.ResourceData, m inte
 
 func resourceSystemPasswordPolicyGuestAdminDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -153,9 +152,15 @@ func resourceSystemPasswordPolicyGuestAdminDelete(d *schema.ResourceData, m inte
 		}
 	}
 
-	err := c.DeleteSystemPasswordPolicyGuestAdmin(mkey, vdomparam)
+	obj, err := getObjectSystemPasswordPolicyGuestAdmin(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemPasswordPolicyGuestAdmin resource: %v", err)
+		return fmt.Errorf("Error updating SystemPasswordPolicyGuestAdmin resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemPasswordPolicyGuestAdmin(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemPasswordPolicyGuestAdmin resource: %v", err)
 	}
 
 	d.SetId("")
@@ -375,126 +380,174 @@ func expandSystemPasswordPolicyGuestAdminReusePassword(d *schema.ResourceData, v
 	return v, nil
 }
 
-func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("apply_to"); ok {
+		if setArgNil {
+			obj["apply-to"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminApplyTo(d, v, "apply_to", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["apply-to"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminApplyTo(d, v, "apply_to", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["apply-to"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("minimum_length"); ok {
+		if setArgNil {
+			obj["minimum-length"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminMinimumLength(d, v, "minimum_length", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["minimum-length"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminMinimumLength(d, v, "minimum_length", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["minimum-length"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("min_lower_case_letter"); ok {
+		if setArgNil {
+			obj["min-lower-case-letter"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminMinLowerCaseLetter(d, v, "min_lower_case_letter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["min-lower-case-letter"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminMinLowerCaseLetter(d, v, "min_lower_case_letter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["min-lower-case-letter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
+		if setArgNil {
+			obj["min-upper-case-letter"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminMinUpperCaseLetter(d, v, "min_upper_case_letter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["min-upper-case-letter"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminMinUpperCaseLetter(d, v, "min_upper_case_letter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["min-upper-case-letter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
+		if setArgNil {
+			obj["min-non-alphanumeric"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminMinNonAlphanumeric(d, v, "min_non_alphanumeric", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["min-non-alphanumeric"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminMinNonAlphanumeric(d, v, "min_non_alphanumeric", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["min-non-alphanumeric"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("min_number"); ok {
+		if setArgNil {
+			obj["min-number"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminMinNumber(d, v, "min_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["min-number"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminMinNumber(d, v, "min_number", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["min-number"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("min_change_characters"); ok {
+		if setArgNil {
+			obj["min-change-characters"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminMinChangeCharacters(d, v, "min_change_characters", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["min-change-characters"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminMinChangeCharacters(d, v, "min_change_characters", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["min-change-characters"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("change_4_characters"); ok {
+		if setArgNil {
+			obj["change-4-characters"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminChange4Characters(d, v, "change_4_characters", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["change-4-characters"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminChange4Characters(d, v, "change_4_characters", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["change-4-characters"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("expire_status"); ok {
+		if setArgNil {
+			obj["expire-status"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminExpireStatus(d, v, "expire_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["expire-status"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminExpireStatus(d, v, "expire_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["expire-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("expire_day"); ok {
+		if setArgNil {
+			obj["expire-day"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminExpireDay(d, v, "expire_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["expire-day"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminExpireDay(d, v, "expire_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["expire-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reuse_password"); ok {
+		if setArgNil {
+			obj["reuse-password"] = nil
+		} else {
 
-		t, err := expandSystemPasswordPolicyGuestAdminReusePassword(d, v, "reuse_password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reuse-password"] = t
+			t, err := expandSystemPasswordPolicyGuestAdminReusePassword(d, v, "reuse_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reuse-password"] = t
+			}
 		}
 	}
 

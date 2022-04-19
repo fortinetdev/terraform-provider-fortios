@@ -98,7 +98,7 @@ func resourceFtpProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	obj, err := getObjectFtpProxyExplicit(d, c.Fv)
+	obj, err := getObjectFtpProxyExplicit(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FtpProxyExplicit resource while getting object: %v", err)
 	}
@@ -120,7 +120,6 @@ func resourceFtpProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error
 
 func resourceFtpProxyExplicitDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -132,9 +131,15 @@ func resourceFtpProxyExplicitDelete(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	err := c.DeleteFtpProxyExplicit(mkey, vdomparam)
+	obj, err := getObjectFtpProxyExplicit(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FtpProxyExplicit resource: %v", err)
+		return fmt.Errorf("Error updating FtpProxyExplicit resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFtpProxyExplicit(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FtpProxyExplicit resource: %v", err)
 	}
 
 	d.SetId("")
@@ -312,96 +317,132 @@ func expandFtpProxyExplicitSslAlgorithm(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectFtpProxyExplicit(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandFtpProxyExplicitStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("incoming_port"); ok {
+		if setArgNil {
+			obj["incoming-port"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitIncomingPort(d, v, "incoming_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["incoming-port"] = t
+			t, err := expandFtpProxyExplicitIncomingPort(d, v, "incoming_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["incoming-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("incoming_ip"); ok {
+		if setArgNil {
+			obj["incoming-ip"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["incoming-ip"] = t
+			t, err := expandFtpProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["incoming-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outgoing_ip"); ok {
+		if setArgNil {
+			obj["outgoing-ip"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outgoing-ip"] = t
+			t, err := expandFtpProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outgoing-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sec_default_action"); ok {
+		if setArgNil {
+			obj["sec-default-action"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sec-default-action"] = t
+			t, err := expandFtpProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sec-default-action"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl"); ok {
+		if setArgNil {
+			obj["ssl"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitSsl(d, v, "ssl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl"] = t
+			t, err := expandFtpProxyExplicitSsl(d, v, "ssl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_cert"); ok {
+		if setArgNil {
+			obj["ssl-cert"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitSslCert(d, v, "ssl_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-cert"] = t
+			t, err := expandFtpProxyExplicitSslCert(d, v, "ssl_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
+		if setArgNil {
+			obj["ssl-dh-bits"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitSslDhBits(d, v, "ssl_dh_bits", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-dh-bits"] = t
+			t, err := expandFtpProxyExplicitSslDhBits(d, v, "ssl_dh_bits", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-dh-bits"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_algorithm"); ok {
+		if setArgNil {
+			obj["ssl-algorithm"] = nil
+		} else {
 
-		t, err := expandFtpProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-algorithm"] = t
+			t, err := expandFtpProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-algorithm"] = t
+			}
 		}
 	}
 

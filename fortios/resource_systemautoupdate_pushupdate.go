@@ -69,7 +69,7 @@ func resourceSystemAutoupdatePushUpdateUpdate(d *schema.ResourceData, m interfac
 		}
 	}
 
-	obj, err := getObjectSystemAutoupdatePushUpdate(d, c.Fv)
+	obj, err := getObjectSystemAutoupdatePushUpdate(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdatePushUpdate resource while getting object: %v", err)
 	}
@@ -91,7 +91,6 @@ func resourceSystemAutoupdatePushUpdateUpdate(d *schema.ResourceData, m interfac
 
 func resourceSystemAutoupdatePushUpdateDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -103,9 +102,15 @@ func resourceSystemAutoupdatePushUpdateDelete(d *schema.ResourceData, m interfac
 		}
 	}
 
-	err := c.DeleteSystemAutoupdatePushUpdate(mkey, vdomparam)
+	obj, err := getObjectSystemAutoupdatePushUpdate(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemAutoupdatePushUpdate resource: %v", err)
+		return fmt.Errorf("Error updating SystemAutoupdatePushUpdate resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemAutoupdatePushUpdate(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemAutoupdatePushUpdate resource: %v", err)
 	}
 
 	d.SetId("")
@@ -213,46 +218,62 @@ func expandSystemAutoupdatePushUpdatePort(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdatePushUpdateStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemAutoupdatePushUpdateStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("override"); ok {
+		if setArgNil {
+			obj["override"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdatePushUpdateOverride(d, v, "override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["override"] = t
+			t, err := expandSystemAutoupdatePushUpdateOverride(d, v, "override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("address"); ok {
+		if setArgNil {
+			obj["address"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdatePushUpdateAddress(d, v, "address", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["address"] = t
+			t, err := expandSystemAutoupdatePushUpdateAddress(d, v, "address", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["address"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandSystemAutoupdatePushUpdatePort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandSystemAutoupdatePushUpdatePort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 

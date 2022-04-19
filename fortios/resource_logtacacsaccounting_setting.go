@@ -68,7 +68,7 @@ func resourceLogTacacsAccountingSettingUpdate(d *schema.ResourceData, m interfac
 		}
 	}
 
-	obj, err := getObjectLogTacacsAccountingSetting(d, c.Fv)
+	obj, err := getObjectLogTacacsAccountingSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogTacacsAccountingSetting resource while getting object: %v", err)
 	}
@@ -90,7 +90,6 @@ func resourceLogTacacsAccountingSettingUpdate(d *schema.ResourceData, m interfac
 
 func resourceLogTacacsAccountingSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -102,9 +101,15 @@ func resourceLogTacacsAccountingSettingDelete(d *schema.ResourceData, m interfac
 		}
 	}
 
-	err := c.DeleteLogTacacsAccountingSetting(mkey, vdomparam)
+	obj, err := getObjectLogTacacsAccountingSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogTacacsAccountingSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogTacacsAccountingSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogTacacsAccountingSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogTacacsAccountingSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -198,36 +203,48 @@ func expandLogTacacsAccountingSettingServerKey(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogTacacsAccountingSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogTacacsAccountingSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandLogTacacsAccountingSettingServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandLogTacacsAccountingSettingServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_key"); ok {
+		if setArgNil {
+			obj["server-key"] = nil
+		} else {
 
-		t, err := expandLogTacacsAccountingSettingServerKey(d, v, "server_key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-key"] = t
+			t, err := expandLogTacacsAccountingSettingServerKey(d, v, "server_key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-key"] = t
+			}
 		}
 	}
 

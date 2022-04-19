@@ -87,7 +87,7 @@ func resourceSystemManagementTunnelUpdate(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	obj, err := getObjectSystemManagementTunnel(d, c.Fv)
+	obj, err := getObjectSystemManagementTunnel(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemManagementTunnel resource while getting object: %v", err)
 	}
@@ -109,7 +109,6 @@ func resourceSystemManagementTunnelUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSystemManagementTunnelDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -121,9 +120,15 @@ func resourceSystemManagementTunnelDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteSystemManagementTunnel(mkey, vdomparam)
+	obj, err := getObjectSystemManagementTunnel(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemManagementTunnel resource: %v", err)
+		return fmt.Errorf("Error updating SystemManagementTunnel resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemManagementTunnel(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemManagementTunnel resource: %v", err)
 	}
 
 	d.SetId("")
@@ -273,76 +278,104 @@ func expandSystemManagementTunnelSerialNumber(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func getObjectSystemManagementTunnel(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemManagementTunnelStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_config_restore"); ok {
+		if setArgNil {
+			obj["allow-config-restore"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelAllowConfigRestore(d, v, "allow_config_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-config-restore"] = t
+			t, err := expandSystemManagementTunnelAllowConfigRestore(d, v, "allow_config_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-config-restore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_push_configuration"); ok {
+		if setArgNil {
+			obj["allow-push-configuration"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelAllowPushConfiguration(d, v, "allow_push_configuration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-push-configuration"] = t
+			t, err := expandSystemManagementTunnelAllowPushConfiguration(d, v, "allow_push_configuration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-push-configuration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_push_firmware"); ok {
+		if setArgNil {
+			obj["allow-push-firmware"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelAllowPushFirmware(d, v, "allow_push_firmware", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-push-firmware"] = t
+			t, err := expandSystemManagementTunnelAllowPushFirmware(d, v, "allow_push_firmware", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-push-firmware"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_collect_statistics"); ok {
+		if setArgNil {
+			obj["allow-collect-statistics"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelAllowCollectStatistics(d, v, "allow_collect_statistics", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-collect-statistics"] = t
+			t, err := expandSystemManagementTunnelAllowCollectStatistics(d, v, "allow_collect_statistics", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-collect-statistics"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authorized_manager_only"); ok {
+		if setArgNil {
+			obj["authorized-manager-only"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelAuthorizedManagerOnly(d, v, "authorized_manager_only", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authorized-manager-only"] = t
+			t, err := expandSystemManagementTunnelAuthorizedManagerOnly(d, v, "authorized_manager_only", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authorized-manager-only"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
+		if setArgNil {
+			obj["serial-number"] = nil
+		} else {
 
-		t, err := expandSystemManagementTunnelSerialNumber(d, v, "serial_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["serial-number"] = t
+			t, err := expandSystemManagementTunnelSerialNumber(d, v, "serial_number", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["serial-number"] = t
+			}
 		}
 	}
 

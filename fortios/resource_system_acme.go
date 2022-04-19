@@ -115,7 +115,7 @@ func resourceSystemAcmeUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemAcme(d, c.Fv)
+	obj, err := getObjectSystemAcme(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAcme resource while getting object: %v", err)
 	}
@@ -137,7 +137,6 @@ func resourceSystemAcmeUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemAcmeDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -149,9 +148,15 @@ func resourceSystemAcmeDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemAcme(mkey, vdomparam)
+	obj, err := getObjectSystemAcme(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemAcme resource: %v", err)
+		return fmt.Errorf("Error updating SystemAcme resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemAcme(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemAcme resource: %v", err)
 	}
 
 	d.SetId("")
@@ -475,26 +480,34 @@ func expandSystemAcmeAccountsPrivatekey(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectSystemAcme(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemAcmeInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemAcmeInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("accounts"); ok {
+		if setArgNil {
+			obj["accounts"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemAcmeAccounts(d, v, "accounts", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["accounts"] = t
+			t, err := expandSystemAcmeAccounts(d, v, "accounts", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["accounts"] = t
+			}
 		}
 	}
 

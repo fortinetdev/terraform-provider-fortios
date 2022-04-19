@@ -252,7 +252,7 @@ func resourceLogMemoryFilterUpdate(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	obj, err := getObjectLogMemoryFilter(d, c.Fv)
+	obj, err := getObjectLogMemoryFilter(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemoryFilter resource while getting object: %v", err)
 	}
@@ -274,7 +274,6 @@ func resourceLogMemoryFilterUpdate(d *schema.ResourceData, m interface{}) error 
 
 func resourceLogMemoryFilterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -286,9 +285,15 @@ func resourceLogMemoryFilterDelete(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	err := c.DeleteLogMemoryFilter(mkey, vdomparam)
+	obj, err := getObjectLogMemoryFilter(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogMemoryFilter resource: %v", err)
+		return fmt.Errorf("Error updating LogMemoryFilter resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogMemoryFilter(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogMemoryFilter resource: %v", err)
 	}
 
 	d.SetId("")
@@ -948,346 +953,482 @@ func expandLogMemoryFilterFilterType(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectLogMemoryFilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("severity"); ok {
+		if setArgNil {
+			obj["severity"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSeverity(d, v, "severity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["severity"] = t
+			t, err := expandLogMemoryFilterSeverity(d, v, "severity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["severity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_traffic"); ok {
+		if setArgNil {
+			obj["forward-traffic"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterForwardTraffic(d, v, "forward_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-traffic"] = t
+			t, err := expandLogMemoryFilterForwardTraffic(d, v, "forward_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_traffic"); ok {
+		if setArgNil {
+			obj["local-traffic"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterLocalTraffic(d, v, "local_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-traffic"] = t
+			t, err := expandLogMemoryFilterLocalTraffic(d, v, "local_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_traffic"); ok {
+		if setArgNil {
+			obj["multicast-traffic"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterMulticastTraffic(d, v, "multicast_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-traffic"] = t
+			t, err := expandLogMemoryFilterMulticastTraffic(d, v, "multicast_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sniffer_traffic"); ok {
+		if setArgNil {
+			obj["sniffer-traffic"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sniffer-traffic"] = t
+			t, err := expandLogMemoryFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sniffer-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ztna_traffic"); ok {
+		if setArgNil {
+			obj["ztna-traffic"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterZtnaTraffic(d, v, "ztna_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ztna-traffic"] = t
+			t, err := expandLogMemoryFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ztna-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anomaly"); ok {
+		if setArgNil {
+			obj["anomaly"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterAnomaly(d, v, "anomaly", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anomaly"] = t
+			t, err := expandLogMemoryFilterAnomaly(d, v, "anomaly", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anomaly"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("netscan_discovery"); ok {
+		if setArgNil {
+			obj["netscan-discovery"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["netscan-discovery"] = t
+			t, err := expandLogMemoryFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["netscan-discovery"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
+		if setArgNil {
+			obj["netscan-vulnerability"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["netscan-vulnerability"] = t
+			t, err := expandLogMemoryFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["netscan-vulnerability"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
+		if setArgNil {
+			obj["voip"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterVoip(d, v, "voip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["voip"] = t
+			t, err := expandLogMemoryFilterVoip(d, v, "voip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["voip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gtp"); ok {
+		if setArgNil {
+			obj["gtp"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterGtp(d, v, "gtp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gtp"] = t
+			t, err := expandLogMemoryFilterGtp(d, v, "gtp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gtp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("free_style"); ok {
+		if setArgNil {
+			obj["free-style"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogMemoryFilterFreeStyle(d, v, "free_style", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["free-style"] = t
+			t, err := expandLogMemoryFilterFreeStyle(d, v, "free_style", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["free-style"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns"); ok {
+		if setArgNil {
+			obj["dns"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterDns(d, v, "dns", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns"] = t
+			t, err := expandLogMemoryFilterDns(d, v, "dns", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
+		if setArgNil {
+			obj["ssh"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSsh(d, v, "ssh", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh"] = t
+			t, err := expandLogMemoryFilterSsh(d, v, "ssh", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("event"); ok {
+		if setArgNil {
+			obj["event"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterEvent(d, v, "event", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["event"] = t
+			t, err := expandLogMemoryFilterEvent(d, v, "event", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["event"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("system"); ok {
+		if setArgNil {
+			obj["system"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSystem(d, v, "system", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["system"] = t
+			t, err := expandLogMemoryFilterSystem(d, v, "system", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["system"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("radius"); ok {
+		if setArgNil {
+			obj["radius"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterRadius(d, v, "radius", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["radius"] = t
+			t, err := expandLogMemoryFilterRadius(d, v, "radius", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["radius"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec"); ok {
+		if setArgNil {
+			obj["ipsec"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterIpsec(d, v, "ipsec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec"] = t
+			t, err := expandLogMemoryFilterIpsec(d, v, "ipsec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp"); ok {
+		if setArgNil {
+			obj["dhcp"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterDhcp(d, v, "dhcp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp"] = t
+			t, err := expandLogMemoryFilterDhcp(d, v, "dhcp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ppp"); ok {
+		if setArgNil {
+			obj["ppp"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterPpp(d, v, "ppp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ppp"] = t
+			t, err := expandLogMemoryFilterPpp(d, v, "ppp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ppp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("admin"); ok {
+		if setArgNil {
+			obj["admin"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterAdmin(d, v, "admin", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin"] = t
+			t, err := expandLogMemoryFilterAdmin(d, v, "admin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha"); ok {
+		if setArgNil {
+			obj["ha"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterHa(d, v, "ha", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha"] = t
+			t, err := expandLogMemoryFilterHa(d, v, "ha", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth"); ok {
+		if setArgNil {
+			obj["auth"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterAuth(d, v, "auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth"] = t
+			t, err := expandLogMemoryFilterAuth(d, v, "auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pattern"); ok {
+		if setArgNil {
+			obj["pattern"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterPattern(d, v, "pattern", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pattern"] = t
+			t, err := expandLogMemoryFilterPattern(d, v, "pattern", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pattern"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_log_auth"); ok {
+		if setArgNil {
+			obj["sslvpn-log-auth"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSslvpnLogAuth(d, v, "sslvpn_log_auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-log-auth"] = t
+			t, err := expandLogMemoryFilterSslvpnLogAuth(d, v, "sslvpn_log_auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-log-auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_log_adm"); ok {
+		if setArgNil {
+			obj["sslvpn-log-adm"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSslvpnLogAdm(d, v, "sslvpn_log_adm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-log-adm"] = t
+			t, err := expandLogMemoryFilterSslvpnLogAdm(d, v, "sslvpn_log_adm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-log-adm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sslvpn_log_session"); ok {
+		if setArgNil {
+			obj["sslvpn-log-session"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterSslvpnLogSession(d, v, "sslvpn_log_session", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sslvpn-log-session"] = t
+			t, err := expandLogMemoryFilterSslvpnLogSession(d, v, "sslvpn_log_session", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-log-session"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vip_ssl"); ok {
+		if setArgNil {
+			obj["vip-ssl"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterVipSsl(d, v, "vip_ssl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vip-ssl"] = t
+			t, err := expandLogMemoryFilterVipSsl(d, v, "vip_ssl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vip-ssl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ldb_monitor"); ok {
+		if setArgNil {
+			obj["ldb-monitor"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterLdbMonitor(d, v, "ldb_monitor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ldb-monitor"] = t
+			t, err := expandLogMemoryFilterLdbMonitor(d, v, "ldb_monitor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ldb-monitor"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wan_opt"); ok {
+		if setArgNil {
+			obj["wan-opt"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterWanOpt(d, v, "wan_opt", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wan-opt"] = t
+			t, err := expandLogMemoryFilterWanOpt(d, v, "wan_opt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wan-opt"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wireless_activity"); ok {
+		if setArgNil {
+			obj["wireless-activity"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterWirelessActivity(d, v, "wireless_activity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wireless-activity"] = t
+			t, err := expandLogMemoryFilterWirelessActivity(d, v, "wireless_activity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wireless-activity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cpu_memory_usage"); ok {
+		if setArgNil {
+			obj["cpu-memory-usage"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterCpuMemoryUsage(d, v, "cpu_memory_usage", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cpu-memory-usage"] = t
+			t, err := expandLogMemoryFilterCpuMemoryUsage(d, v, "cpu_memory_usage", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cpu-memory-usage"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
+		if setArgNil {
+			obj["filter"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterFilter(d, v, "filter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["filter"] = t
+			t, err := expandLogMemoryFilterFilter(d, v, "filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["filter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {
+		if setArgNil {
+			obj["filter-type"] = nil
+		} else {
 
-		t, err := expandLogMemoryFilterFilterType(d, v, "filter_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["filter-type"] = t
+			t, err := expandLogMemoryFilterFilterType(d, v, "filter_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["filter-type"] = t
+			}
 		}
 	}
 

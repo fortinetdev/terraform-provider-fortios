@@ -84,7 +84,7 @@ func resourceSystemNetworkVisibilityUpdate(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	obj, err := getObjectSystemNetworkVisibility(d, c.Fv)
+	obj, err := getObjectSystemNetworkVisibility(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNetworkVisibility resource while getting object: %v", err)
 	}
@@ -106,7 +106,6 @@ func resourceSystemNetworkVisibilityUpdate(d *schema.ResourceData, m interface{}
 
 func resourceSystemNetworkVisibilityDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -118,9 +117,15 @@ func resourceSystemNetworkVisibilityDelete(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	err := c.DeleteSystemNetworkVisibility(mkey, vdomparam)
+	obj, err := getObjectSystemNetworkVisibility(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemNetworkVisibility resource: %v", err)
+		return fmt.Errorf("Error updating SystemNetworkVisibility resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemNetworkVisibility(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemNetworkVisibility resource: %v", err)
 	}
 
 	d.SetId("")
@@ -256,66 +261,90 @@ func expandSystemNetworkVisibilityDestinationLocation(d *schema.ResourceData, v 
 	return v, nil
 }
 
-func getObjectSystemNetworkVisibility(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("destination_visibility"); ok {
+		if setArgNil {
+			obj["destination-visibility"] = nil
+		} else {
 
-		t, err := expandSystemNetworkVisibilityDestinationVisibility(d, v, "destination_visibility", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["destination-visibility"] = t
+			t, err := expandSystemNetworkVisibilityDestinationVisibility(d, v, "destination_visibility", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["destination-visibility"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_location"); ok {
+		if setArgNil {
+			obj["source-location"] = nil
+		} else {
 
-		t, err := expandSystemNetworkVisibilitySourceLocation(d, v, "source_location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-location"] = t
+			t, err := expandSystemNetworkVisibilitySourceLocation(d, v, "source_location", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-location"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("destination_hostname_visibility"); ok {
+		if setArgNil {
+			obj["destination-hostname-visibility"] = nil
+		} else {
 
-		t, err := expandSystemNetworkVisibilityDestinationHostnameVisibility(d, v, "destination_hostname_visibility", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["destination-hostname-visibility"] = t
+			t, err := expandSystemNetworkVisibilityDestinationHostnameVisibility(d, v, "destination_hostname_visibility", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["destination-hostname-visibility"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostname_ttl"); ok {
+		if setArgNil {
+			obj["hostname-ttl"] = nil
+		} else {
 
-		t, err := expandSystemNetworkVisibilityHostnameTtl(d, v, "hostname_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostname-ttl"] = t
+			t, err := expandSystemNetworkVisibilityHostnameTtl(d, v, "hostname_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostname-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("hostname_limit"); ok {
+		if setArgNil {
+			obj["hostname-limit"] = nil
+		} else {
 
-		t, err := expandSystemNetworkVisibilityHostnameLimit(d, v, "hostname_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostname-limit"] = t
+			t, err := expandSystemNetworkVisibilityHostnameLimit(d, v, "hostname_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostname-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("destination_location"); ok {
+		if setArgNil {
+			obj["destination-location"] = nil
+		} else {
 
-		t, err := expandSystemNetworkVisibilityDestinationLocation(d, v, "destination_location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["destination-location"] = t
+			t, err := expandSystemNetworkVisibilityDestinationLocation(d, v, "destination_location", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["destination-location"] = t
+			}
 		}
 	}
 

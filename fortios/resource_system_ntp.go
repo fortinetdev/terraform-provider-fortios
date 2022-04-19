@@ -174,7 +174,7 @@ func resourceSystemNtpUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemNtp(d, c.Fv)
+	obj, err := getObjectSystemNtp(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNtp resource while getting object: %v", err)
 	}
@@ -196,7 +196,6 @@ func resourceSystemNtpUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemNtpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -208,9 +207,15 @@ func resourceSystemNtpDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemNtp(mkey, vdomparam)
+	obj, err := getObjectSystemNtp(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemNtp resource: %v", err)
+		return fmt.Errorf("Error updating SystemNtp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemNtp(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemNtp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -712,126 +717,174 @@ func expandSystemNtpInterfaceInterfaceName(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectSystemNtp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("ntpsync"); ok {
+		if setArgNil {
+			obj["ntpsync"] = nil
+		} else {
 
-		t, err := expandSystemNtpNtpsync(d, v, "ntpsync", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ntpsync"] = t
+			t, err := expandSystemNtpNtpsync(d, v, "ntpsync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ntpsync"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("type"); ok {
+		if setArgNil {
+			obj["type"] = nil
+		} else {
 
-		t, err := expandSystemNtpType(d, v, "type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["type"] = t
+			t, err := expandSystemNtpType(d, v, "type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("syncinterval"); ok {
+		if setArgNil {
+			obj["syncinterval"] = nil
+		} else {
 
-		t, err := expandSystemNtpSyncinterval(d, v, "syncinterval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["syncinterval"] = t
+			t, err := expandSystemNtpSyncinterval(d, v, "syncinterval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["syncinterval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ntpserver"); ok {
+		if setArgNil {
+			obj["ntpserver"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemNtpNtpserver(d, v, "ntpserver", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ntpserver"] = t
+			t, err := expandSystemNtpNtpserver(d, v, "ntpserver", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ntpserver"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemNtpSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemNtpSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
+		if setArgNil {
+			obj["source-ip6"] = nil
+		} else {
 
-		t, err := expandSystemNtpSourceIp6(d, v, "source_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip6"] = t
+			t, err := expandSystemNtpSourceIp6(d, v, "source_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_mode"); ok {
+		if setArgNil {
+			obj["server-mode"] = nil
+		} else {
 
-		t, err := expandSystemNtpServerMode(d, v, "server_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-mode"] = t
+			t, err := expandSystemNtpServerMode(d, v, "server_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
+		if setArgNil {
+			obj["authentication"] = nil
+		} else {
 
-		t, err := expandSystemNtpAuthentication(d, v, "authentication", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authentication"] = t
+			t, err := expandSystemNtpAuthentication(d, v, "authentication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authentication"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("key_type"); ok {
+		if setArgNil {
+			obj["key-type"] = nil
+		} else {
 
-		t, err := expandSystemNtpKeyType(d, v, "key_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["key-type"] = t
+			t, err := expandSystemNtpKeyType(d, v, "key_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["key-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("key"); ok {
+		if setArgNil {
+			obj["key"] = nil
+		} else {
 
-		t, err := expandSystemNtpKey(d, v, "key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["key"] = t
+			t, err := expandSystemNtpKey(d, v, "key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("key_id"); ok {
+		if setArgNil {
+			obj["key-id"] = nil
+		} else {
 
-		t, err := expandSystemNtpKeyId(d, v, "key_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["key-id"] = t
+			t, err := expandSystemNtpKeyId(d, v, "key_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["key-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemNtpInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemNtpInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

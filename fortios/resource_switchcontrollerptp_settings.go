@@ -57,7 +57,7 @@ func resourceSwitchControllerPtpSettingsUpdate(d *schema.ResourceData, m interfa
 		}
 	}
 
-	obj, err := getObjectSwitchControllerPtpSettings(d, c.Fv)
+	obj, err := getObjectSwitchControllerPtpSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerPtpSettings resource while getting object: %v", err)
 	}
@@ -79,7 +79,6 @@ func resourceSwitchControllerPtpSettingsUpdate(d *schema.ResourceData, m interfa
 
 func resourceSwitchControllerPtpSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -91,9 +90,15 @@ func resourceSwitchControllerPtpSettingsDelete(d *schema.ResourceData, m interfa
 		}
 	}
 
-	err := c.DeleteSwitchControllerPtpSettings(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerPtpSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerPtpSettings resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerPtpSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerPtpSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerPtpSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -159,16 +164,20 @@ func expandSwitchControllerPtpSettingsMode(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectSwitchControllerPtpSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerPtpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSwitchControllerPtpSettingsMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSwitchControllerPtpSettingsMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 

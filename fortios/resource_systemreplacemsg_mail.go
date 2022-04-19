@@ -74,7 +74,7 @@ func resourceSystemReplacemsgMailUpdate(d *schema.ResourceData, m interface{}) e
 	}
 
 	mkey = d.Get("msg_type").(string)
-	obj, err := getObjectSystemReplacemsgMail(d, c.Fv)
+	obj, err := getObjectSystemReplacemsgMail(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgMail resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceSystemReplacemsgMailUpdate(d *schema.ResourceData, m interface{}) e
 
 func resourceSystemReplacemsgMailDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceSystemReplacemsgMailDelete(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	err := c.DeleteSystemReplacemsgMail(mkey, vdomparam)
+	obj, err := getObjectSystemReplacemsgMail(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemReplacemsgMail resource: %v", err)
+		return fmt.Errorf("Error updating SystemReplacemsgMail resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemReplacemsgMail(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemReplacemsgMail resource: %v", err)
 	}
 
 	d.SetId("")
@@ -218,46 +223,62 @@ func expandSystemReplacemsgMailFormat(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectSystemReplacemsgMail(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgMail(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
+		if setArgNil {
+			obj["msg-type"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgMailMsgType(d, v, "msg_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["msg-type"] = t
+			t, err := expandSystemReplacemsgMailMsgType(d, v, "msg_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["msg-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
+		if setArgNil {
+			obj["buffer"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgMailBuffer(d, v, "buffer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["buffer"] = t
+			t, err := expandSystemReplacemsgMailBuffer(d, v, "buffer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["buffer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("header"); ok {
+		if setArgNil {
+			obj["header"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgMailHeader(d, v, "header", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["header"] = t
+			t, err := expandSystemReplacemsgMailHeader(d, v, "header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["header"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("format"); ok {
+		if setArgNil {
+			obj["format"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgMailFormat(d, v, "format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["format"] = t
+			t, err := expandSystemReplacemsgMailFormat(d, v, "format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["format"] = t
+			}
 		}
 	}
 

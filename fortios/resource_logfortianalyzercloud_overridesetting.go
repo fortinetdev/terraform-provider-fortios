@@ -57,7 +57,7 @@ func resourceLogFortianalyzerCloudOverrideSettingUpdate(d *schema.ResourceData, 
 		}
 	}
 
-	obj, err := getObjectLogFortianalyzerCloudOverrideSetting(d, c.Fv)
+	obj, err := getObjectLogFortianalyzerCloudOverrideSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerCloudOverrideSetting resource while getting object: %v", err)
 	}
@@ -79,7 +79,6 @@ func resourceLogFortianalyzerCloudOverrideSettingUpdate(d *schema.ResourceData, 
 
 func resourceLogFortianalyzerCloudOverrideSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -91,9 +90,15 @@ func resourceLogFortianalyzerCloudOverrideSettingDelete(d *schema.ResourceData, 
 		}
 	}
 
-	err := c.DeleteLogFortianalyzerCloudOverrideSetting(mkey, vdomparam)
+	obj, err := getObjectLogFortianalyzerCloudOverrideSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogFortianalyzerCloudOverrideSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogFortianalyzerCloudOverrideSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogFortianalyzerCloudOverrideSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogFortianalyzerCloudOverrideSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -159,16 +164,20 @@ func expandLogFortianalyzerCloudOverrideSettingStatus(d *schema.ResourceData, v 
 	return v, nil
 }
 
-func getObjectLogFortianalyzerCloudOverrideSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogFortianalyzerCloudOverrideSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerCloudOverrideSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogFortianalyzerCloudOverrideSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 

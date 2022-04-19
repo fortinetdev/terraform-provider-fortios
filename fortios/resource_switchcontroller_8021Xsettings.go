@@ -75,7 +75,7 @@ func resourceSwitchController8021XSettingsUpdate(d *schema.ResourceData, m inter
 		}
 	}
 
-	obj, err := getObjectSwitchController8021XSettings(d, c.Fv)
+	obj, err := getObjectSwitchController8021XSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchController8021XSettings resource while getting object: %v", err)
 	}
@@ -97,7 +97,6 @@ func resourceSwitchController8021XSettingsUpdate(d *schema.ResourceData, m inter
 
 func resourceSwitchController8021XSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -109,9 +108,15 @@ func resourceSwitchController8021XSettingsDelete(d *schema.ResourceData, m inter
 		}
 	}
 
-	err := c.DeleteSwitchController8021XSettings(mkey, vdomparam)
+	obj, err := getObjectSwitchController8021XSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchController8021XSettings resource: %v", err)
+		return fmt.Errorf("Error updating SwitchController8021XSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchController8021XSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchController8021XSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -219,46 +224,62 @@ func expandSwitchController8021XSettingsTxPeriod(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectSwitchController8021XSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("link_down_auth"); ok {
+		if setArgNil {
+			obj["link-down-auth"] = nil
+		} else {
 
-		t, err := expandSwitchController8021XSettingsLinkDownAuth(d, v, "link_down_auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["link-down-auth"] = t
+			t, err := expandSwitchController8021XSettingsLinkDownAuth(d, v, "link_down_auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["link-down-auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("reauth_period"); ok {
+		if setArgNil {
+			obj["reauth-period"] = nil
+		} else {
 
-		t, err := expandSwitchController8021XSettingsReauthPeriod(d, v, "reauth_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reauth-period"] = t
+			t, err := expandSwitchController8021XSettingsReauthPeriod(d, v, "reauth_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reauth-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_reauth_attempt"); ok {
+		if setArgNil {
+			obj["max-reauth-attempt"] = nil
+		} else {
 
-		t, err := expandSwitchController8021XSettingsMaxReauthAttempt(d, v, "max_reauth_attempt", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-reauth-attempt"] = t
+			t, err := expandSwitchController8021XSettingsMaxReauthAttempt(d, v, "max_reauth_attempt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-reauth-attempt"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tx_period"); ok {
+		if setArgNil {
+			obj["tx-period"] = nil
+		} else {
 
-		t, err := expandSwitchController8021XSettingsTxPeriod(d, v, "tx_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tx-period"] = t
+			t, err := expandSwitchController8021XSettingsTxPeriod(d, v, "tx_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tx-period"] = t
+			}
 		}
 	}
 

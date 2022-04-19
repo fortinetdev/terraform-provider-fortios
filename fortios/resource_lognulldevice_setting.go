@@ -56,7 +56,7 @@ func resourceLogNullDeviceSettingUpdate(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	obj, err := getObjectLogNullDeviceSetting(d, c.Fv)
+	obj, err := getObjectLogNullDeviceSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogNullDeviceSetting resource while getting object: %v", err)
 	}
@@ -78,7 +78,6 @@ func resourceLogNullDeviceSettingUpdate(d *schema.ResourceData, m interface{}) e
 
 func resourceLogNullDeviceSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -90,9 +89,15 @@ func resourceLogNullDeviceSettingDelete(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	err := c.DeleteLogNullDeviceSetting(mkey, vdomparam)
+	obj, err := getObjectLogNullDeviceSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogNullDeviceSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogNullDeviceSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogNullDeviceSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogNullDeviceSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -158,16 +163,20 @@ func expandLogNullDeviceSettingStatus(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectLogNullDeviceSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogNullDeviceSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogNullDeviceSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogNullDeviceSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 

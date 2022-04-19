@@ -211,7 +211,7 @@ func resourceLogDiskSettingUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectLogDiskSetting(d, c.Fv)
+	obj, err := getObjectLogDiskSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogDiskSetting resource while getting object: %v", err)
 	}
@@ -233,7 +233,6 @@ func resourceLogDiskSettingUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceLogDiskSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -245,9 +244,15 @@ func resourceLogDiskSettingDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteLogDiskSetting(mkey, vdomparam)
+	obj, err := getObjectLogDiskSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogDiskSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogDiskSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogDiskSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogDiskSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -713,306 +718,426 @@ func expandLogDiskSettingInterface(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-func getObjectLogDiskSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogDiskSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ips_archive"); ok {
+		if setArgNil {
+			obj["ips-archive"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingIpsArchive(d, v, "ips_archive", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-archive"] = t
+			t, err := expandLogDiskSettingIpsArchive(d, v, "ips_archive", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-archive"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_log_file_size"); ok {
+		if setArgNil {
+			obj["max-log-file-size"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingMaxLogFileSize(d, v, "max_log_file_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-log-file-size"] = t
+			t, err := expandLogDiskSettingMaxLogFileSize(d, v, "max_log_file_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-log-file-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_policy_packet_capture_size"); ok {
+		if setArgNil {
+			obj["max-policy-packet-capture-size"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingMaxPolicyPacketCaptureSize(d, v, "max_policy_packet_capture_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-policy-packet-capture-size"] = t
+			t, err := expandLogDiskSettingMaxPolicyPacketCaptureSize(d, v, "max_policy_packet_capture_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-policy-packet-capture-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("roll_schedule"); ok {
+		if setArgNil {
+			obj["roll-schedule"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingRollSchedule(d, v, "roll_schedule", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["roll-schedule"] = t
+			t, err := expandLogDiskSettingRollSchedule(d, v, "roll_schedule", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["roll-schedule"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("roll_day"); ok {
+		if setArgNil {
+			obj["roll-day"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingRollDay(d, v, "roll_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["roll-day"] = t
+			t, err := expandLogDiskSettingRollDay(d, v, "roll_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["roll-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("roll_time"); ok {
+		if setArgNil {
+			obj["roll-time"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingRollTime(d, v, "roll_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["roll-time"] = t
+			t, err := expandLogDiskSettingRollTime(d, v, "roll_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["roll-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("diskfull"); ok {
+		if setArgNil {
+			obj["diskfull"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingDiskfull(d, v, "diskfull", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["diskfull"] = t
+			t, err := expandLogDiskSettingDiskfull(d, v, "diskfull", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["diskfull"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("log_quota"); ok {
+		if setArgNil {
+			obj["log-quota"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingLogQuota(d, v, "log_quota", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-quota"] = t
+			t, err := expandLogDiskSettingLogQuota(d, v, "log_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-quota"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("dlp_archive_quota"); ok {
+		if setArgNil {
+			obj["dlp-archive-quota"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingDlpArchiveQuota(d, v, "dlp_archive_quota", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dlp-archive-quota"] = t
+			t, err := expandLogDiskSettingDlpArchiveQuota(d, v, "dlp_archive_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dlp-archive-quota"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("report_quota"); ok {
+		if setArgNil {
+			obj["report-quota"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingReportQuota(d, v, "report_quota", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["report-quota"] = t
+			t, err := expandLogDiskSettingReportQuota(d, v, "report_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["report-quota"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("maximum_log_age"); ok {
+		if setArgNil {
+			obj["maximum-log-age"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingMaximumLogAge(d, v, "maximum_log_age", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["maximum-log-age"] = t
+			t, err := expandLogDiskSettingMaximumLogAge(d, v, "maximum_log_age", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["maximum-log-age"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload"); ok {
+		if setArgNil {
+			obj["upload"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUpload(d, v, "upload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload"] = t
+			t, err := expandLogDiskSettingUpload(d, v, "upload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_destination"); ok {
+		if setArgNil {
+			obj["upload-destination"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadDestination(d, v, "upload_destination", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-destination"] = t
+			t, err := expandLogDiskSettingUploadDestination(d, v, "upload_destination", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-destination"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploadip"); ok {
+		if setArgNil {
+			obj["uploadip"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadip(d, v, "uploadip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploadip"] = t
+			t, err := expandLogDiskSettingUploadip(d, v, "uploadip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploadip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("uploadport"); ok {
+		if setArgNil {
+			obj["uploadport"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadport(d, v, "uploadport", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploadport"] = t
+			t, err := expandLogDiskSettingUploadport(d, v, "uploadport", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploadport"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandLogDiskSettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploaduser"); ok {
+		if setArgNil {
+			obj["uploaduser"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploaduser(d, v, "uploaduser", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploaduser"] = t
+			t, err := expandLogDiskSettingUploaduser(d, v, "uploaduser", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploaduser"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploadpass"); ok {
+		if setArgNil {
+			obj["uploadpass"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadpass(d, v, "uploadpass", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploadpass"] = t
+			t, err := expandLogDiskSettingUploadpass(d, v, "uploadpass", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploadpass"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploaddir"); ok {
+		if setArgNil {
+			obj["uploaddir"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploaddir(d, v, "uploaddir", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploaddir"] = t
+			t, err := expandLogDiskSettingUploaddir(d, v, "uploaddir", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploaddir"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploadtype"); ok {
+		if setArgNil {
+			obj["uploadtype"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadtype(d, v, "uploadtype", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploadtype"] = t
+			t, err := expandLogDiskSettingUploadtype(d, v, "uploadtype", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploadtype"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploadsched"); ok {
+		if setArgNil {
+			obj["uploadsched"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadsched(d, v, "uploadsched", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploadsched"] = t
+			t, err := expandLogDiskSettingUploadsched(d, v, "uploadsched", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploadsched"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uploadtime"); ok {
+		if setArgNil {
+			obj["uploadtime"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadtime(d, v, "uploadtime", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uploadtime"] = t
+			t, err := expandLogDiskSettingUploadtime(d, v, "uploadtime", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uploadtime"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_delete_files"); ok {
+		if setArgNil {
+			obj["upload-delete-files"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadDeleteFiles(d, v, "upload_delete_files", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-delete-files"] = t
+			t, err := expandLogDiskSettingUploadDeleteFiles(d, v, "upload_delete_files", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-delete-files"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_ssl_conn"); ok {
+		if setArgNil {
+			obj["upload-ssl-conn"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingUploadSslConn(d, v, "upload_ssl_conn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-ssl-conn"] = t
+			t, err := expandLogDiskSettingUploadSslConn(d, v, "upload_ssl_conn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-ssl-conn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("full_first_warning_threshold"); ok {
+		if setArgNil {
+			obj["full-first-warning-threshold"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["full-first-warning-threshold"] = t
+			t, err := expandLogDiskSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["full-first-warning-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("full_second_warning_threshold"); ok {
+		if setArgNil {
+			obj["full-second-warning-threshold"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["full-second-warning-threshold"] = t
+			t, err := expandLogDiskSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["full-second-warning-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("full_final_warning_threshold"); ok {
+		if setArgNil {
+			obj["full-final-warning-threshold"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["full-final-warning-threshold"] = t
+			t, err := expandLogDiskSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["full-final-warning-threshold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandLogDiskSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandLogDiskSettingInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandLogDiskSettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

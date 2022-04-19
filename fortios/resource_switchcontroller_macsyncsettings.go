@@ -58,7 +58,7 @@ func resourceSwitchControllerMacSyncSettingsUpdate(d *schema.ResourceData, m int
 		}
 	}
 
-	obj, err := getObjectSwitchControllerMacSyncSettings(d, c.Fv)
+	obj, err := getObjectSwitchControllerMacSyncSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerMacSyncSettings resource while getting object: %v", err)
 	}
@@ -80,7 +80,6 @@ func resourceSwitchControllerMacSyncSettingsUpdate(d *schema.ResourceData, m int
 
 func resourceSwitchControllerMacSyncSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -92,9 +91,15 @@ func resourceSwitchControllerMacSyncSettingsDelete(d *schema.ResourceData, m int
 		}
 	}
 
-	err := c.DeleteSwitchControllerMacSyncSettings(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerMacSyncSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerMacSyncSettings resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerMacSyncSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerMacSyncSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerMacSyncSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -160,16 +165,20 @@ func expandSwitchControllerMacSyncSettingsMacSyncInterval(d *schema.ResourceData
 	return v, nil
 }
 
-func getObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mac_sync_interval"); ok {
+		if setArgNil {
+			obj["mac-sync-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerMacSyncSettingsMacSyncInterval(d, v, "mac_sync_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-sync-interval"] = t
+			t, err := expandSwitchControllerMacSyncSettingsMacSyncInterval(d, v, "mac_sync_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-sync-interval"] = t
+			}
 		}
 	}
 

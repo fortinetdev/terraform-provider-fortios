@@ -57,7 +57,7 @@ func resourceAntivirusHeuristicUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectAntivirusHeuristic(d, c.Fv)
+	obj, err := getObjectAntivirusHeuristic(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusHeuristic resource while getting object: %v", err)
 	}
@@ -79,7 +79,6 @@ func resourceAntivirusHeuristicUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceAntivirusHeuristicDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -91,9 +90,15 @@ func resourceAntivirusHeuristicDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteAntivirusHeuristic(mkey, vdomparam)
+	obj, err := getObjectAntivirusHeuristic(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting AntivirusHeuristic resource: %v", err)
+		return fmt.Errorf("Error updating AntivirusHeuristic resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateAntivirusHeuristic(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing AntivirusHeuristic resource: %v", err)
 	}
 
 	d.SetId("")
@@ -159,16 +164,20 @@ func expandAntivirusHeuristicMode(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
-func getObjectAntivirusHeuristic(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectAntivirusHeuristic(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandAntivirusHeuristicMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandAntivirusHeuristicMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 

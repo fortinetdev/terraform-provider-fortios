@@ -105,7 +105,7 @@ func resourceFirewallSshSettingUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectFirewallSshSetting(d, c.Fv)
+	obj, err := getObjectFirewallSshSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshSetting resource while getting object: %v", err)
 	}
@@ -127,7 +127,6 @@ func resourceFirewallSshSettingUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceFirewallSshSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -139,9 +138,15 @@ func resourceFirewallSshSettingDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteFirewallSshSetting(mkey, vdomparam)
+	obj, err := getObjectFirewallSshSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FirewallSshSetting resource: %v", err)
+		return fmt.Errorf("Error updating FirewallSshSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFirewallSshSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FirewallSshSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -319,96 +324,132 @@ func expandFirewallSshSettingHostTrustedChecking(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func getObjectFirewallSshSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("caname"); ok {
+		if setArgNil {
+			obj["caname"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingCaname(d, v, "caname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["caname"] = t
+			t, err := expandFirewallSshSettingCaname(d, v, "caname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["caname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("untrusted_caname"); ok {
+		if setArgNil {
+			obj["untrusted-caname"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingUntrustedCaname(d, v, "untrusted_caname", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["untrusted-caname"] = t
+			t, err := expandFirewallSshSettingUntrustedCaname(d, v, "untrusted_caname", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["untrusted-caname"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostkey_rsa2048"); ok {
+		if setArgNil {
+			obj["hostkey-rsa2048"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostkeyRsa2048(d, v, "hostkey_rsa2048", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostkey-rsa2048"] = t
+			t, err := expandFirewallSshSettingHostkeyRsa2048(d, v, "hostkey_rsa2048", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostkey-rsa2048"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostkey_dsa1024"); ok {
+		if setArgNil {
+			obj["hostkey-dsa1024"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostkeyDsa1024(d, v, "hostkey_dsa1024", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostkey-dsa1024"] = t
+			t, err := expandFirewallSshSettingHostkeyDsa1024(d, v, "hostkey_dsa1024", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostkey-dsa1024"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa256"); ok {
+		if setArgNil {
+			obj["hostkey-ecdsa256"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostkeyEcdsa256(d, v, "hostkey_ecdsa256", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostkey-ecdsa256"] = t
+			t, err := expandFirewallSshSettingHostkeyEcdsa256(d, v, "hostkey_ecdsa256", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostkey-ecdsa256"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa384"); ok {
+		if setArgNil {
+			obj["hostkey-ecdsa384"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostkeyEcdsa384(d, v, "hostkey_ecdsa384", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostkey-ecdsa384"] = t
+			t, err := expandFirewallSshSettingHostkeyEcdsa384(d, v, "hostkey_ecdsa384", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostkey-ecdsa384"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa521"); ok {
+		if setArgNil {
+			obj["hostkey-ecdsa521"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostkeyEcdsa521(d, v, "hostkey_ecdsa521", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostkey-ecdsa521"] = t
+			t, err := expandFirewallSshSettingHostkeyEcdsa521(d, v, "hostkey_ecdsa521", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostkey-ecdsa521"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hostkey_ed25519"); ok {
+		if setArgNil {
+			obj["hostkey-ed25519"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostkeyEd25519(d, v, "hostkey_ed25519", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hostkey-ed25519"] = t
+			t, err := expandFirewallSshSettingHostkeyEd25519(d, v, "hostkey_ed25519", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hostkey-ed25519"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("host_trusted_checking"); ok {
+		if setArgNil {
+			obj["host-trusted-checking"] = nil
+		} else {
 
-		t, err := expandFirewallSshSettingHostTrustedChecking(d, v, "host_trusted_checking", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["host-trusted-checking"] = t
+			t, err := expandFirewallSshSettingHostTrustedChecking(d, v, "host_trusted_checking", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["host-trusted-checking"] = t
+			}
 		}
 	}
 

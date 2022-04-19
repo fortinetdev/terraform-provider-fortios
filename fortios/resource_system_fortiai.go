@@ -74,7 +74,7 @@ func resourceSystemFortiaiUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemFortiai(d, c.Fv)
+	obj, err := getObjectSystemFortiai(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortiai resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceSystemFortiaiUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemFortiaiDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceSystemFortiaiDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemFortiai(mkey, vdomparam)
+	obj, err := getObjectSystemFortiai(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFortiai resource: %v", err)
+		return fmt.Errorf("Error updating SystemFortiai resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFortiai(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFortiai resource: %v", err)
 	}
 
 	d.SetId("")
@@ -218,46 +223,62 @@ func expandSystemFortiaiInterface(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
-func getObjectSystemFortiai(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFortiaiStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFortiaiStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemFortiaiSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemFortiaiSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemFortiaiInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemFortiaiInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemFortiaiInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemFortiaiInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

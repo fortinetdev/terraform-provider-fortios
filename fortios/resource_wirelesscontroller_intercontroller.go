@@ -114,7 +114,7 @@ func resourceWirelessControllerInterControllerUpdate(d *schema.ResourceData, m i
 		}
 	}
 
-	obj, err := getObjectWirelessControllerInterController(d, c.Fv)
+	obj, err := getObjectWirelessControllerInterController(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerInterController resource while getting object: %v", err)
 	}
@@ -136,7 +136,6 @@ func resourceWirelessControllerInterControllerUpdate(d *schema.ResourceData, m i
 
 func resourceWirelessControllerInterControllerDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -148,9 +147,15 @@ func resourceWirelessControllerInterControllerDelete(d *schema.ResourceData, m i
 		}
 	}
 
-	err := c.DeleteWirelessControllerInterController(mkey, vdomparam)
+	obj, err := getObjectWirelessControllerInterController(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WirelessControllerInterController resource: %v", err)
+		return fmt.Errorf("Error updating WirelessControllerInterController resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWirelessControllerInterController(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WirelessControllerInterController resource: %v", err)
 	}
 
 	d.SetId("")
@@ -412,66 +417,90 @@ func expandWirelessControllerInterControllerInterControllerPeerPeerPriority(d *s
 	return v, nil
 }
 
-func getObjectWirelessControllerInterController(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("inter_controller_mode"); ok {
+		if setArgNil {
+			obj["inter-controller-mode"] = nil
+		} else {
 
-		t, err := expandWirelessControllerInterControllerInterControllerMode(d, v, "inter_controller_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inter-controller-mode"] = t
+			t, err := expandWirelessControllerInterControllerInterControllerMode(d, v, "inter_controller_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inter-controller-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("inter_controller_key"); ok {
+		if setArgNil {
+			obj["inter-controller-key"] = nil
+		} else {
 
-		t, err := expandWirelessControllerInterControllerInterControllerKey(d, v, "inter_controller_key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inter-controller-key"] = t
+			t, err := expandWirelessControllerInterControllerInterControllerKey(d, v, "inter_controller_key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inter-controller-key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("inter_controller_pri"); ok {
+		if setArgNil {
+			obj["inter-controller-pri"] = nil
+		} else {
 
-		t, err := expandWirelessControllerInterControllerInterControllerPri(d, v, "inter_controller_pri", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inter-controller-pri"] = t
+			t, err := expandWirelessControllerInterControllerInterControllerPri(d, v, "inter_controller_pri", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inter-controller-pri"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fast_failover_max"); ok {
+		if setArgNil {
+			obj["fast-failover-max"] = nil
+		} else {
 
-		t, err := expandWirelessControllerInterControllerFastFailoverMax(d, v, "fast_failover_max", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fast-failover-max"] = t
+			t, err := expandWirelessControllerInterControllerFastFailoverMax(d, v, "fast_failover_max", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fast-failover-max"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fast_failover_wait"); ok {
+		if setArgNil {
+			obj["fast-failover-wait"] = nil
+		} else {
 
-		t, err := expandWirelessControllerInterControllerFastFailoverWait(d, v, "fast_failover_wait", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fast-failover-wait"] = t
+			t, err := expandWirelessControllerInterControllerFastFailoverWait(d, v, "fast_failover_wait", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fast-failover-wait"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("inter_controller_peer"); ok {
+		if setArgNil {
+			obj["inter-controller-peer"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWirelessControllerInterControllerInterControllerPeer(d, v, "inter_controller_peer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inter-controller-peer"] = t
+			t, err := expandWirelessControllerInterControllerInterControllerPeer(d, v, "inter_controller_peer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inter-controller-peer"] = t
+			}
 		}
 	}
 

@@ -76,7 +76,7 @@ func resourceSystemNdProxyUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemNdProxy(d, c.Fv)
+	obj, err := getObjectSystemNdProxy(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNdProxy resource while getting object: %v", err)
 	}
@@ -98,7 +98,6 @@ func resourceSystemNdProxyUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemNdProxyDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -110,9 +109,15 @@ func resourceSystemNdProxyDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemNdProxy(mkey, vdomparam)
+	obj, err := getObjectSystemNdProxy(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemNdProxy resource: %v", err)
+		return fmt.Errorf("Error updating SystemNdProxy resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemNdProxy(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemNdProxy resource: %v", err)
 	}
 
 	d.SetId("")
@@ -264,26 +269,34 @@ func expandSystemNdProxyMemberInterfaceName(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectSystemNdProxy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemNdProxy(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemNdProxyStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemNdProxyStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("member"); ok {
+		if setArgNil {
+			obj["member"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemNdProxyMember(d, v, "member", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["member"] = t
+			t, err := expandSystemNdProxyMember(d, v, "member", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["member"] = t
+			}
 		}
 	}
 

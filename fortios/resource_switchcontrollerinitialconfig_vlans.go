@@ -94,7 +94,7 @@ func resourceSwitchControllerInitialConfigVlansUpdate(d *schema.ResourceData, m 
 		}
 	}
 
-	obj, err := getObjectSwitchControllerInitialConfigVlans(d, c.Fv)
+	obj, err := getObjectSwitchControllerInitialConfigVlans(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerInitialConfigVlans resource while getting object: %v", err)
 	}
@@ -116,7 +116,6 @@ func resourceSwitchControllerInitialConfigVlansUpdate(d *schema.ResourceData, m 
 
 func resourceSwitchControllerInitialConfigVlansDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -128,9 +127,15 @@ func resourceSwitchControllerInitialConfigVlansDelete(d *schema.ResourceData, m 
 		}
 	}
 
-	err := c.DeleteSwitchControllerInitialConfigVlans(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerInitialConfigVlans(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerInitialConfigVlans resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerInitialConfigVlans resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerInitialConfigVlans(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerInitialConfigVlans resource: %v", err)
 	}
 
 	d.SetId("")
@@ -280,76 +285,104 @@ func expandSwitchControllerInitialConfigVlansNacSegment(d *schema.ResourceData, 
 	return v, nil
 }
 
-func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("default_vlan"); ok {
+		if setArgNil {
+			obj["default-vlan"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansDefaultVlan(d, v, "default_vlan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-vlan"] = t
+			t, err := expandSwitchControllerInitialConfigVlansDefaultVlan(d, v, "default_vlan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-vlan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("quarantine"); ok {
+		if setArgNil {
+			obj["quarantine"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansQuarantine(d, v, "quarantine", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["quarantine"] = t
+			t, err := expandSwitchControllerInitialConfigVlansQuarantine(d, v, "quarantine", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["quarantine"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rspan"); ok {
+		if setArgNil {
+			obj["rspan"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansRspan(d, v, "rspan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rspan"] = t
+			t, err := expandSwitchControllerInitialConfigVlansRspan(d, v, "rspan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rspan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("voice"); ok {
+		if setArgNil {
+			obj["voice"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansVoice(d, v, "voice", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["voice"] = t
+			t, err := expandSwitchControllerInitialConfigVlansVoice(d, v, "voice", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["voice"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("video"); ok {
+		if setArgNil {
+			obj["video"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansVideo(d, v, "video", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["video"] = t
+			t, err := expandSwitchControllerInitialConfigVlansVideo(d, v, "video", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["video"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nac"); ok {
+		if setArgNil {
+			obj["nac"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansNac(d, v, "nac", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nac"] = t
+			t, err := expandSwitchControllerInitialConfigVlansNac(d, v, "nac", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nac"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nac_segment"); ok {
+		if setArgNil {
+			obj["nac-segment"] = nil
+		} else {
 
-		t, err := expandSwitchControllerInitialConfigVlansNacSegment(d, v, "nac_segment", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nac-segment"] = t
+			t, err := expandSwitchControllerInitialConfigVlansNacSegment(d, v, "nac_segment", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nac-segment"] = t
+			}
 		}
 	}
 

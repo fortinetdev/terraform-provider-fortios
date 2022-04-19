@@ -74,7 +74,7 @@ func resourceSystemFssoPollingUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectSystemFssoPolling(d, c.Fv)
+	obj, err := getObjectSystemFssoPolling(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFssoPolling resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceSystemFssoPollingUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceSystemFssoPollingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceSystemFssoPollingDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteSystemFssoPolling(mkey, vdomparam)
+	obj, err := getObjectSystemFssoPolling(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFssoPolling resource: %v", err)
+		return fmt.Errorf("Error updating SystemFssoPolling resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFssoPolling(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFssoPolling resource: %v", err)
 	}
 
 	d.SetId("")
@@ -212,46 +217,62 @@ func expandSystemFssoPollingAuthPassword(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func getObjectSystemFssoPolling(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFssoPolling(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFssoPollingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFssoPollingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("listening_port"); ok {
+		if setArgNil {
+			obj["listening-port"] = nil
+		} else {
 
-		t, err := expandSystemFssoPollingListeningPort(d, v, "listening_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["listening-port"] = t
+			t, err := expandSystemFssoPollingListeningPort(d, v, "listening_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["listening-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
+		if setArgNil {
+			obj["authentication"] = nil
+		} else {
 
-		t, err := expandSystemFssoPollingAuthentication(d, v, "authentication", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authentication"] = t
+			t, err := expandSystemFssoPollingAuthentication(d, v, "authentication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authentication"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_password"); ok {
+		if setArgNil {
+			obj["auth-password"] = nil
+		} else {
 
-		t, err := expandSystemFssoPollingAuthPassword(d, v, "auth_password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-password"] = t
+			t, err := expandSystemFssoPollingAuthPassword(d, v, "auth_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-password"] = t
+			}
 		}
 	}
 

@@ -80,7 +80,7 @@ func resourceSystemFtmPushUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemFtmPush(d, c.Fv)
+	obj, err := getObjectSystemFtmPush(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFtmPush resource while getting object: %v", err)
 	}
@@ -102,7 +102,6 @@ func resourceSystemFtmPushUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemFtmPushDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -114,9 +113,15 @@ func resourceSystemFtmPushDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemFtmPush(mkey, vdomparam)
+	obj, err := getObjectSystemFtmPush(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFtmPush resource: %v", err)
+		return fmt.Errorf("Error updating SystemFtmPush resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFtmPush(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFtmPush resource: %v", err)
 	}
 
 	d.SetId("")
@@ -238,56 +243,76 @@ func expandSystemFtmPushStatus(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-func getObjectSystemFtmPush(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("server_port"); ok {
+		if setArgNil {
+			obj["server-port"] = nil
+		} else {
 
-		t, err := expandSystemFtmPushServerPort(d, v, "server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-port"] = t
+			t, err := expandSystemFtmPushServerPort(d, v, "server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_cert"); ok {
+		if setArgNil {
+			obj["server-cert"] = nil
+		} else {
 
-		t, err := expandSystemFtmPushServerCert(d, v, "server_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-cert"] = t
+			t, err := expandSystemFtmPushServerCert(d, v, "server_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_ip"); ok {
+		if setArgNil {
+			obj["server-ip"] = nil
+		} else {
 
-		t, err := expandSystemFtmPushServerIp(d, v, "server_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-ip"] = t
+			t, err := expandSystemFtmPushServerIp(d, v, "server_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandSystemFtmPushServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandSystemFtmPushServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFtmPushStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFtmPushStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 

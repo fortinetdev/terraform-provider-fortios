@@ -74,7 +74,7 @@ func resourceSystemReplacemsgSslvpnUpdate(d *schema.ResourceData, m interface{})
 	}
 
 	mkey = d.Get("msg_type").(string)
-	obj, err := getObjectSystemReplacemsgSslvpn(d, c.Fv)
+	obj, err := getObjectSystemReplacemsgSslvpn(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgSslvpn resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceSystemReplacemsgSslvpnUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSystemReplacemsgSslvpnDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceSystemReplacemsgSslvpnDelete(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	err := c.DeleteSystemReplacemsgSslvpn(mkey, vdomparam)
+	obj, err := getObjectSystemReplacemsgSslvpn(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemReplacemsgSslvpn resource: %v", err)
+		return fmt.Errorf("Error updating SystemReplacemsgSslvpn resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemReplacemsgSslvpn(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemReplacemsgSslvpn resource: %v", err)
 	}
 
 	d.SetId("")
@@ -218,46 +223,62 @@ func expandSystemReplacemsgSslvpnFormat(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectSystemReplacemsgSslvpn(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgSslvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
+		if setArgNil {
+			obj["msg-type"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgSslvpnMsgType(d, v, "msg_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["msg-type"] = t
+			t, err := expandSystemReplacemsgSslvpnMsgType(d, v, "msg_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["msg-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
+		if setArgNil {
+			obj["buffer"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgSslvpnBuffer(d, v, "buffer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["buffer"] = t
+			t, err := expandSystemReplacemsgSslvpnBuffer(d, v, "buffer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["buffer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("header"); ok {
+		if setArgNil {
+			obj["header"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgSslvpnHeader(d, v, "header", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["header"] = t
+			t, err := expandSystemReplacemsgSslvpnHeader(d, v, "header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["header"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("format"); ok {
+		if setArgNil {
+			obj["format"] = nil
+		} else {
 
-		t, err := expandSystemReplacemsgSslvpnFormat(d, v, "format", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["format"] = t
+			t, err := expandSystemReplacemsgSslvpnFormat(d, v, "format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["format"] = t
+			}
 		}
 	}
 

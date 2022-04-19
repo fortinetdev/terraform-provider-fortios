@@ -63,7 +63,7 @@ func resourceNsxtSettingUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectNsxtSetting(d, c.Fv)
+	obj, err := getObjectNsxtSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating NsxtSetting resource while getting object: %v", err)
 	}
@@ -85,7 +85,6 @@ func resourceNsxtSettingUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceNsxtSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -97,9 +96,15 @@ func resourceNsxtSettingDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteNsxtSetting(mkey, vdomparam)
+	obj, err := getObjectNsxtSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting NsxtSetting resource: %v", err)
+		return fmt.Errorf("Error updating NsxtSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateNsxtSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing NsxtSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -179,26 +184,34 @@ func expandNsxtSettingService(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
-func getObjectNsxtSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectNsxtSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("liveness"); ok {
+		if setArgNil {
+			obj["liveness"] = nil
+		} else {
 
-		t, err := expandNsxtSettingLiveness(d, v, "liveness", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["liveness"] = t
+			t, err := expandNsxtSettingLiveness(d, v, "liveness", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["liveness"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("service"); ok {
+		if setArgNil {
+			obj["service"] = nil
+		} else {
 
-		t, err := expandNsxtSettingService(d, v, "service", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service"] = t
+			t, err := expandNsxtSettingService(d, v, "service", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service"] = t
+			}
 		}
 	}
 

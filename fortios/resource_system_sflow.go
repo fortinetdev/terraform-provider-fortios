@@ -78,7 +78,7 @@ func resourceSystemSflowUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemSflow(d, c.Fv)
+	obj, err := getObjectSystemSflow(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSflow resource while getting object: %v", err)
 	}
@@ -100,7 +100,6 @@ func resourceSystemSflowUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemSflowDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -112,9 +111,15 @@ func resourceSystemSflowDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemSflow(mkey, vdomparam)
+	obj, err := getObjectSystemSflow(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemSflow resource: %v", err)
+		return fmt.Errorf("Error updating SystemSflow resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemSflow(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemSflow resource: %v", err)
 	}
 
 	d.SetId("")
@@ -236,56 +241,76 @@ func expandSystemSflowInterface(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-func getObjectSystemSflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("collector_ip"); ok {
+		if setArgNil {
+			obj["collector-ip"] = nil
+		} else {
 
-		t, err := expandSystemSflowCollectorIp(d, v, "collector_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-ip"] = t
+			t, err := expandSystemSflowCollectorIp(d, v, "collector_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
+		if setArgNil {
+			obj["collector-port"] = nil
+		} else {
 
-		t, err := expandSystemSflowCollectorPort(d, v, "collector_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-port"] = t
+			t, err := expandSystemSflowCollectorPort(d, v, "collector_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemSflowSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemSflowSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemSflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemSflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemSflowInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemSflowInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

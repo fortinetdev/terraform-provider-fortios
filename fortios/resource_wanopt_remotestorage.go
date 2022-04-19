@@ -74,7 +74,7 @@ func resourceWanoptRemoteStorageUpdate(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	obj, err := getObjectWanoptRemoteStorage(d, c.Fv)
+	obj, err := getObjectWanoptRemoteStorage(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptRemoteStorage resource while getting object: %v", err)
 	}
@@ -96,7 +96,6 @@ func resourceWanoptRemoteStorageUpdate(d *schema.ResourceData, m interface{}) er
 
 func resourceWanoptRemoteStorageDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -108,9 +107,15 @@ func resourceWanoptRemoteStorageDelete(d *schema.ResourceData, m interface{}) er
 		}
 	}
 
-	err := c.DeleteWanoptRemoteStorage(mkey, vdomparam)
+	obj, err := getObjectWanoptRemoteStorage(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WanoptRemoteStorage resource: %v", err)
+		return fmt.Errorf("Error updating WanoptRemoteStorage resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWanoptRemoteStorage(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WanoptRemoteStorage resource: %v", err)
 	}
 
 	d.SetId("")
@@ -218,46 +223,62 @@ func expandWanoptRemoteStorageRemoteCacheIp(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectWanoptRemoteStorage(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandWanoptRemoteStorageStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandWanoptRemoteStorageStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_cache_id"); ok {
+		if setArgNil {
+			obj["local-cache-id"] = nil
+		} else {
 
-		t, err := expandWanoptRemoteStorageLocalCacheId(d, v, "local_cache_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-cache-id"] = t
+			t, err := expandWanoptRemoteStorageLocalCacheId(d, v, "local_cache_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-cache-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("remote_cache_id"); ok {
+		if setArgNil {
+			obj["remote-cache-id"] = nil
+		} else {
 
-		t, err := expandWanoptRemoteStorageRemoteCacheId(d, v, "remote_cache_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["remote-cache-id"] = t
+			t, err := expandWanoptRemoteStorageRemoteCacheId(d, v, "remote_cache_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["remote-cache-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("remote_cache_ip"); ok {
+		if setArgNil {
+			obj["remote-cache-ip"] = nil
+		} else {
 
-		t, err := expandWanoptRemoteStorageRemoteCacheIp(d, v, "remote_cache_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["remote-cache-ip"] = t
+			t, err := expandWanoptRemoteStorageRemoteCacheIp(d, v, "remote_cache_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["remote-cache-ip"] = t
+			}
 		}
 	}
 

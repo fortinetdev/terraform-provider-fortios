@@ -108,7 +108,7 @@ func resourceDpdkGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectDpdkGlobal(d, c.Fv)
+	obj, err := getObjectDpdkGlobal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DpdkGlobal resource while getting object: %v", err)
 	}
@@ -130,7 +130,6 @@ func resourceDpdkGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceDpdkGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -142,9 +141,15 @@ func resourceDpdkGlobalDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteDpdkGlobal(mkey, vdomparam)
+	obj, err := getObjectDpdkGlobal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting DpdkGlobal resource: %v", err)
+		return fmt.Errorf("Error updating DpdkGlobal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateDpdkGlobal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing DpdkGlobal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -380,86 +385,118 @@ func expandDpdkGlobalMbufpoolPercentage(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectDpdkGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandDpdkGlobalStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandDpdkGlobalInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandDpdkGlobalInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multiqueue"); ok {
+		if setArgNil {
+			obj["multiqueue"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalMultiqueue(d, v, "multiqueue", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multiqueue"] = t
+			t, err := expandDpdkGlobalMultiqueue(d, v, "multiqueue", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multiqueue"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sleep_on_idle"); ok {
+		if setArgNil {
+			obj["sleep-on-idle"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalSleepOnIdle(d, v, "sleep_on_idle", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sleep-on-idle"] = t
+			t, err := expandDpdkGlobalSleepOnIdle(d, v, "sleep_on_idle", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sleep-on-idle"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("elasticbuffer"); ok {
+		if setArgNil {
+			obj["elasticbuffer"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalElasticbuffer(d, v, "elasticbuffer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["elasticbuffer"] = t
+			t, err := expandDpdkGlobalElasticbuffer(d, v, "elasticbuffer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["elasticbuffer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("per_session_accounting"); ok {
+		if setArgNil {
+			obj["per-session-accounting"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalPerSessionAccounting(d, v, "per_session_accounting", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["per-session-accounting"] = t
+			t, err := expandDpdkGlobalPerSessionAccounting(d, v, "per_session_accounting", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["per-session-accounting"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hugepage_percentage"); ok {
+		if setArgNil {
+			obj["hugepage-percentage"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalHugepagePercentage(d, v, "hugepage_percentage", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hugepage-percentage"] = t
+			t, err := expandDpdkGlobalHugepagePercentage(d, v, "hugepage_percentage", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hugepage-percentage"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mbufpool_percentage"); ok {
+		if setArgNil {
+			obj["mbufpool-percentage"] = nil
+		} else {
 
-		t, err := expandDpdkGlobalMbufpoolPercentage(d, v, "mbufpool_percentage", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mbufpool-percentage"] = t
+			t, err := expandDpdkGlobalMbufpoolPercentage(d, v, "mbufpool_percentage", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mbufpool-percentage"] = t
+			}
 		}
 	}
 

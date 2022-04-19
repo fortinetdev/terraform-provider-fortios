@@ -212,7 +212,7 @@ func resourceLogFortianalyzerSettingUpdate(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	obj, err := getObjectLogFortianalyzerSetting(d, c.Fv)
+	obj, err := getObjectLogFortianalyzerSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerSetting resource while getting object: %v", err)
 	}
@@ -234,7 +234,6 @@ func resourceLogFortianalyzerSettingUpdate(d *schema.ResourceData, m interface{}
 
 func resourceLogFortianalyzerSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -246,9 +245,15 @@ func resourceLogFortianalyzerSettingDelete(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	err := c.DeleteLogFortianalyzerSetting(mkey, vdomparam)
+	obj, err := getObjectLogFortianalyzerSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogFortianalyzerSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogFortianalyzerSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogFortianalyzerSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogFortianalyzerSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -750,276 +755,384 @@ func expandLogFortianalyzerSettingInterface(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectLogFortianalyzerSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogFortianalyzerSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ips_archive"); ok {
+		if setArgNil {
+			obj["ips-archive"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingIpsArchive(d, v, "ips_archive", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ips-archive"] = t
+			t, err := expandLogFortianalyzerSettingIpsArchive(d, v, "ips_archive", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ips-archive"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server"); ok {
+		if setArgNil {
+			obj["server"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingServer(d, v, "server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server"] = t
+			t, err := expandLogFortianalyzerSettingServer(d, v, "server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certificate_verification"); ok {
+		if setArgNil {
+			obj["certificate-verification"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingCertificateVerification(d, v, "certificate_verification", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certificate-verification"] = t
+			t, err := expandLogFortianalyzerSettingCertificateVerification(d, v, "certificate_verification", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate-verification"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("serial"); ok {
+		if setArgNil {
+			obj["serial"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogFortianalyzerSettingSerial(d, v, "serial", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["serial"] = t
+			t, err := expandLogFortianalyzerSettingSerial(d, v, "serial", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["serial"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("preshared_key"); ok {
+		if setArgNil {
+			obj["preshared-key"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingPresharedKey(d, v, "preshared_key", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["preshared-key"] = t
+			t, err := expandLogFortianalyzerSettingPresharedKey(d, v, "preshared_key", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["preshared-key"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {
+		if setArgNil {
+			obj["access-config"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingAccessConfig(d, v, "access_config", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["access-config"] = t
+			t, err := expandLogFortianalyzerSettingAccessConfig(d, v, "access_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["access-config"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hmac_algorithm"); ok {
+		if setArgNil {
+			obj["hmac-algorithm"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hmac-algorithm"] = t
+			t, err := expandLogFortianalyzerSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hmac-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
+		if setArgNil {
+			obj["enc-algorithm"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingEncAlgorithm(d, v, "enc_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enc-algorithm"] = t
+			t, err := expandLogFortianalyzerSettingEncAlgorithm(d, v, "enc_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enc-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandLogFortianalyzerSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("conn_timeout"); ok {
+		if setArgNil {
+			obj["conn-timeout"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingConnTimeout(d, v, "conn_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["conn-timeout"] = t
+			t, err := expandLogFortianalyzerSettingConnTimeout(d, v, "conn_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["conn-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("monitor_keepalive_period"); ok {
+		if setArgNil {
+			obj["monitor-keepalive-period"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["monitor-keepalive-period"] = t
+			t, err := expandLogFortianalyzerSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor-keepalive-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("monitor_failure_retry_period"); ok {
+		if setArgNil {
+			obj["monitor-failure-retry-period"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["monitor-failure-retry-period"] = t
+			t, err := expandLogFortianalyzerSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor-failure-retry-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mgmt_name"); ok {
+		if setArgNil {
+			obj["mgmt-name"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingMgmtName(d, v, "mgmt_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mgmt-name"] = t
+			t, err := expandLogFortianalyzerSettingMgmtName(d, v, "mgmt_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mgmt-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("faz_type"); ok {
+		if setArgNil {
+			obj["faz-type"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingFazType(d, v, "faz_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["faz-type"] = t
+			t, err := expandLogFortianalyzerSettingFazType(d, v, "faz_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["faz-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
+		if setArgNil {
+			obj["certificate"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingCertificate(d, v, "certificate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certificate"] = t
+			t, err := expandLogFortianalyzerSettingCertificate(d, v, "certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandLogFortianalyzerSettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("__change_ip"); ok {
+		if setArgNil {
+			obj["__change_ip"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSetting__Change_Ip(d, v, "__change_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["__change_ip"] = t
+			t, err := expandLogFortianalyzerSetting__Change_Ip(d, v, "__change_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["__change_ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
+		if setArgNil {
+			obj["upload-option"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingUploadOption(d, v, "upload_option", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-option"] = t
+			t, err := expandLogFortianalyzerSettingUploadOption(d, v, "upload_option", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-option"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_interval"); ok {
+		if setArgNil {
+			obj["upload-interval"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingUploadInterval(d, v, "upload_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-interval"] = t
+			t, err := expandLogFortianalyzerSettingUploadInterval(d, v, "upload_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_day"); ok {
+		if setArgNil {
+			obj["upload-day"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingUploadDay(d, v, "upload_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-day"] = t
+			t, err := expandLogFortianalyzerSettingUploadDay(d, v, "upload_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
+		if setArgNil {
+			obj["upload-time"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingUploadTime(d, v, "upload_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-time"] = t
+			t, err := expandLogFortianalyzerSettingUploadTime(d, v, "upload_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reliable"); ok {
+		if setArgNil {
+			obj["reliable"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingReliable(d, v, "reliable", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reliable"] = t
+			t, err := expandLogFortianalyzerSettingReliable(d, v, "reliable", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reliable"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandLogFortianalyzerSettingPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_log_rate"); ok {
+		if setArgNil {
+			obj["max-log-rate"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingMaxLogRate(d, v, "max_log_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-log-rate"] = t
+			t, err := expandLogFortianalyzerSettingMaxLogRate(d, v, "max_log_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-log-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandLogFortianalyzerSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandLogFortianalyzerSettingInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandLogFortianalyzerSettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

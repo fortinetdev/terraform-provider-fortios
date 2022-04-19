@@ -73,7 +73,7 @@ func resourceSystemFipsCcUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemFipsCc(d, c.Fv)
+	obj, err := getObjectSystemFipsCc(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFipsCc resource while getting object: %v", err)
 	}
@@ -95,7 +95,6 @@ func resourceSystemFipsCcUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemFipsCcDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -107,9 +106,15 @@ func resourceSystemFipsCcDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemFipsCc(mkey, vdomparam)
+	obj, err := getObjectSystemFipsCc(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemFipsCc resource: %v", err)
+		return fmt.Errorf("Error updating SystemFipsCc resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemFipsCc(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemFipsCc resource: %v", err)
 	}
 
 	d.SetId("")
@@ -217,46 +222,62 @@ func expandSystemFipsCcKeyGenerationSelfTest(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectSystemFipsCc(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemFipsCc(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSystemFipsCcStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSystemFipsCcStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("entropy_token"); ok {
+		if setArgNil {
+			obj["entropy-token"] = nil
+		} else {
 
-		t, err := expandSystemFipsCcEntropyToken(d, v, "entropy_token", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["entropy-token"] = t
+			t, err := expandSystemFipsCcEntropyToken(d, v, "entropy_token", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["entropy-token"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("self_test_period"); ok {
+		if setArgNil {
+			obj["self-test-period"] = nil
+		} else {
 
-		t, err := expandSystemFipsCcSelfTestPeriod(d, v, "self_test_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["self-test-period"] = t
+			t, err := expandSystemFipsCcSelfTestPeriod(d, v, "self_test_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["self-test-period"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("key_generation_self_test"); ok {
+		if setArgNil {
+			obj["key-generation-self-test"] = nil
+		} else {
 
-		t, err := expandSystemFipsCcKeyGenerationSelfTest(d, v, "key_generation_self_test", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["key-generation-self-test"] = t
+			t, err := expandSystemFipsCcKeyGenerationSelfTest(d, v, "key_generation_self_test", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["key-generation-self-test"] = t
+			}
 		}
 	}
 

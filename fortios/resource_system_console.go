@@ -77,7 +77,7 @@ func resourceSystemConsoleUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemConsole(d, c.Fv)
+	obj, err := getObjectSystemConsole(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemConsole resource while getting object: %v", err)
 	}
@@ -99,7 +99,6 @@ func resourceSystemConsoleUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemConsoleDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -111,9 +110,15 @@ func resourceSystemConsoleDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemConsole(mkey, vdomparam)
+	obj, err := getObjectSystemConsole(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemConsole resource: %v", err)
+		return fmt.Errorf("Error updating SystemConsole resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemConsole(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemConsole resource: %v", err)
 	}
 
 	d.SetId("")
@@ -235,56 +240,76 @@ func expandSystemConsoleFortiexplorer(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectSystemConsole(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemConsole(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemConsoleMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemConsoleMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("baudrate"); ok {
+		if setArgNil {
+			obj["baudrate"] = nil
+		} else {
 
-		t, err := expandSystemConsoleBaudrate(d, v, "baudrate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["baudrate"] = t
+			t, err := expandSystemConsoleBaudrate(d, v, "baudrate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["baudrate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("output"); ok {
+		if setArgNil {
+			obj["output"] = nil
+		} else {
 
-		t, err := expandSystemConsoleOutput(d, v, "output", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["output"] = t
+			t, err := expandSystemConsoleOutput(d, v, "output", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["output"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("login"); ok {
+		if setArgNil {
+			obj["login"] = nil
+		} else {
 
-		t, err := expandSystemConsoleLogin(d, v, "login", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["login"] = t
+			t, err := expandSystemConsoleLogin(d, v, "login", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiexplorer"); ok {
+		if setArgNil {
+			obj["fortiexplorer"] = nil
+		} else {
 
-		t, err := expandSystemConsoleFortiexplorer(d, v, "fortiexplorer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiexplorer"] = t
+			t, err := expandSystemConsoleFortiexplorer(d, v, "fortiexplorer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiexplorer"] = t
+			}
 		}
 	}
 

@@ -465,7 +465,7 @@ func expandRouterMulticast6InterfaceHelloHoldtime(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func expandRouterMulticast6PimSmGlobal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterMulticast6PimSmGlobal(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -477,13 +477,21 @@ func expandRouterMulticast6PimSmGlobal(d *schema.ResourceData, v interface{}, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "register_rate_limit"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["register-rate-limit"] = nil
+		} else {
 
-		result["register-rate-limit"], _ = expandRouterMulticast6PimSmGlobalRegisterRateLimit(d, i["register_rate_limit"], pre_append, sv)
+			result["register-rate-limit"], _ = expandRouterMulticast6PimSmGlobalRegisterRateLimit(d, i["register_rate_limit"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "rp_address"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["rp-address"] = make([]struct{}, 0)
+		} else {
 
-		result["rp-address"], _ = expandRouterMulticast6PimSmGlobalRpAddress(d, i["rp_address"], pre_append, sv)
+			result["rp-address"], _ = expandRouterMulticast6PimSmGlobalRpAddress(d, i["rp_address"], pre_append, sv)
+		}
 	} else {
 		result["rp-address"] = make([]string, 0)
 	}
@@ -537,33 +545,41 @@ func expandRouterMulticast6PimSmGlobalRpAddressIp6Address(d *schema.ResourceData
 	return v, nil
 }
 
-func getObjectRouterMulticast6(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterMulticast6(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("multicast_routing"); ok {
+		if setArgNil {
+			obj["multicast-routing"] = nil
+		} else {
 
-		t, err := expandRouterMulticast6MulticastRouting(d, v, "multicast_routing", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-routing"] = t
+			t, err := expandRouterMulticast6MulticastRouting(d, v, "multicast_routing", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-routing"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_pmtu"); ok {
+		if setArgNil {
+			obj["multicast-pmtu"] = nil
+		} else {
 
-		t, err := expandRouterMulticast6MulticastPmtu(d, v, "multicast_pmtu", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-pmtu"] = t
+			t, err := expandRouterMulticast6MulticastPmtu(d, v, "multicast_pmtu", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-pmtu"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterMulticast6Interface(d, v, "interface", sv)
 			if err != nil {
@@ -576,7 +592,7 @@ func getObjectRouterMulticast6(d *schema.ResourceData, bemptysontable bool, sv s
 
 	if v, ok := d.GetOk("pim_sm_global"); ok {
 
-		t, err := expandRouterMulticast6PimSmGlobal(d, v, "pim_sm_global", sv)
+		t, err := expandRouterMulticast6PimSmGlobal(d, v, "pim_sm_global", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {

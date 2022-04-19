@@ -515,7 +515,7 @@ func resourceSystemIkeUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemIke(d, c.Fv)
+	obj, err := getObjectSystemIke(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIke resource while getting object: %v", err)
 	}
@@ -537,7 +537,6 @@ func resourceSystemIkeUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemIkeDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -549,9 +548,15 @@ func resourceSystemIkeDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemIke(mkey, vdomparam)
+	obj, err := getObjectSystemIke(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemIke resource: %v", err)
+		return fmt.Errorf("Error updating SystemIke resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemIke(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemIke resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1704,7 +1709,7 @@ func expandSystemIkeDhKeypairThrottle(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1716,18 +1721,30 @@ func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup1Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup1Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup1KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup1KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup1KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup1KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1745,7 +1762,7 @@ func expandSystemIkeDhGroup1KeypairCount(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1757,18 +1774,30 @@ func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup2Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup2Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup2KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup2KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup2KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup2KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1786,7 +1815,7 @@ func expandSystemIkeDhGroup2KeypairCount(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1798,18 +1827,30 @@ func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup5Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup5Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup5KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup5KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup5KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup5KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1827,7 +1868,7 @@ func expandSystemIkeDhGroup5KeypairCount(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1839,18 +1880,30 @@ func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup14Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup14Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup14KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup14KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup14KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup14KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1868,7 +1921,7 @@ func expandSystemIkeDhGroup14KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1880,18 +1933,30 @@ func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup15Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup15Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup15KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup15KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup15KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup15KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1909,7 +1974,7 @@ func expandSystemIkeDhGroup15KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1921,18 +1986,30 @@ func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup16Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup16Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup16KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup16KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup16KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup16KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1950,7 +2027,7 @@ func expandSystemIkeDhGroup16KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1962,18 +2039,30 @@ func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup17Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup17Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup17KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup17KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup17KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup17KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1991,7 +2080,7 @@ func expandSystemIkeDhGroup17KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2003,18 +2092,30 @@ func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup18Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup18Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup18KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup18KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup18KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup18KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2032,7 +2133,7 @@ func expandSystemIkeDhGroup18KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2044,18 +2145,30 @@ func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup19Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup19Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup19KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup19KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup19KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup19KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2073,7 +2186,7 @@ func expandSystemIkeDhGroup19KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2085,18 +2198,30 @@ func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup20Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup20Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup20KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup20KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup20KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup20KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2114,7 +2239,7 @@ func expandSystemIkeDhGroup20KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2126,18 +2251,30 @@ func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup21Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup21Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup21KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup21KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup21KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup21KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2155,7 +2292,7 @@ func expandSystemIkeDhGroup21KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2167,18 +2304,30 @@ func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup27Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup27Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup27KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup27KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup27KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup27KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2196,7 +2345,7 @@ func expandSystemIkeDhGroup27KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2208,18 +2357,30 @@ func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup28Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup28Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup28KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup28KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup28KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup28KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2237,7 +2398,7 @@ func expandSystemIkeDhGroup28KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2249,18 +2410,30 @@ func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup29Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup29Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup29KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup29KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup29KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup29KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2278,7 +2451,7 @@ func expandSystemIkeDhGroup29KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2290,18 +2463,30 @@ func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup30Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup30Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup30KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup30KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup30KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup30KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2319,7 +2504,7 @@ func expandSystemIkeDhGroup30KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2331,18 +2516,30 @@ func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup31Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup31Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup31KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup31KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup31KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup31KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2360,7 +2557,7 @@ func expandSystemIkeDhGroup31KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2372,18 +2569,30 @@ func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mode"] = nil
+		} else {
 
-		result["mode"], _ = expandSystemIkeDhGroup32Mode(d, i["mode"], pre_append, sv)
+			result["mode"], _ = expandSystemIkeDhGroup32Mode(d, i["mode"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-cache"] = nil
+		} else {
 
-		result["keypair-cache"], _ = expandSystemIkeDhGroup32KeypairCache(d, i["keypair_cache"], pre_append, sv)
+			result["keypair-cache"], _ = expandSystemIkeDhGroup32KeypairCache(d, i["keypair_cache"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["keypair-count"] = nil
+		} else {
 
-		result["keypair-count"], _ = expandSystemIkeDhGroup32KeypairCount(d, i["keypair_count"], pre_append, sv)
+			result["keypair-count"], _ = expandSystemIkeDhGroup32KeypairCount(d, i["keypair_count"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -2401,82 +2610,110 @@ func expandSystemIkeDhGroup32KeypairCount(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("embryonic_limit"); ok {
+		if setArgNil {
+			obj["embryonic-limit"] = nil
+		} else {
 
-		t, err := expandSystemIkeEmbryonicLimit(d, v, "embryonic_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["embryonic-limit"] = t
+			t, err := expandSystemIkeEmbryonicLimit(d, v, "embryonic_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["embryonic-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_multiprocess"); ok {
+		if setArgNil {
+			obj["dh-multiprocess"] = nil
+		} else {
 
-		t, err := expandSystemIkeDhMultiprocess(d, v, "dh_multiprocess", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-multiprocess"] = t
+			t, err := expandSystemIkeDhMultiprocess(d, v, "dh_multiprocess", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-multiprocess"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_worker_count"); ok {
+		if setArgNil {
+			obj["dh-worker-count"] = nil
+		} else {
 
-		t, err := expandSystemIkeDhWorkerCount(d, v, "dh_worker_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-worker-count"] = t
+			t, err := expandSystemIkeDhWorkerCount(d, v, "dh_worker_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-worker-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_mode"); ok {
+		if setArgNil {
+			obj["dh-mode"] = nil
+		} else {
 
-		t, err := expandSystemIkeDhMode(d, v, "dh_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-mode"] = t
+			t, err := expandSystemIkeDhMode(d, v, "dh_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_keypair_cache"); ok {
+		if setArgNil {
+			obj["dh-keypair-cache"] = nil
+		} else {
 
-		t, err := expandSystemIkeDhKeypairCache(d, v, "dh_keypair_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-keypair-cache"] = t
+			t, err := expandSystemIkeDhKeypairCache(d, v, "dh_keypair_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-keypair-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("dh_keypair_count"); ok {
+		if setArgNil {
+			obj["dh-keypair-count"] = nil
+		} else {
 
-		t, err := expandSystemIkeDhKeypairCount(d, v, "dh_keypair_count", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-keypair-count"] = t
+			t, err := expandSystemIkeDhKeypairCount(d, v, "dh_keypair_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-keypair-count"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_keypair_throttle"); ok {
+		if setArgNil {
+			obj["dh-keypair-throttle"] = nil
+		} else {
 
-		t, err := expandSystemIkeDhKeypairThrottle(d, v, "dh_keypair_throttle", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dh-keypair-throttle"] = t
+			t, err := expandSystemIkeDhKeypairThrottle(d, v, "dh_keypair_throttle", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dh-keypair-throttle"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dh_group_1"); ok {
 
-		t, err := expandSystemIkeDhGroup1(d, v, "dh_group_1", sv)
+		t, err := expandSystemIkeDhGroup1(d, v, "dh_group_1", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2486,7 +2723,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_2"); ok {
 
-		t, err := expandSystemIkeDhGroup2(d, v, "dh_group_2", sv)
+		t, err := expandSystemIkeDhGroup2(d, v, "dh_group_2", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2496,7 +2733,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_5"); ok {
 
-		t, err := expandSystemIkeDhGroup5(d, v, "dh_group_5", sv)
+		t, err := expandSystemIkeDhGroup5(d, v, "dh_group_5", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2506,7 +2743,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_14"); ok {
 
-		t, err := expandSystemIkeDhGroup14(d, v, "dh_group_14", sv)
+		t, err := expandSystemIkeDhGroup14(d, v, "dh_group_14", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2516,7 +2753,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_15"); ok {
 
-		t, err := expandSystemIkeDhGroup15(d, v, "dh_group_15", sv)
+		t, err := expandSystemIkeDhGroup15(d, v, "dh_group_15", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2526,7 +2763,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_16"); ok {
 
-		t, err := expandSystemIkeDhGroup16(d, v, "dh_group_16", sv)
+		t, err := expandSystemIkeDhGroup16(d, v, "dh_group_16", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2536,7 +2773,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_17"); ok {
 
-		t, err := expandSystemIkeDhGroup17(d, v, "dh_group_17", sv)
+		t, err := expandSystemIkeDhGroup17(d, v, "dh_group_17", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2546,7 +2783,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_18"); ok {
 
-		t, err := expandSystemIkeDhGroup18(d, v, "dh_group_18", sv)
+		t, err := expandSystemIkeDhGroup18(d, v, "dh_group_18", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2556,7 +2793,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_19"); ok {
 
-		t, err := expandSystemIkeDhGroup19(d, v, "dh_group_19", sv)
+		t, err := expandSystemIkeDhGroup19(d, v, "dh_group_19", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2566,7 +2803,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_20"); ok {
 
-		t, err := expandSystemIkeDhGroup20(d, v, "dh_group_20", sv)
+		t, err := expandSystemIkeDhGroup20(d, v, "dh_group_20", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2576,7 +2813,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_21"); ok {
 
-		t, err := expandSystemIkeDhGroup21(d, v, "dh_group_21", sv)
+		t, err := expandSystemIkeDhGroup21(d, v, "dh_group_21", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2586,7 +2823,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_27"); ok {
 
-		t, err := expandSystemIkeDhGroup27(d, v, "dh_group_27", sv)
+		t, err := expandSystemIkeDhGroup27(d, v, "dh_group_27", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2596,7 +2833,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_28"); ok {
 
-		t, err := expandSystemIkeDhGroup28(d, v, "dh_group_28", sv)
+		t, err := expandSystemIkeDhGroup28(d, v, "dh_group_28", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2606,7 +2843,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_29"); ok {
 
-		t, err := expandSystemIkeDhGroup29(d, v, "dh_group_29", sv)
+		t, err := expandSystemIkeDhGroup29(d, v, "dh_group_29", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2616,7 +2853,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_30"); ok {
 
-		t, err := expandSystemIkeDhGroup30(d, v, "dh_group_30", sv)
+		t, err := expandSystemIkeDhGroup30(d, v, "dh_group_30", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2626,7 +2863,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_31"); ok {
 
-		t, err := expandSystemIkeDhGroup31(d, v, "dh_group_31", sv)
+		t, err := expandSystemIkeDhGroup31(d, v, "dh_group_31", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2636,7 +2873,7 @@ func getObjectSystemIke(d *schema.ResourceData, sv string) (*map[string]interfac
 
 	if v, ok := d.GetOk("dh_group_32"); ok {
 
-		t, err := expandSystemIkeDhGroup32(d, v, "dh_group_32", sv)
+		t, err := expandSystemIkeDhGroup32(d, v, "dh_group_32", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {

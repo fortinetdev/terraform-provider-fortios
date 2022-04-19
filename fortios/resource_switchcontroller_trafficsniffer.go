@@ -153,7 +153,7 @@ func resourceSwitchControllerTrafficSnifferUpdate(d *schema.ResourceData, m inte
 		}
 	}
 
-	obj, err := getObjectSwitchControllerTrafficSniffer(d, c.Fv)
+	obj, err := getObjectSwitchControllerTrafficSniffer(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerTrafficSniffer resource while getting object: %v", err)
 	}
@@ -175,7 +175,6 @@ func resourceSwitchControllerTrafficSnifferUpdate(d *schema.ResourceData, m inte
 
 func resourceSwitchControllerTrafficSnifferDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -187,9 +186,15 @@ func resourceSwitchControllerTrafficSnifferDelete(d *schema.ResourceData, m inte
 		}
 	}
 
-	err := c.DeleteSwitchControllerTrafficSniffer(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerTrafficSniffer(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerTrafficSniffer resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerTrafficSniffer resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerTrafficSniffer(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerTrafficSniffer resource: %v", err)
 	}
 
 	d.SetId("")
@@ -753,56 +758,76 @@ func expandSwitchControllerTrafficSnifferTargetPortOutPortsName(d *schema.Resour
 	return v, nil
 }
 
-func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSwitchControllerTrafficSnifferMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSwitchControllerTrafficSnifferMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("erspan_ip"); ok {
+		if setArgNil {
+			obj["erspan-ip"] = nil
+		} else {
 
-		t, err := expandSwitchControllerTrafficSnifferErspanIp(d, v, "erspan_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["erspan-ip"] = t
+			t, err := expandSwitchControllerTrafficSnifferErspanIp(d, v, "erspan_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["erspan-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("target_mac"); ok {
+		if setArgNil {
+			obj["target-mac"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerTrafficSnifferTargetMac(d, v, "target_mac", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["target-mac"] = t
+			t, err := expandSwitchControllerTrafficSnifferTargetMac(d, v, "target_mac", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["target-mac"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("target_ip"); ok {
+		if setArgNil {
+			obj["target-ip"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerTrafficSnifferTargetIp(d, v, "target_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["target-ip"] = t
+			t, err := expandSwitchControllerTrafficSnifferTargetIp(d, v, "target_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["target-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("target_port"); ok {
+		if setArgNil {
+			obj["target-port"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSwitchControllerTrafficSnifferTargetPort(d, v, "target_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["target-port"] = t
+			t, err := expandSwitchControllerTrafficSnifferTargetPort(d, v, "target_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["target-port"] = t
+			}
 		}
 	}
 

@@ -217,7 +217,7 @@ func resourceVpnCertificateSettingUpdate(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	obj, err := getObjectVpnCertificateSetting(d, c.Fv)
+	obj, err := getObjectVpnCertificateSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateSetting resource while getting object: %v", err)
 	}
@@ -239,7 +239,6 @@ func resourceVpnCertificateSettingUpdate(d *schema.ResourceData, m interface{}) 
 
 func resourceVpnCertificateSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -251,9 +250,15 @@ func resourceVpnCertificateSettingDelete(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	err := c.DeleteVpnCertificateSetting(mkey, vdomparam)
+	obj, err := getObjectVpnCertificateSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting VpnCertificateSetting resource: %v", err)
+		return fmt.Errorf("Error updating VpnCertificateSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateVpnCertificateSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing VpnCertificateSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -682,7 +687,7 @@ func expandVpnCertificateSettingCnAllowMulti(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -694,18 +699,30 @@ func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interf
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "expiry"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["expiry"] = nil
+		} else {
 
-		result["expiry"], _ = expandVpnCertificateSettingCrlVerificationExpiry(d, i["expiry"], pre_append, sv)
+			result["expiry"], _ = expandVpnCertificateSettingCrlVerificationExpiry(d, i["expiry"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "leaf_crl_absence"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["leaf-crl-absence"] = nil
+		} else {
 
-		result["leaf-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationLeafCrlAbsence(d, i["leaf_crl_absence"], pre_append, sv)
+			result["leaf-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationLeafCrlAbsence(d, i["leaf_crl_absence"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "chain_crl_absence"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["chain-crl-absence"] = nil
+		} else {
 
-		result["chain-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationChainCrlAbsence(d, i["chain_crl_absence"], pre_append, sv)
+			result["chain-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationChainCrlAbsence(d, i["chain_crl_absence"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -783,132 +800,180 @@ func expandVpnCertificateSettingCertnameEd448(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func getObjectVpnCertificateSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("ocsp_status"); ok {
+		if setArgNil {
+			obj["ocsp-status"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingOcspStatus(d, v, "ocsp_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ocsp-status"] = t
+			t, err := expandVpnCertificateSettingOcspStatus(d, v, "ocsp_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ocsp-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ocsp_option"); ok {
+		if setArgNil {
+			obj["ocsp-option"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingOcspOption(d, v, "ocsp_option", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ocsp-option"] = t
+			t, err := expandVpnCertificateSettingOcspOption(d, v, "ocsp_option", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ocsp-option"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_ocsp_source_ip"); ok {
+		if setArgNil {
+			obj["ssl-ocsp-source-ip"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingSslOcspSourceIp(d, v, "ssl_ocsp_source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-ocsp-source-ip"] = t
+			t, err := expandVpnCertificateSettingSslOcspSourceIp(d, v, "ssl_ocsp_source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-ocsp-source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ocsp_default_server"); ok {
+		if setArgNil {
+			obj["ocsp-default-server"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingOcspDefaultServer(d, v, "ocsp_default_server", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ocsp-default-server"] = t
+			t, err := expandVpnCertificateSettingOcspDefaultServer(d, v, "ocsp_default_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ocsp-default-server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandVpnCertificateSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandVpnCertificateSettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("check_ca_cert"); ok {
+		if setArgNil {
+			obj["check-ca-cert"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCheckCaCert(d, v, "check_ca_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["check-ca-cert"] = t
+			t, err := expandVpnCertificateSettingCheckCaCert(d, v, "check_ca_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["check-ca-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("check_ca_chain"); ok {
+		if setArgNil {
+			obj["check-ca-chain"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCheckCaChain(d, v, "check_ca_chain", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["check-ca-chain"] = t
+			t, err := expandVpnCertificateSettingCheckCaChain(d, v, "check_ca_chain", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["check-ca-chain"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("subject_match"); ok {
+		if setArgNil {
+			obj["subject-match"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingSubjectMatch(d, v, "subject_match", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["subject-match"] = t
+			t, err := expandVpnCertificateSettingSubjectMatch(d, v, "subject_match", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["subject-match"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("subject_set"); ok {
+		if setArgNil {
+			obj["subject-set"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingSubjectSet(d, v, "subject_set", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["subject-set"] = t
+			t, err := expandVpnCertificateSettingSubjectSet(d, v, "subject_set", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["subject-set"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cn_match"); ok {
+		if setArgNil {
+			obj["cn-match"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCnMatch(d, v, "cn_match", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cn-match"] = t
+			t, err := expandVpnCertificateSettingCnMatch(d, v, "cn_match", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cn-match"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cn_allow_multi"); ok {
+		if setArgNil {
+			obj["cn-allow-multi"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCnAllowMulti(d, v, "cn_allow_multi", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cn-allow-multi"] = t
+			t, err := expandVpnCertificateSettingCnAllowMulti(d, v, "cn_allow_multi", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cn-allow-multi"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("crl_verification"); ok {
 
-		t, err := expandVpnCertificateSettingCrlVerification(d, v, "crl_verification", sv)
+		t, err := expandVpnCertificateSettingCrlVerification(d, v, "crl_verification", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -917,152 +982,212 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("strict_crl_check"); ok {
+		if setArgNil {
+			obj["strict-crl-check"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingStrictCrlCheck(d, v, "strict_crl_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strict-crl-check"] = t
+			t, err := expandVpnCertificateSettingStrictCrlCheck(d, v, "strict_crl_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strict-crl-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strict_ocsp_check"); ok {
+		if setArgNil {
+			obj["strict-ocsp-check"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingStrictOcspCheck(d, v, "strict_ocsp_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strict-ocsp-check"] = t
+			t, err := expandVpnCertificateSettingStrictOcspCheck(d, v, "strict_ocsp_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strict-ocsp-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandVpnCertificateSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cmp_save_extra_certs"); ok {
+		if setArgNil {
+			obj["cmp-save-extra-certs"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCmpSaveExtraCerts(d, v, "cmp_save_extra_certs", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cmp-save-extra-certs"] = t
+			t, err := expandVpnCertificateSettingCmpSaveExtraCerts(d, v, "cmp_save_extra_certs", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cmp-save-extra-certs"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cmp_key_usage_checking"); ok {
+		if setArgNil {
+			obj["cmp-key-usage-checking"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCmpKeyUsageChecking(d, v, "cmp_key_usage_checking", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cmp-key-usage-checking"] = t
+			t, err := expandVpnCertificateSettingCmpKeyUsageChecking(d, v, "cmp_key_usage_checking", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cmp-key-usage-checking"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_rsa1024"); ok {
+		if setArgNil {
+			obj["certname-rsa1024"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameRsa1024(d, v, "certname_rsa1024", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-rsa1024"] = t
+			t, err := expandVpnCertificateSettingCertnameRsa1024(d, v, "certname_rsa1024", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-rsa1024"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_rsa2048"); ok {
+		if setArgNil {
+			obj["certname-rsa2048"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameRsa2048(d, v, "certname_rsa2048", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-rsa2048"] = t
+			t, err := expandVpnCertificateSettingCertnameRsa2048(d, v, "certname_rsa2048", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-rsa2048"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_rsa4096"); ok {
+		if setArgNil {
+			obj["certname-rsa4096"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameRsa4096(d, v, "certname_rsa4096", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-rsa4096"] = t
+			t, err := expandVpnCertificateSettingCertnameRsa4096(d, v, "certname_rsa4096", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-rsa4096"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_dsa1024"); ok {
+		if setArgNil {
+			obj["certname-dsa1024"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameDsa1024(d, v, "certname_dsa1024", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-dsa1024"] = t
+			t, err := expandVpnCertificateSettingCertnameDsa1024(d, v, "certname_dsa1024", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-dsa1024"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_dsa2048"); ok {
+		if setArgNil {
+			obj["certname-dsa2048"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameDsa2048(d, v, "certname_dsa2048", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-dsa2048"] = t
+			t, err := expandVpnCertificateSettingCertnameDsa2048(d, v, "certname_dsa2048", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-dsa2048"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_ecdsa256"); ok {
+		if setArgNil {
+			obj["certname-ecdsa256"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameEcdsa256(d, v, "certname_ecdsa256", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-ecdsa256"] = t
+			t, err := expandVpnCertificateSettingCertnameEcdsa256(d, v, "certname_ecdsa256", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-ecdsa256"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_ecdsa384"); ok {
+		if setArgNil {
+			obj["certname-ecdsa384"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameEcdsa384(d, v, "certname_ecdsa384", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-ecdsa384"] = t
+			t, err := expandVpnCertificateSettingCertnameEcdsa384(d, v, "certname_ecdsa384", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-ecdsa384"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_ecdsa521"); ok {
+		if setArgNil {
+			obj["certname-ecdsa521"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameEcdsa521(d, v, "certname_ecdsa521", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-ecdsa521"] = t
+			t, err := expandVpnCertificateSettingCertnameEcdsa521(d, v, "certname_ecdsa521", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-ecdsa521"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_ed25519"); ok {
+		if setArgNil {
+			obj["certname-ed25519"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameEd25519(d, v, "certname_ed25519", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-ed25519"] = t
+			t, err := expandVpnCertificateSettingCertnameEd25519(d, v, "certname_ed25519", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-ed25519"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("certname_ed448"); ok {
+		if setArgNil {
+			obj["certname-ed448"] = nil
+		} else {
 
-		t, err := expandVpnCertificateSettingCertnameEd448(d, v, "certname_ed448", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["certname-ed448"] = t
+			t, err := expandVpnCertificateSettingCertnameEd448(d, v, "certname_ed448", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certname-ed448"] = t
+			}
 		}
 	}
 

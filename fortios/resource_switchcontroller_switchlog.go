@@ -62,7 +62,7 @@ func resourceSwitchControllerSwitchLogUpdate(d *schema.ResourceData, m interface
 		}
 	}
 
-	obj, err := getObjectSwitchControllerSwitchLog(d, c.Fv)
+	obj, err := getObjectSwitchControllerSwitchLog(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchLog resource while getting object: %v", err)
 	}
@@ -84,7 +84,6 @@ func resourceSwitchControllerSwitchLogUpdate(d *schema.ResourceData, m interface
 
 func resourceSwitchControllerSwitchLogDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -96,9 +95,15 @@ func resourceSwitchControllerSwitchLogDelete(d *schema.ResourceData, m interface
 		}
 	}
 
-	err := c.DeleteSwitchControllerSwitchLog(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerSwitchLog(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerSwitchLog resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerSwitchLog resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerSwitchLog(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerSwitchLog resource: %v", err)
 	}
 
 	d.SetId("")
@@ -178,26 +183,34 @@ func expandSwitchControllerSwitchLogSeverity(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectSwitchControllerSwitchLog(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSwitchLog(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSwitchLogStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSwitchControllerSwitchLogStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
+		if setArgNil {
+			obj["severity"] = nil
+		} else {
 
-		t, err := expandSwitchControllerSwitchLogSeverity(d, v, "severity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["severity"] = t
+			t, err := expandSwitchControllerSwitchLogSeverity(d, v, "severity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["severity"] = t
+			}
 		}
 	}
 

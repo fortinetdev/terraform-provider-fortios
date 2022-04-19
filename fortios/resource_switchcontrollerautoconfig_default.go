@@ -70,7 +70,7 @@ func resourceSwitchControllerAutoConfigDefaultUpdate(d *schema.ResourceData, m i
 		}
 	}
 
-	obj, err := getObjectSwitchControllerAutoConfigDefault(d, c.Fv)
+	obj, err := getObjectSwitchControllerAutoConfigDefault(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigDefault resource while getting object: %v", err)
 	}
@@ -92,7 +92,6 @@ func resourceSwitchControllerAutoConfigDefaultUpdate(d *schema.ResourceData, m i
 
 func resourceSwitchControllerAutoConfigDefaultDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -104,9 +103,15 @@ func resourceSwitchControllerAutoConfigDefaultDelete(d *schema.ResourceData, m i
 		}
 	}
 
-	err := c.DeleteSwitchControllerAutoConfigDefault(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerAutoConfigDefault(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerAutoConfigDefault resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerAutoConfigDefault resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerAutoConfigDefault(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerAutoConfigDefault resource: %v", err)
 	}
 
 	d.SetId("")
@@ -200,36 +205,48 @@ func expandSwitchControllerAutoConfigDefaultIclPolicy(d *schema.ResourceData, v 
 	return v, nil
 }
 
-func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fgt_policy"); ok {
+		if setArgNil {
+			obj["fgt-policy"] = nil
+		} else {
 
-		t, err := expandSwitchControllerAutoConfigDefaultFgtPolicy(d, v, "fgt_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fgt-policy"] = t
+			t, err := expandSwitchControllerAutoConfigDefaultFgtPolicy(d, v, "fgt_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fgt-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("isl_policy"); ok {
+		if setArgNil {
+			obj["isl-policy"] = nil
+		} else {
 
-		t, err := expandSwitchControllerAutoConfigDefaultIslPolicy(d, v, "isl_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["isl-policy"] = t
+			t, err := expandSwitchControllerAutoConfigDefaultIslPolicy(d, v, "isl_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["isl-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("icl_policy"); ok {
+		if setArgNil {
+			obj["icl-policy"] = nil
+		} else {
 
-		t, err := expandSwitchControllerAutoConfigDefaultIclPolicy(d, v, "icl_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["icl-policy"] = t
+			t, err := expandSwitchControllerAutoConfigDefaultIclPolicy(d, v, "icl_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["icl-policy"] = t
+			}
 		}
 	}
 

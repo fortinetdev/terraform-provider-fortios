@@ -112,7 +112,7 @@ func resourceWirelessControllerLogUpdate(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	obj, err := getObjectWirelessControllerLog(d, c.Fv)
+	obj, err := getObjectWirelessControllerLog(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerLog resource while getting object: %v", err)
 	}
@@ -134,7 +134,6 @@ func resourceWirelessControllerLogUpdate(d *schema.ResourceData, m interface{}) 
 
 func resourceWirelessControllerLogDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -146,9 +145,15 @@ func resourceWirelessControllerLogDelete(d *schema.ResourceData, m interface{}) 
 		}
 	}
 
-	err := c.DeleteWirelessControllerLog(mkey, vdomparam)
+	obj, err := getObjectWirelessControllerLog(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WirelessControllerLog resource: %v", err)
+		return fmt.Errorf("Error updating WirelessControllerLog resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWirelessControllerLog(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WirelessControllerLog resource: %v", err)
 	}
 
 	d.SetId("")
@@ -368,126 +373,174 @@ func expandWirelessControllerLogWtpEventLog(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectWirelessControllerLog(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandWirelessControllerLogStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("addrgrp_log"); ok {
+		if setArgNil {
+			obj["addrgrp-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogAddrgrpLog(d, v, "addrgrp_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["addrgrp-log"] = t
+			t, err := expandWirelessControllerLogAddrgrpLog(d, v, "addrgrp_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["addrgrp-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ble_log"); ok {
+		if setArgNil {
+			obj["ble-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogBleLog(d, v, "ble_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ble-log"] = t
+			t, err := expandWirelessControllerLogBleLog(d, v, "ble_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ble-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("clb_log"); ok {
+		if setArgNil {
+			obj["clb-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogClbLog(d, v, "clb_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["clb-log"] = t
+			t, err := expandWirelessControllerLogClbLog(d, v, "clb_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["clb-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dhcp_starv_log"); ok {
+		if setArgNil {
+			obj["dhcp-starv-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogDhcpStarvLog(d, v, "dhcp_starv_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dhcp-starv-log"] = t
+			t, err := expandWirelessControllerLogDhcpStarvLog(d, v, "dhcp_starv_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-starv-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("led_sched_log"); ok {
+		if setArgNil {
+			obj["led-sched-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogLedSchedLog(d, v, "led_sched_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["led-sched-log"] = t
+			t, err := expandWirelessControllerLogLedSchedLog(d, v, "led_sched_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["led-sched-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("radio_event_log"); ok {
+		if setArgNil {
+			obj["radio-event-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogRadioEventLog(d, v, "radio_event_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["radio-event-log"] = t
+			t, err := expandWirelessControllerLogRadioEventLog(d, v, "radio_event_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["radio-event-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rogue_event_log"); ok {
+		if setArgNil {
+			obj["rogue-event-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogRogueEventLog(d, v, "rogue_event_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rogue-event-log"] = t
+			t, err := expandWirelessControllerLogRogueEventLog(d, v, "rogue_event_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rogue-event-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sta_event_log"); ok {
+		if setArgNil {
+			obj["sta-event-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogStaEventLog(d, v, "sta_event_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sta-event-log"] = t
+			t, err := expandWirelessControllerLogStaEventLog(d, v, "sta_event_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-event-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sta_locate_log"); ok {
+		if setArgNil {
+			obj["sta-locate-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogStaLocateLog(d, v, "sta_locate_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sta-locate-log"] = t
+			t, err := expandWirelessControllerLogStaLocateLog(d, v, "sta_locate_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-locate-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wids_log"); ok {
+		if setArgNil {
+			obj["wids-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogWidsLog(d, v, "wids_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wids-log"] = t
+			t, err := expandWirelessControllerLogWidsLog(d, v, "wids_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wids-log"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wtp_event_log"); ok {
+		if setArgNil {
+			obj["wtp-event-log"] = nil
+		} else {
 
-		t, err := expandWirelessControllerLogWtpEventLog(d, v, "wtp_event_log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wtp-event-log"] = t
+			t, err := expandWirelessControllerLogWtpEventLog(d, v, "wtp_event_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wtp-event-log"] = t
+			}
 		}
 	}
 

@@ -318,7 +318,7 @@ func resourceLogThreatWeightUpdate(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	obj, err := getObjectLogThreatWeight(d, c.Fv)
+	obj, err := getObjectLogThreatWeight(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogThreatWeight resource while getting object: %v", err)
 	}
@@ -340,7 +340,6 @@ func resourceLogThreatWeightUpdate(d *schema.ResourceData, m interface{}) error 
 
 func resourceLogThreatWeightDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -352,9 +351,15 @@ func resourceLogThreatWeightDelete(d *schema.ResourceData, m interface{}) error 
 		}
 	}
 
-	err := c.DeleteLogThreatWeight(mkey, vdomparam)
+	obj, err := getObjectLogThreatWeight(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogThreatWeight resource: %v", err)
+		return fmt.Errorf("Error updating LogThreatWeight resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogThreatWeight(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogThreatWeight resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1029,7 +1034,7 @@ func expandLogThreatWeightStatus(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1041,23 +1046,39 @@ func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre strin
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "low"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["low"] = nil
+		} else {
 
-		result["low"], _ = expandLogThreatWeightLevelLow(d, i["low"], pre_append, sv)
+			result["low"], _ = expandLogThreatWeightLevelLow(d, i["low"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "medium"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["medium"] = nil
+		} else {
 
-		result["medium"], _ = expandLogThreatWeightLevelMedium(d, i["medium"], pre_append, sv)
+			result["medium"], _ = expandLogThreatWeightLevelMedium(d, i["medium"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "high"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["high"] = nil
+		} else {
 
-		result["high"], _ = expandLogThreatWeightLevelHigh(d, i["high"], pre_append, sv)
+			result["high"], _ = expandLogThreatWeightLevelHigh(d, i["high"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "critical"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["critical"] = nil
+		} else {
 
-		result["critical"], _ = expandLogThreatWeightLevelCritical(d, i["critical"], pre_append, sv)
+			result["critical"], _ = expandLogThreatWeightLevelCritical(d, i["critical"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1095,7 +1116,7 @@ func expandLogThreatWeightBotnetConnectionDetected(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1107,88 +1128,156 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "virus_infected"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["virus-infected"] = nil
+		} else {
 
-		result["virus-infected"], _ = expandLogThreatWeightMalwareVirusInfected(d, i["virus_infected"], pre_append, sv)
+			result["virus-infected"], _ = expandLogThreatWeightMalwareVirusInfected(d, i["virus_infected"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "fortiai"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["fortiai"] = nil
+		} else {
 
-		result["fortiai"], _ = expandLogThreatWeightMalwareFortiai(d, i["fortiai"], pre_append, sv)
+			result["fortiai"], _ = expandLogThreatWeightMalwareFortiai(d, i["fortiai"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "file_blocked"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["file-blocked"] = nil
+		} else {
 
-		result["file-blocked"], _ = expandLogThreatWeightMalwareFileBlocked(d, i["file_blocked"], pre_append, sv)
+			result["file-blocked"], _ = expandLogThreatWeightMalwareFileBlocked(d, i["file_blocked"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "command_blocked"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["command-blocked"] = nil
+		} else {
 
-		result["command-blocked"], _ = expandLogThreatWeightMalwareCommandBlocked(d, i["command_blocked"], pre_append, sv)
+			result["command-blocked"], _ = expandLogThreatWeightMalwareCommandBlocked(d, i["command_blocked"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "oversized"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["oversized"] = nil
+		} else {
 
-		result["oversized"], _ = expandLogThreatWeightMalwareOversized(d, i["oversized"], pre_append, sv)
+			result["oversized"], _ = expandLogThreatWeightMalwareOversized(d, i["oversized"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "virus_scan_error"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["virus-scan-error"] = nil
+		} else {
 
-		result["virus-scan-error"], _ = expandLogThreatWeightMalwareVirusScanError(d, i["virus_scan_error"], pre_append, sv)
+			result["virus-scan-error"], _ = expandLogThreatWeightMalwareVirusScanError(d, i["virus_scan_error"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "switch_proto"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["switch-proto"] = nil
+		} else {
 
-		result["switch-proto"], _ = expandLogThreatWeightMalwareSwitchProto(d, i["switch_proto"], pre_append, sv)
+			result["switch-proto"], _ = expandLogThreatWeightMalwareSwitchProto(d, i["switch_proto"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "mimefragmented"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mimefragmented"] = nil
+		} else {
 
-		result["mimefragmented"], _ = expandLogThreatWeightMalwareMimefragmented(d, i["mimefragmented"], pre_append, sv)
+			result["mimefragmented"], _ = expandLogThreatWeightMalwareMimefragmented(d, i["mimefragmented"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "virus_file_type_executable"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["virus-file-type-executable"] = nil
+		} else {
 
-		result["virus-file-type-executable"], _ = expandLogThreatWeightMalwareVirusFileTypeExecutable(d, i["virus_file_type_executable"], pre_append, sv)
+			result["virus-file-type-executable"], _ = expandLogThreatWeightMalwareVirusFileTypeExecutable(d, i["virus_file_type_executable"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "virus_outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["virus-outbreak-prevention"] = nil
+		} else {
 
-		result["virus-outbreak-prevention"], _ = expandLogThreatWeightMalwareVirusOutbreakPrevention(d, i["virus_outbreak_prevention"], pre_append, sv)
+			result["virus-outbreak-prevention"], _ = expandLogThreatWeightMalwareVirusOutbreakPrevention(d, i["virus_outbreak_prevention"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "botnet_connection"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["botnet-connection"] = nil
+		} else {
 
-		result["botnet-connection"], _ = expandLogThreatWeightMalwareBotnetConnection(d, i["botnet_connection"], pre_append, sv)
+			result["botnet-connection"], _ = expandLogThreatWeightMalwareBotnetConnection(d, i["botnet_connection"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["content-disarm"] = nil
+		} else {
 
-		result["content-disarm"], _ = expandLogThreatWeightMalwareContentDisarm(d, i["content_disarm"], pre_append, sv)
+			result["content-disarm"], _ = expandLogThreatWeightMalwareContentDisarm(d, i["content_disarm"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "malware_list"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["malware-list"] = nil
+		} else {
 
-		result["malware-list"], _ = expandLogThreatWeightMalwareMalwareList(d, i["malware_list"], pre_append, sv)
+			result["malware-list"], _ = expandLogThreatWeightMalwareMalwareList(d, i["malware_list"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "ems_threat_feed"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["ems-threat-feed"] = nil
+		} else {
 
-		result["ems-threat-feed"], _ = expandLogThreatWeightMalwareEmsThreatFeed(d, i["ems_threat_feed"], pre_append, sv)
+			result["ems-threat-feed"], _ = expandLogThreatWeightMalwareEmsThreatFeed(d, i["ems_threat_feed"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "fsa_malicious"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["fsa-malicious"] = nil
+		} else {
 
-		result["fsa-malicious"], _ = expandLogThreatWeightMalwareFsaMalicious(d, i["fsa_malicious"], pre_append, sv)
+			result["fsa-malicious"], _ = expandLogThreatWeightMalwareFsaMalicious(d, i["fsa_malicious"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "fsa_high_risk"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["fsa-high-risk"] = nil
+		} else {
 
-		result["fsa-high-risk"], _ = expandLogThreatWeightMalwareFsaHighRisk(d, i["fsa_high_risk"], pre_append, sv)
+			result["fsa-high-risk"], _ = expandLogThreatWeightMalwareFsaHighRisk(d, i["fsa_high_risk"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "fsa_medium_risk"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["fsa-medium-risk"] = nil
+		} else {
 
-		result["fsa-medium-risk"], _ = expandLogThreatWeightMalwareFsaMediumRisk(d, i["fsa_medium_risk"], pre_append, sv)
+			result["fsa-medium-risk"], _ = expandLogThreatWeightMalwareFsaMediumRisk(d, i["fsa_medium_risk"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1262,7 +1351,7 @@ func expandLogThreatWeightMalwareFsaMediumRisk(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1274,28 +1363,48 @@ func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "info_severity"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["info-severity"] = nil
+		} else {
 
-		result["info-severity"], _ = expandLogThreatWeightIpsInfoSeverity(d, i["info_severity"], pre_append, sv)
+			result["info-severity"], _ = expandLogThreatWeightIpsInfoSeverity(d, i["info_severity"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "low_severity"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["low-severity"] = nil
+		} else {
 
-		result["low-severity"], _ = expandLogThreatWeightIpsLowSeverity(d, i["low_severity"], pre_append, sv)
+			result["low-severity"], _ = expandLogThreatWeightIpsLowSeverity(d, i["low_severity"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "medium_severity"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["medium-severity"] = nil
+		} else {
 
-		result["medium-severity"], _ = expandLogThreatWeightIpsMediumSeverity(d, i["medium_severity"], pre_append, sv)
+			result["medium-severity"], _ = expandLogThreatWeightIpsMediumSeverity(d, i["medium_severity"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "high_severity"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["high-severity"] = nil
+		} else {
 
-		result["high-severity"], _ = expandLogThreatWeightIpsHighSeverity(d, i["high_severity"], pre_append, sv)
+			result["high-severity"], _ = expandLogThreatWeightIpsHighSeverity(d, i["high_severity"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "critical_severity"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["critical-severity"] = nil
+		} else {
 
-		result["critical-severity"], _ = expandLogThreatWeightIpsCriticalSeverity(d, i["critical_severity"], pre_append, sv)
+			result["critical-severity"], _ = expandLogThreatWeightIpsCriticalSeverity(d, i["critical_severity"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -1477,22 +1586,26 @@ func expandLogThreatWeightApplicationLevel(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectLogThreatWeight(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogThreatWeightStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogThreatWeightStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("level"); ok {
 
-		t, err := expandLogThreatWeightLevel(d, v, "level", sv)
+		t, err := expandLogThreatWeightLevel(d, v, "level", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1501,48 +1614,64 @@ func getObjectLogThreatWeight(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("blocked_connection"); ok {
+		if setArgNil {
+			obj["blocked-connection"] = nil
+		} else {
 
-		t, err := expandLogThreatWeightBlockedConnection(d, v, "blocked_connection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["blocked-connection"] = t
+			t, err := expandLogThreatWeightBlockedConnection(d, v, "blocked_connection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["blocked-connection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("failed_connection"); ok {
+		if setArgNil {
+			obj["failed-connection"] = nil
+		} else {
 
-		t, err := expandLogThreatWeightFailedConnection(d, v, "failed_connection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["failed-connection"] = t
+			t, err := expandLogThreatWeightFailedConnection(d, v, "failed_connection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["failed-connection"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("url_block_detected"); ok {
+		if setArgNil {
+			obj["url-block-detected"] = nil
+		} else {
 
-		t, err := expandLogThreatWeightUrlBlockDetected(d, v, "url_block_detected", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url-block-detected"] = t
+			t, err := expandLogThreatWeightUrlBlockDetected(d, v, "url_block_detected", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["url-block-detected"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("botnet_connection_detected"); ok {
+		if setArgNil {
+			obj["botnet-connection-detected"] = nil
+		} else {
 
-		t, err := expandLogThreatWeightBotnetConnectionDetected(d, v, "botnet_connection_detected", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["botnet-connection-detected"] = t
+			t, err := expandLogThreatWeightBotnetConnectionDetected(d, v, "botnet_connection_detected", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["botnet-connection-detected"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("malware"); ok {
 
-		t, err := expandLogThreatWeightMalware(d, v, "malware", sv)
+		t, err := expandLogThreatWeightMalware(d, v, "malware", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1552,7 +1681,7 @@ func getObjectLogThreatWeight(d *schema.ResourceData, sv string) (*map[string]in
 
 	if v, ok := d.GetOk("ips"); ok {
 
-		t, err := expandLogThreatWeightIps(d, v, "ips", sv)
+		t, err := expandLogThreatWeightIps(d, v, "ips", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1561,32 +1690,44 @@ func getObjectLogThreatWeight(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("web"); ok {
+		if setArgNil {
+			obj["web"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogThreatWeightWeb(d, v, "web", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["web"] = t
+			t, err := expandLogThreatWeightWeb(d, v, "web", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["web"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("geolocation"); ok {
+		if setArgNil {
+			obj["geolocation"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogThreatWeightGeolocation(d, v, "geolocation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["geolocation"] = t
+			t, err := expandLogThreatWeightGeolocation(d, v, "geolocation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["geolocation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("application"); ok {
+		if setArgNil {
+			obj["application"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogThreatWeightApplication(d, v, "application", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["application"] = t
+			t, err := expandLogThreatWeightApplication(d, v, "application", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["application"] = t
+			}
 		}
 	}
 

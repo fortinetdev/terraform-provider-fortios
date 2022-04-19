@@ -2665,263 +2665,363 @@ func expandVpnSslSettingsSamlRedirectPort(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandVpnSslSettingsStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reqclientcert"); ok {
+		if setArgNil {
+			obj["reqclientcert"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsReqclientcert(d, v, "reqclientcert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reqclientcert"] = t
+			t, err := expandVpnSslSettingsReqclientcert(d, v, "reqclientcert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reqclientcert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user_peer"); ok {
+		if setArgNil {
+			obj["user-peer"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsUserPeer(d, v, "user_peer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user-peer"] = t
+			t, err := expandVpnSslSettingsUserPeer(d, v, "user_peer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-peer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_max_proto_ver"); ok {
+		if setArgNil {
+			obj["ssl-max-proto-ver"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSslMaxProtoVer(d, v, "ssl_max_proto_ver", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-max-proto-ver"] = t
+			t, err := expandVpnSslSettingsSslMaxProtoVer(d, v, "ssl_max_proto_ver", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-max-proto-ver"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_ver"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-ver"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSslMinProtoVer(d, v, "ssl_min_proto_ver", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-ver"] = t
+			t, err := expandVpnSslSettingsSslMinProtoVer(d, v, "ssl_min_proto_ver", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-ver"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tlsv1_0"); ok {
+		if setArgNil {
+			obj["tlsv1-0"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTlsv10(d, v, "tlsv1_0", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tlsv1-0"] = t
+			t, err := expandVpnSslSettingsTlsv10(d, v, "tlsv1_0", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tlsv1-0"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tlsv1_1"); ok {
+		if setArgNil {
+			obj["tlsv1-1"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTlsv11(d, v, "tlsv1_1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tlsv1-1"] = t
+			t, err := expandVpnSslSettingsTlsv11(d, v, "tlsv1_1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tlsv1-1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tlsv1_2"); ok {
+		if setArgNil {
+			obj["tlsv1-2"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTlsv12(d, v, "tlsv1_2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tlsv1-2"] = t
+			t, err := expandVpnSslSettingsTlsv12(d, v, "tlsv1_2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tlsv1-2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tlsv1_3"); ok {
+		if setArgNil {
+			obj["tlsv1-3"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTlsv13(d, v, "tlsv1_3", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tlsv1-3"] = t
+			t, err := expandVpnSslSettingsTlsv13(d, v, "tlsv1_3", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tlsv1-3"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("banned_cipher"); ok {
+		if setArgNil {
+			obj["banned-cipher"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsBannedCipher(d, v, "banned_cipher", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["banned-cipher"] = t
+			t, err := expandVpnSslSettingsBannedCipher(d, v, "banned_cipher", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["banned-cipher"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ciphersuite"); ok {
+		if setArgNil {
+			obj["ciphersuite"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsCiphersuite(d, v, "ciphersuite", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ciphersuite"] = t
+			t, err := expandVpnSslSettingsCiphersuite(d, v, "ciphersuite", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ciphersuite"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_insert_empty_fragment"); ok {
+		if setArgNil {
+			obj["ssl-insert-empty-fragment"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSslInsertEmptyFragment(d, v, "ssl_insert_empty_fragment", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-insert-empty-fragment"] = t
+			t, err := expandVpnSslSettingsSslInsertEmptyFragment(d, v, "ssl_insert_empty_fragment", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-insert-empty-fragment"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("https_redirect"); ok {
+		if setArgNil {
+			obj["https-redirect"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHttpsRedirect(d, v, "https_redirect", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["https-redirect"] = t
+			t, err := expandVpnSslSettingsHttpsRedirect(d, v, "https_redirect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["https-redirect"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("x_content_type_options"); ok {
+		if setArgNil {
+			obj["x-content-type-options"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsXContentTypeOptions(d, v, "x_content_type_options", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["x-content-type-options"] = t
+			t, err := expandVpnSslSettingsXContentTypeOptions(d, v, "x_content_type_options", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["x-content-type-options"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_client_renegotiation"); ok {
+		if setArgNil {
+			obj["ssl-client-renegotiation"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSslClientRenegotiation(d, v, "ssl_client_renegotiation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-client-renegotiation"] = t
+			t, err := expandVpnSslSettingsSslClientRenegotiation(d, v, "ssl_client_renegotiation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-client-renegotiation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("force_two_factor_auth"); ok {
+		if setArgNil {
+			obj["force-two-factor-auth"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsForceTwoFactorAuth(d, v, "force_two_factor_auth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["force-two-factor-auth"] = t
+			t, err := expandVpnSslSettingsForceTwoFactorAuth(d, v, "force_two_factor_auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["force-two-factor-auth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unsafe_legacy_renegotiation"); ok {
+		if setArgNil {
+			obj["unsafe-legacy-renegotiation"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsUnsafeLegacyRenegotiation(d, v, "unsafe_legacy_renegotiation", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unsafe-legacy-renegotiation"] = t
+			t, err := expandVpnSslSettingsUnsafeLegacyRenegotiation(d, v, "unsafe_legacy_renegotiation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unsafe-legacy-renegotiation"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("servercert"); ok {
+		if setArgNil {
+			obj["servercert"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsServercert(d, v, "servercert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["servercert"] = t
+			t, err := expandVpnSslSettingsServercert(d, v, "servercert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["servercert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("algorithm"); ok {
+		if setArgNil {
+			obj["algorithm"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsAlgorithm(d, v, "algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["algorithm"] = t
+			t, err := expandVpnSslSettingsAlgorithm(d, v, "algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("idle_timeout"); ok {
+		if setArgNil {
+			obj["idle-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsIdleTimeout(d, v, "idle_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["idle-timeout"] = t
+			t, err := expandVpnSslSettingsIdleTimeout(d, v, "idle_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["idle-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("auth_timeout"); ok {
+		if setArgNil {
+			obj["auth-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsAuthTimeout(d, v, "auth_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-timeout"] = t
+			t, err := expandVpnSslSettingsAuthTimeout(d, v, "auth_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("login_attempt_limit"); ok {
+		if setArgNil {
+			obj["login-attempt-limit"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsLoginAttemptLimit(d, v, "login_attempt_limit", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["login-attempt-limit"] = t
+			t, err := expandVpnSslSettingsLoginAttemptLimit(d, v, "login_attempt_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login-attempt-limit"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("login_block_time"); ok {
+		if setArgNil {
+			obj["login-block-time"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsLoginBlockTime(d, v, "login_block_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["login-block-time"] = t
+			t, err := expandVpnSslSettingsLoginBlockTime(d, v, "login_block_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login-block-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("login_timeout"); ok {
+		if setArgNil {
+			obj["login-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsLoginTimeout(d, v, "login_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["login-timeout"] = t
+			t, err := expandVpnSslSettingsLoginTimeout(d, v, "login_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dtls_hello_timeout"); ok {
+		if setArgNil {
+			obj["dtls-hello-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDtlsHelloTimeout(d, v, "dtls_hello_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dtls-hello-timeout"] = t
+			t, err := expandVpnSslSettingsDtlsHelloTimeout(d, v, "dtls_hello_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dtls-hello-timeout"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["tunnel-ip-pools"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("tunnel_ip_pools"); ok {
+	if v, ok := d.GetOk("tunnel_ip_pools"); ok {
+		if setArgNil {
+			obj["tunnel-ip-pools"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandVpnSslSettingsTunnelIpPools(d, v, "tunnel_ip_pools", sv)
 			if err != nil {
@@ -2932,10 +3032,10 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 		}
 	}
 
-	if bemptysontable {
-		obj["tunnel-ipv6-pools"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("tunnel_ipv6_pools"); ok {
+	if v, ok := d.GetOk("tunnel_ipv6_pools"); ok {
+		if setArgNil {
+			obj["tunnel-ipv6-pools"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandVpnSslSettingsTunnelIpv6Pools(d, v, "tunnel_ipv6_pools", sv)
 			if err != nil {
@@ -2947,199 +3047,275 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 	}
 
 	if v, ok := d.GetOk("dns_suffix"); ok {
+		if setArgNil {
+			obj["dns-suffix"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDnsSuffix(d, v, "dns_suffix", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-suffix"] = t
+			t, err := expandVpnSslSettingsDnsSuffix(d, v, "dns_suffix", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-suffix"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns_server1"); ok {
+		if setArgNil {
+			obj["dns-server1"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDnsServer1(d, v, "dns_server1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-server1"] = t
+			t, err := expandVpnSslSettingsDnsServer1(d, v, "dns_server1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-server1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns_server2"); ok {
+		if setArgNil {
+			obj["dns-server2"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDnsServer2(d, v, "dns_server2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-server2"] = t
+			t, err := expandVpnSslSettingsDnsServer2(d, v, "dns_server2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-server2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wins_server1"); ok {
+		if setArgNil {
+			obj["wins-server1"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsWinsServer1(d, v, "wins_server1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wins-server1"] = t
+			t, err := expandVpnSslSettingsWinsServer1(d, v, "wins_server1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wins-server1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wins_server2"); ok {
+		if setArgNil {
+			obj["wins-server2"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsWinsServer2(d, v, "wins_server2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wins-server2"] = t
+			t, err := expandVpnSslSettingsWinsServer2(d, v, "wins_server2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wins-server2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_dns_server1"); ok {
+		if setArgNil {
+			obj["ipv6-dns-server1"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsIpv6DnsServer1(d, v, "ipv6_dns_server1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-dns-server1"] = t
+			t, err := expandVpnSslSettingsIpv6DnsServer1(d, v, "ipv6_dns_server1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-dns-server1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_dns_server2"); ok {
+		if setArgNil {
+			obj["ipv6-dns-server2"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsIpv6DnsServer2(d, v, "ipv6_dns_server2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-dns-server2"] = t
+			t, err := expandVpnSslSettingsIpv6DnsServer2(d, v, "ipv6_dns_server2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-dns-server2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_wins_server1"); ok {
+		if setArgNil {
+			obj["ipv6-wins-server1"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsIpv6WinsServer1(d, v, "ipv6_wins_server1", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-wins-server1"] = t
+			t, err := expandVpnSslSettingsIpv6WinsServer1(d, v, "ipv6_wins_server1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-wins-server1"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_wins_server2"); ok {
+		if setArgNil {
+			obj["ipv6-wins-server2"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsIpv6WinsServer2(d, v, "ipv6_wins_server2", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-wins-server2"] = t
+			t, err := expandVpnSslSettingsIpv6WinsServer2(d, v, "ipv6_wins_server2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-wins-server2"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("route_source_interface"); ok {
+		if setArgNil {
+			obj["route-source-interface"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsRouteSourceInterface(d, v, "route_source_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["route-source-interface"] = t
+			t, err := expandVpnSslSettingsRouteSourceInterface(d, v, "route_source_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["route-source-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("url_obscuration"); ok {
+		if setArgNil {
+			obj["url-obscuration"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsUrlObscuration(d, v, "url_obscuration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url-obscuration"] = t
+			t, err := expandVpnSslSettingsUrlObscuration(d, v, "url_obscuration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["url-obscuration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("http_compression"); ok {
+		if setArgNil {
+			obj["http-compression"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHttpCompression(d, v, "http_compression", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-compression"] = t
+			t, err := expandVpnSslSettingsHttpCompression(d, v, "http_compression", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-compression"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("http_only_cookie"); ok {
+		if setArgNil {
+			obj["http-only-cookie"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHttpOnlyCookie(d, v, "http_only_cookie", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-only-cookie"] = t
+			t, err := expandVpnSslSettingsHttpOnlyCookie(d, v, "http_only_cookie", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-only-cookie"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("deflate_compression_level"); ok {
+		if setArgNil {
+			obj["deflate-compression-level"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDeflateCompressionLevel(d, v, "deflate_compression_level", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["deflate-compression-level"] = t
+			t, err := expandVpnSslSettingsDeflateCompressionLevel(d, v, "deflate_compression_level", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["deflate-compression-level"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("deflate_min_data_size"); ok {
+		if setArgNil {
+			obj["deflate-min-data-size"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDeflateMinDataSize(d, v, "deflate_min_data_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["deflate-min-data-size"] = t
+			t, err := expandVpnSslSettingsDeflateMinDataSize(d, v, "deflate_min_data_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["deflate-min-data-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsPort(d, v, "port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port"] = t
+			t, err := expandVpnSslSettingsPort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("port_precedence"); ok {
+		if setArgNil {
+			obj["port-precedence"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsPortPrecedence(d, v, "port_precedence", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["port-precedence"] = t
+			t, err := expandVpnSslSettingsPortPrecedence(d, v, "port_precedence", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port-precedence"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_tunnel_static_route"); ok {
+		if setArgNil {
+			obj["auto-tunnel-static-route"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsAutoTunnelStaticRoute(d, v, "auto_tunnel_static_route", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-tunnel-static-route"] = t
+			t, err := expandVpnSslSettingsAutoTunnelStaticRoute(d, v, "auto_tunnel_static_route", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-tunnel-static-route"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("header_x_forwarded_for"); ok {
+		if setArgNil {
+			obj["header-x-forwarded-for"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHeaderXForwardedFor(d, v, "header_x_forwarded_for", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["header-x-forwarded-for"] = t
+			t, err := expandVpnSslSettingsHeaderXForwardedFor(d, v, "header_x_forwarded_for", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["header-x-forwarded-for"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["source-interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("source_interface"); ok {
+	if v, ok := d.GetOk("source_interface"); ok {
+		if setArgNil {
+			obj["source-interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandVpnSslSettingsSourceInterface(d, v, "source_interface", sv)
 			if err != nil {
@@ -3150,10 +3326,10 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 		}
 	}
 
-	if bemptysontable {
-		obj["source-address"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("source_address"); ok {
+	if v, ok := d.GetOk("source_address"); ok {
+		if setArgNil {
+			obj["source-address"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandVpnSslSettingsSourceAddress(d, v, "source_address", sv)
 			if err != nil {
@@ -3165,19 +3341,23 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 	}
 
 	if v, ok := d.GetOk("source_address_negate"); ok {
+		if setArgNil {
+			obj["source-address-negate"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSourceAddressNegate(d, v, "source_address_negate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-address-negate"] = t
+			t, err := expandVpnSslSettingsSourceAddressNegate(d, v, "source_address_negate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-address-negate"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["source-address6"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("source_address6"); ok {
+	if v, ok := d.GetOk("source_address6"); ok {
+		if setArgNil {
+			obj["source-address6"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandVpnSslSettingsSourceAddress6(d, v, "source_address6", sv)
 			if err != nil {
@@ -3189,29 +3369,37 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 	}
 
 	if v, ok := d.GetOk("source_address6_negate"); ok {
+		if setArgNil {
+			obj["source-address6-negate"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSourceAddress6Negate(d, v, "source_address6_negate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-address6-negate"] = t
+			t, err := expandVpnSslSettingsSourceAddress6Negate(d, v, "source_address6_negate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-address6-negate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_portal"); ok {
+		if setArgNil {
+			obj["default-portal"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDefaultPortal(d, v, "default_portal", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-portal"] = t
+			t, err := expandVpnSslSettingsDefaultPortal(d, v, "default_portal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-portal"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["authentication-rule"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("authentication_rule"); ok {
+	if v, ok := d.GetOk("authentication_rule"); ok {
+		if setArgNil {
+			obj["authentication-rule"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandVpnSslSettingsAuthenticationRule(d, v, "authentication_rule", sv)
 			if err != nil {
@@ -3223,172 +3411,240 @@ func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool, sv str
 	}
 
 	if v, ok := d.GetOk("dtls_tunnel"); ok {
+		if setArgNil {
+			obj["dtls-tunnel"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDtlsTunnel(d, v, "dtls_tunnel", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dtls-tunnel"] = t
+			t, err := expandVpnSslSettingsDtlsTunnel(d, v, "dtls_tunnel", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dtls-tunnel"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dtls_max_proto_ver"); ok {
+		if setArgNil {
+			obj["dtls-max-proto-ver"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDtlsMaxProtoVer(d, v, "dtls_max_proto_ver", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dtls-max-proto-ver"] = t
+			t, err := expandVpnSslSettingsDtlsMaxProtoVer(d, v, "dtls_max_proto_ver", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dtls-max-proto-ver"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dtls_min_proto_ver"); ok {
+		if setArgNil {
+			obj["dtls-min-proto-ver"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDtlsMinProtoVer(d, v, "dtls_min_proto_ver", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dtls-min-proto-ver"] = t
+			t, err := expandVpnSslSettingsDtlsMinProtoVer(d, v, "dtls_min_proto_ver", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dtls-min-proto-ver"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("check_referer"); ok {
+		if setArgNil {
+			obj["check-referer"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsCheckReferer(d, v, "check_referer", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["check-referer"] = t
+			t, err := expandVpnSslSettingsCheckReferer(d, v, "check_referer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["check-referer"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("http_request_header_timeout"); ok {
+		if setArgNil {
+			obj["http-request-header-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHttpRequestHeaderTimeout(d, v, "http_request_header_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-request-header-timeout"] = t
+			t, err := expandVpnSslSettingsHttpRequestHeaderTimeout(d, v, "http_request_header_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-request-header-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("http_request_body_timeout"); ok {
+		if setArgNil {
+			obj["http-request-body-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHttpRequestBodyTimeout(d, v, "http_request_body_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-request-body-timeout"] = t
+			t, err := expandVpnSslSettingsHttpRequestBodyTimeout(d, v, "http_request_body_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-request-body-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auth_session_check_source_ip"); ok {
+		if setArgNil {
+			obj["auth-session-check-source-ip"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsAuthSessionCheckSourceIp(d, v, "auth_session_check_source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-session-check-source-ip"] = t
+			t, err := expandVpnSslSettingsAuthSessionCheckSourceIp(d, v, "auth_session_check_source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-session-check-source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_connect_without_reauth"); ok {
+		if setArgNil {
+			obj["tunnel-connect-without-reauth"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTunnelConnectWithoutReauth(d, v, "tunnel_connect_without_reauth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-connect-without-reauth"] = t
+			t, err := expandVpnSslSettingsTunnelConnectWithoutReauth(d, v, "tunnel_connect_without_reauth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-connect-without-reauth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_user_session_timeout"); ok {
+		if setArgNil {
+			obj["tunnel-user-session-timeout"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTunnelUserSessionTimeout(d, v, "tunnel_user_session_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-user-session-timeout"] = t
+			t, err := expandVpnSslSettingsTunnelUserSessionTimeout(d, v, "tunnel_user_session_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-user-session-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("hsts_include_subdomains"); ok {
+		if setArgNil {
+			obj["hsts-include-subdomains"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsHstsIncludeSubdomains(d, v, "hsts_include_subdomains", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["hsts-include-subdomains"] = t
+			t, err := expandVpnSslSettingsHstsIncludeSubdomains(d, v, "hsts_include_subdomains", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["hsts-include-subdomains"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("transform_backward_slashes"); ok {
+		if setArgNil {
+			obj["transform-backward-slashes"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTransformBackwardSlashes(d, v, "transform_backward_slashes", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["transform-backward-slashes"] = t
+			t, err := expandVpnSslSettingsTransformBackwardSlashes(d, v, "transform_backward_slashes", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["transform-backward-slashes"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("encode_2f_sequence"); ok {
+		if setArgNil {
+			obj["encode-2f-sequence"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsEncode2FSequence(d, v, "encode_2f_sequence", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["encode-2f-sequence"] = t
+			t, err := expandVpnSslSettingsEncode2FSequence(d, v, "encode_2f_sequence", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["encode-2f-sequence"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("encrypt_and_store_password"); ok {
+		if setArgNil {
+			obj["encrypt-and-store-password"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsEncryptAndStorePassword(d, v, "encrypt_and_store_password", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["encrypt-and-store-password"] = t
+			t, err := expandVpnSslSettingsEncryptAndStorePassword(d, v, "encrypt_and_store_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["encrypt-and-store-password"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("client_sigalgs"); ok {
+		if setArgNil {
+			obj["client-sigalgs"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsClientSigalgs(d, v, "client_sigalgs", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["client-sigalgs"] = t
+			t, err := expandVpnSslSettingsClientSigalgs(d, v, "client_sigalgs", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["client-sigalgs"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dual_stack_mode"); ok {
+		if setArgNil {
+			obj["dual-stack-mode"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsDualStackMode(d, v, "dual_stack_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dual-stack-mode"] = t
+			t, err := expandVpnSslSettingsDualStackMode(d, v, "dual_stack_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dual-stack-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_addr_assigned_method"); ok {
+		if setArgNil {
+			obj["tunnel-addr-assigned-method"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsTunnelAddrAssignedMethod(d, v, "tunnel_addr_assigned_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-addr-assigned-method"] = t
+			t, err := expandVpnSslSettingsTunnelAddrAssignedMethod(d, v, "tunnel_addr_assigned_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-addr-assigned-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("saml_redirect_port"); ok {
+		if setArgNil {
+			obj["saml-redirect-port"] = nil
+		} else {
 
-		t, err := expandVpnSslSettingsSamlRedirectPort(d, v, "saml_redirect_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["saml-redirect-port"] = t
+			t, err := expandVpnSslSettingsSamlRedirectPort(d, v, "saml_redirect_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["saml-redirect-port"] = t
+			}
 		}
 	}
 

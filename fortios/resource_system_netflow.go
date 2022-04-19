@@ -103,7 +103,7 @@ func resourceSystemNetflowUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemNetflow(d, c.Fv)
+	obj, err := getObjectSystemNetflow(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNetflow resource while getting object: %v", err)
 	}
@@ -125,7 +125,6 @@ func resourceSystemNetflowUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemNetflowDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -137,9 +136,15 @@ func resourceSystemNetflowDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemNetflow(mkey, vdomparam)
+	obj, err := getObjectSystemNetflow(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemNetflow resource: %v", err)
+		return fmt.Errorf("Error updating SystemNetflow resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemNetflow(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemNetflow resource: %v", err)
 	}
 
 	d.SetId("")
@@ -317,96 +322,132 @@ func expandSystemNetflowInterface(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
-func getObjectSystemNetflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("collector_ip"); ok {
+		if setArgNil {
+			obj["collector-ip"] = nil
+		} else {
 
-		t, err := expandSystemNetflowCollectorIp(d, v, "collector_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-ip"] = t
+			t, err := expandSystemNetflowCollectorIp(d, v, "collector_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
+		if setArgNil {
+			obj["collector-port"] = nil
+		} else {
 
-		t, err := expandSystemNetflowCollectorPort(d, v, "collector_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["collector-port"] = t
+			t, err := expandSystemNetflowCollectorPort(d, v, "collector_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collector-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandSystemNetflowSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandSystemNetflowSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("active_flow_timeout"); ok {
+		if setArgNil {
+			obj["active-flow-timeout"] = nil
+		} else {
 
-		t, err := expandSystemNetflowActiveFlowTimeout(d, v, "active_flow_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["active-flow-timeout"] = t
+			t, err := expandSystemNetflowActiveFlowTimeout(d, v, "active_flow_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["active-flow-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("inactive_flow_timeout"); ok {
+		if setArgNil {
+			obj["inactive-flow-timeout"] = nil
+		} else {
 
-		t, err := expandSystemNetflowInactiveFlowTimeout(d, v, "inactive_flow_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["inactive-flow-timeout"] = t
+			t, err := expandSystemNetflowInactiveFlowTimeout(d, v, "inactive_flow_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inactive-flow-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("template_tx_timeout"); ok {
+		if setArgNil {
+			obj["template-tx-timeout"] = nil
+		} else {
 
-		t, err := expandSystemNetflowTemplateTxTimeout(d, v, "template_tx_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["template-tx-timeout"] = t
+			t, err := expandSystemNetflowTemplateTxTimeout(d, v, "template_tx_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["template-tx-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("template_tx_counter"); ok {
+		if setArgNil {
+			obj["template-tx-counter"] = nil
+		} else {
 
-		t, err := expandSystemNetflowTemplateTxCounter(d, v, "template_tx_counter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["template-tx-counter"] = t
+			t, err := expandSystemNetflowTemplateTxCounter(d, v, "template_tx_counter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["template-tx-counter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemNetflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemNetflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemNetflowInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemNetflowInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

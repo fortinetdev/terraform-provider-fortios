@@ -85,7 +85,7 @@ func resourceSwitchControllerLldpSettingsUpdate(d *schema.ResourceData, m interf
 		}
 	}
 
-	obj, err := getObjectSwitchControllerLldpSettings(d, c.Fv)
+	obj, err := getObjectSwitchControllerLldpSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerLldpSettings resource while getting object: %v", err)
 	}
@@ -107,7 +107,6 @@ func resourceSwitchControllerLldpSettingsUpdate(d *schema.ResourceData, m interf
 
 func resourceSwitchControllerLldpSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -119,9 +118,15 @@ func resourceSwitchControllerLldpSettingsDelete(d *schema.ResourceData, m interf
 		}
 	}
 
-	err := c.DeleteSwitchControllerLldpSettings(mkey, vdomparam)
+	obj, err := getObjectSwitchControllerLldpSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SwitchControllerLldpSettings resource: %v", err)
+		return fmt.Errorf("Error updating SwitchControllerLldpSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSwitchControllerLldpSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SwitchControllerLldpSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -257,66 +262,90 @@ func expandSwitchControllerLldpSettingsDeviceDetection(d *schema.ResourceData, v
 	return v, nil
 }
 
-func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandSwitchControllerLldpSettingsStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandSwitchControllerLldpSettingsStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tx_hold"); ok {
+		if setArgNil {
+			obj["tx-hold"] = nil
+		} else {
 
-		t, err := expandSwitchControllerLldpSettingsTxHold(d, v, "tx_hold", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tx-hold"] = t
+			t, err := expandSwitchControllerLldpSettingsTxHold(d, v, "tx_hold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tx-hold"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tx_interval"); ok {
+		if setArgNil {
+			obj["tx-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerLldpSettingsTxInterval(d, v, "tx_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tx-interval"] = t
+			t, err := expandSwitchControllerLldpSettingsTxInterval(d, v, "tx_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tx-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("fast_start_interval"); ok {
+		if setArgNil {
+			obj["fast-start-interval"] = nil
+		} else {
 
-		t, err := expandSwitchControllerLldpSettingsFastStartInterval(d, v, "fast_start_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fast-start-interval"] = t
+			t, err := expandSwitchControllerLldpSettingsFastStartInterval(d, v, "fast_start_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fast-start-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("management_interface"); ok {
+		if setArgNil {
+			obj["management-interface"] = nil
+		} else {
 
-		t, err := expandSwitchControllerLldpSettingsManagementInterface(d, v, "management_interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["management-interface"] = t
+			t, err := expandSwitchControllerLldpSettingsManagementInterface(d, v, "management_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["management-interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("device_detection"); ok {
+		if setArgNil {
+			obj["device-detection"] = nil
+		} else {
 
-		t, err := expandSwitchControllerLldpSettingsDeviceDetection(d, v, "device_detection", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["device-detection"] = t
+			t, err := expandSwitchControllerLldpSettingsDeviceDetection(d, v, "device_detection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device-detection"] = t
+			}
 		}
 	}
 

@@ -167,7 +167,7 @@ func resourceSystemNpuUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectSystemNpu(d, c.Fv)
+	obj, err := getObjectSystemNpu(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNpu resource while getting object: %v", err)
 	}
@@ -189,7 +189,6 @@ func resourceSystemNpuUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemNpuDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -201,9 +200,15 @@ func resourceSystemNpuDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteSystemNpu(mkey, vdomparam)
+	obj, err := getObjectSystemNpu(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemNpu resource: %v", err)
+		return fmt.Errorf("Error updating SystemNpu resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemNpu(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemNpu resource: %v", err)
 	}
 
 	d.SetId("")
@@ -566,7 +571,7 @@ func expandSystemNpuSessionDeniedOffload(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func expandSystemNpuPriorityProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemNpuPriorityProtocol(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -578,18 +583,30 @@ func expandSystemNpuPriorityProtocol(d *schema.ResourceData, v interface{}, pre 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "bgp"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bgp"] = nil
+		} else {
 
-		result["bgp"], _ = expandSystemNpuPriorityProtocolBgp(d, i["bgp"], pre_append, sv)
+			result["bgp"], _ = expandSystemNpuPriorityProtocolBgp(d, i["bgp"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "slbc"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["slbc"] = nil
+		} else {
 
-		result["slbc"], _ = expandSystemNpuPriorityProtocolSlbc(d, i["slbc"], pre_append, sv)
+			result["slbc"], _ = expandSystemNpuPriorityProtocolSlbc(d, i["slbc"], pre_append, sv)
+		}
 	}
 	pre_append = pre + ".0." + "bfd"
 	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["bfd"] = nil
+		} else {
 
-		result["bfd"], _ = expandSystemNpuPriorityProtocolBfd(d, i["bfd"], pre_append, sv)
+			result["bfd"], _ = expandSystemNpuPriorityProtocolBfd(d, i["bfd"], pre_append, sv)
+		}
 	}
 
 	return result, nil
@@ -607,192 +624,264 @@ func expandSystemNpuPriorityProtocolBfd(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectSystemNpu(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("dedicated_management_cpu"); ok {
+		if setArgNil {
+			obj["dedicated-management-cpu"] = nil
+		} else {
 
-		t, err := expandSystemNpuDedicatedManagementCpu(d, v, "dedicated_management_cpu", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dedicated-management-cpu"] = t
+			t, err := expandSystemNpuDedicatedManagementCpu(d, v, "dedicated_management_cpu", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dedicated-management-cpu"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dedicated_management_affinity"); ok {
+		if setArgNil {
+			obj["dedicated-management-affinity"] = nil
+		} else {
 
-		t, err := expandSystemNpuDedicatedManagementAffinity(d, v, "dedicated_management_affinity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dedicated-management-affinity"] = t
+			t, err := expandSystemNpuDedicatedManagementAffinity(d, v, "dedicated_management_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dedicated-management-affinity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fastpath"); ok {
+		if setArgNil {
+			obj["fastpath"] = nil
+		} else {
 
-		t, err := expandSystemNpuFastpath(d, v, "fastpath", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fastpath"] = t
+			t, err := expandSystemNpuFastpath(d, v, "fastpath", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fastpath"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("capwap_offload"); ok {
+		if setArgNil {
+			obj["capwap-offload"] = nil
+		} else {
 
-		t, err := expandSystemNpuCapwapOffload(d, v, "capwap_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["capwap-offload"] = t
+			t, err := expandSystemNpuCapwapOffload(d, v, "capwap_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["capwap-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_enc_subengine_mask"); ok {
+		if setArgNil {
+			obj["ipsec-enc-subengine-mask"] = nil
+		} else {
 
-		t, err := expandSystemNpuIpsecEncSubengineMask(d, v, "ipsec_enc_subengine_mask", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-enc-subengine-mask"] = t
+			t, err := expandSystemNpuIpsecEncSubengineMask(d, v, "ipsec_enc_subengine_mask", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-enc-subengine-mask"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_dec_subengine_mask"); ok {
+		if setArgNil {
+			obj["ipsec-dec-subengine-mask"] = nil
+		} else {
 
-		t, err := expandSystemNpuIpsecDecSubengineMask(d, v, "ipsec_dec_subengine_mask", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-dec-subengine-mask"] = t
+			t, err := expandSystemNpuIpsecDecSubengineMask(d, v, "ipsec_dec_subengine_mask", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-dec-subengine-mask"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("np6_cps_optimization_mode"); ok {
+		if setArgNil {
+			obj["np6-cps-optimization-mode"] = nil
+		} else {
 
-		t, err := expandSystemNpuNp6CpsOptimizationMode(d, v, "np6_cps_optimization_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["np6-cps-optimization-mode"] = t
+			t, err := expandSystemNpuNp6CpsOptimizationMode(d, v, "np6_cps_optimization_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["np6-cps-optimization-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sw_np_bandwidth"); ok {
+		if setArgNil {
+			obj["sw-np-bandwidth"] = nil
+		} else {
 
-		t, err := expandSystemNpuSwNpBandwidth(d, v, "sw_np_bandwidth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sw-np-bandwidth"] = t
+			t, err := expandSystemNpuSwNpBandwidth(d, v, "sw_np_bandwidth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sw-np-bandwidth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strip_esp_padding"); ok {
+		if setArgNil {
+			obj["strip-esp-padding"] = nil
+		} else {
 
-		t, err := expandSystemNpuStripEspPadding(d, v, "strip_esp_padding", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strip-esp-padding"] = t
+			t, err := expandSystemNpuStripEspPadding(d, v, "strip_esp_padding", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strip-esp-padding"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strip_clear_text_padding"); ok {
+		if setArgNil {
+			obj["strip-clear-text-padding"] = nil
+		} else {
 
-		t, err := expandSystemNpuStripClearTextPadding(d, v, "strip_clear_text_padding", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strip-clear-text-padding"] = t
+			t, err := expandSystemNpuStripClearTextPadding(d, v, "strip_clear_text_padding", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strip-clear-text-padding"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_inbound_cache"); ok {
+		if setArgNil {
+			obj["ipsec-inbound-cache"] = nil
+		} else {
 
-		t, err := expandSystemNpuIpsecInboundCache(d, v, "ipsec_inbound_cache", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-inbound-cache"] = t
+			t, err := expandSystemNpuIpsecInboundCache(d, v, "ipsec_inbound_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-inbound-cache"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sse_backpressure"); ok {
+		if setArgNil {
+			obj["sse-backpressure"] = nil
+		} else {
 
-		t, err := expandSystemNpuSseBackpressure(d, v, "sse_backpressure", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sse-backpressure"] = t
+			t, err := expandSystemNpuSseBackpressure(d, v, "sse_backpressure", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sse-backpressure"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rdp_offload"); ok {
+		if setArgNil {
+			obj["rdp-offload"] = nil
+		} else {
 
-		t, err := expandSystemNpuRdpOffload(d, v, "rdp_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rdp-offload"] = t
+			t, err := expandSystemNpuRdpOffload(d, v, "rdp_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rdp-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_over_vlink"); ok {
+		if setArgNil {
+			obj["ipsec-over-vlink"] = nil
+		} else {
 
-		t, err := expandSystemNpuIpsecOverVlink(d, v, "ipsec_over_vlink", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-over-vlink"] = t
+			t, err := expandSystemNpuIpsecOverVlink(d, v, "ipsec_over_vlink", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-over-vlink"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("uesp_offload"); ok {
+		if setArgNil {
+			obj["uesp-offload"] = nil
+		} else {
 
-		t, err := expandSystemNpuUespOffload(d, v, "uesp_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["uesp-offload"] = t
+			t, err := expandSystemNpuUespOffload(d, v, "uesp_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uesp-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("mcast_session_accounting"); ok {
+		if setArgNil {
+			obj["mcast-session-accounting"] = nil
+		} else {
 
-		t, err := expandSystemNpuMcastSessionAccounting(d, v, "mcast_session_accounting", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mcast-session-accounting"] = t
+			t, err := expandSystemNpuMcastSessionAccounting(d, v, "mcast_session_accounting", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mcast-session-accounting"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipsec_mtu_override"); ok {
+		if setArgNil {
+			obj["ipsec-mtu-override"] = nil
+		} else {
 
-		t, err := expandSystemNpuIpsecMtuOverride(d, v, "ipsec_mtu_override", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipsec-mtu-override"] = t
+			t, err := expandSystemNpuIpsecMtuOverride(d, v, "ipsec_mtu_override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-mtu-override"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("session_denied_offload"); ok {
+		if setArgNil {
+			obj["session-denied-offload"] = nil
+		} else {
 
-		t, err := expandSystemNpuSessionDeniedOffload(d, v, "session_denied_offload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["session-denied-offload"] = t
+			t, err := expandSystemNpuSessionDeniedOffload(d, v, "session_denied_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-denied-offload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("priority_protocol"); ok {
 
-		t, err := expandSystemNpuPriorityProtocol(d, v, "priority_protocol", sv)
+		t, err := expandSystemNpuPriorityProtocol(d, v, "priority_protocol", sv, setArgNil)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {

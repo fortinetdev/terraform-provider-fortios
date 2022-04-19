@@ -3604,7 +3604,7 @@ func expandRouterOspfDistributeListProtocol(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3626,32 +3626,52 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
+			if setArgNil {
+				tmp["status"] = nil
+			} else {
 
-			tmp["status"], _ = expandRouterOspfRedistributeStatus(d, i["status"], pre_append, sv)
+				tmp["status"], _ = expandRouterOspfRedistributeStatus(d, i["status"], pre_append, sv)
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if _, ok := d.GetOk(pre_append); ok {
+			if setArgNil {
+				tmp["metric"] = nil
+			} else {
 
-			tmp["metric"], _ = expandRouterOspfRedistributeMetric(d, i["metric"], pre_append, sv)
+				tmp["metric"], _ = expandRouterOspfRedistributeMetric(d, i["metric"], pre_append, sv)
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if _, ok := d.GetOk(pre_append); ok {
+			if setArgNil {
+				tmp["routemap"] = nil
+			} else {
 
-			tmp["routemap"], _ = expandRouterOspfRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+				tmp["routemap"], _ = expandRouterOspfRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
 		if _, ok := d.GetOk(pre_append); ok {
+			if setArgNil {
+				tmp["metric-type"] = nil
+			} else {
 
-			tmp["metric-type"], _ = expandRouterOspfRedistributeMetricType(d, i["metric_type"], pre_append, sv)
+				tmp["metric-type"], _ = expandRouterOspfRedistributeMetricType(d, i["metric_type"], pre_append, sv)
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := d.GetOk(pre_append); ok {
+			if setArgNil {
+				tmp["tag"] = nil
+			} else {
 
-			tmp["tag"], _ = expandRouterOspfRedistributeTag(d, i["tag"], pre_append, sv)
+				tmp["tag"], _ = expandRouterOspfRedistributeTag(d, i["tag"], pre_append, sv)
+			}
 		}
 
 		result = append(result, tmp)
@@ -3686,243 +3706,335 @@ func expandRouterOspfRedistributeTag(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
+func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("abr_type"); ok {
+		if setArgNil {
+			obj["abr-type"] = nil
+		} else {
 
-		t, err := expandRouterOspfAbrType(d, v, "abr_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["abr-type"] = t
+			t, err := expandRouterOspfAbrType(d, v, "abr_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["abr-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_cost_ref_bandwidth"); ok {
+		if setArgNil {
+			obj["auto-cost-ref-bandwidth"] = nil
+		} else {
 
-		t, err := expandRouterOspfAutoCostRefBandwidth(d, v, "auto_cost_ref_bandwidth", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-cost-ref-bandwidth"] = t
+			t, err := expandRouterOspfAutoCostRefBandwidth(d, v, "auto_cost_ref_bandwidth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-cost-ref-bandwidth"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance_external"); ok {
+		if setArgNil {
+			obj["distance-external"] = nil
+		} else {
 
-		t, err := expandRouterOspfDistanceExternal(d, v, "distance_external", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance-external"] = t
+			t, err := expandRouterOspfDistanceExternal(d, v, "distance_external", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance-external"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance_inter_area"); ok {
+		if setArgNil {
+			obj["distance-inter-area"] = nil
+		} else {
 
-		t, err := expandRouterOspfDistanceInterArea(d, v, "distance_inter_area", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance-inter-area"] = t
+			t, err := expandRouterOspfDistanceInterArea(d, v, "distance_inter_area", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance-inter-area"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance_intra_area"); ok {
+		if setArgNil {
+			obj["distance-intra-area"] = nil
+		} else {
 
-		t, err := expandRouterOspfDistanceIntraArea(d, v, "distance_intra_area", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance-intra-area"] = t
+			t, err := expandRouterOspfDistanceIntraArea(d, v, "distance_intra_area", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance-intra-area"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("database_overflow"); ok {
+		if setArgNil {
+			obj["database-overflow"] = nil
+		} else {
 
-		t, err := expandRouterOspfDatabaseOverflow(d, v, "database_overflow", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["database-overflow"] = t
+			t, err := expandRouterOspfDatabaseOverflow(d, v, "database_overflow", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["database-overflow"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("database_overflow_max_lsas"); ok {
+		if setArgNil {
+			obj["database-overflow-max-lsas"] = nil
+		} else {
 
-		t, err := expandRouterOspfDatabaseOverflowMaxLsas(d, v, "database_overflow_max_lsas", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["database-overflow-max-lsas"] = t
+			t, err := expandRouterOspfDatabaseOverflowMaxLsas(d, v, "database_overflow_max_lsas", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["database-overflow-max-lsas"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("database_overflow_time_to_recover"); ok {
+		if setArgNil {
+			obj["database-overflow-time-to-recover"] = nil
+		} else {
 
-		t, err := expandRouterOspfDatabaseOverflowTimeToRecover(d, v, "database_overflow_time_to_recover", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["database-overflow-time-to-recover"] = t
+			t, err := expandRouterOspfDatabaseOverflowTimeToRecover(d, v, "database_overflow_time_to_recover", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["database-overflow-time-to-recover"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_information_originate"); ok {
+		if setArgNil {
+			obj["default-information-originate"] = nil
+		} else {
 
-		t, err := expandRouterOspfDefaultInformationOriginate(d, v, "default_information_originate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-information-originate"] = t
+			t, err := expandRouterOspfDefaultInformationOriginate(d, v, "default_information_originate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-information-originate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_information_metric"); ok {
+		if setArgNil {
+			obj["default-information-metric"] = nil
+		} else {
 
-		t, err := expandRouterOspfDefaultInformationMetric(d, v, "default_information_metric", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-information-metric"] = t
+			t, err := expandRouterOspfDefaultInformationMetric(d, v, "default_information_metric", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-information-metric"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_information_metric_type"); ok {
+		if setArgNil {
+			obj["default-information-metric-type"] = nil
+		} else {
 
-		t, err := expandRouterOspfDefaultInformationMetricType(d, v, "default_information_metric_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-information-metric-type"] = t
+			t, err := expandRouterOspfDefaultInformationMetricType(d, v, "default_information_metric_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-information-metric-type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_information_route_map"); ok {
+		if setArgNil {
+			obj["default-information-route-map"] = nil
+		} else {
 
-		t, err := expandRouterOspfDefaultInformationRouteMap(d, v, "default_information_route_map", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-information-route-map"] = t
+			t, err := expandRouterOspfDefaultInformationRouteMap(d, v, "default_information_route_map", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-information-route-map"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_metric"); ok {
+		if setArgNil {
+			obj["default-metric"] = nil
+		} else {
 
-		t, err := expandRouterOspfDefaultMetric(d, v, "default_metric", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-metric"] = t
+			t, err := expandRouterOspfDefaultMetric(d, v, "default_metric", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-metric"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
+		if setArgNil {
+			obj["distance"] = nil
+		} else {
 
-		t, err := expandRouterOspfDistance(d, v, "distance", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distance"] = t
+			t, err := expandRouterOspfDistance(d, v, "distance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distance"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rfc1583_compatible"); ok {
+		if setArgNil {
+			obj["rfc1583-compatible"] = nil
+		} else {
 
-		t, err := expandRouterOspfRfc1583Compatible(d, v, "rfc1583_compatible", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rfc1583-compatible"] = t
+			t, err := expandRouterOspfRfc1583Compatible(d, v, "rfc1583_compatible", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rfc1583-compatible"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("router_id"); ok {
+		if setArgNil {
+			obj["router-id"] = nil
+		} else {
 
-		t, err := expandRouterOspfRouterId(d, v, "router_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["router-id"] = t
+			t, err := expandRouterOspfRouterId(d, v, "router_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["router-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("spf_timers"); ok {
+		if setArgNil {
+			obj["spf-timers"] = nil
+		} else {
 
-		t, err := expandRouterOspfSpfTimers(d, v, "spf_timers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["spf-timers"] = t
+			t, err := expandRouterOspfSpfTimers(d, v, "spf_timers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["spf-timers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {
+		if setArgNil {
+			obj["bfd"] = nil
+		} else {
 
-		t, err := expandRouterOspfBfd(d, v, "bfd", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["bfd"] = t
+			t, err := expandRouterOspfBfd(d, v, "bfd", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("log_neighbour_changes"); ok {
+		if setArgNil {
+			obj["log-neighbour-changes"] = nil
+		} else {
 
-		t, err := expandRouterOspfLogNeighbourChanges(d, v, "log_neighbour_changes", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-neighbour-changes"] = t
+			t, err := expandRouterOspfLogNeighbourChanges(d, v, "log_neighbour_changes", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-neighbour-changes"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distribute_list_in"); ok {
+		if setArgNil {
+			obj["distribute-list-in"] = nil
+		} else {
 
-		t, err := expandRouterOspfDistributeListIn(d, v, "distribute_list_in", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distribute-list-in"] = t
+			t, err := expandRouterOspfDistributeListIn(d, v, "distribute_list_in", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distribute-list-in"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("distribute_route_map_in"); ok {
+		if setArgNil {
+			obj["distribute-route-map-in"] = nil
+		} else {
 
-		t, err := expandRouterOspfDistributeRouteMapIn(d, v, "distribute_route_map_in", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distribute-route-map-in"] = t
+			t, err := expandRouterOspfDistributeRouteMapIn(d, v, "distribute_route_map_in", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distribute-route-map-in"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("restart_mode"); ok {
+		if setArgNil {
+			obj["restart-mode"] = nil
+		} else {
 
-		t, err := expandRouterOspfRestartMode(d, v, "restart_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["restart-mode"] = t
+			t, err := expandRouterOspfRestartMode(d, v, "restart_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("restart_period"); ok {
+		if setArgNil {
+			obj["restart-period"] = nil
+		} else {
 
-		t, err := expandRouterOspfRestartPeriod(d, v, "restart_period", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["restart-period"] = t
+			t, err := expandRouterOspfRestartPeriod(d, v, "restart_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-period"] = t
+			}
 		}
 	}
 
-	if bemptysontable {
-		obj["area"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("area"); ok {
+	if v, ok := d.GetOk("area"); ok {
+		if setArgNil {
+			obj["area"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfArea(d, v, "area", sv)
 			if err != nil {
@@ -3933,10 +4045,10 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["ospf-interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("ospf_interface"); ok {
+	if v, ok := d.GetOk("ospf_interface"); ok {
+		if setArgNil {
+			obj["ospf-interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfOspfInterface(d, v, "ospf_interface", sv)
 			if err != nil {
@@ -3947,10 +4059,10 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["network"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("network"); ok {
+	if v, ok := d.GetOk("network"); ok {
+		if setArgNil {
+			obj["network"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfNetwork(d, v, "network", sv)
 			if err != nil {
@@ -3961,10 +4073,10 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["neighbor"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok {
+		if setArgNil {
+			obj["neighbor"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfNeighbor(d, v, "neighbor", sv)
 			if err != nil {
@@ -3975,10 +4087,10 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["passive-interface"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("passive_interface"); ok {
+	if v, ok := d.GetOk("passive_interface"); ok {
+		if setArgNil {
+			obj["passive-interface"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfPassiveInterface(d, v, "passive_interface", sv)
 			if err != nil {
@@ -3989,10 +4101,10 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["summary-address"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("summary_address"); ok {
+	if v, ok := d.GetOk("summary_address"); ok {
+		if setArgNil {
+			obj["summary-address"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfSummaryAddress(d, v, "summary_address", sv)
 			if err != nil {
@@ -4003,10 +4115,10 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["distribute-list"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("distribute_list"); ok {
+	if v, ok := d.GetOk("distribute_list"); ok {
+		if setArgNil {
+			obj["distribute-list"] = make([]struct{}, 0)
+		} else {
 
 			t, err := expandRouterOspfDistributeList(d, v, "distribute_list", sv)
 			if err != nil {
@@ -4017,17 +4129,13 @@ func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool, sv string)
 		}
 	}
 
-	if bemptysontable {
-		obj["redistribute"] = make([]struct{}, 0)
-	} else {
-		if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok {
 
-			t, err := expandRouterOspfRedistribute(d, v, "redistribute", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["redistribute"] = t
-			}
+		t, err := expandRouterOspfRedistribute(d, v, "redistribute", sv, setArgNil)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["redistribute"] = t
 		}
 	}
 

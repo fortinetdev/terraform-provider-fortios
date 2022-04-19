@@ -266,7 +266,7 @@ func resourceWebProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	obj, err := getObjectWebProxyExplicit(d, c.Fv)
+	obj, err := getObjectWebProxyExplicit(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyExplicit resource while getting object: %v", err)
 	}
@@ -288,7 +288,6 @@ func resourceWebProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error
 
 func resourceWebProxyExplicitDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -300,9 +299,15 @@ func resourceWebProxyExplicitDelete(d *schema.ResourceData, m interface{}) error
 		}
 	}
 
-	err := c.DeleteWebProxyExplicit(mkey, vdomparam)
+	obj, err := getObjectWebProxyExplicit(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WebProxyExplicit resource: %v", err)
+		return fmt.Errorf("Error updating WebProxyExplicit resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWebProxyExplicit(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WebProxyExplicit resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1133,276 +1138,384 @@ func expandWebProxyExplicitTraceAuthNoRsp(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectWebProxyExplicit(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandWebProxyExplicitStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ftp_over_http"); ok {
+		if setArgNil {
+			obj["ftp-over-http"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitFtpOverHttp(d, v, "ftp_over_http", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ftp-over-http"] = t
+			t, err := expandWebProxyExplicitFtpOverHttp(d, v, "ftp_over_http", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ftp-over-http"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("socks"); ok {
+		if setArgNil {
+			obj["socks"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitSocks(d, v, "socks", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["socks"] = t
+			t, err := expandWebProxyExplicitSocks(d, v, "socks", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["socks"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("http_incoming_port"); ok {
+		if setArgNil {
+			obj["http-incoming-port"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitHttpIncomingPort(d, v, "http_incoming_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["http-incoming-port"] = t
+			t, err := expandWebProxyExplicitHttpIncomingPort(d, v, "http_incoming_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-incoming-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("https_incoming_port"); ok {
+		if setArgNil {
+			obj["https-incoming-port"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitHttpsIncomingPort(d, v, "https_incoming_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["https-incoming-port"] = t
+			t, err := expandWebProxyExplicitHttpsIncomingPort(d, v, "https_incoming_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["https-incoming-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ftp_incoming_port"); ok {
+		if setArgNil {
+			obj["ftp-incoming-port"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitFtpIncomingPort(d, v, "ftp_incoming_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ftp-incoming-port"] = t
+			t, err := expandWebProxyExplicitFtpIncomingPort(d, v, "ftp_incoming_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ftp-incoming-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("socks_incoming_port"); ok {
+		if setArgNil {
+			obj["socks-incoming-port"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitSocksIncomingPort(d, v, "socks_incoming_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["socks-incoming-port"] = t
+			t, err := expandWebProxyExplicitSocksIncomingPort(d, v, "socks_incoming_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["socks-incoming-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("incoming_ip"); ok {
+		if setArgNil {
+			obj["incoming-ip"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["incoming-ip"] = t
+			t, err := expandWebProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["incoming-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outgoing_ip"); ok {
+		if setArgNil {
+			obj["outgoing-ip"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outgoing-ip"] = t
+			t, err := expandWebProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outgoing-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ipv6_status"); ok {
+		if setArgNil {
+			obj["ipv6-status"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitIpv6Status(d, v, "ipv6_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ipv6-status"] = t
+			t, err := expandWebProxyExplicitIpv6Status(d, v, "ipv6_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("incoming_ip6"); ok {
+		if setArgNil {
+			obj["incoming-ip6"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitIncomingIp6(d, v, "incoming_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["incoming-ip6"] = t
+			t, err := expandWebProxyExplicitIncomingIp6(d, v, "incoming_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["incoming-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("outgoing_ip6"); ok {
+		if setArgNil {
+			obj["outgoing-ip6"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitOutgoingIp6(d, v, "outgoing_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["outgoing-ip6"] = t
+			t, err := expandWebProxyExplicitOutgoingIp6(d, v, "outgoing_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outgoing-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("strict_guest"); ok {
+		if setArgNil {
+			obj["strict-guest"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitStrictGuest(d, v, "strict_guest", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["strict-guest"] = t
+			t, err := expandWebProxyExplicitStrictGuest(d, v, "strict_guest", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["strict-guest"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pref_dns_result"); ok {
+		if setArgNil {
+			obj["pref-dns-result"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitPrefDnsResult(d, v, "pref_dns_result", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pref-dns-result"] = t
+			t, err := expandWebProxyExplicitPrefDnsResult(d, v, "pref_dns_result", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pref-dns-result"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("unknown_http_version"); ok {
+		if setArgNil {
+			obj["unknown-http-version"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitUnknownHttpVersion(d, v, "unknown_http_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["unknown-http-version"] = t
+			t, err := expandWebProxyExplicitUnknownHttpVersion(d, v, "unknown_http_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["unknown-http-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("realm"); ok {
+		if setArgNil {
+			obj["realm"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitRealm(d, v, "realm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["realm"] = t
+			t, err := expandWebProxyExplicitRealm(d, v, "realm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["realm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sec_default_action"); ok {
+		if setArgNil {
+			obj["sec-default-action"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sec-default-action"] = t
+			t, err := expandWebProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sec-default-action"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("https_replacement_message"); ok {
+		if setArgNil {
+			obj["https-replacement-message"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitHttpsReplacementMessage(d, v, "https_replacement_message", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["https-replacement-message"] = t
+			t, err := expandWebProxyExplicitHttpsReplacementMessage(d, v, "https_replacement_message", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["https-replacement-message"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("message_upon_server_error"); ok {
+		if setArgNil {
+			obj["message-upon-server-error"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitMessageUponServerError(d, v, "message_upon_server_error", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["message-upon-server-error"] = t
+			t, err := expandWebProxyExplicitMessageUponServerError(d, v, "message_upon_server_error", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["message-upon-server-error"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pac_file_server_status"); ok {
+		if setArgNil {
+			obj["pac-file-server-status"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitPacFileServerStatus(d, v, "pac_file_server_status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pac-file-server-status"] = t
+			t, err := expandWebProxyExplicitPacFileServerStatus(d, v, "pac_file_server_status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-file-server-status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pac_file_url"); ok {
+		if setArgNil {
+			obj["pac-file-url"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitPacFileUrl(d, v, "pac_file_url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pac-file-url"] = t
+			t, err := expandWebProxyExplicitPacFileUrl(d, v, "pac_file_url", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-file-url"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pac_file_server_port"); ok {
+		if setArgNil {
+			obj["pac-file-server-port"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitPacFileServerPort(d, v, "pac_file_server_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pac-file-server-port"] = t
+			t, err := expandWebProxyExplicitPacFileServerPort(d, v, "pac_file_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-file-server-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pac_file_name"); ok {
+		if setArgNil {
+			obj["pac-file-name"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitPacFileName(d, v, "pac_file_name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pac-file-name"] = t
+			t, err := expandWebProxyExplicitPacFileName(d, v, "pac_file_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-file-name"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pac_file_data"); ok {
+		if setArgNil {
+			obj["pac-file-data"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitPacFileData(d, v, "pac_file_data", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pac-file-data"] = t
+			t, err := expandWebProxyExplicitPacFileData(d, v, "pac_file_data", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-file-data"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pac_policy"); ok {
+		if setArgNil {
+			obj["pac-policy"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandWebProxyExplicitPacPolicy(d, v, "pac_policy", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pac-policy"] = t
+			t, err := expandWebProxyExplicitPacPolicy(d, v, "pac_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-policy"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_algorithm"); ok {
+		if setArgNil {
+			obj["ssl-algorithm"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-algorithm"] = t
+			t, err := expandWebProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("trace_auth_no_rsp"); ok {
+		if setArgNil {
+			obj["trace-auth-no-rsp"] = nil
+		} else {
 
-		t, err := expandWebProxyExplicitTraceAuthNoRsp(d, v, "trace_auth_no_rsp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["trace-auth-no-rsp"] = t
+			t, err := expandWebProxyExplicitTraceAuthNoRsp(d, v, "trace_auth_no_rsp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["trace-auth-no-rsp"] = t
+			}
 		}
 	}
 

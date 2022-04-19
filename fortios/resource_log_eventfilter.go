@@ -137,7 +137,7 @@ func resourceLogEventfilterUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectLogEventfilter(d, c.Fv)
+	obj, err := getObjectLogEventfilter(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogEventfilter resource while getting object: %v", err)
 	}
@@ -159,7 +159,6 @@ func resourceLogEventfilterUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceLogEventfilterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -171,9 +170,15 @@ func resourceLogEventfilterDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteLogEventfilter(mkey, vdomparam)
+	obj, err := getObjectLogEventfilter(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogEventfilter resource: %v", err)
+		return fmt.Errorf("Error updating LogEventfilter resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogEventfilter(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogEventfilter resource: %v", err)
 	}
 
 	d.SetId("")
@@ -463,176 +468,244 @@ func expandLogEventfilterRestApi(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func getObjectLogEventfilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("event"); ok {
+		if setArgNil {
+			obj["event"] = nil
+		} else {
 
-		t, err := expandLogEventfilterEvent(d, v, "event", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["event"] = t
+			t, err := expandLogEventfilterEvent(d, v, "event", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["event"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("system"); ok {
+		if setArgNil {
+			obj["system"] = nil
+		} else {
 
-		t, err := expandLogEventfilterSystem(d, v, "system", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["system"] = t
+			t, err := expandLogEventfilterSystem(d, v, "system", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["system"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vpn"); ok {
+		if setArgNil {
+			obj["vpn"] = nil
+		} else {
 
-		t, err := expandLogEventfilterVpn(d, v, "vpn", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vpn"] = t
+			t, err := expandLogEventfilterVpn(d, v, "vpn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vpn"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("user"); ok {
+		if setArgNil {
+			obj["user"] = nil
+		} else {
 
-		t, err := expandLogEventfilterUser(d, v, "user", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["user"] = t
+			t, err := expandLogEventfilterUser(d, v, "user", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("router"); ok {
+		if setArgNil {
+			obj["router"] = nil
+		} else {
 
-		t, err := expandLogEventfilterRouter(d, v, "router", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["router"] = t
+			t, err := expandLogEventfilterRouter(d, v, "router", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["router"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wireless_activity"); ok {
+		if setArgNil {
+			obj["wireless-activity"] = nil
+		} else {
 
-		t, err := expandLogEventfilterWirelessActivity(d, v, "wireless_activity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wireless-activity"] = t
+			t, err := expandLogEventfilterWirelessActivity(d, v, "wireless_activity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wireless-activity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("wan_opt"); ok {
+		if setArgNil {
+			obj["wan-opt"] = nil
+		} else {
 
-		t, err := expandLogEventfilterWanOpt(d, v, "wan_opt", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["wan-opt"] = t
+			t, err := expandLogEventfilterWanOpt(d, v, "wan_opt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wan-opt"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("endpoint"); ok {
+		if setArgNil {
+			obj["endpoint"] = nil
+		} else {
 
-		t, err := expandLogEventfilterEndpoint(d, v, "endpoint", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["endpoint"] = t
+			t, err := expandLogEventfilterEndpoint(d, v, "endpoint", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["endpoint"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ha"); ok {
+		if setArgNil {
+			obj["ha"] = nil
+		} else {
 
-		t, err := expandLogEventfilterHa(d, v, "ha", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ha"] = t
+			t, err := expandLogEventfilterHa(d, v, "ha", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("compliance_check"); ok {
+		if setArgNil {
+			obj["compliance-check"] = nil
+		} else {
 
-		t, err := expandLogEventfilterComplianceCheck(d, v, "compliance_check", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["compliance-check"] = t
+			t, err := expandLogEventfilterComplianceCheck(d, v, "compliance_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["compliance-check"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("security_rating"); ok {
+		if setArgNil {
+			obj["security-rating"] = nil
+		} else {
 
-		t, err := expandLogEventfilterSecurityRating(d, v, "security_rating", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["security-rating"] = t
+			t, err := expandLogEventfilterSecurityRating(d, v, "security_rating", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["security-rating"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fortiextender"); ok {
+		if setArgNil {
+			obj["fortiextender"] = nil
+		} else {
 
-		t, err := expandLogEventfilterFortiextender(d, v, "fortiextender", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fortiextender"] = t
+			t, err := expandLogEventfilterFortiextender(d, v, "fortiextender", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiextender"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("connector"); ok {
+		if setArgNil {
+			obj["connector"] = nil
+		} else {
 
-		t, err := expandLogEventfilterConnector(d, v, "connector", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["connector"] = t
+			t, err := expandLogEventfilterConnector(d, v, "connector", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["connector"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sdwan"); ok {
+		if setArgNil {
+			obj["sdwan"] = nil
+		} else {
 
-		t, err := expandLogEventfilterSdwan(d, v, "sdwan", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sdwan"] = t
+			t, err := expandLogEventfilterSdwan(d, v, "sdwan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sdwan"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cifs"); ok {
+		if setArgNil {
+			obj["cifs"] = nil
+		} else {
 
-		t, err := expandLogEventfilterCifs(d, v, "cifs", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cifs"] = t
+			t, err := expandLogEventfilterCifs(d, v, "cifs", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cifs"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("switch_controller"); ok {
+		if setArgNil {
+			obj["switch-controller"] = nil
+		} else {
 
-		t, err := expandLogEventfilterSwitchController(d, v, "switch_controller", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["switch-controller"] = t
+			t, err := expandLogEventfilterSwitchController(d, v, "switch_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["switch-controller"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("rest_api"); ok {
+		if setArgNil {
+			obj["rest-api"] = nil
+		} else {
 
-		t, err := expandLogEventfilterRestApi(d, v, "rest_api", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rest-api"] = t
+			t, err := expandLogEventfilterRestApi(d, v, "rest_api", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rest-api"] = t
+			}
 		}
 	}
 

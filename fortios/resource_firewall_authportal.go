@@ -89,7 +89,7 @@ func resourceFirewallAuthPortalUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectFirewallAuthPortal(d, c.Fv)
+	obj, err := getObjectFirewallAuthPortal(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallAuthPortal resource while getting object: %v", err)
 	}
@@ -111,7 +111,6 @@ func resourceFirewallAuthPortalUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceFirewallAuthPortalDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -123,9 +122,15 @@ func resourceFirewallAuthPortalDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteFirewallAuthPortal(mkey, vdomparam)
+	obj, err := getObjectFirewallAuthPortal(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting FirewallAuthPortal resource: %v", err)
+		return fmt.Errorf("Error updating FirewallAuthPortal resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateFirewallAuthPortal(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing FirewallAuthPortal resource: %v", err)
 	}
 
 	d.SetId("")
@@ -305,46 +310,62 @@ func expandFirewallAuthPortalIdentityBasedRoute(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-func getObjectFirewallAuthPortal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("groups"); ok {
+		if setArgNil {
+			obj["groups"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandFirewallAuthPortalGroups(d, v, "groups", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["groups"] = t
+			t, err := expandFirewallAuthPortalGroups(d, v, "groups", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["groups"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("portal_addr"); ok {
+		if setArgNil {
+			obj["portal-addr"] = nil
+		} else {
 
-		t, err := expandFirewallAuthPortalPortalAddr(d, v, "portal_addr", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["portal-addr"] = t
+			t, err := expandFirewallAuthPortalPortalAddr(d, v, "portal_addr", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["portal-addr"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("portal_addr6"); ok {
+		if setArgNil {
+			obj["portal-addr6"] = nil
+		} else {
 
-		t, err := expandFirewallAuthPortalPortalAddr6(d, v, "portal_addr6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["portal-addr6"] = t
+			t, err := expandFirewallAuthPortalPortalAddr6(d, v, "portal_addr6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["portal-addr6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("identity_based_route"); ok {
+		if setArgNil {
+			obj["identity-based-route"] = nil
+		} else {
 
-		t, err := expandFirewallAuthPortalIdentityBasedRoute(d, v, "identity_based_route", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["identity-based-route"] = t
+			t, err := expandFirewallAuthPortalIdentityBasedRoute(d, v, "identity_based_route", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["identity-based-route"] = t
+			}
 		}
 	}
 

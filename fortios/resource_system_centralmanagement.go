@@ -199,7 +199,7 @@ func resourceSystemCentralManagementUpdate(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	obj, err := getObjectSystemCentralManagement(d, c.Fv)
+	obj, err := getObjectSystemCentralManagement(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCentralManagement resource while getting object: %v", err)
 	}
@@ -221,7 +221,6 @@ func resourceSystemCentralManagementUpdate(d *schema.ResourceData, m interface{}
 
 func resourceSystemCentralManagementDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -233,9 +232,15 @@ func resourceSystemCentralManagementDelete(d *schema.ResourceData, m interface{}
 		}
 	}
 
-	err := c.DeleteSystemCentralManagement(mkey, vdomparam)
+	obj, err := getObjectSystemCentralManagement(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemCentralManagement resource: %v", err)
+		return fmt.Errorf("Error updating SystemCentralManagement resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemCentralManagement(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemCentralManagement resource: %v", err)
 	}
 
 	d.SetId("")
@@ -753,216 +758,300 @@ func expandSystemCentralManagementInterface(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-func getObjectSystemCentralManagement(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
+		if setArgNil {
+			obj["mode"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementMode(d, v, "mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mode"] = t
+			t, err := expandSystemCentralManagementMode(d, v, "mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mode"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("type"); ok {
+		if setArgNil {
+			obj["type"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementType(d, v, "type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["type"] = t
+			t, err := expandSystemCentralManagementType(d, v, "type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["type"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("schedule_config_restore"); ok {
+		if setArgNil {
+			obj["schedule-config-restore"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementScheduleConfigRestore(d, v, "schedule_config_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["schedule-config-restore"] = t
+			t, err := expandSystemCentralManagementScheduleConfigRestore(d, v, "schedule_config_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["schedule-config-restore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("schedule_script_restore"); ok {
+		if setArgNil {
+			obj["schedule-script-restore"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementScheduleScriptRestore(d, v, "schedule_script_restore", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["schedule-script-restore"] = t
+			t, err := expandSystemCentralManagementScheduleScriptRestore(d, v, "schedule_script_restore", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["schedule-script-restore"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_push_configuration"); ok {
+		if setArgNil {
+			obj["allow-push-configuration"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementAllowPushConfiguration(d, v, "allow_push_configuration", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-push-configuration"] = t
+			t, err := expandSystemCentralManagementAllowPushConfiguration(d, v, "allow_push_configuration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-push-configuration"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_push_firmware"); ok {
+		if setArgNil {
+			obj["allow-push-firmware"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementAllowPushFirmware(d, v, "allow_push_firmware", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-push-firmware"] = t
+			t, err := expandSystemCentralManagementAllowPushFirmware(d, v, "allow_push_firmware", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-push-firmware"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_remote_firmware_upgrade"); ok {
+		if setArgNil {
+			obj["allow-remote-firmware-upgrade"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementAllowRemoteFirmwareUpgrade(d, v, "allow_remote_firmware_upgrade", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-remote-firmware-upgrade"] = t
+			t, err := expandSystemCentralManagementAllowRemoteFirmwareUpgrade(d, v, "allow_remote_firmware_upgrade", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-remote-firmware-upgrade"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("allow_monitor"); ok {
+		if setArgNil {
+			obj["allow-monitor"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementAllowMonitor(d, v, "allow_monitor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["allow-monitor"] = t
+			t, err := expandSystemCentralManagementAllowMonitor(d, v, "allow_monitor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-monitor"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
+		if setArgNil {
+			obj["serial-number"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementSerialNumber(d, v, "serial_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["serial-number"] = t
+			t, err := expandSystemCentralManagementSerialNumber(d, v, "serial_number", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["serial-number"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fmg"); ok {
+		if setArgNil {
+			obj["fmg"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementFmg(d, v, "fmg", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fmg"] = t
+			t, err := expandSystemCentralManagementFmg(d, v, "fmg", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fmg"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fmg_source_ip"); ok {
+		if setArgNil {
+			obj["fmg-source-ip"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementFmgSourceIp(d, v, "fmg_source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fmg-source-ip"] = t
+			t, err := expandSystemCentralManagementFmgSourceIp(d, v, "fmg_source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fmg-source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fmg_source_ip6"); ok {
+		if setArgNil {
+			obj["fmg-source-ip6"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementFmgSourceIp6(d, v, "fmg_source_ip6", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fmg-source-ip6"] = t
+			t, err := expandSystemCentralManagementFmgSourceIp6(d, v, "fmg_source_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fmg-source-ip6"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_cert"); ok {
+		if setArgNil {
+			obj["local-cert"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementLocalCert(d, v, "local_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-cert"] = t
+			t, err := expandSystemCentralManagementLocalCert(d, v, "local_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ca_cert"); ok {
+		if setArgNil {
+			obj["ca-cert"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementCaCert(d, v, "ca_cert", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ca-cert"] = t
+			t, err := expandSystemCentralManagementCaCert(d, v, "ca_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ca-cert"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
+		if setArgNil {
+			obj["vdom"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementVdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
+			t, err := expandSystemCentralManagementVdom(d, v, "vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("server_list"); ok {
+		if setArgNil {
+			obj["server-list"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandSystemCentralManagementServerList(d, v, "server_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["server-list"] = t
+			t, err := expandSystemCentralManagementServerList(d, v, "server_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-list"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fmg_update_port"); ok {
+		if setArgNil {
+			obj["fmg-update-port"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementFmgUpdatePort(d, v, "fmg_update_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fmg-update-port"] = t
+			t, err := expandSystemCentralManagementFmgUpdatePort(d, v, "fmg_update_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fmg-update-port"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("include_default_servers"); ok {
+		if setArgNil {
+			obj["include-default-servers"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementIncludeDefaultServers(d, v, "include_default_servers", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["include-default-servers"] = t
+			t, err := expandSystemCentralManagementIncludeDefaultServers(d, v, "include_default_servers", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["include-default-servers"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
+		if setArgNil {
+			obj["enc-algorithm"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementEncAlgorithm(d, v, "enc_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enc-algorithm"] = t
+			t, err := expandSystemCentralManagementEncAlgorithm(d, v, "enc_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enc-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandSystemCentralManagementInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandSystemCentralManagementInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandSystemCentralManagementInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

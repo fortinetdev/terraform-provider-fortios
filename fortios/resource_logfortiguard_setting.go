@@ -125,7 +125,7 @@ func resourceLogFortiguardSettingUpdate(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	obj, err := getObjectLogFortiguardSetting(d, c.Fv)
+	obj, err := getObjectLogFortiguardSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortiguardSetting resource while getting object: %v", err)
 	}
@@ -147,7 +147,6 @@ func resourceLogFortiguardSettingUpdate(d *schema.ResourceData, m interface{}) e
 
 func resourceLogFortiguardSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -159,9 +158,15 @@ func resourceLogFortiguardSettingDelete(d *schema.ResourceData, m interface{}) e
 		}
 	}
 
-	err := c.DeleteLogFortiguardSetting(mkey, vdomparam)
+	obj, err := getObjectLogFortiguardSetting(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogFortiguardSetting resource: %v", err)
+		return fmt.Errorf("Error updating LogFortiguardSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogFortiguardSetting(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogFortiguardSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -409,146 +414,202 @@ func expandLogFortiguardSettingInterface(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func getObjectLogFortiguardSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
+			t, err := expandLogFortiguardSettingStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
+		if setArgNil {
+			obj["upload-option"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingUploadOption(d, v, "upload_option", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-option"] = t
+			t, err := expandLogFortiguardSettingUploadOption(d, v, "upload_option", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-option"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_interval"); ok {
+		if setArgNil {
+			obj["upload-interval"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingUploadInterval(d, v, "upload_interval", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-interval"] = t
+			t, err := expandLogFortiguardSettingUploadInterval(d, v, "upload_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-interval"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_day"); ok {
+		if setArgNil {
+			obj["upload-day"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingUploadDay(d, v, "upload_day", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-day"] = t
+			t, err := expandLogFortiguardSettingUploadDay(d, v, "upload_day", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-day"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
+		if setArgNil {
+			obj["upload-time"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingUploadTime(d, v, "upload_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["upload-time"] = t
+			t, err := expandLogFortiguardSettingUploadTime(d, v, "upload_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
+		if setArgNil {
+			obj["priority"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingPriority(d, v, "priority", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["priority"] = t
+			t, err := expandLogFortiguardSettingPriority(d, v, "priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["priority"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("max_log_rate"); ok {
+		if setArgNil {
+			obj["max-log-rate"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingMaxLogRate(d, v, "max_log_rate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-log-rate"] = t
+			t, err := expandLogFortiguardSettingMaxLogRate(d, v, "max_log_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-log-rate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {
+		if setArgNil {
+			obj["access-config"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingAccessConfig(d, v, "access_config", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["access-config"] = t
+			t, err := expandLogFortiguardSettingAccessConfig(d, v, "access_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["access-config"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
+		if setArgNil {
+			obj["enc-algorithm"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingEncAlgorithm(d, v, "enc_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["enc-algorithm"] = t
+			t, err := expandLogFortiguardSettingEncAlgorithm(d, v, "enc_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["enc-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
+		if setArgNil {
+			obj["ssl-min-proto-version"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssl-min-proto-version"] = t
+			t, err := expandLogFortiguardSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-min-proto-version"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("conn_timeout"); ok {
+		if setArgNil {
+			obj["conn-timeout"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingConnTimeout(d, v, "conn_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["conn-timeout"] = t
+			t, err := expandLogFortiguardSettingConnTimeout(d, v, "conn_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["conn-timeout"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingSourceIp(d, v, "source_ip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-ip"] = t
+			t, err := expandLogFortiguardSettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface-select-method"] = t
+			t, err := expandLogFortiguardSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
 
-		t, err := expandLogFortiguardSettingInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandLogFortiguardSettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 

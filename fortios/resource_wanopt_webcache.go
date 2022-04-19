@@ -142,7 +142,7 @@ func resourceWanoptWebcacheUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectWanoptWebcache(d, c.Fv)
+	obj, err := getObjectWanoptWebcache(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptWebcache resource while getting object: %v", err)
 	}
@@ -164,7 +164,6 @@ func resourceWanoptWebcacheUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceWanoptWebcacheDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -176,9 +175,15 @@ func resourceWanoptWebcacheDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteWanoptWebcache(mkey, vdomparam)
+	obj, err := getObjectWanoptWebcache(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WanoptWebcache resource: %v", err)
+		return fmt.Errorf("Error updating WanoptWebcache resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWanoptWebcache(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WanoptWebcache resource: %v", err)
 	}
 
 	d.SetId("")
@@ -468,176 +473,244 @@ func expandWanoptWebcacheExternal(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
-func getObjectWanoptWebcache(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("max_object_size"); ok {
+		if setArgNil {
+			obj["max-object-size"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheMaxObjectSize(d, v, "max_object_size", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-object-size"] = t
+			t, err := expandWanoptWebcacheMaxObjectSize(d, v, "max_object_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-object-size"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("neg_resp_time"); ok {
+		if setArgNil {
+			obj["neg-resp-time"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheNegRespTime(d, v, "neg_resp_time", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neg-resp-time"] = t
+			t, err := expandWanoptWebcacheNegRespTime(d, v, "neg_resp_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neg-resp-time"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("fresh_factor"); ok {
+		if setArgNil {
+			obj["fresh-factor"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheFreshFactor(d, v, "fresh_factor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fresh-factor"] = t
+			t, err := expandWanoptWebcacheFreshFactor(d, v, "fresh_factor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fresh-factor"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("max_ttl"); ok {
+		if setArgNil {
+			obj["max-ttl"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheMaxTtl(d, v, "max_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["max-ttl"] = t
+			t, err := expandWanoptWebcacheMaxTtl(d, v, "max_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("min_ttl"); ok {
+		if setArgNil {
+			obj["min-ttl"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheMinTtl(d, v, "min_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["min-ttl"] = t
+			t, err := expandWanoptWebcacheMinTtl(d, v, "min_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["min-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("default_ttl"); ok {
+		if setArgNil {
+			obj["default-ttl"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheDefaultTtl(d, v, "default_ttl", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-ttl"] = t
+			t, err := expandWanoptWebcacheDefaultTtl(d, v, "default_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-ttl"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ignore_ims"); ok {
+		if setArgNil {
+			obj["ignore-ims"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheIgnoreIms(d, v, "ignore_ims", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ignore-ims"] = t
+			t, err := expandWanoptWebcacheIgnoreIms(d, v, "ignore_ims", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-ims"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ignore_conditional"); ok {
+		if setArgNil {
+			obj["ignore-conditional"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheIgnoreConditional(d, v, "ignore_conditional", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ignore-conditional"] = t
+			t, err := expandWanoptWebcacheIgnoreConditional(d, v, "ignore_conditional", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-conditional"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ignore_pnc"); ok {
+		if setArgNil {
+			obj["ignore-pnc"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheIgnorePnc(d, v, "ignore_pnc", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ignore-pnc"] = t
+			t, err := expandWanoptWebcacheIgnorePnc(d, v, "ignore_pnc", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-pnc"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ignore_ie_reload"); ok {
+		if setArgNil {
+			obj["ignore-ie-reload"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheIgnoreIeReload(d, v, "ignore_ie_reload", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ignore-ie-reload"] = t
+			t, err := expandWanoptWebcacheIgnoreIeReload(d, v, "ignore_ie_reload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-ie-reload"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_expired"); ok {
+		if setArgNil {
+			obj["cache-expired"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheCacheExpired(d, v, "cache_expired", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-expired"] = t
+			t, err := expandWanoptWebcacheCacheExpired(d, v, "cache_expired", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-expired"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_cookie"); ok {
+		if setArgNil {
+			obj["cache-cookie"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheCacheCookie(d, v, "cache_cookie", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-cookie"] = t
+			t, err := expandWanoptWebcacheCacheCookie(d, v, "cache_cookie", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-cookie"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("reval_pnc"); ok {
+		if setArgNil {
+			obj["reval-pnc"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheRevalPnc(d, v, "reval_pnc", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["reval-pnc"] = t
+			t, err := expandWanoptWebcacheRevalPnc(d, v, "reval_pnc", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reval-pnc"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("always_revalidate"); ok {
+		if setArgNil {
+			obj["always-revalidate"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheAlwaysRevalidate(d, v, "always_revalidate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["always-revalidate"] = t
+			t, err := expandWanoptWebcacheAlwaysRevalidate(d, v, "always_revalidate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["always-revalidate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("cache_by_default"); ok {
+		if setArgNil {
+			obj["cache-by-default"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheCacheByDefault(d, v, "cache_by_default", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cache-by-default"] = t
+			t, err := expandWanoptWebcacheCacheByDefault(d, v, "cache_by_default", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-by-default"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("host_validate"); ok {
+		if setArgNil {
+			obj["host-validate"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheHostValidate(d, v, "host_validate", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["host-validate"] = t
+			t, err := expandWanoptWebcacheHostValidate(d, v, "host_validate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["host-validate"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("external"); ok {
+		if setArgNil {
+			obj["external"] = nil
+		} else {
 
-		t, err := expandWanoptWebcacheExternal(d, v, "external", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["external"] = t
+			t, err := expandWanoptWebcacheExternal(d, v, "external", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["external"] = t
+			}
 		}
 	}
 

@@ -162,7 +162,7 @@ func resourceLogWebtrendsFilterUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectLogWebtrendsFilter(d, c.Fv)
+	obj, err := getObjectLogWebtrendsFilter(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogWebtrendsFilter resource while getting object: %v", err)
 	}
@@ -184,7 +184,6 @@ func resourceLogWebtrendsFilterUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceLogWebtrendsFilterDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -196,9 +195,15 @@ func resourceLogWebtrendsFilterDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteLogWebtrendsFilter(mkey, vdomparam)
+	obj, err := getObjectLogWebtrendsFilter(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting LogWebtrendsFilter resource: %v", err)
+		return fmt.Errorf("Error updating LogWebtrendsFilter resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateLogWebtrendsFilter(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing LogWebtrendsFilter resource: %v", err)
 	}
 
 	d.SetId("")
@@ -606,166 +611,230 @@ func expandLogWebtrendsFilterFilterType(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectLogWebtrendsFilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectLogWebtrendsFilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("severity"); ok {
+		if setArgNil {
+			obj["severity"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterSeverity(d, v, "severity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["severity"] = t
+			t, err := expandLogWebtrendsFilterSeverity(d, v, "severity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["severity"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("forward_traffic"); ok {
+		if setArgNil {
+			obj["forward-traffic"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterForwardTraffic(d, v, "forward_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["forward-traffic"] = t
+			t, err := expandLogWebtrendsFilterForwardTraffic(d, v, "forward_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("local_traffic"); ok {
+		if setArgNil {
+			obj["local-traffic"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterLocalTraffic(d, v, "local_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["local-traffic"] = t
+			t, err := expandLogWebtrendsFilterLocalTraffic(d, v, "local_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("multicast_traffic"); ok {
+		if setArgNil {
+			obj["multicast-traffic"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterMulticastTraffic(d, v, "multicast_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["multicast-traffic"] = t
+			t, err := expandLogWebtrendsFilterMulticastTraffic(d, v, "multicast_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["multicast-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("sniffer_traffic"); ok {
+		if setArgNil {
+			obj["sniffer-traffic"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["sniffer-traffic"] = t
+			t, err := expandLogWebtrendsFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sniffer-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ztna_traffic"); ok {
+		if setArgNil {
+			obj["ztna-traffic"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterZtnaTraffic(d, v, "ztna_traffic", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ztna-traffic"] = t
+			t, err := expandLogWebtrendsFilterZtnaTraffic(d, v, "ztna_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ztna-traffic"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("anomaly"); ok {
+		if setArgNil {
+			obj["anomaly"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterAnomaly(d, v, "anomaly", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["anomaly"] = t
+			t, err := expandLogWebtrendsFilterAnomaly(d, v, "anomaly", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["anomaly"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("netscan_discovery"); ok {
+		if setArgNil {
+			obj["netscan-discovery"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["netscan-discovery"] = t
+			t, err := expandLogWebtrendsFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["netscan-discovery"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
+		if setArgNil {
+			obj["netscan-vulnerability"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["netscan-vulnerability"] = t
+			t, err := expandLogWebtrendsFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["netscan-vulnerability"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
+		if setArgNil {
+			obj["voip"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterVoip(d, v, "voip", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["voip"] = t
+			t, err := expandLogWebtrendsFilterVoip(d, v, "voip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["voip"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("gtp"); ok {
+		if setArgNil {
+			obj["gtp"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterGtp(d, v, "gtp", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gtp"] = t
+			t, err := expandLogWebtrendsFilterGtp(d, v, "gtp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gtp"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("free_style"); ok {
+		if setArgNil {
+			obj["free-style"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandLogWebtrendsFilterFreeStyle(d, v, "free_style", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["free-style"] = t
+			t, err := expandLogWebtrendsFilterFreeStyle(d, v, "free_style", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["free-style"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dns"); ok {
+		if setArgNil {
+			obj["dns"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterDns(d, v, "dns", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns"] = t
+			t, err := expandLogWebtrendsFilterDns(d, v, "dns", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
+		if setArgNil {
+			obj["ssh"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterSsh(d, v, "ssh", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ssh"] = t
+			t, err := expandLogWebtrendsFilterSsh(d, v, "ssh", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
+		if setArgNil {
+			obj["filter"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterFilter(d, v, "filter", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["filter"] = t
+			t, err := expandLogWebtrendsFilterFilter(d, v, "filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["filter"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {
+		if setArgNil {
+			obj["filter-type"] = nil
+		} else {
 
-		t, err := expandLogWebtrendsFilterFilterType(d, v, "filter_type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["filter-type"] = t
+			t, err := expandLogWebtrendsFilterFilterType(d, v, "filter_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["filter-type"] = t
+			}
 		}
 	}
 

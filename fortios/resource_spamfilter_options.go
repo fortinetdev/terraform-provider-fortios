@@ -58,7 +58,7 @@ func resourceSpamfilterOptionsUpdate(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	obj, err := getObjectSpamfilterOptions(d, c.Fv)
+	obj, err := getObjectSpamfilterOptions(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterOptions resource while getting object: %v", err)
 	}
@@ -80,7 +80,6 @@ func resourceSpamfilterOptionsUpdate(d *schema.ResourceData, m interface{}) erro
 
 func resourceSpamfilterOptionsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -92,9 +91,15 @@ func resourceSpamfilterOptionsDelete(d *schema.ResourceData, m interface{}) erro
 		}
 	}
 
-	err := c.DeleteSpamfilterOptions(mkey, vdomparam)
+	obj, err := getObjectSpamfilterOptions(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SpamfilterOptions resource: %v", err)
+		return fmt.Errorf("Error updating SpamfilterOptions resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSpamfilterOptions(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing SpamfilterOptions resource: %v", err)
 	}
 
 	d.SetId("")
@@ -160,16 +165,20 @@ func expandSpamfilterOptionsDnsTimeout(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-func getObjectSpamfilterOptions(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectSpamfilterOptions(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("dns_timeout"); ok {
+		if setArgNil {
+			obj["dns-timeout"] = nil
+		} else {
 
-		t, err := expandSpamfilterOptionsDnsTimeout(d, v, "dns_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-timeout"] = t
+			t, err := expandSpamfilterOptionsDnsTimeout(d, v, "dns_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-timeout"] = t
+			}
 		}
 	}
 

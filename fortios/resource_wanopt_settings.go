@@ -67,7 +67,7 @@ func resourceWanoptSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	obj, err := getObjectWanoptSettings(d, c.Fv)
+	obj, err := getObjectWanoptSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptSettings resource while getting object: %v", err)
 	}
@@ -89,7 +89,6 @@ func resourceWanoptSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceWanoptSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -101,9 +100,15 @@ func resourceWanoptSettingsDelete(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	err := c.DeleteWanoptSettings(mkey, vdomparam)
+	obj, err := getObjectWanoptSettings(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting WanoptSettings resource: %v", err)
+		return fmt.Errorf("Error updating WanoptSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateWanoptSettings(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing WanoptSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -197,36 +202,48 @@ func expandWanoptSettingsAutoDetectAlgorithm(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func getObjectWanoptSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectWanoptSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("host_id"); ok {
+		if setArgNil {
+			obj["host-id"] = nil
+		} else {
 
-		t, err := expandWanoptSettingsHostId(d, v, "host_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["host-id"] = t
+			t, err := expandWanoptSettingsHostId(d, v, "host_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["host-id"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("tunnel_ssl_algorithm"); ok {
+		if setArgNil {
+			obj["tunnel-ssl-algorithm"] = nil
+		} else {
 
-		t, err := expandWanoptSettingsTunnelSslAlgorithm(d, v, "tunnel_ssl_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-ssl-algorithm"] = t
+			t, err := expandWanoptSettingsTunnelSslAlgorithm(d, v, "tunnel_ssl_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-ssl-algorithm"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("auto_detect_algorithm"); ok {
+		if setArgNil {
+			obj["auto-detect-algorithm"] = nil
+		} else {
 
-		t, err := expandWanoptSettingsAutoDetectAlgorithm(d, v, "auto_detect_algorithm", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auto-detect-algorithm"] = t
+			t, err := expandWanoptSettingsAutoDetectAlgorithm(d, v, "auto_detect_algorithm", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-detect-algorithm"] = t
+			}
 		}
 	}
 

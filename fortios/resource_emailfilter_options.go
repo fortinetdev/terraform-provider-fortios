@@ -58,7 +58,7 @@ func resourceEmailfilterOptionsUpdate(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	obj, err := getObjectEmailfilterOptions(d, c.Fv)
+	obj, err := getObjectEmailfilterOptions(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterOptions resource while getting object: %v", err)
 	}
@@ -80,7 +80,6 @@ func resourceEmailfilterOptionsUpdate(d *schema.ResourceData, m interface{}) err
 
 func resourceEmailfilterOptionsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -92,9 +91,15 @@ func resourceEmailfilterOptionsDelete(d *schema.ResourceData, m interface{}) err
 		}
 	}
 
-	err := c.DeleteEmailfilterOptions(mkey, vdomparam)
+	obj, err := getObjectEmailfilterOptions(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting EmailfilterOptions resource: %v", err)
+		return fmt.Errorf("Error updating EmailfilterOptions resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateEmailfilterOptions(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error clearing EmailfilterOptions resource: %v", err)
 	}
 
 	d.SetId("")
@@ -160,16 +165,20 @@ func expandEmailfilterOptionsDnsTimeout(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-func getObjectEmailfilterOptions(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectEmailfilterOptions(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("dns_timeout"); ok {
+		if setArgNil {
+			obj["dns-timeout"] = nil
+		} else {
 
-		t, err := expandEmailfilterOptionsDnsTimeout(d, v, "dns_timeout", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dns-timeout"] = t
+			t, err := expandEmailfilterOptionsDnsTimeout(d, v, "dns_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dns-timeout"] = t
+			}
 		}
 	}
 
