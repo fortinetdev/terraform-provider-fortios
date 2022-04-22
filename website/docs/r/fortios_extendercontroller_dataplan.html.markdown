@@ -19,11 +19,11 @@ The following arguments are supported:
 * `slot` - SIM slot configuration. Valid values: `sim1`, `sim2`.
 * `iccid` - ICCID configuration.
 * `carrier` - Carrier configuration.
-* `APN` - APN configuration.
+* `apn` - APN configuration.
 * `auth_type` - Authentication type. Valid values: `none`, `pap`, `chap`.
 * `username` - Username.
 * `password` - Password.
-* `PDN` - PDN type. Valid values: `ipv4-only`, `ipv6-only`, `ipv4-ipv6`.
+* `pdn` - PDN type. Valid values: `ipv4-only`, `ipv6-only`, `ipv4-ipv6`.
 * `signal_threshold` - Signal threshold. Specify the range between 50 - 100, where 50/100 means -50/-100 dBm.
 * `signal_period` - Signal period (600 to 18000 seconds).
 * `capacity` - Capacity in MB (0 - 102400000).
