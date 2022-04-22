@@ -30,7 +30,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 SwitchController SnmpSysinfo can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_switchcontroller_snmpsysinfo.labelname SwitchControllerSnmpSysinfo
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_switchcontroller_snmpsysinfo.labelname SwitchControllerSnmpSysinfo
 $ unset "FORTIOS_IMPORT_TABLE"
 ```

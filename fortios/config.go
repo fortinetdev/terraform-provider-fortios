@@ -124,10 +124,10 @@ func fortiAPIPatch(t interface{}) bool {
 
 func isImportTable() bool {
 	itable := os.Getenv("FORTIOS_IMPORT_TABLE")
-	if itable == "true" {
-		return true
+	if itable == "false" {
+		return false
 	}
-	return false
+	return true
 }
 
 func convintflist2i(v interface{}) interface{} {

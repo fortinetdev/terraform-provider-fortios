@@ -38,7 +38,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 Log GuiDisplay can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_log_guidisplay.labelname LogGuiDisplay
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_log_guidisplay.labelname LogGuiDisplay
 $ unset "FORTIOS_IMPORT_TABLE"
 ```

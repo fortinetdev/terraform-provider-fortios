@@ -34,7 +34,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 Spamfilter Options can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_spamfilter_options.labelname SpamfilterOptions
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_spamfilter_options.labelname SpamfilterOptions
 $ unset "FORTIOS_IMPORT_TABLE"
 ```

@@ -42,7 +42,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 WirelessControllerHotspot20 QosMap can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_wirelesscontrollerhotspot20_qosmap.labelname {{name}}
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_wirelesscontrollerhotspot20_qosmap.labelname {{name}}
 $ unset "FORTIOS_IMPORT_TABLE"
 ```

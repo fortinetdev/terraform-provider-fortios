@@ -254,7 +254,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 Router Ospf can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_router_ospf.labelname RouterOspf
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_router_ospf.labelname RouterOspf
 $ unset "FORTIOS_IMPORT_TABLE"
 ```

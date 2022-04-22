@@ -151,7 +151,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 System Ike can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_system_ike.labelname SystemIke
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_system_ike.labelname SystemIke
 $ unset "FORTIOS_IMPORT_TABLE"
 ```

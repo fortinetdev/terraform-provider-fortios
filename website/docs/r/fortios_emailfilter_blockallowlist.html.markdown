@@ -42,7 +42,10 @@ In addition to all the above arguments, the following attributes are exported:
 
 Emailfilter BlockAllowList can be imported using any of these accepted formats:
 ```
-$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_emailfilter_blockallowlist.labelname {{fosid}}
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
 $ terraform import fortios_emailfilter_blockallowlist.labelname {{fosid}}
 $ unset "FORTIOS_IMPORT_TABLE"
 ```
