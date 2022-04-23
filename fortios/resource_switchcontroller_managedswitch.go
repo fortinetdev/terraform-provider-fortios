@@ -4708,15 +4708,15 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 	}
 
 	if isImportTable() {
-		if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1x-settings"], d, "n802_1x_settings", sv)); err != nil {
-			if !fortiAPIPatch(o["802-1x-settings"]) {
+		if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1X-settings"], d, "n802_1x_settings", sv)); err != nil {
+			if !fortiAPIPatch(o["802-1X-settings"]) {
 				return fmt.Errorf("Error reading n802_1x_settings: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("n802_1x_settings"); ok {
-			if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1x-settings"], d, "n802_1x_settings", sv)); err != nil {
-				if !fortiAPIPatch(o["802-1x-settings"]) {
+			if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1X-settings"], d, "n802_1x_settings", sv)); err != nil {
+				if !fortiAPIPatch(o["802-1X-settings"]) {
 					return fmt.Errorf("Error reading n802_1x_settings: %v", err)
 				}
 			}
@@ -7792,7 +7792,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["802-1x-settings"] = t
+			obj["802-1X-settings"] = t
 		}
 	}
 

@@ -345,8 +345,8 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if err = d.Set("data_ethernet_ii", flattenWirelessControllerGlobalDataEthernetIi(o["data-ethernet-ii"], d, "data_ethernet_ii", sv)); err != nil {
-		if !fortiAPIPatch(o["data-ethernet-ii"]) {
+	if err = d.Set("data_ethernet_ii", flattenWirelessControllerGlobalDataEthernetIi(o["data-ethernet-II"], d, "data_ethernet_ii", sv)); err != nil {
+		if !fortiAPIPatch(o["data-ethernet-II"]) {
 			return fmt.Errorf("Error reading data_ethernet_ii: %v", err)
 		}
 	}
@@ -589,14 +589,14 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 
 	if v, ok := d.GetOk("data_ethernet_ii"); ok {
 		if setArgNil {
-			obj["data-ethernet-ii"] = nil
+			obj["data-ethernet-II"] = nil
 		} else {
 
 			t, err := expandWirelessControllerGlobalDataEthernetIi(d, v, "data_ethernet_ii", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
-				obj["data-ethernet-ii"] = t
+				obj["data-ethernet-II"] = t
 			}
 		}
 	}

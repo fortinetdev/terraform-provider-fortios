@@ -655,8 +655,8 @@ func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if err = d.Set("dont_send_cr1", flattenSystemModemDontSendCr1(o["dont-send-cr1"], d, "dont_send_cr1", sv)); err != nil {
-		if !fortiAPIPatch(o["dont-send-cr1"]) {
+	if err = d.Set("dont_send_cr1", flattenSystemModemDontSendCr1(o["dont-send-CR1"], d, "dont_send_cr1", sv)); err != nil {
+		if !fortiAPIPatch(o["dont-send-CR1"]) {
 			return fmt.Errorf("Error reading dont_send_cr1: %v", err)
 		}
 	}
@@ -709,8 +709,8 @@ func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if err = d.Set("dont_send_cr2", flattenSystemModemDontSendCr2(o["dont-send-cr2"], d, "dont_send_cr2", sv)); err != nil {
-		if !fortiAPIPatch(o["dont-send-cr2"]) {
+	if err = d.Set("dont_send_cr2", flattenSystemModemDontSendCr2(o["dont-send-CR2"], d, "dont_send_cr2", sv)); err != nil {
+		if !fortiAPIPatch(o["dont-send-CR2"]) {
 			return fmt.Errorf("Error reading dont_send_cr2: %v", err)
 		}
 	}
@@ -763,8 +763,8 @@ func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if err = d.Set("dont_send_cr3", flattenSystemModemDontSendCr3(o["dont-send-cr3"], d, "dont_send_cr3", sv)); err != nil {
-		if !fortiAPIPatch(o["dont-send-cr3"]) {
+	if err = d.Set("dont_send_cr3", flattenSystemModemDontSendCr3(o["dont-send-CR3"], d, "dont_send_cr3", sv)); err != nil {
+		if !fortiAPIPatch(o["dont-send-CR3"]) {
 			return fmt.Errorf("Error reading dont_send_cr3: %v", err)
 		}
 	}
@@ -1241,14 +1241,14 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 
 	if v, ok := d.GetOk("dont_send_cr1"); ok {
 		if setArgNil {
-			obj["dont-send-cr1"] = nil
+			obj["dont-send-CR1"] = nil
 		} else {
 
 			t, err := expandSystemModemDontSendCr1(d, v, "dont_send_cr1", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
-				obj["dont-send-cr1"] = t
+				obj["dont-send-CR1"] = t
 			}
 		}
 	}
@@ -1367,14 +1367,14 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 
 	if v, ok := d.GetOk("dont_send_cr2"); ok {
 		if setArgNil {
-			obj["dont-send-cr2"] = nil
+			obj["dont-send-CR2"] = nil
 		} else {
 
 			t, err := expandSystemModemDontSendCr2(d, v, "dont_send_cr2", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
-				obj["dont-send-cr2"] = t
+				obj["dont-send-CR2"] = t
 			}
 		}
 	}
@@ -1493,14 +1493,14 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 
 	if v, ok := d.GetOk("dont_send_cr3"); ok {
 		if setArgNil {
-			obj["dont-send-cr3"] = nil
+			obj["dont-send-CR3"] = nil
 		} else {
 
 			t, err := expandSystemModemDontSendCr3(d, v, "dont_send_cr3", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
-				obj["dont-send-cr3"] = t
+				obj["dont-send-CR3"] = t
 			}
 		}
 	}

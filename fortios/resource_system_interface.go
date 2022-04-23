@@ -5502,8 +5502,8 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("secondary_ip", flattenSystemInterfaceSecondaryIp(o["secondary-ip"], d, "secondary_ip", sv)); err != nil {
-		if !fortiAPIPatch(o["secondary-ip"]) {
+	if err = d.Set("secondary_ip", flattenSystemInterfaceSecondaryIp(o["secondary-IP"], d, "secondary_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["secondary-IP"]) {
 			return fmt.Errorf("Error reading secondary_ip: %v", err)
 		}
 	}
@@ -9806,7 +9806,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["secondary-ip"] = t
+			obj["secondary-IP"] = t
 		}
 	}
 
