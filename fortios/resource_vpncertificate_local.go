@@ -55,8 +55,9 @@ func resourceVpnCertificateLocal() *schema.Resource {
 			},
 			"private_key": &schema.Schema{
 				Type:      schema.TypeString,
-				Required:  true,
+				Optional:  true,
 				Sensitive: true,
+				Computed:  true,
 			},
 			"certificate": &schema.Schema{
 				Type:     schema.TypeString,

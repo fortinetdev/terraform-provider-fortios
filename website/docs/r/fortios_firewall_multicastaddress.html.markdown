@@ -30,8 +30,8 @@ The following arguments are supported:
 * `name` - Multicast address name.
 * `type` - Type of address object: multicast IP address range or broadcast IP/mask to be treated as a multicast address. Valid values: `multicastrange`, `broadcastmask`.
 * `subnet` - Broadcast address and subnet.
-* `start_ip` - (Required) First IPv4 address (inclusive) in the range for the address.
-* `end_ip` - (Required) Final IPv4 address (inclusive) in the range for the address.
+* `start_ip` - First IPv4 address (inclusive) in the range for the address.
+* `end_ip` - Final IPv4 address (inclusive) in the range for the address.
 * `comment` - Comment.
 * `visibility` - Enable/disable visibility of the multicast address on the GUI. Valid values: `enable`, `disable`.
 * `associated_interface` - Interface associated with the address object. When setting up a policy, only addresses associated with this interface are available.

@@ -44,8 +44,7 @@ func resourceSystemInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				ForceNew:     true,
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:         schema.TypeString,

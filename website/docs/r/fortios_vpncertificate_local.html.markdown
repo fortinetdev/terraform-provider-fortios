@@ -16,7 +16,7 @@ The following arguments are supported:
 * `name` - (Required) Name.
 * `password` - Password as a PEM file.
 * `comments` - Comment.
-* `private_key` - (Required) PEM format key, encrypted with a password.
+* `private_key` - PEM format key, encrypted with a password.
 * `certificate` - PEM format certificate.
 * `csr` - Certificate Signing Request.
 * `state` - Certificate Signing Request State.
