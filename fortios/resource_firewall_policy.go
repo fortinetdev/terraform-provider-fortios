@@ -46,7 +46,6 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -363,7 +362,6 @@ func resourceFirewallPolicy() *schema.Resource {
 			"learning_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -489,7 +487,6 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"profile_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -500,103 +497,86 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"spamfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"voip_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"waf_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:         schema.TypeString,
@@ -654,13 +634,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wanopt_peer": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webcache": &schema.Schema{
 				Type:     schema.TypeString,
@@ -676,25 +654,21 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"traffic_shaper": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"traffic_shaper_reverse": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"per_ip_shaper": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application": &schema.Schema{
 				Type:     schema.TypeList,
@@ -806,7 +780,6 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: intBetweenWithZero(300, 604800),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan_cos_fwd": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -877,23 +850,19 @@ func resourceFirewallPolicy() *schema.Resource {
 			"fsso": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"wsso": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rsso": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"fsso_agent_for_ntlm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"groups": &schema.Schema{
 				Type:     schema.TypeList,
@@ -970,7 +939,6 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"natip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1028,37 +996,31 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"global_label": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_redirect_addr": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"redirect_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"identity_based_route": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"block_notification": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1083,7 +1045,6 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"srcaddr_negate": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1124,12 +1085,10 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_mirror": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssl_mirror_intf": &schema.Schema{
 				Type:     schema.TypeList,
@@ -1148,7 +1107,6 @@ func resourceFirewallPolicy() *schema.Resource {
 			"scan_botnet_connections": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dsri": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1168,7 +1126,6 @@ func resourceFirewallPolicy() *schema.Resource {
 			"vlan_filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sgt_check": &schema.Schema{
 				Type:     schema.TypeString,
@@ -6130,6 +6087,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -6410,6 +6369,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["learning-mode"] = t
 		}
+	} else if d.HasChange("learning_mode") {
+		obj["learning-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("action"); ok {
@@ -6640,6 +6601,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["webproxy-profile"] = t
 		}
+	} else if d.HasChange("webproxy_profile") {
+		obj["webproxy-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("profile_type"); ok {
@@ -6660,6 +6623,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["profile-group"] = t
 		}
+	} else if d.HasChange("profile_group") {
+		obj["profile-group"] = nil
 	}
 
 	if v, ok := d.GetOk("av_profile"); ok {
@@ -6670,6 +6635,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["av-profile"] = t
 		}
+	} else if d.HasChange("av_profile") {
+		obj["av-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
@@ -6680,6 +6647,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["webfilter-profile"] = t
 		}
+	} else if d.HasChange("webfilter_profile") {
+		obj["webfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
@@ -6690,6 +6659,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["dnsfilter-profile"] = t
 		}
+	} else if d.HasChange("dnsfilter_profile") {
+		obj["dnsfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile"); ok {
@@ -6700,6 +6671,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
 		}
+	} else if d.HasChange("emailfilter_profile") {
+		obj["emailfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
@@ -6710,6 +6683,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["spamfilter-profile"] = t
 		}
+	} else if d.HasChange("spamfilter_profile") {
+		obj["spamfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_sensor"); ok {
@@ -6720,6 +6695,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["dlp-sensor"] = t
 		}
+	} else if d.HasChange("dlp_sensor") {
+		obj["dlp-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("file_filter_profile"); ok {
@@ -6730,6 +6707,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["file-filter-profile"] = t
 		}
+	} else if d.HasChange("file_filter_profile") {
+		obj["file-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
@@ -6740,6 +6719,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
@@ -6750,6 +6731,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["application-list"] = t
 		}
+	} else if d.HasChange("application_list") {
+		obj["application-list"] = nil
 	}
 
 	if v, ok := d.GetOk("voip_profile"); ok {
@@ -6760,6 +6743,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["voip-profile"] = t
 		}
+	} else if d.HasChange("voip_profile") {
+		obj["voip-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("sctp_filter_profile"); ok {
@@ -6770,6 +6755,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["sctp-filter-profile"] = t
 		}
+	} else if d.HasChange("sctp_filter_profile") {
+		obj["sctp-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("icap_profile"); ok {
@@ -6780,6 +6767,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["icap-profile"] = t
 		}
+	} else if d.HasChange("icap_profile") {
+		obj["icap-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("cifs_profile"); ok {
@@ -6790,6 +6779,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["cifs-profile"] = t
 		}
+	} else if d.HasChange("cifs_profile") {
+		obj["cifs-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("videofilter_profile"); ok {
@@ -6800,6 +6791,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["videofilter-profile"] = t
 		}
+	} else if d.HasChange("videofilter_profile") {
+		obj["videofilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("waf_profile"); ok {
@@ -6810,6 +6803,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["waf-profile"] = t
 		}
+	} else if d.HasChange("waf_profile") {
+		obj["waf-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_filter_profile"); ok {
@@ -6820,6 +6815,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["ssh-filter-profile"] = t
 		}
+	} else if d.HasChange("ssh_filter_profile") {
+		obj["ssh-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("profile_protocol_options"); ok {
@@ -6930,6 +6927,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["wanopt-profile"] = t
 		}
+	} else if d.HasChange("wanopt_profile") {
+		obj["wanopt-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("wanopt_peer"); ok {
@@ -6940,6 +6939,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["wanopt-peer"] = t
 		}
+	} else if d.HasChange("wanopt_peer") {
+		obj["wanopt-peer"] = nil
 	}
 
 	if v, ok := d.GetOk("webcache"); ok {
@@ -6970,6 +6971,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["webproxy-forward-server"] = t
 		}
+	} else if d.HasChange("webproxy_forward_server") {
+		obj["webproxy-forward-server"] = nil
 	}
 
 	if v, ok := d.GetOk("traffic_shaper"); ok {
@@ -6980,6 +6983,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["traffic-shaper"] = t
 		}
+	} else if d.HasChange("traffic_shaper") {
+		obj["traffic-shaper"] = nil
 	}
 
 	if v, ok := d.GetOk("traffic_shaper_reverse"); ok {
@@ -6990,6 +6995,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["traffic-shaper-reverse"] = t
 		}
+	} else if d.HasChange("traffic_shaper_reverse") {
+		obj["traffic-shaper-reverse"] = nil
 	}
 
 	if v, ok := d.GetOk("per_ip_shaper"); ok {
@@ -7000,6 +7007,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["per-ip-shaper"] = t
 		}
+	} else if d.HasChange("per_ip_shaper") {
+		obj["per-ip-shaper"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok {
@@ -7124,6 +7133,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 				obj["session-ttl"] = t
 			}
 		}
+	} else if d.HasChange("session_ttl") {
+		obj["session-ttl"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vlan_cos_fwd"); ok {
@@ -7244,6 +7255,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["fsso"] = t
 		}
+	} else if d.HasChange("fsso") {
+		obj["fsso"] = nil
 	}
 
 	if v, ok := d.GetOk("wsso"); ok {
@@ -7254,6 +7267,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["wsso"] = t
 		}
+	} else if d.HasChange("wsso") {
+		obj["wsso"] = nil
 	}
 
 	if v, ok := d.GetOk("rsso"); ok {
@@ -7264,6 +7279,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["rsso"] = t
 		}
+	} else if d.HasChange("rsso") {
+		obj["rsso"] = nil
 	}
 
 	if v, ok := d.GetOk("fsso_agent_for_ntlm"); ok {
@@ -7274,6 +7291,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["fsso-agent-for-ntlm"] = t
 		}
+	} else if d.HasChange("fsso_agent_for_ntlm") {
+		obj["fsso-agent-for-ntlm"] = nil
 	}
 
 	if v, ok := d.GetOk("groups"); ok {
@@ -7354,6 +7373,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["vpntunnel"] = t
 		}
+	} else if d.HasChange("vpntunnel") {
+		obj["vpntunnel"] = nil
 	}
 
 	if v, ok := d.GetOk("natip"); ok {
@@ -7454,6 +7475,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("label"); ok {
@@ -7464,6 +7487,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["label"] = t
 		}
+	} else if d.HasChange("label") {
+		obj["label"] = nil
 	}
 
 	if v, ok := d.GetOk("global_label"); ok {
@@ -7474,6 +7499,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["global-label"] = t
 		}
+	} else if d.HasChange("global_label") {
+		obj["global-label"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_cert"); ok {
@@ -7484,6 +7511,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["auth-cert"] = t
 		}
+	} else if d.HasChange("auth_cert") {
+		obj["auth-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_redirect_addr"); ok {
@@ -7494,6 +7523,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["auth-redirect-addr"] = t
 		}
+	} else if d.HasChange("auth_redirect_addr") {
+		obj["auth-redirect-addr"] = nil
 	}
 
 	if v, ok := d.GetOk("redirect_url"); ok {
@@ -7504,6 +7535,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["redirect-url"] = t
 		}
+	} else if d.HasChange("redirect_url") {
+		obj["redirect-url"] = nil
 	}
 
 	if v, ok := d.GetOk("identity_based_route"); ok {
@@ -7514,6 +7547,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["identity-based-route"] = t
 		}
+	} else if d.HasChange("identity_based_route") {
+		obj["identity-based-route"] = nil
 	}
 
 	if v, ok := d.GetOk("block_notification"); ok {
@@ -7544,6 +7579,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["replacemsg-override-group"] = t
 		}
+	} else if d.HasChange("replacemsg_override_group") {
+		obj["replacemsg-override-group"] = nil
 	}
 
 	if v, ok := d.GetOk("srcaddr_negate"); ok {
@@ -7624,6 +7661,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["decrypted-traffic-mirror"] = t
 		}
+	} else if d.HasChange("decrypted_traffic_mirror") {
+		obj["decrypted-traffic-mirror"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_mirror"); ok {
@@ -7634,6 +7673,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["ssl-mirror"] = t
 		}
+	} else if d.HasChange("ssl_mirror") {
+		obj["ssl-mirror"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_mirror_intf"); ok {
@@ -7654,6 +7695,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["scan-botnet-connections"] = t
 		}
+	} else if d.HasChange("scan_botnet_connections") {
+		obj["scan-botnet-connections"] = nil
 	}
 
 	if v, ok := d.GetOk("dsri"); ok {
@@ -7694,6 +7737,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["vlan-filter"] = t
 		}
+	} else if d.HasChange("vlan_filter") {
+		obj["vlan-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("sgt_check"); ok {
