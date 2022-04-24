@@ -239,7 +239,7 @@ func expandCertificateRemoteName(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandCertificateRemoteRemote(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandCertificateRemoteRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

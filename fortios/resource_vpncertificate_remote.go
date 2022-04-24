@@ -238,7 +238,7 @@ func expandVpnCertificateRemoteName(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandVpnCertificateRemoteRemote(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandVpnCertificateRemoteRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

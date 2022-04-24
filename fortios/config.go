@@ -200,3 +200,12 @@ func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
 		return warnings, errors
 	}
 }
+
+func toCertFormat(v interface{}) interface{} {
+	if t, ok := v.(string); ok {
+		if t != "" {
+			return "\"" + t + "\""
+		}
+	}
+	return v
+}

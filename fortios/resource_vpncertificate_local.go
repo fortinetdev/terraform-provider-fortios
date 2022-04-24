@@ -618,11 +618,11 @@ func expandVpnCertificateLocalComments(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandVpnCertificateLocalPrivateKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandVpnCertificateLocalCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandVpnCertificateLocalCsr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
