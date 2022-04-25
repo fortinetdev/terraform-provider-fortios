@@ -100,7 +100,7 @@ func resourceVpnIpsecConcentratorCreate(d *schema.ResourceData, m interface{}) e
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("VpnIpsecConcentrator")
 	}
