@@ -1,6 +1,19 @@
 ## 1.15.0 (Unreleased)
 
 
+# 1.14.1 (Apr 25, 2022)
+
+BUG FIXES:
+
+* Fix filter issue;
+* Fix incorrect requirement issue;
+* Improve delete operation for non-deletable resources;
+* Improve import process;
+* Fix capital letters issue;
+* Fix reset argument issue for resource fortios_firewall_policy;
+* Improve certificate argument for API format issue;
+* Fix argument type convert issue;
+
 ## 1.14.0 (Feb 1, 2022)
 
 BUG FIXES:
