@@ -136,6 +136,12 @@ func convintflist2i(v interface{}) interface{} {
 			return v
 		}
 		return t[0]
+	} else if t, ok := v.(string); ok {
+		if t == "" {
+			return 0
+		} else if iVal, _ := strconv.Atoi(t); ok {
+			return iVal
+		}
 	}
 	return v
 }
