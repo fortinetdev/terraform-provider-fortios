@@ -166,10 +166,9 @@ func resourceSystemSdwan() *schema.Resource {
 							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"priority6": &schema.Schema{
 							Type:         schema.TypeInt,

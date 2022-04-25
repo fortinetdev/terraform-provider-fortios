@@ -119,7 +119,7 @@ func resourceEndpointControlFctems() *schema.Resource {
 			},
 			"call_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 50000),
+				ValidateFunc: validation.IntBetween(1, 180000),
 				Optional:     true,
 				Computed:     true,
 			},

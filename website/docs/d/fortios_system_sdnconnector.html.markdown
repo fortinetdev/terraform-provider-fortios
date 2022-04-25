@@ -67,6 +67,8 @@ The following attributes are exported:
 * `group_name` - Group name of computers.
 * `api_key` - IBM cloud API key or service ID API key.
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
+* `ibm_region_gen1` - IBM cloud compute generation 1 region name.
+* `ibm_region_gen2` - IBM cloud compute generation 2 region name.
 * `ibm_region` - IBM cloud region name.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 

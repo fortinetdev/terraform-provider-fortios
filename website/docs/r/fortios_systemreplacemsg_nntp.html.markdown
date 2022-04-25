@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_systemreplacemsg_nntp
-Replacement messages. Applies to FortiOS Version `<= 6.4.0`.
+Replacement messages. Applies to FortiOS Version `<= 6.4.1`.
 
 ## Argument Reference
 

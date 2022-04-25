@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_cifs_profile
-Configure CIFS profile. Applies to FortiOS Version `6.2.4,6.2.6,6.4.0`.
+Configure CIFS profile. Applies to FortiOS Version `6.2.4,6.2.6,6.4.0,6.4.1`.
 
 ## Argument Reference
 

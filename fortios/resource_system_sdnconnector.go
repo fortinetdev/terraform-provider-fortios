@@ -470,6 +470,16 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ibm_region_gen1": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ibm_region_gen2": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ibm_region": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1307,6 +1317,14 @@ func flattenSystemSdnConnectorComputeGeneration(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemSdnConnectorIbmRegionGen1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorIbmRegionGen2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdnConnectorIbmRegion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1629,6 +1647,18 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("compute_generation", flattenSystemSdnConnectorComputeGeneration(o["compute-generation"], d, "compute_generation", sv)); err != nil {
 		if !fortiAPIPatch(o["compute-generation"]) {
 			return fmt.Errorf("Error reading compute_generation: %v", err)
+		}
+	}
+
+	if err = d.Set("ibm_region_gen1", flattenSystemSdnConnectorIbmRegionGen1(o["ibm-region-gen1"], d, "ibm_region_gen1", sv)); err != nil {
+		if !fortiAPIPatch(o["ibm-region-gen1"]) {
+			return fmt.Errorf("Error reading ibm_region_gen1: %v", err)
+		}
+	}
+
+	if err = d.Set("ibm_region_gen2", flattenSystemSdnConnectorIbmRegionGen2(o["ibm-region-gen2"], d, "ibm_region_gen2", sv)); err != nil {
+		if !fortiAPIPatch(o["ibm-region-gen2"]) {
+			return fmt.Errorf("Error reading ibm_region_gen2: %v", err)
 		}
 	}
 
@@ -2289,6 +2319,14 @@ func expandSystemSdnConnectorComputeGeneration(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemSdnConnectorIbmRegionGen1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorIbmRegionGen2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdnConnectorIbmRegion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2777,6 +2815,26 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["compute-generation"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ibm_region_gen1"); ok {
+
+		t, err := expandSystemSdnConnectorIbmRegionGen1(d, v, "ibm_region_gen1", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ibm-region-gen1"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ibm_region_gen2"); ok {
+
+		t, err := expandSystemSdnConnectorIbmRegionGen2(d, v, "ibm_region_gen2", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ibm-region-gen2"] = t
 		}
 	}
 

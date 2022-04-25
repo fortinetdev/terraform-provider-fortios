@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_nacdevice
-Configure/list NAC devices learned on the managed FortiSwitch ports which matches NAC policy. Applies to FortiOS Version `6.4.0,6.4.2,7.0.0`.
+Configure/list NAC devices learned on the managed FortiSwitch ports which matches NAC policy. Applies to FortiOS Version `6.4.0,6.4.1,6.4.2,7.0.0`.
 
 ## Argument Reference
 

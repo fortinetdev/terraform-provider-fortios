@@ -79,6 +79,8 @@ The following arguments are supported:
 * `group_name` - Group name of computers.
 * `api_key` - IBM cloud API key or service ID API key.
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
+* `ibm_region_gen1` - IBM cloud compute generation 1 region name. Valid values: `us-south`, `us-east`, `germany`, `great-britain`, `japan`, `australia`.
+* `ibm_region_gen2` - IBM cloud compute generation 2 region name. Valid values: `us-south`, `us-east`, `great-britain`.
 * `ibm_region` - IBM cloud region name.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.

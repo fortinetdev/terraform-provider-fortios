@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_vnetunnel
-Configure virtual network enabler tunnel. Applies to FortiOS Version `>= 6.4.2`.
+Configure virtual network enabler tunnel. Applies to FortiOS Version `>= 6.4.1`.
 
 ## Argument Reference
 

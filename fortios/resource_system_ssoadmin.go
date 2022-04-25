@@ -61,6 +61,12 @@ func resourceSystemSsoAdmin() *schema.Resource {
 					},
 				},
 			},
+			"gui_ignore_release_overview_version": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 5),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -237,6 +243,10 @@ func flattenSystemSsoAdminVdomName(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemSsoAdminGuiIgnoreReleaseOverviewVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -265,6 +275,12 @@ func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{
 					return fmt.Errorf("Error reading vdom: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("gui_ignore_release_overview_version", flattenSystemSsoAdminGuiIgnoreReleaseOverviewVersion(o["gui-ignore-release-overview-version"], d, "gui_ignore_release_overview_version", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-ignore-release-overview-version"]) {
+			return fmt.Errorf("Error reading gui_ignore_release_overview_version: %v", err)
 		}
 	}
 
@@ -317,6 +333,10 @@ func expandSystemSsoAdminVdomName(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandSystemSsoAdminGuiIgnoreReleaseOverviewVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -347,6 +367,16 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["vdom"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_ignore_release_overview_version"); ok {
+
+		t, err := expandSystemSsoAdminGuiIgnoreReleaseOverviewVersion(d, v, "gui_ignore_release_overview_version", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-ignore-release-overview-version"] = t
 		}
 	}
 

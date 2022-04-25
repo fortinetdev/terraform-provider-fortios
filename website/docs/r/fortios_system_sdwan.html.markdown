@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_sdwan
-Configure redundant internet connections using SD-WAN (formerly virtual WAN link). Applies to FortiOS Version `>= 6.4.2`.
+Configure redundant internet connections using SD-WAN (formerly virtual WAN link). Applies to FortiOS Version `>= 6.4.1`.
 
 ## Argument Reference
 
@@ -67,7 +67,7 @@ The `health_check` block supports:
 * `system_dns` - Enable/disable system DNS as the probe server. Valid values: `disable`, `enable`.
 * `server` - IP address or FQDN name of the server.
 * `detect_mode` - The mode determining how to detect the server. Valid values: `active`, `passive`, `prefer-passive`.
-* `protocol` - Protocol used to determine if the FortiGate can communicate with the server. Valid values: `ping`, `tcp-echo`, `udp-echo`, `http`, `twamp`, `dns`, `tcp-connect`, `ftp`.
+* `protocol` - Protocol used to determine if the FortiGate can communicate with the server.
 * `port` - Port number used to communicate with the server over the selected protocol (0-65535, default = 0, auto select. http, twamp: 80, udp-echo, tcp-echo: 7, dns: 53, ftp: 21).
 * `quality_measured_method` - Method to measure the quality of tcp-connect. Valid values: `half-open`, `half-close`.
 * `security_mode` - Twamp controller security mode. Valid values: `none`, `authentication`.

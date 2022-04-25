@@ -364,6 +364,14 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"ibm_region_gen1": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ibm_region_gen2": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ibm_region": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1085,6 +1093,14 @@ func dataSourceFlattenSystemSdnConnectorComputeGeneration(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorIbmRegionGen1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorIbmRegionGen2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorIbmRegion(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1327,6 +1343,18 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("compute_generation", dataSourceFlattenSystemSdnConnectorComputeGeneration(o["compute-generation"], d, "compute_generation")); err != nil {
 		if !fortiAPIPatch(o["compute-generation"]) {
 			return fmt.Errorf("Error reading compute_generation: %v", err)
+		}
+	}
+
+	if err = d.Set("ibm_region_gen1", dataSourceFlattenSystemSdnConnectorIbmRegionGen1(o["ibm-region-gen1"], d, "ibm_region_gen1")); err != nil {
+		if !fortiAPIPatch(o["ibm-region-gen1"]) {
+			return fmt.Errorf("Error reading ibm_region_gen1: %v", err)
+		}
+	}
+
+	if err = d.Set("ibm_region_gen2", dataSourceFlattenSystemSdnConnectorIbmRegionGen2(o["ibm-region-gen2"], d, "ibm_region_gen2")); err != nil {
+		if !fortiAPIPatch(o["ibm-region-gen2"]) {
+			return fmt.Errorf("Error reading ibm_region_gen2: %v", err)
 		}
 	}
 

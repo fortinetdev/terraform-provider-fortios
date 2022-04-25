@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_filefilter_profile
-Configure file-filter profiles. Applies to FortiOS Version `>= 6.4.2`.
+Configure file-filter profiles. Applies to FortiOS Version `>= 6.4.1`.
 
 ## Argument Reference
 
