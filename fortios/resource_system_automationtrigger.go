@@ -160,6 +160,20 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"logid_block": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -424,6 +438,44 @@ func flattenSystemAutomationTriggerFabricEventSeverity(v interface{}, d *schema.
 	return v
 }
 
+func flattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemAutomationTriggerLogidBlockId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemAutomationTriggerLogidBlockId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -554,6 +606,22 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 	if err = d.Set("fabric_event_severity", flattenSystemAutomationTriggerFabricEventSeverity(o["fabric-event-severity"], d, "fabric_event_severity", sv)); err != nil {
 		if !fortiAPIPatch(o["fabric-event-severity"]) {
 			return fmt.Errorf("Error reading fabric_event_severity: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
+			if !fortiAPIPatch(o["logid"]) {
+				return fmt.Errorf("Error reading logid_block: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("logid_block"); ok {
+			if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
+				if !fortiAPIPatch(o["logid"]) {
+					return fmt.Errorf("Error reading logid_block: %v", err)
+				}
+			}
 		}
 	}
 
@@ -691,6 +759,38 @@ func expandSystemAutomationTriggerFabricEventName(d *schema.ResourceData, v inte
 }
 
 func expandSystemAutomationTriggerFabricEventSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerLogidBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemAutomationTriggerLogidBlockId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAutomationTriggerLogidBlockId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -894,6 +994,16 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["fabric-event-severity"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("logid_block"); ok {
+
+		t, err := expandSystemAutomationTriggerLogidBlock(d, v, "logid_block", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["logid"] = t
 		}
 	}
 

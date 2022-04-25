@@ -39,10 +39,15 @@ The following attributes are exported:
 * `serial` - Fabric connector serial number.
 * `fabric_event_name` - Fabric connector event handler name.
 * `fabric_event_severity` - Fabric connector event severity.
+* `logid_block` - Log ID to trigger event. Only applies on FortiOS v7.0.0+. The structure of `logid_block` block is documented below.
 
 The `fields` block contains:
 
 * `id` - Entry ID.
 * `name` - Name.
 * `value` - Value.
+
+The `logid_block` block contains:
+
+* `id` - Log ID.
 

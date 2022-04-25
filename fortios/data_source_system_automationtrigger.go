@@ -123,6 +123,18 @@ func dataSourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"logid_block": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -300,6 +312,42 @@ func dataSourceFlattenSystemAutomationTriggerFabricEventSeverity(v interface{}, 
 	return v
 }
 
+func dataSourceFlattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemAutomationTriggerLogidBlockId(i["id"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemAutomationTriggerLogidBlockId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -420,6 +468,12 @@ func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o ma
 	if err = d.Set("fabric_event_severity", dataSourceFlattenSystemAutomationTriggerFabricEventSeverity(o["fabric-event-severity"], d, "fabric_event_severity")); err != nil {
 		if !fortiAPIPatch(o["fabric-event-severity"]) {
 			return fmt.Errorf("Error reading fabric_event_severity: %v", err)
+		}
+	}
+
+	if err = d.Set("logid_block", dataSourceFlattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block")); err != nil {
+		if !fortiAPIPatch(o["logid"]) {
+			return fmt.Errorf("Error reading logid_block: %v", err)
 		}
 	}
 

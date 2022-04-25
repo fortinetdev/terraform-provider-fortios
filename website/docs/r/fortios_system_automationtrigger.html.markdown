@@ -48,6 +48,7 @@ The following arguments are supported:
 * `serial` - Fabric connector serial number.
 * `fabric_event_name` - Fabric connector event handler name.
 * `fabric_event_severity` - Fabric connector event severity.
+* `logid_block` - Log ID to trigger event. Only applies on FortiOS v7.0.0+. The structure of `logid_block` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -56,6 +57,10 @@ The `fields` block supports:
 * `id` - Entry ID.
 * `name` - Name.
 * `value` - Value.
+
+The `logid_block` block supports:
+
+* `id` - Log ID.
 
 
 ## Attribute Reference
