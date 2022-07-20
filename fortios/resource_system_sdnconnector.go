@@ -650,6 +650,11 @@ func flattenSystemSdnConnectorServerList(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -728,6 +733,11 @@ func flattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.Resou
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -769,6 +779,11 @@ func flattenSystemSdnConnectorExternalAccountListRoleArn(v interface{}, d *schem
 
 func flattenSystemSdnConnectorExternalAccountListRegionList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -841,6 +856,11 @@ func flattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceData, pre str
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -882,6 +902,11 @@ func flattenSystemSdnConnectorNicName(v interface{}, d *schema.ResourceData, pre
 
 func flattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -939,6 +964,11 @@ func flattenSystemSdnConnectorNicIpResourceGroup(v interface{}, d *schema.Resour
 
 func flattenSystemSdnConnectorRouteTable(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1003,6 +1033,11 @@ func flattenSystemSdnConnectorRouteTableResourceGroup(v interface{}, d *schema.R
 
 func flattenSystemSdnConnectorRouteTableRoute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1077,6 +1112,11 @@ func flattenSystemSdnConnectorExternalIp(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1115,6 +1155,11 @@ func flattenSystemSdnConnectorRoute(v interface{}, d *schema.ResourceData, pre s
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1150,6 +1195,11 @@ func flattenSystemSdnConnectorRouteName(v interface{}, d *schema.ResourceData, p
 
 func flattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1197,6 +1247,11 @@ func flattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{}, d *schema
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1231,6 +1286,11 @@ func flattenSystemSdnConnectorGcpProjectListGcpZoneListName(v interface{}, d *sc
 
 func flattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

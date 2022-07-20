@@ -1897,6 +1897,11 @@ func flattenRouterBgpConfederationPeers(v interface{}, d *schema.ResourceData, p
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2011,6 +2016,11 @@ func flattenRouterBgpAggregateAddress(v interface{}, d *schema.ResourceData, pre
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2086,6 +2096,11 @@ func flattenRouterBgpAggregateAddress6(v interface{}, d *schema.ResourceData, pr
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2151,6 +2166,11 @@ func flattenRouterBgpAggregateAddress6SummaryOnly(v interface{}, d *schema.Resou
 
 func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3098,6 +3118,11 @@ func flattenRouterBgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3155,6 +3180,11 @@ func flattenRouterBgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3209,6 +3239,11 @@ func flattenRouterBgpNeighborConditionalAdvertise6ConditionType(v interface{}, d
 
 func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4130,6 +4165,11 @@ func flattenRouterBgpNeighborRange(v interface{}, d *schema.ResourceData, pre st
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4205,6 +4245,11 @@ func flattenRouterBgpNeighborRange6(v interface{}, d *schema.ResourceData, pre s
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4270,6 +4315,11 @@ func flattenRouterBgpNeighborRange6NeighborGroup(v interface{}, d *schema.Resour
 
 func flattenRouterBgpNetwork(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4358,6 +4408,11 @@ func flattenRouterBgpNetwork6(v interface{}, d *schema.ResourceData, pre string,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4436,6 +4491,11 @@ func flattenRouterBgpRedistribute(v interface{}, d *schema.ResourceData, pre str
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4494,6 +4554,11 @@ func flattenRouterBgpRedistribute6(v interface{}, d *schema.ResourceData, pre st
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4549,6 +4614,11 @@ func flattenRouterBgpRedistribute6RouteMap(v interface{}, d *schema.ResourceData
 
 func flattenRouterBgpAdminDistance(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4627,6 +4697,11 @@ func flattenRouterBgpVrfLeak(v interface{}, d *schema.ResourceData, pre string, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4668,6 +4743,11 @@ func flattenRouterBgpVrfLeakVrf(v interface{}, d *schema.ResourceData, pre strin
 
 func flattenRouterBgpVrfLeakTarget(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4728,6 +4808,11 @@ func flattenRouterBgpVrfLeak6(v interface{}, d *schema.ResourceData, pre string,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4769,6 +4854,11 @@ func flattenRouterBgpVrfLeak6Vrf(v interface{}, d *schema.ResourceData, pre stri
 
 func flattenRouterBgpVrfLeak6Target(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

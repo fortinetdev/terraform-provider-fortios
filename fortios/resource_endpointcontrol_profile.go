@@ -992,6 +992,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1101,6 +1106,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingS
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1155,6 +1165,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingS
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1295,6 +1310,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEn
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1339,6 +1359,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEn
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1497,6 +1522,11 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedV
 
 func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettings(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1678,6 +1708,11 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(v inte
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1815,6 +1850,11 @@ func flattenEndpointControlProfileSrcAddr(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1850,6 +1890,11 @@ func flattenEndpointControlProfileSrcAddrName(v interface{}, d *schema.ResourceD
 
 func flattenEndpointControlProfileDeviceGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1891,6 +1936,11 @@ func flattenEndpointControlProfileUsers(v interface{}, d *schema.ResourceData, p
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1929,6 +1979,11 @@ func flattenEndpointControlProfileUserGroups(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1964,6 +2019,11 @@ func flattenEndpointControlProfileUserGroupsName(v interface{}, d *schema.Resour
 
 func flattenEndpointControlProfileOnNetAddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

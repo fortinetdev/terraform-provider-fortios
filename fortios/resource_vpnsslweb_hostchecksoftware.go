@@ -268,6 +268,11 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemList(v interface{}, d *schema.Res
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -349,6 +354,11 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemListVersion(v interface{}, d *sch
 
 func flattenVpnSslWebHostCheckSoftwareCheckItemListMd5S(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

@@ -791,6 +791,11 @@ func flattenRouterIsisIsisNet(v interface{}, d *schema.ResourceData, pre string,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -836,6 +841,11 @@ func flattenRouterIsisIsisNetNet(v interface{}, d *schema.ResourceData, pre stri
 
 func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1175,6 +1185,11 @@ func flattenRouterIsisSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1240,6 +1255,11 @@ func flattenRouterIsisSummaryAddress6(v interface{}, d *schema.ResourceData, pre
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1295,6 +1315,11 @@ func flattenRouterIsisSummaryAddress6Level(v interface{}, d *schema.ResourceData
 
 func flattenRouterIsisRedistribute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1383,6 +1408,11 @@ func flattenRouterIsisRedistributeRoutemap(v interface{}, d *schema.ResourceData
 
 func flattenRouterIsisRedistribute6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

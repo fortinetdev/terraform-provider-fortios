@@ -700,6 +700,11 @@ func flattenRouterOspf6Area(v interface{}, d *schema.ResourceData, pre string, s
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -876,6 +881,11 @@ func flattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.ResourceData, pre 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -941,6 +951,11 @@ func flattenRouterOspf6AreaRange(v interface{}, d *schema.ResourceData, pre stri
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -995,6 +1010,11 @@ func flattenRouterOspf6AreaRangeAdvertise(v interface{}, d *schema.ResourceData,
 
 func flattenRouterOspf6AreaVirtualLink(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1131,6 +1151,11 @@ func flattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *schema.Resourc
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1193,6 +1218,11 @@ func flattenRouterOspf6AreaVirtualLinkIpsecKeysEncKey(v interface{}, d *schema.R
 
 func flattenRouterOspf6Ospf6Interface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1416,6 +1446,11 @@ func flattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1478,6 +1513,11 @@ func flattenRouterOspf6Ospf6InterfaceIpsecKeysEncKey(v interface{}, d *schema.Re
 
 func flattenRouterOspf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1545,6 +1585,11 @@ func flattenRouterOspf6Ospf6InterfaceNeighborPriority(v interface{}, d *schema.R
 
 func flattenRouterOspf6Redistribute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1626,6 +1671,11 @@ func flattenRouterOspf6PassiveInterface(v interface{}, d *schema.ResourceData, p
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1661,6 +1711,11 @@ func flattenRouterOspf6PassiveInterfaceName(v interface{}, d *schema.ResourceDat
 
 func flattenRouterOspf6SummaryAddress(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

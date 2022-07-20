@@ -799,6 +799,11 @@ func flattenFirewallVipSrcFilter(v interface{}, d *schema.ResourceData, pre stri
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -834,6 +839,11 @@ func flattenFirewallVipSrcFilterRange(v interface{}, d *schema.ResourceData, pre
 
 func flattenFirewallVipService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -876,6 +886,11 @@ func flattenFirewallVipExtip(v interface{}, d *schema.ResourceData, pre string, 
 
 func flattenFirewallVipExtaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -926,6 +941,11 @@ func flattenFirewallVipAddNat46Route(v interface{}, d *schema.ResourceData, pre 
 
 func flattenFirewallVipMappedip(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1019,6 +1039,11 @@ func flattenFirewallVipSrcintfFilter(v interface{}, d *schema.ResourceData, pre 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1058,6 +1083,11 @@ func flattenFirewallVipPortmappingType(v interface{}, d *schema.ResourceData, pr
 
 func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1311,6 +1341,11 @@ func flattenFirewallVipSslCipherSuites(v interface{}, d *schema.ResourceData, pr
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1370,6 +1405,11 @@ func flattenFirewallVipSslServerAlgorithm(v interface{}, d *schema.ResourceData,
 
 func flattenFirewallVipSslServerCipherSuites(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1536,6 +1576,11 @@ func flattenFirewallVipSslHstsIncludeSubdomains(v interface{}, d *schema.Resourc
 
 func flattenFirewallVipMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

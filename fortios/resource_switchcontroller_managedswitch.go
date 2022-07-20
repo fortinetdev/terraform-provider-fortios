@@ -1715,6 +1715,11 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2393,6 +2398,11 @@ func flattenSwitchControllerManagedSwitchPortsAllowedVlans(v interface{}, d *sch
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2427,6 +2437,11 @@ func flattenSwitchControllerManagedSwitchPortsAllowedVlansVlanName(v interface{}
 
 func flattenSwitchControllerManagedSwitchPortsUntaggedVlans(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2603,6 +2618,11 @@ func flattenSwitchControllerManagedSwitchPortsInterfaceTags(v interface{}, d *sc
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2637,6 +2657,11 @@ func flattenSwitchControllerManagedSwitchPortsInterfaceTagsTagName(v interface{}
 
 func flattenSwitchControllerManagedSwitchPortsExportTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2741,6 +2766,11 @@ func flattenSwitchControllerManagedSwitchPortsMembers(v interface{}, d *schema.R
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2775,6 +2805,11 @@ func flattenSwitchControllerManagedSwitchPortsMembersMemberName(v interface{}, d
 
 func flattenSwitchControllerManagedSwitchIpSourceGuard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2829,6 +2864,11 @@ func flattenSwitchControllerManagedSwitchIpSourceGuardDescription(v interface{},
 
 func flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntry(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2989,6 +3029,11 @@ func flattenSwitchControllerManagedSwitchStpSettingsPendingTimer(v interface{}, 
 
 func flattenSwitchControllerManagedSwitchStpInstance(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3158,6 +3203,11 @@ func flattenSwitchControllerManagedSwitchSnmpCommunity(v interface{}, d *schema.
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3288,6 +3338,11 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityHosts(v interface{}, d *sc
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3380,6 +3435,11 @@ func flattenSwitchControllerManagedSwitchOverrideSnmpUser(v interface{}, d *sche
 
 func flattenSwitchControllerManagedSwitchSnmpUser(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3573,6 +3633,11 @@ func flattenSwitchControllerManagedSwitchRemoteLog(v interface{}, d *schema.Reso
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3734,6 +3799,11 @@ func flattenSwitchControllerManagedSwitchMirror(v interface{}, d *schema.Resourc
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3814,6 +3884,11 @@ func flattenSwitchControllerManagedSwitchMirrorSrcIngress(v interface{}, d *sche
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3851,6 +3926,11 @@ func flattenSwitchControllerManagedSwitchMirrorSrcEgress(v interface{}, d *schem
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3885,6 +3965,11 @@ func flattenSwitchControllerManagedSwitchMirrorSrcEgressName(v interface{}, d *s
 
 func flattenSwitchControllerManagedSwitchStaticMac(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3973,6 +4058,11 @@ func flattenSwitchControllerManagedSwitchStaticMacDescription(v interface{}, d *
 
 func flattenSwitchControllerManagedSwitchCustomCommand(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4070,6 +4160,11 @@ func flattenSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(v int
 
 func flattenSwitchControllerManagedSwitchIgmpSnoopingVlans(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

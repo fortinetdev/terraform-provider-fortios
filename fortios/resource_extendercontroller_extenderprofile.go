@@ -724,6 +724,11 @@ func flattenExtenderControllerExtenderProfileCellularDataplan(v interface{}, d *
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -919,6 +924,11 @@ func flattenExtenderControllerExtenderProfileCellularSmsNotificationAlertFgtBack
 
 func flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiver(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1469,6 +1479,11 @@ func flattenExtenderControllerExtenderProfileLanExtensionBackhaulIp(v interface{
 
 func flattenExtenderControllerExtenderProfileLanExtensionBackhaul(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

@@ -383,6 +383,11 @@ func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -442,6 +447,11 @@ func flattenWanoptContentDeliveryNetworkRuleUpdateserver(v interface{}, d *schem
 
 func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -521,6 +531,11 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -574,6 +589,11 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -608,6 +628,11 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(v int
 
 func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -661,6 +686,11 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(v interface{}
 
 func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

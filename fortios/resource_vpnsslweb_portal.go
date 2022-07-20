@@ -864,6 +864,11 @@ func flattenVpnSslWebPortalIpPools(v interface{}, d *schema.ResourceData, pre st
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -915,6 +920,11 @@ func flattenVpnSslWebPortalSplitTunnelingRoutingNegate(v interface{}, d *schema.
 
 func flattenVpnSslWebPortalSplitTunnelingRoutingAddress(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -980,6 +990,11 @@ func flattenVpnSslWebPortalIpv6Pools(v interface{}, d *schema.ResourceData, pre 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1031,6 +1046,11 @@ func flattenVpnSslWebPortalIpv6SplitTunnelingRoutingNegate(v interface{}, d *sch
 
 func flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1108,6 +1128,11 @@ func flattenVpnSslWebPortalBookmarkGroup(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1149,6 +1174,11 @@ func flattenVpnSslWebPortalBookmarkGroupName(v interface{}, d *schema.ResourceDa
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1469,6 +1499,11 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksFormData(v interface{}, d *sche
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1612,6 +1647,11 @@ func flattenVpnSslWebPortalHostCheckPolicy(v interface{}, d *schema.ResourceData
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1659,6 +1699,11 @@ func flattenVpnSslWebPortalMacAddrAction(v interface{}, d *schema.ResourceData, 
 
 func flattenVpnSslWebPortalMacAddrCheckRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1716,6 +1761,11 @@ func flattenVpnSslWebPortalMacAddrCheckRuleMacAddrList(v interface{}, d *schema.
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1754,6 +1804,11 @@ func flattenVpnSslWebPortalOsCheck(v interface{}, d *schema.ResourceData, pre st
 
 func flattenVpnSslWebPortalOsCheckList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1854,6 +1909,11 @@ func flattenVpnSslWebPortalHideSsoCredential(v interface{}, d *schema.ResourceDa
 
 func flattenVpnSslWebPortalSplitDns(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

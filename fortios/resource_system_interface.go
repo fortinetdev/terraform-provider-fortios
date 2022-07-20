@@ -1996,6 +1996,11 @@ func flattenSystemInterfaceClientOptions(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2170,6 +2175,11 @@ func flattenSystemInterfaceFailActionOnExtender(v interface{}, d *schema.Resourc
 
 func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2592,6 +2602,11 @@ func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre str
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2675,6 +2690,11 @@ func flattenSystemInterfaceRedundantInterface(v interface{}, d *schema.ResourceD
 
 func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2773,6 +2793,11 @@ func flattenSystemInterfaceSecurityExemptList(v interface{}, d *schema.ResourceD
 
 func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2891,6 +2916,11 @@ func flattenSystemInterfaceVrrpVirtualMac(v interface{}, d *schema.ResourceData,
 
 func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3058,6 +3088,11 @@ func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, p
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3114,6 +3149,11 @@ func flattenSystemInterfaceSecondaryIp(v interface{}, d *schema.ResourceData, pr
 
 func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3305,6 +3345,11 @@ func flattenSystemInterfaceDhcpSnoopingServerList(v interface{}, d *schema.Resou
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3389,6 +3434,11 @@ func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre st
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3440,6 +3490,11 @@ func flattenSystemInterfaceTaggingCategory(v interface{}, d *schema.ResourceData
 
 func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3809,6 +3864,11 @@ func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3926,6 +3986,11 @@ func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4019,6 +4084,11 @@ func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.Resou
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4053,6 +4123,11 @@ func flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(v interface{}, d *schema
 
 func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4187,6 +4262,11 @@ func flattenSystemInterfaceIpv6Dhcp6IapdList(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4275,6 +4355,11 @@ func flattenSystemInterfaceIpv6Vrip6_Link_Local(v interface{}, d *schema.Resourc
 
 func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

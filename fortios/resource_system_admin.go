@@ -888,6 +888,11 @@ func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string, s
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -959,6 +964,11 @@ func flattenSystemAdminForcePasswordChange(v interface{}, d *schema.ResourceData
 
 func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1043,6 +1053,11 @@ func flattenSystemAdminGuiDashboardColumns(v interface{}, d *schema.ResourceData
 
 func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1229,6 +1244,11 @@ func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.Resour
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1322,6 +1342,11 @@ func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pr
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1369,6 +1394,11 @@ func flattenSystemAdminHistory1(v interface{}, d *schema.ResourceData, pre strin
 
 func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1430,6 +1460,11 @@ func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceD
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1468,6 +1503,11 @@ func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1503,6 +1543,11 @@ func flattenSystemAdminGuiVdomMenuFavoritesId(v interface{}, d *schema.ResourceD
 
 func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

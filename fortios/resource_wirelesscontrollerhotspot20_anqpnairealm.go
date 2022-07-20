@@ -249,6 +249,11 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiList(v interface{}, d *sch
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -313,6 +318,11 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(v interface{
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -363,6 +373,11 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(v inte
 
 func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

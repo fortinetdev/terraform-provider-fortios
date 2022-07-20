@@ -521,6 +521,11 @@ func flattenIpsSensorEntries(v interface{}, d *schema.ResourceData, pre string, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -679,6 +684,11 @@ func flattenIpsSensorEntriesRule(v interface{}, d *schema.ResourceData, pre stri
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -734,6 +744,11 @@ func flattenIpsSensorEntriesApplication(v interface{}, d *schema.ResourceData, p
 
 func flattenIpsSensorEntriesCve(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -807,6 +822,11 @@ func flattenIpsSensorEntriesRateTrack(v interface{}, d *schema.ResourceData, pre
 
 func flattenIpsSensorEntriesExemptIp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -890,6 +910,11 @@ func flattenIpsSensorEntriesQuarantineLog(v interface{}, d *schema.ResourceData,
 
 func flattenIpsSensorFilter(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1052,6 +1077,11 @@ func flattenIpsSensorOverride(v interface{}, d *schema.ResourceData, pre string,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1163,6 +1193,11 @@ func flattenIpsSensorOverrideQuarantineLog(v interface{}, d *schema.ResourceData
 
 func flattenIpsSensorOverrideExemptIp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

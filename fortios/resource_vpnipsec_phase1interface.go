@@ -1053,6 +1053,11 @@ func flattenVpnIpsecPhase1InterfaceCertificate(v interface{}, d *schema.Resource
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1239,6 +1244,11 @@ func flattenVpnIpsecPhase1InterfaceIpv4ExcludeRange(v interface{}, d *schema.Res
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1330,6 +1340,11 @@ func flattenVpnIpsecPhase1InterfaceIpv6DnsServer3(v interface{}, d *schema.Resou
 
 func flattenVpnIpsecPhase1InterfaceIpv6ExcludeRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1436,6 +1451,11 @@ func flattenVpnIpsecPhase1InterfaceClientKeepAlive(v interface{}, d *schema.Reso
 
 func flattenVpnIpsecPhase1InterfaceBackupGateway(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

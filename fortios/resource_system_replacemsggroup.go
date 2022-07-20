@@ -749,6 +749,11 @@ func flattenSystemReplacemsgGroupMail(v interface{}, d *schema.ResourceData, pre
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -814,6 +819,11 @@ func flattenSystemReplacemsgGroupMailFormat(v interface{}, d *schema.ResourceDat
 
 func flattenSystemReplacemsgGroupHttp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -885,6 +895,11 @@ func flattenSystemReplacemsgGroupWebproxy(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -950,6 +965,11 @@ func flattenSystemReplacemsgGroupWebproxyFormat(v interface{}, d *schema.Resourc
 
 func flattenSystemReplacemsgGroupFtp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1021,6 +1041,11 @@ func flattenSystemReplacemsgGroupNntp(v interface{}, d *schema.ResourceData, pre
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1086,6 +1111,11 @@ func flattenSystemReplacemsgGroupNntpFormat(v interface{}, d *schema.ResourceDat
 
 func flattenSystemReplacemsgGroupFortiguardWf(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1157,6 +1187,11 @@ func flattenSystemReplacemsgGroupSpam(v interface{}, d *schema.ResourceData, pre
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1222,6 +1257,11 @@ func flattenSystemReplacemsgGroupSpamFormat(v interface{}, d *schema.ResourceDat
 
 func flattenSystemReplacemsgGroupAlertmail(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1293,6 +1333,11 @@ func flattenSystemReplacemsgGroupAdmin(v interface{}, d *schema.ResourceData, pr
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1358,6 +1403,11 @@ func flattenSystemReplacemsgGroupAdminFormat(v interface{}, d *schema.ResourceDa
 
 func flattenSystemReplacemsgGroupAuth(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1429,6 +1479,11 @@ func flattenSystemReplacemsgGroupSslvpn(v interface{}, d *schema.ResourceData, p
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1494,6 +1549,11 @@ func flattenSystemReplacemsgGroupSslvpnFormat(v interface{}, d *schema.ResourceD
 
 func flattenSystemReplacemsgGroupEc(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1565,6 +1625,11 @@ func flattenSystemReplacemsgGroupDeviceDetectionPortal(v interface{}, d *schema.
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1630,6 +1695,11 @@ func flattenSystemReplacemsgGroupDeviceDetectionPortalFormat(v interface{}, d *s
 
 func flattenSystemReplacemsgGroupNacQuar(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1701,6 +1771,11 @@ func flattenSystemReplacemsgGroupTrafficQuota(v interface{}, d *schema.ResourceD
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1766,6 +1841,11 @@ func flattenSystemReplacemsgGroupTrafficQuotaFormat(v interface{}, d *schema.Res
 
 func flattenSystemReplacemsgGroupUtm(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1837,6 +1917,11 @@ func flattenSystemReplacemsgGroupCustomMessage(v interface{}, d *schema.Resource
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1905,6 +1990,11 @@ func flattenSystemReplacemsgGroupIcap(v interface{}, d *schema.ResourceData, pre
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1970,6 +2060,11 @@ func flattenSystemReplacemsgGroupIcapFormat(v interface{}, d *schema.ResourceDat
 
 func flattenSystemReplacemsgGroupAutomation(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

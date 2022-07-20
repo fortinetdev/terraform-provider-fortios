@@ -2659,6 +2659,11 @@ func flattenWirelessControllerWtpProfileLedSchedules(v interface{}, d *schema.Re
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -2718,6 +2723,11 @@ func flattenWirelessControllerWtpProfileHandoffRoaming(v interface{}, d *schema.
 
 func flattenWirelessControllerWtpProfileDenyMacList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2790,6 +2800,11 @@ func flattenWirelessControllerWtpProfileSplitTunnelingAclLocalApSubnet(v interfa
 
 func flattenWirelessControllerWtpProfileSplitTunnelingAcl(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -3575,6 +3590,11 @@ func flattenWirelessControllerWtpProfileRadio1Vaps(v interface{}, d *schema.Reso
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -3609,6 +3629,11 @@ func flattenWirelessControllerWtpProfileRadio1VapsName(v interface{}, d *schema.
 
 func flattenWirelessControllerWtpProfileRadio1Channel(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -4364,6 +4389,11 @@ func flattenWirelessControllerWtpProfileRadio2Vaps(v interface{}, d *schema.Reso
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -4398,6 +4428,11 @@ func flattenWirelessControllerWtpProfileRadio2VapsName(v interface{}, d *schema.
 
 func flattenWirelessControllerWtpProfileRadio2Channel(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -5143,6 +5178,11 @@ func flattenWirelessControllerWtpProfileRadio3Vaps(v interface{}, d *schema.Reso
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -5177,6 +5217,11 @@ func flattenWirelessControllerWtpProfileRadio3VapsName(v interface{}, d *schema.
 
 func flattenWirelessControllerWtpProfileRadio3Channel(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -5922,6 +5967,11 @@ func flattenWirelessControllerWtpProfileRadio4Vaps(v interface{}, d *schema.Reso
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -5956,6 +6006,11 @@ func flattenWirelessControllerWtpProfileRadio4VapsName(v interface{}, d *schema.
 
 func flattenWirelessControllerWtpProfileRadio4Channel(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

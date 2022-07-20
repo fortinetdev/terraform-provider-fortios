@@ -563,6 +563,11 @@ func flattenApplicationListEntries(v interface{}, d *schema.ResourceData, pre st
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -751,6 +756,11 @@ func flattenApplicationListEntriesRisk(v interface{}, d *schema.ResourceData, pr
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -785,6 +795,11 @@ func flattenApplicationListEntriesRiskLevel(v interface{}, d *schema.ResourceDat
 
 func flattenApplicationListEntriesCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -825,6 +840,11 @@ func flattenApplicationListEntriesSubCategory(v interface{}, d *schema.ResourceD
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -859,6 +879,11 @@ func flattenApplicationListEntriesSubCategoryId(v interface{}, d *schema.Resourc
 
 func flattenApplicationListEntriesApplication(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -919,6 +944,11 @@ func flattenApplicationListEntriesExclusion(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -953,6 +983,11 @@ func flattenApplicationListEntriesExclusionId(v interface{}, d *schema.ResourceD
 
 func flattenApplicationListEntriesParameters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1002,6 +1037,11 @@ func flattenApplicationListEntriesParametersId(v interface{}, d *schema.Resource
 
 func flattenApplicationListEntriesParametersMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1123,6 +1163,11 @@ func flattenApplicationListControlDefaultNetworkServices(v interface{}, d *schem
 
 func flattenApplicationListDefaultNetworkServices(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

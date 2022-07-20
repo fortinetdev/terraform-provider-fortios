@@ -929,6 +929,11 @@ func flattenWebfilterProfileFileFilterEntries(v interface{}, d *schema.ResourceD
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1019,6 +1024,11 @@ func flattenWebfilterProfileFileFilterEntriesPasswordProtected(v interface{}, d 
 
 func flattenWebfilterProfileFileFilterEntriesFileType(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1156,6 +1166,11 @@ func flattenWebfilterProfileOverrideOvrdUserGroup(v interface{}, d *schema.Resou
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1190,6 +1205,11 @@ func flattenWebfilterProfileOverrideOvrdUserGroupName(v interface{}, d *schema.R
 
 func flattenWebfilterProfileOverrideProfile(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1369,6 +1389,11 @@ func flattenWebfilterProfileWebKeywordMatch(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1407,6 +1432,11 @@ func flattenWebfilterProfileYoutubeChannelStatus(v interface{}, d *schema.Resour
 
 func flattenWebfilterProfileYoutubeChannelFilter(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1553,6 +1583,11 @@ func flattenWebfilterProfileFtgdWfFilters(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1650,6 +1685,11 @@ func flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(v interface{}, d *schema.Res
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1700,6 +1740,11 @@ func flattenWebfilterProfileFtgdWfFiltersWarningDurationType(v interface{}, d *s
 
 func flattenWebfilterProfileFtgdWfQuota(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1931,6 +1976,11 @@ func flattenWebfilterProfileAntiphishInspectionEntries(v interface{}, d *schema.
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1985,6 +2035,11 @@ func flattenWebfilterProfileAntiphishInspectionEntriesAction(v interface{}, d *s
 
 func flattenWebfilterProfileAntiphishCustomPatterns(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2050,6 +2105,11 @@ func flattenWebfilterProfileWisp(v interface{}, d *schema.ResourceData, pre stri
 
 func flattenWebfilterProfileWispServers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

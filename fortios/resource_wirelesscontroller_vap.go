@@ -1363,6 +1363,11 @@ func flattenWirelessControllerVapRadiusMacAuthUsergroups(v interface{}, d *schem
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1469,6 +1474,11 @@ func flattenWirelessControllerVapUsergroup(v interface{}, d *schema.ResourceData
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1565,6 +1575,11 @@ func flattenWirelessControllerVapPortalType(v interface{}, d *schema.ResourceDat
 
 func flattenWirelessControllerVapSelectedUsergroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1670,6 +1685,11 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1745,6 +1765,11 @@ func flattenWirelessControllerVapMpskKeyComment(v interface{}, d *schema.Resourc
 
 func flattenWirelessControllerVapMpskKeyMpskSchedules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1897,6 +1922,11 @@ func flattenWirelessControllerVapVlanName(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1946,6 +1976,11 @@ func flattenWirelessControllerVapVlanPooling(v interface{}, d *schema.ResourceDa
 
 func flattenWirelessControllerVapVlanPool(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -2138,6 +2173,11 @@ func flattenWirelessControllerVapMacFilterPolicyOther(v interface{}, d *schema.R
 
 func flattenWirelessControllerVapMacFilterList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

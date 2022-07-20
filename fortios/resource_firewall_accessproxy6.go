@@ -748,6 +748,11 @@ func flattenFirewallAccessProxy6ApiGateway(v interface{}, d *schema.ResourceData
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -935,6 +940,11 @@ func flattenFirewallAccessProxy6ApiGatewayUrlMapType(v interface{}, d *schema.Re
 
 func flattenFirewallAccessProxy6ApiGatewayRealservers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1131,6 +1141,11 @@ func flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKey(v interface{}, d
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1216,6 +1231,11 @@ func flattenFirewallAccessProxy6ApiGatewaySslCipherSuites(v interface{}, d *sche
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1282,6 +1302,11 @@ func flattenFirewallAccessProxy6ApiGatewaySslVpnWebPortal(v interface{}, d *sche
 
 func flattenFirewallAccessProxy6ApiGateway6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1472,6 +1497,11 @@ func flattenFirewallAccessProxy6ApiGateway6UrlMapType(v interface{}, d *schema.R
 
 func flattenFirewallAccessProxy6ApiGateway6Realservers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1668,6 +1698,11 @@ func flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKey(v interface{}, 
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1750,6 +1785,11 @@ func flattenFirewallAccessProxy6ApiGateway6SslAlgorithm(v interface{}, d *schema
 
 func flattenFirewallAccessProxy6ApiGateway6SslCipherSuites(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

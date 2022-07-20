@@ -771,6 +771,11 @@ func flattenVpnSslSettingsTunnelIpPools(v interface{}, d *schema.ResourceData, p
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -806,6 +811,11 @@ func flattenVpnSslSettingsTunnelIpPoolsName(v interface{}, d *schema.ResourceDat
 
 func flattenVpnSslSettingsTunnelIpv6Pools(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -923,6 +933,11 @@ func flattenVpnSslSettingsSourceInterface(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -958,6 +973,11 @@ func flattenVpnSslSettingsSourceInterfaceName(v interface{}, d *schema.ResourceD
 
 func flattenVpnSslSettingsSourceAddress(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1000,6 +1020,11 @@ func flattenVpnSslSettingsSourceAddressNegate(v interface{}, d *schema.ResourceD
 
 func flattenVpnSslSettingsSourceAddress6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1046,6 +1071,11 @@ func flattenVpnSslSettingsDefaultPortal(v interface{}, d *schema.ResourceData, p
 
 func flattenVpnSslSettingsAuthenticationRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1165,6 +1195,11 @@ func flattenVpnSslSettingsAuthenticationRuleSourceInterface(v interface{}, d *sc
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1199,6 +1234,11 @@ func flattenVpnSslSettingsAuthenticationRuleSourceInterfaceName(v interface{}, d
 
 func flattenVpnSslSettingsAuthenticationRuleSourceAddress(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -1243,6 +1283,11 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress6(v interface{}, d *sch
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1284,6 +1329,11 @@ func flattenVpnSslSettingsAuthenticationRuleUsers(v interface{}, d *schema.Resou
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -1318,6 +1368,11 @@ func flattenVpnSslSettingsAuthenticationRuleUsersName(v interface{}, d *schema.R
 
 func flattenVpnSslSettingsAuthenticationRuleGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

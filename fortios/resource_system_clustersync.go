@@ -335,6 +335,11 @@ func flattenSystemClusterSyncSyncvd(v interface{}, d *schema.ResourceData, pre s
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -370,6 +375,11 @@ func flattenSystemClusterSyncSyncvdName(v interface{}, d *schema.ResourceData, p
 
 func flattenSystemClusterSyncDownIntfsBeforeSessSync(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -533,6 +543,11 @@ func flattenSystemClusterSyncSessionSyncFilterDstaddr6(v interface{}, d *schema.
 
 func flattenSystemClusterSyncSessionSyncFilterCustomService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

@@ -255,6 +255,11 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyName(v interface{}
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -322,6 +327,11 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderOsuNai(v interface{}, d *s
 
 func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescription(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 

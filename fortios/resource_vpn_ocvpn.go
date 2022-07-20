@@ -367,6 +367,11 @@ func flattenVpnOcvpnWanInterface(v interface{}, d *schema.ResourceData, pre stri
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -437,6 +442,11 @@ func flattenVpnOcvpnNat(v interface{}, d *schema.ResourceData, pre string, sv st
 
 func flattenVpnOcvpnOverlays(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -541,6 +551,11 @@ func flattenVpnOcvpnOverlaysIpv4EndIp(v interface{}, d *schema.ResourceData, pre
 
 func flattenVpnOcvpnOverlaysSubnets(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
@@ -661,6 +676,11 @@ func flattenVpnOcvpnForticlientAccessAuthGroups(v interface{}, d *schema.Resourc
 		return nil
 	}
 
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil
@@ -711,6 +731,11 @@ func flattenVpnOcvpnForticlientAccessAuthGroupsAuthGroup(v interface{}, d *schem
 
 func flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
 		return nil
 	}
 
