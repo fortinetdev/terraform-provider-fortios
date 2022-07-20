@@ -1161,8 +1161,8 @@ func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre st
 							}
 						}
 					}
+					bstring = true
 				}
-				bstring = true
 			}
 			if bstring == true {
 				tmp["monitor"] = vx

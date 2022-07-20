@@ -247,8 +247,8 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 						}
 					}
 				}
-				bstring = true
 			}
+			bstring = true
 		}
 		if bstring == true {
 			if err = d.Set("ldap_server", vx); err != nil {

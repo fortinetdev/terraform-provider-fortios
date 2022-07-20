@@ -309,8 +309,8 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 						}
 					}
 				}
-				bstring = true
 			}
+			bstring = true
 		}
 		if bstring == true {
 			if err = d.Set("input_device", vx); err != nil {

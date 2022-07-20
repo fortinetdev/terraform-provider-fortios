@@ -2707,8 +2707,8 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 						}
 					}
 				}
-				bstring = true
 			}
+			bstring = true
 		}
 		if bstring == true {
 			if err = d.Set("schedule", vx); err != nil {

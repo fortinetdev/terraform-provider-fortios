@@ -599,8 +599,8 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 						}
 					}
 				}
-				bstring = true
 			}
+			bstring = true
 		}
 		if bstring == true {
 			if err = d.Set("ldap_server", vx); err != nil {
