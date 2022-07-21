@@ -21,7 +21,7 @@ The following arguments are supported:
 * `access_config` - Enable/disable FortiAnalyzer access to configuration and data. Valid values: `enable`, `disable`.
 * `hmac_algorithm` - FortiAnalyzer IPsec tunnel HMAC algorithm. Valid values: `sha256`, `sha1`.
 * `enc_algorithm` - Configure the level of SSL protection for secure communication with FortiAnalyzer. Valid values: `high-medium`, `high`, `low`.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `conn_timeout` - FortiAnalyzer connection time-out in seconds (for status and log buffer).
 * `monitor_keepalive_period` - Time between OFTP keepalives in seconds (for status and log buffer).
 * `monitor_failure_retry_period` - Time between FortiAnalyzer connection retries in seconds (for status and log buffer).

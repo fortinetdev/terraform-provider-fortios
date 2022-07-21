@@ -86,6 +86,8 @@ The following attributes are exported:
 * `pingserver_secondary_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
 * `pingserver_slave_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
 * `pingserver_flip_timeout` - Time to wait in minutes before renegotiating after a remote IP monitoring failover.
+* `vcluster_status` - Enable/disable virtual cluster for virtual clustering.
+* `vcluster` - Virtual cluster table. The structure of `vcluster` block is documented below.
 * `vdom` - VDOMs in virtual cluster 1.
 * `secondary_vcluster` - Configure virtual cluster 2. The structure of `secondary_vcluster` block is documented below.
 * `ha_direct` - Enable/disable using ha-mgmt interface for syslog, SNMP, remote authentication (RADIUS), FortiAnalyzer, and FortiSandbox.
@@ -111,6 +113,22 @@ The `unicast_peers` block contains:
 
 * `id` - Table ID.
 * `peer_ip` - Unicast peer IP.
+
+The `vcluster` block contains:
+
+* `vcluster_id` - ID.
+* `override` - Enable and increase the priority of the unit that should always be primary (master).
+* `priority` - Increase the priority to select the primary unit (0 - 255).
+* `override_wait_time` - Delay negotiating if override is enabled (0 - 3600 sec). Reduces how often the cluster negotiates.
+* `monitor` - Interfaces to check for port monitoring (or link failure).
+* `pingserver_monitor_interface` - Interfaces to check for remote IP monitoring.
+* `pingserver_failover_threshold` - Remote IP monitoring failover threshold (0 - 50).
+* `pingserver_slave_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
+* `vdom` - Virtual domain(s) in the virtual cluster. The structure of `vdom` block is documented below.
+
+The `vdom` block contains:
+
+* `name` - Virtual domain name.
 
 The `secondary_vcluster` block contains:
 

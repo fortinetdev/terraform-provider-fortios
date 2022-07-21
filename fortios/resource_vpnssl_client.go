@@ -115,6 +115,11 @@ func resourceVpnSslClient() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"class_id": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -296,6 +301,10 @@ func flattenVpnSslClientPriority(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenVpnSslClientClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnSslClient(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -383,6 +392,12 @@ func refreshObjectVpnSslClient(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("class_id", flattenVpnSslClientClassId(o["class-id"], d, "class_id", sv)); err != nil {
+		if !fortiAPIPatch(o["class-id"]) {
+			return fmt.Errorf("Error reading class_id: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -445,6 +460,10 @@ func expandVpnSslClientDistance(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandVpnSslClientPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslClientClassId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -588,6 +607,16 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["priority"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("class_id"); ok {
+
+		t, err := expandVpnSslClientClassId(d, v, "class_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["class-id"] = t
 		}
 	}
 

@@ -27,6 +27,7 @@ The following arguments are supported:
 * `reauth_period` - Period of time to allow for reauthentication (1 - 1440 sec, default = 60, 0 = disable reauthentication).
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
 * `tx_period` - 802.1X Tx period (seconds, default=30).
+* `mab_reauth` - Enable/disable MAB re-authentication. Valid values: `disable`, `enable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

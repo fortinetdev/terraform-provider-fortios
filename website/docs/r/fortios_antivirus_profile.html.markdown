@@ -36,6 +36,8 @@ The following arguments are supported:
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group customized for this profile.
 * `feature_set` - Flow/proxy feature set. Valid values: `flow`, `proxy`.
+* `fortisandbox_mode` - FortiSandbox scan modes. Valid values: `inline`, `analytics-suspicious`, `analytics-everything`.
+* `fortisandbox_max_upload` - Maximum size of files that can be uploaded to FortiSandbox.
 * `inspection_mode` - Inspection mode. Valid values: `proxy`, `flow-based`.
 * `ftgd_analytics` - Settings to control which files are uploaded to FortiSandbox. Valid values: `disable`, `suspicious`, `everything`.
 * `analytics_max_upload` - Maximum size of files that can be uploaded to FortiSandbox (1 - 395 MBytes, default = 10).
@@ -62,6 +64,10 @@ The following arguments are supported:
 * `external_blocklist_enable_all` - Enable/disable all external blocklists. Valid values: `disable`, `enable`.
 * `external_blocklist` - One or more external malware block lists. The structure of `external_blocklist` block is documented below.
 * `ems_threat_feed` - Enable/disable use of EMS threat feed when performing AntiVirus scan. Analyzes files including the content of archives. Valid values: `disable`, `enable`.
+* `fortindr_error_action` - Action to take if FortiNDR encounters an error. Valid values: `log-only`, `block`, `ignore`.
+* `fortindr_timeout_action` - Action to take if FortiNDR encounters a scan timeout. Valid values: `log-only`, `block`, `ignore`.
+* `fortisandbox_error_action` - Action to take if FortiSandbox inline scan encounters an error. Valid values: `log-only`, `block`, `ignore`.
+* `fortisandbox_timeout_action` - Action to take if FortiSandbox inline scan encounters a scan timeout. Valid values: `log-only`, `block`, `ignore`.
 * `fortiai_error_action` - Action to take if FortiAI encounters an error. Valid values: `log-only`, `block`, `ignore`.
 * `fortiai_timeout_action` - Action to take if FortiAI encounters a scan timeout. Valid values: `log-only`, `block`, `ignore`.
 * `av_virus_log` - Enable/disable AntiVirus logging. Valid values: `enable`, `disable`.
@@ -80,6 +86,8 @@ The `http` block supports:
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
@@ -93,6 +101,8 @@ The `ftp` block supports:
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
@@ -106,6 +116,8 @@ The `imap` block supports:
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
@@ -120,6 +132,8 @@ The `pop3` block supports:
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
@@ -134,6 +148,8 @@ The `smtp` block supports:
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 * `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
@@ -148,6 +164,8 @@ The `mapi` block supports:
 * `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
@@ -160,6 +178,8 @@ The `nntp` block supports:
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
@@ -172,6 +192,8 @@ The `cifs` block supports:
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 
@@ -184,6 +206,8 @@ The `ssh` block supports:
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
+* `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.
+* `fortisandbox` - Enable scanning of files by FortiSandbox. Valid values: `disable`, `block`, `monitor`.
 * `fortiai` - Enable/disable scanning of files by FortiAI server. Valid values: `disable`, `block`, `monitor`.
 * `quarantine` - Enable/disable quarantine for infected files. Valid values: `disable`, `enable`.
 

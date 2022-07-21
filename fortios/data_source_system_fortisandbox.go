@@ -35,6 +35,10 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"inline_scan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -109,6 +113,10 @@ func dataSourceFlattenSystemFortisandboxForticloud(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemFortisandboxInlineScan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortisandboxServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -149,6 +157,12 @@ func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[str
 	if err = d.Set("forticloud", dataSourceFlattenSystemFortisandboxForticloud(o["forticloud"], d, "forticloud")); err != nil {
 		if !fortiAPIPatch(o["forticloud"]) {
 			return fmt.Errorf("Error reading forticloud: %v", err)
+		}
+	}
+
+	if err = d.Set("inline_scan", dataSourceFlattenSystemFortisandboxInlineScan(o["inline-scan"], d, "inline_scan")); err != nil {
+		if !fortiAPIPatch(o["inline-scan"]) {
+			return fmt.Errorf("Error reading inline_scan: %v", err)
 		}
 	}
 

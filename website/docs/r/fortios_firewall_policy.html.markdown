@@ -128,6 +128,8 @@ The following arguments are supported:
 * `status` - Enable or disable this policy. Valid values: `enable`, `disable`.
 * `schedule` - Schedule name.(Default is `always`)
 * `schedule_timeout` - Enable to force current sessions to end when the schedule object times out. Disable allows them to end from inactivity. Valid values: `enable`, `disable`.
+* `policy_expiry` - Enable/disable policy expiry. Valid values: `enable`, `disable`.
+* `policy_expiry_date` - Policy expiry date (YYYY-MM-DD HH:MM:SS).
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
@@ -149,6 +151,7 @@ The following arguments are supported:
 * `webfilter_profile` - Name of an existing Web filter profile.
 * `dnsfilter_profile` - Name of an existing DNS filter profile.
 * `emailfilter_profile` - Name of an existing email filter profile.
+* `dlp_profile` - Name of an existing DLP profile.
 * `spamfilter_profile` - Name of an existing Spam filter profile.
 * `dlp_sensor` - Name of an existing DLP sensor.
 * `file_filter_profile` - Name of an existing file-filter profile.

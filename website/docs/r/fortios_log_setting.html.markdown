@@ -49,6 +49,7 @@ The following arguments are supported:
 * `local_in_deny_unicast` - Enable/disable local-in-deny-unicast logging. Valid values: `enable`, `disable`.
 * `local_in_deny_broadcast` - Enable/disable local-in-deny-broadcast logging. Valid values: `enable`, `disable`.
 * `local_out` - Enable/disable local-out logging. Valid values: `enable`, `disable`.
+* `local_out_ioc_detection` - Enable/disable local-out traffic IoC detection. Requires local-out to be enabled. Valid values: `enable`, `disable`.
 * `daemon_log` - Enable/disable daemon logging. Valid values: `enable`, `disable`.
 * `neighbor_event` - Enable/disable neighbor event logging. Valid values: `enable`, `disable`.
 * `brief_traffic_format` - Enable/disable brief format traffic logging. Valid values: `enable`, `disable`.

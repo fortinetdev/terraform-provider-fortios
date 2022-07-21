@@ -40,6 +40,11 @@ func resourceWirelessControllerInterController() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"l3_roaming": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"inter_controller_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -199,6 +204,10 @@ func flattenWirelessControllerInterControllerInterControllerMode(v interface{}, 
 	return v
 }
 
+func flattenWirelessControllerInterControllerL3Roaming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerInterControllerInterControllerKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -297,6 +306,12 @@ func refreshObjectWirelessControllerInterController(d *schema.ResourceData, o ma
 		}
 	}
 
+	if err = d.Set("l3_roaming", flattenWirelessControllerInterControllerL3Roaming(o["l3-roaming"], d, "l3_roaming", sv)); err != nil {
+		if !fortiAPIPatch(o["l3-roaming"]) {
+			return fmt.Errorf("Error reading l3_roaming: %v", err)
+		}
+	}
+
 	if err = d.Set("inter_controller_pri", flattenWirelessControllerInterControllerInterControllerPri(o["inter-controller-pri"], d, "inter_controller_pri", sv)); err != nil {
 		if !fortiAPIPatch(o["inter-controller-pri"]) {
 			return fmt.Errorf("Error reading inter_controller_pri: %v", err)
@@ -341,6 +356,10 @@ func flattenWirelessControllerInterControllerFortiTestDebug(d *schema.ResourceDa
 }
 
 func expandWirelessControllerInterControllerInterControllerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerInterControllerL3Roaming(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -435,6 +454,20 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 				return &obj, err
 			} else if t != nil {
 				obj["inter-controller-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("l3_roaming"); ok {
+		if setArgNil {
+			obj["l3-roaming"] = nil
+		} else {
+
+			t, err := expandWirelessControllerInterControllerL3Roaming(d, v, "l3_roaming", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["l3-roaming"] = t
 			}
 		}
 	}

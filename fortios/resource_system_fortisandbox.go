@@ -45,6 +45,11 @@ func resourceSystemFortisandbox() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"inline_scan": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -190,6 +195,10 @@ func flattenSystemFortisandboxForticloud(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemFortisandboxInlineScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortisandboxServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -230,6 +239,12 @@ func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("forticloud", flattenSystemFortisandboxForticloud(o["forticloud"], d, "forticloud", sv)); err != nil {
 		if !fortiAPIPatch(o["forticloud"]) {
 			return fmt.Errorf("Error reading forticloud: %v", err)
+		}
+	}
+
+	if err = d.Set("inline_scan", flattenSystemFortisandboxInlineScan(o["inline-scan"], d, "inline_scan", sv)); err != nil {
+		if !fortiAPIPatch(o["inline-scan"]) {
+			return fmt.Errorf("Error reading inline_scan: %v", err)
 		}
 	}
 
@@ -292,6 +307,10 @@ func expandSystemFortisandboxForticloud(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemFortisandboxInlineScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortisandboxServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -347,6 +366,20 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 				return &obj, err
 			} else if t != nil {
 				obj["forticloud"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("inline_scan"); ok {
+		if setArgNil {
+			obj["inline-scan"] = nil
+		} else {
+
+			t, err := expandSystemFortisandboxInlineScan(d, v, "inline_scan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["inline-scan"] = t
 			}
 		}
 	}

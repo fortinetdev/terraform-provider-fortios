@@ -177,6 +177,26 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mib_view": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 32),
+				Optional:     true,
+				Computed:     true,
+			},
+			"vdoms": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -529,6 +549,53 @@ func flattenSystemSnmpCommunityEvents(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSystemSnmpCommunityMibView(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpCommunityVdoms(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenSystemSnmpCommunityVdomsName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemSnmpCommunityVdomsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -645,6 +712,28 @@ func refreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("events", flattenSystemSnmpCommunityEvents(o["events"], d, "events", sv)); err != nil {
 		if !fortiAPIPatch(o["events"]) {
 			return fmt.Errorf("Error reading events: %v", err)
+		}
+	}
+
+	if err = d.Set("mib_view", flattenSystemSnmpCommunityMibView(o["mib-view"], d, "mib_view", sv)); err != nil {
+		if !fortiAPIPatch(o["mib-view"]) {
+			return fmt.Errorf("Error reading mib_view: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("vdoms", flattenSystemSnmpCommunityVdoms(o["vdoms"], d, "vdoms", sv)); err != nil {
+			if !fortiAPIPatch(o["vdoms"]) {
+				return fmt.Errorf("Error reading vdoms: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vdoms"); ok {
+			if err = d.Set("vdoms", flattenSystemSnmpCommunityVdoms(o["vdoms"], d, "vdoms", sv)); err != nil {
+				if !fortiAPIPatch(o["vdoms"]) {
+					return fmt.Errorf("Error reading vdoms: %v", err)
+				}
+			}
 		}
 	}
 
@@ -857,6 +946,42 @@ func expandSystemSnmpCommunityEvents(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandSystemSnmpCommunityMibView(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpCommunityVdoms(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandSystemSnmpCommunityVdomsName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSnmpCommunityVdomsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1017,6 +1142,26 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["events"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mib_view"); ok {
+
+		t, err := expandSystemSnmpCommunityMibView(d, v, "mib_view", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mib-view"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("vdoms"); ok {
+
+		t, err := expandSystemSnmpCommunityVdoms(d, v, "vdoms", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdoms"] = t
 		}
 	}
 

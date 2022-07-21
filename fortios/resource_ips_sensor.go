@@ -115,6 +115,16 @@ func resourceIpsSensor() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"default_action": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"default_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"cve": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -128,6 +138,24 @@ func resourceIpsSensor() *schema.Resource {
 									},
 								},
 							},
+						},
+						"vuln_type": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"last_modified": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -582,10 +610,34 @@ func flattenIpsSensorEntries(v interface{}, d *schema.ResourceData, pre string, 
 			tmp["application"] = flattenIpsSensorEntriesApplication(i["application"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_action"
+		if _, ok := i["default-action"]; ok {
+
+			tmp["default_action"] = flattenIpsSensorEntriesDefaultAction(i["default-action"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_status"
+		if _, ok := i["default-status"]; ok {
+
+			tmp["default_status"] = flattenIpsSensorEntriesDefaultStatus(i["default-status"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve"
 		if _, ok := i["cve"]; ok {
 
 			tmp["cve"] = flattenIpsSensorEntriesCve(i["cve"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vuln_type"
+		if _, ok := i["vuln-type"]; ok {
+
+			tmp["vuln_type"] = flattenIpsSensorEntriesVulnType(i["vuln-type"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_modified"
+		if _, ok := i["last-modified"]; ok {
+
+			tmp["last_modified"] = flattenIpsSensorEntriesLastModified(i["last-modified"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -742,6 +794,14 @@ func flattenIpsSensorEntriesApplication(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenIpsSensorEntriesDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorEntriesDefaultStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenIpsSensorEntriesCve(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -781,6 +841,52 @@ func flattenIpsSensorEntriesCve(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenIpsSensorEntriesCveCveEntry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorEntriesVulnType(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenIpsSensorEntriesVulnTypeId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenIpsSensorEntriesVulnTypeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorEntriesLastModified(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1445,12 +1551,38 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 			tmp["application"], _ = expandIpsSensorEntriesApplication(d, i["application"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_action"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["default-action"], _ = expandIpsSensorEntriesDefaultAction(d, i["default_action"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_status"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["default-status"], _ = expandIpsSensorEntriesDefaultStatus(d, i["default_status"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve"
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["cve"], _ = expandIpsSensorEntriesCve(d, i["cve"], pre_append, sv)
 		} else {
 			tmp["cve"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vuln_type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vuln-type"], _ = expandIpsSensorEntriesVulnType(d, i["vuln_type"], pre_append, sv)
+		} else {
+			tmp["vuln-type"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_modified"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["last-modified"], _ = expandIpsSensorEntriesLastModified(d, i["last_modified"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1597,6 +1729,14 @@ func expandIpsSensorEntriesApplication(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandIpsSensorEntriesDefaultAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorEntriesDefaultStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandIpsSensorEntriesCve(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -1626,6 +1766,42 @@ func expandIpsSensorEntriesCve(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandIpsSensorEntriesCveCveEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorEntriesVulnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandIpsSensorEntriesVulnTypeId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandIpsSensorEntriesVulnTypeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorEntriesLastModified(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

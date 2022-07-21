@@ -69,6 +69,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"allowas_in_vpnv4": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 10),
+				Optional:     true,
+				Computed:     true,
+			},
 			"attribute_unchanged": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -79,12 +85,22 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"attribute_unchanged_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"activate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"activate6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"activate_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -115,6 +131,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Computed: true,
 			},
 			"capability_graceful_restart6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"capability_graceful_restart_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -174,6 +195,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"next_hop_self_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"override_capability": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -194,6 +220,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"remove_private_as_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"route_reflector_client": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -204,12 +235,22 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"route_reflector_client_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"route_server_client": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"route_server_client6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"route_server_client_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -225,6 +266,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Computed: true,
 			},
 			"soft_reconfiguration6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"soft_reconfiguration_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -274,6 +320,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"distribute_list_in_vpnv4": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"distribute_list_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -281,6 +333,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Computed:     true,
 			},
 			"distribute_list_out6": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"distribute_list_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -332,6 +390,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"maximum_prefix_vpnv4": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"maximum_prefix_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100),
@@ -344,12 +407,23 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"maximum_prefix_threshold_vpnv4": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 100),
+				Optional:     true,
+				Computed:     true,
+			},
 			"maximum_prefix_warning_only": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"maximum_prefix_warning_only6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"maximum_prefix_warning_only_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -366,6 +440,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"prefix_list_in_vpnv4": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"prefix_list_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -373,6 +453,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Computed:     true,
 			},
 			"prefix_list_out6": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"prefix_list_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -416,6 +502,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"route_map_in_vpnv4": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"route_map_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -440,12 +532,29 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"route_map_out_vpnv4": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"route_map_out_vpnv4_preferable": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"send_community": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"send_community6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"send_community_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -508,6 +617,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"additional_path_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"adv_additional_path": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 255),
@@ -515,6 +629,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Computed:     true,
 			},
 			"adv_additional_path6": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(2, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"adv_additional_path_vpnv4": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 255),
 				Optional:     true,
@@ -730,6 +850,10 @@ func flattenRouterbgpNeighborAllowasIn6(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenRouterbgpNeighborAllowasInVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborAttributeUnchanged(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -738,11 +862,19 @@ func flattenRouterbgpNeighborAttributeUnchanged6(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenRouterbgpNeighborAttributeUnchangedVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborActivate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborActivate6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborActivateVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -767,6 +899,10 @@ func flattenRouterbgpNeighborCapabilityGracefulRestart(v interface{}, d *schema.
 }
 
 func flattenRouterbgpNeighborCapabilityGracefulRestart6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborCapabilityGracefulRestartVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -814,6 +950,10 @@ func flattenRouterbgpNeighborNextHopSelfRr6(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenRouterbgpNeighborNextHopSelfVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborOverrideCapability(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -830,6 +970,10 @@ func flattenRouterbgpNeighborRemovePrivateAs6(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenRouterbgpNeighborRemovePrivateAsVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborRouteReflectorClient(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -838,11 +982,19 @@ func flattenRouterbgpNeighborRouteReflectorClient6(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenRouterbgpNeighborRouteReflectorClientVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborRouteServerClient(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborRouteServerClient6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborRouteServerClientVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -855,6 +1007,10 @@ func flattenRouterbgpNeighborSoftReconfiguration(v interface{}, d *schema.Resour
 }
 
 func flattenRouterbgpNeighborSoftReconfiguration6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborSoftReconfigurationVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -890,11 +1046,19 @@ func flattenRouterbgpNeighborDistributeListIn6(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenRouterbgpNeighborDistributeListInVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborDistributeListOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborDistributeListOut6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborDistributeListOutVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -930,11 +1094,19 @@ func flattenRouterbgpNeighborMaximumPrefix6(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenRouterbgpNeighborMaximumPrefixVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborMaximumPrefixThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThreshold6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborMaximumPrefixThresholdVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -946,6 +1118,10 @@ func flattenRouterbgpNeighborMaximumPrefixWarningOnly6(v interface{}, d *schema.
 	return v
 }
 
+func flattenRouterbgpNeighborMaximumPrefixWarningOnlyVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborPrefixListIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -954,11 +1130,19 @@ func flattenRouterbgpNeighborPrefixListIn6(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenRouterbgpNeighborPrefixListInVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborPrefixListOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborPrefixListOut6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborPrefixListOutVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -990,6 +1174,10 @@ func flattenRouterbgpNeighborRouteMapIn6(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenRouterbgpNeighborRouteMapInVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborRouteMapOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1006,11 +1194,23 @@ func flattenRouterbgpNeighborRouteMapOut6Preferable(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenRouterbgpNeighborRouteMapOutVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborRouteMapOutVpnv4Preferable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborSendCommunity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborSendCommunity6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborSendCommunityVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1054,11 +1254,19 @@ func flattenRouterbgpNeighborAdditionalPath6(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenRouterbgpNeighborAdditionalPathVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborAdvAdditionalPath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborAdvAdditionalPath6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborAdvAdditionalPathVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1231,6 +1439,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("allowas_in_vpnv4", flattenRouterbgpNeighborAllowasInVpnv4(o["allowas-in-vpnv4"], d, "allowas_in_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["allowas-in-vpnv4"]) {
+			return fmt.Errorf("Error reading allowas_in_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("attribute_unchanged", flattenRouterbgpNeighborAttributeUnchanged(o["attribute-unchanged"], d, "attribute_unchanged", sv)); err != nil {
 		if !fortiAPIPatch(o["attribute-unchanged"]) {
 			return fmt.Errorf("Error reading attribute_unchanged: %v", err)
@@ -1243,6 +1457,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("attribute_unchanged_vpnv4", flattenRouterbgpNeighborAttributeUnchangedVpnv4(o["attribute-unchanged-vpnv4"], d, "attribute_unchanged_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["attribute-unchanged-vpnv4"]) {
+			return fmt.Errorf("Error reading attribute_unchanged_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("activate", flattenRouterbgpNeighborActivate(o["activate"], d, "activate", sv)); err != nil {
 		if !fortiAPIPatch(o["activate"]) {
 			return fmt.Errorf("Error reading activate: %v", err)
@@ -1252,6 +1472,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("activate6", flattenRouterbgpNeighborActivate6(o["activate6"], d, "activate6", sv)); err != nil {
 		if !fortiAPIPatch(o["activate6"]) {
 			return fmt.Errorf("Error reading activate6: %v", err)
+		}
+	}
+
+	if err = d.Set("activate_vpnv4", flattenRouterbgpNeighborActivateVpnv4(o["activate-vpnv4"], d, "activate_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["activate-vpnv4"]) {
+			return fmt.Errorf("Error reading activate_vpnv4: %v", err)
 		}
 	}
 
@@ -1288,6 +1514,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("capability_graceful_restart6", flattenRouterbgpNeighborCapabilityGracefulRestart6(o["capability-graceful-restart6"], d, "capability_graceful_restart6", sv)); err != nil {
 		if !fortiAPIPatch(o["capability-graceful-restart6"]) {
 			return fmt.Errorf("Error reading capability_graceful_restart6: %v", err)
+		}
+	}
+
+	if err = d.Set("capability_graceful_restart_vpnv4", flattenRouterbgpNeighborCapabilityGracefulRestartVpnv4(o["capability-graceful-restart-vpnv4"], d, "capability_graceful_restart_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["capability-graceful-restart-vpnv4"]) {
+			return fmt.Errorf("Error reading capability_graceful_restart_vpnv4: %v", err)
 		}
 	}
 
@@ -1357,6 +1589,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("next_hop_self_vpnv4", flattenRouterbgpNeighborNextHopSelfVpnv4(o["next-hop-self-vpnv4"], d, "next_hop_self_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["next-hop-self-vpnv4"]) {
+			return fmt.Errorf("Error reading next_hop_self_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("override_capability", flattenRouterbgpNeighborOverrideCapability(o["override-capability"], d, "override_capability", sv)); err != nil {
 		if !fortiAPIPatch(o["override-capability"]) {
 			return fmt.Errorf("Error reading override_capability: %v", err)
@@ -1381,6 +1619,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("remove_private_as_vpnv4", flattenRouterbgpNeighborRemovePrivateAsVpnv4(o["remove-private-as-vpnv4"], d, "remove_private_as_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["remove-private-as-vpnv4"]) {
+			return fmt.Errorf("Error reading remove_private_as_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("route_reflector_client", flattenRouterbgpNeighborRouteReflectorClient(o["route-reflector-client"], d, "route_reflector_client", sv)); err != nil {
 		if !fortiAPIPatch(o["route-reflector-client"]) {
 			return fmt.Errorf("Error reading route_reflector_client: %v", err)
@@ -1393,6 +1637,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("route_reflector_client_vpnv4", flattenRouterbgpNeighborRouteReflectorClientVpnv4(o["route-reflector-client-vpnv4"], d, "route_reflector_client_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["route-reflector-client-vpnv4"]) {
+			return fmt.Errorf("Error reading route_reflector_client_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("route_server_client", flattenRouterbgpNeighborRouteServerClient(o["route-server-client"], d, "route_server_client", sv)); err != nil {
 		if !fortiAPIPatch(o["route-server-client"]) {
 			return fmt.Errorf("Error reading route_server_client: %v", err)
@@ -1402,6 +1652,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("route_server_client6", flattenRouterbgpNeighborRouteServerClient6(o["route-server-client6"], d, "route_server_client6", sv)); err != nil {
 		if !fortiAPIPatch(o["route-server-client6"]) {
 			return fmt.Errorf("Error reading route_server_client6: %v", err)
+		}
+	}
+
+	if err = d.Set("route_server_client_vpnv4", flattenRouterbgpNeighborRouteServerClientVpnv4(o["route-server-client-vpnv4"], d, "route_server_client_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["route-server-client-vpnv4"]) {
+			return fmt.Errorf("Error reading route_server_client_vpnv4: %v", err)
 		}
 	}
 
@@ -1420,6 +1676,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("soft_reconfiguration6", flattenRouterbgpNeighborSoftReconfiguration6(o["soft-reconfiguration6"], d, "soft_reconfiguration6", sv)); err != nil {
 		if !fortiAPIPatch(o["soft-reconfiguration6"]) {
 			return fmt.Errorf("Error reading soft_reconfiguration6: %v", err)
+		}
+	}
+
+	if err = d.Set("soft_reconfiguration_vpnv4", flattenRouterbgpNeighborSoftReconfigurationVpnv4(o["soft-reconfiguration-vpnv4"], d, "soft_reconfiguration_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["soft-reconfiguration-vpnv4"]) {
+			return fmt.Errorf("Error reading soft_reconfiguration_vpnv4: %v", err)
 		}
 	}
 
@@ -1471,6 +1733,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("distribute_list_in_vpnv4", flattenRouterbgpNeighborDistributeListInVpnv4(o["distribute-list-in-vpnv4"], d, "distribute_list_in_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["distribute-list-in-vpnv4"]) {
+			return fmt.Errorf("Error reading distribute_list_in_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("distribute_list_out", flattenRouterbgpNeighborDistributeListOut(o["distribute-list-out"], d, "distribute_list_out", sv)); err != nil {
 		if !fortiAPIPatch(o["distribute-list-out"]) {
 			return fmt.Errorf("Error reading distribute_list_out: %v", err)
@@ -1480,6 +1748,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("distribute_list_out6", flattenRouterbgpNeighborDistributeListOut6(o["distribute-list-out6"], d, "distribute_list_out6", sv)); err != nil {
 		if !fortiAPIPatch(o["distribute-list-out6"]) {
 			return fmt.Errorf("Error reading distribute_list_out6: %v", err)
+		}
+	}
+
+	if err = d.Set("distribute_list_out_vpnv4", flattenRouterbgpNeighborDistributeListOutVpnv4(o["distribute-list-out-vpnv4"], d, "distribute_list_out_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["distribute-list-out-vpnv4"]) {
+			return fmt.Errorf("Error reading distribute_list_out_vpnv4: %v", err)
 		}
 	}
 
@@ -1531,6 +1805,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("maximum_prefix_vpnv4", flattenRouterbgpNeighborMaximumPrefixVpnv4(o["maximum-prefix-vpnv4"], d, "maximum_prefix_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["maximum-prefix-vpnv4"]) {
+			return fmt.Errorf("Error reading maximum_prefix_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("maximum_prefix_threshold", flattenRouterbgpNeighborMaximumPrefixThreshold(o["maximum-prefix-threshold"], d, "maximum_prefix_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["maximum-prefix-threshold"]) {
 			return fmt.Errorf("Error reading maximum_prefix_threshold: %v", err)
@@ -1540,6 +1820,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("maximum_prefix_threshold6", flattenRouterbgpNeighborMaximumPrefixThreshold6(o["maximum-prefix-threshold6"], d, "maximum_prefix_threshold6", sv)); err != nil {
 		if !fortiAPIPatch(o["maximum-prefix-threshold6"]) {
 			return fmt.Errorf("Error reading maximum_prefix_threshold6: %v", err)
+		}
+	}
+
+	if err = d.Set("maximum_prefix_threshold_vpnv4", flattenRouterbgpNeighborMaximumPrefixThresholdVpnv4(o["maximum-prefix-threshold-vpnv4"], d, "maximum_prefix_threshold_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["maximum-prefix-threshold-vpnv4"]) {
+			return fmt.Errorf("Error reading maximum_prefix_threshold_vpnv4: %v", err)
 		}
 	}
 
@@ -1555,6 +1841,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("maximum_prefix_warning_only_vpnv4", flattenRouterbgpNeighborMaximumPrefixWarningOnlyVpnv4(o["maximum-prefix-warning-only-vpnv4"], d, "maximum_prefix_warning_only_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["maximum-prefix-warning-only-vpnv4"]) {
+			return fmt.Errorf("Error reading maximum_prefix_warning_only_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("prefix_list_in", flattenRouterbgpNeighborPrefixListIn(o["prefix-list-in"], d, "prefix_list_in", sv)); err != nil {
 		if !fortiAPIPatch(o["prefix-list-in"]) {
 			return fmt.Errorf("Error reading prefix_list_in: %v", err)
@@ -1567,6 +1859,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("prefix_list_in_vpnv4", flattenRouterbgpNeighborPrefixListInVpnv4(o["prefix-list-in-vpnv4"], d, "prefix_list_in_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["prefix-list-in-vpnv4"]) {
+			return fmt.Errorf("Error reading prefix_list_in_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("prefix_list_out", flattenRouterbgpNeighborPrefixListOut(o["prefix-list-out"], d, "prefix_list_out", sv)); err != nil {
 		if !fortiAPIPatch(o["prefix-list-out"]) {
 			return fmt.Errorf("Error reading prefix_list_out: %v", err)
@@ -1576,6 +1874,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("prefix_list_out6", flattenRouterbgpNeighborPrefixListOut6(o["prefix-list-out6"], d, "prefix_list_out6", sv)); err != nil {
 		if !fortiAPIPatch(o["prefix-list-out6"]) {
 			return fmt.Errorf("Error reading prefix_list_out6: %v", err)
+		}
+	}
+
+	if err = d.Set("prefix_list_out_vpnv4", flattenRouterbgpNeighborPrefixListOutVpnv4(o["prefix-list-out-vpnv4"], d, "prefix_list_out_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["prefix-list-out-vpnv4"]) {
+			return fmt.Errorf("Error reading prefix_list_out_vpnv4: %v", err)
 		}
 	}
 
@@ -1621,6 +1925,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("route_map_in_vpnv4", flattenRouterbgpNeighborRouteMapInVpnv4(o["route-map-in-vpnv4"], d, "route_map_in_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["route-map-in-vpnv4"]) {
+			return fmt.Errorf("Error reading route_map_in_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("route_map_out", flattenRouterbgpNeighborRouteMapOut(o["route-map-out"], d, "route_map_out", sv)); err != nil {
 		if !fortiAPIPatch(o["route-map-out"]) {
 			return fmt.Errorf("Error reading route_map_out: %v", err)
@@ -1645,6 +1955,18 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("route_map_out_vpnv4", flattenRouterbgpNeighborRouteMapOutVpnv4(o["route-map-out-vpnv4"], d, "route_map_out_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["route-map-out-vpnv4"]) {
+			return fmt.Errorf("Error reading route_map_out_vpnv4: %v", err)
+		}
+	}
+
+	if err = d.Set("route_map_out_vpnv4_preferable", flattenRouterbgpNeighborRouteMapOutVpnv4Preferable(o["route-map-out-vpnv4-preferable"], d, "route_map_out_vpnv4_preferable", sv)); err != nil {
+		if !fortiAPIPatch(o["route-map-out-vpnv4-preferable"]) {
+			return fmt.Errorf("Error reading route_map_out_vpnv4_preferable: %v", err)
+		}
+	}
+
 	if err = d.Set("send_community", flattenRouterbgpNeighborSendCommunity(o["send-community"], d, "send_community", sv)); err != nil {
 		if !fortiAPIPatch(o["send-community"]) {
 			return fmt.Errorf("Error reading send_community: %v", err)
@@ -1654,6 +1976,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("send_community6", flattenRouterbgpNeighborSendCommunity6(o["send-community6"], d, "send_community6", sv)); err != nil {
 		if !fortiAPIPatch(o["send-community6"]) {
 			return fmt.Errorf("Error reading send_community6: %v", err)
+		}
+	}
+
+	if err = d.Set("send_community_vpnv4", flattenRouterbgpNeighborSendCommunityVpnv4(o["send-community-vpnv4"], d, "send_community_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["send-community-vpnv4"]) {
+			return fmt.Errorf("Error reading send_community_vpnv4: %v", err)
 		}
 	}
 
@@ -1717,6 +2045,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("additional_path_vpnv4", flattenRouterbgpNeighborAdditionalPathVpnv4(o["additional-path-vpnv4"], d, "additional_path_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["additional-path-vpnv4"]) {
+			return fmt.Errorf("Error reading additional_path_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("adv_additional_path", flattenRouterbgpNeighborAdvAdditionalPath(o["adv-additional-path"], d, "adv_additional_path", sv)); err != nil {
 		if !fortiAPIPatch(o["adv-additional-path"]) {
 			return fmt.Errorf("Error reading adv_additional_path: %v", err)
@@ -1726,6 +2060,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("adv_additional_path6", flattenRouterbgpNeighborAdvAdditionalPath6(o["adv-additional-path6"], d, "adv_additional_path6", sv)); err != nil {
 		if !fortiAPIPatch(o["adv-additional-path6"]) {
 			return fmt.Errorf("Error reading adv_additional_path6: %v", err)
+		}
+	}
+
+	if err = d.Set("adv_additional_path_vpnv4", flattenRouterbgpNeighborAdvAdditionalPathVpnv4(o["adv-additional-path-vpnv4"], d, "adv_additional_path_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["adv-additional-path-vpnv4"]) {
+			return fmt.Errorf("Error reading adv_additional_path_vpnv4: %v", err)
 		}
 	}
 
@@ -1794,6 +2134,10 @@ func expandRouterbgpNeighborAllowasIn6(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandRouterbgpNeighborAllowasInVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborAttributeUnchanged(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1802,11 +2146,19 @@ func expandRouterbgpNeighborAttributeUnchanged6(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandRouterbgpNeighborAttributeUnchangedVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborActivate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborActivate6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborActivateVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1831,6 +2183,10 @@ func expandRouterbgpNeighborCapabilityGracefulRestart(d *schema.ResourceData, v 
 }
 
 func expandRouterbgpNeighborCapabilityGracefulRestart6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborCapabilityGracefulRestartVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1878,6 +2234,10 @@ func expandRouterbgpNeighborNextHopSelfRr6(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandRouterbgpNeighborNextHopSelfVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborOverrideCapability(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1894,6 +2254,10 @@ func expandRouterbgpNeighborRemovePrivateAs6(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandRouterbgpNeighborRemovePrivateAsVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborRouteReflectorClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1902,11 +2266,19 @@ func expandRouterbgpNeighborRouteReflectorClient6(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandRouterbgpNeighborRouteReflectorClientVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborRouteServerClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborRouteServerClient6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborRouteServerClientVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1919,6 +2291,10 @@ func expandRouterbgpNeighborSoftReconfiguration(d *schema.ResourceData, v interf
 }
 
 func expandRouterbgpNeighborSoftReconfiguration6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborSoftReconfigurationVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1954,11 +2330,19 @@ func expandRouterbgpNeighborDistributeListIn6(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandRouterbgpNeighborDistributeListInVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborDistributeListOut(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborDistributeListOut6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborDistributeListOutVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1994,11 +2378,19 @@ func expandRouterbgpNeighborMaximumPrefix6(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandRouterbgpNeighborMaximumPrefixVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborMaximumPrefixThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborMaximumPrefixThreshold6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborMaximumPrefixThresholdVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2010,6 +2402,10 @@ func expandRouterbgpNeighborMaximumPrefixWarningOnly6(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandRouterbgpNeighborMaximumPrefixWarningOnlyVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborPrefixListIn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2018,11 +2414,19 @@ func expandRouterbgpNeighborPrefixListIn6(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandRouterbgpNeighborPrefixListInVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborPrefixListOut(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborPrefixListOut6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborPrefixListOutVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2054,6 +2458,10 @@ func expandRouterbgpNeighborRouteMapIn6(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandRouterbgpNeighborRouteMapInVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborRouteMapOut(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2070,11 +2478,23 @@ func expandRouterbgpNeighborRouteMapOut6Preferable(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandRouterbgpNeighborRouteMapOutVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborRouteMapOutVpnv4Preferable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborSendCommunity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborSendCommunity6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborSendCommunityVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2118,11 +2538,19 @@ func expandRouterbgpNeighborAdditionalPath6(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandRouterbgpNeighborAdditionalPathVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborAdvAdditionalPath(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborAdvAdditionalPath6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborAdvAdditionalPathVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2297,6 +2725,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("allowas_in_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborAllowasInVpnv4(d, v, "allowas_in_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["allowas-in-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("attribute_unchanged"); ok {
 
 		t, err := expandRouterbgpNeighborAttributeUnchanged(d, v, "attribute_unchanged", sv)
@@ -2317,6 +2755,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("attribute_unchanged_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborAttributeUnchangedVpnv4(d, v, "attribute_unchanged_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["attribute-unchanged-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("activate"); ok {
 
 		t, err := expandRouterbgpNeighborActivate(d, v, "activate", sv)
@@ -2334,6 +2782,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["activate6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("activate_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborActivateVpnv4(d, v, "activate_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["activate-vpnv4"] = t
 		}
 	}
 
@@ -2394,6 +2852,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["capability-graceful-restart6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("capability_graceful_restart_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborCapabilityGracefulRestartVpnv4(d, v, "capability_graceful_restart_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["capability-graceful-restart-vpnv4"] = t
 		}
 	}
 
@@ -2507,6 +2975,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("next_hop_self_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborNextHopSelfVpnv4(d, v, "next_hop_self_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["next-hop-self-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("override_capability"); ok {
 
 		t, err := expandRouterbgpNeighborOverrideCapability(d, v, "override_capability", sv)
@@ -2547,6 +3025,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("remove_private_as_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborRemovePrivateAsVpnv4(d, v, "remove_private_as_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remove-private-as-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("route_reflector_client"); ok {
 
 		t, err := expandRouterbgpNeighborRouteReflectorClient(d, v, "route_reflector_client", sv)
@@ -2567,6 +3055,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("route_reflector_client_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborRouteReflectorClientVpnv4(d, v, "route_reflector_client_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-reflector-client-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("route_server_client"); ok {
 
 		t, err := expandRouterbgpNeighborRouteServerClient(d, v, "route_server_client", sv)
@@ -2584,6 +3082,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["route-server-client6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("route_server_client_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborRouteServerClientVpnv4(d, v, "route_server_client_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-server-client-vpnv4"] = t
 		}
 	}
 
@@ -2614,6 +3122,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["soft-reconfiguration6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("soft_reconfiguration_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborSoftReconfigurationVpnv4(d, v, "soft_reconfiguration_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["soft-reconfiguration-vpnv4"] = t
 		}
 	}
 
@@ -2697,6 +3215,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("distribute_list_in_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborDistributeListInVpnv4(d, v, "distribute_list_in_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["distribute-list-in-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("distribute_list_out"); ok {
 
 		t, err := expandRouterbgpNeighborDistributeListOut(d, v, "distribute_list_out", sv)
@@ -2714,6 +3242,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["distribute-list-out6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("distribute_list_out_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborDistributeListOutVpnv4(d, v, "distribute_list_out_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["distribute-list-out-vpnv4"] = t
 		}
 	}
 
@@ -2797,6 +3335,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("maximum_prefix_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborMaximumPrefixVpnv4(d, v, "maximum_prefix_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["maximum-prefix-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("maximum_prefix_threshold"); ok {
 
 		t, err := expandRouterbgpNeighborMaximumPrefixThreshold(d, v, "maximum_prefix_threshold", sv)
@@ -2814,6 +3362,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["maximum-prefix-threshold6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("maximum_prefix_threshold_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborMaximumPrefixThresholdVpnv4(d, v, "maximum_prefix_threshold_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["maximum-prefix-threshold-vpnv4"] = t
 		}
 	}
 
@@ -2837,6 +3395,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("maximum_prefix_warning_only_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborMaximumPrefixWarningOnlyVpnv4(d, v, "maximum_prefix_warning_only_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["maximum-prefix-warning-only-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("prefix_list_in"); ok {
 
 		t, err := expandRouterbgpNeighborPrefixListIn(d, v, "prefix_list_in", sv)
@@ -2857,6 +3425,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("prefix_list_in_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborPrefixListInVpnv4(d, v, "prefix_list_in_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["prefix-list-in-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("prefix_list_out"); ok {
 
 		t, err := expandRouterbgpNeighborPrefixListOut(d, v, "prefix_list_out", sv)
@@ -2874,6 +3452,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["prefix-list-out6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("prefix_list_out_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborPrefixListOutVpnv4(d, v, "prefix_list_out_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["prefix-list-out-vpnv4"] = t
 		}
 	}
 
@@ -2947,6 +3535,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("route_map_in_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborRouteMapInVpnv4(d, v, "route_map_in_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-map-in-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("route_map_out"); ok {
 
 		t, err := expandRouterbgpNeighborRouteMapOut(d, v, "route_map_out", sv)
@@ -2987,6 +3585,26 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("route_map_out_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborRouteMapOutVpnv4(d, v, "route_map_out_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-map-out-vpnv4"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("route_map_out_vpnv4_preferable"); ok {
+
+		t, err := expandRouterbgpNeighborRouteMapOutVpnv4Preferable(d, v, "route_map_out_vpnv4_preferable", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-map-out-vpnv4-preferable"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("send_community"); ok {
 
 		t, err := expandRouterbgpNeighborSendCommunity(d, v, "send_community", sv)
@@ -3004,6 +3622,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["send-community6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("send_community_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborSendCommunityVpnv4(d, v, "send_community_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["send-community-vpnv4"] = t
 		}
 	}
 
@@ -3107,6 +3735,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("additional_path_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborAdditionalPathVpnv4(d, v, "additional_path_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["additional-path-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("adv_additional_path"); ok {
 
 		t, err := expandRouterbgpNeighborAdvAdditionalPath(d, v, "adv_additional_path", sv)
@@ -3124,6 +3762,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["adv-additional-path6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("adv_additional_path_vpnv4"); ok {
+
+		t, err := expandRouterbgpNeighborAdvAdditionalPathVpnv4(d, v, "adv_additional_path_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adv-additional-path-vpnv4"] = t
 		}
 	}
 

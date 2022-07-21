@@ -168,6 +168,17 @@ func resourceFirewallInterfacePolicy6() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dlp_profile_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dlp_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"spamfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -528,6 +539,14 @@ func flattenFirewallInterfacePolicy6EmailfilterProfile(v interface{}, d *schema.
 	return v
 }
 
+func flattenFirewallInterfacePolicy6DlpProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallInterfacePolicy6DlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallInterfacePolicy6SpamfilterProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -702,6 +721,18 @@ func refreshObjectFirewallInterfacePolicy6(d *schema.ResourceData, o map[string]
 	if err = d.Set("emailfilter_profile", flattenFirewallInterfacePolicy6EmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile_status", flattenFirewallInterfacePolicy6DlpProfileStatus(o["dlp-profile-status"], d, "dlp_profile_status", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile-status"]) {
+			return fmt.Errorf("Error reading dlp_profile_status: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", flattenFirewallInterfacePolicy6DlpProfile(o["dlp-profile"], d, "dlp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
 		}
 	}
 
@@ -911,6 +942,14 @@ func expandFirewallInterfacePolicy6EmailfilterProfileStatus(d *schema.ResourceDa
 }
 
 func expandFirewallInterfacePolicy6EmailfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInterfacePolicy6DlpProfileStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInterfacePolicy6DlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1138,6 +1177,26 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dlp_profile_status"); ok {
+
+		t, err := expandFirewallInterfacePolicy6DlpProfileStatus(d, v, "dlp_profile_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dlp_profile"); ok {
+
+		t, err := expandFirewallInterfacePolicy6DlpProfile(d, v, "dlp_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile"] = t
 		}
 	}
 

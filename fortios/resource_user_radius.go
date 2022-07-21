@@ -272,6 +272,11 @@ func resourceUserRadius() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"accounting_server": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -662,6 +667,10 @@ func flattenUserRadiusRssoEpOneIpOnly(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenUserRadiusDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1014,6 +1023,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("delimiter", flattenUserRadiusDelimiter(o["delimiter"], d, "delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["delimiter"]) {
+			return fmt.Errorf("Error reading delimiter: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("accounting_server", flattenUserRadiusAccountingServer(o["accounting-server"], d, "accounting_server", sv)); err != nil {
 			if !fortiAPIPatch(o["accounting-server"]) {
@@ -1232,6 +1247,10 @@ func expandUserRadiusRssoFlushIpSession(d *schema.ResourceData, v interface{}, p
 }
 
 func expandUserRadiusRssoEpOneIpOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1757,6 +1776,16 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["rsso-ep-one-ip-only"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("delimiter"); ok {
+
+		t, err := expandUserRadiusDelimiter(d, v, "delimiter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["delimiter"] = t
 		}
 	}
 

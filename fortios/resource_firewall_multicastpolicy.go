@@ -148,6 +148,12 @@ func resourceFirewallMulticastPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"traffic_shaper": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -428,6 +434,10 @@ func flattenFirewallMulticastPolicyAutoAsicOffload(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenFirewallMulticastPolicyTrafficShaper(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -556,6 +566,12 @@ func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]i
 	if err = d.Set("auto_asic_offload", flattenFirewallMulticastPolicyAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-asic-offload"]) {
 			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("traffic_shaper", flattenFirewallMulticastPolicyTrafficShaper(o["traffic-shaper"], d, "traffic_shaper", sv)); err != nil {
+		if !fortiAPIPatch(o["traffic-shaper"]) {
+			return fmt.Errorf("Error reading traffic_shaper: %v", err)
 		}
 	}
 
@@ -693,6 +709,10 @@ func expandFirewallMulticastPolicyEndPort(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallMulticastPolicyAutoAsicOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallMulticastPolicyTrafficShaper(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -876,6 +896,16 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["auto-asic-offload"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("traffic_shaper"); ok {
+
+		t, err := expandFirewallMulticastPolicyTrafficShaper(d, v, "traffic_shaper", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["traffic-shaper"] = t
 		}
 	}
 

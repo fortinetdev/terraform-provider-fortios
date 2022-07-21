@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_stp
-Configure Spanning Tree Protocol (STP). Applies to FortiOS Version `>= 7.0.4`.
+Configure Spanning Tree Protocol (STP). Applies to FortiOS Version `7.0.4`.
 
 ## Argument Reference
 

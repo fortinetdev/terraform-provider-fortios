@@ -131,7 +131,7 @@ func resourceRouterRouteMap() *schema.Resource {
 						},
 						"match_vrf": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 31),
+							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -318,6 +318,12 @@ func resourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeInt,
 							Optional: true,
 							Computed: true,
+						},
+						"set_priority": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 65535),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -742,6 +748,12 @@ func flattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, pre string
 			tmp["set_route_tag"] = flattenRouterRouteMapRuleSetRouteTag(i["set-route-tag"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_priority"
+		if _, ok := i["set-priority"]; ok {
+
+			tmp["set_priority"] = flattenRouterRouteMapRuleSetPriority(i["set-priority"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1075,6 +1087,10 @@ func flattenRouterRouteMapRuleSetRouteTag(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenRouterRouteMapRuleSetPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectRouterRouteMap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -1403,6 +1419,12 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 			tmp["set-route-tag"], _ = expandRouterRouteMapRuleSetRouteTag(d, i["set_route_tag"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_priority"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["set-priority"], _ = expandRouterRouteMapRuleSetPriority(d, i["set_priority"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1692,6 +1714,10 @@ func expandRouterRouteMapRuleMatchFlags(d *schema.ResourceData, v interface{}, p
 }
 
 func expandRouterRouteMapRuleSetRouteTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterRouteMapRuleSetPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

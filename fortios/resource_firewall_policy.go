@@ -40,7 +40,6 @@ func resourceFirewallPolicy() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 2147482999),
 				ForceNew:     true,
 				Optional:     true,
-				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -320,7 +319,6 @@ func resourceFirewallPolicy() *schema.Resource {
 			"reputation_minimum": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"reputation_direction": &schema.Schema{
 				Type:     schema.TypeString,
@@ -400,6 +398,16 @@ func resourceFirewallPolicy() *schema.Resource {
 				Default:      "always",
 			},
 			"schedule_timeout": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"policy_expiry": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"policy_expiry_date": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -514,6 +522,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -979,13 +992,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tcp_mss_receiver": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -2207,6 +2218,14 @@ func flattenFirewallPolicyScheduleTimeout(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenFirewallPolicyPolicyExpiry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyPolicyExpiryDate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -2327,6 +2346,10 @@ func flattenFirewallPolicyDnsfilterProfile(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallPolicyEmailfilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyDlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3718,6 +3741,18 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("policy_expiry", flattenFirewallPolicyPolicyExpiry(o["policy-expiry"], d, "policy_expiry", sv)); err != nil {
+		if !fortiAPIPatch(o["policy-expiry"]) {
+			return fmt.Errorf("Error reading policy_expiry: %v", err)
+		}
+	}
+
+	if err = d.Set("policy_expiry_date", flattenFirewallPolicyPolicyExpiryDate(o["policy-expiry-date"], d, "policy_expiry_date", sv)); err != nil {
+		if !fortiAPIPatch(o["policy-expiry-date"]) {
+			return fmt.Errorf("Error reading policy_expiry_date: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("service", flattenFirewallPolicyService(o["service"], d, "service", sv)); err != nil {
 			if !fortiAPIPatch(o["service"]) {
@@ -3851,6 +3886,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("emailfilter_profile", flattenFirewallPolicyEmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", flattenFirewallPolicyDlpProfile(o["dlp-profile"], d, "dlp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
 		}
 	}
 
@@ -5333,6 +5374,14 @@ func expandFirewallPolicyScheduleTimeout(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandFirewallPolicyPolicyExpiry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyPolicyExpiryDate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -5442,6 +5491,10 @@ func expandFirewallPolicyDnsfilterProfile(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallPolicyEmailfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyDlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6252,6 +6305,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["policyid"] = t
 		}
+	} else if d.HasChange("policyid") {
+		obj["policyid"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -6494,6 +6549,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["reputation-minimum"] = t
 		}
+	} else if d.HasChange("reputation_minimum") {
+		obj["reputation-minimum"] = nil
 	}
 
 	if v, ok := d.GetOk("reputation_direction"); ok {
@@ -6625,6 +6682,26 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["schedule-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("policy_expiry"); ok {
+
+		t, err := expandFirewallPolicyPolicyExpiry(d, v, "policy_expiry", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["policy-expiry"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("policy_expiry_date"); ok {
+
+		t, err := expandFirewallPolicyPolicyExpiryDate(d, v, "policy_expiry_date", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["policy-expiry-date"] = t
 		}
 	}
 
@@ -6848,6 +6925,18 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	} else if d.HasChange("emailfilter_profile") {
 		obj["emailfilter-profile"] = nil
+	}
+
+	if v, ok := d.GetOk("dlp_profile"); ok {
+
+		t, err := expandFirewallPolicyDlpProfile(d, v, "dlp_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile"] = t
+		}
+	} else if d.HasChange("dlp_profile") {
+		obj["dlp-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
@@ -7630,6 +7719,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["tcp-mss-sender"] = t
 		}
+	} else if d.HasChange("tcp_mss_sender") {
+		obj["tcp-mss-sender"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tcp_mss_receiver"); ok {
@@ -7640,6 +7731,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["tcp-mss-receiver"] = t
 		}
+	} else if d.HasChange("tcp_mss_receiver") {
+		obj["tcp-mss-receiver"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {

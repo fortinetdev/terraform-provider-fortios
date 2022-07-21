@@ -28,6 +28,11 @@ The following arguments are supported:
 
 * `active_auth_scheme` - Active authentication method (scheme name).
 * `sso_auth_scheme` - Single-Sign-On authentication method (scheme name).
+* `update_time` - Time of the last update.
+* `persistent_cookie` - Enable/disable persistent cookie on web portal authentication (default = enable). Valid values: `enable`, `disable`.
+* `ip_auth_cookie` - Enable/disable persistent cookie on IP based web portal authentication (default = disable). Valid values: `enable`, `disable`.
+* `cookie_max_age` - Persistent web portal cookie maximum age in minutes (30 - 10080 (1 week), default = 480 (8 hours)).
+* `cookie_refresh_div` - Refresh rate divider of persistent web portal cookie (default = 2). Refresh value = cookie-max-age/cookie-refresh-div.
 * `captive_portal_type` - Captive portal type. Valid values: `fqdn`, `ip`.
 * `captive_portal_ip` - Captive portal IP address.
 * `captive_portal_ip6` - Captive portal IPv6 address.

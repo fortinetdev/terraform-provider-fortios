@@ -29,8 +29,11 @@ The following arguments are supported:
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
 * `capabilities` - List of EMS capabilities.
 * `call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
+* `out_of_sync_threshold` - Outdated resource threshold in seconds (10 - 3600, default = 180).
 * `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.
 * `preserve_ssl_session` - Enable/disable preservation of EMS SSL session connection. WARNING: Most users should not touch this setting! Valid values: `enable`, `disable`.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
+* `interface` - Specify outgoing interface to reach server.
 * `certificate` - FortiClient EMS certificate.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

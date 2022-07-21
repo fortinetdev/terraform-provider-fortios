@@ -21,7 +21,9 @@ The following arguments are supported:
 * `ipv4_address` - Tunnel IPv4 address and netmask.
 * `br` - Border relay IPv6 address.
 * `update_url` - URL of provisioning server.
-* `mode` - VNE tunnel mode. Valid values: `map-e`, `fixed-ip`.
+* `mode` - VNE tunnel mode.
+* `http_username` - HTTP authentication user name.
+* `http_password` - HTTP authentication password.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

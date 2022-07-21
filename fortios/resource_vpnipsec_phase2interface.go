@@ -90,6 +90,11 @@ func resourceVpnIpsecPhase2Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"inbound_dscp_copy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auto_discovery_sender": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -437,6 +442,10 @@ func flattenVpnIpsecPhase2InterfaceAddRoute(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenVpnIpsecPhase2InterfaceInboundDscpCopy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase2InterfaceAutoDiscoverySender(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -653,6 +662,12 @@ func refreshObjectVpnIpsecPhase2Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("add_route", flattenVpnIpsecPhase2InterfaceAddRoute(o["add-route"], d, "add_route", sv)); err != nil {
 		if !fortiAPIPatch(o["add-route"]) {
 			return fmt.Errorf("Error reading add_route: %v", err)
+		}
+	}
+
+	if err = d.Set("inbound_dscp_copy", flattenVpnIpsecPhase2InterfaceInboundDscpCopy(o["inbound-dscp-copy"], d, "inbound_dscp_copy", sv)); err != nil {
+		if !fortiAPIPatch(o["inbound-dscp-copy"]) {
+			return fmt.Errorf("Error reading inbound_dscp_copy: %v", err)
 		}
 	}
 
@@ -913,6 +928,10 @@ func expandVpnIpsecPhase2InterfaceAddRoute(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandVpnIpsecPhase2InterfaceInboundDscpCopy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase2InterfaceAutoDiscoverySender(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1159,6 +1178,16 @@ func getObjectVpnIpsecPhase2Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["add-route"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
+
+		t, err := expandVpnIpsecPhase2InterfaceInboundDscpCopy(d, v, "inbound_dscp_copy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["inbound-dscp-copy"] = t
 		}
 	}
 

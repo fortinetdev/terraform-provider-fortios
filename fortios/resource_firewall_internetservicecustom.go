@@ -80,13 +80,13 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 									},
 									"start_port": &schema.Schema{
 										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(1, 65535),
+										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
 										Computed:     true,
 									},
 									"end_port": &schema.Schema{
 										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(1, 65535),
+										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
 										Computed:     true,
 									},

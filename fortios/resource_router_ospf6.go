@@ -93,6 +93,22 @@ func resourceRouterOspf6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"restart_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"restart_period": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
+			"restart_on_topology_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"area": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -692,6 +708,18 @@ func flattenRouterOspf6SpfTimers(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterOspf6Bfd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspf6RestartMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspf6RestartPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspf6RestartOnTopologyChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1851,6 +1879,24 @@ func refreshObjectRouterOspf6(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("restart_mode", flattenRouterOspf6RestartMode(o["restart-mode"], d, "restart_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["restart-mode"]) {
+			return fmt.Errorf("Error reading restart_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("restart_period", flattenRouterOspf6RestartPeriod(o["restart-period"], d, "restart_period", sv)); err != nil {
+		if !fortiAPIPatch(o["restart-period"]) {
+			return fmt.Errorf("Error reading restart_period: %v", err)
+		}
+	}
+
+	if err = d.Set("restart_on_topology_change", flattenRouterOspf6RestartOnTopologyChange(o["restart-on-topology-change"], d, "restart_on_topology_change", sv)); err != nil {
+		if !fortiAPIPatch(o["restart-on-topology-change"]) {
+			return fmt.Errorf("Error reading restart_on_topology_change: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("area", flattenRouterOspf6Area(o["area"], d, "area", sv)); err != nil {
 			if !fortiAPIPatch(o["area"]) {
@@ -1981,6 +2027,18 @@ func expandRouterOspf6SpfTimers(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandRouterOspf6Bfd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspf6RestartMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspf6RestartPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspf6RestartOnTopologyChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3097,6 +3155,48 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["bfd"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("restart_mode"); ok {
+		if setArgNil {
+			obj["restart-mode"] = nil
+		} else {
+
+			t, err := expandRouterOspf6RestartMode(d, v, "restart_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("restart_period"); ok {
+		if setArgNil {
+			obj["restart-period"] = nil
+		} else {
+
+			t, err := expandRouterOspf6RestartPeriod(d, v, "restart_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-period"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("restart_on_topology_change"); ok {
+		if setArgNil {
+			obj["restart-on-topology-change"] = nil
+		} else {
+
+			t, err := expandRouterOspf6RestartOnTopologyChange(d, v, "restart_on_topology_change", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-on-topology-change"] = t
 			}
 		}
 	}

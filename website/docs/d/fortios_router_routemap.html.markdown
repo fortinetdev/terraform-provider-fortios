@@ -68,6 +68,7 @@ The `rule` block contains:
 * `set_flags` - BGP flags value (0 - 65535)
 * `match_flags` - BGP flag value to match (0 - 65535)
 * `set_route_tag` - Route tag for routing table.
+* `set_priority` - Priority for routing table.
 
 The `set_aspath` block contains:
 

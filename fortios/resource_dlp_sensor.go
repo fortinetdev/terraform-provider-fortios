@@ -41,10 +41,52 @@ func resourceDlpSensor() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"match_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"eval": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
+			},
+			"entries": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 32),
+							Optional:     true,
+							Computed:     true,
+						},
+						"dictionary": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"count": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"feature_set": &schema.Schema{
 				Type:     schema.TypeString,
@@ -336,7 +378,88 @@ func flattenDlpSensorName(v interface{}, d *schema.ResourceData, pre string, sv 
 	return v
 }
 
+func flattenDlpSensorMatchType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorEval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenDlpSensorComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenDlpSensorEntriesId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dictionary"
+		if _, ok := i["dictionary"]; ok {
+
+			tmp["dictionary"] = flattenDlpSensorEntriesDictionary(i["dictionary"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "count"
+		if _, ok := i["count"]; ok {
+
+			tmp["count"] = flattenDlpSensorEntriesCount(i["count"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if _, ok := i["status"]; ok {
+
+			tmp["status"] = flattenDlpSensorEntriesStatus(i["status"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenDlpSensorEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorEntriesDictionary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorEntriesCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorEntriesStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -654,9 +777,37 @@ func refreshObjectDlpSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("match_type", flattenDlpSensorMatchType(o["match-type"], d, "match_type", sv)); err != nil {
+		if !fortiAPIPatch(o["match-type"]) {
+			return fmt.Errorf("Error reading match_type: %v", err)
+		}
+	}
+
+	if err = d.Set("eval", flattenDlpSensorEval(o["eval"], d, "eval", sv)); err != nil {
+		if !fortiAPIPatch(o["eval"]) {
+			return fmt.Errorf("Error reading eval: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenDlpSensorComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("entries", flattenDlpSensorEntries(o["entries"], d, "entries", sv)); err != nil {
+			if !fortiAPIPatch(o["entries"]) {
+				return fmt.Errorf("Error reading entries: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("entries"); ok {
+			if err = d.Set("entries", flattenDlpSensorEntries(o["entries"], d, "entries", sv)); err != nil {
+				if !fortiAPIPatch(o["entries"]) {
+					return fmt.Errorf("Error reading entries: %v", err)
+				}
+			}
 		}
 	}
 
@@ -743,7 +894,77 @@ func expandDlpSensorName(d *schema.ResourceData, v interface{}, pre string, sv s
 	return v, nil
 }
 
+func expandDlpSensorMatchType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorEval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandDlpSensorComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandDlpSensorEntriesId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dictionary"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["dictionary"], _ = expandDlpSensorEntriesDictionary(d, i["dictionary"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "count"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["count"], _ = expandDlpSensorEntriesCount(d, i["count"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["status"], _ = expandDlpSensorEntriesStatus(d, i["status"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandDlpSensorEntriesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorEntriesDictionary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorEntriesCount(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorEntriesStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1038,6 +1259,26 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
+	if v, ok := d.GetOk("match_type"); ok {
+
+		t, err := expandDlpSensorMatchType(d, v, "match_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eval"); ok {
+
+		t, err := expandDlpSensorEval(d, v, "eval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eval"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("comment"); ok {
 
 		t, err := expandDlpSensorComment(d, v, "comment", sv)
@@ -1045,6 +1286,16 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["comment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("entries"); ok {
+
+		t, err := expandDlpSensorEntries(d, v, "entries", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["entries"] = t
 		}
 	}
 

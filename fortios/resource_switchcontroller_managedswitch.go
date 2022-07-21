@@ -274,6 +274,29 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"flapguard": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"flap_rate": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 30),
+							Optional:     true,
+							Computed:     true,
+						},
+						"flap_duration": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(5, 300),
+							Optional:     true,
+							Computed:     true,
+						},
+						"flap_timeout": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 120),
+							Optional:     true,
+							Computed:     true,
+						},
 						"rpvst_port": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1449,6 +1472,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"mab_reauth": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -1792,6 +1820,30 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		if _, ok := i["aggregator-mode"]; ok {
 
 			tmp["aggregator_mode"] = flattenSwitchControllerManagedSwitchPortsAggregatorMode(i["aggregator-mode"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flapguard"
+		if _, ok := i["flapguard"]; ok {
+
+			tmp["flapguard"] = flattenSwitchControllerManagedSwitchPortsFlapguard(i["flapguard"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_rate"
+		if _, ok := i["flap-rate"]; ok {
+
+			tmp["flap_rate"] = flattenSwitchControllerManagedSwitchPortsFlapRate(i["flap-rate"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_duration"
+		if _, ok := i["flap-duration"]; ok {
+
+			tmp["flap_duration"] = flattenSwitchControllerManagedSwitchPortsFlapDuration(i["flap-duration"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_timeout"
+		if _, ok := i["flap-timeout"]; ok {
+
+			tmp["flap_timeout"] = flattenSwitchControllerManagedSwitchPortsFlapTimeout(i["flap-timeout"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpvst_port"
@@ -2302,6 +2354,22 @@ func flattenSwitchControllerManagedSwitchPortsPtpPolicy(v interface{}, d *schema
 }
 
 func flattenSwitchControllerManagedSwitchPortsAggregatorMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsFlapguard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsFlapRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsFlapDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsFlapTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4279,6 +4347,12 @@ func flattenSwitchControllerManagedSwitch8021XSettings(v interface{}, d *schema.
 		result["tx_period"] = flattenSwitchControllerManagedSwitch8021XSettingsTxPeriod(i["tx-period"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "mab_reauth"
+	if _, ok := i["mab-reauth"]; ok {
+
+		result["mab_reauth"] = flattenSwitchControllerManagedSwitch8021XSettingsMabReauth(i["mab-reauth"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -4300,6 +4374,10 @@ func flattenSwitchControllerManagedSwitch8021XSettingsMaxReauthAttempt(v interfa
 }
 
 func flattenSwitchControllerManagedSwitch8021XSettingsTxPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitch8021XSettingsMabReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5029,6 +5107,30 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["aggregator-mode"], _ = expandSwitchControllerManagedSwitchPortsAggregatorMode(d, i["aggregator_mode"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flapguard"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["flapguard"], _ = expandSwitchControllerManagedSwitchPortsFlapguard(d, i["flapguard"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_rate"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["flap-rate"], _ = expandSwitchControllerManagedSwitchPortsFlapRate(d, i["flap_rate"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_duration"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["flap-duration"], _ = expandSwitchControllerManagedSwitchPortsFlapDuration(d, i["flap_duration"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_timeout"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["flap-timeout"], _ = expandSwitchControllerManagedSwitchPortsFlapTimeout(d, i["flap_timeout"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpvst_port"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -5546,6 +5648,22 @@ func expandSwitchControllerManagedSwitchPortsPtpPolicy(d *schema.ResourceData, v
 }
 
 func expandSwitchControllerManagedSwitchPortsAggregatorMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFlapguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFlapRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFlapDuration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFlapTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7310,6 +7428,11 @@ func expandSwitchControllerManagedSwitch8021XSettings(d *schema.ResourceData, v 
 
 		result["tx-period"], _ = expandSwitchControllerManagedSwitch8021XSettingsTxPeriod(d, i["tx_period"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "mab_reauth"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["mab-reauth"], _ = expandSwitchControllerManagedSwitch8021XSettingsMabReauth(d, i["mab_reauth"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -7331,6 +7454,10 @@ func expandSwitchControllerManagedSwitch8021XSettingsMaxReauthAttempt(d *schema.
 }
 
 func expandSwitchControllerManagedSwitch8021XSettingsTxPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitch8021XSettingsMabReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

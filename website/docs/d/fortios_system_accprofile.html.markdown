@@ -85,4 +85,5 @@ The `utmgrp_permission` block contains:
 * `waf` - Web Application Firewall profiles and settings.
 * `dnsfilter` - DNS Filter profiles and settings.
 * `endpoint_control` - FortiClient Profiles.
+* `videofilter` - Video filter profiles and settings.
 

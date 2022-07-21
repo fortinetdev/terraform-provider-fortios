@@ -153,6 +153,7 @@ The following arguments are supported:
 * `aggregate_member` - Enable/disable use as an aggregate member. Valid values: `enable`, `disable`.
 * `aggregate_weight` - Link weight for aggregate.
 * `mode_cfg` - Enable/disable configuration method. Valid values: `disable`, `enable`.
+* `mode_cfg_allow_client_selector` - Enable/disable mode-cfg client to use custom phase2 selectors. Valid values: `disable`, `enable`.
 * `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method. Valid values: `disable`, `enable`.
 * `assign_ip_from` - Method by which the IP address will be assigned. Valid values: `range`, `usrgrp`, `dhcp`, `name`.
 * `ipv4_start_ip` - Start of IPv4 range.
@@ -232,12 +233,14 @@ The following arguments are supported:
 * `idle_timeout` - Enable/disable IPsec tunnel idle timeout. Valid values: `enable`, `disable`.
 * `idle_timeoutinterval` - IPsec tunnel idle timeout in minutes (5 - 43200).
 * `ha_sync_esp_seqno` - Enable/disable sequence number jump ahead for IPsec HA. Valid values: `enable`, `disable`.
+* `inbound_dscp_copy` - Enable/disable copy the dscp in the ESP header to the inner IP Header. Valid values: `enable`, `disable`.
 * `auto_discovery_sender` - Enable/disable sending auto-discovery short-cut messages. Valid values: `enable`, `disable`.
 * `auto_discovery_receiver` - Enable/disable accepting auto-discovery short-cut messages. Valid values: `enable`, `disable`.
 * `auto_discovery_forwarder` - Enable/disable forwarding auto-discovery short-cut messages. Valid values: `enable`, `disable`.
 * `auto_discovery_psk` - Enable/disable use of pre-shared secrets for authentication of auto-discovery tunnels. Valid values: `enable`, `disable`.
 * `auto_discovery_shortcuts` - Control deletion of child short-cut tunnels when the parent tunnel goes down. Valid values: `independent`, `dependent`.
-* `encapsulation` - Enable/disable GRE/VXLAN encapsulation. Valid values: `none`, `gre`, `vxlan`.
+* `auto_discovery_offer_interval` - Interval between shortcut offer messages in seconds (1 - 300, default = 5).
+* `encapsulation` - Enable/disable GRE/VXLAN encapsulation.
 * `encapsulation_address` - Source for GRE/VXLAN tunnel address. Valid values: `ike`, `ipv4`, `ipv6`.
 * `encap_local_gw4` - Local IPv4 address of GRE/VXLAN tunnel.
 * `encap_local_gw6` - Local IPv6 address of GRE/VXLAN tunnel.

@@ -74,7 +74,8 @@ The following arguments are supported:
 
 * `name` - Portal name.
 * `tunnel_mode` - Enable/disable IPv4 SSL-VPN tunnel mode. Valid values: `enable`, `disable`.
-* `ip_mode` - Method by which users of this SSL-VPN tunnel obtain IP addresses. Valid values: `range`, `user-group`.
+* `ip_mode` - Method by which users of this SSL-VPN tunnel obtain IP addresses.
+* `dhcp_ip_overlap` - Configure overlapping DHCP IP allocation assignment. Valid values: `use-new`, `use-old`.
 * `auto_connect` - Enable/disable automatic connect by client when system is up. Valid values: `enable`, `disable`.
 * `keep_alive` - Enable/disable automatic reconnect for FortiClient connections. Valid values: `enable`, `disable`.
 * `save_password` - Enable/disable FortiClient saving the user's password. Valid values: `enable`, `disable`.
@@ -122,6 +123,8 @@ The following arguments are supported:
 * `use_sdwan` - Use SD-WAN rules to get output interface. Valid values: `enable`, `disable`.
 * `prefer_ipv6_dns` - prefer to query IPv6 dns first if enabled. Valid values: `enable`, `disable`.
 * `clipboard` - Enable to support RDP/VPC clipboard functionality. Valid values: `enable`, `disable`.
+* `default_window_width` - Screen width (range from 0 - 65535, default = 1024).
+* `default_window_height` - Screen height (range from 0 - 65535, default = 768).
 * `host_check` - Type of host checking performed on endpoints. Valid values: `none`, `av`, `fw`, `av-fw`, `custom`.
 * `host_check_interval` - Periodic host check interval. Value of 0 means disabled and host checking only happens when the endpoint connects.
 * `host_check_policy` - One or more policies to require the endpoint to have specific security software. The structure of `host_check_policy` block is documented below.
@@ -177,7 +180,7 @@ The `bookmarks` block supports:
 * `remote_port` - Remote port (0 - 65535).
 * `show_status_window` - Enable/disable showing of status window. Valid values: `enable`, `disable`.
 * `description` - Description.
-* `keyboard_layout` - Keyboard layout. Valid values: `ar-101`, `ar-102`, `ar-102-azerty`, `can-mul`, `cz`, `cz-qwerty`, `cz-pr`, `da`, `nl`, `de`, `de-ch`, `de-ibm`, `en-uk`, `en-uk-ext`, `en-us`, `en-us-dvorak`, `es`, `es-var`, `fi`, `fi-sami`, `fr`, `fr-ca`, `fr-ch`, `fr-be`, `hr`, `hu`, `hu-101`, `it`, `it-142`, `ja`, `ko`, `lt`, `lt-ibm`, `lt-std`, `lav-std`, `lav-leg`, `mk`, `mk-std`, `no`, `no-sami`, `pol-214`, `pol-pr`, `pt`, `pt-br`, `pt-br-abnt2`, `ru`, `ru-mne`, `ru-t`, `sl`, `sv`, `sv-sami`, `tuk`, `tur-f`, `tur-q`, `zh-sym-sg-us`, `zh-sym-us`, `zh-tr-hk`, `zh-tr-mo`, `zh-tr-us`.
+* `keyboard_layout` - Keyboard layout.
 * `server_layout` - Server side keyboard layout.
 * `security` - Security mode for RDP connection. Valid values: `rdp`, `nla`, `tls`, `any`.
 * `send_preconnection_id` - Enable/disable sending of preconnection ID. Valid values: `enable`, `disable`.

@@ -161,6 +161,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"h2c": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 26214),
@@ -225,6 +230,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Computed:     true,
 						},
 						"ssl_offloaded": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"address_ip_rating": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1119,6 +1129,12 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 		result["tunnel_non_http"] = flattenFirewallProfileProtocolOptionsHttpTunnelNonHttp(i["tunnel-non-http"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "h2c"
+	if _, ok := i["h2c"]; ok {
+
+		result["h2c"] = flattenFirewallProfileProtocolOptionsHttpH2C(i["h2c"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
 
@@ -1189,6 +1205,12 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 	if _, ok := i["ssl-offloaded"]; ok {
 
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsHttpSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "address_ip_rating"
+	if _, ok := i["address-ip-rating"]; ok {
+
+		result["address_ip_rating"] = flattenFirewallProfileProtocolOptionsHttpAddressIpRating(i["address-ip-rating"], d, pre_append, sv)
 	}
 
 	lastresult := []map[string]interface{}{result}
@@ -1263,6 +1285,10 @@ func flattenFirewallProfileProtocolOptionsHttpTunnelNonHttp(v interface{}, d *sc
 	return v
 }
 
+func flattenFirewallProfileProtocolOptionsHttpH2C(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileProtocolOptionsHttpOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1308,6 +1334,10 @@ func flattenFirewallProfileProtocolOptionsHttpTcpWindowSize(v interface{}, d *sc
 }
 
 func flattenFirewallProfileProtocolOptionsHttpSslOffloaded(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileProtocolOptionsHttpAddressIpRating(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2782,6 +2812,11 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 
 		result["tunnel-non-http"], _ = expandFirewallProfileProtocolOptionsHttpTunnelNonHttp(d, i["tunnel_non_http"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "h2c"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["h2c"], _ = expandFirewallProfileProtocolOptionsHttpH2C(d, i["h2c"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2841,6 +2876,11 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsHttpSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "address_ip_rating"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["address-ip-rating"], _ = expandFirewallProfileProtocolOptionsHttpAddressIpRating(d, i["address_ip_rating"], pre_append, sv)
 	}
 
 	return result, nil
@@ -2914,6 +2954,10 @@ func expandFirewallProfileProtocolOptionsHttpTunnelNonHttp(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandFirewallProfileProtocolOptionsHttpH2C(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileProtocolOptionsHttpOversizeLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2959,6 +3003,10 @@ func expandFirewallProfileProtocolOptionsHttpTcpWindowSize(d *schema.ResourceDat
 }
 
 func expandFirewallProfileProtocolOptionsHttpSslOffloaded(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileProtocolOptionsHttpAddressIpRating(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

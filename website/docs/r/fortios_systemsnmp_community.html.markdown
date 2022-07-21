@@ -50,6 +50,8 @@ The following arguments are supported:
 * `trap_v2c_lport` - SNMP v2c trap local port (default = 162).
 * `trap_v2c_rport` - SNMP v2c trap remote port (default = 162).
 * `events` - SNMP trap events.
+* `mib_view` - SNMP access control MIB view.
+* `vdoms` - SNMP access control VDOMs. The structure of `vdoms` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -68,6 +70,10 @@ The `hosts6` block supports:
 * `ipv6` - SNMP manager IPv6 address prefix.
 * `ha_direct` - Enable/disable direct management of HA cluster members. Valid values: `enable`, `disable`.
 * `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both. Valid values: `any`, `query`, `trap`.
+
+The `vdoms` block supports:
+
+* `name` - VDOM name
 
 
 ## Attribute Reference

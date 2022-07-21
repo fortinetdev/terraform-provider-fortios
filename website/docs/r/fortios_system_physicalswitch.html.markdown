@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_physicalswitch
-Configure physical switches. Applies to FortiOS Version `>= 7.0.4`.
+Configure physical switches. Applies to FortiOS Version `7.0.4`.
 
 ## Argument Reference
 

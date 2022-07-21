@@ -58,6 +58,11 @@ func resourceSwitchController8021XSettings() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"mab_reauth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -172,6 +177,10 @@ func flattenSwitchController8021XSettingsTxPeriod(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenSwitchController8021XSettingsMabReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -199,6 +208,12 @@ func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("mab_reauth", flattenSwitchController8021XSettingsMabReauth(o["mab-reauth"], d, "mab_reauth", sv)); err != nil {
+		if !fortiAPIPatch(o["mab-reauth"]) {
+			return fmt.Errorf("Error reading mab_reauth: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -221,6 +236,10 @@ func expandSwitchController8021XSettingsMaxReauthAttempt(d *schema.ResourceData,
 }
 
 func expandSwitchController8021XSettingsTxPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsMabReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -279,6 +298,20 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 				return &obj, err
 			} else if t != nil {
 				obj["tx-period"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mab_reauth"); ok {
+		if setArgNil {
+			obj["mab-reauth"] = nil
+		} else {
+
+			t, err := expandSwitchController8021XSettingsMabReauth(d, v, "mab_reauth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mab-reauth"] = t
 			}
 		}
 	}

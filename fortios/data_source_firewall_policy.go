@@ -339,6 +339,14 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"policy_expiry": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"policy_expiry_date": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"service": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -428,6 +436,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"emailfilter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"dlp_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1786,6 +1798,14 @@ func dataSourceFlattenFirewallPolicyScheduleTimeout(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyPolicyExpiry(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyPolicyExpiryDate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyService(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1899,6 +1919,10 @@ func dataSourceFlattenFirewallPolicyDnsfilterProfile(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenFirewallPolicyEmailfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyDlpProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2992,6 +3016,18 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("policy_expiry", dataSourceFlattenFirewallPolicyPolicyExpiry(o["policy-expiry"], d, "policy_expiry")); err != nil {
+		if !fortiAPIPatch(o["policy-expiry"]) {
+			return fmt.Errorf("Error reading policy_expiry: %v", err)
+		}
+	}
+
+	if err = d.Set("policy_expiry_date", dataSourceFlattenFirewallPolicyPolicyExpiryDate(o["policy-expiry-date"], d, "policy_expiry_date")); err != nil {
+		if !fortiAPIPatch(o["policy-expiry-date"]) {
+			return fmt.Errorf("Error reading policy_expiry_date: %v", err)
+		}
+	}
+
 	if err = d.Set("service", dataSourceFlattenFirewallPolicyService(o["service"], d, "service")); err != nil {
 		if !fortiAPIPatch(o["service"]) {
 			return fmt.Errorf("Error reading service: %v", err)
@@ -3115,6 +3151,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("emailfilter_profile", dataSourceFlattenFirewallPolicyEmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile")); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", dataSourceFlattenFirewallPolicyDlpProfile(o["dlp-profile"], d, "dlp_profile")); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
 		}
 	}
 

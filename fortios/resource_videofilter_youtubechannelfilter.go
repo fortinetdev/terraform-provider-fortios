@@ -86,6 +86,11 @@ func resourceVideofilterYoutubeChannelFilter() *schema.Resource {
 					},
 				},
 			},
+			"override_category": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -310,6 +315,10 @@ func flattenVideofilterYoutubeChannelFilterEntriesChannelId(v interface{}, d *sc
 	return v
 }
 
+func flattenVideofilterYoutubeChannelFilterOverrideCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVideofilterYoutubeChannelFilterLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -354,6 +363,12 @@ func refreshObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, o map[
 					return fmt.Errorf("Error reading entries: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("override_category", flattenVideofilterYoutubeChannelFilterOverrideCategory(o["override-category"], d, "override_category", sv)); err != nil {
+		if !fortiAPIPatch(o["override-category"]) {
+			return fmt.Errorf("Error reading override_category: %v", err)
 		}
 	}
 
@@ -450,6 +465,10 @@ func expandVideofilterYoutubeChannelFilterEntriesChannelId(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandVideofilterYoutubeChannelFilterOverrideCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVideofilterYoutubeChannelFilterLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -504,6 +523,16 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 			return &obj, err
 		} else if t != nil {
 			obj["entries"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("override_category"); ok {
+
+		t, err := expandVideofilterYoutubeChannelFilterOverrideCategory(d, v, "override_category", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["override-category"] = t
 		}
 	}
 

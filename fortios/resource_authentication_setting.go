@@ -47,6 +47,33 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"update_time": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"persistent_cookie": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ip_auth_cookie": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cookie_max_age": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(30, 10080),
+				Optional:     true,
+				Computed:     true,
+			},
+			"cookie_refresh_div": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(2, 4),
+				Optional:     true,
+				Computed:     true,
+			},
 			"captive_portal_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -252,6 +279,26 @@ func flattenAuthenticationSettingSsoAuthScheme(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenAuthenticationSettingUpdateTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingPersistentCookie(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingIpAuthCookie(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingCookieMaxAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSettingCookieRefreshDiv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationSettingCaptivePortalType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -401,6 +448,36 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("update_time", flattenAuthenticationSettingUpdateTime(o["update-time"], d, "update_time", sv)); err != nil {
+		if !fortiAPIPatch(o["update-time"]) {
+			return fmt.Errorf("Error reading update_time: %v", err)
+		}
+	}
+
+	if err = d.Set("persistent_cookie", flattenAuthenticationSettingPersistentCookie(o["persistent-cookie"], d, "persistent_cookie", sv)); err != nil {
+		if !fortiAPIPatch(o["persistent-cookie"]) {
+			return fmt.Errorf("Error reading persistent_cookie: %v", err)
+		}
+	}
+
+	if err = d.Set("ip_auth_cookie", flattenAuthenticationSettingIpAuthCookie(o["ip-auth-cookie"], d, "ip_auth_cookie", sv)); err != nil {
+		if !fortiAPIPatch(o["ip-auth-cookie"]) {
+			return fmt.Errorf("Error reading ip_auth_cookie: %v", err)
+		}
+	}
+
+	if err = d.Set("cookie_max_age", flattenAuthenticationSettingCookieMaxAge(o["cookie-max-age"], d, "cookie_max_age", sv)); err != nil {
+		if !fortiAPIPatch(o["cookie-max-age"]) {
+			return fmt.Errorf("Error reading cookie_max_age: %v", err)
+		}
+	}
+
+	if err = d.Set("cookie_refresh_div", flattenAuthenticationSettingCookieRefreshDiv(o["cookie-refresh-div"], d, "cookie_refresh_div", sv)); err != nil {
+		if !fortiAPIPatch(o["cookie-refresh-div"]) {
+			return fmt.Errorf("Error reading cookie_refresh_div: %v", err)
+		}
+	}
+
 	if err = d.Set("captive_portal_type", flattenAuthenticationSettingCaptivePortalType(o["captive-portal-type"], d, "captive_portal_type", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-type"]) {
 			return fmt.Errorf("Error reading captive_portal_type: %v", err)
@@ -519,6 +596,26 @@ func expandAuthenticationSettingActiveAuthScheme(d *schema.ResourceData, v inter
 }
 
 func expandAuthenticationSettingSsoAuthScheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingUpdateTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingPersistentCookie(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingIpAuthCookie(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingCookieMaxAge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingCookieRefreshDiv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -661,6 +758,76 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				return &obj, err
 			} else if t != nil {
 				obj["sso-auth-scheme"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("update_time"); ok {
+		if setArgNil {
+			obj["update-time"] = nil
+		} else {
+
+			t, err := expandAuthenticationSettingUpdateTime(d, v, "update_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-time"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("persistent_cookie"); ok {
+		if setArgNil {
+			obj["persistent-cookie"] = nil
+		} else {
+
+			t, err := expandAuthenticationSettingPersistentCookie(d, v, "persistent_cookie", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["persistent-cookie"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ip_auth_cookie"); ok {
+		if setArgNil {
+			obj["ip-auth-cookie"] = nil
+		} else {
+
+			t, err := expandAuthenticationSettingIpAuthCookie(d, v, "ip_auth_cookie", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip-auth-cookie"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("cookie_max_age"); ok {
+		if setArgNil {
+			obj["cookie-max-age"] = nil
+		} else {
+
+			t, err := expandAuthenticationSettingCookieMaxAge(d, v, "cookie_max_age", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cookie-max-age"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("cookie_refresh_div"); ok {
+		if setArgNil {
+			obj["cookie-refresh-div"] = nil
+		} else {
+
+			t, err := expandAuthenticationSettingCookieRefreshDiv(d, v, "cookie_refresh_div", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cookie-refresh-div"] = t
 			}
 		}
 	}

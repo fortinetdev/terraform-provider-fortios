@@ -35,6 +35,8 @@ The following attributes are exported:
 * `trap_v2c_lport` - SNMP v2c trap local port (default = 162).
 * `trap_v2c_rport` - SNMP v2c trap remote port (default = 162).
 * `events` - SNMP trap events.
+* `mib_view` - SNMP access control MIB view.
+* `vdoms` - SNMP access control VDOMs. The structure of `vdoms` block is documented below.
 
 The `hosts` block contains:
 
@@ -51,4 +53,8 @@ The `hosts6` block contains:
 * `ipv6` - SNMP manager IPv6 address prefix.
 * `ha_direct` - Enable/disable direct management of HA cluster members.
 * `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
+
+The `vdoms` block contains:
+
+* `name` - VDOM name
 

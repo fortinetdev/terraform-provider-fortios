@@ -329,6 +329,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_workflow_management": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_cdn_usage": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -641,6 +646,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"admin_host": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"admin_https_redirect": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -742,6 +753,12 @@ func resourceSystemGlobal() *schema.Resource {
 			"auth_https_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auth_ike_saml_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -931,6 +948,16 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipv6_allow_multicast_probe": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ipv6_allow_local_in_slient_drop": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"csr_ca_attribute": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1088,6 +1115,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_fortiguard_resource_fetch": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"arp_max_entry": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -1150,6 +1182,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipsec_round_robin": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ipsec_asic_offload": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1186,7 +1223,7 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"user_device_store_max_unified_mem": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(21052743, 1682668748),
+				ValidateFunc: validation.IntBetween(21052579, 1682668748),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1305,6 +1342,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"internet_service_database": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"early_tcp_npu_session": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1631,6 +1673,10 @@ func flattenSystemGlobalGuiForticareRegistrationSetupWarning(v interface{}, d *s
 	return v
 }
 
+func flattenSystemGlobalGuiWorkflowManagement(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalGuiCdnUsage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1867,6 +1913,10 @@ func flattenSystemGlobalAdminSport(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemGlobalAdminHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalAdminHttpsRedirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1940,6 +1990,10 @@ func flattenSystemGlobalAuthHttpPort(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemGlobalAuthHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalAuthIkeSamlPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2090,6 +2144,14 @@ func flattenSystemGlobalIpv6AllowAnycastProbe(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemGlobalIpv6AllowMulticastProbe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalIpv6AllowLocalInSlientDrop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalCsrCaAttribute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2206,6 +2268,10 @@ func flattenSystemGlobalGuiRestApiCache(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemGlobalGuiFortiguardResourceFetch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalArpMaxEntry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2247,6 +2313,10 @@ func flattenSystemGlobalBrFdbMaxEntry(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemGlobalMaxRouteCacheSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalIpsecRoundRobin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2363,6 +2433,10 @@ func flattenSystemGlobalManagementPortUseAdminSport(v interface{}, d *schema.Res
 }
 
 func flattenSystemGlobalInternetServiceDatabase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalEarlyTcpNpuSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2702,6 +2776,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("gui_forticare_registration_setup_warning", flattenSystemGlobalGuiForticareRegistrationSetupWarning(o["gui-forticare-registration-setup-warning"], d, "gui_forticare_registration_setup_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-forticare-registration-setup-warning"]) {
 			return fmt.Errorf("Error reading gui_forticare_registration_setup_warning: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_workflow_management", flattenSystemGlobalGuiWorkflowManagement(o["gui-workflow-management"], d, "gui_workflow_management", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-workflow-management"]) {
+			return fmt.Errorf("Error reading gui_workflow_management: %v", err)
 		}
 	}
 
@@ -3059,6 +3139,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("admin_host", flattenSystemGlobalAdminHost(o["admin-host"], d, "admin_host", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-host"]) {
+			return fmt.Errorf("Error reading admin_host: %v", err)
+		}
+	}
+
 	if err = d.Set("admin_https_redirect", flattenSystemGlobalAdminHttpsRedirect(o["admin-https-redirect"], d, "admin_https_redirect", sv)); err != nil {
 		if !fortiAPIPatch(o["admin-https-redirect"]) {
 			return fmt.Errorf("Error reading admin_https_redirect: %v", err)
@@ -3170,6 +3256,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("auth_https_port", flattenSystemGlobalAuthHttpsPort(o["auth-https-port"], d, "auth_https_port", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-https-port"]) {
 			return fmt.Errorf("Error reading auth_https_port: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_ike_saml_port", flattenSystemGlobalAuthIkeSamlPort(o["auth-ike-saml-port"], d, "auth_ike_saml_port", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-ike-saml-port"]) {
+			return fmt.Errorf("Error reading auth_ike_saml_port: %v", err)
 		}
 	}
 
@@ -3383,6 +3475,18 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ipv6_allow_multicast_probe", flattenSystemGlobalIpv6AllowMulticastProbe(o["ipv6-allow-multicast-probe"], d, "ipv6_allow_multicast_probe", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-allow-multicast-probe"]) {
+			return fmt.Errorf("Error reading ipv6_allow_multicast_probe: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv6_allow_local_in_slient_drop", flattenSystemGlobalIpv6AllowLocalInSlientDrop(o["ipv6-allow-local-in-slient-drop"], d, "ipv6_allow_local_in_slient_drop", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-allow-local-in-slient-drop"]) {
+			return fmt.Errorf("Error reading ipv6_allow_local_in_slient_drop: %v", err)
+		}
+	}
+
 	if err = d.Set("csr_ca_attribute", flattenSystemGlobalCsrCaAttribute(o["csr-ca-attribute"], d, "csr_ca_attribute", sv)); err != nil {
 		if !fortiAPIPatch(o["csr-ca-attribute"]) {
 			return fmt.Errorf("Error reading csr_ca_attribute: %v", err)
@@ -3557,6 +3661,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("gui_fortiguard_resource_fetch", flattenSystemGlobalGuiFortiguardResourceFetch(o["gui-fortiguard-resource-fetch"], d, "gui_fortiguard_resource_fetch", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-fortiguard-resource-fetch"]) {
+			return fmt.Errorf("Error reading gui_fortiguard_resource_fetch: %v", err)
+		}
+	}
+
 	if err = d.Set("arp_max_entry", flattenSystemGlobalArpMaxEntry(o["arp-max-entry"], d, "arp_max_entry", sv)); err != nil {
 		if !fortiAPIPatch(o["arp-max-entry"]) {
 			return fmt.Errorf("Error reading arp_max_entry: %v", err)
@@ -3620,6 +3730,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("max_route_cache_size", flattenSystemGlobalMaxRouteCacheSize(o["max-route-cache-size"], d, "max_route_cache_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-route-cache-size"]) {
 			return fmt.Errorf("Error reading max_route_cache_size: %v", err)
+		}
+	}
+
+	if err = d.Set("ipsec_round_robin", flattenSystemGlobalIpsecRoundRobin(o["ipsec-round-robin"], d, "ipsec_round_robin", sv)); err != nil {
+		if !fortiAPIPatch(o["ipsec-round-robin"]) {
+			return fmt.Errorf("Error reading ipsec_round_robin: %v", err)
 		}
 	}
 
@@ -3794,6 +3910,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("internet_service_database", flattenSystemGlobalInternetServiceDatabase(o["internet-service-database"], d, "internet_service_database", sv)); err != nil {
 		if !fortiAPIPatch(o["internet-service-database"]) {
 			return fmt.Errorf("Error reading internet_service_database: %v", err)
+		}
+	}
+
+	if err = d.Set("early_tcp_npu_session", flattenSystemGlobalEarlyTcpNpuSession(o["early-tcp-npu-session"], d, "early_tcp_npu_session", sv)); err != nil {
+		if !fortiAPIPatch(o["early-tcp-npu-session"]) {
+			return fmt.Errorf("Error reading early_tcp_npu_session: %v", err)
 		}
 	}
 
@@ -4027,6 +4149,10 @@ func expandSystemGlobalGuiAllowDefaultHostname(d *schema.ResourceData, v interfa
 }
 
 func expandSystemGlobalGuiForticareRegistrationSetupWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalGuiWorkflowManagement(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4266,6 +4392,10 @@ func expandSystemGlobalAdminSport(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandSystemGlobalAdminHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalAdminHttpsRedirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4339,6 +4469,10 @@ func expandSystemGlobalAuthHttpPort(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemGlobalAuthHttpsPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalAuthIkeSamlPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4482,6 +4616,14 @@ func expandSystemGlobalIpv6AllowAnycastProbe(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemGlobalIpv6AllowMulticastProbe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalIpv6AllowLocalInSlientDrop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalCsrCaAttribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4598,6 +4740,10 @@ func expandSystemGlobalGuiRestApiCache(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemGlobalGuiFortiguardResourceFetch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalArpMaxEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4639,6 +4785,10 @@ func expandSystemGlobalBrFdbMaxEntry(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSystemGlobalMaxRouteCacheSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalIpsecRoundRobin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4755,6 +4905,10 @@ func expandSystemGlobalManagementPortUseAdminSport(d *schema.ResourceData, v int
 }
 
 func expandSystemGlobalInternetServiceDatabase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalEarlyTcpNpuSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5541,6 +5695,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["gui-forticare-registration-setup-warning"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("gui_workflow_management"); ok {
+		if setArgNil {
+			obj["gui-workflow-management"] = nil
+		} else {
+
+			t, err := expandSystemGlobalGuiWorkflowManagement(d, v, "gui_workflow_management", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-workflow-management"] = t
 			}
 		}
 	}
@@ -6371,6 +6539,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("admin_host"); ok {
+		if setArgNil {
+			obj["admin-host"] = nil
+		} else {
+
+			t, err := expandSystemGlobalAdminHost(d, v, "admin_host", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-host"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("admin_https_redirect"); ok {
 		if setArgNil {
 			obj["admin-https-redirect"] = nil
@@ -6633,6 +6815,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["auth-https-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("auth_ike_saml_port"); ok {
+		if setArgNil {
+			obj["auth-ike-saml-port"] = nil
+		} else {
+
+			t, err := expandSystemGlobalAuthIkeSamlPort(d, v, "auth_ike_saml_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ike-saml-port"] = t
 			}
 		}
 	}
@@ -7127,6 +7323,34 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("ipv6_allow_multicast_probe"); ok {
+		if setArgNil {
+			obj["ipv6-allow-multicast-probe"] = nil
+		} else {
+
+			t, err := expandSystemGlobalIpv6AllowMulticastProbe(d, v, "ipv6_allow_multicast_probe", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-allow-multicast-probe"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ipv6_allow_local_in_slient_drop"); ok {
+		if setArgNil {
+			obj["ipv6-allow-local-in-slient-drop"] = nil
+		} else {
+
+			t, err := expandSystemGlobalIpv6AllowLocalInSlientDrop(d, v, "ipv6_allow_local_in_slient_drop", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-allow-local-in-slient-drop"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("csr_ca_attribute"); ok {
 		if setArgNil {
 			obj["csr-ca-attribute"] = nil
@@ -7533,6 +7757,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("gui_fortiguard_resource_fetch"); ok {
+		if setArgNil {
+			obj["gui-fortiguard-resource-fetch"] = nil
+		} else {
+
+			t, err := expandSystemGlobalGuiFortiguardResourceFetch(d, v, "gui_fortiguard_resource_fetch", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-fortiguard-resource-fetch"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("arp_max_entry"); ok {
 		if setArgNil {
 			obj["arp-max-entry"] = nil
@@ -7683,6 +7921,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["max-route-cache-size"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ipsec_round_robin"); ok {
+		if setArgNil {
+			obj["ipsec-round-robin"] = nil
+		} else {
+
+			t, err := expandSystemGlobalIpsecRoundRobin(d, v, "ipsec_round_robin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-round-robin"] = t
 			}
 		}
 	}
@@ -8089,6 +8341,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["internet-service-database"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("early_tcp_npu_session"); ok {
+		if setArgNil {
+			obj["early-tcp-npu-session"] = nil
+		} else {
+
+			t, err := expandSystemGlobalEarlyTcpNpuSession(d, v, "early_tcp_npu_session", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["early-tcp-npu-session"] = t
 			}
 		}
 	}

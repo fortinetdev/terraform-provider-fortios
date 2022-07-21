@@ -21,6 +21,7 @@ The following attributes are exported:
 
 * `status` - Enable/disable FortiSandbox.
 * `forticloud` - Enable/disable FortiSandbox Cloud.
+* `inline_scan` - Enable/disable FortiSandbox inline scan.
 * `server` - IPv4 or IPv6 address of the remote FortiSandbox.
 * `source_ip` - Source IP address for communications to FortiSandbox.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.

@@ -183,6 +183,7 @@ The following attributes are exported:
 * `auth_portal_addr` - Address of captive portal.
 * `security_exempt_list` - Name of security-exempt-list.
 * `security_groups` - User groups that can authenticate with the captive portal. The structure of `security_groups` block is documented below.
+* `ike_saml_server` - Configure IKE authentication SAML server.
 * `stp` - Enable/disable STP.
 * `stp_ha_secondary` - Control STP behaviour on HA secondary.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface.
@@ -239,6 +240,12 @@ The following attributes are exported:
 * `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `eap_supplicant` - Enable/disable EAP-Supplicant.
+* `eap_method` - EAP method.
+* `eap_identity` - EAP identity.
+* `eap_password` - EAP password.
+* `eap_ca_cert` - EAP CA certificate name.
+* `eap_user_cert` - EAP user certificate name.
 * `forward_error_correction` - Configure forward error correction (FEC).
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
 

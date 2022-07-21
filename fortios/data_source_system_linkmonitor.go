@@ -43,6 +43,10 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -260,6 +264,10 @@ func dataSourceFlattenSystemLinkMonitorSrcintf(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemLinkMonitorServerConfig(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServerType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -535,6 +543,12 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 	if err = d.Set("server_config", dataSourceFlattenSystemLinkMonitorServerConfig(o["server-config"], d, "server_config")); err != nil {
 		if !fortiAPIPatch(o["server-config"]) {
 			return fmt.Errorf("Error reading server_config: %v", err)
+		}
+	}
+
+	if err = d.Set("server_type", dataSourceFlattenSystemLinkMonitorServerType(o["server-type"], d, "server_type")); err != nil {
+		if !fortiAPIPatch(o["server-type"]) {
+			return fmt.Errorf("Error reading server_type: %v", err)
 		}
 	}
 

@@ -161,6 +161,11 @@ func resourceRouterOspf() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"restart_on_topology_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"area": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -906,6 +911,10 @@ func flattenRouterOspfRestartMode(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenRouterOspfRestartPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfRestartOnTopologyChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2376,6 +2385,12 @@ func refreshObjectRouterOspf(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("restart_on_topology_change", flattenRouterOspfRestartOnTopologyChange(o["restart-on-topology-change"], d, "restart_on_topology_change", sv)); err != nil {
+		if !fortiAPIPatch(o["restart-on-topology-change"]) {
+			return fmt.Errorf("Error reading restart_on_topology_change: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("area", flattenRouterOspfArea(o["area"], d, "area", sv)); err != nil {
 			if !fortiAPIPatch(o["area"]) {
@@ -2602,6 +2617,10 @@ func expandRouterOspfRestartMode(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandRouterOspfRestartPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfRestartOnTopologyChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4092,6 +4111,20 @@ func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["restart-period"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("restart_on_topology_change"); ok {
+		if setArgNil {
+			obj["restart-on-topology-change"] = nil
+		} else {
+
+			t, err := expandRouterOspfRestartOnTopologyChange(d, v, "restart_on_topology_change", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["restart-on-topology-change"] = t
 			}
 		}
 	}

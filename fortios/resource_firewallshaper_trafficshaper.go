@@ -43,13 +43,13 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 			},
 			"guaranteed_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 16776000),
+				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
 				Computed:     true,
 			},
 			"maximum_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 16776000),
+				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -85,7 +85,7 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 			},
 			"exceed_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 16776000),
+				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
 				Computed:     true,
 			},

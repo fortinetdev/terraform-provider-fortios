@@ -52,6 +52,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_ip_overlap": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auto_connect": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -421,13 +426,13 @@ func resourceVpnSslWebPortal() *schema.Resource {
 									},
 									"width": &schema.Schema{
 										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(640, 65535),
+										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
 										Computed:     true,
 									},
 									"height": &schema.Schema{
 										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(480, 65535),
+										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
 										Computed:     true,
 									},
@@ -518,6 +523,18 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"default_window_width": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"default_window_height": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
 			},
 			"host_check": &schema.Schema{
 				Type:     schema.TypeString,
@@ -844,6 +861,10 @@ func flattenVpnSslWebPortalTunnelMode(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenVpnSslWebPortalIpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslWebPortalDhcpIpOverlap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1634,6 +1655,14 @@ func flattenVpnSslWebPortalClipboard(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenVpnSslWebPortalDefaultWindowWidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslWebPortalDefaultWindowHeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnSslWebPortalHostCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2021,6 +2050,12 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("dhcp_ip_overlap", flattenVpnSslWebPortalDhcpIpOverlap(o["dhcp-ip-overlap"], d, "dhcp_ip_overlap", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-ip-overlap"]) {
+			return fmt.Errorf("Error reading dhcp_ip_overlap: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_connect", flattenVpnSslWebPortalAutoConnect(o["auto-connect"], d, "auto_connect", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-connect"]) {
 			return fmt.Errorf("Error reading auto_connect: %v", err)
@@ -2353,6 +2388,18 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("default_window_width", flattenVpnSslWebPortalDefaultWindowWidth(o["default-window-width"], d, "default_window_width", sv)); err != nil {
+		if !fortiAPIPatch(o["default-window-width"]) {
+			return fmt.Errorf("Error reading default_window_width: %v", err)
+		}
+	}
+
+	if err = d.Set("default_window_height", flattenVpnSslWebPortalDefaultWindowHeight(o["default-window-height"], d, "default_window_height", sv)); err != nil {
+		if !fortiAPIPatch(o["default-window-height"]) {
+			return fmt.Errorf("Error reading default_window_height: %v", err)
+		}
+	}
+
 	if err = d.Set("host_check", flattenVpnSslWebPortalHostCheck(o["host-check"], d, "host_check", sv)); err != nil {
 		if !fortiAPIPatch(o["host-check"]) {
 			return fmt.Errorf("Error reading host_check: %v", err)
@@ -2519,6 +2566,10 @@ func expandVpnSslWebPortalTunnelMode(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandVpnSslWebPortalIpMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslWebPortalDhcpIpOverlap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3230,6 +3281,14 @@ func expandVpnSslWebPortalClipboard(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandVpnSslWebPortalDefaultWindowWidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslWebPortalDefaultWindowHeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnSslWebPortalHostCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3574,6 +3633,16 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["ip-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_ip_overlap"); ok {
+
+		t, err := expandVpnSslWebPortalDhcpIpOverlap(d, v, "dhcp_ip_overlap", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-ip-overlap"] = t
 		}
 	}
 
@@ -4044,6 +4113,26 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["clipboard"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("default_window_width"); ok {
+
+		t, err := expandVpnSslWebPortalDefaultWindowWidth(d, v, "default_window_width", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-window-width"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("default_window_height"); ok {
+
+		t, err := expandVpnSslWebPortalDefaultWindowHeight(d, v, "default_window_height", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-window-height"] = t
 		}
 	}
 

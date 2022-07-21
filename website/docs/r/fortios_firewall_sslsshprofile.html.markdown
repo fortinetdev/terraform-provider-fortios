@@ -76,6 +76,7 @@ The following arguments are supported:
 * `untrusted_caname` - Untrusted CA certificate used by SSL Inspection.
 * `server_cert` - Certificate used by SSL Inspection to replace server certificate.
 * `ssl_server` - SSL servers. The structure of `ssl_server` block is documented below.
+* `ssl_exemption_ip_rating` - Enable/disable IP based URL rating. Valid values: `enable`, `disable`.
 * `ssl_anomaly_log` - Enable/disable logging SSL anomalies. Valid values: `disable`, `enable`.
 * `ssl_exemption_log` - Enable/disable logging SSL exemptions. Valid values: `disable`, `enable`.
 * `ssl_anomalies_log` - Enable/disable logging SSL anomalies. Valid values: `disable`, `enable`.

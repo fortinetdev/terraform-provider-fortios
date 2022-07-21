@@ -71,6 +71,18 @@ func dataSourceRouterOspf6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"restart_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"restart_period": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"restart_on_topology_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"area": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -512,6 +524,18 @@ func dataSourceFlattenRouterOspf6SpfTimers(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenRouterOspf6Bfd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6RestartMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6RestartPeriod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6RestartOnTopologyChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1535,6 +1559,24 @@ func dataSourceRefreshObjectRouterOspf6(d *schema.ResourceData, o map[string]int
 	if err = d.Set("bfd", dataSourceFlattenRouterOspf6Bfd(o["bfd"], d, "bfd")); err != nil {
 		if !fortiAPIPatch(o["bfd"]) {
 			return fmt.Errorf("Error reading bfd: %v", err)
+		}
+	}
+
+	if err = d.Set("restart_mode", dataSourceFlattenRouterOspf6RestartMode(o["restart-mode"], d, "restart_mode")); err != nil {
+		if !fortiAPIPatch(o["restart-mode"]) {
+			return fmt.Errorf("Error reading restart_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("restart_period", dataSourceFlattenRouterOspf6RestartPeriod(o["restart-period"], d, "restart_period")); err != nil {
+		if !fortiAPIPatch(o["restart-period"]) {
+			return fmt.Errorf("Error reading restart_period: %v", err)
+		}
+	}
+
+	if err = d.Set("restart_on_topology_change", dataSourceFlattenRouterOspf6RestartOnTopologyChange(o["restart-on-topology-change"], d, "restart_on_topology_change")); err != nil {
+		if !fortiAPIPatch(o["restart-on-topology-change"]) {
+			return fmt.Errorf("Error reading restart_on_topology_change: %v", err)
 		}
 	}
 

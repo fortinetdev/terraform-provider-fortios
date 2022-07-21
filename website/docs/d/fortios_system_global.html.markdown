@@ -86,6 +86,7 @@ The following attributes are exported:
 * `hostname` - FortiGate unit's hostname. Most models will truncate names longer than 24 characters. Some models support hostnames up to 35 characters.
 * `gui_allow_default_hostname` - Enable/disable the GUI warning about using a default hostname
 * `gui_forticare_registration_setup_warning` - Enable/disable the FortiCare registration setup warning on the GUI.
+* `gui_workflow_management` - Enable/disable Workflow management features on the GUI.
 * `gui_cdn_usage` - Enable/disable Load GUI static files from a CDN.
 * `alias` - Alias for your FortiGate unit.
 * `strong_crypto` - Enable to use strong encryption and only allow strong ciphers (AES, 3DES) and digest (SHA1) for HTTPS/SSH/TLS/SSL functions.
@@ -145,6 +146,7 @@ The following attributes are exported:
 * `edit_vdom_prompt` - Enable/disable edit new VDOM prompt.
 * `admin_port` - Administrative access port for HTTP. (1 - 65535, default = 80).
 * `admin_sport` - Administrative access port for HTTPS. (1 - 65535, default = 443).
+* `admin_host` - Administrative host for HTTP and HTTPS. When set, will be used in lieu of the client's Host header for any redirection.
 * `admin_https_redirect` - Enable/disable redirection of HTTP administration access to HTTPS.
 * `admin_hsts_max_age` - HTTPS Strict-Transport-Security header max-age in seconds. A value of 0 will reset any HSTS records in the browser.When admin-https-redirect is disabled the header max-age will be 0.
 * `admin_ssh_password` - Enable/disable password authentication for SSH admin access.
@@ -164,6 +166,7 @@ The following attributes are exported:
 * `wifi_ca_certificate` - CA certificate that verifies the WiFi certificate.
 * `auth_http_port` - User authentication HTTP port. (1 - 65535, default = 80).
 * `auth_https_port` - User authentication HTTPS port. (1 - 65535, default = 443).
+* `auth_ike_saml_port` - User IKE SAML authentication port (0 - 65535, default = 1001).
 * `auth_keepalive` - Enable to prevent user authentication sessions from timing out when idle.
 * `policy_auth_concurrent` - Number of concurrent firewall use logins from the same user (1 - 100, default = 0 means no limit).
 * `auth_session_limit` - Action to take when the number of allowed user authenticated sessions is reached.
@@ -199,6 +202,8 @@ The following attributes are exported:
 * `ipsec_hmac_offload` - Enable/disable offloading (hardware acceleration) of HMAC processing for IPsec VPN.
 * `ipv6_accept_dad` - Enable/disable acceptance of IPv6 Duplicate Address Detection (DAD).
 * `ipv6_allow_anycast_probe` - Enable/disable IPv6 address probe through Anycast.
+* `ipv6_allow_multicast_probe` - Enable/disable IPv6 address probe through Multicast.
+* `ipv6_allow_local_in_slient_drop` - Enable/disable silent drop of IPv6 local-in traffic.
 * `csr_ca_attribute` - Enable/disable the CA attribute in certificates. Some CA servers reject CSRs that have the CA attribute.
 * `wimax_4g_usb` - Enable/disable comparability with WiMAX 4G USB devices.
 * `cert_chain_max` - Maximum number of certificates that can be traversed in a certificate chain.
@@ -228,6 +233,7 @@ The following attributes are exported:
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs.
 * `log_ssl_connection` - Enable/disable logging of SSL connection events.
 * `gui_rest_api_cache` - Enable/disable REST API result caching on FortiGate.
+* `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments.
 * `arp_max_entry` - Maximum number of dynamically learned MAC addresses that can be added to the ARP table (131072 - 2147483647, default = 131072).
 * `ha_affinity` - Affinity setting for HA daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `cmdbsvr_affinity` - Affinity setting for cmdbsvr (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
@@ -239,6 +245,7 @@ The following attributes are exported:
 * `ndp_max_entry` - Maximum number of NDP table entries (set to 65,536 or higher; if set to 0, kernel holds 65,536 entries).
 * `br_fdb_max_entry` - Maximum number of bridge forwarding database (FDB) entries.
 * `max_route_cache_size` - Maximum number of IP route cache entries (0 - 2147483647).
+* `ipsec_round_robin` - Enable/disable round-robin redistribution to multiple CPUs for IPsec VPN traffic.
 * `ipsec_asic_offload` - Enable/disable ASIC offloading (hardware acceleration) for IPsec VPN traffic. Hardware acceleration can offload IPsec VPN sessions and accelerate encryption and decryption.
 * `ipsec_soft_dec_async` - Enable/disable software decryption asynchronization (using multiple CPUs to do decryption) for IPsec VPN traffic.
 * `ike_embryonic_limit` - Maximum number of IPsec tunnels to negotiate simultaneously.
@@ -268,4 +275,5 @@ The following attributes are exported:
 * `management_port` - Overriding port for management connection (Overrides admin port).
 * `management_port_use_admin_sport` - Enable/disable use of the admin-sport setting for the management port. If disabled, FortiGate will allow user to specify management-port.
 * `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use.
+* `early_tcp_npu_session` - Enable/disable early TCP NPU session.
 

@@ -16,8 +16,11 @@ The following arguments are supported:
 * `echo_interval` - Time between echo requests sent by the managed WTP, AP, or FortiAP (1 - 255 sec, default = 30).
 * `discovery_interval` - Time between discovery requests (2 - 180 sec, default = 5).
 * `client_idle_timeout` - Time after which a client is considered idle and times out (20 - 3600 sec, default = 300, 0 for no timeout).
+* `client_idle_rehome_timeout` - Time after which a client is considered idle and disconnected from the home controller (2 - 3600 sec, default = 20, 0 for no timeout).
+* `auth_timeout` - Time after which a client is considered failed in RADIUS authentication and times out (5 - 30 sec, default = 5).
 * `rogue_ap_log` - Time between logging rogue AP messages if periodic rogue AP logging is configured (0 - 1440 min, default = 0).
 * `fake_ap_log` - Time between recording logs about fake APs if periodic fake AP logging is configured (0 - 1440 min, default = 1).
+* `rogue_ap_cleanup` - Time period in minutes to keep rogue AP after it is gone (default = 0).
 * `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 1800).
 * `darrp_day` - Weekday on which to run DARRP optimization. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `darrp_time` - Time at which DARRP optimizations run (you can add up to 8 times). The structure of `darrp_time` block is documented below.

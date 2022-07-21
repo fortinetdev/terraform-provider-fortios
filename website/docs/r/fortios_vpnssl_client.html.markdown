@@ -27,6 +27,7 @@ The following arguments are supported:
 * `source_ip` - IPv4 or IPv6 address to use as a source for the SSL-VPN connection to the server.
 * `distance` - Distance for routes added by SSL-VPN (1 - 255).
 * `priority` - Priority for routes added by SSL-VPN (0 - 4294967295).
+* `class_id` - Traffic class ID.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

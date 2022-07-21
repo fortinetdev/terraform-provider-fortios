@@ -74,6 +74,11 @@ func resourceDpdkGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipsec_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"hugepage_percentage": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 50),
@@ -252,6 +257,10 @@ func flattenDpdkGlobalPerSessionAccounting(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenDpdkGlobalIpsecOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenDpdkGlobalHugepagePercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -306,6 +315,12 @@ func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("per_session_accounting", flattenDpdkGlobalPerSessionAccounting(o["per-session-accounting"], d, "per_session_accounting", sv)); err != nil {
 		if !fortiAPIPatch(o["per-session-accounting"]) {
 			return fmt.Errorf("Error reading per_session_accounting: %v", err)
+		}
+	}
+
+	if err = d.Set("ipsec_offload", flattenDpdkGlobalIpsecOffload(o["ipsec-offload"], d, "ipsec_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["ipsec-offload"]) {
+			return fmt.Errorf("Error reading ipsec_offload: %v", err)
 		}
 	}
 
@@ -379,6 +394,10 @@ func expandDpdkGlobalElasticbuffer(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandDpdkGlobalPerSessionAccounting(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDpdkGlobalIpsecOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -473,6 +492,20 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["per-session-accounting"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ipsec_offload"); ok {
+		if setArgNil {
+			obj["ipsec-offload"] = nil
+		} else {
+
+			t, err := expandDpdkGlobalIpsecOffload(d, v, "ipsec_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-offload"] = t
 			}
 		}
 	}

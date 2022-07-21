@@ -104,6 +104,26 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mib_view": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 32),
+				Optional:     true,
+				Computed:     true,
+			},
+			"vdoms": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"security_level": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -130,6 +150,11 @@ func resourceSystemSnmpUser() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -308,6 +333,53 @@ func flattenSystemSnmpUserEvents(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemSnmpUserMibView(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpUserVdoms(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenSystemSnmpUserVdomsName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemSnmpUserVdomsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSnmpUserSecurityLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -409,6 +481,28 @@ func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("mib_view", flattenSystemSnmpUserMibView(o["mib-view"], d, "mib_view", sv)); err != nil {
+		if !fortiAPIPatch(o["mib-view"]) {
+			return fmt.Errorf("Error reading mib_view: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("vdoms", flattenSystemSnmpUserVdoms(o["vdoms"], d, "vdoms", sv)); err != nil {
+			if !fortiAPIPatch(o["vdoms"]) {
+				return fmt.Errorf("Error reading vdoms: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vdoms"); ok {
+			if err = d.Set("vdoms", flattenSystemSnmpUserVdoms(o["vdoms"], d, "vdoms", sv)); err != nil {
+				if !fortiAPIPatch(o["vdoms"]) {
+					return fmt.Errorf("Error reading vdoms: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("security_level", flattenSystemSnmpUserSecurityLevel(o["security-level"], d, "security_level", sv)); err != nil {
 		if !fortiAPIPatch(o["security-level"]) {
 			return fmt.Errorf("Error reading security_level: %v", err)
@@ -485,6 +579,42 @@ func expandSystemSnmpUserHaDirect(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandSystemSnmpUserEvents(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpUserMibView(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpUserVdoms(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandSystemSnmpUserVdomsName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSnmpUserVdomsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -638,6 +768,26 @@ func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["events"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mib_view"); ok {
+
+		t, err := expandSystemSnmpUserMibView(d, v, "mib_view", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mib-view"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("vdoms"); ok {
+
+		t, err := expandSystemSnmpUserVdoms(d, v, "vdoms", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdoms"] = t
 		}
 	}
 

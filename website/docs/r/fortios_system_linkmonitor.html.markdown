@@ -47,6 +47,7 @@ The following arguments are supported:
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `srcintf` - Interface that receives the traffic to be monitored.
 * `server_config` - Mode of server configuration. Valid values: `default`, `individual`.
+* `server_type` - Server type (static or dynamic). Valid values: `static`, `dynamic`.
 * `server` - (Required) IP address of the server(s) to be monitored. The structure of `server` block is documented below.
 * `protocol` - Protocols used to monitor the server.
 * `port` - Port number of the traffic to be used to monitor the server.

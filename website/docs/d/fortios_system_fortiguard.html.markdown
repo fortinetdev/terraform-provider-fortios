@@ -31,6 +31,7 @@ The following attributes are exported:
 * `update_extdb` - Enable/disable external resource update.
 * `update_build_proxy` - Enable/disable proxy dictionary rebuild.
 * `persistent_connection` - Enable/disable use of persistent connection to receive update notification from FortiGuard.
+* `vdom` - FortiGuard Service virtual domain name.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service.

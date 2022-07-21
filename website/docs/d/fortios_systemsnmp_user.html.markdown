@@ -32,9 +32,15 @@ The following attributes are exported:
 * `source_ipv6` - Source IPv6 for SNMP trap.
 * `ha_direct` - Enable/disable direct management of HA cluster members.
 * `events` - SNMP notifications (traps) to send.
+* `mib_view` - SNMP access control MIB view.
+* `vdoms` - SNMP access control VDOMs. The structure of `vdoms` block is documented below.
 * `security_level` - Security level for message authentication and encryption.
 * `auth_proto` - Authentication protocol.
 * `auth_pwd` - Password for authentication protocol.
 * `priv_proto` - Privacy (encryption) protocol.
 * `priv_pwd` - Password for privacy (encryption) protocol.
+
+The `vdoms` block contains:
+
+* `name` - VDOM name
 

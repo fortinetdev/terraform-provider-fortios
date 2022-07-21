@@ -693,6 +693,10 @@ func dataSourceSystemInterface() *schema.Resource {
 					},
 				},
 			},
+			"ike_saml_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"stp": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1060,6 +1064,31 @@ func dataSourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
+			},
+			"eap_supplicant": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"eap_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"eap_identity": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"eap_password": &schema.Schema{
+				Type:      schema.TypeString,
+				Sensitive: true,
+				Computed:  true,
+			},
+			"eap_ca_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"eap_user_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"forward_error_correction": &schema.Schema{
 				Type:     schema.TypeString,
@@ -2285,6 +2314,10 @@ func dataSourceFlattenSystemInterfaceSecurityGroupsName(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceIkeSamlServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceStp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2914,6 +2947,30 @@ func dataSourceFlattenSystemInterfaceTaggingTags(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenSystemInterfaceTaggingTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceEapSupplicant(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceEapMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceEapIdentity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceEapPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceEapCaCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceEapUserCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4668,6 +4725,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("ike_saml_server", dataSourceFlattenSystemInterfaceIkeSamlServer(o["ike-saml-server"], d, "ike_saml_server")); err != nil {
+		if !fortiAPIPatch(o["ike-saml-server"]) {
+			return fmt.Errorf("Error reading ike_saml_server: %v", err)
+		}
+	}
+
 	if err = d.Set("stp", dataSourceFlattenSystemInterfaceStp(o["stp"], d, "stp")); err != nil {
 		if !fortiAPIPatch(o["stp"]) {
 			return fmt.Errorf("Error reading stp: %v", err)
@@ -5001,6 +5064,36 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("tagging", dataSourceFlattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
 		if !fortiAPIPatch(o["tagging"]) {
 			return fmt.Errorf("Error reading tagging: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_supplicant", dataSourceFlattenSystemInterfaceEapSupplicant(o["eap-supplicant"], d, "eap_supplicant")); err != nil {
+		if !fortiAPIPatch(o["eap-supplicant"]) {
+			return fmt.Errorf("Error reading eap_supplicant: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_method", dataSourceFlattenSystemInterfaceEapMethod(o["eap-method"], d, "eap_method")); err != nil {
+		if !fortiAPIPatch(o["eap-method"]) {
+			return fmt.Errorf("Error reading eap_method: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_identity", dataSourceFlattenSystemInterfaceEapIdentity(o["eap-identity"], d, "eap_identity")); err != nil {
+		if !fortiAPIPatch(o["eap-identity"]) {
+			return fmt.Errorf("Error reading eap_identity: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_ca_cert", dataSourceFlattenSystemInterfaceEapCaCert(o["eap-ca-cert"], d, "eap_ca_cert")); err != nil {
+		if !fortiAPIPatch(o["eap-ca-cert"]) {
+			return fmt.Errorf("Error reading eap_ca_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_user_cert", dataSourceFlattenSystemInterfaceEapUserCert(o["eap-user-cert"], d, "eap_user_cert")); err != nil {
+		if !fortiAPIPatch(o["eap-user-cert"]) {
+			return fmt.Errorf("Error reading eap_user_cert: %v", err)
 		}
 	}
 

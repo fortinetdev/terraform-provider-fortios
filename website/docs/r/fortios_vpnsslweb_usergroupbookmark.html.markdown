@@ -54,7 +54,7 @@ The `bookmarks` block supports:
 * `remote_port` - Remote port (0 - 65535).
 * `show_status_window` - Enable/disable showing of status window. Valid values: `enable`, `disable`.
 * `description` - Description.
-* `keyboard_layout` - Keyboard layout. Valid values: `ar-101`, `ar-102`, `ar-102-azerty`, `can-mul`, `cz`, `cz-qwerty`, `cz-pr`, `da`, `nl`, `de`, `de-ch`, `de-ibm`, `en-uk`, `en-uk-ext`, `en-us`, `en-us-dvorak`, `es`, `es-var`, `fi`, `fi-sami`, `fr`, `fr-ca`, `fr-ch`, `fr-be`, `hr`, `hu`, `hu-101`, `it`, `it-142`, `ja`, `ko`, `lt`, `lt-ibm`, `lt-std`, `lav-std`, `lav-leg`, `mk`, `mk-std`, `no`, `no-sami`, `pol-214`, `pol-pr`, `pt`, `pt-br`, `pt-br-abnt2`, `ru`, `ru-mne`, `ru-t`, `sl`, `sv`, `sv-sami`, `tuk`, `tur-f`, `tur-q`, `zh-sym-sg-us`, `zh-sym-us`, `zh-tr-hk`, `zh-tr-mo`, `zh-tr-us`.
+* `keyboard_layout` - Keyboard layout.
 * `server_layout` - Server side keyboard layout.
 * `security` - Security mode for RDP connection. Valid values: `rdp`, `nla`, `tls`, `any`.
 * `send_preconnection_id` - Enable/disable sending of preconnection ID. Valid values: `enable`, `disable`.

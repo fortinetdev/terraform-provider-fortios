@@ -882,6 +882,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 					},
 				},
 			},
+			"ssl_exemption_ip_rating": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ssl_anomaly_log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -2666,6 +2671,10 @@ func flattenFirewallSslSshProfileSslServerSslOtherClientCertRequest(v interface{
 	return v
 }
 
+func flattenFirewallSslSshProfileSslExemptionIpRating(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSslSshProfileSslAnomalyLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2962,6 +2971,12 @@ func refreshObjectFirewallSslSshProfile(d *schema.ResourceData, o map[string]int
 					return fmt.Errorf("Error reading ssl_server: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("ssl_exemption_ip_rating", flattenFirewallSslSshProfileSslExemptionIpRating(o["ssl-exemption-ip-rating"], d, "ssl_exemption_ip_rating", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-exemption-ip-rating"]) {
+			return fmt.Errorf("Error reading ssl_exemption_ip_rating: %v", err)
 		}
 	}
 
@@ -4506,6 +4521,10 @@ func expandFirewallSslSshProfileSslServerSslOtherClientCertRequest(d *schema.Res
 	return v, nil
 }
 
+func expandFirewallSslSshProfileSslExemptionIpRating(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallSslSshProfileSslAnomalyLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4772,6 +4791,16 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["ssl-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_exemption_ip_rating"); ok {
+
+		t, err := expandFirewallSslSshProfileSslExemptionIpRating(d, v, "ssl_exemption_ip_rating", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-exemption-ip-rating"] = t
 		}
 	}
 

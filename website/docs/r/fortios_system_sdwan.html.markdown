@@ -38,7 +38,7 @@ The `fail_alert_interfaces` block supports:
 The `zone` block supports:
 
 * `name` - Zone name.
-* `service_sla_tie_break` - Method of selecting member if more than one meets the SLA. Valid values: `cfg-order`, `fib-best-match`.
+* `service_sla_tie_break` - Method of selecting member if more than one meets the SLA.
 
 The `members` block supports:
 
@@ -98,7 +98,10 @@ The `health_check` block supports:
 * `threshold_alert_latency` - Alert threshold for latency (ms, default = 0).
 * `threshold_warning_jitter` - Warning threshold for jitter (ms, default = 0).
 * `threshold_alert_jitter` - Alert threshold for jitter (ms, default = 0).
+* `vrf` - Virtual Routing Forwarding ID.
+* `source` - Source IP address used in the health-check packet to the server.
 * `members` - Member sequence number list. The structure of `members` block is documented below.
+* `mos_codec` - Codec to use for MOS calculation (default = g711). Valid values: `g711`, `g722`, `g729`.
 * `sla` - Service level agreement (SLA). The structure of `sla` block is documented below.
 
 The `members` block supports:
@@ -108,15 +111,17 @@ The `members` block supports:
 The `sla` block supports:
 
 * `id` - SLA ID.
-* `link_cost_factor` - Criteria on which to base link selection. Valid values: `latency`, `jitter`, `packet-loss`.
+* `link_cost_factor` - Criteria on which to base link selection.
 * `latency_threshold` - Latency for SLA to make decision in milliseconds. (0 - 10000000, default = 5).
 * `jitter_threshold` - Jitter for SLA to make decision in milliseconds. (0 - 10000000, default = 5).
 * `packetloss_threshold` - Packet loss for SLA to make decision in percentage. (0 - 100, default = 0).
+* `mos_threshold` - Minimum Mean Opinion Score for SLA to be marked as pass. (1.0 - 5.0, default = 3.6).
 
 The `neighbor` block supports:
 
 * `ip` - IP/IPv6 address of neighbor.
 * `member` - Member sequence number.
+* `minimum_sla_meet_members` - Minimum number of members which meet SLA when the neighbor is preferred.
 * `mode` - What metric to select the neighbor. Valid values: `sla`, `speedtest`.
 * `role` - Role of neighbor. Valid values: `standalone`, `primary`, `secondary`.
 * `health_check` - SD-WAN health-check name.
@@ -129,6 +134,7 @@ The `service` block supports:
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `input_device` - Source interface name. The structure of `input_device` block is documented below.
 * `input_device_negate` - Enable/disable negation of input device match. Valid values: `enable`, `disable`.
+* `input_zone` - Source input-zone name. The structure of `input_zone` block is documented below.
 * `mode` - Control how the SD-WAN rule sets the priority of interfaces in the SD-WAN. Valid values: `auto`, `manual`, `priority`, `sla`, `load-balance`.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA.
 * `hash_mode` - Hash algorithm for selected priority members for load balance mode. Valid values: `round-robin`, `source-ip-based`, `source-dest-ip-based`, `inbandwidth`, `outbandwidth`, `bibandwidth`.
@@ -156,6 +162,7 @@ The `service` block supports:
 * `internet_service_group` - Internet Service group list. The structure of `internet_service_group` block is documented below.
 * `internet_service_app_ctrl` - Application control based Internet Service ID list. The structure of `internet_service_app_ctrl` block is documented below.
 * `internet_service_app_ctrl_group` - Application control based Internet Service group list. The structure of `internet_service_app_ctrl_group` block is documented below.
+* `internet_service_app_ctrl_category` - IDs of one or more application control categories. The structure of `internet_service_app_ctrl_category` block is documented below.
 * `health_check` - Health check list. The structure of `health_check` block is documented below.
 * `link_cost_factor` - Link cost factor. Valid values: `latency`, `jitter`, `packet-loss`, `inbandwidth`, `outbandwidth`, `bibandwidth`, `custom-profile-1`.
 * `packet_loss_weight` - Coefficient of packet-loss in the formula of custom-profile-1.
@@ -175,13 +182,17 @@ The `service` block supports:
 * `gateway` - Enable/disable SD-WAN service gateway. Valid values: `enable`, `disable`.
 * `default` - Enable/disable use of SD-WAN as default service. Valid values: `enable`, `disable`.
 * `sla_compare_method` - Method to compare SLA value for SLA mode. Valid values: `order`, `number`.
-* `tie_break` - Method of selecting member if more than one meets the SLA. Valid values: `zone`, `cfg-order`, `fib-best-match`.
+* `tie_break` - Method of selecting member if more than one meets the SLA.
 * `use_shortcut_sla` - Enable/disable use of ADVPN shortcut for quality comparison. Valid values: `enable`, `disable`.
 * `passive_measurement` - Enable/disable passive measurement based on the service criteria. Valid values: `enable`, `disable`.
 
 The `input_device` block supports:
 
 * `name` - Interface name.
+
+The `input_zone` block supports:
+
+* `name` - Zone.
 
 The `dst` block supports:
 
@@ -231,6 +242,10 @@ The `internet_service_app_ctrl_group` block supports:
 
 * `name` - Application control based Internet Service group name.
 
+The `internet_service_app_ctrl_category` block supports:
+
+* `id` - Application control category ID.
+
 The `health_check` block supports:
 
 * `name` - Health check name.
@@ -260,6 +275,7 @@ The `duplication` block supports:
 * `dstintf` - Outgoing (egress) interfaces or zones. The structure of `dstintf` block is documented below.
 * `service` - Service and service group name. The structure of `service` block is documented below.
 * `packet_duplication` - Configure packet duplication method. Valid values: `disable`, `force`, `on-demand`.
+* `sla_match_service` - Enable/disable packet duplication matching health-check SLAs in service rule. Valid values: `enable`, `disable`.
 * `packet_de_duplication` - Enable/disable discarding of packets that have been duplicated. Valid values: `enable`, `disable`.
 
 The `service_id` block supports:

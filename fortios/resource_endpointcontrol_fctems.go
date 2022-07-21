@@ -123,6 +123,12 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"out_of_sync_threshold": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"websocket_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -132,6 +138,17 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
 			},
 			"certificate": &schema.Schema{
 				Type:         schema.TypeString,
@@ -328,11 +345,23 @@ func flattenEndpointControlFctemsCallTimeout(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenEndpointControlFctemsOutOfSyncThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsWebsocketOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenEndpointControlFctemsPreserveSslSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -433,6 +462,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("out_of_sync_threshold", flattenEndpointControlFctemsOutOfSyncThreshold(o["out-of-sync-threshold"], d, "out_of_sync_threshold", sv)); err != nil {
+		if !fortiAPIPatch(o["out-of-sync-threshold"]) {
+			return fmt.Errorf("Error reading out_of_sync_threshold: %v", err)
+		}
+	}
+
 	if err = d.Set("websocket_override", flattenEndpointControlFctemsWebsocketOverride(o["websocket-override"], d, "websocket_override", sv)); err != nil {
 		if !fortiAPIPatch(o["websocket-override"]) {
 			return fmt.Errorf("Error reading websocket_override: %v", err)
@@ -442,6 +477,18 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 	if err = d.Set("preserve_ssl_session", flattenEndpointControlFctemsPreserveSslSession(o["preserve-ssl-session"], d, "preserve_ssl_session", sv)); err != nil {
 		if !fortiAPIPatch(o["preserve-ssl-session"]) {
 			return fmt.Errorf("Error reading preserve_ssl_session: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenEndpointControlFctemsInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenEndpointControlFctemsInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -524,11 +571,23 @@ func expandEndpointControlFctemsCallTimeout(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandEndpointControlFctemsOutOfSyncThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsWebsocketOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandEndpointControlFctemsPreserveSslSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -699,6 +758,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("out_of_sync_threshold"); ok {
+
+		t, err := expandEndpointControlFctemsOutOfSyncThreshold(d, v, "out_of_sync_threshold", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["out-of-sync-threshold"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("websocket_override"); ok {
 
 		t, err := expandEndpointControlFctemsWebsocketOverride(d, v, "websocket_override", sv)
@@ -716,6 +785,26 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["preserve-ssl-session"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandEndpointControlFctemsInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandEndpointControlFctemsInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
 		}
 	}
 

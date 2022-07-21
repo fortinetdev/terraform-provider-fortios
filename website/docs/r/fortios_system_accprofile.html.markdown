@@ -142,6 +142,7 @@ The `utmgrp_permission` block supports:
 * `waf` - Web Application Firewall profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `dnsfilter` - DNS Filter profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `endpoint_control` - FortiClient Profiles. Valid values: `none`, `read`, `read-write`.
+* `videofilter` - Video filter profiles and settings. Valid values: `none`, `read`, `read-write`.
 
 
 ## Attribute Reference

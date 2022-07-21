@@ -47,12 +47,19 @@ The following arguments are supported:
 * `source_ipv6` - Source IPv6 for SNMP trap.
 * `ha_direct` - Enable/disable direct management of HA cluster members. Valid values: `enable`, `disable`.
 * `events` - SNMP notifications (traps) to send.
+* `mib_view` - SNMP access control MIB view.
+* `vdoms` - SNMP access control VDOMs. The structure of `vdoms` block is documented below.
 * `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
 * `auth_proto` - Authentication protocol.
 * `auth_pwd` - Password for authentication protocol.
 * `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`, `aes256`, `aes256cisco`.
 * `priv_pwd` - Password for privacy (encryption) protocol.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `vdoms` block supports:
+
+* `name` - VDOM name
 
 
 ## Attribute Reference

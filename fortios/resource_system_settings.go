@@ -40,6 +40,11 @@ func resourceSystemSettings() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"vdom_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"opmode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -247,6 +252,11 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"link_down_access": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat46_generate_ipv6_fragment_header": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -652,6 +662,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_ot": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"location_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -709,7 +724,23 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"default_app_port_as_service": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"application_bandwidth_tracking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"default_policy_expiry_days": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 365),
+				Optional:     true,
+				Computed:     true,
+			},
+			"gui_enforce_change_summary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -818,6 +849,10 @@ func resourceSystemSettingsRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemSettingsComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsVdomType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1013,6 +1048,10 @@ func flattenSystemSettingsLldpTransmission(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSettingsLinkDownAccess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsNat46GenerateIpv6FragmentHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1332,6 +1371,10 @@ func flattenSystemSettingsGuiZtna(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemSettingsGuiOt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsLocationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1376,7 +1419,19 @@ func flattenSystemSettingsBlockLandAttack(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemSettingsDefaultAppPortAsService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsApplicationBandwidthTracking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsDefaultPolicyExpiryDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsGuiEnforceChangeSummary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1386,6 +1441,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("comments", flattenSystemSettingsComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom_type", flattenSystemSettingsVdomType(o["vdom-type"], d, "vdom_type", sv)); err != nil {
+		if !fortiAPIPatch(o["vdom-type"]) {
+			return fmt.Errorf("Error reading vdom_type: %v", err)
 		}
 	}
 
@@ -1630,6 +1691,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("link_down_access", flattenSystemSettingsLinkDownAccess(o["link-down-access"], d, "link_down_access", sv)); err != nil {
 		if !fortiAPIPatch(o["link-down-access"]) {
 			return fmt.Errorf("Error reading link_down_access: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46_generate_ipv6_fragment_header", flattenSystemSettingsNat46GenerateIpv6FragmentHeader(o["nat46-generate-ipv6-fragment-header"], d, "nat46_generate_ipv6_fragment_header", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46-generate-ipv6-fragment-header"]) {
+			return fmt.Errorf("Error reading nat46_generate_ipv6_fragment_header: %v", err)
 		}
 	}
 
@@ -2107,6 +2174,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_ot", flattenSystemSettingsGuiOt(o["gui-ot"], d, "gui_ot", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-ot"]) {
+			return fmt.Errorf("Error reading gui_ot: %v", err)
+		}
+	}
+
 	if err = d.Set("location_id", flattenSystemSettingsLocationId(o["location-id"], d, "location_id", sv)); err != nil {
 		if !fortiAPIPatch(o["location-id"]) {
 			return fmt.Errorf("Error reading location_id: %v", err)
@@ -2173,9 +2246,27 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("default_app_port_as_service", flattenSystemSettingsDefaultAppPortAsService(o["default-app-port-as-service"], d, "default_app_port_as_service", sv)); err != nil {
+		if !fortiAPIPatch(o["default-app-port-as-service"]) {
+			return fmt.Errorf("Error reading default_app_port_as_service: %v", err)
+		}
+	}
+
 	if err = d.Set("application_bandwidth_tracking", flattenSystemSettingsApplicationBandwidthTracking(o["application-bandwidth-tracking"], d, "application_bandwidth_tracking", sv)); err != nil {
 		if !fortiAPIPatch(o["application-bandwidth-tracking"]) {
 			return fmt.Errorf("Error reading application_bandwidth_tracking: %v", err)
+		}
+	}
+
+	if err = d.Set("default_policy_expiry_days", flattenSystemSettingsDefaultPolicyExpiryDays(o["default-policy-expiry-days"], d, "default_policy_expiry_days", sv)); err != nil {
+		if !fortiAPIPatch(o["default-policy-expiry-days"]) {
+			return fmt.Errorf("Error reading default_policy_expiry_days: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_enforce_change_summary", flattenSystemSettingsGuiEnforceChangeSummary(o["gui-enforce-change-summary"], d, "gui_enforce_change_summary", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-enforce-change-summary"]) {
+			return fmt.Errorf("Error reading gui_enforce_change_summary: %v", err)
 		}
 	}
 
@@ -2189,6 +2280,10 @@ func flattenSystemSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 }
 
 func expandSystemSettingsComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsVdomType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2373,6 +2468,10 @@ func expandSystemSettingsLldpTransmission(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemSettingsLinkDownAccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsNat46GenerateIpv6FragmentHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2692,6 +2791,10 @@ func expandSystemSettingsGuiZtna(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemSettingsGuiOt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsLocationId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2736,7 +2839,19 @@ func expandSystemSettingsBlockLandAttack(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSystemSettingsDefaultAppPortAsService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsApplicationBandwidthTracking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsDefaultPolicyExpiryDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsGuiEnforceChangeSummary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2753,6 +2868,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["comments"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("vdom_type"); ok {
+		if setArgNil {
+			obj["vdom-type"] = nil
+		} else {
+
+			t, err := expandSystemSettingsVdomType(d, v, "vdom_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom-type"] = t
 			}
 		}
 	}
@@ -3299,6 +3428,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["link-down-access"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("nat46_generate_ipv6_fragment_header"); ok {
+		if setArgNil {
+			obj["nat46-generate-ipv6-fragment-header"] = nil
+		} else {
+
+			t, err := expandSystemSettingsNat46GenerateIpv6FragmentHeader(d, v, "nat46_generate_ipv6_fragment_header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat46-generate-ipv6-fragment-header"] = t
 			}
 		}
 	}
@@ -4409,6 +4552,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_ot"); ok {
+		if setArgNil {
+			obj["gui-ot"] = nil
+		} else {
+
+			t, err := expandSystemSettingsGuiOt(d, v, "gui_ot", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-ot"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("location_id"); ok {
 		if setArgNil {
 			obj["location-id"] = nil
@@ -4563,6 +4720,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("default_app_port_as_service"); ok {
+		if setArgNil {
+			obj["default-app-port-as-service"] = nil
+		} else {
+
+			t, err := expandSystemSettingsDefaultAppPortAsService(d, v, "default_app_port_as_service", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-app-port-as-service"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("application_bandwidth_tracking"); ok {
 		if setArgNil {
 			obj["application-bandwidth-tracking"] = nil
@@ -4573,6 +4744,34 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["application-bandwidth-tracking"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("default_policy_expiry_days"); ok {
+		if setArgNil {
+			obj["default-policy-expiry-days"] = nil
+		} else {
+
+			t, err := expandSystemSettingsDefaultPolicyExpiryDays(d, v, "default_policy_expiry_days", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-policy-expiry-days"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("gui_enforce_change_summary"); ok {
+		if setArgNil {
+			obj["gui-enforce-change-summary"] = nil
+		} else {
+
+			t, err := expandSystemSettingsGuiEnforceChangeSummary(d, v, "gui_enforce_change_summary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-enforce-change-summary"] = t
 			}
 		}
 	}

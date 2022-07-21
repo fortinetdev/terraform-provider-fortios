@@ -53,6 +53,11 @@ func resourceSwitchControllerSwitchProfile() *schema.Resource {
 				Optional:     true,
 				Sensitive:    true,
 			},
+			"login": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -190,6 +195,10 @@ func flattenSwitchControllerSwitchProfileLoginPasswd(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenSwitchControllerSwitchProfileLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -202,6 +211,12 @@ func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[st
 	if err = d.Set("login_passwd_override", flattenSwitchControllerSwitchProfileLoginPasswdOverride(o["login-passwd-override"], d, "login_passwd_override", sv)); err != nil {
 		if !fortiAPIPatch(o["login-passwd-override"]) {
 			return fmt.Errorf("Error reading login_passwd_override: %v", err)
+		}
+	}
+
+	if err = d.Set("login", flattenSwitchControllerSwitchProfileLogin(o["login"], d, "login", sv)); err != nil {
+		if !fortiAPIPatch(o["login"]) {
+			return fmt.Errorf("Error reading login: %v", err)
 		}
 	}
 
@@ -223,6 +238,10 @@ func expandSwitchControllerSwitchProfileLoginPasswdOverride(d *schema.ResourceDa
 }
 
 func expandSwitchControllerSwitchProfileLoginPasswd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSwitchProfileLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -256,6 +275,16 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["login-passwd"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("login"); ok {
+
+		t, err := expandSwitchControllerSwitchProfileLogin(d, v, "login", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["login"] = t
 		}
 	}
 

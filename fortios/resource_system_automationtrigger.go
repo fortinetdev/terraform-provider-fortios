@@ -57,6 +57,20 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"license_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -320,6 +334,49 @@ func flattenSystemAutomationTriggerEventType(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemAutomationTriggerVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenSystemAutomationTriggerVdomName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemAutomationTriggerVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationTriggerLicenseType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -513,6 +570,22 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("vdom", flattenSystemAutomationTriggerVdom(o["vdom"], d, "vdom", sv)); err != nil {
+			if !fortiAPIPatch(o["vdom"]) {
+				return fmt.Errorf("Error reading vdom: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vdom"); ok {
+			if err = d.Set("vdom", flattenSystemAutomationTriggerVdom(o["vdom"], d, "vdom", sv)); err != nil {
+				if !fortiAPIPatch(o["vdom"]) {
+					return fmt.Errorf("Error reading vdom: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("license_type", flattenSystemAutomationTriggerLicenseType(o["license-type"], d, "license_type", sv)); err != nil {
 		if !fortiAPIPatch(o["license-type"]) {
 			return fmt.Errorf("Error reading license_type: %v", err)
@@ -657,6 +730,38 @@ func expandSystemAutomationTriggerTriggerType(d *schema.ResourceData, v interfac
 }
 
 func expandSystemAutomationTriggerEventType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandSystemAutomationTriggerVdomName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAutomationTriggerVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -844,6 +949,16 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["event-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("vdom"); ok {
+
+		t, err := expandSystemAutomationTriggerVdom(d, v, "vdom", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdom"] = t
 		}
 	}
 

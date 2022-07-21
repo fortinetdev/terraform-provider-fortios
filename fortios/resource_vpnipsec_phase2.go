@@ -100,6 +100,11 @@ func resourceVpnIpsecPhase2() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"inbound_dscp_copy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"keylifeseconds": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(120, 172800),
@@ -445,6 +450,10 @@ func flattenVpnIpsecPhase2AddRoute(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenVpnIpsecPhase2InboundDscpCopy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase2Keylifeseconds(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -665,6 +674,12 @@ func refreshObjectVpnIpsecPhase2(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("add_route", flattenVpnIpsecPhase2AddRoute(o["add-route"], d, "add_route", sv)); err != nil {
 		if !fortiAPIPatch(o["add-route"]) {
 			return fmt.Errorf("Error reading add_route: %v", err)
+		}
+	}
+
+	if err = d.Set("inbound_dscp_copy", flattenVpnIpsecPhase2InboundDscpCopy(o["inbound-dscp-copy"], d, "inbound_dscp_copy", sv)); err != nil {
+		if !fortiAPIPatch(o["inbound-dscp-copy"]) {
+			return fmt.Errorf("Error reading inbound_dscp_copy: %v", err)
 		}
 	}
 
@@ -918,6 +933,10 @@ func expandVpnIpsecPhase2AutoNegotiate(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandVpnIpsecPhase2AddRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase2InboundDscpCopy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1179,6 +1198,16 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["add-route"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
+
+		t, err := expandVpnIpsecPhase2InboundDscpCopy(d, v, "inbound_dscp_copy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["inbound-dscp-copy"] = t
 		}
 	}
 

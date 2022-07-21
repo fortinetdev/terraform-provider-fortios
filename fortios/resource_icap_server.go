@@ -37,10 +37,15 @@ func resourceIcapServer() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 63),
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
+			},
+			"addr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ip_version": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,6 +61,12 @@ func resourceIcapServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"fqdn": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -77,6 +88,17 @@ func resourceIcapServer() *schema.Resource {
 			"ssl_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"healthcheck": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"healthcheck_service": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -209,6 +231,10 @@ func flattenIcapServerName(v interface{}, d *schema.ResourceData, pre string, sv
 	return v
 }
 
+func flattenIcapServerAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenIcapServerIpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -218,6 +244,10 @@ func flattenIcapServerIpAddress(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenIcapServerIp6Address(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIcapServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -237,12 +267,26 @@ func flattenIcapServerSslCert(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenIcapServerHealthcheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIcapServerHealthcheckService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectIcapServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if err = d.Set("name", flattenIcapServerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("addr_type", flattenIcapServerAddrType(o["addr-type"], d, "addr_type", sv)); err != nil {
+		if !fortiAPIPatch(o["addr-type"]) {
+			return fmt.Errorf("Error reading addr_type: %v", err)
 		}
 	}
 
@@ -261,6 +305,12 @@ func refreshObjectIcapServer(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("ip6_address", flattenIcapServerIp6Address(o["ip6-address"], d, "ip6_address", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-address"]) {
 			return fmt.Errorf("Error reading ip6_address: %v", err)
+		}
+	}
+
+	if err = d.Set("fqdn", flattenIcapServerFqdn(o["fqdn"], d, "fqdn", sv)); err != nil {
+		if !fortiAPIPatch(o["fqdn"]) {
+			return fmt.Errorf("Error reading fqdn: %v", err)
 		}
 	}
 
@@ -288,6 +338,18 @@ func refreshObjectIcapServer(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("healthcheck", flattenIcapServerHealthcheck(o["healthcheck"], d, "healthcheck", sv)); err != nil {
+		if !fortiAPIPatch(o["healthcheck"]) {
+			return fmt.Errorf("Error reading healthcheck: %v", err)
+		}
+	}
+
+	if err = d.Set("healthcheck_service", flattenIcapServerHealthcheckService(o["healthcheck-service"], d, "healthcheck_service", sv)); err != nil {
+		if !fortiAPIPatch(o["healthcheck-service"]) {
+			return fmt.Errorf("Error reading healthcheck_service: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -301,6 +363,10 @@ func expandIcapServerName(d *schema.ResourceData, v interface{}, pre string, sv 
 	return v, nil
 }
 
+func expandIcapServerAddrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandIcapServerIpVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -310,6 +376,10 @@ func expandIcapServerIpAddress(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandIcapServerIp6Address(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -329,6 +399,14 @@ func expandIcapServerSslCert(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
+func expandIcapServerHealthcheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapServerHealthcheckService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -339,6 +417,16 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("addr_type"); ok {
+
+		t, err := expandIcapServerAddrType(d, v, "addr_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["addr-type"] = t
 		}
 	}
 
@@ -369,6 +457,16 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["ip6-address"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fqdn"); ok {
+
+		t, err := expandIcapServerFqdn(d, v, "fqdn", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fqdn"] = t
 		}
 	}
 
@@ -409,6 +507,26 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["ssl-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("healthcheck"); ok {
+
+		t, err := expandIcapServerHealthcheck(d, v, "healthcheck", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["healthcheck"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("healthcheck_service"); ok {
+
+		t, err := expandIcapServerHealthcheckService(d, v, "healthcheck_service", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["healthcheck-service"] = t
 		}
 	}
 

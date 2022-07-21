@@ -79,6 +79,22 @@ func dataSourceSystemSnmpUser() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"mib_view": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vdoms": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"security_level": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -200,6 +216,46 @@ func dataSourceFlattenSystemSnmpUserEvents(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemSnmpUserMibView(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpUserVdoms(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemSnmpUserVdomsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSnmpUserVdomsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSnmpUserSecurityLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -298,6 +354,18 @@ func dataSourceRefreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]
 	if err = d.Set("events", dataSourceFlattenSystemSnmpUserEvents(o["events"], d, "events")); err != nil {
 		if !fortiAPIPatch(o["events"]) {
 			return fmt.Errorf("Error reading events: %v", err)
+		}
+	}
+
+	if err = d.Set("mib_view", dataSourceFlattenSystemSnmpUserMibView(o["mib-view"], d, "mib_view")); err != nil {
+		if !fortiAPIPatch(o["mib-view"]) {
+			return fmt.Errorf("Error reading mib_view: %v", err)
+		}
+	}
+
+	if err = d.Set("vdoms", dataSourceFlattenSystemSnmpUserVdoms(o["vdoms"], d, "vdoms")); err != nil {
+		if !fortiAPIPatch(o["vdoms"]) {
+			return fmt.Errorf("Error reading vdoms: %v", err)
 		}
 	}
 

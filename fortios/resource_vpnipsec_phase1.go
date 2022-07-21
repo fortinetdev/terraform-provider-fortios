@@ -141,6 +141,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mode_cfg_allow_client_selector": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"assign_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -596,6 +601,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"inbound_dscp_copy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"nattraversal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -953,6 +963,10 @@ func flattenVpnIpsecPhase1Peergrp(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenVpnIpsecPhase1ModeCfg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1ModeCfgAllowClientSelector(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1425,6 +1439,10 @@ func flattenVpnIpsecPhase1HaSyncEspSeqno(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenVpnIpsecPhase1InboundDscpCopy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1Nattraversal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1631,6 +1649,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("mode_cfg", flattenVpnIpsecPhase1ModeCfg(o["mode-cfg"], d, "mode_cfg", sv)); err != nil {
 		if !fortiAPIPatch(o["mode-cfg"]) {
 			return fmt.Errorf("Error reading mode_cfg: %v", err)
+		}
+	}
+
+	if err = d.Set("mode_cfg_allow_client_selector", flattenVpnIpsecPhase1ModeCfgAllowClientSelector(o["mode-cfg-allow-client-selector"], d, "mode_cfg_allow_client_selector", sv)); err != nil {
+		if !fortiAPIPatch(o["mode-cfg-allow-client-selector"]) {
+			return fmt.Errorf("Error reading mode_cfg_allow_client_selector: %v", err)
 		}
 	}
 
@@ -2102,6 +2126,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("inbound_dscp_copy", flattenVpnIpsecPhase1InboundDscpCopy(o["inbound-dscp-copy"], d, "inbound_dscp_copy", sv)); err != nil {
+		if !fortiAPIPatch(o["inbound-dscp-copy"]) {
+			return fmt.Errorf("Error reading inbound_dscp_copy: %v", err)
+		}
+	}
+
 	if err = d.Set("nattraversal", flattenVpnIpsecPhase1Nattraversal(o["nattraversal"], d, "nattraversal", sv)); err != nil {
 		if !fortiAPIPatch(o["nattraversal"]) {
 			return fmt.Errorf("Error reading nattraversal: %v", err)
@@ -2340,6 +2370,10 @@ func expandVpnIpsecPhase1Peergrp(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandVpnIpsecPhase1ModeCfg(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1ModeCfgAllowClientSelector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2779,6 +2813,10 @@ func expandVpnIpsecPhase1HaSyncEspSeqno(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InboundDscpCopy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1Nattraversal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3047,6 +3085,16 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["mode-cfg"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mode_cfg_allow_client_selector"); ok {
+
+		t, err := expandVpnIpsecPhase1ModeCfgAllowClientSelector(d, v, "mode_cfg_allow_client_selector", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mode-cfg-allow-client-selector"] = t
 		}
 	}
 
@@ -3827,6 +3875,16 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["ha-sync-esp-seqno"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
+
+		t, err := expandVpnIpsecPhase1InboundDscpCopy(d, v, "inbound_dscp_copy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["inbound-dscp-copy"] = t
 		}
 	}
 

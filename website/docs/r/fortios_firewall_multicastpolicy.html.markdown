@@ -58,6 +58,7 @@ The following arguments are supported:
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `end_port` -  Integer value for ending TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration. Valid values: `enable`, `disable`.
+* `traffic_shaper` - Traffic shaper to apply to traffic forwarded by the multicast policy.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

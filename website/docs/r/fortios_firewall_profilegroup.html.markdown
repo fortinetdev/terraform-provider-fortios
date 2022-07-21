@@ -28,6 +28,7 @@ The following arguments are supported:
 * `webfilter_profile` - Name of an existing Web filter profile.
 * `dnsfilter_profile` - Name of an existing DNS filter profile.
 * `emailfilter_profile` - Name of an existing email filter profile.
+* `dlp_profile` - Name of an existing DLP profile.
 * `spamfilter_profile` - Name of an existing Spam filter profile.
 * `dlp_sensor` - Name of an existing DLP sensor.
 * `file_filter_profile` - Name of an existing file-filter profile.

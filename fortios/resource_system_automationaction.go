@@ -295,6 +295,29 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"http_headers": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"key": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1023),
+							Optional:     true,
+						},
+						"value": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 4095),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"headers": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -318,6 +341,18 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
+			},
+			"output_size": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 1024),
+				Optional:     true,
+				Computed:     true,
+			},
+			"timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 300),
+				Optional:     true,
+				Computed:     true,
 			},
 			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
@@ -695,6 +730,69 @@ func flattenSystemAutomationActionPort(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemAutomationActionHttpHeaders(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemAutomationActionHttpHeadersId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
+		if _, ok := i["key"]; ok {
+
+			tmp["key"] = flattenSystemAutomationActionHttpHeadersKey(i["key"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := i["value"]; ok {
+
+			tmp["value"] = flattenSystemAutomationActionHttpHeadersValue(i["value"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemAutomationActionHttpHeadersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionHttpHeadersKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionHttpHeadersValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -743,6 +841,14 @@ func flattenSystemAutomationActionVerifyHostCert(v interface{}, d *schema.Resour
 }
 
 func flattenSystemAutomationActionScript(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionOutputSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1061,6 +1167,22 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	}
 
 	if isImportTable() {
+		if err = d.Set("http_headers", flattenSystemAutomationActionHttpHeaders(o["http-headers"], d, "http_headers", sv)); err != nil {
+			if !fortiAPIPatch(o["http-headers"]) {
+				return fmt.Errorf("Error reading http_headers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("http_headers"); ok {
+			if err = d.Set("http_headers", flattenSystemAutomationActionHttpHeaders(o["http-headers"], d, "http_headers", sv)); err != nil {
+				if !fortiAPIPatch(o["http-headers"]) {
+					return fmt.Errorf("Error reading http_headers: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
 		if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers", sv)); err != nil {
 			if !fortiAPIPatch(o["headers"]) {
 				return fmt.Errorf("Error reading headers: %v", err)
@@ -1085,6 +1207,18 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	if err = d.Set("script", flattenSystemAutomationActionScript(o["script"], d, "script", sv)); err != nil {
 		if !fortiAPIPatch(o["script"]) {
 			return fmt.Errorf("Error reading script: %v", err)
+		}
+	}
+
+	if err = d.Set("output_size", flattenSystemAutomationActionOutputSize(o["output-size"], d, "output_size", sv)); err != nil {
+		if !fortiAPIPatch(o["output-size"]) {
+			return fmt.Errorf("Error reading output_size: %v", err)
+		}
+	}
+
+	if err = d.Set("timeout", flattenSystemAutomationActionTimeout(o["timeout"], d, "timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["timeout"]) {
+			return fmt.Errorf("Error reading timeout: %v", err)
 		}
 	}
 
@@ -1335,6 +1469,58 @@ func expandSystemAutomationActionPort(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemAutomationActionHttpHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemAutomationActionHttpHeadersId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["key"], _ = expandSystemAutomationActionHttpHeadersKey(d, i["key"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["value"], _ = expandSystemAutomationActionHttpHeadersValue(d, i["value"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAutomationActionHttpHeadersId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionHttpHeadersKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionHttpHeadersValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -1372,6 +1558,14 @@ func expandSystemAutomationActionVerifyHostCert(d *schema.ResourceData, v interf
 }
 
 func expandSystemAutomationActionScript(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionOutputSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1862,6 +2056,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("http_headers"); ok {
+
+		t, err := expandSystemAutomationActionHttpHeaders(d, v, "http_headers", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["http-headers"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("headers"); ok {
 
 		t, err := expandSystemAutomationActionHeaders(d, v, "headers", sv)
@@ -1889,6 +2093,26 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["script"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("output_size"); ok {
+
+		t, err := expandSystemAutomationActionOutputSize(d, v, "output_size", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["output-size"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("timeout"); ok {
+
+		t, err := expandSystemAutomationActionTimeout(d, v, "timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["timeout"] = t
 		}
 	}
 

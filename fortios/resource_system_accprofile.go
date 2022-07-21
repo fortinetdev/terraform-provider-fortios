@@ -293,6 +293,11 @@ func resourceSystemAccprofile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"videofilter": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -792,6 +797,12 @@ func flattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.ResourceDa
 		result["endpoint_control"] = flattenSystemAccprofileUtmgrpPermissionEndpointControl(i["endpoint-control"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "videofilter"
+	if _, ok := i["videofilter"]; ok {
+
+		result["videofilter"] = flattenSystemAccprofileUtmgrpPermissionVideofilter(i["videofilter"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -845,6 +856,10 @@ func flattenSystemAccprofileUtmgrpPermissionDnsfilter(v interface{}, d *schema.R
 }
 
 func flattenSystemAccprofileUtmgrpPermissionEndpointControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileUtmgrpPermissionVideofilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1385,6 +1400,11 @@ func expandSystemAccprofileUtmgrpPermission(d *schema.ResourceData, v interface{
 
 		result["endpoint-control"], _ = expandSystemAccprofileUtmgrpPermissionEndpointControl(d, i["endpoint_control"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "videofilter"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["videofilter"], _ = expandSystemAccprofileUtmgrpPermissionVideofilter(d, i["videofilter"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -1438,6 +1458,10 @@ func expandSystemAccprofileUtmgrpPermissionDnsfilter(d *schema.ResourceData, v i
 }
 
 func expandSystemAccprofileUtmgrpPermissionEndpointControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileUtmgrpPermissionVideofilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

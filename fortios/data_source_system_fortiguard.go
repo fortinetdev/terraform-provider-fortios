@@ -75,6 +75,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -322,6 +326,10 @@ func dataSourceFlattenSystemFortiguardPersistentConnection(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenSystemFortiguardVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortiguardFortiguardAnycast(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -554,6 +562,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("persistent_connection", dataSourceFlattenSystemFortiguardPersistentConnection(o["persistent-connection"], d, "persistent_connection")); err != nil {
 		if !fortiAPIPatch(o["persistent-connection"]) {
 			return fmt.Errorf("Error reading persistent_connection: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom", dataSourceFlattenSystemFortiguardVdom(o["vdom"], d, "vdom")); err != nil {
+		if !fortiAPIPatch(o["vdom"]) {
+			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 

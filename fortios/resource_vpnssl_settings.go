@@ -476,6 +476,11 @@ func resourceVpnSslSettings() *schema.Resource {
 					},
 				},
 			},
+			"browser_language_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dtls_tunnel": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -562,6 +567,11 @@ func resourceVpnSslSettings() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 				Computed:     true,
+			},
+			"web_mode_snat": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1432,6 +1442,10 @@ func flattenVpnSslSettingsAuthenticationRuleAuth(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenVpnSslSettingsBrowserLanguageDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnSslSettingsDtlsTunnel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1497,6 +1511,10 @@ func flattenVpnSslSettingsTunnelAddrAssignedMethod(v interface{}, d *schema.Reso
 }
 
 func flattenVpnSslSettingsSamlRedirectPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsWebModeSnat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1881,6 +1899,12 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("browser_language_detection", flattenVpnSslSettingsBrowserLanguageDetection(o["browser-language-detection"], d, "browser_language_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["browser-language-detection"]) {
+			return fmt.Errorf("Error reading browser_language_detection: %v", err)
+		}
+	}
+
 	if err = d.Set("dtls_tunnel", flattenVpnSslSettingsDtlsTunnel(o["dtls-tunnel"], d, "dtls_tunnel", sv)); err != nil {
 		if !fortiAPIPatch(o["dtls-tunnel"]) {
 			return fmt.Errorf("Error reading dtls_tunnel: %v", err)
@@ -1980,6 +2004,12 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("saml_redirect_port", flattenVpnSslSettingsSamlRedirectPort(o["saml-redirect-port"], d, "saml_redirect_port", sv)); err != nil {
 		if !fortiAPIPatch(o["saml-redirect-port"]) {
 			return fmt.Errorf("Error reading saml_redirect_port: %v", err)
+		}
+	}
+
+	if err = d.Set("web_mode_snat", flattenVpnSslSettingsWebModeSnat(o["web-mode-snat"], d, "web_mode_snat", sv)); err != nil {
+		if !fortiAPIPatch(o["web-mode-snat"]) {
+			return fmt.Errorf("Error reading web_mode_snat: %v", err)
 		}
 	}
 
@@ -2652,6 +2682,10 @@ func expandVpnSslSettingsAuthenticationRuleAuth(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandVpnSslSettingsBrowserLanguageDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnSslSettingsDtlsTunnel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2717,6 +2751,10 @@ func expandVpnSslSettingsTunnelAddrAssignedMethod(d *schema.ResourceData, v inte
 }
 
 func expandVpnSslSettingsSamlRedirectPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsWebModeSnat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3465,6 +3503,20 @@ func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("browser_language_detection"); ok {
+		if setArgNil {
+			obj["browser-language-detection"] = nil
+		} else {
+
+			t, err := expandVpnSslSettingsBrowserLanguageDetection(d, v, "browser_language_detection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["browser-language-detection"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("dtls_tunnel"); ok {
 		if setArgNil {
 			obj["dtls-tunnel"] = nil
@@ -3699,6 +3751,20 @@ func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["saml-redirect-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("web_mode_snat"); ok {
+		if setArgNil {
+			obj["web-mode-snat"] = nil
+		} else {
+
+			t, err := expandVpnSslSettingsWebModeSnat(d, v, "web_mode_snat", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["web-mode-snat"] = t
 			}
 		}
 	}

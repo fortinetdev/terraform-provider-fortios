@@ -244,6 +244,10 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"set_priority": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -534,6 +538,11 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_route_tag"
 		if _, ok := i["set-route-tag"]; ok {
 			tmp["set_route_tag"] = dataSourceFlattenRouterRouteMapRuleSetRouteTag(i["set-route-tag"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_priority"
+		if _, ok := i["set-priority"]; ok {
+			tmp["set_priority"] = dataSourceFlattenRouterRouteMapRuleSetPriority(i["set-priority"], d, pre_append)
 		}
 
 		result = append(result, tmp)
@@ -841,6 +850,10 @@ func dataSourceFlattenRouterRouteMapRuleMatchFlags(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenRouterRouteMapRuleSetRouteTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleSetPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

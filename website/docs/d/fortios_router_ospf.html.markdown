@@ -42,6 +42,7 @@ The following attributes are exported:
 * `distribute_route_map_in` - Filter incoming external routes by route-map.
 * `restart_mode` - OSPF restart mode (graceful or LLS).
 * `restart_period` - Graceful restart period.
+* `restart_on_topology_change` - Enable/disable continuing graceful restart upon topology change.
 * `area` - OSPF area configuration. The structure of `area` block is documented below.
 * `ospf_interface` - OSPF interface configuration. The structure of `ospf_interface` block is documented below.
 * `network` - OSPF network configuration. The structure of `network` block is documented below.

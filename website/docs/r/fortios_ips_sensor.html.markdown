@@ -34,7 +34,11 @@ The `entries` block supports:
 * `protocol` - Protocols to be examined. set protocol ? lists available protocols. all includes all protocols. other includes all unlisted protocols.
 * `os` - Operating systems to be protected.  all includes all operating systems. other includes all unlisted operating systems.
 * `application` - Applications to be protected. set application ? lists available applications. all includes all applications. other includes all unlisted applications.
+* `default_action` - Signature default action filter. Valid values: `all`, `pass`, `block`.
+* `default_status` - Signature default status filter. Valid values: `all`, `enable`, `disable`.
 * `cve` - List of CVE IDs of the signatures to add to the sensor The structure of `cve` block is documented below.
+* `vuln_type` - List of signature vulnerability types to filter by. The structure of `vuln_type` block is documented below.
+* `last_modified` - Filter by signature last modified date. Formats: before <date>, after <date>, between <start-date> <end-date>.
 * `status` - Status of the signatures included in filter. default enables the filter and only use filters with default status of enable. Filters with default status of disable will not be used. Valid values: `disable`, `enable`, `default`.
 * `log` - Enable/disable logging of signatures included in filter. Valid values: `disable`, `enable`.
 * `log_packet` - Enable/disable packet logging. Enable to save the packet that triggers the filter. You can download the packets in pcap format for diagnostic use. Valid values: `disable`, `enable`.
@@ -56,6 +60,10 @@ The `rule` block supports:
 The `cve` block supports:
 
 * `cve_entry` - CVE IDs or CVE wildcards.
+
+The `vuln_type` block supports:
+
+* `id` - Vulnerability type ID.
 
 The `exempt_ip` block supports:
 

@@ -26,6 +26,7 @@ resource "fortios_wirelesscontroller_intercontroller" "trname" {
 The following arguments are supported:
 
 * `inter_controller_mode` - Configure inter-controller mode (disable, l2-roaming, 1+1, default = disable). Valid values: `disable`, `l2-roaming`, `1+1`.
+* `l3_roaming` - Enable/disable layer 3 roaming (default = disable). Valid values: `enable`, `disable`.
 * `inter_controller_key` - Secret key for inter-controller communications.
 * `inter_controller_pri` - Configure inter-controller's priority (primary or secondary, default = primary). Valid values: `primary`, `secondary`.
 * `fast_failover_max` - Maximum number of retransmissions for fast failover HA messages between peer wireless controllers (3 - 64, default = 10).

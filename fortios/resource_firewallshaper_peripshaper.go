@@ -43,7 +43,7 @@ func resourceFirewallShaperPerIpShaper() *schema.Resource {
 			},
 			"max_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 16776000),
+				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
 				Computed:     true,
 			},

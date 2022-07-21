@@ -64,6 +64,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dlp_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"spamfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -293,6 +299,10 @@ func flattenFirewallProfileGroupEmailfilterProfile(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenFirewallProfileGroupDlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupSpamfilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -379,6 +389,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("emailfilter_profile", flattenFirewallProfileGroupEmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", flattenFirewallProfileGroupDlpProfile(o["dlp-profile"], d, "dlp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
 		}
 	}
 
@@ -495,6 +511,10 @@ func expandFirewallProfileGroupEmailfilterProfile(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandFirewallProfileGroupDlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileGroupSpamfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -601,6 +621,16 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dlp_profile"); ok {
+
+		t, err := expandFirewallProfileGroupDlpProfile(d, v, "dlp_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile"] = t
 		}
 	}
 

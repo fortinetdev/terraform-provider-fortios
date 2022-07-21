@@ -53,6 +53,18 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"client_idle_rehome_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(2, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auth_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 30),
+				Optional:     true,
+				Computed:     true,
+			},
 			"rogue_ap_log": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1440),
@@ -64,6 +76,11 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 1440),
 				Optional:     true,
 				Computed:     true,
+			},
+			"rogue_ap_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"darrp_optimize": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -253,11 +270,23 @@ func flattenWirelessControllerTimersClientIdleTimeout(v interface{}, d *schema.R
 	return v
 }
 
+func flattenWirelessControllerTimersClientIdleRehomeTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerTimersAuthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerTimersRogueApLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenWirelessControllerTimersFakeApLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerTimersRogueApCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -365,6 +394,18 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("client_idle_rehome_timeout", flattenWirelessControllerTimersClientIdleRehomeTimeout(o["client-idle-rehome-timeout"], d, "client_idle_rehome_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["client-idle-rehome-timeout"]) {
+			return fmt.Errorf("Error reading client_idle_rehome_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_timeout", flattenWirelessControllerTimersAuthTimeout(o["auth-timeout"], d, "auth_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-timeout"]) {
+			return fmt.Errorf("Error reading auth_timeout: %v", err)
+		}
+	}
+
 	if err = d.Set("rogue_ap_log", flattenWirelessControllerTimersRogueApLog(o["rogue-ap-log"], d, "rogue_ap_log", sv)); err != nil {
 		if !fortiAPIPatch(o["rogue-ap-log"]) {
 			return fmt.Errorf("Error reading rogue_ap_log: %v", err)
@@ -374,6 +415,12 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 	if err = d.Set("fake_ap_log", flattenWirelessControllerTimersFakeApLog(o["fake-ap-log"], d, "fake_ap_log", sv)); err != nil {
 		if !fortiAPIPatch(o["fake-ap-log"]) {
 			return fmt.Errorf("Error reading fake_ap_log: %v", err)
+		}
+	}
+
+	if err = d.Set("rogue_ap_cleanup", flattenWirelessControllerTimersRogueApCleanup(o["rogue-ap-cleanup"], d, "rogue_ap_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["rogue-ap-cleanup"]) {
+			return fmt.Errorf("Error reading rogue_ap_cleanup: %v", err)
 		}
 	}
 
@@ -474,11 +521,23 @@ func expandWirelessControllerTimersClientIdleTimeout(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandWirelessControllerTimersClientIdleRehomeTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersAuthTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerTimersRogueApLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandWirelessControllerTimersFakeApLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersRogueApCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -599,6 +658,34 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		}
 	}
 
+	if v, ok := d.GetOk("client_idle_rehome_timeout"); ok {
+		if setArgNil {
+			obj["client-idle-rehome-timeout"] = nil
+		} else {
+
+			t, err := expandWirelessControllerTimersClientIdleRehomeTimeout(d, v, "client_idle_rehome_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["client-idle-rehome-timeout"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("auth_timeout"); ok {
+		if setArgNil {
+			obj["auth-timeout"] = nil
+		} else {
+
+			t, err := expandWirelessControllerTimersAuthTimeout(d, v, "auth_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-timeout"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOkExists("rogue_ap_log"); ok {
 		if setArgNil {
 			obj["rogue-ap-log"] = nil
@@ -623,6 +710,20 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["fake-ap-log"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("rogue_ap_cleanup"); ok {
+		if setArgNil {
+			obj["rogue-ap-cleanup"] = nil
+		} else {
+
+			t, err := expandWirelessControllerTimersRogueApCleanup(d, v, "rogue_ap_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rogue-ap-cleanup"] = t
 			}
 		}
 	}

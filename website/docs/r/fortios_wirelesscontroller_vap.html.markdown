@@ -163,6 +163,7 @@ The following arguments are supported:
 * `webfilter_profile` - WebFilter profile name.
 * `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning. Valid values: `disable`, `monitor`, `block`.
 * `address_group` - Address group ID.
+* `address_group_policy` - Configure MAC address filtering policy for MAC addresses that are in the address-group. Valid values: `disable`, `allow`, `deny`.
 * `mac_filter` - Enable/disable MAC filtering to block wireless clients by mac address. Valid values: `enable`, `disable`.
 * `mac_filter_policy_other` - Allow or block clients with MAC addresses that are not in the filter list. Valid values: `allow`, `deny`.
 * `mac_filter_list` - Create a list of MAC addresses for MAC address filtering. The structure of `mac_filter_list` block is documented below.
@@ -174,6 +175,9 @@ The following arguments are supported:
 * `bstm_disassociation_imminent` - Enable/disable forcing of disassociation after the BSTM request timer has been reached (default = enable). Valid values: `enable`, `disable`.
 * `beacon_advertising` - Fortinet beacon advertising IE data   (default = empty). Valid values: `name`, `model`, `serial-number`.
 * `osen` - Enable/disable OSEN as part of key management (default = disable). Valid values: `enable`, `disable`.
+* `application_detection_engine` - Enable/disable application detection engine (default = disable). Valid values: `enable`, `disable`.
+* `application_report_intv` - Application report interval (30 - 864000 sec, default = 120).
+* `l3_roaming` - Enable/disable layer 3 roaming (default = disable). Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

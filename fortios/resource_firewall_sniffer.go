@@ -150,6 +150,17 @@ func resourceFirewallSniffer() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dlp_profile_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dlp_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"spamfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -483,6 +494,14 @@ func flattenFirewallSnifferEmailfilterProfileStatus(v interface{}, d *schema.Res
 }
 
 func flattenFirewallSnifferEmailfilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferDlpProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferDlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -821,6 +840,18 @@ func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("dlp_profile_status", flattenFirewallSnifferDlpProfileStatus(o["dlp-profile-status"], d, "dlp_profile_status", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile-status"]) {
+			return fmt.Errorf("Error reading dlp_profile_status: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", flattenFirewallSnifferDlpProfile(o["dlp-profile"], d, "dlp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("spamfilter_profile_status", flattenFirewallSnifferSpamfilterProfileStatus(o["spamfilter-profile-status"], d, "spamfilter_profile_status", sv)); err != nil {
 		if !fortiAPIPatch(o["spamfilter-profile-status"]) {
 			return fmt.Errorf("Error reading spamfilter_profile_status: %v", err)
@@ -1003,6 +1034,14 @@ func expandFirewallSnifferEmailfilterProfileStatus(d *schema.ResourceData, v int
 }
 
 func expandFirewallSnifferEmailfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferDlpProfileStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferDlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1400,6 +1439,26 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dlp_profile_status"); ok {
+
+		t, err := expandFirewallSnifferDlpProfileStatus(d, v, "dlp_profile_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dlp_profile"); ok {
+
+		t, err := expandFirewallSnifferDlpProfile(d, v, "dlp_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile"] = t
 		}
 	}
 

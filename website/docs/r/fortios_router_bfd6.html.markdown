@@ -14,6 +14,7 @@ Configure IPv6 BFD.
 The following arguments are supported:
 
 * `neighbor` - Configure neighbor of IPv6 BFD. The structure of `neighbor` block is documented below.
+* `multihop_template` - BFD IPv6 multi-hop template table. The structure of `multihop_template` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -21,6 +22,17 @@ The `neighbor` block supports:
 
 * `ip6_address` - IPv6 address of the BFD neighbor.
 * `interface` - Interface to the BFD neighbor.
+
+The `multihop_template` block supports:
+
+* `id` - ID.
+* `src` - Source prefix.
+* `dst` - Destination prefix.
+* `bfd_desired_min_tx` - BFD desired minimal transmit interval (milliseconds).
+* `bfd_required_min_rx` - BFD required minimal receive interval (milliseconds).
+* `bfd_detect_mult` - BFD detection multiplier.
+* `auth_mode` - Authentication mode. Valid values: `none`, `md5`.
+* `md5_key` - MD5 key of key ID 1.
 
 
 ## Attribute Reference

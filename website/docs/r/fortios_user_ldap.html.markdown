@@ -66,6 +66,8 @@ The following arguments are supported:
 * `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token. Valid values: `same`, `strip`.
 * `account_key_filter` - Account key filter, using the UPN as the search filter.
 * `search_type` - Search type. Valid values: `recursive`.
+* `client_cert_auth` - Enable/disable using client certificate for TLS authentication. Valid values: `enable`, `disable`.
+* `client_cert` - Client certificate name.
 * `obtain_user_info` - Enable/disable obtaining of user information. Valid values: `enable`, `disable`.
 * `user_info_exchange_server` - MS Exchange server from which to fetch user information.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

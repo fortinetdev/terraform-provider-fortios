@@ -363,6 +363,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dlp_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"spamfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1270,6 +1274,10 @@ func dataSourceFlattenFirewallProxyPolicyEmailfilterProfile(v interface{}, d *sc
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyDlpProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicySpamfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1650,6 +1658,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("emailfilter_profile", dataSourceFlattenFirewallProxyPolicyEmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile")); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", dataSourceFlattenFirewallProxyPolicyDlpProfile(o["dlp-profile"], d, "dlp_profile")); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
 		}
 	}
 

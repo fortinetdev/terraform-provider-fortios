@@ -23,6 +23,7 @@ The following attributes are exported:
 * `description` - Description.
 * `trigger_type` - Trigger type.
 * `event_type` - Event type.
+* `vdom` - Virtual domain(s) that this trigger is valid for. The structure of `vdom` block is documented below.
 * `license_type` - License type.
 * `ioc_level` - IOC threat level.
 * `report_type` - Security Rating report.
@@ -40,6 +41,10 @@ The following attributes are exported:
 * `fabric_event_name` - Fabric connector event handler name.
 * `fabric_event_severity` - Fabric connector event severity.
 * `logid_block` - Log ID to trigger event. Only applies on FortiOS v7.0.0+. The structure of `logid_block` block is documented below.
+
+The `vdom` block contains:
+
+* `name` - Virtual domain name.
 
 The `fields` block contains:
 

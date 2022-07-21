@@ -30,6 +30,9 @@ The following attributes are exported:
 * `router_id` - A.B.C.D, in IPv4 address format.
 * `spf_timers` - SPF calculation frequency.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+* `restart_mode` - OSPFv3 restart mode (graceful or none).
+* `restart_period` - Graceful restart period in seconds.
+* `restart_on_topology_change` - Enable/disable continuing graceful restart upon topology change.
 * `area` - OSPF6 area configuration. The structure of `area` block is documented below.
 * `ospf6_interface` - OSPF6 interface configuration. The structure of `ospf6_interface` block is documented below.
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.

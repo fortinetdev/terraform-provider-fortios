@@ -181,6 +181,12 @@ func resourceUserFsso() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"sni": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ssl_server_host_ip_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -438,6 +444,10 @@ func flattenUserFssoSsl(v interface{}, d *schema.ResourceData, pre string, sv st
 	return v
 }
 
+func flattenUserFssoSni(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserFssoSslServerHostIpCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -585,6 +595,12 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("sni", flattenUserFssoSni(o["sni"], d, "sni", sv)); err != nil {
+		if !fortiAPIPatch(o["sni"]) {
+			return fmt.Errorf("Error reading sni: %v", err)
+		}
+	}
+
 	if err = d.Set("ssl_server_host_ip_check", flattenUserFssoSslServerHostIpCheck(o["ssl-server-host-ip-check"], d, "ssl_server_host_ip_check", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-server-host-ip-check"]) {
 			return fmt.Errorf("Error reading ssl_server_host_ip_check: %v", err)
@@ -727,6 +743,10 @@ func expandUserFssoUserInfoServer(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserFssoSsl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoSni(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1004,6 +1024,16 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["ssl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sni"); ok {
+
+		t, err := expandUserFssoSni(d, v, "sni", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sni"] = t
 		}
 	}
 

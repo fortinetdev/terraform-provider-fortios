@@ -14,6 +14,8 @@ Configure ACME client. Applies to FortiOS Version `>= 7.0.1`.
 The following arguments are supported:
 
 * `interface` - Interface(s) on which the ACME client will listen for challenges. The structure of `interface` block is documented below.
+* `source_ip` - Source IPv4 address used to connect to the ACME server.
+* `source_ip6` - Source IPv6 address used to connect to the ACME server.
 * `accounts` - ACME accounts list. The structure of `accounts` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

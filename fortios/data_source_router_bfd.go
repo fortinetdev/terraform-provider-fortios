@@ -43,6 +43,47 @@ func dataSourceRouterBfd() *schema.Resource {
 					},
 				},
 			},
+			"multihop_template": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"src": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dst": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"bfd_desired_min_tx": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"bfd_required_min_rx": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"bfd_detect_mult": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"auth_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"md5_key": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -126,12 +167,135 @@ func dataSourceFlattenRouterBfdNeighborInterface(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenRouterBfdMultihopTemplate(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenRouterBfdMultihopTemplateId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
+		if _, ok := i["src"]; ok {
+			tmp["src"] = dataSourceFlattenRouterBfdMultihopTemplateSrc(i["src"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
+		if _, ok := i["dst"]; ok {
+			tmp["dst"] = dataSourceFlattenRouterBfdMultihopTemplateDst(i["dst"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_desired_min_tx"
+		if _, ok := i["bfd-desired-min-tx"]; ok {
+			tmp["bfd_desired_min_tx"] = dataSourceFlattenRouterBfdMultihopTemplateBfdDesiredMinTx(i["bfd-desired-min-tx"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_required_min_rx"
+		if _, ok := i["bfd-required-min-rx"]; ok {
+			tmp["bfd_required_min_rx"] = dataSourceFlattenRouterBfdMultihopTemplateBfdRequiredMinRx(i["bfd-required-min-rx"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_detect_mult"
+		if _, ok := i["bfd-detect-mult"]; ok {
+			tmp["bfd_detect_mult"] = dataSourceFlattenRouterBfdMultihopTemplateBfdDetectMult(i["bfd-detect-mult"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
+		if _, ok := i["auth-mode"]; ok {
+			tmp["auth_mode"] = dataSourceFlattenRouterBfdMultihopTemplateAuthMode(i["auth-mode"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
+		if _, ok := i["md5-key"]; ok {
+			tmp["md5_key"] = dataSourceFlattenRouterBfdMultihopTemplateMd5Key(i["md5-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["md5_key"] = c
+			}
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateSrc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateDst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateBfdDetectMult(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateAuthMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBfdMultihopTemplateMd5Key(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterBfd(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
 	if err = d.Set("neighbor", dataSourceFlattenRouterBfdNeighbor(o["neighbor"], d, "neighbor")); err != nil {
 		if !fortiAPIPatch(o["neighbor"]) {
 			return fmt.Errorf("Error reading neighbor: %v", err)
+		}
+	}
+
+	if err = d.Set("multihop_template", dataSourceFlattenRouterBfdMultihopTemplate(o["multihop-template"], d, "multihop_template")); err != nil {
+		if !fortiAPIPatch(o["multihop-template"]) {
+			return fmt.Errorf("Error reading multihop_template: %v", err)
 		}
 	}
 

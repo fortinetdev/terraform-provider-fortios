@@ -214,6 +214,26 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"http_headers": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"headers": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -232,6 +252,14 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 			},
 			"script": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"output_size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"timeout": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"execute_security_fabric": &schema.Schema{
@@ -513,6 +541,60 @@ func dataSourceFlattenSystemAutomationActionPort(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemAutomationActionHttpHeaders(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemAutomationActionHttpHeadersId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
+		if _, ok := i["key"]; ok {
+			tmp["key"] = dataSourceFlattenSystemAutomationActionHttpHeadersKey(i["key"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := i["value"]; ok {
+			tmp["value"] = dataSourceFlattenSystemAutomationActionHttpHeadersValue(i["value"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemAutomationActionHttpHeadersId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionHttpHeadersKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionHttpHeadersValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -554,6 +636,14 @@ func dataSourceFlattenSystemAutomationActionVerifyHostCert(v interface{}, d *sch
 }
 
 func dataSourceFlattenSystemAutomationActionScript(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionOutputSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -854,6 +944,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("http_headers", dataSourceFlattenSystemAutomationActionHttpHeaders(o["http-headers"], d, "http_headers")); err != nil {
+		if !fortiAPIPatch(o["http-headers"]) {
+			return fmt.Errorf("Error reading http_headers: %v", err)
+		}
+	}
+
 	if err = d.Set("headers", dataSourceFlattenSystemAutomationActionHeaders(o["headers"], d, "headers")); err != nil {
 		if !fortiAPIPatch(o["headers"]) {
 			return fmt.Errorf("Error reading headers: %v", err)
@@ -869,6 +965,18 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("script", dataSourceFlattenSystemAutomationActionScript(o["script"], d, "script")); err != nil {
 		if !fortiAPIPatch(o["script"]) {
 			return fmt.Errorf("Error reading script: %v", err)
+		}
+	}
+
+	if err = d.Set("output_size", dataSourceFlattenSystemAutomationActionOutputSize(o["output-size"], d, "output_size")); err != nil {
+		if !fortiAPIPatch(o["output-size"]) {
+			return fmt.Errorf("Error reading output_size: %v", err)
+		}
+	}
+
+	if err = d.Set("timeout", dataSourceFlattenSystemAutomationActionTimeout(o["timeout"], d, "timeout")); err != nil {
+		if !fortiAPIPatch(o["timeout"]) {
+			return fmt.Errorf("Error reading timeout: %v", err)
 		}
 	}
 

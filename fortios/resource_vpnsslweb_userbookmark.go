@@ -220,13 +220,13 @@ func resourceVpnSslWebUserBookmark() *schema.Resource {
 						},
 						"width": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(640, 65535),
+							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
 							Computed:     true,
 						},
 						"height": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(480, 65535),
+							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
 							Computed:     true,
 						},

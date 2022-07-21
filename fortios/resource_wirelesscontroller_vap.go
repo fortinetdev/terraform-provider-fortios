@@ -967,9 +967,14 @@ func resourceWirelessControllerVap() *schema.Resource {
 			},
 			"address_group": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
+			},
+			"address_group_policy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"mac_filter": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1044,6 +1049,22 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed: true,
 			},
 			"osen": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"application_detection_engine": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"application_report_intv": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(30, 864000),
+				Optional:     true,
+				Computed:     true,
+			},
+			"l3_roaming": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -2163,6 +2184,10 @@ func flattenWirelessControllerVapAddressGroup(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenWirelessControllerVapAddressGroupPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapMacFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2263,6 +2288,18 @@ func flattenWirelessControllerVapBeaconAdvertising(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerVapOsen(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapApplicationDetectionEngine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapApplicationReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapL3Roaming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3239,6 +3276,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("address_group_policy", flattenWirelessControllerVapAddressGroupPolicy(o["address-group-policy"], d, "address_group_policy", sv)); err != nil {
+		if !fortiAPIPatch(o["address-group-policy"]) {
+			return fmt.Errorf("Error reading address_group_policy: %v", err)
+		}
+	}
+
 	if err = d.Set("mac_filter", flattenWirelessControllerVapMacFilter(o["mac-filter"], d, "mac_filter", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-filter"]) {
 			return fmt.Errorf("Error reading mac_filter: %v", err)
@@ -3312,6 +3355,24 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("osen", flattenWirelessControllerVapOsen(o["osen"], d, "osen", sv)); err != nil {
 		if !fortiAPIPatch(o["osen"]) {
 			return fmt.Errorf("Error reading osen: %v", err)
+		}
+	}
+
+	if err = d.Set("application_detection_engine", flattenWirelessControllerVapApplicationDetectionEngine(o["application-detection-engine"], d, "application_detection_engine", sv)); err != nil {
+		if !fortiAPIPatch(o["application-detection-engine"]) {
+			return fmt.Errorf("Error reading application_detection_engine: %v", err)
+		}
+	}
+
+	if err = d.Set("application_report_intv", flattenWirelessControllerVapApplicationReportIntv(o["application-report-intv"], d, "application_report_intv", sv)); err != nil {
+		if !fortiAPIPatch(o["application-report-intv"]) {
+			return fmt.Errorf("Error reading application_report_intv: %v", err)
+		}
+	}
+
+	if err = d.Set("l3_roaming", flattenWirelessControllerVapL3Roaming(o["l3-roaming"], d, "l3_roaming", sv)); err != nil {
+		if !fortiAPIPatch(o["l3-roaming"]) {
+			return fmt.Errorf("Error reading l3_roaming: %v", err)
 		}
 	}
 
@@ -4228,6 +4289,10 @@ func expandWirelessControllerVapAddressGroup(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandWirelessControllerVapAddressGroupPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapMacFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4317,6 +4382,18 @@ func expandWirelessControllerVapBeaconAdvertising(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerVapOsen(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapApplicationDetectionEngine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapApplicationReportIntv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapL3Roaming(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5839,6 +5916,16 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("address_group_policy"); ok {
+
+		t, err := expandWirelessControllerVapAddressGroupPolicy(d, v, "address_group_policy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["address-group-policy"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("mac_filter"); ok {
 
 		t, err := expandWirelessControllerVapMacFilter(d, v, "mac_filter", sv)
@@ -5946,6 +6033,36 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["osen"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("application_detection_engine"); ok {
+
+		t, err := expandWirelessControllerVapApplicationDetectionEngine(d, v, "application_detection_engine", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["application-detection-engine"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("application_report_intv"); ok {
+
+		t, err := expandWirelessControllerVapApplicationReportIntv(d, v, "application_report_intv", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["application-report-intv"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("l3_roaming"); ok {
+
+		t, err := expandWirelessControllerVapL3Roaming(d, v, "l3_roaming", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["l3-roaming"] = t
 		}
 	}
 

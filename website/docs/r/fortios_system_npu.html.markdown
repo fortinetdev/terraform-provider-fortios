@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_npu
-Configure NPU attributes. Applies to FortiOS Version `>= 7.0.4`.
+Configure NPU attributes. Applies to FortiOS Version `7.0.4`.
 
 ## Argument Reference
 

@@ -32,6 +32,7 @@ The following arguments are supported:
 * `description` - Description.
 * `trigger_type` - Trigger type. Valid values: `event-based`, `scheduled`.
 * `event_type` - Event type.
+* `vdom` - Virtual domain(s) that this trigger is valid for. The structure of `vdom` block is documented below.
 * `license_type` - License type.
 * `ioc_level` - IOC threat level. Valid values: `medium`, `high`.
 * `report_type` - Security Rating report.
@@ -51,6 +52,10 @@ The following arguments are supported:
 * `logid_block` - Log ID to trigger event. Only applies on FortiOS v7.0.0+. The structure of `logid_block` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `vdom` block supports:
+
+* `name` - Virtual domain name.
 
 The `fields` block supports:
 

@@ -241,6 +241,10 @@ func dataSourceSystemAccprofile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"videofilter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -629,6 +633,11 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.
 		result["endpoint_control"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionEndpointControl(i["endpoint-control"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "videofilter"
+	if _, ok := i["videofilter"]; ok {
+		result["videofilter"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionVideofilter(i["videofilter"], d, pre_append)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -682,6 +691,10 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermissionDnsfilter(v interface{}, d
 }
 
 func dataSourceFlattenSystemAccprofileUtmgrpPermissionEndpointControl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileUtmgrpPermissionVideofilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

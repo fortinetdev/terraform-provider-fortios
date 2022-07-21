@@ -82,13 +82,13 @@ func resourceSystemClusterSync() *schema.Resource {
 			},
 			"hb_interval": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 10),
+				ValidateFunc: validation.IntBetween(1, 20),
 				Optional:     true,
 				Computed:     true,
 			},
 			"hb_lost_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 10),
+				ValidateFunc: validation.IntBetween(1, 60),
 				Optional:     true,
 				Computed:     true,
 			},

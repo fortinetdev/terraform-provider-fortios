@@ -147,7 +147,7 @@ func resourceRouterStatic() *schema.Resource {
 			},
 			"vrf": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 31),
+				ValidateFunc: validation.IntBetween(0, 63),
 				Optional:     true,
 				Computed:     true,
 			},

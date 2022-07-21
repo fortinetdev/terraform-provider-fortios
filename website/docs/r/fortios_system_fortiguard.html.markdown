@@ -62,6 +62,7 @@ The following arguments are supported:
 * `update_extdb` - Enable/disable external resource update. Valid values: `enable`, `disable`.
 * `update_build_proxy` - Enable/disable proxy dictionary rebuild. Valid values: `enable`, `disable`.
 * `persistent_connection` - Enable/disable use of persistent connection to receive update notification from FortiGuard. Valid values: `enable`, `disable`.
+* `vdom` - FortiGuard Service virtual domain name.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network. Valid values: `enable`, `disable`.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet. Valid values: `fortinet`, `aws`, `debug`.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service. Valid values: `enable`, `disable`.

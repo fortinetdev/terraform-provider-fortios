@@ -20,9 +20,21 @@ Use this data source to get information on fortios router bfd6
 The following attributes are exported:
 
 * `neighbor` - Configure neighbor of IPv6 BFD. The structure of `neighbor` block is documented below.
+* `multihop_template` - BFD IPv6 multi-hop template table. The structure of `multihop_template` block is documented below.
 
 The `neighbor` block contains:
 
 * `ip6_address` - IPv6 address of the BFD neighbor.
 * `interface` - Interface to the BFD neighbor.
+
+The `multihop_template` block contains:
+
+* `id` - ID.
+* `src` - Source prefix.
+* `dst` - Destination prefix.
+* `bfd_desired_min_tx` - BFD desired minimal transmit interval (milliseconds).
+* `bfd_required_min_rx` - BFD required minimal receive interval (milliseconds).
+* `bfd_detect_mult` - BFD detection multiplier.
+* `auth_mode` - Authentication mode.
+* `md5_key` - MD5 key of key ID 1.
 

@@ -119,6 +119,10 @@ func dataSourceRouterOspf() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"restart_on_topology_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"area": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -684,6 +688,10 @@ func dataSourceFlattenRouterOspfRestartMode(v interface{}, d *schema.ResourceDat
 }
 
 func dataSourceFlattenRouterOspfRestartPeriod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfRestartOnTopologyChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1991,6 +1999,12 @@ func dataSourceRefreshObjectRouterOspf(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("restart_period", dataSourceFlattenRouterOspfRestartPeriod(o["restart-period"], d, "restart_period")); err != nil {
 		if !fortiAPIPatch(o["restart-period"]) {
 			return fmt.Errorf("Error reading restart_period: %v", err)
+		}
+	}
+
+	if err = d.Set("restart_on_topology_change", dataSourceFlattenRouterOspfRestartOnTopologyChange(o["restart-on-topology-change"], d, "restart_on_topology_change")); err != nil {
+		if !fortiAPIPatch(o["restart-on-topology-change"]) {
+			return fmt.Errorf("Error reading restart_on_topology_change: %v", err)
 		}
 	}
 

@@ -58,6 +58,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"server_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -412,6 +417,10 @@ func flattenSystemLinkMonitorServerConfig(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemLinkMonitorServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -712,6 +721,12 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("server_type", flattenSystemLinkMonitorServerType(o["server-type"], d, "server_type", sv)); err != nil {
+		if !fortiAPIPatch(o["server-type"]) {
+			return fmt.Errorf("Error reading server_type: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server", sv)); err != nil {
 			if !fortiAPIPatch(o["server"]) {
@@ -932,6 +947,10 @@ func expandSystemLinkMonitorSrcintf(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemLinkMonitorServerConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1215,6 +1234,16 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["server-config"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_type"); ok {
+
+		t, err := expandSystemLinkMonitorServerType(d, v, "server_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-type"] = t
 		}
 	}
 

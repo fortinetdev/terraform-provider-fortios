@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system3gmodem_custom
-3G MODEM custom. Applies to FortiOS Version `>= 7.0.4`.
+3G MODEM custom. Applies to FortiOS Version `7.0.4`.
 
 ## Argument Reference
 

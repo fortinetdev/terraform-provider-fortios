@@ -25,6 +25,7 @@ The following arguments are supported:
 
 * `status` - Enable/disable FortiSandbox. Valid values: `enable`, `disable`.
 * `forticloud` - Enable/disable FortiSandbox Cloud. Valid values: `enable`, `disable`.
+* `inline_scan` - Enable/disable FortiSandbox inline scan. Valid values: `enable`, `disable`.
 * `server` - IPv4 or IPv6 address of the remote FortiSandbox.
 * `source_ip` - Source IP address for communications to FortiSandbox.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

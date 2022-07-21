@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_modem
-Configure MODEM. Applies to FortiOS Version `>= 7.0.4`.
+Configure MODEM. Applies to FortiOS Version `7.0.4`.
 
 ## Argument Reference
 

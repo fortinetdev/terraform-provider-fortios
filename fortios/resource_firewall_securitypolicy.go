@@ -454,6 +454,12 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dlp_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dlp_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -1672,6 +1678,10 @@ func flattenFirewallSecurityPolicyEmailfilterProfileSp(v interface{}, d *schema.
 	return v
 }
 
+func flattenFirewallSecurityPolicyDlpProfileSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSecurityPolicyDlpSensorSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2491,6 +2501,12 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 	if err = d.Set("emailfilter_profile", flattenFirewallSecurityPolicyEmailfilterProfileSp(o["emailfilter-profile"], d, "emailfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dlp_profile", flattenFirewallSecurityPolicyDlpProfileSp(o["dlp-profile"], d, "dlp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["dlp-profile"]) {
+			return fmt.Errorf("Error reading dlp_profile: %v", err)
 		}
 	}
 
@@ -3399,6 +3415,10 @@ func expandFirewallSecurityPolicyEmailfilterProfileSp(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandFirewallSecurityPolicyDlpProfileSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallSecurityPolicyDlpSensorSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4143,6 +4163,16 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dlp_profile"); ok {
+
+		t, err := expandFirewallSecurityPolicyDlpProfileSp(d, v, "dlp_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dlp-profile"] = t
 		}
 	}
 

@@ -19,6 +19,7 @@ The following arguments are supported:
 * `sleep_on_idle` - Enable/disable sleep-on-idle support for all FDH engines. Valid values: `disable`, `enable`.
 * `elasticbuffer` - Enable/disable elasticbuffer support for all DPDK ports. Valid values: `disable`, `enable`.
 * `per_session_accounting` - Enable/disable per-session accounting. Valid values: `disable`, `traffic-log-only`, `enable`.
+* `ipsec_offload` - Enable/disable DPDK IPsec phase 2 offloading. Valid values: `disable`, `enable`.
 * `hugepage_percentage` - Percentage of main memory allocated to hugepages, which are available for DPDK operation.
 * `mbufpool_percentage` - Percentage of main memory allocated to DPDK packet buffer.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.

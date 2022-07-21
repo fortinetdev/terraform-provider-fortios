@@ -195,6 +195,17 @@ func resourceUserLdap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"client_cert_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"client_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"obtain_user_info": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -469,6 +480,14 @@ func flattenUserLdapSearchType(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenUserLdapClientCertAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserLdapClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapObtainUserInfo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -664,6 +683,18 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("client_cert_auth", flattenUserLdapClientCertAuth(o["client-cert-auth"], d, "client_cert_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["client-cert-auth"]) {
+			return fmt.Errorf("Error reading client_cert_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("client_cert", flattenUserLdapClientCert(o["client-cert"], d, "client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["client-cert"]) {
+			return fmt.Errorf("Error reading client_cert: %v", err)
+		}
+	}
+
 	if err = d.Set("obtain_user_info", flattenUserLdapObtainUserInfo(o["obtain-user-info"], d, "obtain_user_info", sv)); err != nil {
 		if !fortiAPIPatch(o["obtain-user-info"]) {
 			return fmt.Errorf("Error reading obtain_user_info: %v", err)
@@ -822,6 +853,14 @@ func expandUserLdapAccountKeyFilter(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandUserLdapSearchType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapClientCertAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1139,6 +1178,26 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["search-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_cert_auth"); ok {
+
+		t, err := expandUserLdapClientCertAuth(d, v, "client_cert_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-cert-auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_cert"); ok {
+
+		t, err := expandUserLdapClientCert(d, v, "client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-cert"] = t
 		}
 	}
 

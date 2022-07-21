@@ -104,6 +104,16 @@ func resourceLogThreatWeight() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"fortindr": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortisandbox": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortiai": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -487,6 +497,18 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 		result["virus_infected"] = flattenLogThreatWeightMalwareVirusInfected(i["virus-infected"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "fortindr"
+	if _, ok := i["fortindr"]; ok {
+
+		result["fortindr"] = flattenLogThreatWeightMalwareFortindr(i["fortindr"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "fortisandbox"
+	if _, ok := i["fortisandbox"]; ok {
+
+		result["fortisandbox"] = flattenLogThreatWeightMalwareFortisandbox(i["fortisandbox"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortiai"
 	if _, ok := i["fortiai"]; ok {
 
@@ -588,6 +610,14 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogThreatWeightMalwareVirusInfected(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogThreatWeightMalwareFortindr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogThreatWeightMalwareFortisandbox(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1150,6 +1180,24 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 			result["virus-infected"], _ = expandLogThreatWeightMalwareVirusInfected(d, i["virus_infected"], pre_append, sv)
 		}
 	}
+	pre_append = pre + ".0." + "fortindr"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["fortindr"] = nil
+		} else {
+
+			result["fortindr"], _ = expandLogThreatWeightMalwareFortindr(d, i["fortindr"], pre_append, sv)
+		}
+	}
+	pre_append = pre + ".0." + "fortisandbox"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["fortisandbox"] = nil
+		} else {
+
+			result["fortisandbox"], _ = expandLogThreatWeightMalwareFortisandbox(d, i["fortisandbox"], pre_append, sv)
+		}
+	}
 	pre_append = pre + ".0." + "fortiai"
 	if _, ok := d.GetOk(pre_append); ok {
 		if setArgNil {
@@ -1299,6 +1347,14 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandLogThreatWeightMalwareVirusInfected(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogThreatWeightMalwareFortindr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogThreatWeightMalwareFortisandbox(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

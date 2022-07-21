@@ -76,6 +76,9 @@ The following arguments are supported:
 * `router_id` - (Required) A.B.C.D, in IPv4 address format.
 * `spf_timers` - SPF calculation frequency.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
+* `restart_mode` - OSPFv3 restart mode (graceful or none). Valid values: `none`, `graceful-restart`.
+* `restart_period` - Graceful restart period in seconds.
+* `restart_on_topology_change` - Enable/disable continuing graceful restart upon topology change. Valid values: `enable`, `disable`.
 * `area` - OSPF6 area configuration. The structure of `area` block is documented below.
 * `ospf6_interface` - OSPF6 interface configuration. The structure of `ospf6_interface` block is documented below.
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.

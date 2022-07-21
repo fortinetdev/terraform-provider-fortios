@@ -159,6 +159,8 @@ The `level` block supports:
 The `malware` block supports:
 
 * `virus_infected` - Threat weight score for virus (infected) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `fortindr` - Threat weight score for FortiNDR-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `fortisandbox` - Threat weight score for FortiSandbox-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fortiai` - Threat weight score for FortiAI-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `file_blocked` - Threat weight score for blocked file detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `command_blocked` - Threat weight score for blocked command detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.

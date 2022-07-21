@@ -51,6 +51,36 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"collectors": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"transport": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"collector_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -75,6 +105,12 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 			"max_export_pkt_size": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(512, 9216),
+				Optional:     true,
+				Computed:     true,
+			},
+			"template_export_period": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 60),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -253,6 +289,79 @@ func flattenSwitchControllerFlowTrackingFormat(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSwitchControllerFlowTrackingCollectors(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenSwitchControllerFlowTrackingCollectorsName(i["name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := i["ip"]; ok {
+
+			tmp["ip"] = flattenSwitchControllerFlowTrackingCollectorsIp(i["ip"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := i["port"]; ok {
+
+			tmp["port"] = flattenSwitchControllerFlowTrackingCollectorsPort(i["port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport"
+		if _, ok := i["transport"]; ok {
+
+			tmp["transport"] = flattenSwitchControllerFlowTrackingCollectorsTransport(i["transport"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSwitchControllerFlowTrackingCollectorsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerFlowTrackingCollectorsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerFlowTrackingCollectorsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerFlowTrackingCollectorsTransport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerFlowTrackingCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -270,6 +379,10 @@ func flattenSwitchControllerFlowTrackingLevel(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchControllerFlowTrackingMaxExportPktSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerFlowTrackingTemplateExportPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -382,6 +495,22 @@ func refreshObjectSwitchControllerFlowTracking(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("collectors", flattenSwitchControllerFlowTrackingCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+			if !fortiAPIPatch(o["collectors"]) {
+				return fmt.Errorf("Error reading collectors: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("collectors"); ok {
+			if err = d.Set("collectors", flattenSwitchControllerFlowTrackingCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+				if !fortiAPIPatch(o["collectors"]) {
+					return fmt.Errorf("Error reading collectors: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("collector_ip", flattenSwitchControllerFlowTrackingCollectorIp(o["collector-ip"], d, "collector_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
 			return fmt.Errorf("Error reading collector_ip: %v", err)
@@ -409,6 +538,12 @@ func refreshObjectSwitchControllerFlowTracking(d *schema.ResourceData, o map[str
 	if err = d.Set("max_export_pkt_size", flattenSwitchControllerFlowTrackingMaxExportPktSize(o["max-export-pkt-size"], d, "max_export_pkt_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-export-pkt-size"]) {
 			return fmt.Errorf("Error reading max_export_pkt_size: %v", err)
+		}
+	}
+
+	if err = d.Set("template_export_period", flattenSwitchControllerFlowTrackingTemplateExportPeriod(o["template-export-period"], d, "template_export_period", sv)); err != nil {
+		if !fortiAPIPatch(o["template-export-period"]) {
+			return fmt.Errorf("Error reading template_export_period: %v", err)
 		}
 	}
 
@@ -491,6 +626,68 @@ func expandSwitchControllerFlowTrackingFormat(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandSwitchControllerFlowTrackingCollectors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandSwitchControllerFlowTrackingCollectorsName(d, i["name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["ip"], _ = expandSwitchControllerFlowTrackingCollectorsIp(d, i["ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["port"], _ = expandSwitchControllerFlowTrackingCollectorsPort(d, i["port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["transport"], _ = expandSwitchControllerFlowTrackingCollectorsTransport(d, i["transport"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerFlowTrackingCollectorsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerFlowTrackingCollectorsIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerFlowTrackingCollectorsPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerFlowTrackingCollectorsTransport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerFlowTrackingCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -508,6 +705,10 @@ func expandSwitchControllerFlowTrackingLevel(d *schema.ResourceData, v interface
 }
 
 func expandSwitchControllerFlowTrackingMaxExportPktSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerFlowTrackingTemplateExportPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -626,6 +827,20 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		}
 	}
 
+	if v, ok := d.GetOk("collectors"); ok {
+		if setArgNil {
+			obj["collectors"] = make([]struct{}, 0)
+		} else {
+
+			t, err := expandSwitchControllerFlowTrackingCollectors(d, v, "collectors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collectors"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("collector_ip"); ok {
 		if setArgNil {
 			obj["collector-ip"] = nil
@@ -692,6 +907,20 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 				return &obj, err
 			} else if t != nil {
 				obj["max-export-pkt-size"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("template_export_period"); ok {
+		if setArgNil {
+			obj["template-export-period"] = nil
+		} else {
+
+			t, err := expandSwitchControllerFlowTrackingTemplateExportPeriod(d, v, "template_export_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["template-export-period"] = t
 			}
 		}
 	}

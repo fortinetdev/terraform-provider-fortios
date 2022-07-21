@@ -57,6 +57,8 @@ The following arguments are supported:
 * `webfilter_profile` - Name of an existing web filter profile.
 * `emailfilter_profile_status` - Enable/disable emailfilter. Valid values: `enable`, `disable`.
 * `emailfilter_profile` - Name of an existing email filter profile.
+* `dlp_profile_status` - Enable/disable DLP profile. Valid values: `enable`, `disable`.
+* `dlp_profile` - Name of an existing DLP profile.
 * `spamfilter_profile_status` - Enable/disable spam filter. Valid values: `enable`, `disable`.
 * `spamfilter_profile` - Name of an existing spam filter profile.
 * `dlp_sensor_status` - Enable/disable DLP sensor. Valid values: `enable`, `disable`.

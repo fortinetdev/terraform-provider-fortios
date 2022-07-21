@@ -49,6 +49,16 @@ func resourceSystemAcme() *schema.Resource {
 					},
 				},
 			},
+			"source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"accounts": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -239,6 +249,14 @@ func flattenSystemAcmeInterfaceInterfaceName(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemAcmeSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAcmeSourceIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAcmeAccounts(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -351,6 +369,18 @@ func refreshObjectSystemAcme(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("source_ip", flattenSystemAcmeSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip6", flattenSystemAcmeSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip6"]) {
+			return fmt.Errorf("Error reading source_ip6: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("accounts", flattenSystemAcmeAccounts(o["accounts"], d, "accounts", sv)); err != nil {
 			if !fortiAPIPatch(o["accounts"]) {
@@ -405,6 +435,14 @@ func expandSystemAcmeInterface(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemAcmeInterfaceInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAcmeSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAcmeSourceIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -503,6 +541,34 @@ func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["interface"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
+
+			t, err := expandSystemAcmeSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip6"); ok {
+		if setArgNil {
+			obj["source-ip6"] = nil
+		} else {
+
+			t, err := expandSystemAcmeSourceIp6(d, v, "source_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip6"] = t
 			}
 		}
 	}

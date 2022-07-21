@@ -98,6 +98,12 @@ func resourceSystemFortiguard() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 31),
+				Optional:     true,
+				Computed:     true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -456,6 +462,10 @@ func flattenSystemFortiguardPersistentConnection(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenSystemFortiguardVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortiguardFortiguardAnycast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -688,6 +698,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("persistent_connection", flattenSystemFortiguardPersistentConnection(o["persistent-connection"], d, "persistent_connection", sv)); err != nil {
 		if !fortiAPIPatch(o["persistent-connection"]) {
 			return fmt.Errorf("Error reading persistent_connection: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom", flattenSystemFortiguardVdom(o["vdom"], d, "vdom", sv)); err != nil {
+		if !fortiAPIPatch(o["vdom"]) {
+			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
@@ -979,6 +995,10 @@ func expandSystemFortiguardUpdateBuildProxy(d *schema.ResourceData, v interface{
 }
 
 func expandSystemFortiguardPersistentConnection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortiguardVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1309,6 +1329,20 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["persistent-connection"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("vdom"); ok {
+		if setArgNil {
+			obj["vdom"] = nil
+		} else {
+
+			t, err := expandSystemFortiguardVdom(d, v, "vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vdom"] = t
 			}
 		}
 	}

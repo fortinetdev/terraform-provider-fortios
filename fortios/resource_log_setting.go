@@ -85,6 +85,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"local_out_ioc_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"daemon_log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -303,6 +308,10 @@ func flattenLogSettingLocalOut(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenLogSettingLocalOutIocDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingDaemonLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -457,6 +466,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("local_out_ioc_detection", flattenLogSettingLocalOutIocDetection(o["local-out-ioc-detection"], d, "local_out_ioc_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["local-out-ioc-detection"]) {
+			return fmt.Errorf("Error reading local_out_ioc_detection: %v", err)
+		}
+	}
+
 	if err = d.Set("daemon_log", flattenLogSettingDaemonLog(o["daemon-log"], d, "daemon_log", sv)); err != nil {
 		if !fortiAPIPatch(o["daemon-log"]) {
 			return fmt.Errorf("Error reading daemon_log: %v", err)
@@ -591,6 +606,10 @@ func expandLogSettingLocalInDenyBroadcast(d *schema.ResourceData, v interface{},
 }
 
 func expandLogSettingLocalOut(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingLocalOutIocDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -813,6 +832,20 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["local-out"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("local_out_ioc_detection"); ok {
+		if setArgNil {
+			obj["local-out-ioc-detection"] = nil
+		} else {
+
+			t, err := expandLogSettingLocalOutIocDetection(d, v, "local_out_ioc_detection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-out-ioc-detection"] = t
 			}
 		}
 	}

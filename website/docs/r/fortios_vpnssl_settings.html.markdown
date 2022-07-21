@@ -78,6 +78,7 @@ The following arguments are supported:
 * `source_address6_negate` - Enable/disable negated source IPv6 address match. Valid values: `enable`, `disable`.
 * `default_portal` - Default SSL VPN portal.
 * `authentication_rule` - Authentication rule for SSL VPN. The structure of `authentication_rule` block is documented below.
+* `browser_language_detection` - Enable/disable overriding the configured system language based on the preferred language of the browser. Valid values: `enable`, `disable`.
 * `dtls_tunnel` - Enable DTLS to prevent eavesdropping, tampering, or message forgery. Valid values: `enable`, `disable`.
 * `dtls_max_proto_ver` - DTLS maximum protocol version. Valid values: `dtls1-0`, `dtls1-2`.
 * `dtls_min_proto_ver` - DTLS minimum protocol version. Valid values: `dtls1-0`, `dtls1-2`.
@@ -95,6 +96,7 @@ The following arguments are supported:
 * `dual_stack_mode` - Tunnel mode: enable parallel IPv4 and IPv6 tunnel. Web mode: support IPv4 and IPv6 bookmarks in the portal. Valid values: `enable`, `disable`.
 * `tunnel_addr_assigned_method` - Method used for assigning address for tunnel. Valid values: `first-available`, `round-robin`.
 * `saml_redirect_port` - SAML local redirect port in the machine running FCT (0 - 65535). 0 is to disable redirection on FGT side.
+* `web_mode_snat` - Enable/disable use of IP pools defined in firewall policy while using web-mode. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

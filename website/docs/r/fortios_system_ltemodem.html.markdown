@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_ltemodem
-Configure USB LTE/WIMAX devices. Applies to FortiOS Version `>= 7.0.4`.
+Configure USB LTE/WIMAX devices. Applies to FortiOS Version `7.0.4`.
 
 ## Argument Reference
 

@@ -43,6 +43,18 @@ func dataSourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"license_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -195,6 +207,42 @@ func dataSourceFlattenSystemAutomationTriggerTriggerType(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemAutomationTriggerEventType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationTriggerVdom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemAutomationTriggerVdomName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemAutomationTriggerVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -372,6 +420,12 @@ func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o ma
 	if err = d.Set("event_type", dataSourceFlattenSystemAutomationTriggerEventType(o["event-type"], d, "event_type")); err != nil {
 		if !fortiAPIPatch(o["event-type"]) {
 			return fmt.Errorf("Error reading event_type: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom", dataSourceFlattenSystemAutomationTriggerVdom(o["vdom"], d, "vdom")); err != nil {
+		if !fortiAPIPatch(o["vdom"]) {
+			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 

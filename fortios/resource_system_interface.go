@@ -53,7 +53,7 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"vrf": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 31),
+				ValidateFunc: validation.IntBetween(0, 63),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -640,13 +640,13 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"inbandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 16776000),
+				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
 				Computed:     true,
 			},
 			"outbandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 16776000),
+				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -913,6 +913,12 @@ func resourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
+			},
+			"ike_saml_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
 			},
 			"stp": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1383,6 +1389,40 @@ func resourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
+			},
+			"eap_supplicant": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"eap_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"eap_identity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"eap_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
+			},
+			"eap_ca_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"eap_user_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
 			},
 			"forward_error_correction": &schema.Schema{
 				Type:     schema.TypeString,
@@ -2834,6 +2874,10 @@ func flattenSystemInterfaceSecurityGroupsName(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemInterfaceIkeSamlServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemInterfaceStp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3527,6 +3571,30 @@ func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemInterfaceTaggingTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceEapSupplicant(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceEapMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceEapIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceEapPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceEapCaCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceEapUserCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5438,6 +5506,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("ike_saml_server", flattenSystemInterfaceIkeSamlServer(o["ike-saml-server"], d, "ike_saml_server", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-saml-server"]) {
+			return fmt.Errorf("Error reading ike_saml_server: %v", err)
+		}
+	}
+
 	if err = d.Set("stp", flattenSystemInterfaceStp(o["stp"], d, "stp", sv)); err != nil {
 		if !fortiAPIPatch(o["stp"]) {
 			return fmt.Errorf("Error reading stp: %v", err)
@@ -5811,6 +5885,36 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 					return fmt.Errorf("Error reading tagging: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("eap_supplicant", flattenSystemInterfaceEapSupplicant(o["eap-supplicant"], d, "eap_supplicant", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-supplicant"]) {
+			return fmt.Errorf("Error reading eap_supplicant: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_method", flattenSystemInterfaceEapMethod(o["eap-method"], d, "eap_method", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-method"]) {
+			return fmt.Errorf("Error reading eap_method: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_identity", flattenSystemInterfaceEapIdentity(o["eap-identity"], d, "eap_identity", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-identity"]) {
+			return fmt.Errorf("Error reading eap_identity: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_ca_cert", flattenSystemInterfaceEapCaCert(o["eap-ca-cert"], d, "eap_ca_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-ca-cert"]) {
+			return fmt.Errorf("Error reading eap_ca_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_user_cert", flattenSystemInterfaceEapUserCert(o["eap-user-cert"], d, "eap_user_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-user-cert"]) {
+			return fmt.Errorf("Error reading eap_user_cert: %v", err)
 		}
 	}
 
@@ -6633,6 +6737,10 @@ func expandSystemInterfaceSecurityGroupsName(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemInterfaceIkeSamlServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemInterfaceStp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7266,6 +7374,30 @@ func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemInterfaceTaggingTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceEapSupplicant(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceEapMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceEapIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceEapPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceEapCaCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceEapUserCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9654,6 +9786,16 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	if v, ok := d.GetOk("ike_saml_server"); ok {
+
+		t, err := expandSystemInterfaceIkeSamlServer(d, v, "ike_saml_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ike-saml-server"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("stp"); ok {
 
 		t, err := expandSystemInterfaceStp(d, v, "stp", sv)
@@ -10211,6 +10353,66 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["tagging"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_supplicant"); ok {
+
+		t, err := expandSystemInterfaceEapSupplicant(d, v, "eap_supplicant", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-supplicant"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_method"); ok {
+
+		t, err := expandSystemInterfaceEapMethod(d, v, "eap_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_identity"); ok {
+
+		t, err := expandSystemInterfaceEapIdentity(d, v, "eap_identity", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-identity"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_password"); ok {
+
+		t, err := expandSystemInterfaceEapPassword(d, v, "eap_password", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-password"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_ca_cert"); ok {
+
+		t, err := expandSystemInterfaceEapCaCert(d, v, "eap_ca_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-ca-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_user_cert"); ok {
+
+		t, err := expandSystemInterfaceEapUserCert(d, v, "eap_user_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-user-cert"] = t
 		}
 	}
 

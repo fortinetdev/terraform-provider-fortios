@@ -333,6 +333,62 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"vcluster_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vcluster": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vcluster_id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"override": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"priority": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"override_wait_time": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"monitor": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"pingserver_monitor_interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"pingserver_failover_threshold": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"pingserver_slave_force_reset": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vdom": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -845,6 +901,150 @@ func dataSourceFlattenSystemHaPingserverSlaveForceReset(v interface{}, d *schema
 }
 
 func dataSourceFlattenSystemHaPingserverFlipTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vcluster_id"
+		if _, ok := i["vcluster-id"]; ok {
+			tmp["vcluster_id"] = dataSourceFlattenSystemHaVclusterVclusterId(i["vcluster-id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "override"
+		if _, ok := i["override"]; ok {
+			tmp["override"] = dataSourceFlattenSystemHaVclusterOverride(i["override"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+		if _, ok := i["priority"]; ok {
+			tmp["priority"] = dataSourceFlattenSystemHaVclusterPriority(i["priority"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
+		if _, ok := i["override-wait-time"]; ok {
+			tmp["override_wait_time"] = dataSourceFlattenSystemHaVclusterOverrideWaitTime(i["override-wait-time"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
+		if _, ok := i["monitor"]; ok {
+			tmp["monitor"] = dataSourceFlattenSystemHaVclusterMonitor(i["monitor"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
+		if _, ok := i["pingserver-monitor-interface"]; ok {
+			tmp["pingserver_monitor_interface"] = dataSourceFlattenSystemHaVclusterPingserverMonitorInterface(i["pingserver-monitor-interface"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
+		if _, ok := i["pingserver-failover-threshold"]; ok {
+			tmp["pingserver_failover_threshold"] = dataSourceFlattenSystemHaVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
+		if _, ok := i["pingserver-slave-force-reset"]; ok {
+			tmp["pingserver_slave_force_reset"] = dataSourceFlattenSystemHaVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+		if _, ok := i["vdom"]; ok {
+			tmp["vdom"] = dataSourceFlattenSystemHaVclusterVdom(i["vdom"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaVclusterVclusterId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterOverrideWaitTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterPingserverMonitorInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterPingserverFailoverThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterPingserverSlaveForceReset(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterVdom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemHaVclusterVdomName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaVclusterVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1385,6 +1585,18 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("pingserver_flip_timeout", dataSourceFlattenSystemHaPingserverFlipTimeout(o["pingserver-flip-timeout"], d, "pingserver_flip_timeout")); err != nil {
 		if !fortiAPIPatch(o["pingserver-flip-timeout"]) {
 			return fmt.Errorf("Error reading pingserver_flip_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("vcluster_status", dataSourceFlattenSystemHaVclusterStatus(o["vcluster-status"], d, "vcluster_status")); err != nil {
+		if !fortiAPIPatch(o["vcluster-status"]) {
+			return fmt.Errorf("Error reading vcluster_status: %v", err)
+		}
+	}
+
+	if err = d.Set("vcluster", dataSourceFlattenSystemHaVcluster(o["vcluster"], d, "vcluster")); err != nil {
+		if !fortiAPIPatch(o["vcluster"]) {
+			return fmt.Errorf("Error reading vcluster: %v", err)
 		}
 	}
 

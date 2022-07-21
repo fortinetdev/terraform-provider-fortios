@@ -139,6 +139,22 @@ func dataSourceSystemSnmpCommunity() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"mib_view": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vdoms": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -386,6 +402,46 @@ func dataSourceFlattenSystemSnmpCommunityEvents(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenSystemSnmpCommunityMibView(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityVdoms(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemSnmpCommunityVdomsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSnmpCommunityVdomsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -482,6 +538,18 @@ func dataSourceRefreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[st
 	if err = d.Set("events", dataSourceFlattenSystemSnmpCommunityEvents(o["events"], d, "events")); err != nil {
 		if !fortiAPIPatch(o["events"]) {
 			return fmt.Errorf("Error reading events: %v", err)
+		}
+	}
+
+	if err = d.Set("mib_view", dataSourceFlattenSystemSnmpCommunityMibView(o["mib-view"], d, "mib_view")); err != nil {
+		if !fortiAPIPatch(o["mib-view"]) {
+			return fmt.Errorf("Error reading mib_view: %v", err)
+		}
+	}
+
+	if err = d.Set("vdoms", dataSourceFlattenSystemSnmpCommunityVdoms(o["vdoms"], d, "vdoms")); err != nil {
+		if !fortiAPIPatch(o["vdoms"]) {
+			return fmt.Errorf("Error reading vdoms: %v", err)
 		}
 	}
 

@@ -84,6 +84,17 @@ func resourceSystemVneTunnel() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"http_username": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
+				Computed:     true,
+			},
+			"http_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -218,6 +229,14 @@ func flattenSystemVneTunnelMode(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenSystemVneTunnelHttpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVneTunnelHttpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemVneTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -269,6 +288,18 @@ func refreshObjectSystemVneTunnel(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("http_username", flattenSystemVneTunnelHttpUsername(o["http-username"], d, "http_username", sv)); err != nil {
+		if !fortiAPIPatch(o["http-username"]) {
+			return fmt.Errorf("Error reading http_username: %v", err)
+		}
+	}
+
+	if err = d.Set("http_password", flattenSystemVneTunnelHttpPassword(o["http-password"], d, "http_password", sv)); err != nil {
+		if !fortiAPIPatch(o["http-password"]) {
+			return fmt.Errorf("Error reading http_password: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -311,6 +342,14 @@ func expandSystemVneTunnelUpdateUrl(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemVneTunnelMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVneTunnelHttpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVneTunnelHttpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -439,6 +478,34 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 				return &obj, err
 			} else if t != nil {
 				obj["mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("http_username"); ok {
+		if setArgNil {
+			obj["http-username"] = nil
+		} else {
+
+			t, err := expandSystemVneTunnelHttpUsername(d, v, "http_username", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-username"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("http_password"); ok {
+		if setArgNil {
+			obj["http-password"] = nil
+		} else {
+
+			t, err := expandSystemVneTunnelHttpPassword(d, v, "http_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-password"] = t
 			}
 		}
 	}

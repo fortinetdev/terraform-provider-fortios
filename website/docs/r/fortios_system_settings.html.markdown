@@ -26,6 +26,7 @@ resource "fortios_system_settings" "trname" {
 The following arguments are supported:
 
 * `comments` - VDOM comments.
+* `vdom_type` - VDOM type (traffic or admin). Valid values: `traffic`, `admin`.
 * `opmode` - Firewall operation mode (NAT or Transparent). Valid values: `nat`, `transparent`.
 * `inspection_mode` - Inspection mode (proxy-based or flow-based). Valid values: `proxy`, `flow`.
 * `ngfw_mode` - Next Generation Firewall (NGFW) mode. Valid values: `profile-based`, `policy-based`.
@@ -65,6 +66,7 @@ The following arguments are supported:
 * `lldp_reception` - Enable/disable Link Layer Discovery Protocol (LLDP) reception for this VDOM or apply global settings to this VDOM. Valid values: `enable`, `disable`, `global`.
 * `lldp_transmission` - Enable/disable Link Layer Discovery Protocol (LLDP) transmission for this VDOM or apply global settings to this VDOM. Valid values: `enable`, `disable`, `global`.
 * `link_down_access` - Enable/disable link down access traffic. Valid values: `enable`, `disable`.
+* `nat46_generate_ipv6_fragment_header` - Enable/disable NAT46 IPv6 fragment header generation. Valid values: `enable`, `disable`.
 * `auxiliary_session` - Enable/disable auxiliary session. Valid values: `enable`, `disable`.
 * `asymroute` - Enable/disable IPv4 asymmetric routing. Valid values: `enable`, `disable`.
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing. Valid values: `enable`, `disable`.
@@ -144,6 +146,7 @@ The following arguments are supported:
 * `gui_multiple_interface_policy` - Enable/disable adding multiple interfaces to a policy on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_ztna` - Enable/disable Zero Trust Network Access features on the GUI. Valid values: `enable`, `disable`.
+* `gui_ot` - Enable/disable Show Operational Technology Purdue Model. Valid values: `enable`, `disable`.
 * `location_id` - Local location ID in the form of an IPv4 address.
 * `gui_per_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_learning` - Enable/disable firewall policy learning mode on the GUI. Valid values: `enable`, `disable`.
@@ -155,7 +158,10 @@ The following arguments are supported:
 * `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks. Valid values: `disable`, `enable`.
+* `default_app_port_as_service` - Enable/disable policy service enforcement based on application default ports. Valid values: `enable`, `disable`.
 * `application_bandwidth_tracking` - Enable/disable application bandwidth tracking. Valid values: `disable`, `enable`.
+* `default_policy_expiry_days` - Default policy expiry in days (0 - 365 days, default = 30).
+* `gui_enforce_change_summary` - Enforce change summaries for select tables in the GUI. Valid values: `disable`, `require`, `optional`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

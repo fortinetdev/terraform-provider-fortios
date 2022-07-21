@@ -83,6 +83,10 @@ The `ports` block supports:
 * `ip_source_guard` - Enable/disable IP source guard. Valid values: `disable`, `enable`.
 * `ptp_policy` - PTP policy configuration.
 * `aggregator_mode` - LACP member select mode. Valid values: `bandwidth`, `count`.
+* `flapguard` - Enable/disable flap guard. Valid values: `enable`, `disable`.
+* `flap_rate` - Number of stage change events needed within flap-duration.
+* `flap_duration` - Period over which flap events are calculated (seconds).
+* `flap_timeout` - Flap guard disabling protection (min).
 * `rpvst_port` - Enable/disable inter-operability with rapid PVST on this interface. Valid values: `disabled`, `enabled`.
 * `poe_pre_standard_detection` - Enable/disable PoE pre-standard detection. Valid values: `enable`, `disable`.
 * `port_number` - Port number.
@@ -339,6 +343,7 @@ The `n802_1x_settings` block supports:
 * `reauth_period` - Reauthentication time interval (1 - 1440 min, default = 60, 0 = disable).
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
 * `tx_period` - 802.1X Tx period (seconds, default=30).
+* `mab_reauth` - Enable or disable MAB reauthentication settings. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference

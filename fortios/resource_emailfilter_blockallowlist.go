@@ -97,6 +97,12 @@ func resourceEmailfilterBlockAllowList() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"pattern": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 127),
+							Optional:     true,
+							Computed:     true,
+						},
 						"email_pattern": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
@@ -320,6 +326,12 @@ func flattenEmailfilterBlockAllowListEntries(v interface{}, d *schema.ResourceDa
 			tmp["pattern_type"] = flattenEmailfilterBlockAllowListEntriesPatternType(i["pattern-type"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
+		if _, ok := i["pattern"]; ok {
+
+			tmp["pattern"] = flattenEmailfilterBlockAllowListEntriesPattern(i["pattern"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if _, ok := i["email-pattern"]; ok {
 
@@ -371,6 +383,10 @@ func flattenEmailfilterBlockAllowListEntriesIp6Subnet(v interface{}, d *schema.R
 }
 
 func flattenEmailfilterBlockAllowListEntriesPatternType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEmailfilterBlockAllowListEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -498,6 +514,12 @@ func expandEmailfilterBlockAllowListEntries(d *schema.ResourceData, v interface{
 			tmp["pattern-type"], _ = expandEmailfilterBlockAllowListEntriesPatternType(d, i["pattern_type"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["pattern"], _ = expandEmailfilterBlockAllowListEntriesPattern(d, i["pattern"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -541,6 +563,10 @@ func expandEmailfilterBlockAllowListEntriesIp6Subnet(d *schema.ResourceData, v i
 }
 
 func expandEmailfilterBlockAllowListEntriesPatternType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEmailfilterBlockAllowListEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

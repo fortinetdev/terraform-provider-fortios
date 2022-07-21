@@ -418,6 +418,17 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"vrf": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"source": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"members": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -430,6 +441,11 @@ func resourceSystemSdwan() *schema.Resource {
 									},
 								},
 							},
+						},
+						"mos_codec": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"sla": &schema.Schema{
 							Type:     schema.TypeList,
@@ -465,6 +481,12 @@ func resourceSystemSdwan() *schema.Resource {
 										Optional:     true,
 										Computed:     true,
 									},
+									"mos_threshold": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
+									},
 								},
 							},
 						},
@@ -486,6 +508,12 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:     schema.TypeInt,
 							Optional: true,
 							Computed: true,
+						},
+						"minimum_sla_meet_members": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 255),
+							Optional:     true,
+							Computed:     true,
 						},
 						"mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -551,6 +579,20 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"input_zone": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
 						},
 						"mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -795,6 +837,19 @@ func resourceSystemSdwan() *schema.Resource {
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
 										Computed:     true,
+									},
+								},
+							},
+						},
+						"internet_service_app_ctrl_category": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1081,6 +1136,11 @@ func resourceSystemSdwan() *schema.Resource {
 							},
 						},
 						"packet_duplication": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sla_match_service": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1767,10 +1827,28 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 			tmp["threshold_alert_jitter"] = flattenSystemSdwanHealthCheckThresholdAlertJitter(i["threshold-alert-jitter"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := i["vrf"]; ok {
+
+			tmp["vrf"] = flattenSystemSdwanHealthCheckVrf(i["vrf"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
+		if _, ok := i["source"]; ok {
+
+			tmp["source"] = flattenSystemSdwanHealthCheckSource(i["source"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
 		if _, ok := i["members"]; ok {
 
 			tmp["members"] = flattenSystemSdwanHealthCheckMembers(i["members"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_codec"
+		if _, ok := i["mos-codec"]; ok {
+
+			tmp["mos_codec"] = flattenSystemSdwanHealthCheckMosCodec(i["mos-codec"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
@@ -1936,6 +2014,14 @@ func flattenSystemSdwanHealthCheckThresholdAlertJitter(v interface{}, d *schema.
 	return v
 }
 
+func flattenSystemSdwanHealthCheckVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanHealthCheckMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1975,6 +2061,10 @@ func flattenSystemSdwanHealthCheckMembers(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemSdwanHealthCheckMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckMosCodec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2032,6 +2122,12 @@ func flattenSystemSdwanHealthCheckSla(v interface{}, d *schema.ResourceData, pre
 			tmp["packetloss_threshold"] = flattenSystemSdwanHealthCheckSlaPacketlossThreshold(i["packetloss-threshold"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_threshold"
+		if _, ok := i["mos-threshold"]; ok {
+
+			tmp["mos_threshold"] = flattenSystemSdwanHealthCheckSlaMosThreshold(i["mos-threshold"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2057,6 +2153,10 @@ func flattenSystemSdwanHealthCheckSlaJitterThreshold(v interface{}, d *schema.Re
 }
 
 func flattenSystemSdwanHealthCheckSlaPacketlossThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckSlaMosThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2094,6 +2194,12 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 		if _, ok := i["member"]; ok {
 
 			tmp["member"] = flattenSystemSdwanNeighborMember(i["member"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
+		if _, ok := i["minimum-sla-meet-members"]; ok {
+
+			tmp["minimum_sla_meet_members"] = flattenSystemSdwanNeighborMinimumSlaMeetMembers(i["minimum-sla-meet-members"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
@@ -2134,6 +2240,10 @@ func flattenSystemSdwanNeighborIp(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSdwanNeighborMember(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanNeighborMinimumSlaMeetMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2205,6 +2315,12 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		if _, ok := i["input-device-negate"]; ok {
 
 			tmp["input_device_negate"] = flattenSystemSdwanServiceInputDeviceNegate(i["input-device-negate"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_zone"
+		if _, ok := i["input-zone"]; ok {
+
+			tmp["input_zone"] = flattenSystemSdwanServiceInputZone(i["input-zone"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
@@ -2367,6 +2483,12 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		if _, ok := i["internet-service-app-ctrl-group"]; ok {
 
 			tmp["internet_service_app_ctrl_group"] = flattenSystemSdwanServiceInternetServiceAppCtrlGroup(i["internet-service-app-ctrl-group"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_category"
+		if _, ok := i["internet-service-app-ctrl-category"]; ok {
+
+			tmp["internet_service_app_ctrl_category"] = flattenSystemSdwanServiceInternetServiceAppCtrlCategory(i["internet-service-app-ctrl-category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
@@ -2565,6 +2687,48 @@ func flattenSystemSdwanServiceInputDeviceName(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSdwanServiceInputDeviceNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceInputZone(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenSystemSdwanServiceInputZoneName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemSdwanServiceInputZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3132,6 +3296,48 @@ func flattenSystemSdwanServiceInternetServiceAppCtrlGroupName(v interface{}, d *
 	return v
 }
 
+func flattenSystemSdwanServiceInternetServiceAppCtrlCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemSdwanServiceInternetServiceAppCtrlCategoryId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemSdwanServiceInternetServiceAppCtrlCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanServiceHealthCheck(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -3464,6 +3670,12 @@ func flattenSystemSdwanDuplication(v interface{}, d *schema.ResourceData, pre st
 		if _, ok := i["packet-duplication"]; ok {
 
 			tmp["packet_duplication"] = flattenSystemSdwanDuplicationPacketDuplication(i["packet-duplication"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_match_service"
+		if _, ok := i["sla-match-service"]; ok {
+
+			tmp["sla_match_service"] = flattenSystemSdwanDuplicationSlaMatchService(i["sla-match-service"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_de_duplication"
@@ -3822,6 +4034,10 @@ func flattenSystemSdwanDuplicationServiceName(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSdwanDuplicationPacketDuplication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanDuplicationSlaMatchService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4525,12 +4741,30 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 			tmp["threshold-alert-jitter"], _ = expandSystemSdwanHealthCheckThresholdAlertJitter(d, i["threshold_alert_jitter"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vrf"], _ = expandSystemSdwanHealthCheckVrf(d, i["vrf"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["source"], _ = expandSystemSdwanHealthCheckSource(d, i["source"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["members"], _ = expandSystemSdwanHealthCheckMembers(d, i["members"], pre_append, sv)
 		} else {
 			tmp["members"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_codec"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["mos-codec"], _ = expandSystemSdwanHealthCheckMosCodec(d, i["mos_codec"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
@@ -4697,6 +4931,14 @@ func expandSystemSdwanHealthCheckThresholdAlertJitter(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandSystemSdwanHealthCheckVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanHealthCheckMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -4726,6 +4968,10 @@ func expandSystemSdwanHealthCheckMembers(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemSdwanHealthCheckMembersSeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckMosCodec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4773,6 +5019,12 @@ func expandSystemSdwanHealthCheckSla(d *schema.ResourceData, v interface{}, pre 
 			tmp["packetloss-threshold"], _ = expandSystemSdwanHealthCheckSlaPacketlossThreshold(d, i["packetloss_threshold"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_threshold"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["mos-threshold"], _ = expandSystemSdwanHealthCheckSlaMosThreshold(d, i["mos_threshold"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -4801,6 +5053,10 @@ func expandSystemSdwanHealthCheckSlaPacketlossThreshold(d *schema.ResourceData, 
 	return v, nil
 }
 
+func expandSystemSdwanHealthCheckSlaMosThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -4825,6 +5081,12 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["member"], _ = expandSystemSdwanNeighborMember(d, i["member"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["minimum-sla-meet-members"], _ = expandSystemSdwanNeighborMinimumSlaMeetMembers(d, i["minimum_sla_meet_members"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
@@ -4864,6 +5126,10 @@ func expandSystemSdwanNeighborIp(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemSdwanNeighborMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanNeighborMinimumSlaMeetMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4927,6 +5193,14 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["input-device-negate"], _ = expandSystemSdwanServiceInputDeviceNegate(d, i["input_device_negate"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_zone"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["input-zone"], _ = expandSystemSdwanServiceInputZone(d, i["input_zone"], pre_append, sv)
+		} else {
+			tmp["input-zone"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
@@ -5113,6 +5387,14 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 			tmp["internet-service-app-ctrl-group"], _ = expandSystemSdwanServiceInternetServiceAppCtrlGroup(d, i["internet_service_app_ctrl_group"], pre_append, sv)
 		} else {
 			tmp["internet-service-app-ctrl-group"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_category"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["internet-service-app-ctrl-category"], _ = expandSystemSdwanServiceInternetServiceAppCtrlCategory(d, i["internet_service_app_ctrl_category"], pre_append, sv)
+		} else {
+			tmp["internet-service-app-ctrl-category"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
@@ -5308,6 +5590,38 @@ func expandSystemSdwanServiceInputDeviceName(d *schema.ResourceData, v interface
 }
 
 func expandSystemSdwanServiceInputDeviceNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServiceInputZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandSystemSdwanServiceInputZoneName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanServiceInputZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5755,6 +6069,38 @@ func expandSystemSdwanServiceInternetServiceAppCtrlGroupName(d *schema.ResourceD
 	return v, nil
 }
 
+func expandSystemSdwanServiceInternetServiceAppCtrlCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemSdwanServiceInternetServiceAppCtrlCategoryId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanServiceInternetServiceAppCtrlCategoryId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanServiceHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -6055,6 +6401,12 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 			tmp["packet-duplication"], _ = expandSystemSdwanDuplicationPacketDuplication(d, i["packet_duplication"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_match_service"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["sla-match-service"], _ = expandSystemSdwanDuplicationSlaMatchService(d, i["sla_match_service"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_de_duplication"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -6330,6 +6682,10 @@ func expandSystemSdwanDuplicationServiceName(d *schema.ResourceData, v interface
 }
 
 func expandSystemSdwanDuplicationPacketDuplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanDuplicationSlaMatchService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -50,6 +50,11 @@ func resourceWanoptSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tunnel_optimization": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -160,6 +165,10 @@ func flattenWanoptSettingsAutoDetectAlgorithm(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenWanoptSettingsTunnelOptimization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -181,6 +190,12 @@ func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("tunnel_optimization", flattenWanoptSettingsTunnelOptimization(o["tunnel-optimization"], d, "tunnel_optimization", sv)); err != nil {
+		if !fortiAPIPatch(o["tunnel-optimization"]) {
+			return fmt.Errorf("Error reading tunnel_optimization: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -199,6 +214,10 @@ func expandWanoptSettingsTunnelSslAlgorithm(d *schema.ResourceData, v interface{
 }
 
 func expandWanoptSettingsAutoDetectAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWanoptSettingsTunnelOptimization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -243,6 +262,20 @@ func getObjectWanoptSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["auto-detect-algorithm"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("tunnel_optimization"); ok {
+		if setArgNil {
+			obj["tunnel-optimization"] = nil
+		} else {
+
+			t, err := expandWanoptSettingsTunnelOptimization(d, v, "tunnel_optimization", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-optimization"] = t
 			}
 		}
 	}

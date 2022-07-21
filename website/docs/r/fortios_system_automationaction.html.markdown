@@ -73,9 +73,12 @@ The following arguments are supported:
 * `uri` - Request API URI.
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
+* `http_headers` - Request headers. The structure of `http_headers` block is documented below.
 * `headers` - Request headers. The structure of `headers` block is documented below.
 * `verify_host_cert` - Enable/disable verification of the remote host certificate. Valid values: `enable`, `disable`.
 * `script` - CLI script.
+* `output_size` - Number of megabytes to limit script output to (1 - 1024, default = 10).
+* `timeout` - Maximum running time for this script in seconds (0 = no timeout).
 * `execute_security_fabric` - Enable/disable execution of CLI script on all or only one FortiGate unit in the Security Fabric. Valid values: `enable`, `disable`.
 * `accprofile` - Access profile for CLI script action to access FortiGate features.
 * `security_tag` - NSX security tag.
@@ -86,6 +89,12 @@ The following arguments are supported:
 The `email_to` block supports:
 
 * `name` - Email address.
+
+The `http_headers` block supports:
+
+* `id` - Entry ID.
+* `key` - Request header key.
+* `value` - Request header value.
 
 The `headers` block supports:
 

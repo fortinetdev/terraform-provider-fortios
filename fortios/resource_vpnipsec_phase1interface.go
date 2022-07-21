@@ -234,6 +234,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mode_cfg_allow_client_selector": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"assign_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -694,6 +699,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"inbound_dscp_copy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auto_discovery_sender": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -718,6 +728,12 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"auto_discovery_offer_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 300),
+				Optional:     true,
+				Computed:     true,
 			},
 			"encapsulation": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1184,6 +1200,10 @@ func flattenVpnIpsecPhase1InterfaceAggregateWeight(v interface{}, d *schema.Reso
 }
 
 func flattenVpnIpsecPhase1InterfaceModeCfg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceModeCfgAllowClientSelector(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1660,6 +1680,10 @@ func flattenVpnIpsecPhase1InterfaceHaSyncEspSeqno(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceInboundDscpCopy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceAutoDiscoverySender(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1677,6 +1701,10 @@ func flattenVpnIpsecPhase1InterfaceAutoDiscoveryPsk(v interface{}, d *schema.Res
 }
 
 func flattenVpnIpsecPhase1InterfaceAutoDiscoveryShortcuts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceAutoDiscoveryOfferInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2022,6 +2050,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("mode_cfg", flattenVpnIpsecPhase1InterfaceModeCfg(o["mode-cfg"], d, "mode_cfg", sv)); err != nil {
 		if !fortiAPIPatch(o["mode-cfg"]) {
 			return fmt.Errorf("Error reading mode_cfg: %v", err)
+		}
+	}
+
+	if err = d.Set("mode_cfg_allow_client_selector", flattenVpnIpsecPhase1InterfaceModeCfgAllowClientSelector(o["mode-cfg-allow-client-selector"], d, "mode_cfg_allow_client_selector", sv)); err != nil {
+		if !fortiAPIPatch(o["mode-cfg-allow-client-selector"]) {
+			return fmt.Errorf("Error reading mode_cfg_allow_client_selector: %v", err)
 		}
 	}
 
@@ -2499,6 +2533,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("inbound_dscp_copy", flattenVpnIpsecPhase1InterfaceInboundDscpCopy(o["inbound-dscp-copy"], d, "inbound_dscp_copy", sv)); err != nil {
+		if !fortiAPIPatch(o["inbound-dscp-copy"]) {
+			return fmt.Errorf("Error reading inbound_dscp_copy: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_discovery_sender", flattenVpnIpsecPhase1InterfaceAutoDiscoverySender(o["auto-discovery-sender"], d, "auto_discovery_sender", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-discovery-sender"]) {
 			return fmt.Errorf("Error reading auto_discovery_sender: %v", err)
@@ -2526,6 +2566,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("auto_discovery_shortcuts", flattenVpnIpsecPhase1InterfaceAutoDiscoveryShortcuts(o["auto-discovery-shortcuts"], d, "auto_discovery_shortcuts", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-discovery-shortcuts"]) {
 			return fmt.Errorf("Error reading auto_discovery_shortcuts: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_discovery_offer_interval", flattenVpnIpsecPhase1InterfaceAutoDiscoveryOfferInterval(o["auto-discovery-offer-interval"], d, "auto_discovery_offer_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-discovery-offer-interval"]) {
+			return fmt.Errorf("Error reading auto_discovery_offer_interval: %v", err)
 		}
 	}
 
@@ -2881,6 +2927,10 @@ func expandVpnIpsecPhase1InterfaceAggregateWeight(d *schema.ResourceData, v inte
 }
 
 func expandVpnIpsecPhase1InterfaceModeCfg(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceModeCfgAllowClientSelector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3324,6 +3374,10 @@ func expandVpnIpsecPhase1InterfaceHaSyncEspSeqno(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceInboundDscpCopy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceAutoDiscoverySender(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3341,6 +3395,10 @@ func expandVpnIpsecPhase1InterfaceAutoDiscoveryPsk(d *schema.ResourceData, v int
 }
 
 func expandVpnIpsecPhase1InterfaceAutoDiscoveryShortcuts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceAutoDiscoveryOfferInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3820,6 +3878,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["mode-cfg"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mode_cfg_allow_client_selector"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceModeCfgAllowClientSelector(d, v, "mode_cfg_allow_client_selector", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mode-cfg-allow-client-selector"] = t
 		}
 	}
 
@@ -4613,6 +4681,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceInboundDscpCopy(d, v, "inbound_dscp_copy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["inbound-dscp-copy"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("auto_discovery_sender"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceAutoDiscoverySender(d, v, "auto_discovery_sender", sv)
@@ -4660,6 +4738,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["auto-discovery-shortcuts"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_discovery_offer_interval"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceAutoDiscoveryOfferInterval(d, v, "auto_discovery_offer_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-discovery-offer-interval"] = t
 		}
 	}
 

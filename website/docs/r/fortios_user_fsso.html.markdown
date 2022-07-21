@@ -54,6 +54,7 @@ The following arguments are supported:
 * `ldap_poll_filter` - Filter used to fetch groups.
 * `user_info_server` - LDAP server to get user information.
 * `ssl` - Enable/disable use of SSL. Valid values: `enable`, `disable`.
+* `sni` - Server Name Indication.
 * `ssl_server_host_ip_check` - Enable/disable server host/IP verification. Valid values: `enable`, `disable`.
 * `ssl_trusted_cert` - Trusted server certificate or CA certificate.
 * `source_ip` - Source IP for communications to FSSO agent.

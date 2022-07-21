@@ -110,6 +110,7 @@ The following arguments are supported:
 * `peer` - Accept this peer certificate.
 * `peergrp` - Accept this peer certificate group.
 * `mode_cfg` - Enable/disable configuration method. Valid values: `disable`, `enable`.
+* `mode_cfg_allow_client_selector` - Enable/disable mode-cfg client to use custom phase2 selectors. Valid values: `disable`, `enable`.
 * `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method. Valid values: `disable`, `enable`.
 * `assign_ip_from` - Method by which the IP address will be assigned. Valid values: `range`, `usrgrp`, `dhcp`, `name`.
 * `ipv4_start_ip` - Start of IPv4 range.
@@ -188,6 +189,7 @@ The following arguments are supported:
 * `idle_timeout` - Enable/disable IPsec tunnel idle timeout. Valid values: `enable`, `disable`.
 * `idle_timeoutinterval` - IPsec tunnel idle timeout in minutes (5 - 43200).
 * `ha_sync_esp_seqno` - Enable/disable sequence number jump ahead for IPsec HA. Valid values: `enable`, `disable`.
+* `inbound_dscp_copy` - Enable/disable copy the dscp in the ESP header to the inner IP Header. Valid values: `enable`, `disable`.
 * `nattraversal` - Enable/disable NAT traversal. Valid values: `enable`, `disable`, `forced`.
 * `esn` - Extended sequence number (ESN) negotiation. Valid values: `require`, `allow`, `disable`.
 * `fragmentation_mtu` - IKE fragmentation MTU (500 - 16000).
