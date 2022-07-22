@@ -778,7 +778,9 @@ func flattenIpsSensorEntriesLocation(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenIpsSensorEntriesSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	var rst_v interface{} = strings.TrimRight(v.(string), " ")
+	var temp_v = v.(string)
+	temp_v = strings.TrimRight(temp_v, " ")
+	var rst_v interface{} = temp_v
 	return rst_v
 }
 
@@ -1134,7 +1136,9 @@ func flattenIpsSensorFilterLocation(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenIpsSensorFilterSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	var rst_v interface{} = strings.TrimRight(v.(string), " ")
+	var temp_v = v.(string)
+	temp_v = strings.TrimRight(temp_v, " ")
+	var rst_v interface{} = temp_v
 	return rst_v
 }
 

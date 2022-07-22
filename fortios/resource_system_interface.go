@@ -2135,7 +2135,11 @@ func flattenSystemInterfaceDhcpRelayService(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	var temp_v = v.(string)
+	temp_v = strings.TrimRight(temp_v, " ")
+	temp_v = strings.ReplaceAll(temp_v, "\"", "")
+	var rst_v interface{} = temp_v
+	return rst_v
 }
 
 func flattenSystemInterfaceDhcpRelayLinkSelection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
