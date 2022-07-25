@@ -60,9 +60,10 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				Computed:  true,
 			},
 			"certificate": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"csr": &schema.Schema{
 				Type:     schema.TypeString,
@@ -449,12 +450,6 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("comments", flattenVpnCertificateLocalComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
-		}
-	}
-
-	if err = d.Set("certificate", flattenVpnCertificateLocalCertificate(o["certificate"], d, "certificate", sv)); err != nil {
-		if !fortiAPIPatch(o["certificate"]) {
-			return fmt.Errorf("Error reading certificate: %v", err)
 		}
 	}
 
