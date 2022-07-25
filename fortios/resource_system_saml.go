@@ -795,11 +795,11 @@ func expandSystemSamlLife(d *schema.ResourceData, v interface{}, pre string, sv 
 
 func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -874,7 +874,7 @@ func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["assertion-attributes"], _ = expandSystemSamlServiceProvidersAssertionAttributes(d, i["assertion_attributes"], pre_append, sv)
 		} else {
@@ -935,11 +935,11 @@ func expandSystemSamlServiceProvidersIdpSingleLogoutUrl(d *schema.ResourceData, 
 
 func expandSystemSamlServiceProvidersAssertionAttributes(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1216,7 +1216,7 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("service_providers"); ok {
+	if v, ok := d.GetOk("service_providers"); ok || d.HasChange("service_providers") {
 		if setArgNil {
 			obj["service-providers"] = make([]struct{}, 0)
 		} else {

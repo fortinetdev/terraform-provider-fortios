@@ -430,11 +430,11 @@ func expandWirelessControllerHotspot20H2QpAdviceOfChargeName(d *schema.ResourceD
 
 func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -467,7 +467,7 @@ func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocList(d *schema.Resour
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "plan_info"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["plan-info"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(d, i["plan_info"], pre_append, sv)
 		} else {
@@ -500,11 +500,11 @@ func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealm(d *schem
 
 func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -573,7 +573,7 @@ func getObjectWirelessControllerHotspot20H2QpAdviceOfCharge(d *schema.ResourceDa
 		}
 	}
 
-	if v, ok := d.GetOk("aoc_list"); ok {
+	if v, ok := d.GetOk("aoc_list"); ok || d.HasChange("aoc_list") {
 
 		t, err := expandWirelessControllerHotspot20H2QpAdviceOfChargeAocList(d, v, "aoc_list", sv)
 		if err != nil {

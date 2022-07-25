@@ -426,11 +426,11 @@ func expandFirewallInternetServiceDefinitionId(d *schema.ResourceData, v interfa
 
 func expandFirewallInternetServiceDefinitionEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -463,7 +463,7 @@ func expandFirewallInternetServiceDefinitionEntry(d *schema.ResourceData, v inte
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["port-range"], _ = expandFirewallInternetServiceDefinitionEntryPortRange(d, i["port_range"], pre_append, sv)
 		} else {
@@ -502,11 +502,11 @@ func expandFirewallInternetServiceDefinitionEntryProtocol(d *schema.ResourceData
 
 func expandFirewallInternetServiceDefinitionEntryPortRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -569,7 +569,7 @@ func getObjectFirewallInternetServiceDefinition(d *schema.ResourceData, sv strin
 		}
 	}
 
-	if v, ok := d.GetOk("entry"); ok {
+	if v, ok := d.GetOk("entry"); ok || d.HasChange("entry") {
 
 		t, err := expandFirewallInternetServiceDefinitionEntry(d, v, "entry", sv)
 		if err != nil {

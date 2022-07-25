@@ -643,11 +643,11 @@ func expandFirewallAddrgrpUuid(d *schema.ResourceData, v interface{}, pre string
 
 func expandFirewallAddrgrpMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -683,11 +683,11 @@ func expandFirewallAddrgrpExclude(d *schema.ResourceData, v interface{}, pre str
 
 func expandFirewallAddrgrpExcludeMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -723,11 +723,11 @@ func expandFirewallAddrgrpColor(d *schema.ResourceData, v interface{}, pre strin
 
 func expandFirewallAddrgrpTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -748,7 +748,7 @@ func expandFirewallAddrgrpTagging(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandFirewallAddrgrpTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -773,11 +773,11 @@ func expandFirewallAddrgrpTaggingCategory(d *schema.ResourceData, v interface{},
 
 func expandFirewallAddrgrpTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -854,7 +854,7 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandFirewallAddrgrpMember(d, v, "member", sv)
 		if err != nil {
@@ -884,7 +884,7 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("exclude_member"); ok {
+	if v, ok := d.GetOk("exclude_member"); ok || d.HasChange("exclude_member") {
 
 		t, err := expandFirewallAddrgrpExcludeMember(d, v, "exclude_member", sv)
 		if err != nil {
@@ -914,7 +914,7 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandFirewallAddrgrpTagging(d, v, "tagging", sv)
 		if err != nil {

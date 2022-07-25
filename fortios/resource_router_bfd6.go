@@ -425,11 +425,11 @@ func flattenRouterBfd6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 
 func expandRouterBfd6Neighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -467,11 +467,11 @@ func expandRouterBfd6NeighborInterface(d *schema.ResourceData, v interface{}, pr
 
 func expandRouterBfd6MultihopTemplate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -570,7 +570,7 @@ func expandRouterBfd6MultihopTemplateMd5Key(d *schema.ResourceData, v interface{
 func getObjectRouterBfd6(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok || d.HasChange("neighbor") {
 		if setArgNil {
 			obj["neighbor"] = make([]struct{}, 0)
 		} else {
@@ -584,7 +584,7 @@ func getObjectRouterBfd6(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("multihop_template"); ok {
+	if v, ok := d.GetOk("multihop_template"); ok || d.HasChange("multihop_template") {
 		if setArgNil {
 			obj["multihop-template"] = make([]struct{}, 0)
 		} else {

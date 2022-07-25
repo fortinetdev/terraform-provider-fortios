@@ -1141,11 +1141,11 @@ func expandRouterRouteMapComments(d *schema.ResourceData, v interface{}, pre str
 
 func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1262,7 +1262,7 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aspath"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["set-aspath"], _ = expandRouterRouteMapRuleSetAspath(d, i["set_aspath"], pre_append, sv)
 		} else {
@@ -1282,7 +1282,7 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["set-community"], _ = expandRouterRouteMapRuleSetCommunity(d, i["set_community"], pre_append, sv)
 		} else {
@@ -1326,7 +1326,7 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_rt"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["set-extcommunity-rt"], _ = expandRouterRouteMapRuleSetExtcommunityRt(d, i["set_extcommunity_rt"], pre_append, sv)
 		} else {
@@ -1334,7 +1334,7 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_soo"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["set-extcommunity-soo"], _ = expandRouterRouteMapRuleSetExtcommunitySoo(d, i["set_extcommunity_soo"], pre_append, sv)
 		} else {
@@ -1507,11 +1507,11 @@ func expandRouterRouteMapRuleSetAspathAction(d *schema.ResourceData, v interface
 
 func expandRouterRouteMapRuleSetAspath(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1547,11 +1547,11 @@ func expandRouterRouteMapRuleSetCommunityDelete(d *schema.ResourceData, v interf
 
 func expandRouterRouteMapRuleSetCommunity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1603,11 +1603,11 @@ func expandRouterRouteMapRuleSetDampeningUnreachabilityHalfLife(d *schema.Resour
 
 func expandRouterRouteMapRuleSetExtcommunityRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1635,11 +1635,11 @@ func expandRouterRouteMapRuleSetExtcommunityRtCommunity(d *schema.ResourceData, 
 
 func expandRouterRouteMapRuleSetExtcommunitySoo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1744,7 +1744,7 @@ func getObjectRouterRouteMap(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("rule"); ok {
+	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
 
 		t, err := expandRouterRouteMapRule(d, v, "rule", sv)
 		if err != nil {

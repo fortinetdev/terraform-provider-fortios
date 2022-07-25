@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
+	"net/url"
 	"os"
 	"regexp"
 	"sort"
@@ -65,9 +66,10 @@ func escapeFilter(filter string) string {
 				argName = strings.ReplaceAll(argName, "fosid", "id")
 				argName = strings.ReplaceAll(argName, ".", "\\.")
 				argName = strings.ReplaceAll(argName, "\\", "\\\\")
+				argValue := url.QueryEscape(match[3])
 				rstSb.WriteString(argName)
 				rstSb.WriteString(match[2])
-				rstSb.WriteString(match[3])
+				rstSb.WriteString(argValue)
 			}
 		}
 	}

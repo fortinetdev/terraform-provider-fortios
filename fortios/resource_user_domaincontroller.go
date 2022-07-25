@@ -717,11 +717,11 @@ func expandUserDomainControllerInterface(d *schema.ResourceData, v interface{}, 
 
 func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -946,7 +946,7 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("extra_server"); ok {
+	if v, ok := d.GetOk("extra_server"); ok || d.HasChange("extra_server") {
 
 		t, err := expandUserDomainControllerExtraServer(d, v, "extra_server", sv)
 		if err != nil {

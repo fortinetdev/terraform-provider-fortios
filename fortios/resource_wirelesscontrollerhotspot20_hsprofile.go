@@ -955,11 +955,11 @@ func expandWirelessControllerHotspot20HsProfileTermsAndConditions(d *schema.Reso
 
 func expandWirelessControllerHotspot20HsProfileOsuProvider(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1322,7 +1322,7 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("osu_provider"); ok {
+	if v, ok := d.GetOk("osu_provider"); ok || d.HasChange("osu_provider") {
 
 		t, err := expandWirelessControllerHotspot20HsProfileOsuProvider(d, v, "osu_provider", sv)
 		if err != nil {

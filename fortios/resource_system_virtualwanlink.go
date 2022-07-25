@@ -3283,11 +3283,11 @@ func expandSystemVirtualWanLinkFailDetect(d *schema.ResourceData, v interface{},
 
 func expandSystemVirtualWanLinkFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3315,11 +3315,11 @@ func expandSystemVirtualWanLinkFailAlertInterfacesName(d *schema.ResourceData, v
 
 func expandSystemVirtualWanLinkZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3347,11 +3347,11 @@ func expandSystemVirtualWanLinkZoneName(d *schema.ResourceData, v interface{}, p
 
 func expandSystemVirtualWanLinkMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3509,11 +3509,11 @@ func expandSystemVirtualWanLinkMembersComment(d *schema.ResourceData, v interfac
 
 func expandSystemVirtualWanLinkHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3708,7 +3708,7 @@ func expandSystemVirtualWanLinkHealthCheck(d *schema.ResourceData, v interface{}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["members"], _ = expandSystemVirtualWanLinkHealthCheckMembers(d, i["members"], pre_append, sv)
 		} else {
@@ -3716,7 +3716,7 @@ func expandSystemVirtualWanLinkHealthCheck(d *schema.ResourceData, v interface{}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sla"], _ = expandSystemVirtualWanLinkHealthCheckSla(d, i["sla"], pre_append, sv)
 		} else {
@@ -3857,11 +3857,11 @@ func expandSystemVirtualWanLinkHealthCheckThresholdAlertJitter(d *schema.Resourc
 
 func expandSystemVirtualWanLinkHealthCheckMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3889,11 +3889,11 @@ func expandSystemVirtualWanLinkHealthCheckMembersSeqNum(d *schema.ResourceData, 
 
 func expandSystemVirtualWanLinkHealthCheckSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3961,11 +3961,11 @@ func expandSystemVirtualWanLinkHealthCheckSlaPacketlossThreshold(d *schema.Resou
 
 func expandSystemVirtualWanLinkNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4033,11 +4033,11 @@ func expandSystemVirtualWanLinkNeighborSlaId(d *schema.ResourceData, v interface
 
 func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4064,7 +4064,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["input-device"], _ = expandSystemVirtualWanLinkServiceInputDevice(d, i["input_device"], pre_append, sv)
 		} else {
@@ -4144,7 +4144,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dst"], _ = expandSystemVirtualWanLinkServiceDst(d, i["dst"], pre_append, sv)
 		} else {
@@ -4158,7 +4158,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["src"], _ = expandSystemVirtualWanLinkServiceSrc(d, i["src"], pre_append, sv)
 		} else {
@@ -4166,7 +4166,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dst6"], _ = expandSystemVirtualWanLinkServiceDst6(d, i["dst6"], pre_append, sv)
 		} else {
@@ -4174,7 +4174,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["src6"], _ = expandSystemVirtualWanLinkServiceSrc6(d, i["src6"], pre_append, sv)
 		} else {
@@ -4188,7 +4188,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["users"], _ = expandSystemVirtualWanLinkServiceUsers(d, i["users"], pre_append, sv)
 		} else {
@@ -4196,7 +4196,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["groups"], _ = expandSystemVirtualWanLinkServiceGroups(d, i["groups"], pre_append, sv)
 		} else {
@@ -4210,7 +4210,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-custom"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustom(d, i["internet_service_custom"], pre_append, sv)
 		} else {
@@ -4218,7 +4218,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-custom-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustomGroup(d, i["internet_service_custom_group"], pre_append, sv)
 		} else {
@@ -4226,7 +4226,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_name"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-name"], _ = expandSystemVirtualWanLinkServiceInternetServiceName(d, i["internet_service_name"], pre_append, sv)
 		} else {
@@ -4234,7 +4234,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_id"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-id"], _ = expandSystemVirtualWanLinkServiceInternetServiceId(d, i["internet_service_id"], pre_append, sv)
 		} else {
@@ -4242,7 +4242,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceGroup(d, i["internet_service_group"], pre_append, sv)
 		} else {
@@ -4250,7 +4250,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-app-ctrl"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrl(d, i["internet_service_app_ctrl"], pre_append, sv)
 		} else {
@@ -4258,7 +4258,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-app-ctrl-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(d, i["internet_service_app_ctrl_group"], pre_append, sv)
 		} else {
@@ -4266,7 +4266,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_ctrl"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-ctrl"], _ = expandSystemVirtualWanLinkServiceInternetServiceCtrl(d, i["internet_service_ctrl"], pre_append, sv)
 		} else {
@@ -4274,7 +4274,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_ctrl_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-ctrl-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceCtrlGroup(d, i["internet_service_ctrl_group"], pre_append, sv)
 		} else {
@@ -4379,7 +4379,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sla"], _ = expandSystemVirtualWanLinkServiceSla(d, i["sla"], pre_append, sv)
 		} else {
@@ -4387,7 +4387,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_members"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["priority-members"], _ = expandSystemVirtualWanLinkServicePriorityMembers(d, i["priority_members"], pre_append, sv)
 		} else {
@@ -4440,11 +4440,11 @@ func expandSystemVirtualWanLinkServiceAddrMode(d *schema.ResourceData, v interfa
 
 func expandSystemVirtualWanLinkServiceInputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4520,11 +4520,11 @@ func expandSystemVirtualWanLinkServiceRouteTag(d *schema.ResourceData, v interfa
 
 func expandSystemVirtualWanLinkServiceDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4556,11 +4556,11 @@ func expandSystemVirtualWanLinkServiceDstNegate(d *schema.ResourceData, v interf
 
 func expandSystemVirtualWanLinkServiceSrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4588,11 +4588,11 @@ func expandSystemVirtualWanLinkServiceSrcName(d *schema.ResourceData, v interfac
 
 func expandSystemVirtualWanLinkServiceDst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4620,11 +4620,11 @@ func expandSystemVirtualWanLinkServiceDst6Name(d *schema.ResourceData, v interfa
 
 func expandSystemVirtualWanLinkServiceSrc6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4656,11 +4656,11 @@ func expandSystemVirtualWanLinkServiceSrcNegate(d *schema.ResourceData, v interf
 
 func expandSystemVirtualWanLinkServiceUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4688,11 +4688,11 @@ func expandSystemVirtualWanLinkServiceUsersName(d *schema.ResourceData, v interf
 
 func expandSystemVirtualWanLinkServiceGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4724,11 +4724,11 @@ func expandSystemVirtualWanLinkServiceInternetService(d *schema.ResourceData, v 
 
 func expandSystemVirtualWanLinkServiceInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4756,11 +4756,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceCustomName(d *schema.Resour
 
 func expandSystemVirtualWanLinkServiceInternetServiceCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4788,11 +4788,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceCustomGroupName(d *schema.R
 
 func expandSystemVirtualWanLinkServiceInternetServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4820,11 +4820,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceNameName(d *schema.Resource
 
 func expandSystemVirtualWanLinkServiceInternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4852,11 +4852,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceIdId(d *schema.ResourceData
 
 func expandSystemVirtualWanLinkServiceInternetServiceGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4884,11 +4884,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceGroupName(d *schema.Resourc
 
 func expandSystemVirtualWanLinkServiceInternetServiceAppCtrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4916,11 +4916,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceAppCtrlId(d *schema.Resourc
 
 func expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4948,11 +4948,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroupName(d *schema.
 
 func expandSystemVirtualWanLinkServiceInternetServiceCtrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4980,11 +4980,11 @@ func expandSystemVirtualWanLinkServiceInternetServiceCtrlId(d *schema.ResourceDa
 
 func expandSystemVirtualWanLinkServiceInternetServiceCtrlGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5060,11 +5060,11 @@ func expandSystemVirtualWanLinkServiceDscpReverseTag(d *schema.ResourceData, v i
 
 func expandSystemVirtualWanLinkServiceSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5102,11 +5102,11 @@ func expandSystemVirtualWanLinkServiceSlaId(d *schema.ResourceData, v interface{
 
 func expandSystemVirtualWanLinkServicePriorityMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5235,7 +5235,7 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("fail_alert_interfaces"); ok {
+	if v, ok := d.GetOk("fail_alert_interfaces"); ok || d.HasChange("fail_alert_interfaces") {
 		if setArgNil {
 			obj["fail-alert-interfaces"] = make([]struct{}, 0)
 		} else {
@@ -5249,7 +5249,7 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("zone"); ok {
+	if v, ok := d.GetOk("zone"); ok || d.HasChange("zone") {
 		if setArgNil {
 			obj["zone"] = make([]struct{}, 0)
 		} else {
@@ -5263,7 +5263,7 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("members"); ok {
+	if v, ok := d.GetOk("members"); ok || d.HasChange("members") {
 		if setArgNil {
 			obj["members"] = make([]struct{}, 0)
 		} else {
@@ -5277,7 +5277,7 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("health_check"); ok {
+	if v, ok := d.GetOk("health_check"); ok || d.HasChange("health_check") {
 		if setArgNil {
 			obj["health-check"] = make([]struct{}, 0)
 		} else {
@@ -5291,7 +5291,7 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok || d.HasChange("neighbor") {
 		if setArgNil {
 			obj["neighbor"] = make([]struct{}, 0)
 		} else {
@@ -5305,7 +5305,7 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	}
 
-	if v, ok := d.GetOk("service"); ok {
+	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
 		if setArgNil {
 			obj["service"] = make([]struct{}, 0)
 		} else {

@@ -4684,11 +4684,11 @@ func expandAntivirusProfileExternalBlocklistEnableAll(d *schema.ResourceData, v 
 
 func expandAntivirusProfileExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5061,7 +5061,7 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("external_blocklist"); ok {
+	if v, ok := d.GetOk("external_blocklist"); ok || d.HasChange("external_blocklist") {
 
 		t, err := expandAntivirusProfileExternalBlocklist(d, v, "external_blocklist", sv)
 		if err != nil {

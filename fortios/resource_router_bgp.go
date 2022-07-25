@@ -6756,11 +6756,11 @@ func expandRouterBgpConfederationIdentifier(d *schema.ResourceData, v interface{
 
 func expandRouterBgpConfederationPeers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6868,11 +6868,11 @@ func expandRouterBgpAdditionalPathSelectVpnv4(d *schema.ResourceData, v interfac
 
 func expandRouterBgpAggregateAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6930,11 +6930,11 @@ func expandRouterBgpAggregateAddressSummaryOnly(d *schema.ResourceData, v interf
 
 func expandRouterBgpAggregateAddress6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6992,11 +6992,11 @@ func expandRouterBgpAggregateAddress6SummaryOnly(d *schema.ResourceData, v inter
 
 func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7677,7 +7677,7 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["conditional-advertise"], _ = expandRouterBgpNeighborConditionalAdvertise(d, i["conditional_advertise"], pre_append, sv)
 		} else {
@@ -7685,7 +7685,7 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["conditional-advertise6"], _ = expandRouterBgpNeighborConditionalAdvertise6(d, i["conditional_advertise6"], pre_append, sv)
 		} else {
@@ -8150,11 +8150,11 @@ func expandRouterBgpNeighborPassword(d *schema.ResourceData, v interface{}, pre 
 
 func expandRouterBgpNeighborConditionalAdvertise(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -8202,11 +8202,11 @@ func expandRouterBgpNeighborConditionalAdvertiseConditionType(d *schema.Resource
 
 func expandRouterBgpNeighborConditionalAdvertise6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -8254,11 +8254,11 @@ func expandRouterBgpNeighborConditionalAdvertise6ConditionType(d *schema.Resourc
 
 func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9386,11 +9386,11 @@ func expandRouterBgpNeighborGroupAdvAdditionalPathVpnv4(d *schema.ResourceData, 
 
 func expandRouterBgpNeighborRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9448,11 +9448,11 @@ func expandRouterBgpNeighborRangeNeighborGroup(d *schema.ResourceData, v interfa
 
 func expandRouterBgpNeighborRange6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9510,11 +9510,11 @@ func expandRouterBgpNeighborRange6NeighborGroup(d *schema.ResourceData, v interf
 
 func expandRouterBgpNetwork(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9582,11 +9582,11 @@ func expandRouterBgpNetworkRouteMap(d *schema.ResourceData, v interface{}, pre s
 
 func expandRouterBgpNetwork6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9654,11 +9654,11 @@ func expandRouterBgpNetwork6RouteMap(d *schema.ResourceData, v interface{}, pre 
 
 func expandRouterBgpRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9706,11 +9706,11 @@ func expandRouterBgpRedistributeRouteMap(d *schema.ResourceData, v interface{}, 
 
 func expandRouterBgpRedistribute6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9758,11 +9758,11 @@ func expandRouterBgpRedistribute6RouteMap(d *schema.ResourceData, v interface{},
 
 func expandRouterBgpAdminDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9820,11 +9820,11 @@ func expandRouterBgpAdminDistanceDistance(d *schema.ResourceData, v interface{},
 
 func expandRouterBgpVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9851,7 +9851,7 @@ func expandRouterBgpVrf(d *schema.ResourceData, v interface{}, pre string, sv st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_rt"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["export-rt"], _ = expandRouterBgpVrfExportRt(d, i["export_rt"], pre_append, sv)
 		} else {
@@ -9859,7 +9859,7 @@ func expandRouterBgpVrf(d *schema.ResourceData, v interface{}, pre string, sv st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "import_rt"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["import-rt"], _ = expandRouterBgpVrfImportRt(d, i["import_rt"], pre_append, sv)
 		} else {
@@ -9873,7 +9873,7 @@ func expandRouterBgpVrf(d *schema.ResourceData, v interface{}, pre string, sv st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "leak_target"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["leak-target"], _ = expandRouterBgpVrfLeakTargetU(d, i["leak_target"], pre_append, sv)
 		} else {
@@ -9902,11 +9902,11 @@ func expandRouterBgpVrfRd(d *schema.ResourceData, v interface{}, pre string, sv 
 
 func expandRouterBgpVrfExportRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9934,11 +9934,11 @@ func expandRouterBgpVrfExportRtRouteTarget(d *schema.ResourceData, v interface{}
 
 func expandRouterBgpVrfImportRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -9970,11 +9970,11 @@ func expandRouterBgpVrfImportRouteMap(d *schema.ResourceData, v interface{}, pre
 
 func expandRouterBgpVrfLeakTargetU(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10022,11 +10022,11 @@ func expandRouterBgpVrfLeakTargetUInterface(d *schema.ResourceData, v interface{
 
 func expandRouterBgpVrf6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10041,7 +10041,7 @@ func expandRouterBgpVrf6(d *schema.ResourceData, v interface{}, pre string, sv s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "leak_target"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["leak-target"], _ = expandRouterBgpVrf6LeakTarget(d, i["leak_target"], pre_append, sv)
 		} else {
@@ -10062,11 +10062,11 @@ func expandRouterBgpVrf6Vrf(d *schema.ResourceData, v interface{}, pre string, s
 
 func expandRouterBgpVrf6LeakTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10114,11 +10114,11 @@ func expandRouterBgpVrf6LeakTargetInterface(d *schema.ResourceData, v interface{
 
 func expandRouterBgpVrfLeak(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10133,7 +10133,7 @@ func expandRouterBgpVrfLeak(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["target"], _ = expandRouterBgpVrfLeakTarget(d, i["target"], pre_append, sv)
 		} else {
@@ -10154,11 +10154,11 @@ func expandRouterBgpVrfLeakVrf(d *schema.ResourceData, v interface{}, pre string
 
 func expandRouterBgpVrfLeakTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10206,11 +10206,11 @@ func expandRouterBgpVrfLeakTargetInterface(d *schema.ResourceData, v interface{}
 
 func expandRouterBgpVrfLeak6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10225,7 +10225,7 @@ func expandRouterBgpVrfLeak6(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["target"], _ = expandRouterBgpVrfLeak6Target(d, i["target"], pre_append, sv)
 		} else {
@@ -10246,11 +10246,11 @@ func expandRouterBgpVrfLeak6Vrf(d *schema.ResourceData, v interface{}, pre strin
 
 func expandRouterBgpVrfLeak6Target(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -10691,7 +10691,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("confederation_peers"); ok {
+	if v, ok := d.GetOk("confederation_peers"); ok || d.HasChange("confederation_peers") {
 		if setArgNil {
 			obj["confederation-peers"] = make([]struct{}, 0)
 		} else {
@@ -10985,7 +10985,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("aggregate_address"); ok {
+	if v, ok := d.GetOk("aggregate_address"); ok || d.HasChange("aggregate_address") {
 		if setArgNil {
 			obj["aggregate-address"] = make([]struct{}, 0)
 		} else {
@@ -10999,7 +10999,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("aggregate_address6"); ok {
+	if v, ok := d.GetOk("aggregate_address6"); ok || d.HasChange("aggregate_address6") {
 		if setArgNil {
 			obj["aggregate-address6"] = make([]struct{}, 0)
 		} else {
@@ -11013,7 +11013,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok || d.HasChange("neighbor") {
 		if setArgNil {
 			obj["neighbor"] = make([]struct{}, 0)
 		} else {
@@ -11027,7 +11027,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor_group"); ok {
+	if v, ok := d.GetOk("neighbor_group"); ok || d.HasChange("neighbor_group") {
 		if setArgNil {
 			obj["neighbor-group"] = make([]struct{}, 0)
 		} else {
@@ -11041,7 +11041,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor_range"); ok {
+	if v, ok := d.GetOk("neighbor_range"); ok || d.HasChange("neighbor_range") {
 		if setArgNil {
 			obj["neighbor-range"] = make([]struct{}, 0)
 		} else {
@@ -11055,7 +11055,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor_range6"); ok {
+	if v, ok := d.GetOk("neighbor_range6"); ok || d.HasChange("neighbor_range6") {
 		if setArgNil {
 			obj["neighbor-range6"] = make([]struct{}, 0)
 		} else {
@@ -11069,7 +11069,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("network"); ok {
+	if v, ok := d.GetOk("network"); ok || d.HasChange("network") {
 		if setArgNil {
 			obj["network"] = make([]struct{}, 0)
 		} else {
@@ -11083,7 +11083,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("network6"); ok {
+	if v, ok := d.GetOk("network6"); ok || d.HasChange("network6") {
 		if setArgNil {
 			obj["network6"] = make([]struct{}, 0)
 		} else {
@@ -11097,7 +11097,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
 		if setArgNil {
 			obj["redistribute"] = make([]struct{}, 0)
 		} else {
@@ -11111,7 +11111,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute6"); ok {
+	if v, ok := d.GetOk("redistribute6"); ok || d.HasChange("redistribute6") {
 		if setArgNil {
 			obj["redistribute6"] = make([]struct{}, 0)
 		} else {
@@ -11125,7 +11125,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("admin_distance"); ok {
+	if v, ok := d.GetOk("admin_distance"); ok || d.HasChange("admin_distance") {
 		if setArgNil {
 			obj["admin-distance"] = make([]struct{}, 0)
 		} else {
@@ -11139,7 +11139,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("vrf"); ok {
+	if v, ok := d.GetOk("vrf"); ok || d.HasChange("vrf") {
 		if setArgNil {
 			obj["vrf"] = make([]struct{}, 0)
 		} else {
@@ -11153,7 +11153,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("vrf6"); ok {
+	if v, ok := d.GetOk("vrf6"); ok || d.HasChange("vrf6") {
 		if setArgNil {
 			obj["vrf6"] = make([]struct{}, 0)
 		} else {
@@ -11167,7 +11167,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("vrf_leak"); ok {
+	if v, ok := d.GetOk("vrf_leak"); ok || d.HasChange("vrf_leak") {
 		if setArgNil {
 			obj["vrf-leak"] = make([]struct{}, 0)
 		} else {
@@ -11181,7 +11181,7 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("vrf_leak6"); ok {
+	if v, ok := d.GetOk("vrf_leak6"); ok || d.HasChange("vrf_leak6") {
 		if setArgNil {
 			obj["vrf-leak6"] = make([]struct{}, 0)
 		} else {

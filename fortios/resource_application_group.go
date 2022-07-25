@@ -529,11 +529,11 @@ func expandApplicationGroupType(d *schema.ResourceData, v interface{}, pre strin
 
 func expandApplicationGroupApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -561,11 +561,11 @@ func expandApplicationGroupApplicationId(d *schema.ResourceData, v interface{}, 
 
 func expandApplicationGroupCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -593,11 +593,11 @@ func expandApplicationGroupCategoryId(d *schema.ResourceData, v interface{}, pre
 
 func expandApplicationGroupRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -676,7 +676,7 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("application"); ok {
+	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
 
 		t, err := expandApplicationGroupApplication(d, v, "application", sv)
 		if err != nil {
@@ -686,7 +686,7 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("category"); ok {
+	if v, ok := d.GetOk("category"); ok || d.HasChange("category") {
 
 		t, err := expandApplicationGroupCategory(d, v, "category", sv)
 		if err != nil {
@@ -696,7 +696,7 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("risk"); ok {
+	if v, ok := d.GetOk("risk"); ok || d.HasChange("risk") {
 
 		t, err := expandApplicationGroupRisk(d, v, "risk", sv)
 		if err != nil {

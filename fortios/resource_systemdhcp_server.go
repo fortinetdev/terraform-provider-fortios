@@ -1634,11 +1634,11 @@ func expandSystemDhcpServerInterface(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1694,11 +1694,11 @@ func expandSystemDhcpServerTimezone(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemDhcpServerTftpServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1730,11 +1730,11 @@ func expandSystemDhcpServerFilename(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1866,11 +1866,11 @@ func expandSystemDhcpServerVciMatch(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemDhcpServerVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1898,11 +1898,11 @@ func expandSystemDhcpServerVciStringVciString(d *schema.ResourceData, v interfac
 
 func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1950,11 +1950,11 @@ func expandSystemDhcpServerExcludeRangeEndIp(d *schema.ResourceData, v interface
 
 func expandSystemDhcpServerReservedAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2323,7 +2323,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("ip_range"); ok {
+	if v, ok := d.GetOk("ip_range"); ok || d.HasChange("ip_range") {
 
 		t, err := expandSystemDhcpServerIpRange(d, v, "ip_range", sv)
 		if err != nil {
@@ -2353,7 +2353,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("tftp_server"); ok {
+	if v, ok := d.GetOk("tftp_server"); ok || d.HasChange("tftp_server") {
 
 		t, err := expandSystemDhcpServerTftpServer(d, v, "tftp_server", sv)
 		if err != nil {
@@ -2373,7 +2373,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("options"); ok {
+	if v, ok := d.GetOk("options"); ok || d.HasChange("options") {
 
 		t, err := expandSystemDhcpServerOptions(d, v, "options", sv)
 		if err != nil {
@@ -2543,7 +2543,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("vci_string"); ok {
+	if v, ok := d.GetOk("vci_string"); ok || d.HasChange("vci_string") {
 
 		t, err := expandSystemDhcpServerVciString(d, v, "vci_string", sv)
 		if err != nil {
@@ -2553,7 +2553,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("exclude_range"); ok {
+	if v, ok := d.GetOk("exclude_range"); ok || d.HasChange("exclude_range") {
 
 		t, err := expandSystemDhcpServerExcludeRange(d, v, "exclude_range", sv)
 		if err != nil {
@@ -2563,7 +2563,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("reserved_address"); ok {
+	if v, ok := d.GetOk("reserved_address"); ok || d.HasChange("reserved_address") {
 
 		t, err := expandSystemDhcpServerReservedAddress(d, v, "reserved_address", sv)
 		if err != nil {

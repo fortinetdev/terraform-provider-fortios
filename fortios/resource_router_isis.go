@@ -1947,11 +1947,11 @@ func expandRouterIsisRedistribute6L2List(d *schema.ResourceData, v interface{}, 
 
 func expandRouterIsisIsisNet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1989,11 +1989,11 @@ func expandRouterIsisIsisNetNet(d *schema.ResourceData, v interface{}, pre strin
 
 func expandRouterIsisIsisInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2311,11 +2311,11 @@ func expandRouterIsisIsisInterfaceMeshGroupId(d *schema.ResourceData, v interfac
 
 func expandRouterIsisSummaryAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2363,11 +2363,11 @@ func expandRouterIsisSummaryAddressLevel(d *schema.ResourceData, v interface{}, 
 
 func expandRouterIsisSummaryAddress6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2415,11 +2415,11 @@ func expandRouterIsisSummaryAddress6Level(d *schema.ResourceData, v interface{},
 
 func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2497,11 +2497,11 @@ func expandRouterIsisRedistributeRoutemap(d *schema.ResourceData, v interface{},
 
 func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3070,7 +3070,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("isis_net"); ok {
+	if v, ok := d.GetOk("isis_net"); ok || d.HasChange("isis_net") {
 		if setArgNil {
 			obj["isis-net"] = make([]struct{}, 0)
 		} else {
@@ -3084,7 +3084,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("isis_interface"); ok {
+	if v, ok := d.GetOk("isis_interface"); ok || d.HasChange("isis_interface") {
 		if setArgNil {
 			obj["isis-interface"] = make([]struct{}, 0)
 		} else {
@@ -3098,7 +3098,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("summary_address"); ok {
+	if v, ok := d.GetOk("summary_address"); ok || d.HasChange("summary_address") {
 		if setArgNil {
 			obj["summary-address"] = make([]struct{}, 0)
 		} else {
@@ -3112,7 +3112,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("summary_address6"); ok {
+	if v, ok := d.GetOk("summary_address6"); ok || d.HasChange("summary_address6") {
 		if setArgNil {
 			obj["summary-address6"] = make([]struct{}, 0)
 		} else {
@@ -3126,7 +3126,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
 		if setArgNil {
 			obj["redistribute"] = make([]struct{}, 0)
 		} else {
@@ -3140,7 +3140,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute6"); ok {
+	if v, ok := d.GetOk("redistribute6"); ok || d.HasChange("redistribute6") {
 		if setArgNil {
 			obj["redistribute6"] = make([]struct{}, 0)
 		} else {

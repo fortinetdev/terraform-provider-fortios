@@ -607,11 +607,11 @@ func expandSystemDnsSslCertificate(d *schema.ResourceData, v interface{}, pre st
 
 func expandSystemDnsServerHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -639,11 +639,11 @@ func expandSystemDnsServerHostnameHostname(d *schema.ResourceData, v interface{}
 
 func expandSystemDnsDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -798,7 +798,7 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("server_hostname"); ok {
+	if v, ok := d.GetOk("server_hostname"); ok || d.HasChange("server_hostname") {
 		if setArgNil {
 			obj["server-hostname"] = make([]struct{}, 0)
 		} else {
@@ -812,7 +812,7 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("domain"); ok {
+	if v, ok := d.GetOk("domain"); ok || d.HasChange("domain") {
 		if setArgNil {
 			obj["domain"] = make([]struct{}, 0)
 		} else {

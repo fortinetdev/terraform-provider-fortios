@@ -712,11 +712,11 @@ func expandDlpProfileReplacemsgGroup(d *schema.ResourceData, v interface{}, pre 
 
 func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -767,7 +767,7 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sensitivity"], _ = expandDlpProfileRuleSensitivity(d, i["sensitivity"], pre_append, sv)
 		} else {
@@ -787,7 +787,7 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensor"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sensor"], _ = expandDlpProfileRuleSensor(d, i["sensor"], pre_append, sv)
 		} else {
@@ -856,11 +856,11 @@ func expandDlpProfileRuleFileSize(d *schema.ResourceData, v interface{}, pre str
 
 func expandDlpProfileRuleSensitivity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -896,11 +896,11 @@ func expandDlpProfileRuleFileType(d *schema.ResourceData, v interface{}, pre str
 
 func expandDlpProfileRuleSensor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1005,7 +1005,7 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("rule"); ok {
+	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
 
 		t, err := expandDlpProfileRule(d, v, "rule", sv)
 		if err != nil {

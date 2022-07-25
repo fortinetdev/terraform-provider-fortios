@@ -925,11 +925,11 @@ func expandVpnOcvpnSdwanZone(d *schema.ResourceData, v interface{}, pre string, 
 
 func expandVpnOcvpnWanInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -985,11 +985,11 @@ func expandVpnOcvpnNat(d *schema.ResourceData, v interface{}, pre string, sv str
 
 func expandVpnOcvpnOverlays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1040,7 +1040,7 @@ func expandVpnOcvpnOverlays(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["subnets"], _ = expandVpnOcvpnOverlaysSubnets(d, i["subnets"], pre_append, sv)
 		} else {
@@ -1085,11 +1085,11 @@ func expandVpnOcvpnOverlaysIpv4EndIp(d *schema.ResourceData, v interface{}, pre 
 
 func expandVpnOcvpnOverlaysSubnets(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1198,11 +1198,11 @@ func expandVpnOcvpnForticlientAccessPsksecret(d *schema.ResourceData, v interfac
 
 func expandVpnOcvpnForticlientAccessAuthGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1223,7 +1223,7 @@ func expandVpnOcvpnForticlientAccessAuthGroups(d *schema.ResourceData, v interfa
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["overlays"], _ = expandVpnOcvpnForticlientAccessAuthGroupsOverlays(d, i["overlays"], pre_append, sv)
 		} else {
@@ -1248,11 +1248,11 @@ func expandVpnOcvpnForticlientAccessAuthGroupsAuthGroup(d *schema.ResourceData, 
 
 func expandVpnOcvpnForticlientAccessAuthGroupsOverlays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1351,7 +1351,7 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("wan_interface"); ok {
+	if v, ok := d.GetOk("wan_interface"); ok || d.HasChange("wan_interface") {
 		if setArgNil {
 			obj["wan-interface"] = make([]struct{}, 0)
 		} else {
@@ -1463,7 +1463,7 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("overlays"); ok {
+	if v, ok := d.GetOk("overlays"); ok || d.HasChange("overlays") {
 		if setArgNil {
 			obj["overlays"] = make([]struct{}, 0)
 		} else {

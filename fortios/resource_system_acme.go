@@ -408,11 +408,11 @@ func flattenSystemAcmeFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 
 func expandSystemAcmeInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -448,11 +448,11 @@ func expandSystemAcmeSourceIp6(d *schema.ResourceData, v interface{}, pre string
 
 func expandSystemAcmeAccounts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -531,7 +531,7 @@ func expandSystemAcmeAccountsPrivatekey(d *schema.ResourceData, v interface{}, p
 func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {
@@ -573,7 +573,7 @@ func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("accounts"); ok {
+	if v, ok := d.GetOk("accounts"); ok || d.HasChange("accounts") {
 		if setArgNil {
 			obj["accounts"] = make([]struct{}, 0)
 		} else {

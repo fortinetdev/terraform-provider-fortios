@@ -743,11 +743,11 @@ func expandSystemClusterSyncPeerip(d *schema.ResourceData, v interface{}, pre st
 
 func expandSystemClusterSyncSyncvd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -775,11 +775,11 @@ func expandSystemClusterSyncSyncvdName(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemClusterSyncDownIntfsBeforeSessSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -914,11 +914,11 @@ func expandSystemClusterSyncSessionSyncFilterDstaddr6(d *schema.ResourceData, v 
 
 func expandSystemClusterSyncSessionSyncFilterCustomService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -997,7 +997,7 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("syncvd"); ok {
+	if v, ok := d.GetOk("syncvd"); ok || d.HasChange("syncvd") {
 
 		t, err := expandSystemClusterSyncSyncvd(d, v, "syncvd", sv)
 		if err != nil {
@@ -1007,7 +1007,7 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("down_intfs_before_sess_sync"); ok {
+	if v, ok := d.GetOk("down_intfs_before_sess_sync"); ok || d.HasChange("down_intfs_before_sess_sync") {
 
 		t, err := expandSystemClusterSyncDownIntfsBeforeSessSync(d, v, "down_intfs_before_sess_sync", sv)
 		if err != nil {

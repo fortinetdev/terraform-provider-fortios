@@ -292,11 +292,11 @@ func expandFirewallRegionName(d *schema.ResourceData, v interface{}, pre string,
 
 func expandFirewallRegionCity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -345,7 +345,7 @@ func getObjectFirewallRegion(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("city"); ok {
+	if v, ok := d.GetOk("city"); ok || d.HasChange("city") {
 
 		t, err := expandFirewallRegionCity(d, v, "city", sv)
 		if err != nil {

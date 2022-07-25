@@ -960,11 +960,11 @@ func expandWebProxyExplicitPacFileData(d *schema.ResourceData, v interface{}, pr
 
 func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -985,7 +985,7 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["srcaddr"], _ = expandWebProxyExplicitPacPolicySrcaddr(d, i["srcaddr"], pre_append, sv)
 		} else {
@@ -993,7 +993,7 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["srcaddr6"], _ = expandWebProxyExplicitPacPolicySrcaddr6(d, i["srcaddr6"], pre_append, sv)
 		} else {
@@ -1001,7 +1001,7 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dstaddr"], _ = expandWebProxyExplicitPacPolicyDstaddr(d, i["dstaddr"], pre_append, sv)
 		} else {
@@ -1044,11 +1044,11 @@ func expandWebProxyExplicitPacPolicyStatus(d *schema.ResourceData, v interface{}
 
 func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1076,11 +1076,11 @@ func expandWebProxyExplicitPacPolicySrcaddrName(d *schema.ResourceData, v interf
 
 func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1108,11 +1108,11 @@ func expandWebProxyExplicitPacPolicySrcaddr6Name(d *schema.ResourceData, v inter
 
 func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1497,7 +1497,7 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
-	if v, ok := d.GetOk("pac_policy"); ok {
+	if v, ok := d.GetOk("pac_policy"); ok || d.HasChange("pac_policy") {
 		if setArgNil {
 			obj["pac-policy"] = make([]struct{}, 0)
 		} else {

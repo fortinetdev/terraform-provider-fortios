@@ -352,11 +352,11 @@ func expandWirelessControllerHotspot20IconName(d *schema.ResourceData, v interfa
 
 func expandWirelessControllerHotspot20IconIconList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -445,7 +445,7 @@ func getObjectWirelessControllerHotspot20Icon(d *schema.ResourceData, sv string)
 		}
 	}
 
-	if v, ok := d.GetOk("icon_list"); ok {
+	if v, ok := d.GetOk("icon_list"); ok || d.HasChange("icon_list") {
 
 		t, err := expandWirelessControllerHotspot20IconIconList(d, v, "icon_list", sv)
 		if err != nil {

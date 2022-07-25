@@ -2110,11 +2110,11 @@ func expandSystemAdminHidden(d *schema.ResourceData, v interface{}, pre string, 
 
 func expandSystemAdminVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2178,11 +2178,11 @@ func expandSystemAdminForcePasswordChange(d *schema.ResourceData, v interface{},
 
 func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2221,7 +2221,7 @@ func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "widget"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["widget"], _ = expandSystemAdminGuiDashboardWidget(d, i["widget"], pre_append, sv)
 		} else {
@@ -2258,11 +2258,11 @@ func expandSystemAdminGuiDashboardColumns(d *schema.ResourceData, v interface{},
 
 func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2361,7 +2361,7 @@ func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filters"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["filters"], _ = expandSystemAdminGuiDashboardWidgetFilters(d, i["filters"], pre_append, sv)
 		} else {
@@ -2438,11 +2438,11 @@ func expandSystemAdminGuiDashboardWidgetVisualization(d *schema.ResourceData, v 
 
 func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2526,11 +2526,11 @@ func expandSystemAdminGuestAuth(d *schema.ResourceData, v interface{}, pre strin
 
 func expandSystemAdminGuestUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2570,11 +2570,11 @@ func expandSystemAdminHistory1(d *schema.ResourceData, v interface{}, pre string
 
 func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2622,11 +2622,11 @@ func expandSystemAdminLoginTimeLastFailedLogin(d *schema.ResourceData, v interfa
 
 func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2654,11 +2654,11 @@ func expandSystemAdminGuiGlobalMenuFavoritesId(d *schema.ResourceData, v interfa
 
 func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2686,11 +2686,11 @@ func expandSystemAdminGuiVdomMenuFavoritesId(d *schema.ResourceData, v interface
 
 func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3029,7 +3029,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok {
+	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
 
 		t, err := expandSystemAdminVdom(d, v, "vdom", sv)
 		if err != nil {
@@ -3129,7 +3129,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("gui_dashboard"); ok {
+	if v, ok := d.GetOk("gui_dashboard"); ok || d.HasChange("gui_dashboard") {
 
 		t, err := expandSystemAdminGuiDashboard(d, v, "gui_dashboard", sv)
 		if err != nil {
@@ -3229,7 +3229,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("guest_usergroups"); ok {
+	if v, ok := d.GetOk("guest_usergroups"); ok || d.HasChange("guest_usergroups") {
 
 		t, err := expandSystemAdminGuestUsergroups(d, v, "guest_usergroups", sv)
 		if err != nil {
@@ -3269,7 +3269,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("login_time"); ok {
+	if v, ok := d.GetOk("login_time"); ok || d.HasChange("login_time") {
 
 		t, err := expandSystemAdminLoginTime(d, v, "login_time", sv)
 		if err != nil {
@@ -3279,7 +3279,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("gui_global_menu_favorites"); ok {
+	if v, ok := d.GetOk("gui_global_menu_favorites"); ok || d.HasChange("gui_global_menu_favorites") {
 
 		t, err := expandSystemAdminGuiGlobalMenuFavorites(d, v, "gui_global_menu_favorites", sv)
 		if err != nil {
@@ -3289,7 +3289,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("gui_vdom_menu_favorites"); ok {
+	if v, ok := d.GetOk("gui_vdom_menu_favorites"); ok || d.HasChange("gui_vdom_menu_favorites") {
 
 		t, err := expandSystemAdminGuiVdomMenuFavorites(d, v, "gui_vdom_menu_favorites", sv)
 		if err != nil {
@@ -3299,7 +3299,7 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("gui_new_feature_acknowledge"); ok {
+	if v, ok := d.GetOk("gui_new_feature_acknowledge"); ok || d.HasChange("gui_new_feature_acknowledge") {
 
 		t, err := expandSystemAdminGuiNewFeatureAcknowledge(d, v, "gui_new_feature_acknowledge", sv)
 		if err != nil {

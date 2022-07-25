@@ -943,11 +943,11 @@ func expandFirewallCentralSnatMapType(d *schema.ResourceData, v interface{}, pre
 
 func expandFirewallCentralSnatMapOrigAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -975,11 +975,11 @@ func expandFirewallCentralSnatMapOrigAddrName(d *schema.ResourceData, v interfac
 
 func expandFirewallCentralSnatMapOrigAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1007,11 +1007,11 @@ func expandFirewallCentralSnatMapOrigAddr6Name(d *schema.ResourceData, v interfa
 
 func expandFirewallCentralSnatMapSrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1039,11 +1039,11 @@ func expandFirewallCentralSnatMapSrcintfName(d *schema.ResourceData, v interface
 
 func expandFirewallCentralSnatMapDstAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1071,11 +1071,11 @@ func expandFirewallCentralSnatMapDstAddrName(d *schema.ResourceData, v interface
 
 func expandFirewallCentralSnatMapDstAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1103,11 +1103,11 @@ func expandFirewallCentralSnatMapDstAddr6Name(d *schema.ResourceData, v interfac
 
 func expandFirewallCentralSnatMapDstintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1135,11 +1135,11 @@ func expandFirewallCentralSnatMapDstintfName(d *schema.ResourceData, v interface
 
 func expandFirewallCentralSnatMapNatIppool(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1167,11 +1167,11 @@ func expandFirewallCentralSnatMapNatIppoolName(d *schema.ResourceData, v interfa
 
 func expandFirewallCentralSnatMapNatIppool6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1268,7 +1268,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("orig_addr"); ok {
+	if v, ok := d.GetOk("orig_addr"); ok || d.HasChange("orig_addr") {
 
 		t, err := expandFirewallCentralSnatMapOrigAddr(d, v, "orig_addr", sv)
 		if err != nil {
@@ -1278,7 +1278,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("orig_addr6"); ok {
+	if v, ok := d.GetOk("orig_addr6"); ok || d.HasChange("orig_addr6") {
 
 		t, err := expandFirewallCentralSnatMapOrigAddr6(d, v, "orig_addr6", sv)
 		if err != nil {
@@ -1288,7 +1288,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("srcintf"); ok {
+	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
 
 		t, err := expandFirewallCentralSnatMapSrcintf(d, v, "srcintf", sv)
 		if err != nil {
@@ -1298,7 +1298,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("dst_addr"); ok {
+	if v, ok := d.GetOk("dst_addr"); ok || d.HasChange("dst_addr") {
 
 		t, err := expandFirewallCentralSnatMapDstAddr(d, v, "dst_addr", sv)
 		if err != nil {
@@ -1308,7 +1308,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("dst_addr6"); ok {
+	if v, ok := d.GetOk("dst_addr6"); ok || d.HasChange("dst_addr6") {
 
 		t, err := expandFirewallCentralSnatMapDstAddr6(d, v, "dst_addr6", sv)
 		if err != nil {
@@ -1318,7 +1318,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("dstintf"); ok {
+	if v, ok := d.GetOk("dstintf"); ok || d.HasChange("dstintf") {
 
 		t, err := expandFirewallCentralSnatMapDstintf(d, v, "dstintf", sv)
 		if err != nil {
@@ -1328,7 +1328,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("nat_ippool"); ok {
+	if v, ok := d.GetOk("nat_ippool"); ok || d.HasChange("nat_ippool") {
 
 		t, err := expandFirewallCentralSnatMapNatIppool(d, v, "nat_ippool", sv)
 		if err != nil {
@@ -1338,7 +1338,7 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("nat_ippool6"); ok {
+	if v, ok := d.GetOk("nat_ippool6"); ok || d.HasChange("nat_ippool6") {
 
 		t, err := expandFirewallCentralSnatMapNatIppool6(d, v, "nat_ippool6", sv)
 		if err != nil {

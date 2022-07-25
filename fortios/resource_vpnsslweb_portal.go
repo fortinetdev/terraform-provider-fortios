@@ -2587,11 +2587,11 @@ func expandVpnSslWebPortalSavePassword(d *schema.ResourceData, v interface{}, pr
 
 func expandVpnSslWebPortalIpPools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2635,11 +2635,11 @@ func expandVpnSslWebPortalSplitTunnelingRoutingNegate(d *schema.ResourceData, v 
 
 func expandVpnSslWebPortalSplitTunnelingRoutingAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2691,11 +2691,11 @@ func expandVpnSslWebPortalIpv6TunnelMode(d *schema.ResourceData, v interface{}, 
 
 func expandVpnSslWebPortalIpv6Pools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2739,11 +2739,11 @@ func expandVpnSslWebPortalIpv6SplitTunnelingRoutingNegate(d *schema.ResourceData
 
 func expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2807,11 +2807,11 @@ func expandVpnSslWebPortalUserGroupBookmark(d *schema.ResourceData, v interface{
 
 func expandVpnSslWebPortalBookmarkGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2826,7 +2826,7 @@ func expandVpnSslWebPortalBookmarkGroup(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bookmarks"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["bookmarks"], _ = expandVpnSslWebPortalBookmarkGroupBookmarks(d, i["bookmarks"], pre_append, sv)
 		} else {
@@ -2847,11 +2847,11 @@ func expandVpnSslWebPortalBookmarkGroupName(d *schema.ResourceData, v interface{
 
 func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3004,7 +3004,7 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["form-data"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksFormData(d, i["form_data"], pre_append, sv)
 		} else {
@@ -3153,11 +3153,11 @@ func expandVpnSslWebPortalBookmarkGroupBookmarksSso(d *schema.ResourceData, v in
 
 func expandVpnSslWebPortalBookmarkGroupBookmarksFormData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3299,11 +3299,11 @@ func expandVpnSslWebPortalHostCheckInterval(d *schema.ResourceData, v interface{
 
 func expandVpnSslWebPortalHostCheckPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3343,11 +3343,11 @@ func expandVpnSslWebPortalMacAddrAction(d *schema.ResourceData, v interface{}, p
 
 func expandVpnSslWebPortalMacAddrCheckRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3368,7 +3368,7 @@ func expandVpnSslWebPortalMacAddrCheckRule(d *schema.ResourceData, v interface{}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_list"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["mac-addr-list"], _ = expandVpnSslWebPortalMacAddrCheckRuleMacAddrList(d, i["mac_addr_list"], pre_append, sv)
 		} else {
@@ -3393,11 +3393,11 @@ func expandVpnSslWebPortalMacAddrCheckRuleMacAddrMask(d *schema.ResourceData, v 
 
 func expandVpnSslWebPortalMacAddrCheckRuleMacAddrList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3429,11 +3429,11 @@ func expandVpnSslWebPortalOsCheck(d *schema.ResourceData, v interface{}, pre str
 
 func expandVpnSslWebPortalOsCheckList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3523,11 +3523,11 @@ func expandVpnSslWebPortalHideSsoCredential(d *schema.ResourceData, v interface{
 
 func expandVpnSslWebPortalSplitDns(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3676,7 +3676,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("ip_pools"); ok {
+	if v, ok := d.GetOk("ip_pools"); ok || d.HasChange("ip_pools") {
 
 		t, err := expandVpnSslWebPortalIpPools(d, v, "ip_pools", sv)
 		if err != nil {
@@ -3726,7 +3726,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("split_tunneling_routing_address"); ok {
+	if v, ok := d.GetOk("split_tunneling_routing_address"); ok || d.HasChange("split_tunneling_routing_address") {
 
 		t, err := expandVpnSslWebPortalSplitTunnelingRoutingAddress(d, v, "split_tunneling_routing_address", sv)
 		if err != nil {
@@ -3796,7 +3796,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("ipv6_pools"); ok {
+	if v, ok := d.GetOk("ipv6_pools"); ok || d.HasChange("ipv6_pools") {
 
 		t, err := expandVpnSslWebPortalIpv6Pools(d, v, "ipv6_pools", sv)
 		if err != nil {
@@ -3846,7 +3846,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("ipv6_split_tunneling_routing_address"); ok {
+	if v, ok := d.GetOk("ipv6_split_tunneling_routing_address"); ok || d.HasChange("ipv6_split_tunneling_routing_address") {
 
 		t, err := expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(d, v, "ipv6_split_tunneling_routing_address", sv)
 		if err != nil {
@@ -3946,7 +3946,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("bookmark_group"); ok {
+	if v, ok := d.GetOk("bookmark_group"); ok || d.HasChange("bookmark_group") {
 
 		t, err := expandVpnSslWebPortalBookmarkGroup(d, v, "bookmark_group", sv)
 		if err != nil {
@@ -4156,7 +4156,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("host_check_policy"); ok {
+	if v, ok := d.GetOk("host_check_policy"); ok || d.HasChange("host_check_policy") {
 
 		t, err := expandVpnSslWebPortalHostCheckPolicy(d, v, "host_check_policy", sv)
 		if err != nil {
@@ -4196,7 +4196,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("mac_addr_check_rule"); ok {
+	if v, ok := d.GetOk("mac_addr_check_rule"); ok || d.HasChange("mac_addr_check_rule") {
 
 		t, err := expandVpnSslWebPortalMacAddrCheckRule(d, v, "mac_addr_check_rule", sv)
 		if err != nil {
@@ -4216,7 +4216,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("os_check_list"); ok {
+	if v, ok := d.GetOk("os_check_list"); ok || d.HasChange("os_check_list") {
 
 		t, err := expandVpnSslWebPortalOsCheckList(d, v, "os_check_list", sv)
 		if err != nil {
@@ -4306,7 +4306,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("split_dns"); ok {
+	if v, ok := d.GetOk("split_dns"); ok || d.HasChange("split_dns") {
 
 		t, err := expandVpnSslWebPortalSplitDns(d, v, "split_dns", sv)
 		if err != nil {

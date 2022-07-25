@@ -554,11 +554,11 @@ func expandSwitchControllerSecurityPolicy8021XSecurityMode(d *schema.ResourceDat
 
 func expandSwitchControllerSecurityPolicy8021XUserGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -675,7 +675,7 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		}
 	}
 
-	if v, ok := d.GetOk("user_group"); ok {
+	if v, ok := d.GetOk("user_group"); ok || d.HasChange("user_group") {
 
 		t, err := expandSwitchControllerSecurityPolicy8021XUserGroup(d, v, "user_group", sv)
 		if err != nil {

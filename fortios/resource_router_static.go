@@ -621,11 +621,11 @@ func expandRouterStaticDynamicGateway(d *schema.ResourceData, v interface{}, pre
 
 func expandRouterStaticSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -806,7 +806,7 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("sdwan_zone"); ok {
+	if v, ok := d.GetOk("sdwan_zone"); ok || d.HasChange("sdwan_zone") {
 
 		t, err := expandRouterStaticSdwanZone(d, v, "sdwan_zone", sv)
 		if err != nil {

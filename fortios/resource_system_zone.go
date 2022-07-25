@@ -455,11 +455,11 @@ func expandSystemZoneName(d *schema.ResourceData, v interface{}, pre string, sv 
 
 func expandSystemZoneTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -480,7 +480,7 @@ func expandSystemZoneTagging(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandSystemZoneTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -505,11 +505,11 @@ func expandSystemZoneTaggingCategory(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemZoneTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -545,11 +545,11 @@ func expandSystemZoneIntrazone(d *schema.ResourceData, v interface{}, pre string
 
 func expandSystemZoneInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -588,7 +588,7 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandSystemZoneTagging(d, v, "tagging", sv)
 		if err != nil {
@@ -618,7 +618,7 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 
 		t, err := expandSystemZoneInterface(d, v, "interface", sv)
 		if err != nil {

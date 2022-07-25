@@ -330,11 +330,11 @@ func expandFirewallVipgrp46Comments(d *schema.ResourceData, v interface{}, pre s
 
 func expandFirewallVipgrp46Member(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -403,7 +403,7 @@ func getObjectFirewallVipgrp46(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandFirewallVipgrp46Member(d, v, "member", sv)
 		if err != nil {

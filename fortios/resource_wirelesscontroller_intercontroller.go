@@ -381,11 +381,11 @@ func expandWirelessControllerInterControllerFastFailoverWait(d *schema.ResourceD
 
 func expandWirelessControllerInterControllerInterControllerPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -528,7 +528,7 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		}
 	}
 
-	if v, ok := d.GetOk("inter_controller_peer"); ok {
+	if v, ok := d.GetOk("inter_controller_peer"); ok || d.HasChange("inter_controller_peer") {
 		if setArgNil {
 			obj["inter-controller-peer"] = make([]struct{}, 0)
 		} else {

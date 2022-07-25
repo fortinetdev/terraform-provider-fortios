@@ -1066,11 +1066,11 @@ func expandWirelessControllerWidsProfileApBgscanReportIntv(d *schema.ResourceDat
 
 func expandWirelessControllerWidsProfileApBgscanDisableSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1353,7 +1353,7 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("ap_bgscan_disable_schedules"); ok {
+	if v, ok := d.GetOk("ap_bgscan_disable_schedules"); ok || d.HasChange("ap_bgscan_disable_schedules") {
 
 		t, err := expandWirelessControllerWidsProfileApBgscanDisableSchedules(d, v, "ap_bgscan_disable_schedules", sv)
 		if err != nil {

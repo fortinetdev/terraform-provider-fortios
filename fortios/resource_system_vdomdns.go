@@ -461,11 +461,11 @@ func expandSystemVdomDnsSslCertificate(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemVdomDnsServerHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -610,7 +610,7 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("server_hostname"); ok {
+	if v, ok := d.GetOk("server_hostname"); ok || d.HasChange("server_hostname") {
 		if setArgNil {
 			obj["server-hostname"] = make([]struct{}, 0)
 		} else {

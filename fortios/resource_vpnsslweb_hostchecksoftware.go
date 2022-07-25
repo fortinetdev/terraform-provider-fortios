@@ -474,11 +474,11 @@ func expandVpnSslWebHostCheckSoftwareGuid(d *schema.ResourceData, v interface{},
 
 func expandVpnSslWebHostCheckSoftwareCheckItemList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -517,7 +517,7 @@ func expandVpnSslWebHostCheckSoftwareCheckItemList(d *schema.ResourceData, v int
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5s"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["md5s"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListMd5S(d, i["md5s"], pre_append, sv)
 		} else {
@@ -554,11 +554,11 @@ func expandVpnSslWebHostCheckSoftwareCheckItemListVersion(d *schema.ResourceData
 
 func expandVpnSslWebHostCheckSoftwareCheckItemListMd5S(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -637,7 +637,7 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("check_item_list"); ok {
+	if v, ok := d.GetOk("check_item_list"); ok || d.HasChange("check_item_list") {
 
 		t, err := expandVpnSslWebHostCheckSoftwareCheckItemList(d, v, "check_item_list", sv)
 		if err != nil {

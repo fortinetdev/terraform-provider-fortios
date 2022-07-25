@@ -3084,11 +3084,11 @@ func expandWafProfileSignature(d *schema.ResourceData, v interface{}, pre string
 
 func expandWafProfileSignatureMainClass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3156,11 +3156,11 @@ func expandWafProfileSignatureMainClassSeverity(d *schema.ResourceData, v interf
 
 func expandWafProfileSignatureDisabledSubClass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3188,11 +3188,11 @@ func expandWafProfileSignatureDisabledSubClassId(d *schema.ResourceData, v inter
 
 func expandWafProfileSignatureDisabledSignature(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3224,11 +3224,11 @@ func expandWafProfileSignatureCreditCardDetectionThreshold(d *schema.ResourceDat
 
 func expandWafProfileSignatureCustomSignature(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4179,11 +4179,11 @@ func expandWafProfileConstraintMaxRangeSegmentSeverity(d *schema.ResourceData, v
 
 func expandWafProfileConstraintException(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4428,11 +4428,11 @@ func expandWafProfileMethodDefaultAllowedMethods(d *schema.ResourceData, v inter
 
 func expandWafProfileMethodMethodPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4555,11 +4555,11 @@ func expandWafProfileAddressListSeverity(d *schema.ResourceData, v interface{}, 
 
 func expandWafProfileAddressListTrustedAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4587,11 +4587,11 @@ func expandWafProfileAddressListTrustedAddressName(d *schema.ResourceData, v int
 
 func expandWafProfileAddressListBlockedAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4619,11 +4619,11 @@ func expandWafProfileAddressListBlockedAddressName(d *schema.ResourceData, v int
 
 func expandWafProfileUrlAccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4662,7 +4662,7 @@ func expandWafProfileUrlAccess(d *schema.ResourceData, v interface{}, pre string
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_pattern"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["access-pattern"], _ = expandWafProfileUrlAccessAccessPattern(d, i["access_pattern"], pre_append, sv)
 		} else {
@@ -4699,11 +4699,11 @@ func expandWafProfileUrlAccessSeverity(d *schema.ResourceData, v interface{}, pr
 
 func expandWafProfileUrlAccessAccessPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4846,7 +4846,7 @@ func getObjectWafProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("url_access"); ok {
+	if v, ok := d.GetOk("url_access"); ok || d.HasChange("url_access") {
 
 		t, err := expandWafProfileUrlAccess(d, v, "url_access", sv)
 		if err != nil {

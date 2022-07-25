@@ -551,11 +551,11 @@ func expandWirelessControllerTimersDarrpDay(d *schema.ResourceData, v interface{
 
 func expandWirelessControllerTimersDarrpTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -756,7 +756,7 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		}
 	}
 
-	if v, ok := d.GetOk("darrp_time"); ok {
+	if v, ok := d.GetOk("darrp_time"); ok || d.HasChange("darrp_time") {
 		if setArgNil {
 			obj["darrp-time"] = make([]struct{}, 0)
 		} else {

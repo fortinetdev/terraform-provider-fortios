@@ -329,11 +329,11 @@ func expandSwitchControllerSwitchGroupFortilink(d *schema.ResourceData, v interf
 
 func expandSwitchControllerSwitchGroupMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -402,7 +402,7 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("members"); ok {
+	if v, ok := d.GetOk("members"); ok || d.HasChange("members") {
 
 		t, err := expandSwitchControllerSwitchGroupMembers(d, v, "members", sv)
 		if err != nil {

@@ -689,11 +689,11 @@ func expandFirewallDosPolicyInterface(d *schema.ResourceData, v interface{}, pre
 
 func expandFirewallDosPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -721,11 +721,11 @@ func expandFirewallDosPolicySrcaddrName(d *schema.ResourceData, v interface{}, p
 
 func expandFirewallDosPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -753,11 +753,11 @@ func expandFirewallDosPolicyDstaddrName(d *schema.ResourceData, v interface{}, p
 
 func expandFirewallDosPolicyService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -785,11 +785,11 @@ func expandFirewallDosPolicyServiceName(d *schema.ResourceData, v interface{}, p
 
 func expandFirewallDosPolicyAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -948,7 +948,7 @@ func getObjectFirewallDosPolicy(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr"); ok {
+	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
 
 		t, err := expandFirewallDosPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
@@ -958,7 +958,7 @@ func getObjectFirewallDosPolicy(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr"); ok {
+	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
 
 		t, err := expandFirewallDosPolicyDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
@@ -968,7 +968,7 @@ func getObjectFirewallDosPolicy(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("service"); ok {
+	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
 
 		t, err := expandFirewallDosPolicyService(d, v, "service", sv)
 		if err != nil {
@@ -978,7 +978,7 @@ func getObjectFirewallDosPolicy(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("anomaly"); ok {
+	if v, ok := d.GetOk("anomaly"); ok || d.HasChange("anomaly") {
 
 		t, err := expandFirewallDosPolicyAnomaly(d, v, "anomaly", sv)
 		if err != nil {

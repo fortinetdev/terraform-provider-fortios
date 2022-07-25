@@ -536,11 +536,11 @@ func expandLogSyslogdSettingCertificate(d *schema.ResourceData, v interface{}, p
 
 func expandLogSyslogdSettingCustomFieldName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -769,7 +769,7 @@ func getObjectLogSyslogdSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		}
 	}
 
-	if v, ok := d.GetOk("custom_field_name"); ok {
+	if v, ok := d.GetOk("custom_field_name"); ok || d.HasChange("custom_field_name") {
 		if setArgNil {
 			obj["custom-field-name"] = make([]struct{}, 0)
 		} else {

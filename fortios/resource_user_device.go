@@ -478,11 +478,11 @@ func expandUserDeviceAvatar(d *schema.ResourceData, v interface{}, pre string, s
 
 func expandUserDeviceTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -503,7 +503,7 @@ func expandUserDeviceTagging(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandUserDeviceTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -528,11 +528,11 @@ func expandUserDeviceTaggingCategory(d *schema.ResourceData, v interface{}, pre 
 
 func expandUserDeviceTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -629,7 +629,7 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandUserDeviceTagging(d, v, "tagging", sv)
 		if err != nil {

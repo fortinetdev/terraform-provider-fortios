@@ -521,11 +521,11 @@ func expandSystemAutomationStitchTrigger(d *schema.ResourceData, v interface{}, 
 
 func expandSystemAutomationStitchActions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -583,11 +583,11 @@ func expandSystemAutomationStitchActionsRequired(d *schema.ResourceData, v inter
 
 func expandSystemAutomationStitchAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -615,11 +615,11 @@ func expandSystemAutomationStitchActionName(d *schema.ResourceData, v interface{
 
 func expandSystemAutomationStitchDestination(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -688,7 +688,7 @@ func getObjectSystemAutomationStitch(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("actions"); ok {
+	if v, ok := d.GetOk("actions"); ok || d.HasChange("actions") {
 
 		t, err := expandSystemAutomationStitchActions(d, v, "actions", sv)
 		if err != nil {
@@ -698,7 +698,7 @@ func getObjectSystemAutomationStitch(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("action"); ok {
+	if v, ok := d.GetOk("action"); ok || d.HasChange("action") {
 
 		t, err := expandSystemAutomationStitchAction(d, v, "action", sv)
 		if err != nil {
@@ -708,7 +708,7 @@ func getObjectSystemAutomationStitch(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("destination"); ok {
+	if v, ok := d.GetOk("destination"); ok || d.HasChange("destination") {
 
 		t, err := expandSystemAutomationStitchDestination(d, v, "destination", sv)
 		if err != nil {

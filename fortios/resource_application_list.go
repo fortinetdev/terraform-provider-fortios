@@ -1436,11 +1436,11 @@ func expandApplicationListOptions(d *schema.ResourceData, v interface{}, pre str
 
 func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1455,7 +1455,7 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["risk"], _ = expandApplicationListEntriesRisk(d, i["risk"], pre_append, sv)
 		} else {
@@ -1463,7 +1463,7 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["category"], _ = expandApplicationListEntriesCategory(d, i["category"], pre_append, sv)
 		} else {
@@ -1471,7 +1471,7 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sub_category"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sub-category"], _ = expandApplicationListEntriesSubCategory(d, i["sub_category"], pre_append, sv)
 		} else {
@@ -1479,7 +1479,7 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["application"], _ = expandApplicationListEntriesApplication(d, i["application"], pre_append, sv)
 		} else {
@@ -1517,7 +1517,7 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusion"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["exclusion"], _ = expandApplicationListEntriesExclusion(d, i["exclusion"], pre_append, sv)
 		} else {
@@ -1525,7 +1525,7 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["parameters"], _ = expandApplicationListEntriesParameters(d, i["parameters"], pre_append, sv)
 		} else {
@@ -1630,11 +1630,11 @@ func expandApplicationListEntriesId(d *schema.ResourceData, v interface{}, pre s
 
 func expandApplicationListEntriesRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1662,11 +1662,11 @@ func expandApplicationListEntriesRiskLevel(d *schema.ResourceData, v interface{}
 
 func expandApplicationListEntriesCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1694,11 +1694,11 @@ func expandApplicationListEntriesCategoryId(d *schema.ResourceData, v interface{
 
 func expandApplicationListEntriesSubCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1726,11 +1726,11 @@ func expandApplicationListEntriesSubCategoryId(d *schema.ResourceData, v interfa
 
 func expandApplicationListEntriesApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1778,11 +1778,11 @@ func expandApplicationListEntriesPopularity(d *schema.ResourceData, v interface{
 
 func expandApplicationListEntriesExclusion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1810,11 +1810,11 @@ func expandApplicationListEntriesExclusionId(d *schema.ResourceData, v interface
 
 func expandApplicationListEntriesParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1829,7 +1829,7 @@ func expandApplicationListEntriesParameters(d *schema.ResourceData, v interface{
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["members"], _ = expandApplicationListEntriesParametersMembers(d, i["members"], pre_append, sv)
 		} else {
@@ -1856,11 +1856,11 @@ func expandApplicationListEntriesParametersId(d *schema.ResourceData, v interfac
 
 func expandApplicationListEntriesParametersMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1972,11 +1972,11 @@ func expandApplicationListControlDefaultNetworkServices(d *schema.ResourceData, 
 
 func expandApplicationListDefaultNetworkServices(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2185,7 +2185,7 @@ func getObjectApplicationList(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("entries"); ok {
+	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
 
 		t, err := expandApplicationListEntries(d, v, "entries", sv)
 		if err != nil {
@@ -2205,7 +2205,7 @@ func getObjectApplicationList(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("default_network_services"); ok {
+	if v, ok := d.GetOk("default_network_services"); ok || d.HasChange("default_network_services") {
 
 		t, err := expandApplicationListDefaultNetworkServices(d, v, "default_network_services", sv)
 		if err != nil {

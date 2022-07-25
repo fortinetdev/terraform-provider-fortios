@@ -659,11 +659,11 @@ func expandSystemDnsDatabaseRrMax(d *schema.ResourceData, v interface{}, pre str
 
 func expandSystemDnsDatabaseDnsEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -922,7 +922,7 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("dns_entry"); ok {
+	if v, ok := d.GetOk("dns_entry"); ok || d.HasChange("dns_entry") {
 
 		t, err := expandSystemDnsDatabaseDnsEntry(d, v, "dns_entry", sv)
 		if err != nil {

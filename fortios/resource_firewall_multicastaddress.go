@@ -511,11 +511,11 @@ func expandFirewallMulticastAddressColor(d *schema.ResourceData, v interface{}, 
 
 func expandFirewallMulticastAddressTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -536,7 +536,7 @@ func expandFirewallMulticastAddressTagging(d *schema.ResourceData, v interface{}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandFirewallMulticastAddressTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -561,11 +561,11 @@ func expandFirewallMulticastAddressTaggingCategory(d *schema.ResourceData, v int
 
 func expandFirewallMulticastAddressTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -684,7 +684,7 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandFirewallMulticastAddressTagging(d, v, "tagging", sv)
 		if err != nil {

@@ -1601,11 +1601,11 @@ func expandReportLayoutPageHeaderStyle(d *schema.ResourceData, v interface{}, pr
 
 func expandReportLayoutPageHeaderHeaderItem(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1713,11 +1713,11 @@ func expandReportLayoutPageFooterStyle(d *schema.ResourceData, v interface{}, pr
 
 func expandReportLayoutPageFooterFooterItem(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1795,11 +1795,11 @@ func expandReportLayoutPageFooterFooterItemImgSrc(d *schema.ResourceData, v inte
 
 func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1844,7 +1844,7 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["parameters"], _ = expandReportLayoutBodyItemParameters(d, i["parameters"], pre_append, sv)
 		} else {
@@ -1876,7 +1876,7 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["list"], _ = expandReportLayoutBodyItemList(d, i["list"], pre_append, sv)
 		} else {
@@ -1989,11 +1989,11 @@ func expandReportLayoutBodyItemHide(d *schema.ResourceData, v interface{}, pre s
 
 func expandReportLayoutBodyItemParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2057,11 +2057,11 @@ func expandReportLayoutBodyItemListComponent(d *schema.ResourceData, v interface
 
 func expandReportLayoutBodyItemList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2308,7 +2308,7 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("body_item"); ok {
+	if v, ok := d.GetOk("body_item"); ok || d.HasChange("body_item") {
 
 		t, err := expandReportLayoutBodyItem(d, v, "body_item", sv)
 		if err != nil {

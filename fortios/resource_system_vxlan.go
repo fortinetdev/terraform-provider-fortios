@@ -434,11 +434,11 @@ func expandSystemVxlanIpVersion(d *schema.ResourceData, v interface{}, pre strin
 
 func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -466,11 +466,11 @@ func expandSystemVxlanRemoteIpIp(d *schema.ResourceData, v interface{}, pre stri
 
 func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -547,7 +547,7 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("remote_ip"); ok {
+	if v, ok := d.GetOk("remote_ip"); ok || d.HasChange("remote_ip") {
 
 		t, err := expandSystemVxlanRemoteIp(d, v, "remote_ip", sv)
 		if err != nil {
@@ -557,7 +557,7 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("remote_ip6"); ok {
+	if v, ok := d.GetOk("remote_ip6"); ok || d.HasChange("remote_ip6") {
 
 		t, err := expandSystemVxlanRemoteIp6(d, v, "remote_ip6", sv)
 		if err != nil {

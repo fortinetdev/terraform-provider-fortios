@@ -2307,11 +2307,11 @@ func expandVpnIpsecPhase1Keylife(d *schema.ResourceData, v interface{}, pre stri
 
 func expandVpnIpsecPhase1Certificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2431,11 +2431,11 @@ func expandVpnIpsecPhase1Ipv4WinsServer2(d *schema.ResourceData, v interface{}, 
 
 func expandVpnIpsecPhase1Ipv4ExcludeRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2519,11 +2519,11 @@ func expandVpnIpsecPhase1Ipv6DnsServer3(d *schema.ResourceData, v interface{}, p
 
 func expandVpnIpsecPhase1Ipv6ExcludeRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2619,11 +2619,11 @@ func expandVpnIpsecPhase1ClientKeepAlive(d *schema.ResourceData, v interface{}, 
 
 func expandVpnIpsecPhase1BackupGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2988,7 +2988,7 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("certificate"); ok {
+	if v, ok := d.GetOk("certificate"); ok || d.HasChange("certificate") {
 
 		t, err := expandVpnIpsecPhase1Certificate(d, v, "certificate", sv)
 		if err != nil {
@@ -3228,7 +3228,7 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("ipv4_exclude_range"); ok {
+	if v, ok := d.GetOk("ipv4_exclude_range"); ok || d.HasChange("ipv4_exclude_range") {
 
 		t, err := expandVpnIpsecPhase1Ipv4ExcludeRange(d, v, "ipv4_exclude_range", sv)
 		if err != nil {
@@ -3328,7 +3328,7 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("ipv6_exclude_range"); ok {
+	if v, ok := d.GetOk("ipv6_exclude_range"); ok || d.HasChange("ipv6_exclude_range") {
 
 		t, err := expandVpnIpsecPhase1Ipv6ExcludeRange(d, v, "ipv6_exclude_range", sv)
 		if err != nil {
@@ -3458,7 +3458,7 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("backup_gateway"); ok {
+	if v, ok := d.GetOk("backup_gateway"); ok || d.HasChange("backup_gateway") {
 
 		t, err := expandVpnIpsecPhase1BackupGateway(d, v, "backup_gateway", sv)
 		if err != nil {

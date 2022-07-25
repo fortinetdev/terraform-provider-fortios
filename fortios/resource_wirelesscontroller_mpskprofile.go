@@ -529,11 +529,11 @@ func expandWirelessControllerMpskProfileMpskConcurrentClients(d *schema.Resource
 
 func expandWirelessControllerMpskProfileMpskGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -560,7 +560,7 @@ func expandWirelessControllerMpskProfileMpskGroup(d *schema.ResourceData, v inte
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_key"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["mpsk-key"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKey(d, i["mpsk_key"], pre_append, sv)
 		} else {
@@ -589,11 +589,11 @@ func expandWirelessControllerMpskProfileMpskGroupVlanId(d *schema.ResourceData, 
 
 func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -638,7 +638,7 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["mpsk-schedules"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(d, i["mpsk_schedules"], pre_append, sv)
 		} else {
@@ -679,11 +679,11 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKeyComment(d *schema.Resour
 
 func expandWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -732,7 +732,7 @@ func getObjectWirelessControllerMpskProfile(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("mpsk_group"); ok {
+	if v, ok := d.GetOk("mpsk_group"); ok || d.HasChange("mpsk_group") {
 
 		t, err := expandWirelessControllerMpskProfileMpskGroup(d, v, "mpsk_group", sv)
 		if err != nil {

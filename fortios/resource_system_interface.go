@@ -5983,11 +5983,11 @@ func expandSystemInterfaceMode(d *schema.ResourceData, v interface{}, pre string
 
 func expandSystemInterfaceClientOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6147,11 +6147,11 @@ func expandSystemInterfaceFailActionOnExtender(d *schema.ResourceData, v interfa
 
 func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6539,11 +6539,11 @@ func expandSystemInterfaceRemoteIp(d *schema.ResourceData, v interface{}, pre st
 
 func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6619,11 +6619,11 @@ func expandSystemInterfaceRedundantInterface(d *schema.ResourceData, v interface
 
 func expandSystemInterfaceManagedDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6711,11 +6711,11 @@ func expandSystemInterfaceSecurityExemptList(d *schema.ResourceData, v interface
 
 func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6827,11 +6827,11 @@ func expandSystemInterfaceVrrpVirtualMac(d *schema.ResourceData, v interface{}, 
 
 func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6918,7 +6918,7 @@ func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy_arp"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["proxy-arp"], _ = expandSystemInterfaceVrrpProxyArp(d, i["proxy_arp"], pre_append, sv)
 		} else {
@@ -6987,11 +6987,11 @@ func expandSystemInterfaceVrrpStatus(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemInterfaceVrrpProxyArp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7041,11 +7041,11 @@ func expandSystemInterfaceSecondaryIp(d *schema.ResourceData, v interface{}, pre
 
 func expandSystemInterfaceSecondaryip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7223,11 +7223,11 @@ func expandSystemInterfaceSwitchControllerDhcpSnoopingOption82(d *schema.Resourc
 
 func expandSystemInterfaceDhcpSnoopingServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7301,11 +7301,11 @@ func expandSystemInterfaceColor(d *schema.ResourceData, v interface{}, pre strin
 
 func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7326,7 +7326,7 @@ func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandSystemInterfaceTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -7351,11 +7351,11 @@ func expandSystemInterfaceTaggingCategory(d *schema.ResourceData, v interface{},
 
 func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7701,11 +7701,11 @@ func expandSystemInterfaceIpv6Ip6Address(d *schema.ResourceData, v interface{}, 
 
 func expandSystemInterfaceIpv6Ip6ExtraAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7813,11 +7813,11 @@ func expandSystemInterfaceIpv6Ip6Subnet(d *schema.ResourceData, v interface{}, p
 
 func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7862,7 +7862,7 @@ func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dnssl"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dnssl"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnssl(d, i["dnssl"], pre_append, sv)
 		} else {
@@ -7903,11 +7903,11 @@ func expandSystemInterfaceIpv6Ip6PrefixListRdnss(d *schema.ResourceData, v inter
 
 func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7935,11 +7935,11 @@ func expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d *schema.ResourceData, v
 
 func expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -8061,11 +8061,11 @@ func expandSystemInterfaceIpv6Dhcp6InformationRequest(d *schema.ResourceData, v 
 
 func expandSystemInterfaceIpv6Dhcp6IapdList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -8147,11 +8147,11 @@ func expandSystemInterfaceIpv6Vrip6_Link_Local(d *schema.ResourceData, v interfa
 
 func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -8340,7 +8340,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("client_options"); ok {
+	if v, ok := d.GetOk("client_options"); ok || d.HasChange("client_options") {
 
 		t, err := expandSystemInterfaceClientOptions(d, v, "client_options", sv)
 		if err != nil {
@@ -8580,7 +8580,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("fail_alert_interfaces"); ok {
+	if v, ok := d.GetOk("fail_alert_interfaces"); ok || d.HasChange("fail_alert_interfaces") {
 
 		t, err := expandSystemInterfaceFailAlertInterfaces(d, v, "fail_alert_interfaces", sv)
 		if err != nil {
@@ -9490,7 +9490,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandSystemInterfaceMember(d, v, "member", sv)
 		if err != nil {
@@ -9620,7 +9620,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("managed_device"); ok {
+	if v, ok := d.GetOk("managed_device"); ok || d.HasChange("managed_device") {
 
 		t, err := expandSystemInterfaceManagedDevice(d, v, "managed_device", sv)
 		if err != nil {
@@ -9780,7 +9780,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("security_groups"); ok {
+	if v, ok := d.GetOk("security_groups"); ok || d.HasChange("security_groups") {
 
 		t, err := expandSystemInterfaceSecurityGroups(d, v, "security_groups", sv)
 		if err != nil {
@@ -10000,7 +10000,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("vrrp"); ok {
+	if v, ok := d.GetOk("vrrp"); ok || d.HasChange("vrrp") {
 
 		t, err := expandSystemInterfaceVrrp(d, v, "vrrp", sv)
 		if err != nil {
@@ -10040,7 +10040,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("secondaryip"); ok {
+	if v, ok := d.GetOk("secondaryip"); ok || d.HasChange("secondaryip") {
 
 		t, err := expandSystemInterfaceSecondaryip(d, v, "secondaryip", sv)
 		if err != nil {
@@ -10250,7 +10250,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("dhcp_snooping_server_list"); ok {
+	if v, ok := d.GetOk("dhcp_snooping_server_list"); ok || d.HasChange("dhcp_snooping_server_list") {
 
 		t, err := expandSystemInterfaceDhcpSnoopingServerList(d, v, "dhcp_snooping_server_list", sv)
 		if err != nil {
@@ -10350,7 +10350,7 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandSystemInterfaceTagging(d, v, "tagging", sv)
 		if err != nil {

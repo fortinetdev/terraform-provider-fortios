@@ -2926,11 +2926,11 @@ func expandWirelessControllerWtpSplitTunnelingAclLocalApSubnet(d *schema.Resourc
 
 func expandWirelessControllerWtpSplitTunnelingAcl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3359,11 +3359,11 @@ func expandWirelessControllerWtpRadio1VapAll(d *schema.ResourceData, v interface
 
 func expandWirelessControllerWtpRadio1Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3395,11 +3395,11 @@ func expandWirelessControllerWtpRadio1OverrideChannel(d *schema.ResourceData, v 
 
 func expandWirelessControllerWtpRadio1Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3604,11 +3604,11 @@ func expandWirelessControllerWtpRadio2VapAll(d *schema.ResourceData, v interface
 
 func expandWirelessControllerWtpRadio2Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3640,11 +3640,11 @@ func expandWirelessControllerWtpRadio2OverrideChannel(d *schema.ResourceData, v 
 
 func expandWirelessControllerWtpRadio2Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3840,11 +3840,11 @@ func expandWirelessControllerWtpRadio3VapAll(d *schema.ResourceData, v interface
 
 func expandWirelessControllerWtpRadio3Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3876,11 +3876,11 @@ func expandWirelessControllerWtpRadio3OverrideChannel(d *schema.ResourceData, v 
 
 func expandWirelessControllerWtpRadio3Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4076,11 +4076,11 @@ func expandWirelessControllerWtpRadio4VapAll(d *schema.ResourceData, v interface
 
 func expandWirelessControllerWtpRadio4Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4112,11 +4112,11 @@ func expandWirelessControllerWtpRadio4OverrideChannel(d *schema.ResourceData, v 
 
 func expandWirelessControllerWtpRadio4Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4425,7 +4425,7 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("split_tunneling_acl"); ok {
+	if v, ok := d.GetOk("split_tunneling_acl"); ok || d.HasChange("split_tunneling_acl") {
 
 		t, err := expandWirelessControllerWtpSplitTunnelingAcl(d, v, "split_tunneling_acl", sv)
 		if err != nil {

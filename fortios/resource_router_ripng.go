@@ -1248,11 +1248,11 @@ func expandRouterRipngMaxOutMetric(d *schema.ResourceData, v interface{}, pre st
 
 func expandRouterRipngDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1310,11 +1310,11 @@ func expandRouterRipngDistanceAccessList6(d *schema.ResourceData, v interface{},
 
 func expandRouterRipngDistributeList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1382,11 +1382,11 @@ func expandRouterRipngDistributeListInterface(d *schema.ResourceData, v interfac
 
 func expandRouterRipngNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1434,11 +1434,11 @@ func expandRouterRipngNeighborInterface(d *schema.ResourceData, v interface{}, p
 
 func expandRouterRipngNetwork(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1476,11 +1476,11 @@ func expandRouterRipngNetworkPrefix(d *schema.ResourceData, v interface{}, pre s
 
 func expandRouterRipngAggregateAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1518,11 +1518,11 @@ func expandRouterRipngAggregateAddressPrefix6(d *schema.ResourceData, v interfac
 
 func expandRouterRipngOffsetList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1600,11 +1600,11 @@ func expandRouterRipngOffsetListInterface(d *schema.ResourceData, v interface{},
 
 func expandRouterRipngPassiveInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1632,11 +1632,11 @@ func expandRouterRipngPassiveInterfaceName(d *schema.ResourceData, v interface{}
 
 func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1706,11 +1706,11 @@ func expandRouterRipngGarbageTimer(d *schema.ResourceData, v interface{}, pre st
 
 func expandRouterRipngInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1811,7 +1811,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("distance"); ok {
+	if v, ok := d.GetOk("distance"); ok || d.HasChange("distance") {
 		if setArgNil {
 			obj["distance"] = make([]struct{}, 0)
 		} else {
@@ -1825,7 +1825,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("distribute_list"); ok {
+	if v, ok := d.GetOk("distribute_list"); ok || d.HasChange("distribute_list") {
 		if setArgNil {
 			obj["distribute-list"] = make([]struct{}, 0)
 		} else {
@@ -1839,7 +1839,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok || d.HasChange("neighbor") {
 		if setArgNil {
 			obj["neighbor"] = make([]struct{}, 0)
 		} else {
@@ -1853,7 +1853,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("network"); ok {
+	if v, ok := d.GetOk("network"); ok || d.HasChange("network") {
 		if setArgNil {
 			obj["network"] = make([]struct{}, 0)
 		} else {
@@ -1867,7 +1867,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("aggregate_address"); ok {
+	if v, ok := d.GetOk("aggregate_address"); ok || d.HasChange("aggregate_address") {
 		if setArgNil {
 			obj["aggregate-address"] = make([]struct{}, 0)
 		} else {
@@ -1881,7 +1881,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("offset_list"); ok {
+	if v, ok := d.GetOk("offset_list"); ok || d.HasChange("offset_list") {
 		if setArgNil {
 			obj["offset-list"] = make([]struct{}, 0)
 		} else {
@@ -1895,7 +1895,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("passive_interface"); ok {
+	if v, ok := d.GetOk("passive_interface"); ok || d.HasChange("passive_interface") {
 		if setArgNil {
 			obj["passive-interface"] = make([]struct{}, 0)
 		} else {
@@ -1909,7 +1909,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
 		if setArgNil {
 			obj["redistribute"] = make([]struct{}, 0)
 		} else {
@@ -1965,7 +1965,7 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {

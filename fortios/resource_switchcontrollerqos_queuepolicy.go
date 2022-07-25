@@ -429,11 +429,11 @@ func expandSwitchControllerQosQueuePolicyRateBy(d *schema.ResourceData, v interf
 
 func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -572,7 +572,7 @@ func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, sv string) 
 		}
 	}
 
-	if v, ok := d.GetOk("cos_queue"); ok {
+	if v, ok := d.GetOk("cos_queue"); ok || d.HasChange("cos_queue") {
 
 		t, err := expandSwitchControllerQosQueuePolicyCosQueue(d, v, "cos_queue", sv)
 		if err != nil {

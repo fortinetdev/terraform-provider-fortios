@@ -472,11 +472,11 @@ func expandWirelessControllerHotspot20H2QpOsuProviderName(d *schema.ResourceData
 
 func expandWirelessControllerHotspot20H2QpOsuProviderFriendlyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -536,11 +536,11 @@ func expandWirelessControllerHotspot20H2QpOsuProviderOsuNai(d *schema.ResourceDa
 
 func expandWirelessControllerHotspot20H2QpOsuProviderServiceDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -603,7 +603,7 @@ func getObjectWirelessControllerHotspot20H2QpOsuProvider(d *schema.ResourceData,
 		}
 	}
 
-	if v, ok := d.GetOk("friendly_name"); ok {
+	if v, ok := d.GetOk("friendly_name"); ok || d.HasChange("friendly_name") {
 
 		t, err := expandWirelessControllerHotspot20H2QpOsuProviderFriendlyName(d, v, "friendly_name", sv)
 		if err != nil {
@@ -643,7 +643,7 @@ func getObjectWirelessControllerHotspot20H2QpOsuProvider(d *schema.ResourceData,
 		}
 	}
 
-	if v, ok := d.GetOk("service_description"); ok {
+	if v, ok := d.GetOk("service_description"); ok || d.HasChange("service_description") {
 
 		t, err := expandWirelessControllerHotspot20H2QpOsuProviderServiceDescription(d, v, "service_description", sv)
 		if err != nil {

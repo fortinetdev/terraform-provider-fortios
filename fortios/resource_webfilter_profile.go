@@ -2610,11 +2610,11 @@ func expandWebfilterProfileFileFilterScanArchiveContents(d *schema.ResourceData,
 
 func expandWebfilterProfileFileFilterEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2659,7 +2659,7 @@ func expandWebfilterProfileFileFilterEntries(d *schema.ResourceData, v interface
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["file-type"], _ = expandWebfilterProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
 		} else {
@@ -2700,11 +2700,11 @@ func expandWebfilterProfileFileFilterEntriesPasswordProtected(d *schema.Resource
 
 func expandWebfilterProfileFileFilterEntriesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2826,11 +2826,11 @@ func expandWebfilterProfileOverrideProfileAttribute(d *schema.ResourceData, v in
 
 func expandWebfilterProfileOverrideOvrdUserGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2858,11 +2858,11 @@ func expandWebfilterProfileOverrideOvrdUserGroupName(d *schema.ResourceData, v i
 
 func expandWebfilterProfileOverrideProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3019,11 +3019,11 @@ func expandWebfilterProfileWebLogSearch(d *schema.ResourceData, v interface{}, p
 
 func expandWebfilterProfileWebKeywordMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3055,11 +3055,11 @@ func expandWebfilterProfileYoutubeChannelStatus(d *schema.ResourceData, v interf
 
 func expandWebfilterProfileYoutubeChannelFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3187,11 +3187,11 @@ func expandWebfilterProfileFtgdWfOvrd(d *schema.ResourceData, v interface{}, pre
 
 func expandWebfilterProfileFtgdWfFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3224,7 +3224,7 @@ func expandWebfilterProfileFtgdWfFilters(d *schema.ResourceData, v interface{}, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_usr_grp"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["auth-usr-grp"], _ = expandWebfilterProfileFtgdWfFiltersAuthUsrGrp(d, i["auth_usr_grp"], pre_append, sv)
 		} else {
@@ -3281,11 +3281,11 @@ func expandWebfilterProfileFtgdWfFiltersWarnDuration(d *schema.ResourceData, v i
 
 func expandWebfilterProfileFtgdWfFiltersAuthUsrGrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3329,11 +3329,11 @@ func expandWebfilterProfileFtgdWfFiltersWarningDurationType(d *schema.ResourceDa
 
 func expandWebfilterProfileFtgdWfQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3546,11 +3546,11 @@ func expandWebfilterProfileAntiphishMaxBodyLen(d *schema.ResourceData, v interfa
 
 func expandWebfilterProfileAntiphishInspectionEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3598,11 +3598,11 @@ func expandWebfilterProfileAntiphishInspectionEntriesAction(d *schema.ResourceDa
 
 func expandWebfilterProfileAntiphishCustomPatterns(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3658,11 +3658,11 @@ func expandWebfilterProfileWisp(d *schema.ResourceData, v interface{}, pre strin
 
 func expandWebfilterProfileWispServers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3901,7 +3901,7 @@ func getObjectWebfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("youtube_channel_filter"); ok {
+	if v, ok := d.GetOk("youtube_channel_filter"); ok || d.HasChange("youtube_channel_filter") {
 
 		t, err := expandWebfilterProfileYoutubeChannelFilter(d, v, "youtube_channel_filter", sv)
 		if err != nil {
@@ -3941,7 +3941,7 @@ func getObjectWebfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("wisp_servers"); ok {
+	if v, ok := d.GetOk("wisp_servers"); ok || d.HasChange("wisp_servers") {
 
 		t, err := expandWebfilterProfileWispServers(d, v, "wisp_servers", sv)
 		if err != nil {

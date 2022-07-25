@@ -336,11 +336,11 @@ func expandSctpFilterProfileComment(d *schema.ResourceData, v interface{}, pre s
 
 func expandSctpFilterProfilePpidFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -419,7 +419,7 @@ func getObjectSctpFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("ppid_filters"); ok {
+	if v, ok := d.GetOk("ppid_filters"); ok || d.HasChange("ppid_filters") {
 
 		t, err := expandSctpFilterProfilePpidFilters(d, v, "ppid_filters", sv)
 		if err != nil {

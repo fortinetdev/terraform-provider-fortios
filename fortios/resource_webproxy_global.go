@@ -639,11 +639,11 @@ func expandWebProxyGlobalLearnClientIpFromHeader(d *schema.ResourceData, v inter
 
 func expandWebProxyGlobalLearnClientIpSrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -671,11 +671,11 @@ func expandWebProxyGlobalLearnClientIpSrcaddrName(d *schema.ResourceData, v inte
 
 func expandWebProxyGlobalLearnClientIpSrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -936,7 +936,7 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
-	if v, ok := d.GetOk("learn_client_ip_srcaddr"); ok {
+	if v, ok := d.GetOk("learn_client_ip_srcaddr"); ok || d.HasChange("learn_client_ip_srcaddr") {
 		if setArgNil {
 			obj["learn-client-ip-srcaddr"] = make([]struct{}, 0)
 		} else {
@@ -950,7 +950,7 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
-	if v, ok := d.GetOk("learn_client_ip_srcaddr6"); ok {
+	if v, ok := d.GetOk("learn_client_ip_srcaddr6"); ok || d.HasChange("learn_client_ip_srcaddr6") {
 		if setArgNil {
 			obj["learn-client-ip-srcaddr6"] = make([]struct{}, 0)
 		} else {

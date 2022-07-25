@@ -445,11 +445,11 @@ func expandSystemGeoipOverrideCountryId(d *schema.ResourceData, v interface{}, p
 
 func expandSystemGeoipOverrideIpRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -497,11 +497,11 @@ func expandSystemGeoipOverrideIpRangeEndIp(d *schema.ResourceData, v interface{}
 
 func expandSystemGeoipOverrideIp6Range(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -580,7 +580,7 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
-	if v, ok := d.GetOk("ip_range"); ok {
+	if v, ok := d.GetOk("ip_range"); ok || d.HasChange("ip_range") {
 
 		t, err := expandSystemGeoipOverrideIpRange(d, v, "ip_range", sv)
 		if err != nil {
@@ -590,7 +590,7 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
-	if v, ok := d.GetOk("ip6_range"); ok {
+	if v, ok := d.GetOk("ip6_range"); ok || d.HasChange("ip6_range") {
 
 		t, err := expandSystemGeoipOverrideIp6Range(d, v, "ip6_range", sv)
 		if err != nil {

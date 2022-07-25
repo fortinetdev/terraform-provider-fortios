@@ -329,11 +329,11 @@ func expandSystemVdomExceptionScope(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemVdomExceptionVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -402,7 +402,7 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok {
+	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
 
 		t, err := expandSystemVdomExceptionVdom(d, v, "vdom", sv)
 		if err != nil {

@@ -273,11 +273,11 @@ func expandSwitchControllerStpInstanceId(d *schema.ResourceData, v interface{}, 
 
 func expandSwitchControllerStpInstanceVlanRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -316,7 +316,7 @@ func getObjectSwitchControllerStpInstance(d *schema.ResourceData, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("vlan_range"); ok {
+	if v, ok := d.GetOk("vlan_range"); ok || d.HasChange("vlan_range") {
 
 		t, err := expandSwitchControllerStpInstanceVlanRange(d, v, "vlan_range", sv)
 		if err != nil {

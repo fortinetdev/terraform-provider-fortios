@@ -584,11 +584,11 @@ func expandApplicationNameVendor(d *schema.ResourceData, v interface{}, pre stri
 
 func expandApplicationNameParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -620,11 +620,11 @@ func expandApplicationNameParameter(d *schema.ResourceData, v interface{}, pre s
 
 func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -783,7 +783,7 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("parameters"); ok {
+	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
 
 		t, err := expandApplicationNameParameters(d, v, "parameters", sv)
 		if err != nil {
@@ -803,7 +803,7 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("metadata"); ok {
+	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
 
 		t, err := expandApplicationNameMetadata(d, v, "metadata", sv)
 		if err != nil {

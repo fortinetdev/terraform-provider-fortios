@@ -425,11 +425,11 @@ func expandRouterMulticast6MulticastPmtu(d *schema.ResourceData, v interface{}, 
 
 func expandRouterMulticast6Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -515,11 +515,11 @@ func expandRouterMulticast6PimSmGlobalRegisterRateLimit(d *schema.ResourceData, 
 
 func expandRouterMulticast6PimSmGlobalRpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -586,7 +586,7 @@ func getObjectRouterMulticast6(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
-	if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {

@@ -476,11 +476,11 @@ func expandReportDatasetQuery(d *schema.ResourceData, v interface{}, pre string,
 
 func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -538,11 +538,11 @@ func expandReportDatasetFieldDisplayname(d *schema.ResourceData, v interface{}, 
 
 func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -631,7 +631,7 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("field"); ok {
+	if v, ok := d.GetOk("field"); ok || d.HasChange("field") {
 
 		t, err := expandReportDatasetField(d, v, "field", sv)
 		if err != nil {
@@ -641,7 +641,7 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("parameters"); ok {
+	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
 
 		t, err := expandReportDatasetParameters(d, v, "parameters", sv)
 		if err != nil {

@@ -745,11 +745,11 @@ func expandSwitchControllerLldpProfileAutoMclagIcl(d *schema.ResourceData, v int
 
 func expandSwitchControllerLldpProfileMedNetworkPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -837,11 +837,11 @@ func expandSwitchControllerLldpProfileMedNetworkPolicyDscp(d *schema.ResourceDat
 
 func expandSwitchControllerLldpProfileMedLocationService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -889,11 +889,11 @@ func expandSwitchControllerLldpProfileMedLocationServiceSysLocationId(d *schema.
 
 func expandSwitchControllerLldpProfileCustomTlvs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1042,7 +1042,7 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("med_network_policy"); ok {
+	if v, ok := d.GetOk("med_network_policy"); ok || d.HasChange("med_network_policy") {
 
 		t, err := expandSwitchControllerLldpProfileMedNetworkPolicy(d, v, "med_network_policy", sv)
 		if err != nil {
@@ -1052,7 +1052,7 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("med_location_service"); ok {
+	if v, ok := d.GetOk("med_location_service"); ok || d.HasChange("med_location_service") {
 
 		t, err := expandSwitchControllerLldpProfileMedLocationService(d, v, "med_location_service", sv)
 		if err != nil {
@@ -1062,7 +1062,7 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("custom_tlvs"); ok {
+	if v, ok := d.GetOk("custom_tlvs"); ok || d.HasChange("custom_tlvs") {
 
 		t, err := expandSwitchControllerLldpProfileCustomTlvs(d, v, "custom_tlvs", sv)
 		if err != nil {

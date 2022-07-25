@@ -567,11 +567,11 @@ func expandSystemNtpSyncinterval(d *schema.ResourceData, v interface{}, pre stri
 
 func expandSystemNtpNtpserver(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -697,11 +697,11 @@ func expandSystemNtpKeyId(d *schema.ResourceData, v interface{}, pre string, sv 
 
 func expandSystemNtpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -772,7 +772,7 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("ntpserver"); ok {
+	if v, ok := d.GetOk("ntpserver"); ok || d.HasChange("ntpserver") {
 		if setArgNil {
 			obj["ntpserver"] = make([]struct{}, 0)
 		} else {
@@ -884,7 +884,7 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {

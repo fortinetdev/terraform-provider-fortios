@@ -507,11 +507,11 @@ func expandFirewallProxyAddrgrpUuid(d *schema.ResourceData, v interface{}, pre s
 
 func expandFirewallProxyAddrgrpMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -543,11 +543,11 @@ func expandFirewallProxyAddrgrpColor(d *schema.ResourceData, v interface{}, pre 
 
 func expandFirewallProxyAddrgrpTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -568,7 +568,7 @@ func expandFirewallProxyAddrgrpTagging(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandFirewallProxyAddrgrpTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -593,11 +593,11 @@ func expandFirewallProxyAddrgrpTaggingCategory(d *schema.ResourceData, v interfa
 
 func expandFirewallProxyAddrgrpTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -664,7 +664,7 @@ func getObjectFirewallProxyAddrgrp(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandFirewallProxyAddrgrpMember(d, v, "member", sv)
 		if err != nil {
@@ -684,7 +684,7 @@ func getObjectFirewallProxyAddrgrp(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandFirewallProxyAddrgrpTagging(d, v, "tagging", sv)
 		if err != nil {

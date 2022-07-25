@@ -781,11 +781,11 @@ func expandSystemDhcp6ServerPrefixMode(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemDhcp6ServerPrefixRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -843,11 +843,11 @@ func expandSystemDhcp6ServerPrefixRangePrefixLength(d *schema.ResourceData, v in
 
 func expandSystemDhcp6ServerIpRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1096,7 +1096,7 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("prefix_range"); ok {
+	if v, ok := d.GetOk("prefix_range"); ok || d.HasChange("prefix_range") {
 
 		t, err := expandSystemDhcp6ServerPrefixRange(d, v, "prefix_range", sv)
 		if err != nil {
@@ -1106,7 +1106,7 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("ip_range"); ok {
+	if v, ok := d.GetOk("ip_range"); ok || d.HasChange("ip_range") {
 
 		t, err := expandSystemDhcp6ServerIpRange(d, v, "ip_range", sv)
 		if err != nil {

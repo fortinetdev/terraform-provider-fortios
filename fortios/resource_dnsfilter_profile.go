@@ -886,11 +886,11 @@ func expandDnsfilterProfileFtgdDnsOptions(d *schema.ResourceData, v interface{},
 
 func expandDnsfilterProfileFtgdDnsFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -984,11 +984,11 @@ func expandDnsfilterProfileYoutubeRestrict(d *schema.ResourceData, v interface{}
 
 func expandDnsfilterProfileExternalIpBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1016,11 +1016,11 @@ func expandDnsfilterProfileExternalIpBlocklistName(d *schema.ResourceData, v int
 
 func expandDnsfilterProfileDnsTranslation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1259,7 +1259,7 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("external_ip_blocklist"); ok {
+	if v, ok := d.GetOk("external_ip_blocklist"); ok || d.HasChange("external_ip_blocklist") {
 
 		t, err := expandDnsfilterProfileExternalIpBlocklist(d, v, "external_ip_blocklist", sv)
 		if err != nil {
@@ -1269,7 +1269,7 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("dns_translation"); ok {
+	if v, ok := d.GetOk("dns_translation"); ok || d.HasChange("dns_translation") {
 
 		t, err := expandDnsfilterProfileDnsTranslation(d, v, "dns_translation", sv)
 		if err != nil {

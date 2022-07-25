@@ -592,11 +592,11 @@ func expandSwitchControllerGlobalVlanOptimization(d *schema.ResourceData, v inte
 
 func expandSwitchControllerGlobalDisableDiscovery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -664,11 +664,11 @@ func expandSwitchControllerGlobalUpdateUserDevice(d *schema.ResourceData, v inte
 
 func expandSwitchControllerGlobalCustomCommand(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -785,7 +785,7 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
-	if v, ok := d.GetOk("disable_discovery"); ok {
+	if v, ok := d.GetOk("disable_discovery"); ok || d.HasChange("disable_discovery") {
 		if setArgNil {
 			obj["disable-discovery"] = make([]struct{}, 0)
 		} else {
@@ -939,7 +939,7 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
-	if v, ok := d.GetOk("custom_command"); ok {
+	if v, ok := d.GetOk("custom_command"); ok || d.HasChange("custom_command") {
 		if setArgNil {
 			obj["custom-command"] = make([]struct{}, 0)
 		} else {

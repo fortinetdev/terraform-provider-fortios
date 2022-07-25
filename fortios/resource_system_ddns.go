@@ -620,11 +620,11 @@ func expandSystemDdnsServerType(d *schema.ResourceData, v interface{}, pre strin
 
 func expandSystemDdnsDdnsServerAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -716,11 +716,11 @@ func expandSystemDdnsBoundIp(d *schema.ResourceData, v interface{}, pre string, 
 
 func expandSystemDdnsMonitorInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -779,7 +779,7 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("ddns_server_addr"); ok {
+	if v, ok := d.GetOk("ddns_server_addr"); ok || d.HasChange("ddns_server_addr") {
 
 		t, err := expandSystemDdnsDdnsServerAddr(d, v, "ddns_server_addr", sv)
 		if err != nil {
@@ -949,7 +949,7 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("monitor_interface"); ok {
+	if v, ok := d.GetOk("monitor_interface"); ok || d.HasChange("monitor_interface") {
 
 		t, err := expandSystemDdnsMonitorInterface(d, v, "monitor_interface", sv)
 		if err != nil {

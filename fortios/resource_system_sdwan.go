@@ -4251,11 +4251,11 @@ func expandSystemSdwanFailDetect(d *schema.ResourceData, v interface{}, pre stri
 
 func expandSystemSdwanFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4283,11 +4283,11 @@ func expandSystemSdwanFailAlertInterfacesName(d *schema.ResourceData, v interfac
 
 func expandSystemSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4325,11 +4325,11 @@ func expandSystemSdwanZoneServiceSlaTieBreak(d *schema.ResourceData, v interface
 
 func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4507,11 +4507,11 @@ func expandSystemSdwanMembersComment(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4754,7 +4754,7 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["members"], _ = expandSystemSdwanHealthCheckMembers(d, i["members"], pre_append, sv)
 		} else {
@@ -4768,7 +4768,7 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sla"], _ = expandSystemSdwanHealthCheckSla(d, i["sla"], pre_append, sv)
 		} else {
@@ -4941,11 +4941,11 @@ func expandSystemSdwanHealthCheckSource(d *schema.ResourceData, v interface{}, p
 
 func expandSystemSdwanHealthCheckMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4977,11 +4977,11 @@ func expandSystemSdwanHealthCheckMosCodec(d *schema.ResourceData, v interface{},
 
 func expandSystemSdwanHealthCheckSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5059,11 +5059,11 @@ func expandSystemSdwanHealthCheckSlaMosThreshold(d *schema.ResourceData, v inter
 
 func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5151,11 +5151,11 @@ func expandSystemSdwanNeighborSlaId(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5182,7 +5182,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["input-device"], _ = expandSystemSdwanServiceInputDevice(d, i["input_device"], pre_append, sv)
 		} else {
@@ -5196,7 +5196,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_zone"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["input-zone"], _ = expandSystemSdwanServiceInputZone(d, i["input_zone"], pre_append, sv)
 		} else {
@@ -5276,7 +5276,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dst"], _ = expandSystemSdwanServiceDst(d, i["dst"], pre_append, sv)
 		} else {
@@ -5290,7 +5290,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["src"], _ = expandSystemSdwanServiceSrc(d, i["src"], pre_append, sv)
 		} else {
@@ -5298,7 +5298,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dst6"], _ = expandSystemSdwanServiceDst6(d, i["dst6"], pre_append, sv)
 		} else {
@@ -5306,7 +5306,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["src6"], _ = expandSystemSdwanServiceSrc6(d, i["src6"], pre_append, sv)
 		} else {
@@ -5320,7 +5320,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["users"], _ = expandSystemSdwanServiceUsers(d, i["users"], pre_append, sv)
 		} else {
@@ -5328,7 +5328,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["groups"], _ = expandSystemSdwanServiceGroups(d, i["groups"], pre_append, sv)
 		} else {
@@ -5342,7 +5342,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-custom"], _ = expandSystemSdwanServiceInternetServiceCustom(d, i["internet_service_custom"], pre_append, sv)
 		} else {
@@ -5350,7 +5350,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-custom-group"], _ = expandSystemSdwanServiceInternetServiceCustomGroup(d, i["internet_service_custom_group"], pre_append, sv)
 		} else {
@@ -5358,7 +5358,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_name"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-name"], _ = expandSystemSdwanServiceInternetServiceName(d, i["internet_service_name"], pre_append, sv)
 		} else {
@@ -5366,7 +5366,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-group"], _ = expandSystemSdwanServiceInternetServiceGroup(d, i["internet_service_group"], pre_append, sv)
 		} else {
@@ -5374,7 +5374,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-app-ctrl"], _ = expandSystemSdwanServiceInternetServiceAppCtrl(d, i["internet_service_app_ctrl"], pre_append, sv)
 		} else {
@@ -5382,7 +5382,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-app-ctrl-group"], _ = expandSystemSdwanServiceInternetServiceAppCtrlGroup(d, i["internet_service_app_ctrl_group"], pre_append, sv)
 		} else {
@@ -5390,7 +5390,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_category"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["internet-service-app-ctrl-category"], _ = expandSystemSdwanServiceInternetServiceAppCtrlCategory(d, i["internet_service_app_ctrl_category"], pre_append, sv)
 		} else {
@@ -5398,7 +5398,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["health-check"], _ = expandSystemSdwanServiceHealthCheck(d, i["health_check"], pre_append, sv)
 		} else {
@@ -5472,7 +5472,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sla"], _ = expandSystemSdwanServiceSla(d, i["sla"], pre_append, sv)
 		} else {
@@ -5480,7 +5480,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_members"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["priority-members"], _ = expandSystemSdwanServicePriorityMembers(d, i["priority_members"], pre_append, sv)
 		} else {
@@ -5488,7 +5488,7 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_zone"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["priority-zone"], _ = expandSystemSdwanServicePriorityZone(d, i["priority_zone"], pre_append, sv)
 		} else {
@@ -5559,11 +5559,11 @@ func expandSystemSdwanServiceAddrMode(d *schema.ResourceData, v interface{}, pre
 
 func expandSystemSdwanServiceInputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5595,11 +5595,11 @@ func expandSystemSdwanServiceInputDeviceNegate(d *schema.ResourceData, v interfa
 
 func expandSystemSdwanServiceInputZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5675,11 +5675,11 @@ func expandSystemSdwanServiceRouteTag(d *schema.ResourceData, v interface{}, pre
 
 func expandSystemSdwanServiceDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5711,11 +5711,11 @@ func expandSystemSdwanServiceDstNegate(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemSdwanServiceSrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5743,11 +5743,11 @@ func expandSystemSdwanServiceSrcName(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemSdwanServiceDst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5775,11 +5775,11 @@ func expandSystemSdwanServiceDst6Name(d *schema.ResourceData, v interface{}, pre
 
 func expandSystemSdwanServiceSrc6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5811,11 +5811,11 @@ func expandSystemSdwanServiceSrcNegate(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemSdwanServiceUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5843,11 +5843,11 @@ func expandSystemSdwanServiceUsersName(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemSdwanServiceGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5879,11 +5879,11 @@ func expandSystemSdwanServiceInternetService(d *schema.ResourceData, v interface
 
 func expandSystemSdwanServiceInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5911,11 +5911,11 @@ func expandSystemSdwanServiceInternetServiceCustomName(d *schema.ResourceData, v
 
 func expandSystemSdwanServiceInternetServiceCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5943,11 +5943,11 @@ func expandSystemSdwanServiceInternetServiceCustomGroupName(d *schema.ResourceDa
 
 func expandSystemSdwanServiceInternetServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5975,11 +5975,11 @@ func expandSystemSdwanServiceInternetServiceNameName(d *schema.ResourceData, v i
 
 func expandSystemSdwanServiceInternetServiceGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6007,11 +6007,11 @@ func expandSystemSdwanServiceInternetServiceGroupName(d *schema.ResourceData, v 
 
 func expandSystemSdwanServiceInternetServiceAppCtrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6039,11 +6039,11 @@ func expandSystemSdwanServiceInternetServiceAppCtrlId(d *schema.ResourceData, v 
 
 func expandSystemSdwanServiceInternetServiceAppCtrlGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6071,11 +6071,11 @@ func expandSystemSdwanServiceInternetServiceAppCtrlGroupName(d *schema.ResourceD
 
 func expandSystemSdwanServiceInternetServiceAppCtrlCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6103,11 +6103,11 @@ func expandSystemSdwanServiceInternetServiceAppCtrlCategoryId(d *schema.Resource
 
 func expandSystemSdwanServiceHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6179,11 +6179,11 @@ func expandSystemSdwanServiceDscpReverseTag(d *schema.ResourceData, v interface{
 
 func expandSystemSdwanServiceSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6221,11 +6221,11 @@ func expandSystemSdwanServiceSlaId(d *schema.ResourceData, v interface{}, pre st
 
 func expandSystemSdwanServicePriorityMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6253,11 +6253,11 @@ func expandSystemSdwanServicePriorityMembersSeqNum(d *schema.ResourceData, v int
 
 func expandSystemSdwanServicePriorityZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6313,11 +6313,11 @@ func expandSystemSdwanServicePassiveMeasurement(d *schema.ResourceData, v interf
 
 func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6332,7 +6332,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["service-id"], _ = expandSystemSdwanDuplicationServiceId(d, i["service_id"], pre_append, sv)
 		} else {
@@ -6340,7 +6340,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["srcaddr"], _ = expandSystemSdwanDuplicationSrcaddr(d, i["srcaddr"], pre_append, sv)
 		} else {
@@ -6348,7 +6348,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dstaddr"], _ = expandSystemSdwanDuplicationDstaddr(d, i["dstaddr"], pre_append, sv)
 		} else {
@@ -6356,7 +6356,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["srcaddr6"], _ = expandSystemSdwanDuplicationSrcaddr6(d, i["srcaddr6"], pre_append, sv)
 		} else {
@@ -6364,7 +6364,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dstaddr6"], _ = expandSystemSdwanDuplicationDstaddr6(d, i["dstaddr6"], pre_append, sv)
 		} else {
@@ -6372,7 +6372,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcintf"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["srcintf"], _ = expandSystemSdwanDuplicationSrcintf(d, i["srcintf"], pre_append, sv)
 		} else {
@@ -6380,7 +6380,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstintf"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dstintf"], _ = expandSystemSdwanDuplicationDstintf(d, i["dstintf"], pre_append, sv)
 		} else {
@@ -6388,7 +6388,7 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["service"], _ = expandSystemSdwanDuplicationService(d, i["service"], pre_append, sv)
 		} else {
@@ -6427,11 +6427,11 @@ func expandSystemSdwanDuplicationId(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemSdwanDuplicationServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6459,11 +6459,11 @@ func expandSystemSdwanDuplicationServiceIdId(d *schema.ResourceData, v interface
 
 func expandSystemSdwanDuplicationSrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6491,11 +6491,11 @@ func expandSystemSdwanDuplicationSrcaddrName(d *schema.ResourceData, v interface
 
 func expandSystemSdwanDuplicationDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6523,11 +6523,11 @@ func expandSystemSdwanDuplicationDstaddrName(d *schema.ResourceData, v interface
 
 func expandSystemSdwanDuplicationSrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6555,11 +6555,11 @@ func expandSystemSdwanDuplicationSrcaddr6Name(d *schema.ResourceData, v interfac
 
 func expandSystemSdwanDuplicationDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6587,11 +6587,11 @@ func expandSystemSdwanDuplicationDstaddr6Name(d *schema.ResourceData, v interfac
 
 func expandSystemSdwanDuplicationSrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6619,11 +6619,11 @@ func expandSystemSdwanDuplicationSrcintfName(d *schema.ResourceData, v interface
 
 func expandSystemSdwanDuplicationDstintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6651,11 +6651,11 @@ func expandSystemSdwanDuplicationDstintfName(d *schema.ResourceData, v interface
 
 func expandSystemSdwanDuplicationService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6808,7 +6808,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("fail_alert_interfaces"); ok {
+	if v, ok := d.GetOk("fail_alert_interfaces"); ok || d.HasChange("fail_alert_interfaces") {
 		if setArgNil {
 			obj["fail-alert-interfaces"] = make([]struct{}, 0)
 		} else {
@@ -6822,7 +6822,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("zone"); ok {
+	if v, ok := d.GetOk("zone"); ok || d.HasChange("zone") {
 		if setArgNil {
 			obj["zone"] = make([]struct{}, 0)
 		} else {
@@ -6836,7 +6836,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("members"); ok {
+	if v, ok := d.GetOk("members"); ok || d.HasChange("members") {
 		if setArgNil {
 			obj["members"] = make([]struct{}, 0)
 		} else {
@@ -6850,7 +6850,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("health_check"); ok {
+	if v, ok := d.GetOk("health_check"); ok || d.HasChange("health_check") {
 		if setArgNil {
 			obj["health-check"] = make([]struct{}, 0)
 		} else {
@@ -6864,7 +6864,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor"); ok {
+	if v, ok := d.GetOk("neighbor"); ok || d.HasChange("neighbor") {
 		if setArgNil {
 			obj["neighbor"] = make([]struct{}, 0)
 		} else {
@@ -6878,7 +6878,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("service"); ok {
+	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
 		if setArgNil {
 			obj["service"] = make([]struct{}, 0)
 		} else {
@@ -6892,7 +6892,7 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("duplication"); ok {
+	if v, ok := d.GetOk("duplication"); ok || d.HasChange("duplication") {
 		if setArgNil {
 			obj["duplication"] = make([]struct{}, 0)
 		} else {

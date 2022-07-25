@@ -630,11 +630,11 @@ func expandUserSettingPerPolicyDisclaimer(d *schema.ResourceData, v interface{},
 
 func expandUserSettingAuthPorts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -933,7 +933,7 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("auth_ports"); ok {
+	if v, ok := d.GetOk("auth_ports"); ok || d.HasChange("auth_ports") {
 		if setArgNil {
 			obj["auth-ports"] = make([]struct{}, 0)
 		} else {

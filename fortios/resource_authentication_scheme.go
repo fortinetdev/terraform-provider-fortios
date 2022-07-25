@@ -483,11 +483,11 @@ func expandAuthenticationSchemeUserCert(d *schema.ResourceData, v interface{}, p
 
 func expandAuthenticationSchemeUserDatabase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -630,7 +630,7 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("user_database"); ok {
+	if v, ok := d.GetOk("user_database"); ok || d.HasChange("user_database") {
 
 		t, err := expandAuthenticationSchemeUserDatabase(d, v, "user_database", sv)
 		if err != nil {

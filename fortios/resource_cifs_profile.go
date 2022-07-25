@@ -600,11 +600,11 @@ func expandCifsProfileFileFilterLog(d *schema.ResourceData, v interface{}, pre s
 
 func expandCifsProfileFileFilterEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -637,7 +637,7 @@ func expandCifsProfileFileFilterEntries(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["file-type"], _ = expandCifsProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
 		} else {
@@ -670,11 +670,11 @@ func expandCifsProfileFileFilterEntriesDirection(d *schema.ResourceData, v inter
 
 func expandCifsProfileFileFilterEntriesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -706,11 +706,11 @@ func expandCifsProfileDomainController(d *schema.ResourceData, v interface{}, pr
 
 func expandCifsProfileServerKeytab(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -789,7 +789,7 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("server_keytab"); ok {
+	if v, ok := d.GetOk("server_keytab"); ok || d.HasChange("server_keytab") {
 
 		t, err := expandCifsProfileServerKeytab(d, v, "server_keytab", sv)
 		if err != nil {

@@ -669,11 +669,11 @@ func expandWirelessControllerArrpProfileDarrpOptimize(d *schema.ResourceData, v 
 
 func expandWirelessControllerArrpProfileDarrpOptimizeSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -912,7 +912,7 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("darrp_optimize_schedules"); ok {
+	if v, ok := d.GetOk("darrp_optimize_schedules"); ok || d.HasChange("darrp_optimize_schedules") {
 
 		t, err := expandWirelessControllerArrpProfileDarrpOptimizeSchedules(d, v, "darrp_optimize_schedules", sv)
 		if err != nil {

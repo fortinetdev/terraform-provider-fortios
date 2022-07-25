@@ -461,11 +461,11 @@ func expandSystemSwitchInterfaceSpanDestPort(d *schema.ResourceData, v interface
 
 func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -493,11 +493,11 @@ func expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d *schema.ResourceDa
 
 func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -576,7 +576,7 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("span_source_port"); ok {
+	if v, ok := d.GetOk("span_source_port"); ok || d.HasChange("span_source_port") {
 
 		t, err := expandSystemSwitchInterfaceSpanSourcePort(d, v, "span_source_port", sv)
 		if err != nil {
@@ -586,7 +586,7 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandSystemSwitchInterfaceMember(d, v, "member", sv)
 		if err != nil {

@@ -3567,11 +3567,11 @@ func expandWirelessControllerVapRadiusMacMpskTimeout(d *schema.ResourceData, v i
 
 func expandWirelessControllerVapRadiusMacAuthUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3667,11 +3667,11 @@ func expandWirelessControllerVapLocalAuthentication(d *schema.ResourceData, v in
 
 func expandWirelessControllerVapUsergroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3757,11 +3757,11 @@ func expandWirelessControllerVapPortalType(d *schema.ResourceData, v interface{}
 
 func expandWirelessControllerVapSelectedUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3853,11 +3853,11 @@ func expandWirelessControllerVapMpskConcurrentClients(d *schema.ResourceData, v 
 
 func expandWirelessControllerVapMpskKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3890,7 +3890,7 @@ func expandWirelessControllerVapMpskKey(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["mpsk-schedules"], _ = expandWirelessControllerVapMpskKeyMpskSchedules(d, i["mpsk_schedules"], pre_append, sv)
 		} else {
@@ -3923,11 +3923,11 @@ func expandWirelessControllerVapMpskKeyComment(d *schema.ResourceData, v interfa
 
 func expandWirelessControllerVapMpskKeyMpskSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4067,11 +4067,11 @@ func expandWirelessControllerVapRadio2GThreshold(d *schema.ResourceData, v inter
 
 func expandWirelessControllerVapVlanName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4113,11 +4113,11 @@ func expandWirelessControllerVapVlanPooling(d *schema.ResourceData, v interface{
 
 func expandWirelessControllerVapVlanPool(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4303,11 +4303,11 @@ func expandWirelessControllerVapMacFilterPolicyOther(d *schema.ResourceData, v i
 
 func expandWirelessControllerVapMacFilterList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4850,7 +4850,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("radius_mac_auth_usergroups"); ok {
+	if v, ok := d.GetOk("radius_mac_auth_usergroups"); ok || d.HasChange("radius_mac_auth_usergroups") {
 
 		t, err := expandWirelessControllerVapRadiusMacAuthUsergroups(d, v, "radius_mac_auth_usergroups", sv)
 		if err != nil {
@@ -5030,7 +5030,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("usergroup"); ok {
+	if v, ok := d.GetOk("usergroup"); ok || d.HasChange("usergroup") {
 
 		t, err := expandWirelessControllerVapUsergroup(d, v, "usergroup", sv)
 		if err != nil {
@@ -5070,7 +5070,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("selected_usergroups"); ok {
+	if v, ok := d.GetOk("selected_usergroups"); ok || d.HasChange("selected_usergroups") {
 
 		t, err := expandWirelessControllerVapSelectedUsergroups(d, v, "selected_usergroups", sv)
 		if err != nil {
@@ -5256,7 +5256,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("mpsk_key"); ok {
+	if v, ok := d.GetOk("mpsk_key"); ok || d.HasChange("mpsk_key") {
 
 		t, err := expandWirelessControllerVapMpskKey(d, v, "mpsk_key", sv)
 		if err != nil {
@@ -5546,7 +5546,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("vlan_name"); ok {
+	if v, ok := d.GetOk("vlan_name"); ok || d.HasChange("vlan_name") {
 
 		t, err := expandWirelessControllerVapVlanName(d, v, "vlan_name", sv)
 		if err != nil {
@@ -5566,7 +5566,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("vlan_pool"); ok {
+	if v, ok := d.GetOk("vlan_pool"); ok || d.HasChange("vlan_pool") {
 
 		t, err := expandWirelessControllerVapVlanPool(d, v, "vlan_pool", sv)
 		if err != nil {
@@ -5946,7 +5946,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("mac_filter_list"); ok {
+	if v, ok := d.GetOk("mac_filter_list"); ok || d.HasChange("mac_filter_list") {
 
 		t, err := expandWirelessControllerVapMacFilterList(d, v, "mac_filter_list", sv)
 		if err != nil {

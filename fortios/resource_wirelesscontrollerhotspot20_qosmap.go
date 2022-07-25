@@ -426,11 +426,11 @@ func expandWirelessControllerHotspot20QosMapName(d *schema.ResourceData, v inter
 
 func expandWirelessControllerHotspot20QosMapDscpExcept(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -478,11 +478,11 @@ func expandWirelessControllerHotspot20QosMapDscpExceptUp(d *schema.ResourceData,
 
 func expandWirelessControllerHotspot20QosMapDscpRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -551,7 +551,7 @@ func getObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, sv strin
 		}
 	}
 
-	if v, ok := d.GetOk("dscp_except"); ok {
+	if v, ok := d.GetOk("dscp_except"); ok || d.HasChange("dscp_except") {
 
 		t, err := expandWirelessControllerHotspot20QosMapDscpExcept(d, v, "dscp_except", sv)
 		if err != nil {
@@ -561,7 +561,7 @@ func getObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, sv strin
 		}
 	}
 
-	if v, ok := d.GetOk("dscp_range"); ok {
+	if v, ok := d.GetOk("dscp_range"); ok || d.HasChange("dscp_range") {
 
 		t, err := expandWirelessControllerHotspot20QosMapDscpRange(d, v, "dscp_range", sv)
 		if err != nil {

@@ -1132,11 +1132,11 @@ func expandUserRadiusGroupOverrideAttrType(d *schema.ResourceData, v interface{}
 
 func expandUserRadiusClass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1256,11 +1256,11 @@ func expandUserRadiusDelimiter(d *schema.ResourceData, v interface{}, pre string
 
 func expandUserRadiusAccountingServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1549,7 +1549,7 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("class"); ok {
+	if v, ok := d.GetOk("class"); ok || d.HasChange("class") {
 
 		t, err := expandUserRadiusClass(d, v, "class", sv)
 		if err != nil {
@@ -1789,7 +1789,7 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("accounting_server"); ok {
+	if v, ok := d.GetOk("accounting_server"); ok || d.HasChange("accounting_server") {
 
 		t, err := expandUserRadiusAccountingServer(d, v, "accounting_server", sv)
 		if err != nil {

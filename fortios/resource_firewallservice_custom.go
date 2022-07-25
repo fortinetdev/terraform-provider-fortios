@@ -818,11 +818,11 @@ func expandFirewallServiceCustomAppServiceType(d *schema.ResourceData, v interfa
 
 func expandFirewallServiceCustomAppCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -850,11 +850,11 @@ func expandFirewallServiceCustomAppCategoryId(d *schema.ResourceData, v interfac
 
 func expandFirewallServiceCustomApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1131,7 +1131,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("app_category"); ok {
+	if v, ok := d.GetOk("app_category"); ok || d.HasChange("app_category") {
 
 		t, err := expandFirewallServiceCustomAppCategory(d, v, "app_category", sv)
 		if err != nil {
@@ -1141,7 +1141,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("application"); ok {
+	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
 
 		t, err := expandFirewallServiceCustomApplication(d, v, "application", sv)
 		if err != nil {

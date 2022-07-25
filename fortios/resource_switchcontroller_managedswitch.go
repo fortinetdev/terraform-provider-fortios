@@ -5035,11 +5035,11 @@ func expandSwitchControllerManagedSwitchFirmwareProvisionLatest(d *schema.Resour
 
 func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5264,7 +5264,7 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["allowed-vlans"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlans(d, i["allowed_vlans"], pre_append, sv)
 		} else {
@@ -5272,7 +5272,7 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "untagged_vlans"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["untagged-vlans"], _ = expandSwitchControllerManagedSwitchPortsUntaggedVlans(d, i["untagged_vlans"], pre_append, sv)
 		} else {
@@ -5484,7 +5484,7 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["interface-tags"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTags(d, i["interface_tags"], pre_append, sv)
 		} else {
@@ -5492,7 +5492,7 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["export-tags"], _ = expandSwitchControllerManagedSwitchPortsExportTags(d, i["export_tags"], pre_append, sv)
 		} else {
@@ -5596,7 +5596,7 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["members"], _ = expandSwitchControllerManagedSwitchPortsMembers(d, i["members"], pre_append, sv)
 		} else {
@@ -5757,11 +5757,11 @@ func expandSwitchControllerManagedSwitchPortsAllowedVlansAll(d *schema.ResourceD
 
 func expandSwitchControllerManagedSwitchPortsAllowedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5789,11 +5789,11 @@ func expandSwitchControllerManagedSwitchPortsAllowedVlansVlanName(d *schema.Reso
 
 func expandSwitchControllerManagedSwitchPortsUntaggedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5957,11 +5957,11 @@ func expandSwitchControllerManagedSwitchPortsExportToPool(d *schema.ResourceData
 
 func expandSwitchControllerManagedSwitchPortsInterfaceTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -5989,11 +5989,11 @@ func expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d *schema.Reso
 
 func expandSwitchControllerManagedSwitchPortsExportTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6085,11 +6085,11 @@ func expandSwitchControllerManagedSwitchPortsMaxBundle(d *schema.ResourceData, v
 
 func expandSwitchControllerManagedSwitchPortsMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6117,11 +6117,11 @@ func expandSwitchControllerManagedSwitchPortsMembersMemberName(d *schema.Resourc
 
 func expandSwitchControllerManagedSwitchIpSourceGuard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6142,7 +6142,7 @@ func expandSwitchControllerManagedSwitchIpSourceGuard(d *schema.ResourceData, v 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "binding_entry"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["binding-entry"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntry(d, i["binding_entry"], pre_append, sv)
 		} else {
@@ -6167,11 +6167,11 @@ func expandSwitchControllerManagedSwitchIpSourceGuardDescription(d *schema.Resou
 
 func expandSwitchControllerManagedSwitchIpSourceGuardBindingEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6314,11 +6314,11 @@ func expandSwitchControllerManagedSwitchStpSettingsPendingTimer(d *schema.Resour
 
 func expandSwitchControllerManagedSwitchStpInstance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6468,11 +6468,11 @@ func expandSwitchControllerManagedSwitchOverrideSnmpCommunity(d *schema.Resource
 
 func expandSwitchControllerManagedSwitchSnmpCommunity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6499,7 +6499,7 @@ func expandSwitchControllerManagedSwitchSnmpCommunity(d *schema.ResourceData, v 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["hosts"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHosts(d, i["hosts"], pre_append, sv)
 		} else {
@@ -6594,11 +6594,11 @@ func expandSwitchControllerManagedSwitchSnmpCommunityStatus(d *schema.ResourceDa
 
 func expandSwitchControllerManagedSwitchSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6684,11 +6684,11 @@ func expandSwitchControllerManagedSwitchOverrideSnmpUser(d *schema.ResourceData,
 
 func expandSwitchControllerManagedSwitchSnmpUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -6858,11 +6858,11 @@ func expandSwitchControllerManagedSwitchSwitchLogSeverity(d *schema.ResourceData
 
 func expandSwitchControllerManagedSwitchRemoteLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7009,11 +7009,11 @@ func expandSwitchControllerManagedSwitchStormControlBroadcast(d *schema.Resource
 
 func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7046,7 +7046,7 @@ func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interfa
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ingress"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["src-ingress"], _ = expandSwitchControllerManagedSwitchMirrorSrcIngress(d, i["src_ingress"], pre_append, sv)
 		} else {
@@ -7054,7 +7054,7 @@ func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interfa
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_egress"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["src-egress"], _ = expandSwitchControllerManagedSwitchMirrorSrcEgress(d, i["src_egress"], pre_append, sv)
 		} else {
@@ -7087,11 +7087,11 @@ func expandSwitchControllerManagedSwitchMirrorDst(d *schema.ResourceData, v inte
 
 func expandSwitchControllerManagedSwitchMirrorSrcIngress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7119,11 +7119,11 @@ func expandSwitchControllerManagedSwitchMirrorSrcIngressName(d *schema.ResourceD
 
 func expandSwitchControllerManagedSwitchMirrorSrcEgress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7151,11 +7151,11 @@ func expandSwitchControllerManagedSwitchMirrorSrcEgressName(d *schema.ResourceDa
 
 func expandSwitchControllerManagedSwitchStaticMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7233,11 +7233,11 @@ func expandSwitchControllerManagedSwitchStaticMacDescription(d *schema.ResourceD
 
 func expandSwitchControllerManagedSwitchCustomCommand(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7323,11 +7323,11 @@ func expandSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(d *sch
 
 func expandSwitchControllerManagedSwitchIgmpSnoopingVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -7788,7 +7788,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("ports"); ok {
+	if v, ok := d.GetOk("ports"); ok || d.HasChange("ports") {
 
 		t, err := expandSwitchControllerManagedSwitchPorts(d, v, "ports", sv)
 		if err != nil {
@@ -7798,7 +7798,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("ip_source_guard"); ok {
+	if v, ok := d.GetOk("ip_source_guard"); ok || d.HasChange("ip_source_guard") {
 
 		t, err := expandSwitchControllerManagedSwitchIpSourceGuard(d, v, "ip_source_guard", sv)
 		if err != nil {
@@ -7818,7 +7818,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("stp_instance"); ok {
+	if v, ok := d.GetOk("stp_instance"); ok || d.HasChange("stp_instance") {
 
 		t, err := expandSwitchControllerManagedSwitchStpInstance(d, v, "stp_instance", sv)
 		if err != nil {
@@ -7878,7 +7878,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("snmp_community"); ok {
+	if v, ok := d.GetOk("snmp_community"); ok || d.HasChange("snmp_community") {
 
 		t, err := expandSwitchControllerManagedSwitchSnmpCommunity(d, v, "snmp_community", sv)
 		if err != nil {
@@ -7898,7 +7898,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("snmp_user"); ok {
+	if v, ok := d.GetOk("snmp_user"); ok || d.HasChange("snmp_user") {
 
 		t, err := expandSwitchControllerManagedSwitchSnmpUser(d, v, "snmp_user", sv)
 		if err != nil {
@@ -7948,7 +7948,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("remote_log"); ok {
+	if v, ok := d.GetOk("remote_log"); ok || d.HasChange("remote_log") {
 
 		t, err := expandSwitchControllerManagedSwitchRemoteLog(d, v, "remote_log", sv)
 		if err != nil {
@@ -7968,7 +7968,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("mirror"); ok {
+	if v, ok := d.GetOk("mirror"); ok || d.HasChange("mirror") {
 
 		t, err := expandSwitchControllerManagedSwitchMirror(d, v, "mirror", sv)
 		if err != nil {
@@ -7978,7 +7978,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("static_mac"); ok {
+	if v, ok := d.GetOk("static_mac"); ok || d.HasChange("static_mac") {
 
 		t, err := expandSwitchControllerManagedSwitchStaticMac(d, v, "static_mac", sv)
 		if err != nil {
@@ -7988,7 +7988,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("custom_command"); ok {
+	if v, ok := d.GetOk("custom_command"); ok || d.HasChange("custom_command") {
 
 		t, err := expandSwitchControllerManagedSwitchCustomCommand(d, v, "custom_command", sv)
 		if err != nil {

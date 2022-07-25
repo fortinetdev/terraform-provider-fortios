@@ -480,11 +480,11 @@ func expandUserExchangeAutoDiscoverKdc(d *schema.ResourceData, v interface{}, pr
 
 func expandUserExchangeKdcIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -633,7 +633,7 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("kdc_ip"); ok {
+	if v, ok := d.GetOk("kdc_ip"); ok || d.HasChange("kdc_ip") {
 
 		t, err := expandUserExchangeKdcIp(d, v, "kdc_ip", sv)
 		if err != nil {

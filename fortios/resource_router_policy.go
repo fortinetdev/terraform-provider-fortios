@@ -941,11 +941,11 @@ func expandRouterPolicySeqNum(d *schema.ResourceData, v interface{}, pre string,
 
 func expandRouterPolicyInputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -977,11 +977,11 @@ func expandRouterPolicyInputDeviceNegate(d *schema.ResourceData, v interface{}, 
 
 func expandRouterPolicySrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1009,11 +1009,11 @@ func expandRouterPolicySrcSubnet(d *schema.ResourceData, v interface{}, pre stri
 
 func expandRouterPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1045,11 +1045,11 @@ func expandRouterPolicySrcNegate(d *schema.ResourceData, v interface{}, pre stri
 
 func expandRouterPolicyDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1077,11 +1077,11 @@ func expandRouterPolicyDstSubnet(d *schema.ResourceData, v interface{}, pre stri
 
 func expandRouterPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1161,11 +1161,11 @@ func expandRouterPolicyComments(d *schema.ResourceData, v interface{}, pre strin
 
 func expandRouterPolicyInternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1193,11 +1193,11 @@ func expandRouterPolicyInternetServiceIdId(d *schema.ResourceData, v interface{}
 
 func expandRouterPolicyInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1236,7 +1236,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("input_device"); ok {
+	if v, ok := d.GetOk("input_device"); ok || d.HasChange("input_device") {
 
 		t, err := expandRouterPolicyInputDevice(d, v, "input_device", sv)
 		if err != nil {
@@ -1256,7 +1256,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("src"); ok {
+	if v, ok := d.GetOk("src"); ok || d.HasChange("src") {
 
 		t, err := expandRouterPolicySrc(d, v, "src", sv)
 		if err != nil {
@@ -1266,7 +1266,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr"); ok {
+	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
 
 		t, err := expandRouterPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
@@ -1286,7 +1286,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("dst"); ok {
+	if v, ok := d.GetOk("dst"); ok || d.HasChange("dst") {
 
 		t, err := expandRouterPolicyDst(d, v, "dst", sv)
 		if err != nil {
@@ -1296,7 +1296,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr"); ok {
+	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
 
 		t, err := expandRouterPolicyDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
@@ -1436,7 +1436,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_id"); ok {
+	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {
 
 		t, err := expandRouterPolicyInternetServiceId(d, v, "internet_service_id", sv)
 		if err != nil {
@@ -1446,7 +1446,7 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_custom"); ok {
+	if v, ok := d.GetOk("internet_service_custom"); ok || d.HasChange("internet_service_custom") {
 
 		t, err := expandRouterPolicyInternetServiceCustom(d, v, "internet_service_custom", sv)
 		if err != nil {

@@ -669,11 +669,11 @@ func expandAuthenticationSettingCaptivePortalSslPort(d *schema.ResourceData, v i
 
 func expandAuthenticationSettingUserCertCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -701,11 +701,11 @@ func expandAuthenticationSettingUserCertCaName(d *schema.ResourceData, v interfa
 
 func expandAuthenticationSettingDevRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1000,7 +1000,7 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		}
 	}
 
-	if v, ok := d.GetOk("user_cert_ca"); ok {
+	if v, ok := d.GetOk("user_cert_ca"); ok || d.HasChange("user_cert_ca") {
 		if setArgNil {
 			obj["user-cert-ca"] = make([]struct{}, 0)
 		} else {
@@ -1014,7 +1014,7 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		}
 	}
 
-	if v, ok := d.GetOk("dev_range"); ok {
+	if v, ok := d.GetOk("dev_range"); ok || d.HasChange("dev_range") {
 		if setArgNil {
 			obj["dev-range"] = make([]struct{}, 0)
 		} else {

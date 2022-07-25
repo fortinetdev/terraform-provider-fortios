@@ -336,11 +336,11 @@ func expandSwitchControllerQuarantineQuarantine(d *schema.ResourceData, v interf
 
 func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -367,7 +367,7 @@ func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tag"], _ = expandSwitchControllerQuarantineTargetsTag(d, i["tag"], pre_append, sv)
 		} else {
@@ -396,11 +396,11 @@ func expandSwitchControllerQuarantineTargetsDescription(d *schema.ResourceData, 
 
 func expandSwitchControllerQuarantineTargetsTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -443,7 +443,7 @@ func getObjectSwitchControllerQuarantine(d *schema.ResourceData, setArgNil bool,
 		}
 	}
 
-	if v, ok := d.GetOk("targets"); ok {
+	if v, ok := d.GetOk("targets"); ok || d.HasChange("targets") {
 		if setArgNil {
 			obj["targets"] = make([]struct{}, 0)
 		} else {

@@ -2434,11 +2434,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsComplian
 
 func expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2538,11 +2538,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientLinuxVer(d 
 
 func expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystem(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2590,11 +2590,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSy
 
 func expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2722,11 +2722,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppA
 
 func expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2764,11 +2764,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEnt
 
 func expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2913,11 +2913,11 @@ func expandEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVp
 
 func expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettings(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3077,11 +3077,11 @@ func expandEndpointControlProfileForticlientIosSettingsClientVpnProvisioning(d *
 
 func expandEndpointControlProfileForticlientIosSettingsClientVpnSettings(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3205,11 +3205,11 @@ func expandEndpointControlProfileDescription(d *schema.ResourceData, v interface
 
 func expandEndpointControlProfileSrcAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3237,11 +3237,11 @@ func expandEndpointControlProfileSrcAddrName(d *schema.ResourceData, v interface
 
 func expandEndpointControlProfileDeviceGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3269,11 +3269,11 @@ func expandEndpointControlProfileDeviceGroupsName(d *schema.ResourceData, v inte
 
 func expandEndpointControlProfileUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3301,11 +3301,11 @@ func expandEndpointControlProfileUsersName(d *schema.ResourceData, v interface{}
 
 func expandEndpointControlProfileUserGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3333,11 +3333,11 @@ func expandEndpointControlProfileUserGroupsName(d *schema.ResourceData, v interf
 
 func expandEndpointControlProfileOnNetAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3420,7 +3420,7 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("src_addr"); ok {
+	if v, ok := d.GetOk("src_addr"); ok || d.HasChange("src_addr") {
 
 		t, err := expandEndpointControlProfileSrcAddr(d, v, "src_addr", sv)
 		if err != nil {
@@ -3430,7 +3430,7 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("device_groups"); ok {
+	if v, ok := d.GetOk("device_groups"); ok || d.HasChange("device_groups") {
 
 		t, err := expandEndpointControlProfileDeviceGroups(d, v, "device_groups", sv)
 		if err != nil {
@@ -3440,7 +3440,7 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("users"); ok {
+	if v, ok := d.GetOk("users"); ok || d.HasChange("users") {
 
 		t, err := expandEndpointControlProfileUsers(d, v, "users", sv)
 		if err != nil {
@@ -3450,7 +3450,7 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("user_groups"); ok {
+	if v, ok := d.GetOk("user_groups"); ok || d.HasChange("user_groups") {
 
 		t, err := expandEndpointControlProfileUserGroups(d, v, "user_groups", sv)
 		if err != nil {
@@ -3460,7 +3460,7 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("on_net_addr"); ok {
+	if v, ok := d.GetOk("on_net_addr"); ok || d.HasChange("on_net_addr") {
 
 		t, err := expandEndpointControlProfileOnNetAddr(d, v, "on_net_addr", sv)
 		if err != nil {

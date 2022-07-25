@@ -931,11 +931,11 @@ func expandWanoptContentDeliveryNetworkRuleStatus(d *schema.ResourceData, v inte
 
 func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -987,11 +987,11 @@ func expandWanoptContentDeliveryNetworkRuleUpdateserver(d *schema.ResourceData, 
 
 func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1018,7 +1018,7 @@ func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v inter
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_entries"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["match-entries"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d, i["match_entries"], pre_append, sv)
 		} else {
@@ -1026,7 +1026,7 @@ func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v inter
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_entries"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["skip-entries"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d, i["skip_entries"], pre_append, sv)
 		} else {
@@ -1063,11 +1063,11 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(d *schema.ResourceD
 
 func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1088,7 +1088,7 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceD
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["pattern"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d, i["pattern"], pre_append, sv)
 		} else {
@@ -1113,11 +1113,11 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(d *schema.Res
 
 func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1145,11 +1145,11 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(d *sch
 
 func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1170,7 +1170,7 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceDa
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["pattern"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d, i["pattern"], pre_append, sv)
 		} else {
@@ -1195,11 +1195,11 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(d *schema.Reso
 
 func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1344,7 +1344,7 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, sv string
 		}
 	}
 
-	if v, ok := d.GetOk("host_domain_name_suffix"); ok {
+	if v, ok := d.GetOk("host_domain_name_suffix"); ok || d.HasChange("host_domain_name_suffix") {
 
 		t, err := expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d, v, "host_domain_name_suffix", sv)
 		if err != nil {
@@ -1414,7 +1414,7 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, sv string
 		}
 	}
 
-	if v, ok := d.GetOk("rules"); ok {
+	if v, ok := d.GetOk("rules"); ok || d.HasChange("rules") {
 
 		t, err := expandWanoptContentDeliveryNetworkRuleRules(d, v, "rules", sv)
 		if err != nil {

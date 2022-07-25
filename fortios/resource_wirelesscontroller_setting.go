@@ -542,11 +542,11 @@ func expandWirelessControllerSettingFakeSsidAction(d *schema.ResourceData, v int
 
 func expandWirelessControllerSettingOffendingSsid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -614,11 +614,11 @@ func expandWirelessControllerSettingDarrpOptimize(d *schema.ResourceData, v inte
 
 func expandWirelessControllerSettingDarrpOptimizeSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -745,7 +745,7 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		}
 	}
 
-	if v, ok := d.GetOk("offending_ssid"); ok {
+	if v, ok := d.GetOk("offending_ssid"); ok || d.HasChange("offending_ssid") {
 		if setArgNil {
 			obj["offending-ssid"] = make([]struct{}, 0)
 		} else {
@@ -829,7 +829,7 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		}
 	}
 
-	if v, ok := d.GetOk("darrp_optimize_schedules"); ok {
+	if v, ok := d.GetOk("darrp_optimize_schedules"); ok || d.HasChange("darrp_optimize_schedules") {
 		if setArgNil {
 			obj["darrp-optimize-schedules"] = make([]struct{}, 0)
 		} else {

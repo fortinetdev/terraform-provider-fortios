@@ -1680,11 +1680,11 @@ func expandRouterMulticastPimSmGlobalRegisterRateLimit(d *schema.ResourceData, v
 
 func expandRouterMulticastPimSmGlobalRpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1732,11 +1732,11 @@ func expandRouterMulticastPimSmGlobalRpAddressGroup(d *schema.ResourceData, v in
 
 func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1865,7 +1865,7 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "join_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["join-group"], _ = expandRouterMulticastInterfaceJoinGroup(d, i["join_group"], pre_append, sv)
 		} else {
@@ -1970,11 +1970,11 @@ func expandRouterMulticastInterfaceRpfNbrFailBackFilter(d *schema.ResourceData, 
 
 func expandRouterMulticastInterfaceJoinGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2150,7 +2150,7 @@ func getObjectRouterMulticast(d *schema.ResourceData, setArgNil bool, sv string)
 		}
 	}
 
-	if v, ok := d.GetOk("interface"); ok {
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {

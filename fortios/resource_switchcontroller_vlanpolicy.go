@@ -436,11 +436,11 @@ func expandSwitchControllerVlanPolicyVlan(d *schema.ResourceData, v interface{},
 
 func expandSwitchControllerVlanPolicyAllowedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -468,11 +468,11 @@ func expandSwitchControllerVlanPolicyAllowedVlansVlanName(d *schema.ResourceData
 
 func expandSwitchControllerVlanPolicyUntaggedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -549,7 +549,7 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("allowed_vlans"); ok {
+	if v, ok := d.GetOk("allowed_vlans"); ok || d.HasChange("allowed_vlans") {
 
 		t, err := expandSwitchControllerVlanPolicyAllowedVlans(d, v, "allowed_vlans", sv)
 		if err != nil {
@@ -559,7 +559,7 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("untagged_vlans"); ok {
+	if v, ok := d.GetOk("untagged_vlans"); ok || d.HasChange("untagged_vlans") {
 
 		t, err := expandSwitchControllerVlanPolicyUntaggedVlans(d, v, "untagged_vlans", sv)
 		if err != nil {

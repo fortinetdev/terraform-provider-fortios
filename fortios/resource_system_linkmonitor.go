@@ -956,11 +956,11 @@ func expandSystemLinkMonitorServerType(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemLinkMonitorServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1004,11 +1004,11 @@ func expandSystemLinkMonitorGatewayIp6(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemLinkMonitorRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1124,11 +1124,11 @@ func expandSystemLinkMonitorServiceDetection(d *schema.ResourceData, v interface
 
 func expandSystemLinkMonitorServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1247,7 +1247,7 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("server"); ok {
+	if v, ok := d.GetOk("server"); ok || d.HasChange("server") {
 
 		t, err := expandSystemLinkMonitorServer(d, v, "server", sv)
 		if err != nil {
@@ -1297,7 +1297,7 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("route"); ok {
+	if v, ok := d.GetOk("route"); ok || d.HasChange("route") {
 
 		t, err := expandSystemLinkMonitorRoute(d, v, "route", sv)
 		if err != nil {
@@ -1527,7 +1527,7 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("server_list"); ok {
+	if v, ok := d.GetOk("server_list"); ok || d.HasChange("server_list") {
 
 		t, err := expandSystemLinkMonitorServerList(d, v, "server_list", sv)
 		if err != nil {

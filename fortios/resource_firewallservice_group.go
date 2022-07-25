@@ -332,11 +332,11 @@ func expandFirewallServiceGroupName(d *schema.ResourceData, v interface{}, pre s
 
 func expandFirewallServiceGroupMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -391,7 +391,7 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandFirewallServiceGroupMember(d, v, "member", sv)
 		if err != nil {

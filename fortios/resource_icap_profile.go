@@ -1098,11 +1098,11 @@ func expandIcapProfileTimeout(d *schema.ResourceData, v interface{}, pre string,
 
 func expandIcapProfileIcapHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1160,11 +1160,11 @@ func expandIcapProfileIcapHeadersBase64Encoding(d *schema.ResourceData, v interf
 
 func expandIcapProfileRespmodForwardRules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1185,7 +1185,7 @@ func expandIcapProfileRespmodForwardRules(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_group"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["header-group"], _ = expandIcapProfileRespmodForwardRulesHeaderGroup(d, i["header_group"], pre_append, sv)
 		} else {
@@ -1199,7 +1199,7 @@ func expandIcapProfileRespmodForwardRules(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_resp_status_code"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["http-resp-status-code"], _ = expandIcapProfileRespmodForwardRulesHttpRespStatusCode(d, i["http_resp_status_code"], pre_append, sv)
 		} else {
@@ -1224,11 +1224,11 @@ func expandIcapProfileRespmodForwardRulesHost(d *schema.ResourceData, v interfac
 
 func expandIcapProfileRespmodForwardRulesHeaderGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1290,11 +1290,11 @@ func expandIcapProfileRespmodForwardRulesAction(d *schema.ResourceData, v interf
 
 func expandIcapProfileRespmodForwardRulesHttpRespStatusCode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1593,7 +1593,7 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("icap_headers"); ok {
+	if v, ok := d.GetOk("icap_headers"); ok || d.HasChange("icap_headers") {
 
 		t, err := expandIcapProfileIcapHeaders(d, v, "icap_headers", sv)
 		if err != nil {
@@ -1603,7 +1603,7 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("respmod_forward_rules"); ok {
+	if v, ok := d.GetOk("respmod_forward_rules"); ok || d.HasChange("respmod_forward_rules") {
 
 		t, err := expandIcapProfileRespmodForwardRules(d, v, "respmod_forward_rules", sv)
 		if err != nil {

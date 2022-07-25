@@ -584,11 +584,11 @@ func expandWirelessControllerAccessControlListComment(d *schema.ResourceData, v 
 
 func expandWirelessControllerAccessControlListLayer3Ipv4Rules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -686,11 +686,11 @@ func expandWirelessControllerAccessControlListLayer3Ipv4RulesAction(d *schema.Re
 
 func expandWirelessControllerAccessControlListLayer3Ipv6Rules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -809,7 +809,7 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 		}
 	}
 
-	if v, ok := d.GetOk("layer3_ipv4_rules"); ok {
+	if v, ok := d.GetOk("layer3_ipv4_rules"); ok || d.HasChange("layer3_ipv4_rules") {
 
 		t, err := expandWirelessControllerAccessControlListLayer3Ipv4Rules(d, v, "layer3_ipv4_rules", sv)
 		if err != nil {
@@ -819,7 +819,7 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 		}
 	}
 
-	if v, ok := d.GetOk("layer3_ipv6_rules"); ok {
+	if v, ok := d.GetOk("layer3_ipv6_rules"); ok || d.HasChange("layer3_ipv6_rules") {
 
 		t, err := expandWirelessControllerAccessControlListLayer3Ipv6Rules(d, v, "layer3_ipv6_rules", sv)
 		if err != nil {

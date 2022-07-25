@@ -678,11 +678,11 @@ func expandWebProxyProfileLogHeaderChange(d *schema.ResourceData, v interface{},
 
 func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -703,7 +703,7 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dstaddr"], _ = expandWebProxyProfileHeadersDstaddr(d, i["dstaddr"], pre_append, sv)
 		} else {
@@ -711,7 +711,7 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["dstaddr6"], _ = expandWebProxyProfileHeadersDstaddr6(d, i["dstaddr6"], pre_append, sv)
 		} else {
@@ -766,11 +766,11 @@ func expandWebProxyProfileHeadersName(d *schema.ResourceData, v interface{}, pre
 
 func expandWebProxyProfileHeadersDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -798,11 +798,11 @@ func expandWebProxyProfileHeadersDstaddrName(d *schema.ResourceData, v interface
 
 func expandWebProxyProfileHeadersDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -961,7 +961,7 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("headers"); ok {
+	if v, ok := d.GetOk("headers"); ok || d.HasChange("headers") {
 
 		t, err := expandWebProxyProfileHeaders(d, v, "headers", sv)
 		if err != nil {

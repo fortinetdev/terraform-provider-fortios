@@ -273,11 +273,11 @@ func flattenFirewallAuthPortalFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 
 func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -318,7 +318,7 @@ func expandFirewallAuthPortalIdentityBasedRoute(d *schema.ResourceData, v interf
 func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("groups"); ok {
+	if v, ok := d.GetOk("groups"); ok || d.HasChange("groups") {
 		if setArgNil {
 			obj["groups"] = make([]struct{}, 0)
 		} else {

@@ -353,11 +353,11 @@ func expandSwitchControllerQosIpDscpMapDescription(d *schema.ResourceData, v int
 
 func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -446,7 +446,7 @@ func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, sv string) (*
 		}
 	}
 
-	if v, ok := d.GetOk("map"); ok {
+	if v, ok := d.GetOk("map"); ok || d.HasChange("map") {
 
 		t, err := expandSwitchControllerQosIpDscpMapMap(d, v, "map", sv)
 		if err != nil {

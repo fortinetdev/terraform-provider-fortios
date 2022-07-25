@@ -967,11 +967,11 @@ func expandSystemCsfFixedKey(d *schema.ResourceData, v interface{}, pre string, 
 
 func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1059,11 +1059,11 @@ func expandSystemCsfTrustedListDownstreamAuthorization(d *schema.ResourceData, v
 
 func expandSystemCsfFabricConnector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1115,11 +1115,11 @@ func expandSystemCsfForticloudAccountEnforcement(d *schema.ResourceData, v inter
 
 func expandSystemCsfFabricDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1474,7 +1474,7 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("trusted_list"); ok {
+	if v, ok := d.GetOk("trusted_list"); ok || d.HasChange("trusted_list") {
 		if setArgNil {
 			obj["trusted-list"] = make([]struct{}, 0)
 		} else {
@@ -1488,7 +1488,7 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("fabric_connector"); ok {
+	if v, ok := d.GetOk("fabric_connector"); ok || d.HasChange("fabric_connector") {
 		if setArgNil {
 			obj["fabric-connector"] = make([]struct{}, 0)
 		} else {
@@ -1516,7 +1516,7 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("fabric_device"); ok {
+	if v, ok := d.GetOk("fabric_device"); ok || d.HasChange("fabric_device") {
 		if setArgNil {
 			obj["fabric-device"] = make([]struct{}, 0)
 		} else {

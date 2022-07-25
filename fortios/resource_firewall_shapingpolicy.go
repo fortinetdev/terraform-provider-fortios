@@ -2164,11 +2164,11 @@ func expandFirewallShapingPolicyIpVersion(d *schema.ResourceData, v interface{},
 
 func expandFirewallShapingPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2196,11 +2196,11 @@ func expandFirewallShapingPolicySrcaddrName(d *schema.ResourceData, v interface{
 
 func expandFirewallShapingPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2228,11 +2228,11 @@ func expandFirewallShapingPolicyDstaddrName(d *schema.ResourceData, v interface{
 
 func expandFirewallShapingPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2260,11 +2260,11 @@ func expandFirewallShapingPolicySrcaddr6Name(d *schema.ResourceData, v interface
 
 func expandFirewallShapingPolicyDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2296,11 +2296,11 @@ func expandFirewallShapingPolicyInternetService(d *schema.ResourceData, v interf
 
 func expandFirewallShapingPolicyInternetServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2328,11 +2328,11 @@ func expandFirewallShapingPolicyInternetServiceNameName(d *schema.ResourceData, 
 
 func expandFirewallShapingPolicyInternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2360,11 +2360,11 @@ func expandFirewallShapingPolicyInternetServiceIdId(d *schema.ResourceData, v in
 
 func expandFirewallShapingPolicyInternetServiceGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2392,11 +2392,11 @@ func expandFirewallShapingPolicyInternetServiceGroupName(d *schema.ResourceData,
 
 func expandFirewallShapingPolicyInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2424,11 +2424,11 @@ func expandFirewallShapingPolicyInternetServiceCustomName(d *schema.ResourceData
 
 func expandFirewallShapingPolicyInternetServiceCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2460,11 +2460,11 @@ func expandFirewallShapingPolicyInternetServiceSrc(d *schema.ResourceData, v int
 
 func expandFirewallShapingPolicyInternetServiceSrcName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2492,11 +2492,11 @@ func expandFirewallShapingPolicyInternetServiceSrcNameName(d *schema.ResourceDat
 
 func expandFirewallShapingPolicyInternetServiceSrcId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2524,11 +2524,11 @@ func expandFirewallShapingPolicyInternetServiceSrcIdId(d *schema.ResourceData, v
 
 func expandFirewallShapingPolicyInternetServiceSrcGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2556,11 +2556,11 @@ func expandFirewallShapingPolicyInternetServiceSrcGroupName(d *schema.ResourceDa
 
 func expandFirewallShapingPolicyInternetServiceSrcCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2588,11 +2588,11 @@ func expandFirewallShapingPolicyInternetServiceSrcCustomName(d *schema.ResourceD
 
 func expandFirewallShapingPolicyInternetServiceSrcCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2620,11 +2620,11 @@ func expandFirewallShapingPolicyInternetServiceSrcCustomGroupName(d *schema.Reso
 
 func expandFirewallShapingPolicyService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2656,11 +2656,11 @@ func expandFirewallShapingPolicySchedule(d *schema.ResourceData, v interface{}, 
 
 func expandFirewallShapingPolicyUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2688,11 +2688,11 @@ func expandFirewallShapingPolicyUsersName(d *schema.ResourceData, v interface{},
 
 func expandFirewallShapingPolicyGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2720,11 +2720,11 @@ func expandFirewallShapingPolicyGroupsName(d *schema.ResourceData, v interface{}
 
 func expandFirewallShapingPolicyApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2752,11 +2752,11 @@ func expandFirewallShapingPolicyApplicationId(d *schema.ResourceData, v interfac
 
 func expandFirewallShapingPolicyAppCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2784,11 +2784,11 @@ func expandFirewallShapingPolicyAppCategoryId(d *schema.ResourceData, v interfac
 
 func expandFirewallShapingPolicyAppGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2816,11 +2816,11 @@ func expandFirewallShapingPolicyAppGroupName(d *schema.ResourceData, v interface
 
 func expandFirewallShapingPolicyUrlCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2848,11 +2848,11 @@ func expandFirewallShapingPolicyUrlCategoryId(d *schema.ResourceData, v interfac
 
 func expandFirewallShapingPolicySrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2880,11 +2880,11 @@ func expandFirewallShapingPolicySrcintfName(d *schema.ResourceData, v interface{
 
 func expandFirewallShapingPolicyDstintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3007,7 +3007,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr"); ok {
+	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
 
 		t, err := expandFirewallShapingPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
@@ -3017,7 +3017,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr"); ok {
+	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
 
 		t, err := expandFirewallShapingPolicyDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
@@ -3027,7 +3027,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr6"); ok {
+	if v, ok := d.GetOk("srcaddr6"); ok || d.HasChange("srcaddr6") {
 
 		t, err := expandFirewallShapingPolicySrcaddr6(d, v, "srcaddr6", sv)
 		if err != nil {
@@ -3037,7 +3037,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr6"); ok {
+	if v, ok := d.GetOk("dstaddr6"); ok || d.HasChange("dstaddr6") {
 
 		t, err := expandFirewallShapingPolicyDstaddr6(d, v, "dstaddr6", sv)
 		if err != nil {
@@ -3057,7 +3057,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_name"); ok {
+	if v, ok := d.GetOk("internet_service_name"); ok || d.HasChange("internet_service_name") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceName(d, v, "internet_service_name", sv)
 		if err != nil {
@@ -3067,7 +3067,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_id"); ok {
+	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceId(d, v, "internet_service_id", sv)
 		if err != nil {
@@ -3077,7 +3077,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_group"); ok {
+	if v, ok := d.GetOk("internet_service_group"); ok || d.HasChange("internet_service_group") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceGroup(d, v, "internet_service_group", sv)
 		if err != nil {
@@ -3087,7 +3087,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_custom"); ok {
+	if v, ok := d.GetOk("internet_service_custom"); ok || d.HasChange("internet_service_custom") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceCustom(d, v, "internet_service_custom", sv)
 		if err != nil {
@@ -3097,7 +3097,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_custom_group"); ok {
+	if v, ok := d.GetOk("internet_service_custom_group"); ok || d.HasChange("internet_service_custom_group") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceCustomGroup(d, v, "internet_service_custom_group", sv)
 		if err != nil {
@@ -3117,7 +3117,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_src_name"); ok {
+	if v, ok := d.GetOk("internet_service_src_name"); ok || d.HasChange("internet_service_src_name") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceSrcName(d, v, "internet_service_src_name", sv)
 		if err != nil {
@@ -3127,7 +3127,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_src_id"); ok {
+	if v, ok := d.GetOk("internet_service_src_id"); ok || d.HasChange("internet_service_src_id") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceSrcId(d, v, "internet_service_src_id", sv)
 		if err != nil {
@@ -3137,7 +3137,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_src_group"); ok {
+	if v, ok := d.GetOk("internet_service_src_group"); ok || d.HasChange("internet_service_src_group") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceSrcGroup(d, v, "internet_service_src_group", sv)
 		if err != nil {
@@ -3147,7 +3147,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_src_custom"); ok {
+	if v, ok := d.GetOk("internet_service_src_custom"); ok || d.HasChange("internet_service_src_custom") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceSrcCustom(d, v, "internet_service_src_custom", sv)
 		if err != nil {
@@ -3157,7 +3157,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service_src_custom_group"); ok {
+	if v, ok := d.GetOk("internet_service_src_custom_group"); ok || d.HasChange("internet_service_src_custom_group") {
 
 		t, err := expandFirewallShapingPolicyInternetServiceSrcCustomGroup(d, v, "internet_service_src_custom_group", sv)
 		if err != nil {
@@ -3167,7 +3167,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("service"); ok {
+	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
 
 		t, err := expandFirewallShapingPolicyService(d, v, "service", sv)
 		if err != nil {
@@ -3187,7 +3187,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("users"); ok {
+	if v, ok := d.GetOk("users"); ok || d.HasChange("users") {
 
 		t, err := expandFirewallShapingPolicyUsers(d, v, "users", sv)
 		if err != nil {
@@ -3197,7 +3197,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("groups"); ok {
+	if v, ok := d.GetOk("groups"); ok || d.HasChange("groups") {
 
 		t, err := expandFirewallShapingPolicyGroups(d, v, "groups", sv)
 		if err != nil {
@@ -3207,7 +3207,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("application"); ok {
+	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
 
 		t, err := expandFirewallShapingPolicyApplication(d, v, "application", sv)
 		if err != nil {
@@ -3217,7 +3217,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("app_category"); ok {
+	if v, ok := d.GetOk("app_category"); ok || d.HasChange("app_category") {
 
 		t, err := expandFirewallShapingPolicyAppCategory(d, v, "app_category", sv)
 		if err != nil {
@@ -3227,7 +3227,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("app_group"); ok {
+	if v, ok := d.GetOk("app_group"); ok || d.HasChange("app_group") {
 
 		t, err := expandFirewallShapingPolicyAppGroup(d, v, "app_group", sv)
 		if err != nil {
@@ -3237,7 +3237,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("url_category"); ok {
+	if v, ok := d.GetOk("url_category"); ok || d.HasChange("url_category") {
 
 		t, err := expandFirewallShapingPolicyUrlCategory(d, v, "url_category", sv)
 		if err != nil {
@@ -3247,7 +3247,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("srcintf"); ok {
+	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
 
 		t, err := expandFirewallShapingPolicySrcintf(d, v, "srcintf", sv)
 		if err != nil {
@@ -3257,7 +3257,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("dstintf"); ok {
+	if v, ok := d.GetOk("dstintf"); ok || d.HasChange("dstintf") {
 
 		t, err := expandFirewallShapingPolicyDstintf(d, v, "dstintf", sv)
 		if err != nil {

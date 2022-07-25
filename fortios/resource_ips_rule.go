@@ -550,11 +550,11 @@ func expandIpsRuleDate(d *schema.ResourceData, v interface{}, pre string, sv str
 
 func expandIpsRuleMetadata(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -743,7 +743,7 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("metadata"); ok {
+	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
 
 		t, err := expandIpsRuleMetadata(d, v, "metadata", sv)
 		if err != nil {

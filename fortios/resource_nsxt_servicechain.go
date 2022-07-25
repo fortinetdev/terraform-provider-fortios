@@ -341,11 +341,11 @@ func expandNsxtServiceChainName(d *schema.ResourceData, v interface{}, pre strin
 
 func expandNsxtServiceChainServiceIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -424,7 +424,7 @@ func getObjectNsxtServiceChain(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("service_index"); ok {
+	if v, ok := d.GetOk("service_index"); ok || d.HasChange("service_index") {
 
 		t, err := expandNsxtServiceChainServiceIndex(d, v, "service_index", sv)
 		if err != nil {

@@ -512,11 +512,11 @@ func expandSystemApiUserAccprofile(d *schema.ResourceData, v interface{}, pre st
 
 func expandSystemApiUserVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -560,11 +560,11 @@ func expandSystemApiUserPeerGroup(d *schema.ResourceData, v interface{}, pre str
 
 func expandSystemApiUserTrusthost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -663,7 +663,7 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok {
+	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
 
 		t, err := expandSystemApiUserVdom(d, v, "vdom", sv)
 		if err != nil {
@@ -713,7 +713,7 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("trusthost"); ok {
+	if v, ok := d.GetOk("trusthost"); ok || d.HasChange("trusthost") {
 
 		t, err := expandSystemApiUserTrusthost(d, v, "trusthost", sv)
 		if err != nil {

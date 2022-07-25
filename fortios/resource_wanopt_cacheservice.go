@@ -501,11 +501,11 @@ func expandWanoptCacheServiceAcceptableConnections(d *schema.ResourceData, v int
 
 func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -573,11 +573,11 @@ func expandWanoptCacheServiceDstPeerIp(d *schema.ResourceData, v interface{}, pr
 
 func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -702,7 +702,7 @@ func getObjectWanoptCacheService(d *schema.ResourceData, setArgNil bool, sv stri
 		}
 	}
 
-	if v, ok := d.GetOk("dst_peer"); ok {
+	if v, ok := d.GetOk("dst_peer"); ok || d.HasChange("dst_peer") {
 		if setArgNil {
 			obj["dst-peer"] = make([]struct{}, 0)
 		} else {
@@ -716,7 +716,7 @@ func getObjectWanoptCacheService(d *schema.ResourceData, setArgNil bool, sv stri
 		}
 	}
 
-	if v, ok := d.GetOk("src_peer"); ok {
+	if v, ok := d.GetOk("src_peer"); ok || d.HasChange("src_peer") {
 		if setArgNil {
 			obj["src-peer"] = make([]struct{}, 0)
 		} else {

@@ -603,11 +603,11 @@ func expandSwitchControllerVlanPortalMessageOverridesAuthLoginFailedPage(d *sche
 
 func expandSwitchControllerVlanSelectedUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -746,7 +746,7 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("selected_usergroups"); ok {
+	if v, ok := d.GetOk("selected_usergroups"); ok || d.HasChange("selected_usergroups") {
 
 		t, err := expandSwitchControllerVlanSelectedUsergroups(d, v, "selected_usergroups", sv)
 		if err != nil {

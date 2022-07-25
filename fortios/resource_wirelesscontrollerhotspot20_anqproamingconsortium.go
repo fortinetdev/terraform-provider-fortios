@@ -305,11 +305,11 @@ func expandWirelessControllerHotspot20AnqpRoamingConsortiumName(d *schema.Resour
 
 func expandWirelessControllerHotspot20AnqpRoamingConsortiumOiList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -368,7 +368,7 @@ func getObjectWirelessControllerHotspot20AnqpRoamingConsortium(d *schema.Resourc
 		}
 	}
 
-	if v, ok := d.GetOk("oi_list"); ok {
+	if v, ok := d.GetOk("oi_list"); ok || d.HasChange("oi_list") {
 
 		t, err := expandWirelessControllerHotspot20AnqpRoamingConsortiumOiList(d, v, "oi_list", sv)
 		if err != nil {

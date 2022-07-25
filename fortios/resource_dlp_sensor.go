@@ -908,11 +908,11 @@ func expandDlpSensorComment(d *schema.ResourceData, v interface{}, pre string, s
 
 func expandDlpSensorEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -978,11 +978,11 @@ func expandDlpSensorReplacemsgGroup(d *schema.ResourceData, v interface{}, pre s
 
 func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1039,7 +1039,7 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["sensitivity"], _ = expandDlpSensorFilterSensitivity(d, i["sensitivity"], pre_append, sv)
 		} else {
@@ -1047,7 +1047,7 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fp_sensitivity"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["fp-sensitivity"], _ = expandDlpSensorFilterFpSensitivity(d, i["fp_sensitivity"], pre_append, sv)
 		} else {
@@ -1132,11 +1132,11 @@ func expandDlpSensorFilterCompanyIdentifier(d *schema.ResourceData, v interface{
 
 func expandDlpSensorFilterSensitivity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1164,11 +1164,11 @@ func expandDlpSensorFilterSensitivityName(d *schema.ResourceData, v interface{},
 
 func expandDlpSensorFilterFpSensitivity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1289,7 +1289,7 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("entries"); ok {
+	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
 
 		t, err := expandDlpSensorEntries(d, v, "entries", sv)
 		if err != nil {
@@ -1319,7 +1319,7 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("filter"); ok {
+	if v, ok := d.GetOk("filter"); ok || d.HasChange("filter") {
 
 		t, err := expandDlpSensorFilter(d, v, "filter", sv)
 		if err != nil {

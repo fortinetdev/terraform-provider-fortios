@@ -368,11 +368,11 @@ func expandRouterPrefixList6Comments(d *schema.ResourceData, v interface{}, pre 
 
 func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -471,7 +471,7 @@ func getObjectRouterPrefixList6(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("rule"); ok {
+	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
 
 		t, err := expandRouterPrefixList6Rule(d, v, "rule", sv)
 		if err != nil {

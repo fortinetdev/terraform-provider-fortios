@@ -807,11 +807,11 @@ func expandFirewallInterfacePolicy6Interface(d *schema.ResourceData, v interface
 
 func expandFirewallInterfacePolicy6Srcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -839,11 +839,11 @@ func expandFirewallInterfacePolicy6Srcaddr6Name(d *schema.ResourceData, v interf
 
 func expandFirewallInterfacePolicy6Dstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -871,11 +871,11 @@ func expandFirewallInterfacePolicy6Dstaddr6Name(d *schema.ResourceData, v interf
 
 func expandFirewallInterfacePolicy6Service6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1040,7 +1040,7 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr6"); ok {
+	if v, ok := d.GetOk("srcaddr6"); ok || d.HasChange("srcaddr6") {
 
 		t, err := expandFirewallInterfacePolicy6Srcaddr6(d, v, "srcaddr6", sv)
 		if err != nil {
@@ -1050,7 +1050,7 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr6"); ok {
+	if v, ok := d.GetOk("dstaddr6"); ok || d.HasChange("dstaddr6") {
 
 		t, err := expandFirewallInterfacePolicy6Dstaddr6(d, v, "dstaddr6", sv)
 		if err != nil {
@@ -1060,7 +1060,7 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("service6"); ok {
+	if v, ok := d.GetOk("service6"); ok || d.HasChange("service6") {
 
 		t, err := expandFirewallInterfacePolicy6Service6(d, v, "service6", sv)
 		if err != nil {

@@ -591,11 +591,11 @@ func expandSystemAlarmAudible(d *schema.ResourceData, v interface{}, pre string,
 
 func expandSystemAlarmGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -670,7 +670,7 @@ func expandSystemAlarmGroups(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_violations"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["fw-policy-violations"], _ = expandSystemAlarmGroupsFwPolicyViolations(d, i["fw_policy_violations"], pre_append, sv)
 		} else {
@@ -743,11 +743,11 @@ func expandSystemAlarmGroupsDecryptionFailureThreshold(d *schema.ResourceData, v
 
 func expandSystemAlarmGroupsFwPolicyViolations(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -862,7 +862,7 @@ func getObjectSystemAlarm(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("groups"); ok {
+	if v, ok := d.GetOk("groups"); ok || d.HasChange("groups") {
 		if setArgNil {
 			obj["groups"] = make([]struct{}, 0)
 		} else {

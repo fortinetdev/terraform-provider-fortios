@@ -742,11 +742,11 @@ func expandUserNacPolicySwitchFortilink(d *schema.ResourceData, v interface{}, p
 
 func expandUserNacPolicySwitchGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -774,11 +774,11 @@ func expandUserNacPolicySwitchGroupName(d *schema.ResourceData, v interface{}, p
 
 func expandUserNacPolicySwitchScope(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -997,7 +997,7 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("switch_group"); ok {
+	if v, ok := d.GetOk("switch_group"); ok || d.HasChange("switch_group") {
 
 		t, err := expandUserNacPolicySwitchGroup(d, v, "switch_group", sv)
 		if err != nil {
@@ -1007,7 +1007,7 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("switch_scope"); ok {
+	if v, ok := d.GetOk("switch_scope"); ok || d.HasChange("switch_scope") {
 
 		t, err := expandUserNacPolicySwitchScope(d, v, "switch_scope", sv)
 		if err != nil {

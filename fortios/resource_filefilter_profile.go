@@ -525,11 +525,11 @@ func expandFileFilterProfileScanArchiveContents(d *schema.ResourceData, v interf
 
 func expandFileFilterProfileRules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -574,7 +574,7 @@ func expandFileFilterProfileRules(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["file-type"], _ = expandFileFilterProfileRulesFileType(d, i["file_type"], pre_append, sv)
 		} else {
@@ -615,11 +615,11 @@ func expandFileFilterProfileRulesPasswordProtected(d *schema.ResourceData, v int
 
 func expandFileFilterProfileRulesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -718,7 +718,7 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("rules"); ok {
+	if v, ok := d.GetOk("rules"); ok || d.HasChange("rules") {
 
 		t, err := expandFileFilterProfileRules(d, v, "rules", sv)
 		if err != nil {

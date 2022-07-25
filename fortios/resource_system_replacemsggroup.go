@@ -2479,11 +2479,11 @@ func expandSystemReplacemsgGroupGroupType(d *schema.ResourceData, v interface{},
 
 func expandSystemReplacemsgGroupMail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2541,11 +2541,11 @@ func expandSystemReplacemsgGroupMailFormat(d *schema.ResourceData, v interface{}
 
 func expandSystemReplacemsgGroupHttp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2603,11 +2603,11 @@ func expandSystemReplacemsgGroupHttpFormat(d *schema.ResourceData, v interface{}
 
 func expandSystemReplacemsgGroupWebproxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2665,11 +2665,11 @@ func expandSystemReplacemsgGroupWebproxyFormat(d *schema.ResourceData, v interfa
 
 func expandSystemReplacemsgGroupFtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2727,11 +2727,11 @@ func expandSystemReplacemsgGroupFtpFormat(d *schema.ResourceData, v interface{},
 
 func expandSystemReplacemsgGroupNntp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2789,11 +2789,11 @@ func expandSystemReplacemsgGroupNntpFormat(d *schema.ResourceData, v interface{}
 
 func expandSystemReplacemsgGroupFortiguardWf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2851,11 +2851,11 @@ func expandSystemReplacemsgGroupFortiguardWfFormat(d *schema.ResourceData, v int
 
 func expandSystemReplacemsgGroupSpam(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2913,11 +2913,11 @@ func expandSystemReplacemsgGroupSpamFormat(d *schema.ResourceData, v interface{}
 
 func expandSystemReplacemsgGroupAlertmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2975,11 +2975,11 @@ func expandSystemReplacemsgGroupAlertmailFormat(d *schema.ResourceData, v interf
 
 func expandSystemReplacemsgGroupAdmin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3037,11 +3037,11 @@ func expandSystemReplacemsgGroupAdminFormat(d *schema.ResourceData, v interface{
 
 func expandSystemReplacemsgGroupAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3099,11 +3099,11 @@ func expandSystemReplacemsgGroupAuthFormat(d *schema.ResourceData, v interface{}
 
 func expandSystemReplacemsgGroupSslvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3161,11 +3161,11 @@ func expandSystemReplacemsgGroupSslvpnFormat(d *schema.ResourceData, v interface
 
 func expandSystemReplacemsgGroupEc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3223,11 +3223,11 @@ func expandSystemReplacemsgGroupEcFormat(d *schema.ResourceData, v interface{}, 
 
 func expandSystemReplacemsgGroupDeviceDetectionPortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3285,11 +3285,11 @@ func expandSystemReplacemsgGroupDeviceDetectionPortalFormat(d *schema.ResourceDa
 
 func expandSystemReplacemsgGroupNacQuar(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3347,11 +3347,11 @@ func expandSystemReplacemsgGroupNacQuarFormat(d *schema.ResourceData, v interfac
 
 func expandSystemReplacemsgGroupTrafficQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3409,11 +3409,11 @@ func expandSystemReplacemsgGroupTrafficQuotaFormat(d *schema.ResourceData, v int
 
 func expandSystemReplacemsgGroupUtm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3471,11 +3471,11 @@ func expandSystemReplacemsgGroupUtmFormat(d *schema.ResourceData, v interface{},
 
 func expandSystemReplacemsgGroupCustomMessage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3533,11 +3533,11 @@ func expandSystemReplacemsgGroupCustomMessageFormat(d *schema.ResourceData, v in
 
 func expandSystemReplacemsgGroupIcap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3595,11 +3595,11 @@ func expandSystemReplacemsgGroupIcapFormat(d *schema.ResourceData, v interface{}
 
 func expandSystemReplacemsgGroupAutomation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3688,7 +3688,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("mail"); ok {
+	if v, ok := d.GetOk("mail"); ok || d.HasChange("mail") {
 
 		t, err := expandSystemReplacemsgGroupMail(d, v, "mail", sv)
 		if err != nil {
@@ -3698,7 +3698,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("http"); ok {
+	if v, ok := d.GetOk("http"); ok || d.HasChange("http") {
 
 		t, err := expandSystemReplacemsgGroupHttp(d, v, "http", sv)
 		if err != nil {
@@ -3708,7 +3708,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("webproxy"); ok {
+	if v, ok := d.GetOk("webproxy"); ok || d.HasChange("webproxy") {
 
 		t, err := expandSystemReplacemsgGroupWebproxy(d, v, "webproxy", sv)
 		if err != nil {
@@ -3718,7 +3718,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("ftp"); ok {
+	if v, ok := d.GetOk("ftp"); ok || d.HasChange("ftp") {
 
 		t, err := expandSystemReplacemsgGroupFtp(d, v, "ftp", sv)
 		if err != nil {
@@ -3728,7 +3728,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("nntp"); ok {
+	if v, ok := d.GetOk("nntp"); ok || d.HasChange("nntp") {
 
 		t, err := expandSystemReplacemsgGroupNntp(d, v, "nntp", sv)
 		if err != nil {
@@ -3738,7 +3738,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("fortiguard_wf"); ok {
+	if v, ok := d.GetOk("fortiguard_wf"); ok || d.HasChange("fortiguard_wf") {
 
 		t, err := expandSystemReplacemsgGroupFortiguardWf(d, v, "fortiguard_wf", sv)
 		if err != nil {
@@ -3748,7 +3748,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("spam"); ok {
+	if v, ok := d.GetOk("spam"); ok || d.HasChange("spam") {
 
 		t, err := expandSystemReplacemsgGroupSpam(d, v, "spam", sv)
 		if err != nil {
@@ -3758,7 +3758,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("alertmail"); ok {
+	if v, ok := d.GetOk("alertmail"); ok || d.HasChange("alertmail") {
 
 		t, err := expandSystemReplacemsgGroupAlertmail(d, v, "alertmail", sv)
 		if err != nil {
@@ -3768,7 +3768,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("admin"); ok {
+	if v, ok := d.GetOk("admin"); ok || d.HasChange("admin") {
 
 		t, err := expandSystemReplacemsgGroupAdmin(d, v, "admin", sv)
 		if err != nil {
@@ -3778,7 +3778,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("auth"); ok {
+	if v, ok := d.GetOk("auth"); ok || d.HasChange("auth") {
 
 		t, err := expandSystemReplacemsgGroupAuth(d, v, "auth", sv)
 		if err != nil {
@@ -3788,7 +3788,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("sslvpn"); ok {
+	if v, ok := d.GetOk("sslvpn"); ok || d.HasChange("sslvpn") {
 
 		t, err := expandSystemReplacemsgGroupSslvpn(d, v, "sslvpn", sv)
 		if err != nil {
@@ -3798,7 +3798,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("ec"); ok {
+	if v, ok := d.GetOk("ec"); ok || d.HasChange("ec") {
 
 		t, err := expandSystemReplacemsgGroupEc(d, v, "ec", sv)
 		if err != nil {
@@ -3808,7 +3808,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("device_detection_portal"); ok {
+	if v, ok := d.GetOk("device_detection_portal"); ok || d.HasChange("device_detection_portal") {
 
 		t, err := expandSystemReplacemsgGroupDeviceDetectionPortal(d, v, "device_detection_portal", sv)
 		if err != nil {
@@ -3818,7 +3818,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("nac_quar"); ok {
+	if v, ok := d.GetOk("nac_quar"); ok || d.HasChange("nac_quar") {
 
 		t, err := expandSystemReplacemsgGroupNacQuar(d, v, "nac_quar", sv)
 		if err != nil {
@@ -3828,7 +3828,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("traffic_quota"); ok {
+	if v, ok := d.GetOk("traffic_quota"); ok || d.HasChange("traffic_quota") {
 
 		t, err := expandSystemReplacemsgGroupTrafficQuota(d, v, "traffic_quota", sv)
 		if err != nil {
@@ -3838,7 +3838,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("utm"); ok {
+	if v, ok := d.GetOk("utm"); ok || d.HasChange("utm") {
 
 		t, err := expandSystemReplacemsgGroupUtm(d, v, "utm", sv)
 		if err != nil {
@@ -3848,7 +3848,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("custom_message"); ok {
+	if v, ok := d.GetOk("custom_message"); ok || d.HasChange("custom_message") {
 
 		t, err := expandSystemReplacemsgGroupCustomMessage(d, v, "custom_message", sv)
 		if err != nil {
@@ -3858,7 +3858,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("icap"); ok {
+	if v, ok := d.GetOk("icap"); ok || d.HasChange("icap") {
 
 		t, err := expandSystemReplacemsgGroupIcap(d, v, "icap", sv)
 		if err != nil {
@@ -3868,7 +3868,7 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("automation"); ok {
+	if v, ok := d.GetOk("automation"); ok || d.HasChange("automation") {
 
 		t, err := expandSystemReplacemsgGroupAutomation(d, v, "automation", sv)
 		if err != nil {

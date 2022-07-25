@@ -2560,11 +2560,11 @@ func expandRouterbgpNeighborPassword(d *schema.ResourceData, v interface{}, pre 
 
 func expandRouterbgpNeighborConditionalAdvertise(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2612,11 +2612,11 @@ func expandRouterbgpNeighborConditionalAdvertiseConditionType(d *schema.Resource
 
 func expandRouterbgpNeighborConditionalAdvertise6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3785,7 +3785,7 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("conditional_advertise"); ok {
+	if v, ok := d.GetOk("conditional_advertise"); ok || d.HasChange("conditional_advertise") {
 
 		t, err := expandRouterbgpNeighborConditionalAdvertise(d, v, "conditional_advertise", sv)
 		if err != nil {
@@ -3795,7 +3795,7 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("conditional_advertise6"); ok {
+	if v, ok := d.GetOk("conditional_advertise6"); ok || d.HasChange("conditional_advertise6") {
 
 		t, err := expandRouterbgpNeighborConditionalAdvertise6(d, v, "conditional_advertise6", sv)
 		if err != nil {

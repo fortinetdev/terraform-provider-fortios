@@ -1503,11 +1503,11 @@ func expandLogThreatWeightIpsCriticalSeverity(d *schema.ResourceData, v interfac
 
 func expandLogThreatWeightWeb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1555,11 +1555,11 @@ func expandLogThreatWeightWebLevel(d *schema.ResourceData, v interface{}, pre st
 
 func expandLogThreatWeightGeolocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1607,11 +1607,11 @@ func expandLogThreatWeightGeolocationLevel(d *schema.ResourceData, v interface{}
 
 func expandLogThreatWeightApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1760,7 +1760,7 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		}
 	}
 
-	if v, ok := d.GetOk("web"); ok {
+	if v, ok := d.GetOk("web"); ok || d.HasChange("web") {
 		if setArgNil {
 			obj["web"] = make([]struct{}, 0)
 		} else {
@@ -1774,7 +1774,7 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		}
 	}
 
-	if v, ok := d.GetOk("geolocation"); ok {
+	if v, ok := d.GetOk("geolocation"); ok || d.HasChange("geolocation") {
 		if setArgNil {
 			obj["geolocation"] = make([]struct{}, 0)
 		} else {
@@ -1788,7 +1788,7 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		}
 	}
 
-	if v, ok := d.GetOk("application"); ok {
+	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
 		if setArgNil {
 			obj["application"] = make([]struct{}, 0)
 		} else {

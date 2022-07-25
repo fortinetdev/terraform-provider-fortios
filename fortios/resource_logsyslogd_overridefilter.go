@@ -540,11 +540,11 @@ func expandLogSyslogdOverrideFilterGtp(d *schema.ResourceData, v interface{}, pr
 
 func expandLogSyslogdOverrideFilterFreeStyle(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -773,7 +773,7 @@ func getObjectLogSyslogdOverrideFilter(d *schema.ResourceData, setArgNil bool, s
 		}
 	}
 
-	if v, ok := d.GetOk("free_style"); ok {
+	if v, ok := d.GetOk("free_style"); ok || d.HasChange("free_style") {
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {

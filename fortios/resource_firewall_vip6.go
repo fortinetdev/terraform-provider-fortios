@@ -1866,11 +1866,11 @@ func expandFirewallVip6Type(d *schema.ResourceData, v interface{}, pre string, s
 
 func expandFirewallVip6SrcFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1962,11 +1962,11 @@ func expandFirewallVip6AddNat64Route(d *schema.ResourceData, v interface{}, pre 
 
 func expandFirewallVip6Realservers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2187,11 +2187,11 @@ func expandFirewallVip6SslAlgorithm(d *schema.ResourceData, v interface{}, pre s
 
 func expandFirewallVip6SslCipherSuites(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2243,11 +2243,11 @@ func expandFirewallVip6SslServerAlgorithm(d *schema.ResourceData, v interface{},
 
 func expandFirewallVip6SslServerCipherSuites(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2403,11 +2403,11 @@ func expandFirewallVip6SslHstsIncludeSubdomains(d *schema.ResourceData, v interf
 
 func expandFirewallVip6Monitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2502,7 +2502,7 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("src_filter"); ok {
+	if v, ok := d.GetOk("src_filter"); ok || d.HasChange("src_filter") {
 
 		t, err := expandFirewallVip6SrcFilter(d, v, "src_filter", sv)
 		if err != nil {
@@ -2672,7 +2672,7 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("realservers"); ok {
+	if v, ok := d.GetOk("realservers"); ok || d.HasChange("realservers") {
 
 		t, err := expandFirewallVip6Realservers(d, v, "realservers", sv)
 		if err != nil {
@@ -2852,7 +2852,7 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("ssl_cipher_suites"); ok {
+	if v, ok := d.GetOk("ssl_cipher_suites"); ok || d.HasChange("ssl_cipher_suites") {
 
 		t, err := expandFirewallVip6SslCipherSuites(d, v, "ssl_cipher_suites", sv)
 		if err != nil {
@@ -2872,7 +2872,7 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("ssl_server_cipher_suites"); ok {
+	if v, ok := d.GetOk("ssl_server_cipher_suites"); ok || d.HasChange("ssl_server_cipher_suites") {
 
 		t, err := expandFirewallVip6SslServerCipherSuites(d, v, "ssl_server_cipher_suites", sv)
 		if err != nil {
@@ -3152,7 +3152,7 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("monitor"); ok {
+	if v, ok := d.GetOk("monitor"); ok || d.HasChange("monitor") {
 
 		t, err := expandFirewallVip6Monitor(d, v, "monitor", sv)
 		if err != nil {

@@ -628,11 +628,11 @@ func expandSwitchControllerFlowTrackingFormat(d *schema.ResourceData, v interfac
 
 func expandSwitchControllerFlowTrackingCollectors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -742,11 +742,11 @@ func expandSwitchControllerFlowTrackingTimeoutUdp(d *schema.ResourceData, v inte
 
 func expandSwitchControllerFlowTrackingAggregates(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -827,7 +827,7 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		}
 	}
 
-	if v, ok := d.GetOk("collectors"); ok {
+	if v, ok := d.GetOk("collectors"); ok || d.HasChange("collectors") {
 		if setArgNil {
 			obj["collectors"] = make([]struct{}, 0)
 		} else {
@@ -1023,7 +1023,7 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		}
 	}
 
-	if v, ok := d.GetOk("aggregates"); ok {
+	if v, ok := d.GetOk("aggregates"); ok || d.HasChange("aggregates") {
 		if setArgNil {
 			obj["aggregates"] = make([]struct{}, 0)
 		} else {

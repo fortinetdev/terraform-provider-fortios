@@ -2127,11 +2127,11 @@ func expandSystemHaHaMgmtStatus(d *schema.ResourceData, v interface{}, pre strin
 
 func expandSystemHaHaMgmtInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2227,11 +2227,11 @@ func expandSystemHaUnicastGateway(d *schema.ResourceData, v interface{}, pre str
 
 func expandSystemHaUnicastPeers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2361,11 +2361,11 @@ func expandSystemHaVclusterStatus(d *schema.ResourceData, v interface{}, pre str
 
 func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2422,7 +2422,7 @@ func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["vdom"], _ = expandSystemHaVclusterVdom(d, i["vdom"], pre_append, sv)
 		} else {
@@ -2471,11 +2471,11 @@ func expandSystemHaVclusterPingserverSlaveForceReset(d *schema.ResourceData, v i
 
 func expandSystemHaVclusterVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3196,7 +3196,7 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("ha_mgmt_interfaces"); ok {
+	if v, ok := d.GetOk("ha_mgmt_interfaces"); ok || d.HasChange("ha_mgmt_interfaces") {
 		if setArgNil {
 			obj["ha-mgmt-interfaces"] = make([]struct{}, 0)
 		} else {
@@ -3308,7 +3308,7 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("unicast_peers"); ok {
+	if v, ok := d.GetOk("unicast_peers"); ok || d.HasChange("unicast_peers") {
 		if setArgNil {
 			obj["unicast-peers"] = make([]struct{}, 0)
 		} else {
@@ -3644,7 +3644,7 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("vcluster"); ok {
+	if v, ok := d.GetOk("vcluster"); ok || d.HasChange("vcluster") {
 		if setArgNil {
 			obj["vcluster"] = make([]struct{}, 0)
 		} else {

@@ -820,11 +820,11 @@ func expandVpnSslWebUserBookmarkCustomLang(d *schema.ResourceData, v interface{}
 
 func expandVpnSslWebUserBookmarkBookmarks(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -977,7 +977,7 @@ func expandVpnSslWebUserBookmarkBookmarks(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["form-data"], _ = expandVpnSslWebUserBookmarkBookmarksFormData(d, i["form_data"], pre_append, sv)
 		} else {
@@ -1126,11 +1126,11 @@ func expandVpnSslWebUserBookmarkBookmarksSso(d *schema.ResourceData, v interface
 
 func expandVpnSslWebUserBookmarkBookmarksFormData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1213,7 +1213,7 @@ func getObjectVpnSslWebUserBookmark(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("bookmarks"); ok {
+	if v, ok := d.GetOk("bookmarks"); ok || d.HasChange("bookmarks") {
 
 		t, err := expandVpnSslWebUserBookmarkBookmarks(d, v, "bookmarks", sv)
 		if err != nil {

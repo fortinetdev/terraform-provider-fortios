@@ -1769,11 +1769,11 @@ func expandSystemSdnConnectorServer(d *schema.ResourceData, v interface{}, pre s
 
 func expandSystemSdnConnectorServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1841,11 +1841,11 @@ func expandSystemSdnConnectorVpcId(d *schema.ResourceData, v interface{}, pre st
 
 func expandSystemSdnConnectorExternalAccountList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1860,7 +1860,7 @@ func expandSystemSdnConnectorExternalAccountList(d *schema.ResourceData, v inter
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["region-list"], _ = expandSystemSdnConnectorExternalAccountListRegionList(d, i["region_list"], pre_append, sv)
 		} else {
@@ -1881,11 +1881,11 @@ func expandSystemSdnConnectorExternalAccountListRoleArn(d *schema.ResourceData, 
 
 func expandSystemSdnConnectorExternalAccountListRegionList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1945,11 +1945,11 @@ func expandSystemSdnConnectorAzureRegion(d *schema.ResourceData, v interface{}, 
 
 func expandSystemSdnConnectorNic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1964,7 +1964,7 @@ func expandSystemSdnConnectorNic(d *schema.ResourceData, v interface{}, pre stri
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["ip"], _ = expandSystemSdnConnectorNicIp(d, i["ip"], pre_append, sv)
 		} else {
@@ -1985,11 +1985,11 @@ func expandSystemSdnConnectorNicName(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemSdnConnectorNicIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2037,11 +2037,11 @@ func expandSystemSdnConnectorNicIpResourceGroup(d *schema.ResourceData, v interf
 
 func expandSystemSdnConnectorRouteTable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2068,7 +2068,7 @@ func expandSystemSdnConnectorRouteTable(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["route"], _ = expandSystemSdnConnectorRouteTableRoute(d, i["route"], pre_append, sv)
 		} else {
@@ -2097,11 +2097,11 @@ func expandSystemSdnConnectorRouteTableResourceGroup(d *schema.ResourceData, v i
 
 func expandSystemSdnConnectorRouteTableRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2163,11 +2163,11 @@ func expandSystemSdnConnectorOciFingerprint(d *schema.ResourceData, v interface{
 
 func expandSystemSdnConnectorExternalIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2195,11 +2195,11 @@ func expandSystemSdnConnectorExternalIpName(d *schema.ResourceData, v interface{
 
 func expandSystemSdnConnectorRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2227,11 +2227,11 @@ func expandSystemSdnConnectorRouteName(d *schema.ResourceData, v interface{}, pr
 
 func expandSystemSdnConnectorGcpProjectList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2246,7 +2246,7 @@ func expandSystemSdnConnectorGcpProjectList(d *schema.ResourceData, v interface{
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gcp_zone_list"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["gcp-zone-list"], _ = expandSystemSdnConnectorGcpProjectListGcpZoneList(d, i["gcp_zone_list"], pre_append, sv)
 		} else {
@@ -2267,11 +2267,11 @@ func expandSystemSdnConnectorGcpProjectListId(d *schema.ResourceData, v interfac
 
 func expandSystemSdnConnectorGcpProjectListGcpZoneList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2299,11 +2299,11 @@ func expandSystemSdnConnectorGcpProjectListGcpZoneListName(d *schema.ResourceDat
 
 func expandSystemSdnConnectorForwardingRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2458,7 +2458,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("server_list"); ok {
+	if v, ok := d.GetOk("server_list"); ok || d.HasChange("server_list") {
 
 		t, err := expandSystemSdnConnectorServerList(d, v, "server_list", sv)
 		if err != nil {
@@ -2568,7 +2568,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("external_account_list"); ok {
+	if v, ok := d.GetOk("external_account_list"); ok || d.HasChange("external_account_list") {
 
 		t, err := expandSystemSdnConnectorExternalAccountList(d, v, "external_account_list", sv)
 		if err != nil {
@@ -2658,7 +2658,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("nic"); ok {
+	if v, ok := d.GetOk("nic"); ok || d.HasChange("nic") {
 
 		t, err := expandSystemSdnConnectorNic(d, v, "nic", sv)
 		if err != nil {
@@ -2668,7 +2668,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("route_table"); ok {
+	if v, ok := d.GetOk("route_table"); ok || d.HasChange("route_table") {
 
 		t, err := expandSystemSdnConnectorRouteTable(d, v, "route_table", sv)
 		if err != nil {
@@ -2738,7 +2738,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("external_ip"); ok {
+	if v, ok := d.GetOk("external_ip"); ok || d.HasChange("external_ip") {
 
 		t, err := expandSystemSdnConnectorExternalIp(d, v, "external_ip", sv)
 		if err != nil {
@@ -2748,7 +2748,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("route"); ok {
+	if v, ok := d.GetOk("route"); ok || d.HasChange("route") {
 
 		t, err := expandSystemSdnConnectorRoute(d, v, "route", sv)
 		if err != nil {
@@ -2758,7 +2758,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("gcp_project_list"); ok {
+	if v, ok := d.GetOk("gcp_project_list"); ok || d.HasChange("gcp_project_list") {
 
 		t, err := expandSystemSdnConnectorGcpProjectList(d, v, "gcp_project_list", sv)
 		if err != nil {
@@ -2768,7 +2768,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("forwarding_rule"); ok {
+	if v, ok := d.GetOk("forwarding_rule"); ok || d.HasChange("forwarding_rule") {
 
 		t, err := expandSystemSdnConnectorForwardingRule(d, v, "forwarding_rule", sv)
 		if err != nil {

@@ -1468,11 +1468,11 @@ func expandEmailfilterProfileFileFilterScanArchiveContents(d *schema.ResourceDat
 
 func expandEmailfilterProfileFileFilterEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1511,7 +1511,7 @@ func expandEmailfilterProfileFileFilterEntries(d *schema.ResourceData, v interfa
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["file-type"], _ = expandEmailfilterProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
 		} else {
@@ -1548,11 +1548,11 @@ func expandEmailfilterProfileFileFilterEntriesPasswordProtected(d *schema.Resour
 
 func expandEmailfilterProfileFileFilterEntriesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {

@@ -383,11 +383,11 @@ func expandFirewallIdentityBasedRouteComments(d *schema.ResourceData, v interfac
 
 func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -414,7 +414,7 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["groups"], _ = expandFirewallIdentityBasedRouteRuleGroups(d, i["groups"], pre_append, sv)
 		} else {
@@ -443,11 +443,11 @@ func expandFirewallIdentityBasedRouteRuleDevice(d *schema.ResourceData, v interf
 
 func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -496,7 +496,7 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("rule"); ok {
+	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
 
 		t, err := expandFirewallIdentityBasedRouteRule(d, v, "rule", sv)
 		if err != nil {

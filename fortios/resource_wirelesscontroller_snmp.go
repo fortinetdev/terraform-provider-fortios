@@ -689,11 +689,11 @@ func expandWirelessControllerSnmpTrapHighMemThreshold(d *schema.ResourceData, v 
 
 func expandWirelessControllerSnmpCommunity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -744,7 +744,7 @@ func expandWirelessControllerSnmpCommunity(d *schema.ResourceData, v interface{}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["hosts"], _ = expandWirelessControllerSnmpCommunityHosts(d, i["hosts"], pre_append, sv)
 		} else {
@@ -789,11 +789,11 @@ func expandWirelessControllerSnmpCommunityTrapV2CStatus(d *schema.ResourceData, 
 
 func expandWirelessControllerSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -831,11 +831,11 @@ func expandWirelessControllerSnmpCommunityHostsIp(d *schema.ResourceData, v inte
 
 func expandWirelessControllerSnmpUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1010,7 +1010,7 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
-	if v, ok := d.GetOk("community"); ok {
+	if v, ok := d.GetOk("community"); ok || d.HasChange("community") {
 		if setArgNil {
 			obj["community"] = make([]struct{}, 0)
 		} else {
@@ -1024,7 +1024,7 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
-	if v, ok := d.GetOk("user"); ok {
+	if v, ok := d.GetOk("user"); ok || d.HasChange("user") {
 		if setArgNil {
 			obj["user"] = make([]struct{}, 0)
 		} else {

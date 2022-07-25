@@ -787,11 +787,11 @@ func expandFirewallPolicy46Dstintf(d *schema.ResourceData, v interface{}, pre st
 
 func expandFirewallPolicy46Srcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -819,11 +819,11 @@ func expandFirewallPolicy46SrcaddrName(d *schema.ResourceData, v interface{}, pr
 
 func expandFirewallPolicy46Dstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -863,11 +863,11 @@ func expandFirewallPolicy46Schedule(d *schema.ResourceData, v interface{}, pre s
 
 func expandFirewallPolicy46Service(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -935,11 +935,11 @@ func expandFirewallPolicy46Ippool(d *schema.ResourceData, v interface{}, pre str
 
 func expandFirewallPolicy46Poolname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1028,7 +1028,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr"); ok {
+	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
 
 		t, err := expandFirewallPolicy46Srcaddr(d, v, "srcaddr", sv)
 		if err != nil {
@@ -1038,7 +1038,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr"); ok {
+	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
 
 		t, err := expandFirewallPolicy46Dstaddr(d, v, "dstaddr", sv)
 		if err != nil {
@@ -1078,7 +1078,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("service"); ok {
+	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
 
 		t, err := expandFirewallPolicy46Service(d, v, "service", sv)
 		if err != nil {
@@ -1188,7 +1188,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("poolname"); ok {
+	if v, ok := d.GetOk("poolname"); ok || d.HasChange("poolname") {
 
 		t, err := expandFirewallPolicy46Poolname(d, v, "poolname", sv)
 		if err != nil {

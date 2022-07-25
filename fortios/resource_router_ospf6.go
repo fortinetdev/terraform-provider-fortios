@@ -2044,11 +2044,11 @@ func expandRouterOspf6RestartOnTopologyChange(d *schema.ResourceData, v interfac
 
 func expandRouterOspf6Area(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2135,7 +2135,7 @@ func expandRouterOspf6Area(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["ipsec-keys"], _ = expandRouterOspf6AreaIpsecKeys(d, i["ipsec_keys"], pre_append, sv)
 		} else {
@@ -2143,7 +2143,7 @@ func expandRouterOspf6Area(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["range"], _ = expandRouterOspf6AreaRange(d, i["range"], pre_append, sv)
 		} else {
@@ -2151,7 +2151,7 @@ func expandRouterOspf6Area(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_link"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["virtual-link"], _ = expandRouterOspf6AreaVirtualLink(d, i["virtual_link"], pre_append, sv)
 		} else {
@@ -2220,11 +2220,11 @@ func expandRouterOspf6AreaIpsecEncAlg(d *schema.ResourceData, v interface{}, pre
 
 func expandRouterOspf6AreaIpsecKeys(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2272,11 +2272,11 @@ func expandRouterOspf6AreaIpsecKeysEncKey(d *schema.ResourceData, v interface{},
 
 func expandRouterOspf6AreaRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2324,11 +2324,11 @@ func expandRouterOspf6AreaRangeAdvertise(d *schema.ResourceData, v interface{}, 
 
 func expandRouterOspf6AreaVirtualLink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2397,7 +2397,7 @@ func expandRouterOspf6AreaVirtualLink(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["ipsec-keys"], _ = expandRouterOspf6AreaVirtualLinkIpsecKeys(d, i["ipsec_keys"], pre_append, sv)
 		} else {
@@ -2454,11 +2454,11 @@ func expandRouterOspf6AreaVirtualLinkIpsecEncAlg(d *schema.ResourceData, v inter
 
 func expandRouterOspf6AreaVirtualLinkIpsecKeys(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2506,11 +2506,11 @@ func expandRouterOspf6AreaVirtualLinkIpsecKeysEncKey(d *schema.ResourceData, v i
 
 func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2627,7 +2627,7 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["ipsec-keys"], _ = expandRouterOspf6Ospf6InterfaceIpsecKeys(d, i["ipsec_keys"], pre_append, sv)
 		} else {
@@ -2635,7 +2635,7 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["neighbor"], _ = expandRouterOspf6Ospf6InterfaceNeighbor(d, i["neighbor"], pre_append, sv)
 		} else {
@@ -2724,11 +2724,11 @@ func expandRouterOspf6Ospf6InterfaceIpsecEncAlg(d *schema.ResourceData, v interf
 
 func expandRouterOspf6Ospf6InterfaceIpsecKeys(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2776,11 +2776,11 @@ func expandRouterOspf6Ospf6InterfaceIpsecKeysEncKey(d *schema.ResourceData, v in
 
 func expandRouterOspf6Ospf6InterfaceNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2838,11 +2838,11 @@ func expandRouterOspf6Ospf6InterfaceNeighborPriority(d *schema.ResourceData, v i
 
 func expandRouterOspf6Redistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2910,11 +2910,11 @@ func expandRouterOspf6RedistributeMetricType(d *schema.ResourceData, v interface
 
 func expandRouterOspf6PassiveInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2942,11 +2942,11 @@ func expandRouterOspf6PassiveInterfaceName(d *schema.ResourceData, v interface{}
 
 func expandRouterOspf6SummaryAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -3201,7 +3201,7 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("area"); ok {
+	if v, ok := d.GetOk("area"); ok || d.HasChange("area") {
 		if setArgNil {
 			obj["area"] = make([]struct{}, 0)
 		} else {
@@ -3215,7 +3215,7 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("ospf6_interface"); ok {
+	if v, ok := d.GetOk("ospf6_interface"); ok || d.HasChange("ospf6_interface") {
 		if setArgNil {
 			obj["ospf6-interface"] = make([]struct{}, 0)
 		} else {
@@ -3229,7 +3229,7 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
+	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
 		if setArgNil {
 			obj["redistribute"] = make([]struct{}, 0)
 		} else {
@@ -3243,7 +3243,7 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("passive_interface"); ok {
+	if v, ok := d.GetOk("passive_interface"); ok || d.HasChange("passive_interface") {
 		if setArgNil {
 			obj["passive-interface"] = make([]struct{}, 0)
 		} else {
@@ -3257,7 +3257,7 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOk("summary_address"); ok {
+	if v, ok := d.GetOk("summary_address"); ok || d.HasChange("summary_address") {
 		if setArgNil {
 			obj["summary-address"] = make([]struct{}, 0)
 		} else {

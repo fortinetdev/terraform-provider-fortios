@@ -308,11 +308,11 @@ func expandIcapServerGroupLdbMethod(d *schema.ResourceData, v interface{}, pre s
 
 func expandIcapServerGroupServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -371,7 +371,7 @@ func getObjectIcapServerGroup(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("server_list"); ok {
+	if v, ok := d.GetOk("server_list"); ok || d.HasChange("server_list") {
 
 		t, err := expandIcapServerGroupServerList(d, v, "server_list", sv)
 		if err != nil {

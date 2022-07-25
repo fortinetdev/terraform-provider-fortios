@@ -1067,11 +1067,11 @@ func expandFirewallSnifferIpThreatfeedStatus(d *schema.ResourceData, v interface
 
 func expandFirewallSnifferIpThreatfeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1111,11 +1111,11 @@ func expandFirewallSnifferIpsDosStatus(d *schema.ResourceData, v interface{}, pr
 
 func expandFirewallSnifferAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1512,7 +1512,7 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("ip_threatfeed"); ok {
+	if v, ok := d.GetOk("ip_threatfeed"); ok || d.HasChange("ip_threatfeed") {
 
 		t, err := expandFirewallSnifferIpThreatfeed(d, v, "ip_threatfeed", sv)
 		if err != nil {
@@ -1552,7 +1552,7 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("anomaly"); ok {
+	if v, ok := d.GetOk("anomaly"); ok || d.HasChange("anomaly") {
 
 		t, err := expandFirewallSnifferAnomaly(d, v, "anomaly", sv)
 		if err != nil {

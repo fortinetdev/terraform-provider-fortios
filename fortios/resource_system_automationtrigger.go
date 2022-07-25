@@ -735,11 +735,11 @@ func expandSystemAutomationTriggerEventType(d *schema.ResourceData, v interface{
 
 func expandSystemAutomationTriggerVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -803,11 +803,11 @@ func expandSystemAutomationTriggerTriggerMinute(d *schema.ResourceData, v interf
 
 func expandSystemAutomationTriggerFields(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -879,11 +879,11 @@ func expandSystemAutomationTriggerFabricEventSeverity(d *schema.ResourceData, v 
 
 func expandSystemAutomationTriggerLogidBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -952,7 +952,7 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok {
+	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
 
 		t, err := expandSystemAutomationTriggerVdom(d, v, "vdom", sv)
 		if err != nil {
@@ -1052,7 +1052,7 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("fields"); ok {
+	if v, ok := d.GetOk("fields"); ok || d.HasChange("fields") {
 
 		t, err := expandSystemAutomationTriggerFields(d, v, "fields", sv)
 		if err != nil {
@@ -1122,7 +1122,7 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("logid_block"); ok {
+	if v, ok := d.GetOk("logid_block"); ok || d.HasChange("logid_block") {
 
 		t, err := expandSystemAutomationTriggerLogidBlock(d, v, "logid_block", sv)
 		if err != nil {

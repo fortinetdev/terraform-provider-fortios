@@ -710,11 +710,11 @@ func expandAuthenticationRuleProtocol(d *schema.ResourceData, v interface{}, pre
 
 func expandAuthenticationRuleSrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -742,11 +742,11 @@ func expandAuthenticationRuleSrcintfName(d *schema.ResourceData, v interface{}, 
 
 func expandAuthenticationRuleSrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -774,11 +774,11 @@ func expandAuthenticationRuleSrcaddrName(d *schema.ResourceData, v interface{}, 
 
 func expandAuthenticationRuleDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -806,11 +806,11 @@ func expandAuthenticationRuleDstaddrName(d *schema.ResourceData, v interface{}, 
 
 func expandAuthenticationRuleSrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -838,11 +838,11 @@ func expandAuthenticationRuleSrcaddr6Name(d *schema.ResourceData, v interface{},
 
 func expandAuthenticationRuleDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -929,7 +929,7 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("srcintf"); ok {
+	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
 
 		t, err := expandAuthenticationRuleSrcintf(d, v, "srcintf", sv)
 		if err != nil {
@@ -939,7 +939,7 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr"); ok {
+	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
 
 		t, err := expandAuthenticationRuleSrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
@@ -949,7 +949,7 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr"); ok {
+	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
 
 		t, err := expandAuthenticationRuleDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
@@ -959,7 +959,7 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("srcaddr6"); ok {
+	if v, ok := d.GetOk("srcaddr6"); ok || d.HasChange("srcaddr6") {
 
 		t, err := expandAuthenticationRuleSrcaddr6(d, v, "srcaddr6", sv)
 		if err != nil {
@@ -969,7 +969,7 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("dstaddr6"); ok {
+	if v, ok := d.GetOk("dstaddr6"); ok || d.HasChange("dstaddr6") {
 
 		t, err := expandAuthenticationRuleDstaddr6(d, v, "dstaddr6", sv)
 		if err != nil {

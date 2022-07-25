@@ -1393,11 +1393,11 @@ func expandReportChartPeriod(d *schema.ResourceData, v interface{}, pre string, 
 
 func expandReportChartDrillDownCharts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1778,11 +1778,11 @@ func expandReportChartLegendFontSize(d *schema.ResourceData, v interface{}, pre 
 
 func expandReportChartColumn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1827,7 +1827,7 @@ func expandReportChartColumn(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["mapping"], _ = expandReportChartColumnMapping(d, i["mapping"], pre_append, sv)
 		} else {
@@ -1868,11 +1868,11 @@ func expandReportChartColumnFooterUnit(d *schema.ResourceData, v interface{}, pr
 
 func expandReportChartColumnMapping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1991,7 +1991,7 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("drill_down_charts"); ok {
+	if v, ok := d.GetOk("drill_down_charts"); ok || d.HasChange("drill_down_charts") {
 
 		t, err := expandReportChartDrillDownCharts(d, v, "drill_down_charts", sv)
 		if err != nil {
@@ -2171,7 +2171,7 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("column"); ok {
+	if v, ok := d.GetOk("column"); ok || d.HasChange("column") {
 
 		t, err := expandReportChartColumn(d, v, "column", sv)
 		if err != nil {

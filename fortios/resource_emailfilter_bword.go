@@ -417,11 +417,11 @@ func expandEmailfilterBwordComment(d *schema.ResourceData, v interface{}, pre st
 
 func expandEmailfilterBwordEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -550,7 +550,7 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("entries"); ok {
+	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
 
 		t, err := expandEmailfilterBwordEntries(d, v, "entries", sv)
 		if err != nil {

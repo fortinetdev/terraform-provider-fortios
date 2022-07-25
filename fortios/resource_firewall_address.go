@@ -1160,11 +1160,11 @@ func expandFirewallAddressClearpassSpt(d *schema.ResourceData, v interface{}, pr
 
 func expandFirewallAddressMacaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1232,11 +1232,11 @@ func expandFirewallAddressSdn(d *schema.ResourceData, v interface{}, pre string,
 
 func expandFirewallAddressFssoGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1340,11 +1340,11 @@ func expandFirewallAddressObjId(d *schema.ResourceData, v interface{}, pre strin
 
 func expandFirewallAddressList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1372,11 +1372,11 @@ func expandFirewallAddressListIp(d *schema.ResourceData, v interface{}, pre stri
 
 func expandFirewallAddressTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1397,7 +1397,7 @@ func expandFirewallAddressTagging(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandFirewallAddressTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -1422,11 +1422,11 @@ func expandFirewallAddressTaggingCategory(d *schema.ResourceData, v interface{},
 
 func expandFirewallAddressTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1523,7 +1523,7 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("macaddr"); ok {
+	if v, ok := d.GetOk("macaddr"); ok || d.HasChange("macaddr") {
 
 		t, err := expandFirewallAddressMacaddr(d, v, "macaddr", sv)
 		if err != nil {
@@ -1633,7 +1633,7 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("fsso_group"); ok {
+	if v, ok := d.GetOk("fsso_group"); ok || d.HasChange("fsso_group") {
 
 		t, err := expandFirewallAddressFssoGroup(d, v, "fsso_group", sv)
 		if err != nil {
@@ -1833,7 +1833,7 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("list"); ok {
+	if v, ok := d.GetOk("list"); ok || d.HasChange("list") {
 
 		t, err := expandFirewallAddressList(d, v, "list", sv)
 		if err != nil {
@@ -1843,7 +1843,7 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandFirewallAddressTagging(d, v, "tagging", sv)
 		if err != nil {

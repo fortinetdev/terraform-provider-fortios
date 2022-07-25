@@ -806,11 +806,11 @@ func expandFirewallVip64Type(d *schema.ResourceData, v interface{}, pre string, 
 
 func expandFirewallVip64SrcFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -878,11 +878,11 @@ func expandFirewallVip64ServerType(d *schema.ResourceData, v interface{}, pre st
 
 func expandFirewallVip64Realservers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1025,11 +1025,11 @@ func expandFirewallVip64RealserversClientIp(d *schema.ResourceData, v interface{
 
 func expandFirewallVip64Monitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1108,7 +1108,7 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("src_filter"); ok {
+	if v, ok := d.GetOk("src_filter"); ok || d.HasChange("src_filter") {
 
 		t, err := expandFirewallVip64SrcFilter(d, v, "src_filter", sv)
 		if err != nil {
@@ -1218,7 +1218,7 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("realservers"); ok {
+	if v, ok := d.GetOk("realservers"); ok || d.HasChange("realservers") {
 
 		t, err := expandFirewallVip64Realservers(d, v, "realservers", sv)
 		if err != nil {
@@ -1228,7 +1228,7 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("monitor"); ok {
+	if v, ok := d.GetOk("monitor"); ok || d.HasChange("monitor") {
 
 		t, err := expandFirewallVip64Monitor(d, v, "monitor", sv)
 		if err != nil {

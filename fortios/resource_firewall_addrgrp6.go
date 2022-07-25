@@ -515,11 +515,11 @@ func expandFirewallAddrgrp6Comment(d *schema.ResourceData, v interface{}, pre st
 
 func expandFirewallAddrgrp6Member(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -547,11 +547,11 @@ func expandFirewallAddrgrp6MemberName(d *schema.ResourceData, v interface{}, pre
 
 func expandFirewallAddrgrp6Tagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -572,7 +572,7 @@ func expandFirewallAddrgrp6Tagging(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandFirewallAddrgrp6TaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -597,11 +597,11 @@ func expandFirewallAddrgrp6TaggingCategory(d *schema.ResourceData, v interface{}
 
 func expandFirewallAddrgrp6TaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -684,7 +684,7 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandFirewallAddrgrp6Member(d, v, "member", sv)
 		if err != nil {
@@ -694,7 +694,7 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandFirewallAddrgrp6Tagging(d, v, "tagging", sv)
 		if err != nil {

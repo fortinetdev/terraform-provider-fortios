@@ -473,11 +473,11 @@ func expandWirelessControllerHotspot20AnqpNaiRealmName(d *schema.ResourceData, v
 
 func expandWirelessControllerHotspot20AnqpNaiRealmNaiList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -504,7 +504,7 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiList(d *schema.ResourceData
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "eap_method"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["eap-method"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(d, i["eap_method"], pre_append, sv)
 		} else {
@@ -533,11 +533,11 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiListNaiRealm(d *schema.Reso
 
 func expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -558,7 +558,7 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(d *schema.Res
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_param"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["auth-param"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(d, i["auth_param"], pre_append, sv)
 		} else {
@@ -583,11 +583,11 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(d *sche
 
 func expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -646,7 +646,7 @@ func getObjectWirelessControllerHotspot20AnqpNaiRealm(d *schema.ResourceData, sv
 		}
 	}
 
-	if v, ok := d.GetOk("nai_list"); ok {
+	if v, ok := d.GetOk("nai_list"); ok || d.HasChange("nai_list") {
 
 		t, err := expandWirelessControllerHotspot20AnqpNaiRealmNaiList(d, v, "nai_list", sv)
 		if err != nil {

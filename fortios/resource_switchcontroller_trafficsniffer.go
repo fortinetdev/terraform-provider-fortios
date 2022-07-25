@@ -579,11 +579,11 @@ func expandSwitchControllerTrafficSnifferErspanIp(d *schema.ResourceData, v inte
 
 func expandSwitchControllerTrafficSnifferTargetMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -621,11 +621,11 @@ func expandSwitchControllerTrafficSnifferTargetMacDescription(d *schema.Resource
 
 func expandSwitchControllerTrafficSnifferTargetIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -663,11 +663,11 @@ func expandSwitchControllerTrafficSnifferTargetIpDescription(d *schema.ResourceD
 
 func expandSwitchControllerTrafficSnifferTargetPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -688,7 +688,7 @@ func expandSwitchControllerTrafficSnifferTargetPort(d *schema.ResourceData, v in
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "in_ports"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["in-ports"], _ = expandSwitchControllerTrafficSnifferTargetPortInPorts(d, i["in_ports"], pre_append, sv)
 		} else {
@@ -696,7 +696,7 @@ func expandSwitchControllerTrafficSnifferTargetPort(d *schema.ResourceData, v in
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "out_ports"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["out-ports"], _ = expandSwitchControllerTrafficSnifferTargetPortOutPorts(d, i["out_ports"], pre_append, sv)
 		} else {
@@ -721,11 +721,11 @@ func expandSwitchControllerTrafficSnifferTargetPortDescription(d *schema.Resourc
 
 func expandSwitchControllerTrafficSnifferTargetPortInPorts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -753,11 +753,11 @@ func expandSwitchControllerTrafficSnifferTargetPortInPortsName(d *schema.Resourc
 
 func expandSwitchControllerTrafficSnifferTargetPortOutPorts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -814,7 +814,7 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		}
 	}
 
-	if v, ok := d.GetOk("target_mac"); ok {
+	if v, ok := d.GetOk("target_mac"); ok || d.HasChange("target_mac") {
 		if setArgNil {
 			obj["target-mac"] = make([]struct{}, 0)
 		} else {
@@ -828,7 +828,7 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		}
 	}
 
-	if v, ok := d.GetOk("target_ip"); ok {
+	if v, ok := d.GetOk("target_ip"); ok || d.HasChange("target_ip") {
 		if setArgNil {
 			obj["target-ip"] = make([]struct{}, 0)
 		} else {
@@ -842,7 +842,7 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		}
 	}
 
-	if v, ok := d.GetOk("target_port"); ok {
+	if v, ok := d.GetOk("target_port"); ok || d.HasChange("target_port") {
 		if setArgNil {
 			obj["target-port"] = make([]struct{}, 0)
 		} else {

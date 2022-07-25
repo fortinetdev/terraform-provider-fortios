@@ -1283,11 +1283,11 @@ func expandSystemAutomationActionTlsCertificate(d *schema.ResourceData, v interf
 
 func expandSystemAutomationActionEmailTo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1471,11 +1471,11 @@ func expandSystemAutomationActionPort(d *schema.ResourceData, v interface{}, pre
 
 func expandSystemAutomationActionHttpHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1523,11 +1523,11 @@ func expandSystemAutomationActionHttpHeadersValue(d *schema.ResourceData, v inte
 
 func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1583,11 +1583,11 @@ func expandSystemAutomationActionSecurityTag(d *schema.ResourceData, v interface
 
 func expandSystemAutomationActionSdnConnector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1656,7 +1656,7 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("email_to"); ok {
+	if v, ok := d.GetOk("email_to"); ok || d.HasChange("email_to") {
 
 		t, err := expandSystemAutomationActionEmailTo(d, v, "email_to", sv)
 		if err != nil {
@@ -2056,7 +2056,7 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("http_headers"); ok {
+	if v, ok := d.GetOk("http_headers"); ok || d.HasChange("http_headers") {
 
 		t, err := expandSystemAutomationActionHttpHeaders(d, v, "http_headers", sv)
 		if err != nil {
@@ -2066,7 +2066,7 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("headers"); ok {
+	if v, ok := d.GetOk("headers"); ok || d.HasChange("headers") {
 
 		t, err := expandSystemAutomationActionHeaders(d, v, "headers", sv)
 		if err != nil {
@@ -2146,7 +2146,7 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("sdn_connector"); ok {
+	if v, ok := d.GetOk("sdn_connector"); ok || d.HasChange("sdn_connector") {
 
 		t, err := expandSystemAutomationActionSdnConnector(d, v, "sdn_connector", sv)
 		if err != nil {

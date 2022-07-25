@@ -292,11 +292,11 @@ func expandWirelessControllerWtpGroupPlatformType(d *schema.ResourceData, v inte
 
 func expandWirelessControllerWtpGroupWtps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -345,7 +345,7 @@ func getObjectWirelessControllerWtpGroup(d *schema.ResourceData, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("wtps"); ok {
+	if v, ok := d.GetOk("wtps"); ok || d.HasChange("wtps") {
 
 		t, err := expandWirelessControllerWtpGroupWtps(d, v, "wtps", sv)
 		if err != nil {

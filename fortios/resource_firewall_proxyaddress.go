@@ -801,11 +801,11 @@ func expandFirewallProxyAddressReferrer(d *schema.ResourceData, v interface{}, p
 
 func expandFirewallProxyAddressCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -853,11 +853,11 @@ func expandFirewallProxyAddressCaseSensitivity(d *schema.ResourceData, v interfa
 
 func expandFirewallProxyAddressHeaderGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -919,11 +919,11 @@ func expandFirewallProxyAddressColor(d *schema.ResourceData, v interface{}, pre 
 
 func expandFirewallProxyAddressTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -944,7 +944,7 @@ func expandFirewallProxyAddressTagging(d *schema.ResourceData, v interface{}, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["tags"], _ = expandFirewallProxyAddressTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
@@ -969,11 +969,11 @@ func expandFirewallProxyAddressTaggingCategory(d *schema.ResourceData, v interfa
 
 func expandFirewallProxyAddressTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1090,7 +1090,7 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("category"); ok {
+	if v, ok := d.GetOk("category"); ok || d.HasChange("category") {
 
 		t, err := expandFirewallProxyAddressCategory(d, v, "category", sv)
 		if err != nil {
@@ -1150,7 +1150,7 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("header_group"); ok {
+	if v, ok := d.GetOk("header_group"); ok || d.HasChange("header_group") {
 
 		t, err := expandFirewallProxyAddressHeaderGroup(d, v, "header_group", sv)
 		if err != nil {
@@ -1170,7 +1170,7 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 
 		t, err := expandFirewallProxyAddressTagging(d, v, "tagging", sv)
 		if err != nil {

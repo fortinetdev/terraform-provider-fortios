@@ -289,11 +289,11 @@ func expandWirelessControllerHotspot20H2QpOsuProviderNaiName(d *schema.ResourceD
 
 func expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -342,7 +342,7 @@ func getObjectWirelessControllerHotspot20H2QpOsuProviderNai(d *schema.ResourceDa
 		}
 	}
 
-	if v, ok := d.GetOk("nai_list"); ok {
+	if v, ok := d.GetOk("nai_list"); ok || d.HasChange("nai_list") {
 
 		t, err := expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(d, v, "nai_list", sv)
 		if err != nil {

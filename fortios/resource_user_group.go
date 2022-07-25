@@ -930,11 +930,11 @@ func expandUserGroupSsoAttributeValue(d *schema.ResourceData, v interface{}, pre
 
 func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -962,11 +962,11 @@ func expandUserGroupMemberName(d *schema.ResourceData, v interface{}, pre string
 
 func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1066,11 +1066,11 @@ func expandUserGroupMultipleGuestAdd(d *schema.ResourceData, v interface{}, pre 
 
 func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1269,7 +1269,7 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("member"); ok {
+	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
 
 		t, err := expandUserGroupMember(d, v, "member", sv)
 		if err != nil {
@@ -1279,7 +1279,7 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("match"); ok {
+	if v, ok := d.GetOk("match"); ok || d.HasChange("match") {
 
 		t, err := expandUserGroupMatch(d, v, "match", sv)
 		if err != nil {
@@ -1419,7 +1419,7 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("guest"); ok {
+	if v, ok := d.GetOk("guest"); ok || d.HasChange("guest") {
 
 		t, err := expandUserGroupGuest(d, v, "guest", sv)
 		if err != nil {

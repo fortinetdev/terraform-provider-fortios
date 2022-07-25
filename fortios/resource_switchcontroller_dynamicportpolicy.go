@@ -580,11 +580,11 @@ func expandSwitchControllerDynamicPortPolicyFortilink(d *schema.ResourceData, v 
 
 func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -617,7 +617,7 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["interface-tags"], _ = expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d, i["interface_tags"], pre_append, sv)
 		} else {
@@ -710,11 +710,11 @@ func expandSwitchControllerDynamicPortPolicyPolicyCategory(d *schema.ResourceDat
 
 func expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -813,7 +813,7 @@ func getObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, sv strin
 		}
 	}
 
-	if v, ok := d.GetOk("policy"); ok {
+	if v, ok := d.GetOk("policy"); ok || d.HasChange("policy") {
 
 		t, err := expandSwitchControllerDynamicPortPolicyPolicy(d, v, "policy", sv)
 		if err != nil {

@@ -484,11 +484,11 @@ func expandFirewallShapingProfileDefaultClassId(d *schema.ResourceData, v interf
 
 func expandFirewallShapingProfileShapingEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -657,7 +657,7 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("shaping_entries"); ok {
+	if v, ok := d.GetOk("shaping_entries"); ok || d.HasChange("shaping_entries") {
 
 		t, err := expandFirewallShapingProfileShapingEntries(d, v, "shaping_entries", sv)
 		if err != nil {

@@ -405,11 +405,11 @@ func expandVideofilterYoutubeChannelFilterDefaultAction(d *schema.ResourceData, 
 
 func expandVideofilterYoutubeChannelFilterEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -516,7 +516,7 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 		}
 	}
 
-	if v, ok := d.GetOk("entries"); ok {
+	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
 
 		t, err := expandVideofilterYoutubeChannelFilterEntries(d, v, "entries", sv)
 		if err != nil {

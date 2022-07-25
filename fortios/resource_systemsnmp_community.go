@@ -760,11 +760,11 @@ func expandSystemSnmpCommunityStatus(d *schema.ResourceData, v interface{}, pre 
 
 func expandSystemSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -832,11 +832,11 @@ func expandSystemSnmpCommunityHostsHostType(d *schema.ResourceData, v interface{
 
 func expandSystemSnmpCommunityHosts6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -952,11 +952,11 @@ func expandSystemSnmpCommunityMibView(d *schema.ResourceData, v interface{}, pre
 
 func expandSystemSnmpCommunityVdoms(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1015,7 +1015,7 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
-	if v, ok := d.GetOk("hosts"); ok {
+	if v, ok := d.GetOk("hosts"); ok || d.HasChange("hosts") {
 
 		t, err := expandSystemSnmpCommunityHosts(d, v, "hosts", sv)
 		if err != nil {
@@ -1025,7 +1025,7 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
-	if v, ok := d.GetOk("hosts6"); ok {
+	if v, ok := d.GetOk("hosts6"); ok || d.HasChange("hosts6") {
 
 		t, err := expandSystemSnmpCommunityHosts6(d, v, "hosts6", sv)
 		if err != nil {
@@ -1155,7 +1155,7 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
-	if v, ok := d.GetOk("vdoms"); ok {
+	if v, ok := d.GetOk("vdoms"); ok || d.HasChange("vdoms") {
 
 		t, err := expandSystemSnmpCommunityVdoms(d, v, "vdoms", sv)
 		if err != nil {

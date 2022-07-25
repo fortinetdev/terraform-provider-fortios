@@ -4249,11 +4249,11 @@ func expandFirewallSslSshProfileBlockBlacklistedCertificates(d *schema.ResourceD
 
 func expandFirewallSslSshProfileSslExempt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4361,11 +4361,11 @@ func expandFirewallSslSshProfileServerCert(d *schema.ResourceData, v interface{}
 
 func expandFirewallSslSshProfileSslServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -4708,7 +4708,7 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("ssl_exempt"); ok {
+	if v, ok := d.GetOk("ssl_exempt"); ok || d.HasChange("ssl_exempt") {
 
 		t, err := expandFirewallSslSshProfileSslExempt(d, v, "ssl_exempt", sv)
 		if err != nil {
@@ -4784,7 +4784,7 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("ssl_server"); ok {
+	if v, ok := d.GetOk("ssl_server"); ok || d.HasChange("ssl_server") {
 
 		t, err := expandFirewallSslSshProfileSslServer(d, v, "ssl_server", sv)
 		if err != nil {

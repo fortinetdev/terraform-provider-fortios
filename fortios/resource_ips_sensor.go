@@ -1499,11 +1499,11 @@ func expandIpsSensorExtendedLog(d *schema.ResourceData, v interface{}, pre strin
 
 func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1518,7 +1518,7 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["rule"], _ = expandIpsSensorEntriesRule(d, i["rule"], pre_append, sv)
 		} else {
@@ -1568,7 +1568,7 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["cve"], _ = expandIpsSensorEntriesCve(d, i["cve"], pre_append, sv)
 		} else {
@@ -1576,7 +1576,7 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vuln_type"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["vuln-type"], _ = expandIpsSensorEntriesVulnType(d, i["vuln_type"], pre_append, sv)
 		} else {
@@ -1644,7 +1644,7 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt_ip"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["exempt-ip"], _ = expandIpsSensorEntriesExemptIp(d, i["exempt_ip"], pre_append, sv)
 		} else {
@@ -1683,11 +1683,11 @@ func expandIpsSensorEntriesId(d *schema.ResourceData, v interface{}, pre string,
 
 func expandIpsSensorEntriesRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1743,11 +1743,11 @@ func expandIpsSensorEntriesDefaultStatus(d *schema.ResourceData, v interface{}, 
 
 func expandIpsSensorEntriesCve(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1775,11 +1775,11 @@ func expandIpsSensorEntriesCveCveEntry(d *schema.ResourceData, v interface{}, pr
 
 func expandIpsSensorEntriesVulnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1847,11 +1847,11 @@ func expandIpsSensorEntriesRateTrack(d *schema.ResourceData, v interface{}, pre 
 
 func expandIpsSensorEntriesExemptIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -1911,11 +1911,11 @@ func expandIpsSensorEntriesQuarantineLog(d *schema.ResourceData, v interface{}, 
 
 func expandIpsSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2063,11 +2063,11 @@ func expandIpsSensorFilterQuarantineLog(d *schema.ResourceData, v interface{}, p
 
 func expandIpsSensorOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2124,7 +2124,7 @@ func expandIpsSensorOverride(d *schema.ResourceData, v interface{}, pre string, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt_ip"
-		if _, ok := d.GetOk(pre_append); ok {
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
 			tmp["exempt-ip"], _ = expandIpsSensorOverrideExemptIp(d, i["exempt_ip"], pre_append, sv)
 		} else {
@@ -2173,11 +2173,11 @@ func expandIpsSensorOverrideQuarantineLog(d *schema.ResourceData, v interface{},
 
 func expandIpsSensorOverrideExemptIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -2286,7 +2286,7 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("entries"); ok {
+	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
 
 		t, err := expandIpsSensorEntries(d, v, "entries", sv)
 		if err != nil {
@@ -2296,7 +2296,7 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("filter"); ok {
+	if v, ok := d.GetOk("filter"); ok || d.HasChange("filter") {
 
 		t, err := expandIpsSensorFilter(d, v, "filter", sv)
 		if err != nil {
@@ -2306,7 +2306,7 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("override"); ok {
+	if v, ok := d.GetOk("override"); ok || d.HasChange("override") {
 
 		t, err := expandIpsSensorOverride(d, v, "override", sv)
 		if err != nil {

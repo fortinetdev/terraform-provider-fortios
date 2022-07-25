@@ -305,11 +305,11 @@ func expandWirelessControllerHotspot20AnqpVenueUrlName(d *schema.ResourceData, v
 
 func expandWirelessControllerHotspot20AnqpVenueUrlValueList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-
 	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
 
 	con := 0
 	for _, r := range l {
@@ -368,7 +368,7 @@ func getObjectWirelessControllerHotspot20AnqpVenueUrl(d *schema.ResourceData, sv
 		}
 	}
 
-	if v, ok := d.GetOk("value_list"); ok {
+	if v, ok := d.GetOk("value_list"); ok || d.HasChange("value_list") {
 
 		t, err := expandWirelessControllerHotspot20AnqpVenueUrlValueList(d, v, "value_list", sv)
 		if err != nil {
