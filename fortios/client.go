@@ -204,6 +204,7 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	}
 
 	tr := &http.Transport{
+		Proxy:           http.ProxyFromEnvironment,
 		TLSClientConfig: config,
 	}
 
@@ -278,6 +279,7 @@ func createFortiManagerClient(fClient *FortiClient, c *Config) error {
 	}
 
 	tr := &http.Transport{
+		Proxy:           http.ProxyFromEnvironment,
 		TLSClientConfig: config,
 	}
 
