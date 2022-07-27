@@ -77,7 +77,7 @@ pBmnz+IlqzrwBZBxmB+1xFrYATm/hZ3HMFrLKQVoTJgTP74/PIpCaO/mjis4
 
 **Step2: Prepare TF file with fortios_json_generic_api resource**
 
-```
+```hcl
 #cat main.tf
 provider "fortios" {
   hostname = "192.168.52.177"
@@ -110,7 +110,7 @@ EOF
 ```
 
 **Step3: Apply**
-```
+```hcl
 # terraform apply
 data.local_file.key_file: Refreshing state...
 data.local_file.crt_file: Refreshing state...
@@ -157,7 +157,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ![111](https://user-images.githubusercontent.com/49291382/99555680-86cc5400-29fb-11eb-8ae8-2c437f13595e.png)
 
 ### Delete Certificate:
-```
+```hcl
 resource "fortios_system_autoscript" "trname1" {
   interval    = 1
   name        = "delcerttest"

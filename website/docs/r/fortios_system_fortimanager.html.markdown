@@ -12,7 +12,7 @@ Configure FortiManager. Applies to FortiOS Version `<= 7.0.1`.
 By design considerations, the feature is using the fortios_system_centralmanagement resource as documented below.
 
 ## Example
-```
+```hcl
 resource "fortios_system_centralmanagement" "trname" {
   allow_monitor                 = "enable"
   allow_push_configuration      = "enable"

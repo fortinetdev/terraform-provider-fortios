@@ -59,7 +59,7 @@ $ unset "FORTIOS_IMPORT_TABLE"
 The feature can only be correctly supported when FortiOS Version >= 6.2.4, for FortiOS Version < 6.2.4, please use the following resource configuration as an alternative.
 
 ### Example
-```
+```hcl
 resource "fortios_system_autoscript" "trname1" {
   interval    = 1
   name        = "1"

@@ -13,7 +13,7 @@ By design considerations, the feature is using the fortios_system_autoscript res
 
 ## Example1
 
-```
+```hcl
 resource "fortios_system_autoscript" "trname" {
   interval    = 1
   name        = "1"
@@ -36,7 +36,7 @@ EOF
 
 ## Example2
 
-```
+```hcl
 resource "fortios_system_autoscript" "trname1" {
   interval    = 1
   name        = "1"
