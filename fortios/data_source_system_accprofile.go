@@ -14,8 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func dataSourceSystemAccprofile() *schema.Resource {
@@ -87,7 +87,6 @@ func dataSourceSystemAccprofile() *schema.Resource {
 			"netgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"cfg": &schema.Schema{
@@ -108,7 +107,6 @@ func dataSourceSystemAccprofile() *schema.Resource {
 			"sysgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"admin": &schema.Schema{
@@ -133,7 +131,6 @@ func dataSourceSystemAccprofile() *schema.Resource {
 			"fwgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"policy": &schema.Schema{
@@ -162,7 +159,6 @@ func dataSourceSystemAccprofile() *schema.Resource {
 			"loggrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"config": &schema.Schema{
@@ -187,7 +183,6 @@ func dataSourceSystemAccprofile() *schema.Resource {
 			"utmgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"antivirus": &schema.Schema{

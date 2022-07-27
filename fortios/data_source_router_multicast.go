@@ -14,8 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func dataSourceRouterMulticast() *schema.Resource {
@@ -43,7 +43,6 @@ func dataSourceRouterMulticast() *schema.Resource {
 			"pim_sm_global": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"message_interval": &schema.Schema{
@@ -269,7 +268,6 @@ func dataSourceRouterMulticast() *schema.Resource {
 						"igmp": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
-							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"access_group": &schema.Schema{

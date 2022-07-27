@@ -14,8 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
@@ -55,7 +55,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"http": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -188,7 +187,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"ftp": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -261,7 +259,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -310,7 +307,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -347,7 +343,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"pop3": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -396,7 +391,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"smtp": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -449,7 +443,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"nntp": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -494,7 +487,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"ssh": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
@@ -555,7 +547,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"dns": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -572,7 +563,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"cifs": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
@@ -649,7 +639,6 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 			"mail_signature": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{

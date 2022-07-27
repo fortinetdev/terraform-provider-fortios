@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceLogFortiAnalyzerSetting() *schema.Resource {

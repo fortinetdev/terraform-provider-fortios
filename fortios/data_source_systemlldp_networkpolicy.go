@@ -14,8 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
@@ -39,7 +39,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"voice": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -68,7 +67,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"voice_signaling": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -97,7 +95,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"guest": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -126,7 +123,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"guest_voice_signaling": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -155,7 +151,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"softphone": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -184,7 +179,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"video_conferencing": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -213,7 +207,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"streaming_video": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
@@ -242,7 +235,6 @@ func dataSourceSystemLldpNetworkPolicy() *schema.Resource {
 			"video_signaling": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
-				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
