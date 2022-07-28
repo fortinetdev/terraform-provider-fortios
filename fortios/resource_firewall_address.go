@@ -39,7 +39,6 @@ func resourceFirewallAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -83,12 +82,10 @@ func resourceFirewallAddress() *schema.Resource {
 			"start_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"end_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -104,25 +101,21 @@ func resourceFirewallAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"country": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wildcard_fqdn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cache_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wildcard": &schema.Schema{
 				Type:     schema.TypeString,
@@ -133,7 +126,6 @@ func resourceFirewallAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fsso_group": &schema.Schema{
 				Type:     schema.TypeList,
@@ -153,49 +145,41 @@ func resourceFirewallAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tenant": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"organization": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"epg_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"subnet_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sdn_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"policy_group": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"obj_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"obj_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -206,13 +190,11 @@ func resourceFirewallAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tag_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -222,19 +204,16 @@ func resourceFirewallAddress() *schema.Resource {
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"associated_interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter": &schema.Schema{
 				Type:         schema.TypeString,
@@ -1471,6 +1450,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -1541,6 +1522,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["start-mac"] = t
 		}
+	} else if d.HasChange("start_mac") {
+		obj["start-mac"] = nil
 	}
 
 	if v, ok := d.GetOk("end_mac"); ok {
@@ -1551,6 +1534,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["end-mac"] = t
 		}
+	} else if d.HasChange("end_mac") {
+		obj["end-mac"] = nil
 	}
 
 	if v, ok := d.GetOk("start_ip"); ok {
@@ -1581,6 +1566,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["fqdn"] = t
 		}
+	} else if d.HasChange("fqdn") {
+		obj["fqdn"] = nil
 	}
 
 	if v, ok := d.GetOk("country"); ok {
@@ -1591,6 +1578,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["country"] = t
 		}
+	} else if d.HasChange("country") {
+		obj["country"] = nil
 	}
 
 	if v, ok := d.GetOk("wildcard_fqdn"); ok {
@@ -1601,6 +1590,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["wildcard-fqdn"] = t
 		}
+	} else if d.HasChange("wildcard_fqdn") {
+		obj["wildcard-fqdn"] = nil
 	}
 
 	if v, ok := d.GetOkExists("cache_ttl"); ok {
@@ -1611,6 +1602,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["cache-ttl"] = t
 		}
+	} else if d.HasChange("cache_ttl") {
+		obj["cache-ttl"] = nil
 	}
 
 	if v, ok := d.GetOk("wildcard"); ok {
@@ -1631,6 +1624,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["sdn"] = t
 		}
+	} else if d.HasChange("sdn") {
+		obj["sdn"] = nil
 	}
 
 	if v, ok := d.GetOk("fsso_group"); ok || d.HasChange("fsso_group") {
@@ -1651,6 +1646,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("tenant"); ok {
@@ -1661,6 +1658,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["tenant"] = t
 		}
+	} else if d.HasChange("tenant") {
+		obj["tenant"] = nil
 	}
 
 	if v, ok := d.GetOk("organization"); ok {
@@ -1671,6 +1670,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["organization"] = t
 		}
+	} else if d.HasChange("organization") {
+		obj["organization"] = nil
 	}
 
 	if v, ok := d.GetOk("epg_name"); ok {
@@ -1681,6 +1682,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["epg-name"] = t
 		}
+	} else if d.HasChange("epg_name") {
+		obj["epg-name"] = nil
 	}
 
 	if v, ok := d.GetOk("subnet_name"); ok {
@@ -1691,6 +1694,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["subnet-name"] = t
 		}
+	} else if d.HasChange("subnet_name") {
+		obj["subnet-name"] = nil
 	}
 
 	if v, ok := d.GetOk("sdn_tag"); ok {
@@ -1701,6 +1706,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["sdn-tag"] = t
 		}
+	} else if d.HasChange("sdn_tag") {
+		obj["sdn-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("policy_group"); ok {
@@ -1711,6 +1718,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["policy-group"] = t
 		}
+	} else if d.HasChange("policy_group") {
+		obj["policy-group"] = nil
 	}
 
 	if v, ok := d.GetOk("obj_tag"); ok {
@@ -1721,6 +1730,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["obj-tag"] = t
 		}
+	} else if d.HasChange("obj_tag") {
+		obj["obj-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("obj_type"); ok {
@@ -1741,6 +1752,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["tag-detection-level"] = t
 		}
+	} else if d.HasChange("tag_detection_level") {
+		obj["tag-detection-level"] = nil
 	}
 
 	if v, ok := d.GetOk("tag_type"); ok {
@@ -1751,6 +1764,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["tag-type"] = t
 		}
+	} else if d.HasChange("tag_type") {
+		obj["tag-type"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -1761,6 +1776,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
@@ -1771,6 +1788,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	if v, ok := d.GetOk("associated_interface"); ok {
@@ -1781,6 +1800,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["associated-interface"] = t
 		}
+	} else if d.HasChange("associated_interface") {
+		obj["associated-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -1791,6 +1812,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
@@ -1801,6 +1824,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["filter"] = t
 		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
 	}
 
 	if v, ok := d.GetOk("sdn_addr_type"); ok {
@@ -1831,6 +1856,8 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["obj-id"] = t
 		}
+	} else if d.HasChange("obj_id") {
+		obj["obj-id"] = nil
 	}
 
 	if v, ok := d.GetOk("list"); ok || d.HasChange("list") {
