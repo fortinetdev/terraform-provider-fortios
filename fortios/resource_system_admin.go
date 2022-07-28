@@ -2141,15 +2141,15 @@ func expandSystemAdminVdomName(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemAdminSshPublicKey1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandSystemAdminSshPublicKey2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandSystemAdminSshPublicKey3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandSystemAdminSshCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

@@ -211,7 +211,8 @@ func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
 
 func toCertFormat(v interface{}) interface{} {
 	if t, ok := v.(string); ok {
-		if t != "" {
+		if t != "" && !strings.HasPrefix(t, "\"") {
+			t = strings.TrimRight(t, "\n")
 			return "\"" + t + "\""
 		}
 	}
