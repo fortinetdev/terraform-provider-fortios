@@ -237,6 +237,7 @@ func resourceFirewallAddress() *schema.Resource {
 			},
 			"list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1858,16 +1859,6 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	} else if d.HasChange("obj_id") {
 		obj["obj-id"] = nil
-	}
-
-	if v, ok := d.GetOk("list"); ok || d.HasChange("list") {
-
-		t, err := expandFirewallAddressList(d, v, "list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["list"] = t
-		}
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
