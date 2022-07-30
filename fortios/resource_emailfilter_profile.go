@@ -663,6 +663,7 @@ func flattenEmailfilterProfileFileFilterEntries(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "filter", d)
 	return result
 }
 
@@ -721,6 +722,7 @@ func flattenEmailfilterProfileFileFilterEntriesFileType(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

@@ -584,6 +584,7 @@ func flattenSystemSamlServiceProvidersAssertionAttributes(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

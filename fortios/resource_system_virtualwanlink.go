@@ -1670,6 +1670,7 @@ func flattenSystemVirtualWanLinkHealthCheckMembers(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "seq_num", d)
 	return result
 }
 
@@ -1736,6 +1737,7 @@ func flattenSystemVirtualWanLinkHealthCheckSla(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2258,6 +2260,7 @@ func flattenSystemVirtualWanLinkServiceInputDevice(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2348,6 +2351,7 @@ func flattenSystemVirtualWanLinkServiceDst(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2394,6 +2398,7 @@ func flattenSystemVirtualWanLinkServiceSrc(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2436,6 +2441,7 @@ func flattenSystemVirtualWanLinkServiceDst6(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2478,6 +2484,7 @@ func flattenSystemVirtualWanLinkServiceSrc6(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2524,6 +2531,7 @@ func flattenSystemVirtualWanLinkServiceUsers(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2566,6 +2574,7 @@ func flattenSystemVirtualWanLinkServiceGroups(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2612,6 +2621,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCustom(v interface{}, d *s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2654,6 +2664,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCustomGroup(v interface{},
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2696,6 +2707,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceName(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2738,6 +2750,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceId(v interface{}, d *schem
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2780,6 +2793,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceGroup(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2822,6 +2836,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrl(v interface{}, d *
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2864,6 +2879,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(v interface{}
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2906,6 +2922,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCtrl(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2948,6 +2965,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroup(v interface{}, d
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3044,6 +3062,7 @@ func flattenSystemVirtualWanLinkServiceSla(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "health_check", d)
 	return result
 }
 
@@ -3090,6 +3109,7 @@ func flattenSystemVirtualWanLinkServicePriorityMembers(v interface{}, d *schema.
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "seq_num", d)
 	return result
 }
 

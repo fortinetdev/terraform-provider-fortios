@@ -363,6 +363,7 @@ func flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(v interface
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vlan_name", d)
 	return result
 }
 

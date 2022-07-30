@@ -784,6 +784,7 @@ func flattenReportLayoutPageHeaderHeaderItem(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -905,6 +906,7 @@ func flattenReportLayoutPageFooterFooterItem(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1180,6 +1182,7 @@ func flattenReportLayoutBodyItemParameters(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1252,6 +1255,7 @@ func flattenReportLayoutBodyItemList(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

@@ -1291,6 +1291,7 @@ func flattenSystemHaVclusterVdom(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

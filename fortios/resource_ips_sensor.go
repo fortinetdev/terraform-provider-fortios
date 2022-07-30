@@ -766,6 +766,7 @@ func flattenIpsSensorEntriesRule(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -839,6 +840,7 @@ func flattenIpsSensorEntriesCve(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "cve_entry", d)
 	return result
 }
 
@@ -881,6 +883,7 @@ func flattenIpsSensorEntriesVulnType(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -975,6 +978,7 @@ func flattenIpsSensorEntriesExemptIp(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1348,6 +1352,7 @@ func flattenIpsSensorOverrideExemptIp(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

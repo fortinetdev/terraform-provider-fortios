@@ -460,6 +460,7 @@ func flattenDnsfilterProfileFtgdDnsFilters(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

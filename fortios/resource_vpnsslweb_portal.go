@@ -1416,6 +1416,7 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1556,6 +1557,7 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksFormData(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1820,6 +1822,7 @@ func flattenVpnSslWebPortalMacAddrCheckRuleMacAddrList(v interface{}, d *schema.
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "addr", d)
 	return result
 }
 

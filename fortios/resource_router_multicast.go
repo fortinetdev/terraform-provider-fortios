@@ -849,6 +849,7 @@ func flattenRouterMulticastPimSmGlobalRpAddress(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1144,6 +1145,7 @@ func flattenRouterMulticastInterfaceJoinGroup(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "address", d)
 	return result
 }
 

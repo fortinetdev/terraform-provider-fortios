@@ -402,6 +402,7 @@ func flattenFirewallAddrgrp6TaggingTags(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

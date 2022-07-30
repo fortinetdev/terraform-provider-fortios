@@ -371,6 +371,7 @@ func flattenCifsProfileFileFilterEntries(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "filter", d)
 	return result
 }
 
@@ -425,6 +426,7 @@ func flattenCifsProfileFileFilterEntriesFileType(v interface{}, d *schema.Resour
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

@@ -319,6 +319,7 @@ func flattenVideofilterProfileFortiguardCategoryFilters(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

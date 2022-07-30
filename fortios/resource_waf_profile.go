@@ -1141,6 +1141,7 @@ func flattenWafProfileSignatureMainClass(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1199,6 +1200,7 @@ func flattenWafProfileSignatureDisabledSubClass(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1241,6 +1243,7 @@ func flattenWafProfileSignatureDisabledSignature(v interface{}, d *schema.Resour
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1335,6 +1338,7 @@ func flattenWafProfileSignatureCustomSignature(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2381,6 +2385,7 @@ func flattenWafProfileConstraintException(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2570,6 +2575,7 @@ func flattenWafProfileMethodMethodPolicy(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2683,6 +2689,7 @@ func flattenWafProfileAddressListTrustedAddress(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2725,6 +2732,7 @@ func flattenWafProfileAddressListBlockedAddress(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2880,6 +2888,7 @@ func flattenWafProfileUrlAccessAccessPattern(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

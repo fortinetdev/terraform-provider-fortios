@@ -567,6 +567,7 @@ func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -609,6 +610,7 @@ func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -651,6 +653,7 @@ func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

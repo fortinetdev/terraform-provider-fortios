@@ -995,6 +995,7 @@ func flattenWebfilterProfileFileFilterEntries(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "filter", d)
 	return result
 }
 
@@ -1057,6 +1058,7 @@ func flattenWebfilterProfileFileFilterEntriesFileType(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1196,6 +1198,7 @@ func flattenWebfilterProfileOverrideOvrdUserGroup(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1238,6 +1241,7 @@ func flattenWebfilterProfileOverrideProfile(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1419,6 +1423,7 @@ func flattenWebfilterProfileWebKeywordMatch(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "pattern", d)
 	return result
 }
 
@@ -1661,6 +1666,7 @@ func flattenWebfilterProfileFtgdWfFilters(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1715,6 +1721,7 @@ func flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(v interface{}, d *schema.Res
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1809,6 +1816,7 @@ func flattenWebfilterProfileFtgdWfQuota(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2018,6 +2026,7 @@ func flattenWebfilterProfileAntiphishInspectionEntries(v interface{}, d *schema.
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2080,6 +2089,7 @@ func flattenWebfilterProfileAntiphishCustomPatterns(v interface{}, d *schema.Res
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "pattern", d)
 	return result
 }
 

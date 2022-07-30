@@ -3620,6 +3620,7 @@ func flattenWirelessControllerWtpProfileRadio1Vaps(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3662,6 +3663,7 @@ func flattenWirelessControllerWtpProfileRadio1Channel(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "chan", d)
 	return result
 }
 
@@ -4419,6 +4421,7 @@ func flattenWirelessControllerWtpProfileRadio2Vaps(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -4461,6 +4464,7 @@ func flattenWirelessControllerWtpProfileRadio2Channel(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "chan", d)
 	return result
 }
 
@@ -5208,6 +5212,7 @@ func flattenWirelessControllerWtpProfileRadio3Vaps(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -5250,6 +5255,7 @@ func flattenWirelessControllerWtpProfileRadio3Channel(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "chan", d)
 	return result
 }
 
@@ -5997,6 +6003,7 @@ func flattenWirelessControllerWtpProfileRadio4Vaps(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -6039,6 +6046,7 @@ func flattenWirelessControllerWtpProfileRadio4Channel(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "chan", d)
 	return result
 }
 

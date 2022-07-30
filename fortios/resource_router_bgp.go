@@ -3764,6 +3764,7 @@ func flattenRouterBgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "advertise_routemap", d)
 	return result
 }
 
@@ -3826,6 +3827,7 @@ func flattenRouterBgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "advertise_routemap", d)
 	return result
 }
 
@@ -5638,6 +5640,7 @@ func flattenRouterBgpVrfExportRt(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "route_target", d)
 	return result
 }
 
@@ -5680,6 +5683,7 @@ func flattenRouterBgpVrfImportRt(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "route_target", d)
 	return result
 }
 
@@ -5738,6 +5742,7 @@ func flattenRouterBgpVrfLeakTargetU(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vrf", d)
 	return result
 }
 
@@ -5849,6 +5854,7 @@ func flattenRouterBgpVrf6LeakTarget(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vrf", d)
 	return result
 }
 
@@ -5960,6 +5966,7 @@ func flattenRouterBgpVrfLeakTarget(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vrf", d)
 	return result
 }
 
@@ -6071,6 +6078,7 @@ func flattenRouterBgpVrfLeak6Target(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vrf", d)
 	return result
 }
 

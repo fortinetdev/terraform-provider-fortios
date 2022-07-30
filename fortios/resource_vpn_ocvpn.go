@@ -602,6 +602,7 @@ func flattenVpnOcvpnOverlaysSubnets(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -718,6 +719,7 @@ func flattenVpnOcvpnForticlientAccessAuthGroups(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -764,6 +766,7 @@ func flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "overlay_name", d)
 	return result
 }
 

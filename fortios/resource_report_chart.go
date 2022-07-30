@@ -1138,6 +1138,7 @@ func flattenReportChartColumnMapping(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

@@ -2057,6 +2057,7 @@ func flattenSystemSdwanHealthCheckMembers(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "seq_num", d)
 	return result
 }
 
@@ -2133,6 +2134,7 @@ func flattenSystemSdwanHealthCheckSla(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2679,6 +2681,7 @@ func flattenSystemSdwanServiceInputDevice(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2725,6 +2728,7 @@ func flattenSystemSdwanServiceInputZone(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2815,6 +2819,7 @@ func flattenSystemSdwanServiceDst(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2861,6 +2866,7 @@ func flattenSystemSdwanServiceSrc(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2903,6 +2909,7 @@ func flattenSystemSdwanServiceDst6(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2945,6 +2952,7 @@ func flattenSystemSdwanServiceSrc6(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2991,6 +2999,7 @@ func flattenSystemSdwanServiceUsers(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3033,6 +3042,7 @@ func flattenSystemSdwanServiceGroups(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3079,6 +3089,7 @@ func flattenSystemSdwanServiceInternetServiceCustom(v interface{}, d *schema.Res
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3121,6 +3132,7 @@ func flattenSystemSdwanServiceInternetServiceCustomGroup(v interface{}, d *schem
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3163,6 +3175,7 @@ func flattenSystemSdwanServiceInternetServiceName(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3205,6 +3218,7 @@ func flattenSystemSdwanServiceInternetServiceGroup(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3247,6 +3261,7 @@ func flattenSystemSdwanServiceInternetServiceAppCtrl(v interface{}, d *schema.Re
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3289,6 +3304,7 @@ func flattenSystemSdwanServiceInternetServiceAppCtrlGroup(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3331,6 +3347,7 @@ func flattenSystemSdwanServiceInternetServiceAppCtrlCategory(v interface{}, d *s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3373,6 +3390,7 @@ func flattenSystemSdwanServiceHealthCheck(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3465,6 +3483,7 @@ func flattenSystemSdwanServiceSla(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "health_check", d)
 	return result
 }
 
@@ -3511,6 +3530,7 @@ func flattenSystemSdwanServicePriorityMembers(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "seq_num", d)
 	return result
 }
 
@@ -3553,6 +3573,7 @@ func flattenSystemSdwanServicePriorityZone(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3732,6 +3753,7 @@ func flattenSystemSdwanDuplicationServiceId(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3774,6 +3796,7 @@ func flattenSystemSdwanDuplicationSrcaddr(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3816,6 +3839,7 @@ func flattenSystemSdwanDuplicationDstaddr(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3858,6 +3882,7 @@ func flattenSystemSdwanDuplicationSrcaddr6(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3900,6 +3925,7 @@ func flattenSystemSdwanDuplicationDstaddr6(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3942,6 +3968,7 @@ func flattenSystemSdwanDuplicationSrcintf(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3984,6 +4011,7 @@ func flattenSystemSdwanDuplicationDstintf(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -4026,6 +4054,7 @@ func flattenSystemSdwanDuplicationService(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

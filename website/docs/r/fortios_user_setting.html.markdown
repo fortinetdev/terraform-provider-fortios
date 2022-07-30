@@ -56,7 +56,7 @@ The following arguments are supported:
 * `auth_ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 * `auth_ssl_max_proto_version` - Maximum supported protocol version for SSL/TLS connections (default is no limit). Valid values: `sslv3`, `tlsv1`, `tlsv1-1`, `tlsv1-2`, `tlsv1-3`.
 * `auth_ssl_sigalgs` - Set signature algorithms related to HTTPS authentication (affects TLS version <= 1.2 only, default is to enable all). Valid values: `no-rsa-pss`, `all`.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `auth_ports` block supports:

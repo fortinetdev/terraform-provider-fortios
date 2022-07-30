@@ -1819,6 +1819,7 @@ func flattenWirelessControllerVapMpskKeyMpskSchedules(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

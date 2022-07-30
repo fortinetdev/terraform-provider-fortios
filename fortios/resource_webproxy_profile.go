@@ -469,6 +469,7 @@ func flattenWebProxyProfileHeadersDstaddr(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -511,6 +512,7 @@ func flattenWebProxyProfileHeadersDstaddr6(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

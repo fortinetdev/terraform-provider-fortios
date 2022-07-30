@@ -870,6 +870,7 @@ func flattenRouterRouteMapRuleSetAspath(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "as", d)
 	return result
 }
 
@@ -920,6 +921,7 @@ func flattenRouterRouteMapRuleSetCommunity(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "community", d)
 	return result
 }
 
@@ -986,6 +988,7 @@ func flattenRouterRouteMapRuleSetExtcommunityRt(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "community", d)
 	return result
 }
 
@@ -1028,6 +1031,7 @@ func flattenRouterRouteMapRuleSetExtcommunitySoo(v interface{}, d *schema.Resour
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "community", d)
 	return result
 }
 

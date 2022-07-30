@@ -360,6 +360,7 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(v interface{
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 
@@ -418,6 +419,7 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(v i
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 

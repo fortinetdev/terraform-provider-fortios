@@ -21,7 +21,7 @@ The following arguments are supported:
 * `extended_log` - Enable/disable file-filter extended logging. Valid values: `disable`, `enable`.
 * `scan_archive_contents` - Enable/disable archive contents scan. (Not for CIFS) Valid values: `disable`, `enable`.
 * `rules` - File filter rules. The structure of `rules` block is documented below.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `rules` block supports:

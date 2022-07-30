@@ -717,6 +717,7 @@ func flattenIcapProfileRespmodForwardRulesHeaderGroup(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -775,6 +776,7 @@ func flattenIcapProfileRespmodForwardRulesHttpRespStatusCode(v interface{}, d *s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "code", d)
 	return result
 }
 

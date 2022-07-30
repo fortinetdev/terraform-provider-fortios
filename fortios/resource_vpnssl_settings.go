@@ -1235,6 +1235,7 @@ func flattenVpnSslSettingsAuthenticationRuleSourceInterface(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1277,6 +1278,7 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1323,6 +1325,7 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress6(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1369,6 +1372,7 @@ func flattenVpnSslSettingsAuthenticationRuleUsers(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1411,6 +1415,7 @@ func flattenVpnSslSettingsAuthenticationRuleGroups(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

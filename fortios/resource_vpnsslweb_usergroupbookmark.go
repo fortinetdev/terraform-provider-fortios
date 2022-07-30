@@ -725,6 +725,7 @@ func flattenVpnSslWebUserGroupBookmarkBookmarksFormData(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

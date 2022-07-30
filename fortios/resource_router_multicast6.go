@@ -348,6 +348,7 @@ func flattenRouterMulticast6PimSmGlobalRpAddress(v interface{}, d *schema.Resour
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

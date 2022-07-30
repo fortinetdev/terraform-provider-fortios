@@ -959,6 +959,7 @@ func flattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "spi", d)
 	return result
 }
 
@@ -1021,6 +1022,7 @@ func flattenRouterOspf6AreaRange(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1131,6 +1133,7 @@ func flattenRouterOspf6AreaVirtualLink(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1229,6 +1232,7 @@ func flattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "spi", d)
 	return result
 }
 
@@ -1524,6 +1528,7 @@ func flattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "spi", d)
 	return result
 }
 
@@ -1592,6 +1597,7 @@ func flattenRouterOspf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "ip6", d)
 	return result
 }
 

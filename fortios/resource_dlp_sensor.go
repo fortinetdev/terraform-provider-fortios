@@ -667,6 +667,7 @@ func flattenDlpSensorFilterSensitivity(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -709,6 +710,7 @@ func flattenDlpSensorFilterFpSensitivity(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

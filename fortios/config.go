@@ -99,12 +99,20 @@ func sortStringwithNumber(v string) string {
 
 func dynamic_sort_subtable(result []map[string]interface{}, fieldname string, d *schema.ResourceData) {
 	if v, ok := d.GetOk("dynamic_sort_subtable"); ok {
-		if v.(string) == "true" {
+		vs := v.(string)
+		if vs == "true" || vs == "natural" {
 			sort.Slice(result, func(i, j int) bool {
 				v1 := fmt.Sprintf("%v", result[i][fieldname])
 				v2 := fmt.Sprintf("%v", result[j][fieldname])
 
 				return sortStringwithNumber(v1) < sortStringwithNumber(v2)
+			})
+		} else if vs == "alphabetical" {
+			sort.Slice(result, func(i, j int) bool {
+				v1 := fmt.Sprintf("%v", result[i][fieldname])
+				v2 := fmt.Sprintf("%v", result[j][fieldname])
+
+				return v1 < v2
 			})
 		}
 	}

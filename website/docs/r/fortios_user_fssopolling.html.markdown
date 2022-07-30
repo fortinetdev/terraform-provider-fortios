@@ -26,7 +26,7 @@ The following arguments are supported:
 * `adgrp` - LDAP Group Info. The structure of `adgrp` block is documented below.
 * `smbv1` - Enable/disable support of SMBv1 for Samba. Valid values: `enable`, `disable`.
 * `smb_ntlmv1_auth` - Enable/disable support of NTLMv1 for Samba authentication. Valid values: `enable`, `disable`.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `adgrp` block supports:

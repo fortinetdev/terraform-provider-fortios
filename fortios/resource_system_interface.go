@@ -3172,6 +3172,7 @@ func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3571,6 +3572,7 @@ func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3966,6 +3968,7 @@ func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "prefix", d)
 	return result
 }
 
@@ -4124,6 +4127,7 @@ func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "prefix", d)
 	return result
 }
 
@@ -4186,6 +4190,7 @@ func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "domain", d)
 	return result
 }
 
@@ -4270,6 +4275,7 @@ func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "prefix_id", d)
 	return result
 }
 
@@ -4382,6 +4388,7 @@ func flattenSystemInterfaceIpv6Dhcp6IapdList(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "iaid", d)
 	return result
 }
 
@@ -4514,6 +4521,7 @@ func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vrid", d)
 	return result
 }
 

@@ -812,6 +812,7 @@ func flattenSystemSdnConnectorExternalAccountListRegionList(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "region", d)
 	return result
 }
 
@@ -947,6 +948,7 @@ func flattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1072,6 +1074,7 @@ func flattenSystemSdnConnectorRouteTableRoute(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1277,6 +1280,7 @@ func flattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

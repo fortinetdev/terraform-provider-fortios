@@ -398,6 +398,7 @@ func flattenFirewallProxyAddrgrpTaggingTags(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

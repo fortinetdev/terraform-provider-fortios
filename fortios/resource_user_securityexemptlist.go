@@ -357,6 +357,7 @@ func flattenUserSecurityExemptListRuleSrcaddr(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -399,6 +400,7 @@ func flattenUserSecurityExemptListRuleDevices(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -441,6 +443,7 @@ func flattenUserSecurityExemptListRuleDstaddr(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -483,6 +486,7 @@ func flattenUserSecurityExemptListRuleService(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

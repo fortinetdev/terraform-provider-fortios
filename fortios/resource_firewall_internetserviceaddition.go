@@ -334,6 +334,7 @@ func flattenFirewallInternetServiceAdditionEntryPortRange(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

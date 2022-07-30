@@ -1148,6 +1148,7 @@ func flattenRouterOspfAreaRange(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1294,6 +1295,7 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1386,6 +1388,7 @@ func flattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1444,6 +1447,7 @@ func flattenRouterOspfAreaFilterList(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1791,6 +1795,7 @@ func flattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

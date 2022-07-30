@@ -1069,6 +1069,7 @@ func flattenFirewallAccessProxy6ApiGatewayRealservers(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1171,6 +1172,7 @@ func flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKey(v interface{}, d
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1273,6 +1275,7 @@ func flattenFirewallAccessProxy6ApiGatewaySslCipherSuites(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "priority", d)
 	return result
 }
 
@@ -1626,6 +1629,7 @@ func flattenFirewallAccessProxy6ApiGateway6Realservers(v interface{}, d *schema.
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1728,6 +1732,7 @@ func flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKey(v interface{}, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1830,6 +1835,7 @@ func flattenFirewallAccessProxy6ApiGateway6SslCipherSuites(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "priority", d)
 	return result
 }
 

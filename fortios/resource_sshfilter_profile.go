@@ -536,6 +536,7 @@ func flattenSshFilterProfileFileFilterEntries(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "filter", d)
 	return result
 }
 
@@ -594,6 +595,7 @@ func flattenSshFilterProfileFileFilterEntriesFileType(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

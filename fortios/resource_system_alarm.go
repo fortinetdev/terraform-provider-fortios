@@ -506,6 +506,7 @@ func flattenSystemAlarmGroupsFwPolicyViolations(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

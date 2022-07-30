@@ -2496,6 +2496,7 @@ func flattenSwitchControllerManagedSwitchPortsAllowedVlans(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vlan_name", d)
 	return result
 }
 
@@ -2538,6 +2539,7 @@ func flattenSwitchControllerManagedSwitchPortsUntaggedVlans(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vlan_name", d)
 	return result
 }
 
@@ -2716,6 +2718,7 @@ func flattenSwitchControllerManagedSwitchPortsInterfaceTags(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "tag_name", d)
 	return result
 }
 
@@ -2758,6 +2761,7 @@ func flattenSwitchControllerManagedSwitchPortsExportTags(v interface{}, d *schem
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "tag_name", d)
 	return result
 }
 
@@ -2864,6 +2868,7 @@ func flattenSwitchControllerManagedSwitchPortsMembers(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "member_name", d)
 	return result
 }
 
@@ -2977,6 +2982,7 @@ func flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntry(v interface{}
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "entry_name", d)
 	return result
 }
 
@@ -3442,6 +3448,7 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityHosts(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3982,6 +3989,7 @@ func flattenSwitchControllerManagedSwitchMirrorSrcIngress(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -4024,6 +4032,7 @@ func flattenSwitchControllerManagedSwitchMirrorSrcEgress(v interface{}, d *schem
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -4285,6 +4294,7 @@ func flattenSwitchControllerManagedSwitchIgmpSnoopingVlans(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vlan_name", d)
 	return result
 }
 

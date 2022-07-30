@@ -2415,6 +2415,7 @@ func flattenFirewallProfileProtocolOptionsCifsServerKeytab(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "principal", d)
 	return result
 }
 

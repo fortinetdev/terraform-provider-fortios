@@ -365,6 +365,7 @@ func flattenUserDeviceGroupTaggingTags(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

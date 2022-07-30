@@ -448,6 +448,7 @@ func flattenSwitchControllerTrafficSnifferTargetPortInPorts(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -490,6 +491,7 @@ func flattenSwitchControllerTrafficSnifferTargetPortOutPorts(v interface{}, d *s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

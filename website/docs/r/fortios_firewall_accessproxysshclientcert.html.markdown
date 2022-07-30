@@ -22,7 +22,7 @@ The following arguments are supported:
 * `permit_user_rc` - Enable/disable appending permit-user-rc certificate extension. Valid values: `enable`, `disable`.
 * `cert_extension` - Configure certificate extension for user certificate. The structure of `cert_extension` block is documented below.
 * `auth_ca` - Name of the SSH server public key authentication CA.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `cert_extension` block supports:

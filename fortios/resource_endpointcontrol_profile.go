@@ -1022,6 +1022,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1148,6 +1149,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingS
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1258,6 +1260,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1346,6 +1349,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEn
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1398,6 +1402,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(v 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1595,6 +1600,7 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1790,6 +1796,7 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(v inte
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

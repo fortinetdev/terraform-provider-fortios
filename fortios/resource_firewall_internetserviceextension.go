@@ -427,6 +427,7 @@ func flattenFirewallInternetServiceExtensionEntryPortRange(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -477,6 +478,7 @@ func flattenFirewallInternetServiceExtensionEntryDst(v interface{}, d *schema.Re
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -602,6 +604,7 @@ func flattenFirewallInternetServiceExtensionDisableEntryPortRange(v interface{},
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -668,6 +671,7 @@ func flattenFirewallInternetServiceExtensionDisableEntryIpRange(v interface{}, d
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

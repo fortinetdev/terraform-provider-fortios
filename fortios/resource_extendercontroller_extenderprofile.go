@@ -754,6 +754,7 @@ func flattenExtenderControllerExtenderProfileCellularDataplan(v interface{}, d *
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -975,6 +976,7 @@ func flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiver(v i
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1530,6 +1532,7 @@ func flattenExtenderControllerExtenderProfileLanExtensionBackhaul(v interface{},
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

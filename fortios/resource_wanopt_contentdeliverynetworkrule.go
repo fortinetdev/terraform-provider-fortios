@@ -573,6 +573,7 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -619,6 +620,7 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "string", d)
 	return result
 }
 
@@ -673,6 +675,7 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -719,6 +722,7 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "string", d)
 	return result
 }
 

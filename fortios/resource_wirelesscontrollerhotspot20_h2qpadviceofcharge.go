@@ -371,6 +371,7 @@ func flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(v inter
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

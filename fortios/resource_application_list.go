@@ -786,6 +786,7 @@ func flattenApplicationListEntriesRisk(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "level", d)
 	return result
 }
 
@@ -828,6 +829,7 @@ func flattenApplicationListEntriesCategory(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -870,6 +872,7 @@ func flattenApplicationListEntriesSubCategory(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -912,6 +915,7 @@ func flattenApplicationListEntriesApplication(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -974,6 +978,7 @@ func flattenApplicationListEntriesExclusion(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1028,6 +1033,7 @@ func flattenApplicationListEntriesParameters(v interface{}, d *schema.ResourceDa
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1082,6 +1088,7 @@ func flattenApplicationListEntriesParametersMembers(v interface{}, d *schema.Res
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

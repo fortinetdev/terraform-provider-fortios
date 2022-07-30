@@ -473,6 +473,7 @@ func flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(v interface{}, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "tag_name", d)
 	return result
 }
 
