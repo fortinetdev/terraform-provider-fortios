@@ -16,11 +16,12 @@ import (
 
 // Config gets the authentication information from the given metadata
 type Config struct {
-	Hostname string
-	Token    string
-	Insecure *bool
-	CABundle string
-	Vdom     string
+	Hostname        string
+	Token           string
+	Insecure        *bool
+	CABundle        string
+	CABundleContent string
+	Vdom            string
 
 	FMG_Hostname string
 	FMG_Username string
@@ -99,7 +100,7 @@ func bFortiManagerHostnameExist(c *Config) bool {
 func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	config := &tls.Config{}
 
-	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom)
 
 	if auth.Hostname == "" {
 		_, err := auth.GetEnvHostname()
@@ -147,6 +148,10 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	pool := x509.NewCertPool()
 
 	if auth.CABundle != "" {
+		if auth.CABundleContent != "" {
+			return fmt.Errorf("\"cabundlefile\" and \"cabundlecontent\" could not exist at the same time! Please only configure one of them. If you are not configure \"cabundlefile\", please check the environment variable \"FORTIOS_CA_CABUNDLE\".")
+		}
+
 		f, err := os.Open(auth.CABundle)
 		if err != nil {
 			return fmt.Errorf("Error reading CA Bundle: %v", err)
@@ -159,6 +164,11 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		}
 
 		if !pool.AppendCertsFromPEM([]byte(caBundle)) {
+			return fmt.Errorf("Error reading CA Bundle")
+		}
+		config.RootCAs = pool
+	} else if auth.CABundleContent != "" {
+		if !pool.AppendCertsFromPEM([]byte(auth.CABundleContent)) {
 			return fmt.Errorf("Error reading CA Bundle")
 		}
 		config.RootCAs = pool
@@ -199,7 +209,7 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		config.InsecureSkipVerify = *c.Insecure
 	}
 
-	if config.InsecureSkipVerify == false && auth.CABundle == "" {
+	if config.InsecureSkipVerify == false && auth.CABundle == "" && auth.CABundleContent == "" {
 		return fmt.Errorf("Error getting CA Bundle, CA Bundle should be set when insecure is false")
 	}
 

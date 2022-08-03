@@ -43,6 +43,13 @@ func Provider() *schema.Provider {
 				Description: "CA Bundle file",
 			},
 
+			"cabundlecontent": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "CA Bundle file content",
+			},
+
 			"peerauth": {
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -1004,14 +1011,15 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	// Init client config with the values from TF files
 	config := Config{
-		Hostname:     d.Get("hostname").(string),
-		Token:        d.Get("token").(string),
-		CABundle:     d.Get("cabundlefile").(string),
-		Vdom:         d.Get("vdom").(string),
-		FMG_Hostname: d.Get("fmg_hostname").(string),
-		FMG_CABundle: d.Get("fmg_cabundlefile").(string),
-		FMG_Username: d.Get("fmg_username").(string),
-		FMG_Passwd:   d.Get("fmg_passwd").(string),
+		Hostname:        d.Get("hostname").(string),
+		Token:           d.Get("token").(string),
+		CABundle:        d.Get("cabundlefile").(string),
+		CABundleContent: d.Get("cabundlecontent").(string),
+		Vdom:            d.Get("vdom").(string),
+		FMG_Hostname:    d.Get("fmg_hostname").(string),
+		FMG_CABundle:    d.Get("fmg_cabundlefile").(string),
+		FMG_Username:    d.Get("fmg_username").(string),
+		FMG_Passwd:      d.Get("fmg_passwd").(string),
 
 		PeerAuth:   d.Get("peerauth").(string),
 		CaCert:     d.Get("cacert").(string),

@@ -10,6 +10,7 @@ type Auth struct {
 	Hostname string
 	Token    string
 	CABundle string
+	CABundleContent string
 	Vdom     string
 	Insecure *bool
 	Refresh  bool
@@ -21,11 +22,12 @@ type Auth struct {
 }
 
 // NewAuth inits Auth object with the given metadata
-func NewAuth(hostname, token, cabundle, peerauth, cacert, clientcert, clientkey, vdom string) *Auth {
+func NewAuth(hostname, token, cabundle, cabundlecontent, peerauth, cacert, clientcert, clientkey, vdom string) *Auth {
 	return &Auth{
 		Hostname: hostname,
 		Token:    token,
 		CABundle: cabundle,
+		CABundleContent: cabundlecontent,
 		Vdom:     vdom,
 
 		PeerAuth:   peerauth,
