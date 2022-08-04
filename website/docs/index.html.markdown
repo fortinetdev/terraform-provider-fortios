@@ -142,6 +142,8 @@ The following arguments are supported:
 
 * `cabundlefile` - (Optional) The path of a custom CA bundle file. You can specify a path to the file, or you can specify it by the `FORTIOS_CA_CABUNDLE` environment variable.
 
+* `cabundlecontent` - (Optional) The content of a custom CA bundle file. Note: `cabundlefile` and `cabundlecontent` cannot exist at the same time! Please only configure one of them.
+
 * `vdom` - (Optional) If the FortiGate unit is running in VDOM mode, you can use this argument to specify the name of the vdom to be set .
 
 
