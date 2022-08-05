@@ -1,5 +1,34 @@
-## 1.15.0 (Unreleased)
+## 1.16.0 (Unreleased)
 
+
+# 1.15.0 (Aug 5, 2022)
+
+BUG FIXES:
+
+* Improve sort blocks by adding options of alphabetical sorting and natural sorting;
+* Fix issue of parameter `split_dns` could not be deleted (#228);
+* Fix issue of parameter `certificate` always needs to be updated (#230);
+* Fix issue of parameter `associated_interface` could not be unset (#233);
+* Fix issue of SSH key needs extra quotes (#234);
+* Fix issue of parameter `list` always shows need to be updated (#235);
+* Fix issue of filter content could not contains spaces;
+* Fix issue of prarmeter `dhcp_relay_ip` has extra quotes (#239);
+
+IMPROVEMENTS:
+
+* Support FortiOS v7.0.5, v7.0.6, v7.2.0;
+* Add parameter `http_proxy` to provider configuration (#229);
+* Add parameter `cabundlecontent` to provider configuration (#238);
+
+FEATURES:
+
+* **New Resource:** `fortios_automation_setting`
+* **New Resource:** `fortios_dlp_dictionary`
+* **New Resource:** `fortios_dlp_datatype`
+* **New Resource:** `fortios_dlp_profile`
+* **New Resource:** `fortios_icap_servergroup`
+* **New Resource:** `fortios_system_fortindr`
+* **New Resource:** `fortios_systemsnmp_mibview`
 
 # 1.14.1 (Apr 25, 2022)
 
