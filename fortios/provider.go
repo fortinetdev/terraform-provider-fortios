@@ -50,6 +50,13 @@ func Provider() *schema.Provider {
 				Description: "CA Bundle file content",
 			},
 
+			"http_proxy": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "HTTP proxy address",
+			},
+
 			"peerauth": {
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -1016,6 +1023,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		CABundle:        d.Get("cabundlefile").(string),
 		CABundleContent: d.Get("cabundlecontent").(string),
 		Vdom:            d.Get("vdom").(string),
+		HTTPProxy:       d.Get("http_proxy").(string),
 		FMG_Hostname:    d.Get("fmg_hostname").(string),
 		FMG_CABundle:    d.Get("fmg_cabundlefile").(string),
 		FMG_Username:    d.Get("fmg_username").(string),

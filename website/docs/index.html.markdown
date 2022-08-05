@@ -146,6 +146,8 @@ The following arguments are supported:
 
 * `vdom` - (Optional) If the FortiGate unit is running in VDOM mode, you can use this argument to specify the name of the vdom to be set .
 
+* `http_proxy` - (Optional) HTTP proxy address. You can also specify it by the environment variable `HTTPS_PROXY` or `HTTP_PROXY`. 
+
 
 
 ## Configuration for FortiManager

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 
@@ -22,6 +23,7 @@ type Config struct {
 	CABundle        string
 	CABundleContent string
 	Vdom            string
+	HTTPProxy       string
 
 	FMG_Hostname string
 	FMG_Username string
@@ -100,7 +102,7 @@ func bFortiManagerHostnameExist(c *Config) bool {
 func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	config := &tls.Config{}
 
-	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy)
 
 	if auth.Hostname == "" {
 		_, err := auth.GetEnvHostname()
@@ -142,6 +144,12 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		_, err := auth.GetEnvClientKey()
 		if err != nil {
 			return fmt.Errorf("Error reading ClientKey")
+		}
+	}
+	if auth.HTTPProxy == "" {
+		_, err := auth.GetEnvHTTPProxy()
+		if err != nil {
+			return fmt.Errorf("Error reading HTTP proxy")
 		}
 	}
 
@@ -215,6 +223,15 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 
 	tr := &http.Transport{
 		TLSClientConfig: config,
+	}
+
+	if auth.HTTPProxy != "" {
+		var httpProxy *url.URL
+		httpProxy, err := url.Parse(auth.HTTPProxy)
+		if err != nil {
+			return fmt.Errorf("Error parsing HTTP proxy: %w", err)
+		}
+		tr.Proxy = http.ProxyURL(httpProxy)
 	}
 
 	client := &http.Client{
