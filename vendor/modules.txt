@@ -8,7 +8,7 @@ github.com/apparentlymart/go-textseg/v13/textseg
 github.com/davecgh/go-spew/spew
 # github.com/fatih/color v1.13.0
 github.com/fatih/color
-# github.com/fortinetdev/forti-sdk-go v1.6.0
+# github.com/fortinetdev/forti-sdk-go v1.9.0
 github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore
 github.com/fortinetdev/forti-sdk-go/fortimanager/util
 github.com/fortinetdev/forti-sdk-go/fortios/auth

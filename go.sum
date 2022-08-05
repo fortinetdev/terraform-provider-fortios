@@ -112,6 +112,8 @@ github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568 h1:BHsljHzVlRcyQhjr
 github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568/go.mod h1:xEzjJPgXI435gkrCt3MPfRiAkVrwSbHsst4LCFVfpJc=
 github.com/fortinetdev/forti-sdk-go v1.6.0 h1:ZvxYM4G0ucRTwSYdS5IpVhnNx6MjUpt6p3OeZTHUNxs=
 github.com/fortinetdev/forti-sdk-go v1.6.0/go.mod h1:7ZX6yVsDHI9cnWK4m4zVboM38MQpiPTTe0mcGAHXqQM=
+github.com/fortinetdev/forti-sdk-go v1.9.0 h1:Nitrg87a3qQaVoFb8cw4oqZ9gpXRv4/vfHK0amj7mzg=
+github.com/fortinetdev/forti-sdk-go v1.9.0/go.mod h1:7ZX6yVsDHI9cnWK4m4zVboM38MQpiPTTe0mcGAHXqQM=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/gliderlabs/ssh v0.2.2 h1:6zsha5zo/TWhRhwqCD3+EarCAgZ2yN28ipRnGPnwkI0=
 github.com/gliderlabs/ssh v0.2.2/go.mod h1:U7qILu1NlMHj9FlMhZLlkCdDnU1DBEAqr0aevW3Awn0=
