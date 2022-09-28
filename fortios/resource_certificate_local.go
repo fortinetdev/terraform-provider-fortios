@@ -632,11 +632,11 @@ func expandCertificateLocalComments(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandCertificateLocalPrivateKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandCertificateLocalCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandCertificateLocalCsr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

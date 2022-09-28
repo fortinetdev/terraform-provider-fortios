@@ -374,7 +374,7 @@ func expandVpnCertificateCaName(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandVpnCertificateCaCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandVpnCertificateCaRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

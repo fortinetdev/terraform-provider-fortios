@@ -374,7 +374,7 @@ func expandCertificateCaName(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandCertificateCaCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandCertificateCaRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

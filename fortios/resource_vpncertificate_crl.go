@@ -389,7 +389,7 @@ func expandVpnCertificateCrlName(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandVpnCertificateCrlCrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandVpnCertificateCrlRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
