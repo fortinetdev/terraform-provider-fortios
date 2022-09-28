@@ -183,6 +183,7 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 						},
 						"content_id": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{

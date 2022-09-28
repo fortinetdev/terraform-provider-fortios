@@ -119,6 +119,7 @@ func resourceReportLayout() *schema.Resource {
 			},
 			"page": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -145,6 +146,7 @@ func resourceReportLayout() *schema.Resource {
 						},
 						"header": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -202,6 +204,7 @@ func resourceReportLayout() *schema.Resource {
 						},
 						"footer": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{

@@ -70,6 +70,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"file_filter": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -157,6 +158,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -192,6 +194,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"pop3": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -227,6 +230,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"smtp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -272,6 +276,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -296,6 +301,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"msn_hotmail": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -315,6 +321,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"yahoo_mail": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -334,6 +341,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"gmail": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -353,6 +361,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"other_webmails": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

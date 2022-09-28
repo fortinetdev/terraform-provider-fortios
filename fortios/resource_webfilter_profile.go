@@ -69,6 +69,7 @@ func resourceWebfilterProfile() *schema.Resource {
 			},
 			"file_filter": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -161,6 +162,7 @@ func resourceWebfilterProfile() *schema.Resource {
 			},
 			"override": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -228,6 +230,7 @@ func resourceWebfilterProfile() *schema.Resource {
 			},
 			"web": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -341,6 +344,7 @@ func resourceWebfilterProfile() *schema.Resource {
 			},
 			"ftgd_wf": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -500,6 +504,7 @@ func resourceWebfilterProfile() *schema.Resource {
 			},
 			"antiphish": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

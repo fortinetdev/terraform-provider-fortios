@@ -824,6 +824,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"stp_settings": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -909,6 +910,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"snmp_sysinfo": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -952,6 +954,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"snmp_trap_threshold": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1152,6 +1155,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"switch_stp_settings": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1166,6 +1170,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"switch_log": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1236,6 +1241,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"storm_control": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1390,6 +1396,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"igmp_snooping": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1450,6 +1457,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			},
 			"n802_1x_settings": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

@@ -96,6 +96,7 @@ func resourceSwitchControllerVlan() *schema.Resource {
 			},
 			"portal_message_overrides": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

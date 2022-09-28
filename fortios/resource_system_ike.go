@@ -75,6 +75,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_1": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -100,6 +101,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_2": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -125,6 +127,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_5": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -150,6 +153,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_14": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -175,6 +179,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_15": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -200,6 +205,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_16": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -225,6 +231,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_17": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -250,6 +257,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_18": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -275,6 +283,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_19": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -300,6 +309,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_20": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -325,6 +335,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_21": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -350,6 +361,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_27": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -375,6 +387,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_28": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -400,6 +413,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_29": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -425,6 +439,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_30": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -450,6 +465,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_31": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -475,6 +491,7 @@ func resourceSystemIke() *schema.Resource {
 			},
 			"dh_group_32": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

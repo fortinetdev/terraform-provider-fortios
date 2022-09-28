@@ -54,6 +54,7 @@ func resourceVideofilterProfile() *schema.Resource {
 			},
 			"fortiguard_category": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

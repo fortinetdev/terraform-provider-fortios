@@ -1446,6 +1446,7 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"ipv6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

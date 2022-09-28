@@ -60,6 +60,7 @@ func resourceWanoptProfile() *schema.Resource {
 			},
 			"http": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -131,6 +132,7 @@ func resourceWanoptProfile() *schema.Resource {
 			},
 			"cifs": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -181,6 +183,7 @@ func resourceWanoptProfile() *schema.Resource {
 			},
 			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -221,6 +224,7 @@ func resourceWanoptProfile() *schema.Resource {
 			},
 			"ftp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -276,6 +280,7 @@ func resourceWanoptProfile() *schema.Resource {
 			},
 			"tcp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

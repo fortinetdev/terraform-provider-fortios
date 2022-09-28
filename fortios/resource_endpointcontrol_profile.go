@@ -44,6 +44,7 @@ func resourceEndpointControlProfile() *schema.Resource {
 			},
 			"forticlient_winmac_settings": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -354,6 +355,7 @@ func resourceEndpointControlProfile() *schema.Resource {
 			},
 			"forticlient_android_settings": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -441,6 +443,7 @@ func resourceEndpointControlProfile() *schema.Resource {
 			},
 			"forticlient_ios_settings": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

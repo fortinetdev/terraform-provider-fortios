@@ -44,6 +44,7 @@ func resourceSwitchControllerLocation() *schema.Resource {
 			},
 			"address_civic": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -257,6 +258,7 @@ func resourceSwitchControllerLocation() *schema.Resource {
 			},
 			"coordinates": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -300,6 +302,7 @@ func resourceSwitchControllerLocation() *schema.Resource {
 			},
 			"elin_number": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

@@ -108,6 +108,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"netgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -132,6 +133,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"sysgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -161,6 +163,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"fwgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -195,6 +198,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"loggrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -224,6 +228,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"utmgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

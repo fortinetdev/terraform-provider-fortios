@@ -61,6 +61,7 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 			},
 			"nac_ports": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

@@ -68,6 +68,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"http": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -249,6 +250,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"ftp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -352,6 +354,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -415,6 +418,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -463,6 +467,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"pop3": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -526,6 +531,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"smtp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -594,6 +600,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"nntp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -652,6 +659,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"ssh": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -734,6 +742,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"dns": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -754,6 +763,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"cifs": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -856,6 +866,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"mail_signature": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

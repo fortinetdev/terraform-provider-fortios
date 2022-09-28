@@ -120,6 +120,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 			},
 			"wan_extension": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -147,6 +148,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 			},
 			"controller_report": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -171,6 +173,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 			},
 			"modem1": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -235,6 +238,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 						},
 						"auto_switch": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -289,6 +293,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 			},
 			"modem2": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -353,6 +358,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 						},
 						"auto_switch": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{

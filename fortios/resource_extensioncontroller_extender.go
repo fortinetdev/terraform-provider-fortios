@@ -129,6 +129,7 @@ func resourceExtensionControllerExtender() *schema.Resource {
 			},
 			"wan_extension": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

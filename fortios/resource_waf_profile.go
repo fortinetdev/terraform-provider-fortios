@@ -54,6 +54,7 @@ func resourceWafProfile() *schema.Resource {
 			},
 			"signature": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -183,12 +184,14 @@ func resourceWafProfile() *schema.Resource {
 			},
 			"constraint": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"header_length": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -223,6 +226,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"content_length": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -257,6 +261,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"param_length": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -291,6 +296,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"line_length": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -325,6 +331,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"url_param_length": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -359,6 +366,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"version": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -388,6 +396,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"method": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -417,6 +426,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"hostname": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -446,6 +456,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"malformed": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -475,6 +486,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"max_cookie": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -509,6 +521,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"max_header_line": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -543,6 +556,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"max_url_param": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -577,6 +591,7 @@ func resourceWafProfile() *schema.Resource {
 						},
 						"max_range_segment": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -709,6 +724,7 @@ func resourceWafProfile() *schema.Resource {
 			},
 			"method": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -773,6 +789,7 @@ func resourceWafProfile() *schema.Resource {
 			},
 			"address_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

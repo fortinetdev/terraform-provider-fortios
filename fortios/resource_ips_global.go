@@ -130,6 +130,7 @@ func resourceIpsGlobal() *schema.Resource {
 			},
 			"tls_active_probe": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

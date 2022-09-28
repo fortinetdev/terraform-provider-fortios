@@ -49,6 +49,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"platform": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -101,6 +102,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"lan": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -379,6 +381,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"radio_1": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -791,6 +794,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"radio_2": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1203,6 +1207,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"radio_3": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -1609,6 +1614,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"radio_4": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -2015,6 +2021,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"lbs": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -2162,6 +2169,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 			},
 			"esl_ses_dongle": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

@@ -188,6 +188,7 @@ func resourceVpnOcvpn() *schema.Resource {
 			},
 			"forticlient_access": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

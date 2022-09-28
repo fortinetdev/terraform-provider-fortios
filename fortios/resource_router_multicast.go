@@ -52,6 +52,7 @@ func resourceRouterMulticast() *schema.Resource {
 			},
 			"pim_sm_global": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -356,6 +357,7 @@ func resourceRouterMulticast() *schema.Resource {
 						},
 						"igmp": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{

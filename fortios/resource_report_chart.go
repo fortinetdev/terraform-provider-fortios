@@ -117,6 +117,7 @@ func resourceReportChart() *schema.Resource {
 			},
 			"x_series": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -187,6 +188,7 @@ func resourceReportChart() *schema.Resource {
 			},
 			"y_series": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -260,6 +262,7 @@ func resourceReportChart() *schema.Resource {
 			},
 			"category_series": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -281,6 +284,7 @@ func resourceReportChart() *schema.Resource {
 			},
 			"value_series": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

@@ -99,6 +99,7 @@ func resourceVpnCertificateSetting() *schema.Resource {
 			},
 			"crl_verification": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

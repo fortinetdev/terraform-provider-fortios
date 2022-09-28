@@ -202,6 +202,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			},
 			"lan": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -347,6 +348,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			},
 			"radio_1": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -473,6 +475,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			},
 			"radio_2": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -599,6 +602,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			},
 			"radio_3": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -719,6 +723,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			},
 			"radio_4": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

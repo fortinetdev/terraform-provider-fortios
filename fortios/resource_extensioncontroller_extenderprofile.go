@@ -86,6 +86,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 			},
 			"cellular": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -106,6 +107,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 						},
 						"controller_report": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -131,6 +133,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 						},
 						"sms_notification": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -142,6 +145,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 									},
 									"alert": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
@@ -226,6 +230,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 						},
 						"modem1": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -284,6 +289,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 									},
 									"auto_switch": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
@@ -339,6 +345,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 						},
 						"modem2": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -397,6 +404,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 									},
 									"auto_switch": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
@@ -455,6 +463,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 			},
 			"lan_extension": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

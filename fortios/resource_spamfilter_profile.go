@@ -84,6 +84,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -114,6 +115,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"pop3": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -144,6 +146,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"smtp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -184,6 +187,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -203,6 +207,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"msn_hotmail": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -217,6 +222,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"yahoo_mail": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -231,6 +237,7 @@ func resourceSpamfilterProfile() *schema.Resource {
 			},
 			"gmail": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

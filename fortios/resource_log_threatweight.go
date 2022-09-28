@@ -42,6 +42,7 @@ func resourceLogThreatWeight() *schema.Resource {
 			},
 			"level": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -95,6 +96,7 @@ func resourceLogThreatWeight() *schema.Resource {
 			},
 			"malware": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -199,6 +201,7 @@ func resourceLogThreatWeight() *schema.Resource {
 			},
 			"ips": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

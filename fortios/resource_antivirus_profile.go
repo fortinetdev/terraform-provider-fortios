@@ -116,6 +116,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"http": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -190,6 +191,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"ftp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -254,6 +256,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -328,6 +331,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"pop3": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -402,6 +406,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"smtp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -476,6 +481,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -545,6 +551,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"nntp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -609,6 +616,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"cifs": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -673,6 +681,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"ssh": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -737,6 +746,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"smb": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -771,6 +781,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"nac_quar": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -795,6 +806,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"outbreak_prevention": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -814,6 +826,7 @@ func resourceAntivirusProfile() *schema.Resource {
 			},
 			"content_disarm": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

@@ -47,6 +47,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"ssl": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -136,6 +137,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"https": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -235,6 +237,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"ftps": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -324,6 +327,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"imaps": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -413,6 +417,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"pop3s": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -502,6 +507,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"smtps": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -591,6 +597,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"ssh": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -640,6 +647,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"dot": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

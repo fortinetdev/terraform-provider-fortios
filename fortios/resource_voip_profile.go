@@ -53,6 +53,7 @@ func resourceVoipProfile() *schema.Resource {
 			},
 			"sip": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -634,6 +635,7 @@ func resourceVoipProfile() *schema.Resource {
 			},
 			"sccp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -674,6 +676,7 @@ func resourceVoipProfile() *schema.Resource {
 			},
 			"msrp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

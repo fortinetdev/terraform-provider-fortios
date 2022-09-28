@@ -126,6 +126,7 @@ func resourceSystemClusterSync() *schema.Resource {
 			},
 			"session_sync_filter": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
