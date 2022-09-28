@@ -176,6 +176,18 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"tenant": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"epg_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"sdn_tag": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -515,6 +527,18 @@ func dataSourceFlattenFirewallAddress6Host(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6Tenant(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6EpgName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6SdnTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -657,6 +681,24 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("host", dataSourceFlattenFirewallAddress6Host(o["host"], d, "host")); err != nil {
 		if !fortiAPIPatch(o["host"]) {
 			return fmt.Errorf("Error reading host: %v", err)
+		}
+	}
+
+	if err = d.Set("tenant", dataSourceFlattenFirewallAddress6Tenant(o["tenant"], d, "tenant")); err != nil {
+		if !fortiAPIPatch(o["tenant"]) {
+			return fmt.Errorf("Error reading tenant: %v", err)
+		}
+	}
+
+	if err = d.Set("epg_name", dataSourceFlattenFirewallAddress6EpgName(o["epg-name"], d, "epg_name")); err != nil {
+		if !fortiAPIPatch(o["epg-name"]) {
+			return fmt.Errorf("Error reading epg_name: %v", err)
+		}
+	}
+
+	if err = d.Set("sdn_tag", dataSourceFlattenFirewallAddress6SdnTag(o["sdn-tag"], d, "sdn_tag")); err != nil {
+		if !fortiAPIPatch(o["sdn-tag"]) {
+			return fmt.Errorf("Error reading sdn_tag: %v", err)
 		}
 	}
 

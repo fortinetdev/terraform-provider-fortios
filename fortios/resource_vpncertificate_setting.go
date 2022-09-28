@@ -146,6 +146,12 @@ func resourceVpnCertificateSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cert_expire_warning": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 100),
+				Optional:     true,
+				Computed:     true,
+			},
 			"certname_rsa1024": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -409,6 +415,10 @@ func flattenVpnCertificateSettingCmpKeyUsageChecking(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenVpnCertificateSettingCertExpireWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateSettingCertnameRsa1024(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -567,6 +577,12 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 	if err = d.Set("cmp_key_usage_checking", flattenVpnCertificateSettingCmpKeyUsageChecking(o["cmp-key-usage-checking"], d, "cmp_key_usage_checking", sv)); err != nil {
 		if !fortiAPIPatch(o["cmp-key-usage-checking"]) {
 			return fmt.Errorf("Error reading cmp_key_usage_checking: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_expire_warning", flattenVpnCertificateSettingCertExpireWarning(o["cert-expire-warning"], d, "cert_expire_warning", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-expire-warning"]) {
+			return fmt.Errorf("Error reading cert_expire_warning: %v", err)
 		}
 	}
 
@@ -757,6 +773,10 @@ func expandVpnCertificateSettingCmpSaveExtraCerts(d *schema.ResourceData, v inte
 }
 
 func expandVpnCertificateSettingCmpKeyUsageChecking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingCertExpireWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1047,6 +1067,20 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 				return &obj, err
 			} else if t != nil {
 				obj["cmp-key-usage-checking"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("cert_expire_warning"); ok {
+		if setArgNil {
+			obj["cert-expire-warning"] = nil
+		} else {
+
+			t, err := expandVpnCertificateSettingCertExpireWarning(d, v, "cert_expire_warning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-expire-warning"] = t
 			}
 		}
 	}

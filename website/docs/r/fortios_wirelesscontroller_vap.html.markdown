@@ -65,6 +65,9 @@ The following arguments are supported:
 * `key` - WEP Key.
 * `passphrase` - WPA pre-shard key (PSK) to be used to authenticate WiFi users.
 * `sae_password` - WPA3 SAE password to be used to authenticate WiFi users.
+* `sae_h2e_only` - Use hash-to-element-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
+* `sae_pk` - Enable/disable WPA3 SAE-PK (default = disable). Valid values: `enable`, `disable`.
+* `sae_private_key` - Private key used for WPA3 SAE-PK authentication.
 * `radius_server` - RADIUS server to be used to authenticate WiFi users.
 * `acct_interim_interval` - WiFi RADIUS accounting interim interval (60 - 86400 sec, default = 0).
 * `local_standalone` - Enable/disable AP local standalone (default = disable). Valid values: `enable`, `disable`.
@@ -150,6 +153,8 @@ The following arguments are supported:
 * `rates_11bg` - Allowed data rates for 802.11b/g. Valid values: `1`, `1-basic`, `2`, `2-basic`, `5.5`, `5.5-basic`, `11`, `11-basic`, `6`, `6-basic`, `9`, `9-basic`, `12`, `12-basic`, `18`, `18-basic`, `24`, `24-basic`, `36`, `36-basic`, `48`, `48-basic`, `54`, `54-basic`.
 * `rates_11n_ss12` - Allowed data rates for 802.11n with 1 or 2 spatial streams. Valid values: `mcs0/1`, `mcs1/1`, `mcs2/1`, `mcs3/1`, `mcs4/1`, `mcs5/1`, `mcs6/1`, `mcs7/1`, `mcs8/2`, `mcs9/2`, `mcs10/2`, `mcs11/2`, `mcs12/2`, `mcs13/2`, `mcs14/2`, `mcs15/2`.
 * `rates_11n_ss34` - Allowed data rates for 802.11n with 3 or 4 spatial streams. Valid values: `mcs16/3`, `mcs17/3`, `mcs18/3`, `mcs19/3`, `mcs20/3`, `mcs21/3`, `mcs22/3`, `mcs23/3`, `mcs24/4`, `mcs25/4`, `mcs26/4`, `mcs27/4`, `mcs28/4`, `mcs29/4`, `mcs30/4`, `mcs31/4`.
+* `rates_11ac_mcs_map` - Comma separated list of max supported VHT MCS for spatial streams 1 through 8.
+* `rates_11ax_mcs_map` - Comma separated list of max supported HE MCS for spatial streams 1 through 8.
 * `rates_11ac_ss12` - Allowed data rates for 802.11ac with 1 or 2 spatial streams. Valid values: `mcs0/1`, `mcs1/1`, `mcs2/1`, `mcs3/1`, `mcs4/1`, `mcs5/1`, `mcs6/1`, `mcs7/1`, `mcs8/1`, `mcs9/1`, `mcs10/1`, `mcs11/1`, `mcs0/2`, `mcs1/2`, `mcs2/2`, `mcs3/2`, `mcs4/2`, `mcs5/2`, `mcs6/2`, `mcs7/2`, `mcs8/2`, `mcs9/2`, `mcs10/2`, `mcs11/2`.
 * `rates_11ac_ss34` - Allowed data rates for 802.11ac with 3 or 4 spatial streams. Valid values: `mcs0/3`, `mcs1/3`, `mcs2/3`, `mcs3/3`, `mcs4/3`, `mcs5/3`, `mcs6/3`, `mcs7/3`, `mcs8/3`, `mcs9/3`, `mcs10/3`, `mcs11/3`, `mcs0/4`, `mcs1/4`, `mcs2/4`, `mcs3/4`, `mcs4/4`, `mcs5/4`, `mcs6/4`, `mcs7/4`, `mcs8/4`, `mcs9/4`, `mcs10/4`, `mcs11/4`.
 * `rates_11ax_ss12` - Allowed data rates for 802.11ax with 1 or 2 spatial streams. Valid values: `mcs0/1`, `mcs1/1`, `mcs2/1`, `mcs3/1`, `mcs4/1`, `mcs5/1`, `mcs6/1`, `mcs7/1`, `mcs8/1`, `mcs9/1`, `mcs10/1`, `mcs11/1`, `mcs0/2`, `mcs1/2`, `mcs2/2`, `mcs3/2`, `mcs4/2`, `mcs5/2`, `mcs6/2`, `mcs7/2`, `mcs8/2`, `mcs9/2`, `mcs10/2`, `mcs11/2`.
@@ -170,14 +175,17 @@ The following arguments are supported:
 * `sticky_client_remove` - Enable/disable sticky client remove to maintain good signal level clients in SSID. (default = disable). Valid values: `enable`, `disable`.
 * `sticky_client_threshold_5g` - Minimum signal level/threshold in dBm required for the 5G client to be serviced by the AP (-95 to -20, default = -76).
 * `sticky_client_threshold_2g` - Minimum signal level/threshold in dBm required for the 2G client to be serviced by the AP (-95 to -20, default = -79).
+* `sticky_client_threshold_6g` - Minimum signal level/threshold in dBm required for the 6G client to be serviced by the AP (-95 to -20, default = -76).
 * `bstm_rssi_disassoc_timer` - Time interval for client to voluntarily leave AP before forcing a disassociation due to low RSSI (0 to 2000, default = 200).
 * `bstm_load_balancing_disassoc_timer` - Time interval for client to voluntarily leave AP before forcing a disassociation due to AP load-balancing (0 to 30, default = 10).
 * `bstm_disassociation_imminent` - Enable/disable forcing of disassociation after the BSTM request timer has been reached (default = enable). Valid values: `enable`, `disable`.
 * `beacon_advertising` - Fortinet beacon advertising IE data   (default = empty). Valid values: `name`, `model`, `serial-number`.
 * `osen` - Enable/disable OSEN as part of key management (default = disable). Valid values: `enable`, `disable`.
 * `application_detection_engine` - Enable/disable application detection engine (default = disable). Valid values: `enable`, `disable`.
+* `application_dscp_marking` - Enable/disable application attribute based DSCP marking (default = disable). Valid values: `enable`, `disable`.
 * `application_report_intv` - Application report interval (30 - 864000 sec, default = 120).
 * `l3_roaming` - Enable/disable layer 3 roaming (default = disable). Valid values: `enable`, `disable`.
+* `l3_roaming_mode` - Select the way that layer 3 roaming traffic is passed (default = direct). Valid values: `direct`, `indirect`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

@@ -483,6 +483,11 @@ func resourceSystemHa() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"pingserver_secondary_force_reset": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"pingserver_slave_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1203,6 +1208,12 @@ func flattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pre string, 
 			tmp["pingserver_failover_threshold"] = flattenSystemHaVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
+		if _, ok := i["pingserver-secondary-force-reset"]; ok {
+
+			tmp["pingserver_secondary_force_reset"] = flattenSystemHaVclusterPingserverSecondaryForceReset(i["pingserver-secondary-force-reset"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := i["pingserver-slave-force-reset"]; ok {
 
@@ -1249,6 +1260,10 @@ func flattenSystemHaVclusterPingserverMonitorInterface(v interface{}, d *schema.
 }
 
 func flattenSystemHaVclusterPingserverFailoverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaVclusterPingserverSecondaryForceReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2416,6 +2431,12 @@ func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, s
 			tmp["pingserver-failover-threshold"], _ = expandSystemHaVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["pingserver-secondary-force-reset"], _ = expandSystemHaVclusterPingserverSecondaryForceReset(d, i["pingserver_secondary_force_reset"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -2463,6 +2484,10 @@ func expandSystemHaVclusterPingserverMonitorInterface(d *schema.ResourceData, v 
 }
 
 func expandSystemHaVclusterPingserverFailoverThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaVclusterPingserverSecondaryForceReset(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

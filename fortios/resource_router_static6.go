@@ -72,6 +72,12 @@ func resourceRouterStatic6() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"weight": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -105,6 +111,12 @@ func resourceRouterStatic6() *schema.Resource {
 						},
 					},
 				},
+			},
+			"dstaddr": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
 			},
 			"sdwan": &schema.Schema{
 				Type:     schema.TypeString,
@@ -290,6 +302,10 @@ func flattenRouterStatic6Distance(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenRouterStatic6Weight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterStatic6Priority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -346,6 +362,10 @@ func flattenRouterStatic6SdwanZone(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterStatic6SdwanZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterStatic6Dstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -414,6 +434,12 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("weight", flattenRouterStatic6Weight(o["weight"], d, "weight", sv)); err != nil {
+		if !fortiAPIPatch(o["weight"]) {
+			return fmt.Errorf("Error reading weight: %v", err)
+		}
+	}
+
 	if err = d.Set("priority", flattenRouterStatic6Priority(o["priority"], d, "priority", sv)); err != nil {
 		if !fortiAPIPatch(o["priority"]) {
 			return fmt.Errorf("Error reading priority: %v", err)
@@ -451,6 +477,12 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 					return fmt.Errorf("Error reading sdwan_zone: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("dstaddr", flattenRouterStatic6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
+		if !fortiAPIPatch(o["dstaddr"]) {
+			return fmt.Errorf("Error reading dstaddr: %v", err)
 		}
 	}
 
@@ -521,6 +553,10 @@ func expandRouterStatic6Distance(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandRouterStatic6Weight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterStatic6Priority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -566,6 +602,10 @@ func expandRouterStatic6SdwanZone(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandRouterStatic6SdwanZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStatic6Dstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -662,6 +702,16 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
+	if v, ok := d.GetOkExists("weight"); ok {
+
+		t, err := expandRouterStatic6Weight(d, v, "weight", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["weight"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("priority"); ok {
 
 		t, err := expandRouterStatic6Priority(d, v, "priority", sv)
@@ -709,6 +759,16 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["sdwan-zone"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dstaddr"); ok {
+
+		t, err := expandRouterStatic6Dstaddr(d, v, "dstaddr", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dstaddr"] = t
 		}
 	}
 

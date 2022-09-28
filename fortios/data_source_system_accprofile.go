@@ -256,6 +256,14 @@ func dataSourceSystemAccprofile() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"system_execute_ssh": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"system_execute_telnet": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -706,6 +714,14 @@ func dataSourceFlattenSystemAccprofileSystemDiagnostics(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemAccprofileSystemExecuteSsh(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileSystemExecuteTelnet(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -838,6 +854,18 @@ func dataSourceRefreshObjectSystemAccprofile(d *schema.ResourceData, o map[strin
 	if err = d.Set("system_diagnostics", dataSourceFlattenSystemAccprofileSystemDiagnostics(o["system-diagnostics"], d, "system_diagnostics")); err != nil {
 		if !fortiAPIPatch(o["system-diagnostics"]) {
 			return fmt.Errorf("Error reading system_diagnostics: %v", err)
+		}
+	}
+
+	if err = d.Set("system_execute_ssh", dataSourceFlattenSystemAccprofileSystemExecuteSsh(o["system-execute-ssh"], d, "system_execute_ssh")); err != nil {
+		if !fortiAPIPatch(o["system-execute-ssh"]) {
+			return fmt.Errorf("Error reading system_execute_ssh: %v", err)
+		}
+	}
+
+	if err = d.Set("system_execute_telnet", dataSourceFlattenSystemAccprofileSystemExecuteTelnet(o["system-execute-telnet"], d, "system_execute_telnet")); err != nil {
+		if !fortiAPIPatch(o["system-execute-telnet"]) {
+			return fmt.Errorf("Error reading system_execute_telnet: %v", err)
 		}
 	}
 

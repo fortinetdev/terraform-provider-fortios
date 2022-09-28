@@ -167,6 +167,7 @@ The `http` block supports:
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned (MB, 0 = unlimited (default).  Stream-based uncompression used only under certain conditions.).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
+* `verify_dns_for_policy_matching` - Enable/disable verification of DNS for policy matching. Valid values: `enable`, `disable`.
 * `block_page_status_code` - Code number returned for blocked HTTP pages (non-FortiGuard only) (100 - 599, default = 403).
 * `retry_count` - Number of attempts to retry HTTP connection (0 - 100, default = 0).
 * `tcp_window_type` - Specify type of TCP window to use for this protocol.
@@ -194,6 +195,7 @@ The `ftp` block supports:
 * `tcp_window_maximum` - Maximum dynamic TCP window size.
 * `tcp_window_size` - Set TCP static window size.
 * `ssl_offloaded` - SSL decryption and encryption performed by an external device. Valid values: `no`, `yes`.
+* `explicit_ftp_tls` - Enable/disable FTP redirection for explicit FTPS. Valid values: `enable`, `disable`.
 
 The `imap` block supports:
 

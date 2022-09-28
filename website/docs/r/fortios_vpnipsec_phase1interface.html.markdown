@@ -152,6 +152,7 @@ The following arguments are supported:
 * `exchange_ip_addr6` - IPv6 address to exchange with peers
 * `aggregate_member` - Enable/disable use as an aggregate member. Valid values: `enable`, `disable`.
 * `aggregate_weight` - Link weight for aggregate.
+* `packet_redistribution` - Enable/disable packet distribution (RPS) on the IPsec interface. Valid values: `enable`, `disable`.
 * `mode_cfg` - Enable/disable configuration method. Valid values: `disable`, `enable`.
 * `mode_cfg_allow_client_selector` - Enable/disable mode-cfg client to use custom phase2 selectors. Valid values: `disable`, `enable`.
 * `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method. Valid values: `disable`, `enable`.
@@ -233,6 +234,7 @@ The following arguments are supported:
 * `idle_timeout` - Enable/disable IPsec tunnel idle timeout. Valid values: `enable`, `disable`.
 * `idle_timeoutinterval` - IPsec tunnel idle timeout in minutes (5 - 43200).
 * `ha_sync_esp_seqno` - Enable/disable sequence number jump ahead for IPsec HA. Valid values: `enable`, `disable`.
+* `fgsp_sync` - Enable/disable IPsec syncing of tunnels for FGSP IPsec. Valid values: `enable`, `disable`.
 * `inbound_dscp_copy` - Enable/disable copy the dscp in the ESP header to the inner IP Header. Valid values: `enable`, `disable`.
 * `auto_discovery_sender` - Enable/disable sending auto-discovery short-cut messages. Valid values: `enable`, `disable`.
 * `auto_discovery_receiver` - Enable/disable accepting auto-discovery short-cut messages. Valid values: `enable`, `disable`.
@@ -255,6 +257,7 @@ The following arguments are supported:
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
 * `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
 * `rsa_signature_format` - Digital Signature Authentication RSA signature format. Valid values: `pkcs1`, `pss`.
+* `rsa_signature_hash_override` - Enable/disable IKEv2 RSA signature hash algorithm override. Valid values: `enable`, `disable`.
 * `enforce_unique_id` - Enable/disable peer ID uniqueness check. Valid values: `disable`, `keep-new`, `keep-old`.
 * `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945. Valid values: `enable`, `disable`.
 * `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic. Valid values: `enable`, `disable`.
@@ -269,6 +272,7 @@ The following arguments are supported:
 * `network_overlay` - Enable/disable network overlays. Valid values: `disable`, `enable`.
 * `network_id` - VPN gateway network ID.
 * `loopback_asymroute` - Enable/disable asymmetric routing for IKE traffic on loopback interface. Valid values: `enable`, `disable`.
+* `link_cost` - VPN tunnel underlay link cost.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

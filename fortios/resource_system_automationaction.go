@@ -52,6 +52,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"system_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tls_certificate": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -527,6 +532,10 @@ func flattenSystemAutomationActionActionType(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemAutomationActionSystemAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionTlsCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -928,6 +937,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("system_action", flattenSystemAutomationActionSystemAction(o["system-action"], d, "system_action", sv)); err != nil {
+		if !fortiAPIPatch(o["system-action"]) {
+			return fmt.Errorf("Error reading system_action: %v", err)
+		}
+	}
+
 	if err = d.Set("tls_certificate", flattenSystemAutomationActionTlsCertificate(o["tls-certificate"], d, "tls_certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["tls-certificate"]) {
 			return fmt.Errorf("Error reading tls_certificate: %v", err)
@@ -1274,6 +1289,10 @@ func expandSystemAutomationActionDescription(d *schema.ResourceData, v interface
 }
 
 func expandSystemAutomationActionActionType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionSystemAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1643,6 +1662,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["action-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("system_action"); ok {
+
+		t, err := expandSystemAutomationActionSystemAction(d, v, "system_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["system-action"] = t
 		}
 	}
 

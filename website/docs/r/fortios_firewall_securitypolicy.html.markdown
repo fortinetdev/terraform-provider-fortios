@@ -72,6 +72,18 @@ The following arguments are supported:
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
 * `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
 * `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
+* `internet_service6` - Enable/disable use of IPv6 Internet Services for this policy. If enabled, destination address, service and default application port enforcement are not used. Valid values: `enable`, `disable`.
+* `internet_service6_name` - IPv6 Internet Service name. The structure of `internet_service6_name` block is documented below.
+* `internet_service6_negate` - When enabled internet-service6 specifies what the service must NOT be. Valid values: `enable`, `disable`.
+* `internet_service6_group` - Internet Service group name. The structure of `internet_service6_group` block is documented below.
+* `internet_service6_custom` - Custom IPv6 Internet Service name. The structure of `internet_service6_custom` block is documented below.
+* `internet_service6_custom_group` - Custom IPv6 Internet Service group name. The structure of `internet_service6_custom_group` block is documented below.
+* `internet_service6_src` - Enable/disable use of IPv6 Internet Services in source for this policy. If enabled, source address is not used. Valid values: `enable`, `disable`.
+* `internet_service6_src_name` - IPv6 Internet Service source name. The structure of `internet_service6_src_name` block is documented below.
+* `internet_service6_src_negate` - When enabled internet-service6-src specifies what the service must NOT be. Valid values: `enable`, `disable`.
+* `internet_service6_src_group` - Internet Service6 source group name. The structure of `internet_service6_src_group` block is documented below.
+* `internet_service6_src_custom` - Custom IPv6 Internet Service source name. The structure of `internet_service6_src_custom` block is documented below.
+* `internet_service6_src_custom_group` - Custom Internet Service6 source group name. The structure of `internet_service6_src_custom_group` block is documented below.
 * `enforce_default_app_port` - Enable/disable default application port enforcement for allowed applications. Valid values: `enable`, `disable`.
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
@@ -184,6 +196,38 @@ The `internet_service_src_custom` block supports:
 The `internet_service_src_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
+
+The `internet_service6_name` block supports:
+
+* `name` - IPv6 Internet Service name.
+
+The `internet_service6_group` block supports:
+
+* `name` - Internet Service group name.
+
+The `internet_service6_custom` block supports:
+
+* `name` - Custom IPv6 Internet Service name.
+
+The `internet_service6_custom_group` block supports:
+
+* `name` - Custom IPv6 Internet Service group name.
+
+The `internet_service6_src_name` block supports:
+
+* `name` - Internet Service name.
+
+The `internet_service6_src_group` block supports:
+
+* `name` - Internet Service group name.
+
+The `internet_service6_src_custom` block supports:
+
+* `name` - Custom Internet Service name.
+
+The `internet_service6_src_custom_group` block supports:
+
+* `name` - Custom Internet Service6 group name.
 
 The `service` block supports:
 

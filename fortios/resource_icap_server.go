@@ -75,10 +75,9 @@ func resourceIcapServer() *schema.Resource {
 				Computed:     true,
 			},
 			"max_connections": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"secure": &schema.Schema{
 				Type:     schema.TypeString,
@@ -480,7 +479,7 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("max_connections"); ok {
+	if v, ok := d.GetOkExists("max_connections"); ok {
 
 		t, err := expandIcapServerMaxConnections(d, v, "max_connections", sv)
 		if err != nil {

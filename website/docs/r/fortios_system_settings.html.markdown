@@ -26,7 +26,8 @@ resource "fortios_system_settings" "trname" {
 The following arguments are supported:
 
 * `comments` - VDOM comments.
-* `vdom_type` - VDOM type (traffic or admin). Valid values: `traffic`, `admin`.
+* `vdom_type` - VDOM type (traffic or admin).
+* `lan_extension_controller_addr` - Controller IP address or FQDN to connect.
 * `opmode` - Firewall operation mode (NAT or Transparent). Valid values: `nat`, `transparent`.
 * `inspection_mode` - Inspection mode (proxy-based or flow-based). Valid values: `proxy`, `flow`.
 * `ngfw_mode` - Next Generation Firewall (NGFW) mode. Valid values: `profile-based`, `policy-based`.
@@ -67,6 +68,8 @@ The following arguments are supported:
 * `lldp_transmission` - Enable/disable Link Layer Discovery Protocol (LLDP) transmission for this VDOM or apply global settings to this VDOM. Valid values: `enable`, `disable`, `global`.
 * `link_down_access` - Enable/disable link down access traffic. Valid values: `enable`, `disable`.
 * `nat46_generate_ipv6_fragment_header` - Enable/disable NAT46 IPv6 fragment header generation. Valid values: `enable`, `disable`.
+* `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in NAT46. Valid values: `enable`, `disable`.
+* `nat64_force_ipv6_packet_forwarding` - Enable/disable mandatory IPv6 packet forwarding in NAT64. Valid values: `enable`, `disable`.
 * `auxiliary_session` - Enable/disable auxiliary session. Valid values: `enable`, `disable`.
 * `asymroute` - Enable/disable IPv4 asymmetric routing. Valid values: `enable`, `disable`.
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing. Valid values: `enable`, `disable`.
@@ -128,6 +131,7 @@ The following arguments are supported:
 * `gui_dhcp_advanced` - Enable/disable advanced DHCP options on the GUI. Valid values: `enable`, `disable`.
 * `gui_vpn` - Enable/disable VPN tunnels on the GUI. Valid values: `enable`, `disable`.
 * `gui_wireless_controller` - Enable/disable the wireless controller on the GUI. Valid values: `enable`, `disable`.
+* `gui_advanced_wireless_features` - Enable/disable advanced wireless features in GUI. Valid values: `enable`, `disable`.
 * `gui_switch_controller` - Enable/disable the switch controller on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortiap_split_tunneling` - Enable/disable FortiAP split tunneling on the GUI. Valid values: `enable`, `disable`.
 * `gui_webfilter_advanced` - Enable/disable advanced web filtering on the GUI. Valid values: `enable`, `disable`.
@@ -154,12 +158,15 @@ The following arguments are supported:
 * `ike_session_resume` - Enable/disable IKEv2 session resumption (RFC 5723). Valid values: `enable`, `disable`.
 * `ike_quick_crash_detect` - Enable/disable IKE quick crash detection (RFC 6290). Valid values: `enable`, `disable`.
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions. Valid values: `with-space`, `no-space`.
-* `ike_port` - UDP port for IKE/IPsec traffic (default 500).
 * `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
+* `ike_port` - UDP port for IKE/IPsec traffic (default 500).
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks. Valid values: `disable`, `enable`.
 * `default_app_port_as_service` - Enable/disable policy service enforcement based on application default ports. Valid values: `enable`, `disable`.
 * `application_bandwidth_tracking` - Enable/disable application bandwidth tracking. Valid values: `disable`, `enable`.
+* `fqdn_session_check` - Enable/disable dirty session check caused by FQDN updates. Valid values: `enable`, `disable`.
+* `ext_resource_session_check` - Enable/disable dirty session check caused by external resource updates. Valid values: `enable`, `disable`.
+* `dyn_addr_session_check` - Enable/disable dirty session check caused by dynamic address updates. Valid values: `enable`, `disable`.
 * `default_policy_expiry_days` - Default policy expiry in days (0 - 365 days, default = 30).
 * `gui_enforce_change_summary` - Enforce change summaries for select tables in the GUI. Valid values: `disable`, `require`, `optional`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

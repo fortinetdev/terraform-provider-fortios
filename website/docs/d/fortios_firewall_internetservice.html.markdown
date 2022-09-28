@@ -29,6 +29,8 @@ The following attributes are exported:
 * `ip_range_number` - Total number of IP ranges.
 * `extra_ip_range_number` - Extra number of IP ranges.
 * `ip_number` - Total number of IP addresses.
+* `ip6_range_number` - Number of IPv6 ranges.
+* `extra_ip6_range_number` - Extra number of IPv6 ranges.
 * `singularity` - Singular level of the Internet Service.
 * `obsolete` - Indicates whether the Internet Service can be used.
 

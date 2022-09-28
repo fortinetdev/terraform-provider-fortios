@@ -224,6 +224,24 @@ func resourceFirewallAddress6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tenant": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"epg_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"sdn_tag": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -686,6 +704,18 @@ func flattenFirewallAddress6Host(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenFirewallAddress6Tenant(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddress6EpgName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddress6SdnTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -868,6 +898,24 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("host", flattenFirewallAddress6Host(o["host"], d, "host", sv)); err != nil {
 		if !fortiAPIPatch(o["host"]) {
 			return fmt.Errorf("Error reading host: %v", err)
+		}
+	}
+
+	if err = d.Set("tenant", flattenFirewallAddress6Tenant(o["tenant"], d, "tenant", sv)); err != nil {
+		if !fortiAPIPatch(o["tenant"]) {
+			return fmt.Errorf("Error reading tenant: %v", err)
+		}
+	}
+
+	if err = d.Set("epg_name", flattenFirewallAddress6EpgName(o["epg-name"], d, "epg_name", sv)); err != nil {
+		if !fortiAPIPatch(o["epg-name"]) {
+			return fmt.Errorf("Error reading epg_name: %v", err)
+		}
+	}
+
+	if err = d.Set("sdn_tag", flattenFirewallAddress6SdnTag(o["sdn-tag"], d, "sdn_tag", sv)); err != nil {
+		if !fortiAPIPatch(o["sdn-tag"]) {
+			return fmt.Errorf("Error reading sdn_tag: %v", err)
 		}
 	}
 
@@ -1160,6 +1208,18 @@ func expandFirewallAddress6Host(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandFirewallAddress6Tenant(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddress6EpgName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddress6SdnTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAddress6FabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1394,6 +1454,36 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["host"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tenant"); ok {
+
+		t, err := expandFirewallAddress6Tenant(d, v, "tenant", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tenant"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("epg_name"); ok {
+
+		t, err := expandFirewallAddress6EpgName(d, v, "epg_name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["epg-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sdn_tag"); ok {
+
+		t, err := expandFirewallAddress6SdnTag(d, v, "sdn_tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sdn-tag"] = t
 		}
 	}
 

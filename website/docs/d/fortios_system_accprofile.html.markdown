@@ -41,6 +41,8 @@ The following attributes are exported:
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
 * `system_diagnostics` - Enable/disable permission to run system diagnostic commands.
+* `system_execute_ssh` - Enable/disable permission to execute SSH commands.
+* `system_execute_telnet` - Enable/disable permission to execute TELNET commands.
 
 The `netgrp_permission` block contains:
 

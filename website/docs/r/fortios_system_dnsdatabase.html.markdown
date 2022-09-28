@@ -42,7 +42,7 @@ The following arguments are supported:
 * `domain` - (Required) Domain name.
 * `allow_transfer` - DNS zone transfer IP address list.
 * `type` - (Required) Zone type (master to manage entries directly, slave to import entries from other zones).
-* `view` - (Required) Zone view (public to serve public clients, shadow to serve internal clients). Valid values: `shadow`, `public`.
+* `view` - (Required) Zone view (public to serve public clients, shadow to serve internal clients).
 * `ip_primary` - IP address of primary DNS server. Entries in this primary DNS server and imported into the DNS zone.
 * `ip_master` - IP address of master DNS server. Entries in this master DNS server and imported into the DNS zone.
 * `primary_name` - Domain name of the default DNS server for this zone.

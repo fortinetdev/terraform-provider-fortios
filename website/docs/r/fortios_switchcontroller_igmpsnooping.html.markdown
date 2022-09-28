@@ -24,6 +24,7 @@ The following arguments are supported:
 
 * `aging_time` - Maximum number of seconds to retain a multicast snooping entry for which no packets have been seen (15 - 3600 sec, default = 300).
 * `flood_unknown_multicast` - Enable/disable unknown multicast flooding. Valid values: `enable`, `disable`.
+* `query_interval` - Maximum time after which IGMP query will be sent (10 - 1200 sec, default = 125).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -22,6 +22,7 @@ The following attributes are exported:
 * `name` - Name.
 * `description` - Description.
 * `action_type` - Action type.
+* `system_action` - System action type.
 * `tls_certificate` - Custom TLS certificate for API request.
 * `email_to` - Email addresses. The structure of `email_to` block is documented below.
 * `email_from` - Email sender name.

@@ -149,6 +149,10 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"verify_dns_for_policy_matching": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"block_page_status_code": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -250,6 +254,10 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 							Computed: true,
 						},
 						"ssl_offloaded": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"explicit_ftp_tls": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -851,6 +859,11 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schem
 		result["scan_bzip2"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpScanBzip2(i["scan-bzip2"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "verify_dns_for_policy_matching"
+	if _, ok := i["verify-dns-for-policy-matching"]; ok {
+		result["verify_dns_for_policy_matching"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(i["verify-dns-for-policy-matching"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "block_page_status_code"
 	if _, ok := i["block-page-status-code"]; ok {
 		result["block_page_status_code"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpBlockPageStatusCode(i["block-page-status-code"], d, pre_append)
@@ -987,6 +1000,10 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttpScanBzip2(v interface{},
 	return v
 }
 
+func dataSourceFlattenFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProfileProtocolOptionsHttpBlockPageStatusCode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1108,6 +1125,11 @@ func dataSourceFlattenFirewallProfileProtocolOptionsFtp(v interface{}, d *schema
 		result["ssl_offloaded"] = dataSourceFlattenFirewallProfileProtocolOptionsFtpSslOffloaded(i["ssl-offloaded"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "explicit_ftp_tls"
+	if _, ok := i["explicit-ftp-tls"]; ok {
+		result["explicit_ftp_tls"] = dataSourceFlattenFirewallProfileProtocolOptionsFtpExplicitFtpTls(i["explicit-ftp-tls"], d, pre_append)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -1173,6 +1195,10 @@ func dataSourceFlattenFirewallProfileProtocolOptionsFtpTcpWindowSize(v interface
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsFtpSslOffloaded(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProfileProtocolOptionsFtpExplicitFtpTls(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

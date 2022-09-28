@@ -28,7 +28,7 @@ The following arguments are supported:
 
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `type` - Proxy address type. Valid values: `host-regex`, `url`, `category`, `method`, `ua`, `header`, `src-advanced`, `dst-advanced`.
+* `type` - Proxy address type.
 * `host` - Address object for the host.
 * `host_regex` - Host name as a regular expression.
 * `path` - URL path as a regular expression.
@@ -44,6 +44,7 @@ The following arguments are supported:
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Optional comments.
+* `application` - SaaS application. The structure of `application` block is documented below.
 * `visibility` - Enable/disable visibility of the object in the GUI. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -68,6 +69,10 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
+
+The `application` block supports:
+
+* `name` - SaaS applicaton name.
 
 
 ## Attribute Reference

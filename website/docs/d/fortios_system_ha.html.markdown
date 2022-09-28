@@ -123,6 +123,7 @@ The `vcluster` block contains:
 * `monitor` - Interfaces to check for port monitoring (or link failure).
 * `pingserver_monitor_interface` - Interfaces to check for remote IP monitoring.
 * `pingserver_failover_threshold` - Remote IP monitoring failover threshold (0 - 50).
+* `pingserver_secondary_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
 * `pingserver_slave_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
 * `vdom` - Virtual domain(s) in the virtual cluster. The structure of `vdom` block is documented below.
 

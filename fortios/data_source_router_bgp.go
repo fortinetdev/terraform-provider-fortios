@@ -128,6 +128,10 @@ func dataSourceRouterBgp() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"recursive_inherit_priority": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"tag_resolve_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1696,6 +1700,10 @@ func dataSourceFlattenRouterBgpMultipathRecursiveDistance(v interface{}, d *sche
 }
 
 func dataSourceFlattenRouterBgpRecursiveNextHop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpRecursiveInheritPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -5244,6 +5252,12 @@ func dataSourceRefreshObjectRouterBgp(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("recursive_next_hop", dataSourceFlattenRouterBgpRecursiveNextHop(o["recursive-next-hop"], d, "recursive_next_hop")); err != nil {
 		if !fortiAPIPatch(o["recursive-next-hop"]) {
 			return fmt.Errorf("Error reading recursive_next_hop: %v", err)
+		}
+	}
+
+	if err = d.Set("recursive_inherit_priority", dataSourceFlattenRouterBgpRecursiveInheritPriority(o["recursive-inherit-priority"], d, "recursive_inherit_priority")); err != nil {
+		if !fortiAPIPatch(o["recursive-inherit-priority"]) {
+			return fmt.Errorf("Error reading recursive_inherit_priority: %v", err)
 		}
 	}
 

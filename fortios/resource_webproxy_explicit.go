@@ -146,6 +146,11 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"pac_file_through_https": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"pac_file_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -432,6 +437,10 @@ func flattenWebProxyExplicitPacFileUrl(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenWebProxyExplicitPacFileServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitPacFileThroughHttps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -816,6 +825,12 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("pac_file_through_https", flattenWebProxyExplicitPacFileThroughHttps(o["pac-file-through-https"], d, "pac_file_through_https", sv)); err != nil {
+		if !fortiAPIPatch(o["pac-file-through-https"]) {
+			return fmt.Errorf("Error reading pac_file_through_https: %v", err)
+		}
+	}
+
 	if err = d.Set("pac_file_name", flattenWebProxyExplicitPacFileName(o["pac-file-name"], d, "pac_file_name", sv)); err != nil {
 		if !fortiAPIPatch(o["pac-file-name"]) {
 			return fmt.Errorf("Error reading pac_file_name: %v", err)
@@ -950,6 +965,10 @@ func expandWebProxyExplicitPacFileUrl(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandWebProxyExplicitPacFileServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitPacFileThroughHttps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1468,6 +1487,20 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["pac-file-server-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("pac_file_through_https"); ok {
+		if setArgNil {
+			obj["pac-file-through-https"] = nil
+		} else {
+
+			t, err := expandWebProxyExplicitPacFileThroughHttps(d, v, "pac_file_through_https", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pac-file-through-https"] = t
 			}
 		}
 	}

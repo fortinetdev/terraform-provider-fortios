@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_clustersync
-Configure FortiGate Session Life Support Protocol (FGSP) session synchronization.
+Configure FortiGate Session Life Support Protocol (FGSP) session synchronization. Applies to FortiOS Version `<= 7.2.0`.
 
 ## Example Usage
 

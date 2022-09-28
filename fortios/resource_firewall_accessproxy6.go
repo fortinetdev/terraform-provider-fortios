@@ -52,6 +52,11 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"user_agent_detect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auth_portal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -69,6 +74,11 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 				Computed: true,
 			},
 			"log_blocked_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"add_vhost_domain_to_dnsdb": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -220,6 +230,20 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 												},
 											},
 										},
+									},
+								},
+							},
+						},
+						"application": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -475,6 +499,20 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 								},
 							},
 						},
+						"application": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
 						"persistence": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -723,6 +761,10 @@ func flattenFirewallAccessProxy6ClientCert(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallAccessProxy6UserAgentDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAccessProxy6AuthPortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -736,6 +778,10 @@ func flattenFirewallAccessProxy6EmptyCertAction(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallAccessProxy6LogBlockedTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAccessProxy6AddVhostDomainToDnsdb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -807,6 +853,12 @@ func flattenFirewallAccessProxy6ApiGateway(v interface{}, d *schema.ResourceData
 		if _, ok := i["realservers"]; ok {
 
 			tmp["realservers"] = flattenFirewallAccessProxy6ApiGatewayRealservers(i["realservers"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
+		if _, ok := i["application"]; ok {
+
+			tmp["application"] = flattenFirewallAccessProxy6ApiGatewayApplication(i["application"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
@@ -1180,6 +1232,49 @@ func flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKeyName(v interface{
 	return v
 }
 
+func flattenFirewallAccessProxy6ApiGatewayApplication(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallAccessProxy6ApiGatewayApplicationName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallAccessProxy6ApiGatewayApplicationName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAccessProxy6ApiGatewayPersistence(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1367,6 +1462,12 @@ func flattenFirewallAccessProxy6ApiGateway6(v interface{}, d *schema.ResourceDat
 		if _, ok := i["realservers"]; ok {
 
 			tmp["realservers"] = flattenFirewallAccessProxy6ApiGateway6Realservers(i["realservers"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
+		if _, ok := i["application"]; ok {
+
+			tmp["application"] = flattenFirewallAccessProxy6ApiGateway6Application(i["application"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
@@ -1740,6 +1841,49 @@ func flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKeyName(v interface
 	return v
 }
 
+func flattenFirewallAccessProxy6ApiGateway6Application(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallAccessProxy6ApiGateway6ApplicationName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallAccessProxy6ApiGateway6ApplicationName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAccessProxy6ApiGateway6Persistence(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1884,6 +2028,12 @@ func refreshObjectFirewallAccessProxy6(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("user_agent_detect", flattenFirewallAccessProxy6UserAgentDetect(o["user-agent-detect"], d, "user_agent_detect", sv)); err != nil {
+		if !fortiAPIPatch(o["user-agent-detect"]) {
+			return fmt.Errorf("Error reading user_agent_detect: %v", err)
+		}
+	}
+
 	if err = d.Set("auth_portal", flattenFirewallAccessProxy6AuthPortal(o["auth-portal"], d, "auth_portal", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-portal"]) {
 			return fmt.Errorf("Error reading auth_portal: %v", err)
@@ -1905,6 +2055,12 @@ func refreshObjectFirewallAccessProxy6(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("log_blocked_traffic", flattenFirewallAccessProxy6LogBlockedTraffic(o["log-blocked-traffic"], d, "log_blocked_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["log-blocked-traffic"]) {
 			return fmt.Errorf("Error reading log_blocked_traffic: %v", err)
+		}
+	}
+
+	if err = d.Set("add_vhost_domain_to_dnsdb", flattenFirewallAccessProxy6AddVhostDomainToDnsdb(o["add-vhost-domain-to-dnsdb"], d, "add_vhost_domain_to_dnsdb", sv)); err != nil {
+		if !fortiAPIPatch(o["add-vhost-domain-to-dnsdb"]) {
+			return fmt.Errorf("Error reading add_vhost_domain_to_dnsdb: %v", err)
 		}
 	}
 
@@ -1967,6 +2123,10 @@ func expandFirewallAccessProxy6ClientCert(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandFirewallAccessProxy6UserAgentDetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAccessProxy6AuthPortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1980,6 +2140,10 @@ func expandFirewallAccessProxy6EmptyCertAction(d *schema.ResourceData, v interfa
 }
 
 func expandFirewallAccessProxy6LogBlockedTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxy6AddVhostDomainToDnsdb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2043,6 +2207,14 @@ func expandFirewallAccessProxy6ApiGateway(d *schema.ResourceData, v interface{},
 			tmp["realservers"], _ = expandFirewallAccessProxy6ApiGatewayRealservers(d, i["realservers"], pre_append, sv)
 		} else {
 			tmp["realservers"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+
+			tmp["application"], _ = expandFirewallAccessProxy6ApiGatewayApplication(d, i["application"], pre_append, sv)
+		} else {
+			tmp["application"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
@@ -2397,6 +2569,38 @@ func expandFirewallAccessProxy6ApiGatewayRealserversSshHostKeyName(d *schema.Res
 	return v, nil
 }
 
+func expandFirewallAccessProxy6ApiGatewayApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallAccessProxy6ApiGatewayApplicationName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallAccessProxy6ApiGatewayApplicationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAccessProxy6ApiGatewayPersistence(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2565,6 +2769,14 @@ func expandFirewallAccessProxy6ApiGateway6(d *schema.ResourceData, v interface{}
 			tmp["realservers"], _ = expandFirewallAccessProxy6ApiGateway6Realservers(d, i["realservers"], pre_append, sv)
 		} else {
 			tmp["realservers"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+
+			tmp["application"], _ = expandFirewallAccessProxy6ApiGateway6Application(d, i["application"], pre_append, sv)
+		} else {
+			tmp["application"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
@@ -2919,6 +3131,38 @@ func expandFirewallAccessProxy6ApiGateway6RealserversSshHostKeyName(d *schema.Re
 	return v, nil
 }
 
+func expandFirewallAccessProxy6ApiGateway6Application(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallAccessProxy6ApiGateway6ApplicationName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallAccessProxy6ApiGateway6ApplicationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAccessProxy6ApiGateway6Persistence(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3064,6 +3308,16 @@ func getObjectFirewallAccessProxy6(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("user_agent_detect"); ok {
+
+		t, err := expandFirewallAccessProxy6UserAgentDetect(d, v, "user_agent_detect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-agent-detect"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("auth_portal"); ok {
 
 		t, err := expandFirewallAccessProxy6AuthPortal(d, v, "auth_portal", sv)
@@ -3101,6 +3355,16 @@ func getObjectFirewallAccessProxy6(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["log-blocked-traffic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("add_vhost_domain_to_dnsdb"); ok {
+
+		t, err := expandFirewallAccessProxy6AddVhostDomainToDnsdb(d, v, "add_vhost_domain_to_dnsdb", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["add-vhost-domain-to-dnsdb"] = t
 		}
 	}
 

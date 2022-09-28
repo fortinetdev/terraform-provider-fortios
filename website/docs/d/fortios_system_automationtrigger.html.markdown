@@ -33,6 +33,7 @@ The following attributes are exported:
 * `trigger_day` - Day within a month to trigger.
 * `trigger_hour` - Hour of the day on which to trigger (0 - 23, default = 1).
 * `trigger_minute` - Minute of the hour on which to trigger (0 - 59, 60 to randomize).
+* `trigger_datetime` - Trigger date and time (YYYY-MM-DD HH:MM:SS).
 * `fields` - Customized trigger field settings. The structure of `fields` block is documented below.
 * `faz_event_name` - FortiAnalyzer event handler name.
 * `faz_event_severity` - FortiAnalyzer event severity.

@@ -490,6 +490,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"igmp_snooping_flood_reports": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"mcast_snooping_flood_traffic": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"igmp_snooping": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -2032,6 +2042,18 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 			tmp["arp_inspection_trust"] = flattenSwitchControllerManagedSwitchPortsArpInspectionTrust(i["arp-inspection-trust"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping_flood_reports"
+		if _, ok := i["igmp-snooping-flood-reports"]; ok {
+
+			tmp["igmp_snooping_flood_reports"] = flattenSwitchControllerManagedSwitchPortsIgmpSnoopingFloodReports(i["igmp-snooping-flood-reports"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mcast_snooping_flood_traffic"
+		if _, ok := i["mcast-snooping-flood-traffic"]; ok {
+
+			tmp["mcast_snooping_flood_traffic"] = flattenSwitchControllerManagedSwitchPortsMcastSnoopingFloodTraffic(i["mcast-snooping-flood-traffic"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping"
 		if _, ok := i["igmp-snooping"]; ok {
 
@@ -2572,6 +2594,14 @@ func flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82Trust(v interface
 }
 
 func flattenSwitchControllerManagedSwitchPortsArpInspectionTrust(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsIgmpSnoopingFloodReports(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsMcastSnoopingFloodTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5331,6 +5361,18 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["arp-inspection-trust"], _ = expandSwitchControllerManagedSwitchPortsArpInspectionTrust(d, i["arp_inspection_trust"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping_flood_reports"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["igmp-snooping-flood-reports"], _ = expandSwitchControllerManagedSwitchPortsIgmpSnoopingFloodReports(d, i["igmp_snooping_flood_reports"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mcast_snooping_flood_traffic"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["mcast-snooping-flood-traffic"], _ = expandSwitchControllerManagedSwitchPortsMcastSnoopingFloodTraffic(d, i["mcast_snooping_flood_traffic"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -5854,6 +5896,14 @@ func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Trust(d *schema.Re
 }
 
 func expandSwitchControllerManagedSwitchPortsArpInspectionTrust(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsIgmpSnoopingFloodReports(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsMcastSnoopingFloodTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

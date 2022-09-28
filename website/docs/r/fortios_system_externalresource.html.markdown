@@ -30,6 +30,7 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable user resource. Valid values: `enable`, `disable`.
 * `type` - User resource type. Valid values: `category`, `address`, `domain`, `malware`.
+* `update_method` - External resource update method. Valid values: `feed`, `push`.
 * `category` - User resource category.
 * `username` - HTTP basic authentication user name.
 * `password` - HTTP basic authentication password.

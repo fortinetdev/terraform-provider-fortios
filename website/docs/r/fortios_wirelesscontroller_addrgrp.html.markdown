@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_wirelesscontroller_addrgrp
-Configure the MAC address group. Applies to FortiOS Version `6.2.4,6.2.6,6.4.0,6.4.1,6.4.2,7.0.0,7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6`.
+Configure the MAC address group. Applies to FortiOS Version `6.2.4,6.2.6,6.4.0,6.4.1,6.4.2,6.4.10,7.0.0,7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6`.
 
 ## Argument Reference
 

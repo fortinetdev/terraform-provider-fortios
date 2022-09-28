@@ -128,6 +128,14 @@ func dataSourceSystemDns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fqdn_cache_ttl": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"fqdn_min_refresh": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -314,6 +322,14 @@ func dataSourceFlattenSystemDnsLog(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func dataSourceFlattenSystemDnsFqdnCacheTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsFqdnMinRefresh(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -440,6 +456,18 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("log", dataSourceFlattenSystemDnsLog(o["log"], d, "log")); err != nil {
 		if !fortiAPIPatch(o["log"]) {
 			return fmt.Errorf("Error reading log: %v", err)
+		}
+	}
+
+	if err = d.Set("fqdn_cache_ttl", dataSourceFlattenSystemDnsFqdnCacheTtl(o["fqdn-cache-ttl"], d, "fqdn_cache_ttl")); err != nil {
+		if !fortiAPIPatch(o["fqdn-cache-ttl"]) {
+			return fmt.Errorf("Error reading fqdn_cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("fqdn_min_refresh", dataSourceFlattenSystemDnsFqdnMinRefresh(o["fqdn-min-refresh"], d, "fqdn_min_refresh")); err != nil {
+		if !fortiAPIPatch(o["fqdn-min-refresh"]) {
+			return fmt.Errorf("Error reading fqdn_min_refresh: %v", err)
 		}
 	}
 

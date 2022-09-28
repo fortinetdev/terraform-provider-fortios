@@ -192,6 +192,10 @@ func dataSourceSystemAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vdom_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"radius_vdom_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -736,6 +740,10 @@ func dataSourceFlattenSystemAdminSchedule(v interface{}, d *schema.ResourceData,
 }
 
 func dataSourceFlattenSystemAdminAccprofileOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminVdomOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1499,6 +1507,12 @@ func dataSourceRefreshObjectSystemAdmin(d *schema.ResourceData, o map[string]int
 	if err = d.Set("accprofile_override", dataSourceFlattenSystemAdminAccprofileOverride(o["accprofile-override"], d, "accprofile_override")); err != nil {
 		if !fortiAPIPatch(o["accprofile-override"]) {
 			return fmt.Errorf("Error reading accprofile_override: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom_override", dataSourceFlattenSystemAdminVdomOverride(o["vdom-override"], d, "vdom_override")); err != nil {
+		if !fortiAPIPatch(o["vdom-override"]) {
+			return fmt.Errorf("Error reading vdom_override: %v", err)
 		}
 	}
 

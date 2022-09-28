@@ -45,6 +45,12 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"lan_extension_controller_addr": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"opmode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -257,6 +263,16 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"nat46_generate_ipv6_fragment_header": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat46_force_ipv4_packet_forwarding": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat64_force_ipv6_packet_forwarding": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -572,6 +588,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_advanced_wireless_features": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_switch_controller": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -702,16 +723,16 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ike_policy_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ike_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1024, 65535),
 				Optional:     true,
 				Computed:     true,
-			},
-			"ike_policy_route": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
 			},
 			"ike_natt_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -730,6 +751,21 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"application_bandwidth_tracking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fqdn_session_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ext_resource_session_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dyn_addr_session_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -853,6 +889,10 @@ func flattenSystemSettingsComments(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemSettingsVdomType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsLanExtensionControllerAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1052,6 +1092,14 @@ func flattenSystemSettingsLinkDownAccess(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemSettingsNat46GenerateIpv6FragmentHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsNat46ForceIpv4PacketForwarding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsNat64ForceIpv6PacketForwarding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1299,6 +1347,10 @@ func flattenSystemSettingsGuiWirelessController(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemSettingsGuiAdvancedWirelessFeatures(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsGuiSwitchController(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1403,11 +1455,11 @@ func flattenSystemSettingsIkeDnFormat(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-func flattenSystemSettingsIkePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemSettingsIkePolicyRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSettingsIkePolicyRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemSettingsIkePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1424,6 +1476,18 @@ func flattenSystemSettingsDefaultAppPortAsService(v interface{}, d *schema.Resou
 }
 
 func flattenSystemSettingsApplicationBandwidthTracking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsFqdnSessionCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsExtResourceSessionCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsDynAddrSessionCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1447,6 +1511,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("vdom_type", flattenSystemSettingsVdomType(o["vdom-type"], d, "vdom_type", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom-type"]) {
 			return fmt.Errorf("Error reading vdom_type: %v", err)
+		}
+	}
+
+	if err = d.Set("lan_extension_controller_addr", flattenSystemSettingsLanExtensionControllerAddr(o["lan-extension-controller-addr"], d, "lan_extension_controller_addr", sv)); err != nil {
+		if !fortiAPIPatch(o["lan-extension-controller-addr"]) {
+			return fmt.Errorf("Error reading lan_extension_controller_addr: %v", err)
 		}
 	}
 
@@ -1697,6 +1767,18 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("nat46_generate_ipv6_fragment_header", flattenSystemSettingsNat46GenerateIpv6FragmentHeader(o["nat46-generate-ipv6-fragment-header"], d, "nat46_generate_ipv6_fragment_header", sv)); err != nil {
 		if !fortiAPIPatch(o["nat46-generate-ipv6-fragment-header"]) {
 			return fmt.Errorf("Error reading nat46_generate_ipv6_fragment_header: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46_force_ipv4_packet_forwarding", flattenSystemSettingsNat46ForceIpv4PacketForwarding(o["nat46-force-ipv4-packet-forwarding"], d, "nat46_force_ipv4_packet_forwarding", sv)); err != nil {
+		if !fortiAPIPatch(o["nat46-force-ipv4-packet-forwarding"]) {
+			return fmt.Errorf("Error reading nat46_force_ipv4_packet_forwarding: %v", err)
+		}
+	}
+
+	if err = d.Set("nat64_force_ipv6_packet_forwarding", flattenSystemSettingsNat64ForceIpv6PacketForwarding(o["nat64-force-ipv6-packet-forwarding"], d, "nat64_force_ipv6_packet_forwarding", sv)); err != nil {
+		if !fortiAPIPatch(o["nat64-force-ipv6-packet-forwarding"]) {
+			return fmt.Errorf("Error reading nat64_force_ipv6_packet_forwarding: %v", err)
 		}
 	}
 
@@ -2066,6 +2148,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_advanced_wireless_features", flattenSystemSettingsGuiAdvancedWirelessFeatures(o["gui-advanced-wireless-features"], d, "gui_advanced_wireless_features", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-advanced-wireless-features"]) {
+			return fmt.Errorf("Error reading gui_advanced_wireless_features: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_switch_controller", flattenSystemSettingsGuiSwitchController(o["gui-switch-controller"], d, "gui_switch_controller", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-switch-controller"]) {
 			return fmt.Errorf("Error reading gui_switch_controller: %v", err)
@@ -2222,15 +2310,15 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if err = d.Set("ike_port", flattenSystemSettingsIkePort(o["ike-port"], d, "ike_port", sv)); err != nil {
-		if !fortiAPIPatch(o["ike-port"]) {
-			return fmt.Errorf("Error reading ike_port: %v", err)
-		}
-	}
-
 	if err = d.Set("ike_policy_route", flattenSystemSettingsIkePolicyRoute(o["ike-policy-route"], d, "ike_policy_route", sv)); err != nil {
 		if !fortiAPIPatch(o["ike-policy-route"]) {
 			return fmt.Errorf("Error reading ike_policy_route: %v", err)
+		}
+	}
+
+	if err = d.Set("ike_port", flattenSystemSettingsIkePort(o["ike-port"], d, "ike_port", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-port"]) {
+			return fmt.Errorf("Error reading ike_port: %v", err)
 		}
 	}
 
@@ -2255,6 +2343,24 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("application_bandwidth_tracking", flattenSystemSettingsApplicationBandwidthTracking(o["application-bandwidth-tracking"], d, "application_bandwidth_tracking", sv)); err != nil {
 		if !fortiAPIPatch(o["application-bandwidth-tracking"]) {
 			return fmt.Errorf("Error reading application_bandwidth_tracking: %v", err)
+		}
+	}
+
+	if err = d.Set("fqdn_session_check", flattenSystemSettingsFqdnSessionCheck(o["fqdn-session-check"], d, "fqdn_session_check", sv)); err != nil {
+		if !fortiAPIPatch(o["fqdn-session-check"]) {
+			return fmt.Errorf("Error reading fqdn_session_check: %v", err)
+		}
+	}
+
+	if err = d.Set("ext_resource_session_check", flattenSystemSettingsExtResourceSessionCheck(o["ext-resource-session-check"], d, "ext_resource_session_check", sv)); err != nil {
+		if !fortiAPIPatch(o["ext-resource-session-check"]) {
+			return fmt.Errorf("Error reading ext_resource_session_check: %v", err)
+		}
+	}
+
+	if err = d.Set("dyn_addr_session_check", flattenSystemSettingsDynAddrSessionCheck(o["dyn-addr-session-check"], d, "dyn_addr_session_check", sv)); err != nil {
+		if !fortiAPIPatch(o["dyn-addr-session-check"]) {
+			return fmt.Errorf("Error reading dyn_addr_session_check: %v", err)
 		}
 	}
 
@@ -2284,6 +2390,10 @@ func expandSystemSettingsComments(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandSystemSettingsVdomType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsLanExtensionControllerAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2472,6 +2582,14 @@ func expandSystemSettingsLinkDownAccess(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemSettingsNat46GenerateIpv6FragmentHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsNat46ForceIpv4PacketForwarding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsNat64ForceIpv6PacketForwarding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2719,6 +2837,10 @@ func expandSystemSettingsGuiWirelessController(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemSettingsGuiAdvancedWirelessFeatures(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsGuiSwitchController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2823,11 +2945,11 @@ func expandSystemSettingsIkeDnFormat(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func expandSystemSettingsIkePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemSettingsIkePolicyRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSettingsIkePolicyRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemSettingsIkePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2844,6 +2966,18 @@ func expandSystemSettingsDefaultAppPortAsService(d *schema.ResourceData, v inter
 }
 
 func expandSystemSettingsApplicationBandwidthTracking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsFqdnSessionCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsExtResourceSessionCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsDynAddrSessionCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2882,6 +3016,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["vdom-type"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("lan_extension_controller_addr"); ok {
+		if setArgNil {
+			obj["lan-extension-controller-addr"] = nil
+		} else {
+
+			t, err := expandSystemSettingsLanExtensionControllerAddr(d, v, "lan_extension_controller_addr", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lan-extension-controller-addr"] = t
 			}
 		}
 	}
@@ -3442,6 +3590,34 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["nat46-generate-ipv6-fragment-header"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("nat46_force_ipv4_packet_forwarding"); ok {
+		if setArgNil {
+			obj["nat46-force-ipv4-packet-forwarding"] = nil
+		} else {
+
+			t, err := expandSystemSettingsNat46ForceIpv4PacketForwarding(d, v, "nat46_force_ipv4_packet_forwarding", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat46-force-ipv4-packet-forwarding"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("nat64_force_ipv6_packet_forwarding"); ok {
+		if setArgNil {
+			obj["nat64-force-ipv6-packet-forwarding"] = nil
+		} else {
+
+			t, err := expandSystemSettingsNat64ForceIpv6PacketForwarding(d, v, "nat64_force_ipv6_packet_forwarding", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat64-force-ipv6-packet-forwarding"] = t
 			}
 		}
 	}
@@ -4300,6 +4476,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_advanced_wireless_features"); ok {
+		if setArgNil {
+			obj["gui-advanced-wireless-features"] = nil
+		} else {
+
+			t, err := expandSystemSettingsGuiAdvancedWirelessFeatures(d, v, "gui_advanced_wireless_features", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-advanced-wireless-features"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_switch_controller"); ok {
 		if setArgNil {
 			obj["gui-switch-controller"] = nil
@@ -4664,20 +4854,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
-	if v, ok := d.GetOk("ike_port"); ok {
-		if setArgNil {
-			obj["ike-port"] = nil
-		} else {
-
-			t, err := expandSystemSettingsIkePort(d, v, "ike_port", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["ike-port"] = t
-			}
-		}
-	}
-
 	if v, ok := d.GetOk("ike_policy_route"); ok {
 		if setArgNil {
 			obj["ike-policy-route"] = nil
@@ -4688,6 +4864,20 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["ike-policy-route"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ike_port"); ok {
+		if setArgNil {
+			obj["ike-port"] = nil
+		} else {
+
+			t, err := expandSystemSettingsIkePort(d, v, "ike_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-port"] = t
 			}
 		}
 	}
@@ -4744,6 +4934,48 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["application-bandwidth-tracking"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("fqdn_session_check"); ok {
+		if setArgNil {
+			obj["fqdn-session-check"] = nil
+		} else {
+
+			t, err := expandSystemSettingsFqdnSessionCheck(d, v, "fqdn_session_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fqdn-session-check"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ext_resource_session_check"); ok {
+		if setArgNil {
+			obj["ext-resource-session-check"] = nil
+		} else {
+
+			t, err := expandSystemSettingsExtResourceSessionCheck(d, v, "ext_resource_session_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ext-resource-session-check"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dyn_addr_session_check"); ok {
+		if setArgNil {
+			obj["dyn-addr-session-check"] = nil
+		} else {
+
+			t, err := expandSystemSettingsDynAddrSessionCheck(d, v, "dyn_addr_session_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dyn-addr-session-check"] = t
 			}
 		}
 	}

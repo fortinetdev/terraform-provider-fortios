@@ -56,6 +56,11 @@ func resourceSystemExternalResource() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"update_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"category": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(192, 221),
@@ -86,7 +91,7 @@ func resourceSystemExternalResource() *schema.Resource {
 			},
 			"user_agent": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 127),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -252,6 +257,10 @@ func flattenSystemExternalResourceType(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemExternalResourceUpdateMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemExternalResourceCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -316,6 +325,12 @@ func refreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]in
 	if err = d.Set("type", flattenSystemExternalResourceType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("update_method", flattenSystemExternalResourceUpdateMethod(o["update-method"], d, "update_method", sv)); err != nil {
+		if !fortiAPIPatch(o["update-method"]) {
+			return fmt.Errorf("Error reading update_method: %v", err)
 		}
 	}
 
@@ -395,6 +410,10 @@ func expandSystemExternalResourceStatus(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemExternalResourceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemExternalResourceUpdateMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -478,6 +497,16 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("update_method"); ok {
+
+		t, err := expandSystemExternalResourceUpdateMethod(d, v, "update_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["update-method"] = t
 		}
 	}
 

@@ -67,8 +67,8 @@ The following arguments are supported:
 * `oci_fingerprint` - OCI pubkey fingerprint.
 * `external_ip` - Configure GCP external IP. The structure of `external_ip` block is documented below.
 * `route` - Configure GCP route. The structure of `route` block is documented below.
-* `gcp_project_list` - Configure GCP project list. The structure of `gcp_project_list` block is documented below.
 * `forwarding_rule` - Configure GCP forwarding rule. The structure of `forwarding_rule` block is documented below.
+* `gcp_project_list` - Configure GCP project list. The structure of `gcp_project_list` block is documented below.
 * `use_metadata_iam` - Enable/disable using IAM role from metadata to call API. Valid values: `disable`, `enable`.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
@@ -93,6 +93,7 @@ The `server_list` block supports:
 The `external_account_list` block supports:
 
 * `role_arn` - AWS role ARN to assume.
+* `external_id` - AWS external ID.
 * `region_list` - AWS region name list. The structure of `region_list` block is documented below.
 
 The `region_list` block supports:
@@ -130,6 +131,11 @@ The `route` block supports:
 
 * `name` - Route name.
 
+The `forwarding_rule` block supports:
+
+* `rule_name` - Forwarding rule name.
+* `target` - Target instance name.
+
 The `gcp_project_list` block supports:
 
 * `id` - GCP project ID.
@@ -138,11 +144,6 @@ The `gcp_project_list` block supports:
 The `gcp_zone_list` block supports:
 
 * `name` - GCP zone name.
-
-The `forwarding_rule` block supports:
-
-* `rule_name` - Forwarding rule name.
-* `target` - Target instance name.
 
 
 ## Attribute Reference

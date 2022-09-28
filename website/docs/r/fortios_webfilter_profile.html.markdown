@@ -246,7 +246,7 @@ The `antiphish` block supports:
 * `default_action` - Action to be taken when there is no matching rule. Valid values: `exempt`, `log`, `block`.
 * `check_uri` - Enable/disable checking of GET URI parameters for known credentials. Valid values: `enable`, `disable`.
 * `check_basic_auth` - Enable/disable checking of HTTP Basic Auth field for known credentials. Valid values: `enable`, `disable`.
-* `check_username_only` - Enable/disable username only matching of credentials. Action will be taken for valid usernames regardless of password validity. Valid values: `enable`, `disable`.
+* `check_username_only` - Enable/disable acting only on valid username credentials. Action will be taken for valid usernames regardless of password validity. Valid values: `enable`, `disable`.
 * `max_body_len` - Maximum size of a POST body to check for credentials.
 * `inspection_entries` - AntiPhishing entries. The structure of `inspection_entries` block is documented below.
 * `custom_patterns` - Custom username and password regex patterns. The structure of `custom_patterns` block is documented below.

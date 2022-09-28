@@ -194,6 +194,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"verify_dns_for_policy_matching": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"block_page_status_code": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(100, 599),
@@ -333,6 +338,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Computed:     true,
 						},
 						"ssl_offloaded": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"explicit_ftp_tls": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1165,6 +1175,12 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsHttpScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "verify_dns_for_policy_matching"
+	if _, ok := i["verify-dns-for-policy-matching"]; ok {
+
+		result["verify_dns_for_policy_matching"] = flattenFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(i["verify-dns-for-policy-matching"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "block_page_status_code"
 	if _, ok := i["block-page-status-code"]; ok {
 
@@ -1309,6 +1325,10 @@ func flattenFirewallProfileProtocolOptionsHttpScanBzip2(v interface{}, d *schema
 	return v
 }
 
+func flattenFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileProtocolOptionsHttpBlockPageStatusCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1446,6 +1466,12 @@ func flattenFirewallProfileProtocolOptionsFtp(v interface{}, d *schema.ResourceD
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsFtpSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "explicit_ftp_tls"
+	if _, ok := i["explicit-ftp-tls"]; ok {
+
+		result["explicit_ftp_tls"] = flattenFirewallProfileProtocolOptionsFtpExplicitFtpTls(i["explicit-ftp-tls"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -1511,6 +1537,10 @@ func flattenFirewallProfileProtocolOptionsFtpTcpWindowSize(v interface{}, d *sch
 }
 
 func flattenFirewallProfileProtocolOptionsFtpSslOffloaded(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileProtocolOptionsFtpExplicitFtpTls(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2843,6 +2873,11 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsHttpScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "verify_dns_for_policy_matching"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["verify-dns-for-policy-matching"], _ = expandFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(d, i["verify_dns_for_policy_matching"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "block_page_status_code"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2979,6 +3014,10 @@ func expandFirewallProfileProtocolOptionsHttpScanBzip2(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileProtocolOptionsHttpBlockPageStatusCode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3101,6 +3140,11 @@ func expandFirewallProfileProtocolOptionsFtp(d *schema.ResourceData, v interface
 
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsFtpSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "explicit_ftp_tls"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["explicit-ftp-tls"], _ = expandFirewallProfileProtocolOptionsFtpExplicitFtpTls(d, i["explicit_ftp_tls"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -3166,6 +3210,10 @@ func expandFirewallProfileProtocolOptionsFtpTcpWindowSize(d *schema.ResourceData
 }
 
 func expandFirewallProfileProtocolOptionsFtpSslOffloaded(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileProtocolOptionsFtpExplicitFtpTls(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

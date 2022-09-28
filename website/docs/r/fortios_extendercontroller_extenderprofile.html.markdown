@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_extendercontroller_extenderprofile
-FortiExtender extender profile configuration. Applies to FortiOS Version `>= 7.0.2`.
+FortiExtender extender profile configuration. Applies to FortiOS Version `7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.2.0`.
 
 ## Argument Reference
 

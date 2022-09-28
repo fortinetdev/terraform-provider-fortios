@@ -42,6 +42,9 @@ The following attributes are exported:
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
 * `host_type` - Host type.
 * `host` - Host Address.
+* `tenant` - Tenant.
+* `epg_name` - Endpoint group name.
+* `sdn_tag` - SDN Tag.
 * `fabric_object` - Security Fabric global object setting.
 
 The `macaddr` block contains:

@@ -601,6 +601,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fgsp_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"inbound_dscp_copy": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -643,6 +648,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"rsa_signature_format": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"rsa_signature_hash_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1439,6 +1449,10 @@ func flattenVpnIpsecPhase1HaSyncEspSeqno(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenVpnIpsecPhase1FgspSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InboundDscpCopy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1472,6 +1486,10 @@ func flattenVpnIpsecPhase1SignatureHashAlg(v interface{}, d *schema.ResourceData
 }
 
 func flattenVpnIpsecPhase1RsaSignatureFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1RsaSignatureHashOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2126,6 +2144,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("fgsp_sync", flattenVpnIpsecPhase1FgspSync(o["fgsp-sync"], d, "fgsp_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fgsp-sync"]) {
+			return fmt.Errorf("Error reading fgsp_sync: %v", err)
+		}
+	}
+
 	if err = d.Set("inbound_dscp_copy", flattenVpnIpsecPhase1InboundDscpCopy(o["inbound-dscp-copy"], d, "inbound_dscp_copy", sv)); err != nil {
 		if !fortiAPIPatch(o["inbound-dscp-copy"]) {
 			return fmt.Errorf("Error reading inbound_dscp_copy: %v", err)
@@ -2177,6 +2201,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("rsa_signature_format", flattenVpnIpsecPhase1RsaSignatureFormat(o["rsa-signature-format"], d, "rsa_signature_format", sv)); err != nil {
 		if !fortiAPIPatch(o["rsa-signature-format"]) {
 			return fmt.Errorf("Error reading rsa_signature_format: %v", err)
+		}
+	}
+
+	if err = d.Set("rsa_signature_hash_override", flattenVpnIpsecPhase1RsaSignatureHashOverride(o["rsa-signature-hash-override"], d, "rsa_signature_hash_override", sv)); err != nil {
+		if !fortiAPIPatch(o["rsa-signature-hash-override"]) {
+			return fmt.Errorf("Error reading rsa_signature_hash_override: %v", err)
 		}
 	}
 
@@ -2813,6 +2843,10 @@ func expandVpnIpsecPhase1HaSyncEspSeqno(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandVpnIpsecPhase1FgspSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InboundDscpCopy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2846,6 +2880,10 @@ func expandVpnIpsecPhase1SignatureHashAlg(d *schema.ResourceData, v interface{},
 }
 
 func expandVpnIpsecPhase1RsaSignatureFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1RsaSignatureHashOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3878,6 +3916,16 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("fgsp_sync"); ok {
+
+		t, err := expandVpnIpsecPhase1FgspSync(d, v, "fgsp_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fgsp-sync"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
 
 		t, err := expandVpnIpsecPhase1InboundDscpCopy(d, v, "inbound_dscp_copy", sv)
@@ -3965,6 +4013,16 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["rsa-signature-format"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rsa_signature_hash_override"); ok {
+
+		t, err := expandVpnIpsecPhase1RsaSignatureHashOverride(d, v, "rsa_signature_hash_override", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rsa-signature-hash-override"] = t
 		}
 	}
 

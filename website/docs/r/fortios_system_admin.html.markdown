@@ -75,6 +75,7 @@ The following arguments are supported:
 * `ssh_certificate` - Select the certificate to be used by the FortiGate for authentication with an SSH client.
 * `schedule` - Firewall schedule used to restrict when the administrator can log in. No schedule means no restrictions.
 * `accprofile_override` - Enable to use the name of an access profile provided by the remote authentication server to control the FortiGate features that this administrator can access. Valid values: `enable`, `disable`.
+* `vdom_override` - Enable to use the names of VDOMs provided by the remote authentication server to control the VDOMs that this administrator can access. Valid values: `enable`, `disable`.
 * `radius_vdom_override` - Enable to use the names of VDOMs provided by the remote authentication server to control the VDOMs that this administrator can access. Valid values: `enable`, `disable`.
 * `password_expire` - Password expire time.
 * `force_password_change` - Enable/disable force password change on next login. Valid values: `enable`, `disable`.

@@ -86,6 +86,16 @@ func resourceFirewallInternetService() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ip6_range_number": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"extra_ip6_range_number": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"singularity": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
@@ -263,6 +273,14 @@ func flattenFirewallInternetServiceIpNumber(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallInternetServiceIp6RangeNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallInternetServiceExtraIp6RangeNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallInternetServiceSingularity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -334,6 +352,18 @@ func refreshObjectFirewallInternetService(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("ip6_range_number", flattenFirewallInternetServiceIp6RangeNumber(o["ip6-range-number"], d, "ip6_range_number", sv)); err != nil {
+		if !fortiAPIPatch(o["ip6-range-number"]) {
+			return fmt.Errorf("Error reading ip6_range_number: %v", err)
+		}
+	}
+
+	if err = d.Set("extra_ip6_range_number", flattenFirewallInternetServiceExtraIp6RangeNumber(o["extra-ip6-range-number"], d, "extra_ip6_range_number", sv)); err != nil {
+		if !fortiAPIPatch(o["extra-ip6-range-number"]) {
+			return fmt.Errorf("Error reading extra_ip6_range_number: %v", err)
+		}
+	}
+
 	if err = d.Set("singularity", flattenFirewallInternetServiceSingularity(o["singularity"], d, "singularity", sv)); err != nil {
 		if !fortiAPIPatch(o["singularity"]) {
 			return fmt.Errorf("Error reading singularity: %v", err)
@@ -392,6 +422,14 @@ func expandFirewallInternetServiceExtraIpRangeNumber(d *schema.ResourceData, v i
 }
 
 func expandFirewallInternetServiceIpNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInternetServiceIp6RangeNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInternetServiceExtraIp6RangeNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -503,6 +541,26 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["ip-number"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("ip6_range_number"); ok {
+
+		t, err := expandFirewallInternetServiceIp6RangeNumber(d, v, "ip6_range_number", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ip6-range-number"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("extra_ip6_range_number"); ok {
+
+		t, err := expandFirewallInternetServiceExtraIp6RangeNumber(d, v, "extra_ip6_range_number", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["extra-ip6-range-number"] = t
 		}
 	}
 

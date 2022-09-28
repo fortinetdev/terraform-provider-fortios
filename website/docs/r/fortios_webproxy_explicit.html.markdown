@@ -35,6 +35,7 @@ The following arguments are supported:
 * `pac_file_server_status` - Enable/disable Proxy Auto-Configuration (PAC) for users of this explicit proxy profile. Valid values: `enable`, `disable`.
 * `pac_file_url` - PAC file access URL.
 * `pac_file_server_port` - Port number that PAC traffic from client web browsers uses to connect to the explicit web proxy (0 - 65535, default = 0; use the same as HTTP).
+* `pac_file_through_https` - Enable/disable to get Proxy Auto-Configuration (PAC) through HTTPS. Valid values: `enable`, `disable`.
 * `pac_file_name` - Pac file name.
 * `pac_file_data` - PAC file contents enclosed in quotes (maximum of 256K bytes).
 * `pac_policy` - PAC policies. The structure of `pac_policy` block is documented below.

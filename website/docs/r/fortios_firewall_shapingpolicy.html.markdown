@@ -51,6 +51,7 @@ resource "fortios_firewall_shapingpolicy" "trname" {
 The following arguments are supported:
 
 * `fosid` - Shaping policy ID.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `name` - Shaping policy name.
 * `comment` - Comments.
 * `status` - Enable/disable this traffic shaping policy. Valid values: `enable`, `disable`.

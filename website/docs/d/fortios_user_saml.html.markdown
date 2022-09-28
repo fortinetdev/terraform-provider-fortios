@@ -33,6 +33,7 @@ The following attributes are exported:
 * `digest_method` - Digest Method Algorithm. (default = sha1).
 * `limit_relaystate` - Enable/disable limiting of relay-state parameter when it exceeds SAML 2.0 specification limits (80 bytes).
 * `clock_tolerance` - Clock skew tolerance in seconds (0 - 300, default = 15, 0 = no tolerance).
+* `auth_url` - URL to verify authentication.
 * `adfs_claim` - Enable/disable ADFS Claim for user/group attribute in assertion statement (default = disable).
 * `user_claim_type` - User name claim in assertion statement.
 * `group_claim_type` - Group claim in assertion statement.

@@ -133,6 +133,7 @@ The `radio_1` block supports:
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
@@ -215,6 +216,7 @@ The `radio_2` block supports:
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
@@ -296,6 +298,7 @@ The `radio_3` block supports:
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
@@ -377,6 +380,7 @@ The `radio_4` block supports:
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).

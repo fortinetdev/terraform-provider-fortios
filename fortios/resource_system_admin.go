@@ -246,6 +246,11 @@ func resourceSystemAdmin() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vdom_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"radius_vdom_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -947,6 +952,10 @@ func flattenSystemAdminSchedule(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemAdminAccprofileOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminVdomOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1803,6 +1812,12 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("vdom_override", flattenSystemAdminVdomOverride(o["vdom-override"], d, "vdom_override", sv)); err != nil {
+		if !fortiAPIPatch(o["vdom-override"]) {
+			return fmt.Errorf("Error reading vdom_override: %v", err)
+		}
+	}
+
 	if err = d.Set("radius_vdom_override", flattenSystemAdminRadiusVdomOverride(o["radius-vdom-override"], d, "radius_vdom_override", sv)); err != nil {
 		if !fortiAPIPatch(o["radius-vdom-override"]) {
 			return fmt.Errorf("Error reading radius_vdom_override: %v", err)
@@ -2163,6 +2178,10 @@ func expandSystemAdminSchedule(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemAdminAccprofileOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminVdomOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3098,6 +3117,16 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["accprofile-override"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("vdom_override"); ok {
+
+		t, err := expandSystemAdminVdomOverride(d, v, "vdom_override", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdom-override"] = t
 		}
 	}
 

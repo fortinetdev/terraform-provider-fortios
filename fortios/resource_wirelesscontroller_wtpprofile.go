@@ -520,6 +520,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"n80211d": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"rts_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(256, 2346),
@@ -927,6 +932,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"n80211d": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"rts_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(256, 2346),
@@ -1328,6 +1338,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"n80211d": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"rts_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(256, 2346),
@@ -1728,6 +1743,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
 							Computed:     true,
+						},
+						"n80211d": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"rts_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -3051,6 +3071,12 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 		result["beacon_interval"] = flattenWirelessControllerWtpProfileRadio1BeaconInterval(i["beacon-interval"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := i["80211d"]; ok {
+
+		result["n80211d"] = flattenWirelessControllerWtpProfileRadio180211D(i["80211d"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := i["rts-threshold"]; ok {
 
@@ -3426,6 +3452,10 @@ func flattenWirelessControllerWtpProfileRadio1Dtim(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerWtpProfileRadio1BeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio180211D(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3852,6 +3882,12 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["beacon_interval"] = flattenWirelessControllerWtpProfileRadio2BeaconInterval(i["beacon-interval"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := i["80211d"]; ok {
+
+		result["n80211d"] = flattenWirelessControllerWtpProfileRadio280211D(i["80211d"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := i["rts-threshold"]; ok {
 
@@ -4227,6 +4263,10 @@ func flattenWirelessControllerWtpProfileRadio2Dtim(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerWtpProfileRadio2BeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio280211D(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4647,6 +4687,12 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["beacon_interval"] = flattenWirelessControllerWtpProfileRadio3BeaconInterval(i["beacon-interval"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := i["80211d"]; ok {
+
+		result["n80211d"] = flattenWirelessControllerWtpProfileRadio380211D(i["80211d"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := i["rts-threshold"]; ok {
 
@@ -5018,6 +5064,10 @@ func flattenWirelessControllerWtpProfileRadio3Dtim(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerWtpProfileRadio3BeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio380211D(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5438,6 +5488,12 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["beacon_interval"] = flattenWirelessControllerWtpProfileRadio4BeaconInterval(i["beacon-interval"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := i["80211d"]; ok {
+
+		result["n80211d"] = flattenWirelessControllerWtpProfileRadio480211D(i["80211d"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := i["rts-threshold"]; ok {
 
@@ -5809,6 +5865,10 @@ func flattenWirelessControllerWtpProfileRadio4Dtim(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerWtpProfileRadio4BeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio480211D(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -7473,6 +7533,11 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 
 		result["beacon-interval"], _ = expandWirelessControllerWtpProfileRadio1BeaconInterval(d, i["beacon_interval"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["80211d"], _ = expandWirelessControllerWtpProfileRadio180211D(d, i["n80211d"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -7807,6 +7872,10 @@ func expandWirelessControllerWtpProfileRadio1Dtim(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerWtpProfileRadio1BeaconInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio180211D(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8186,6 +8255,11 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 
 		result["beacon-interval"], _ = expandWirelessControllerWtpProfileRadio2BeaconInterval(d, i["beacon_interval"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["80211d"], _ = expandWirelessControllerWtpProfileRadio280211D(d, i["n80211d"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -8520,6 +8594,10 @@ func expandWirelessControllerWtpProfileRadio2Dtim(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerWtpProfileRadio2BeaconInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio280211D(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8894,6 +8972,11 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 
 		result["beacon-interval"], _ = expandWirelessControllerWtpProfileRadio3BeaconInterval(d, i["beacon_interval"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["80211d"], _ = expandWirelessControllerWtpProfileRadio380211D(d, i["n80211d"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -9224,6 +9307,10 @@ func expandWirelessControllerWtpProfileRadio3Dtim(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerWtpProfileRadio3BeaconInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio380211D(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9598,6 +9685,11 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 
 		result["beacon-interval"], _ = expandWirelessControllerWtpProfileRadio4BeaconInterval(d, i["beacon_interval"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "n80211d"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["80211d"], _ = expandWirelessControllerWtpProfileRadio480211D(d, i["n80211d"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "rts_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -9928,6 +10020,10 @@ func expandWirelessControllerWtpProfileRadio4Dtim(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerWtpProfileRadio4BeaconInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio480211D(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

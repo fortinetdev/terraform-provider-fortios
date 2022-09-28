@@ -151,6 +151,12 @@ func resourceSystemSdnConnector() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"external_id": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1399),
+							Optional:     true,
+							Computed:     true,
+						},
 						"region_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -363,6 +369,26 @@ func resourceSystemSdnConnector() *schema.Resource {
 					},
 				},
 			},
+			"forwarding_rule": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"rule_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"target": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"gcp_project_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -387,26 +413,6 @@ func resourceSystemSdnConnector() *schema.Resource {
 									},
 								},
 							},
-						},
-					},
-				},
-			},
-			"forwarding_rule": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"rule_name": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional:     true,
-							Computed:     true,
-						},
-						"target": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -758,6 +764,12 @@ func flattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.Resou
 			tmp["role_arn"] = flattenSystemSdnConnectorExternalAccountListRoleArn(i["role-arn"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_id"
+		if _, ok := i["external-id"]; ok {
+
+			tmp["external_id"] = flattenSystemSdnConnectorExternalAccountListExternalId(i["external-id"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
 		if _, ok := i["region-list"]; ok {
 
@@ -774,6 +786,10 @@ func flattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.Resou
 }
 
 func flattenSystemSdnConnectorExternalAccountListRoleArn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorExternalAccountListExternalId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1196,6 +1212,59 @@ func flattenSystemSdnConnectorRouteName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
+		if _, ok := i["rule-name"]; ok {
+
+			tmp["rule_name"] = flattenSystemSdnConnectorForwardingRuleRuleName(i["rule-name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := i["target"]; ok {
+
+			tmp["target"] = flattenSystemSdnConnectorForwardingRuleTarget(i["target"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "rule_name", d)
+	return result
+}
+
+func flattenSystemSdnConnectorForwardingRuleRuleName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorForwardingRuleTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1285,59 +1354,6 @@ func flattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{}, d *schema
 }
 
 func flattenSystemSdnConnectorGcpProjectListGcpZoneListName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
-	if v == nil {
-		return nil
-	}
-
-	if _, ok := v.([]interface{}); !ok {
-		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
-		return nil
-	}
-
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil
-	}
-
-	result := make([]map[string]interface{}, 0, len(l))
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
-		if _, ok := i["rule-name"]; ok {
-
-			tmp["rule_name"] = flattenSystemSdnConnectorForwardingRuleRuleName(i["rule-name"], d, pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-
-			tmp["target"] = flattenSystemSdnConnectorForwardingRuleTarget(i["target"], d, pre_append, sv)
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	dynamic_sort_subtable(result, "rule_name", d)
-	return result
-}
-
-func flattenSystemSdnConnectorForwardingRuleRuleName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemSdnConnectorForwardingRuleTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1647,22 +1663,6 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 	}
 
 	if isImportTable() {
-		if err = d.Set("gcp_project_list", flattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list", sv)); err != nil {
-			if !fortiAPIPatch(o["gcp-project-list"]) {
-				return fmt.Errorf("Error reading gcp_project_list: %v", err)
-			}
-		}
-	} else {
-		if _, ok := d.GetOk("gcp_project_list"); ok {
-			if err = d.Set("gcp_project_list", flattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list", sv)); err != nil {
-				if !fortiAPIPatch(o["gcp-project-list"]) {
-					return fmt.Errorf("Error reading gcp_project_list: %v", err)
-				}
-			}
-		}
-	}
-
-	if isImportTable() {
 		if err = d.Set("forwarding_rule", flattenSystemSdnConnectorForwardingRule(o["forwarding-rule"], d, "forwarding_rule", sv)); err != nil {
 			if !fortiAPIPatch(o["forwarding-rule"]) {
 				return fmt.Errorf("Error reading forwarding_rule: %v", err)
@@ -1673,6 +1673,22 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 			if err = d.Set("forwarding_rule", flattenSystemSdnConnectorForwardingRule(o["forwarding-rule"], d, "forwarding_rule", sv)); err != nil {
 				if !fortiAPIPatch(o["forwarding-rule"]) {
 					return fmt.Errorf("Error reading forwarding_rule: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("gcp_project_list", flattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list", sv)); err != nil {
+			if !fortiAPIPatch(o["gcp-project-list"]) {
+				return fmt.Errorf("Error reading gcp_project_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gcp_project_list"); ok {
+			if err = d.Set("gcp_project_list", flattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list", sv)); err != nil {
+				if !fortiAPIPatch(o["gcp-project-list"]) {
+					return fmt.Errorf("Error reading gcp_project_list: %v", err)
 				}
 			}
 		}
@@ -1863,6 +1879,12 @@ func expandSystemSdnConnectorExternalAccountList(d *schema.ResourceData, v inter
 			tmp["role-arn"], _ = expandSystemSdnConnectorExternalAccountListRoleArn(d, i["role_arn"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["external-id"], _ = expandSystemSdnConnectorExternalAccountListExternalId(d, i["external_id"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 
@@ -1880,6 +1902,10 @@ func expandSystemSdnConnectorExternalAccountList(d *schema.ResourceData, v inter
 }
 
 func expandSystemSdnConnectorExternalAccountListRoleArn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorExternalAccountListExternalId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2229,6 +2255,48 @@ func expandSystemSdnConnectorRouteName(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemSdnConnectorForwardingRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["rule-name"], _ = expandSystemSdnConnectorForwardingRuleRuleName(d, i["rule_name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["target"], _ = expandSystemSdnConnectorForwardingRuleTarget(d, i["target"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdnConnectorForwardingRuleRuleName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorForwardingRuleTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdnConnectorGcpProjectList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -2298,48 +2366,6 @@ func expandSystemSdnConnectorGcpProjectListGcpZoneList(d *schema.ResourceData, v
 }
 
 func expandSystemSdnConnectorGcpProjectListGcpZoneListName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSdnConnectorForwardingRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
-		if _, ok := d.GetOk(pre_append); ok {
-
-			tmp["rule-name"], _ = expandSystemSdnConnectorForwardingRuleRuleName(d, i["rule_name"], pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := d.GetOk(pre_append); ok {
-
-			tmp["target"], _ = expandSystemSdnConnectorForwardingRuleTarget(d, i["target"], pre_append, sv)
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandSystemSdnConnectorForwardingRuleRuleName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSdnConnectorForwardingRuleTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2762,16 +2788,6 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("gcp_project_list"); ok || d.HasChange("gcp_project_list") {
-
-		t, err := expandSystemSdnConnectorGcpProjectList(d, v, "gcp_project_list", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gcp-project-list"] = t
-		}
-	}
-
 	if v, ok := d.GetOk("forwarding_rule"); ok || d.HasChange("forwarding_rule") {
 
 		t, err := expandSystemSdnConnectorForwardingRule(d, v, "forwarding_rule", sv)
@@ -2779,6 +2795,16 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["forwarding-rule"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gcp_project_list"); ok || d.HasChange("gcp_project_list") {
+
+		t, err := expandSystemSdnConnectorGcpProjectList(d, v, "gcp_project_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gcp-project-list"] = t
 		}
 	}
 

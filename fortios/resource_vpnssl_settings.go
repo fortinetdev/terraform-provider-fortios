@@ -573,6 +573,11 @@ func resourceVpnSslSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_trusted_client": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1523,6 +1528,10 @@ func flattenVpnSslSettingsWebModeSnat(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenVpnSslSettingsZtnaTrustedClient(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -2015,6 +2024,12 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("web_mode_snat", flattenVpnSslSettingsWebModeSnat(o["web-mode-snat"], d, "web_mode_snat", sv)); err != nil {
 		if !fortiAPIPatch(o["web-mode-snat"]) {
 			return fmt.Errorf("Error reading web_mode_snat: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_trusted_client", flattenVpnSslSettingsZtnaTrustedClient(o["ztna-trusted-client"], d, "ztna_trusted_client", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-trusted-client"]) {
+			return fmt.Errorf("Error reading ztna_trusted_client: %v", err)
 		}
 	}
 
@@ -2760,6 +2775,10 @@ func expandVpnSslSettingsSamlRedirectPort(d *schema.ResourceData, v interface{},
 }
 
 func expandVpnSslSettingsWebModeSnat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsZtnaTrustedClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3770,6 +3789,20 @@ func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["web-mode-snat"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_trusted_client"); ok {
+		if setArgNil {
+			obj["ztna-trusted-client"] = nil
+		} else {
+
+			t, err := expandVpnSslSettingsZtnaTrustedClient(d, v, "ztna_trusted_client", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ztna-trusted-client"] = t
 			}
 		}
 	}

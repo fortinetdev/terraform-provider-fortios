@@ -50,7 +50,7 @@ The following arguments are supported:
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay. Valid values: `disable`, `enable`.
 * `dhcp_relay_ip` - DHCP relay IP address.
 * `dhcp_relay_link_selection` - DHCP relay link selection.
-* `dhcp_relay_request_all_server` - Enable/disable sending of DHCP requests to all servers. Valid values: `disable`, `enable`.
+* `dhcp_relay_request_all_server` - Enable/disable sending DHCP request to all servers. Valid values: `disable`, `enable`.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec). Valid values: `regular`, `ipsec`.
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option. Valid values: `enable`, `disable`.
 * `dhcp_classless_route_addition` - Enable/disable addition of classless static routes retrieved from DHCP server. Valid values: `enable`, `disable`.
@@ -159,14 +159,16 @@ The following arguments are supported:
 * `remote_ip` - Remote IP address of tunnel.
 * `member` - Physical interfaces that belong to the aggregate or redundant interface. The structure of `member` block is documented below.
 * `lacp_mode` - LACP mode. Valid values: `static`, `passive`, `active`.
+* `lacp_ha_secondary` - LACP HA secondary member. Valid values: `enable`, `disable`.
 * `lacp_ha_slave` - LACP HA slave. Valid values: `enable`, `disable`.
 * `system_id_type` - Method in which system ID is generated. Valid values: `auto`, `user`.
 * `system_id` - Define a system ID for the aggregate interface.
 * `lacp_speed` - How often the interface sends LACP messages. Valid values: `slow`, `fast`.
 * `min_links` - Minimum number of aggregated ports that must be up.
 * `min_links_down` - Action to take when less than the configured minimum number of links are active. Valid values: `operational`, `administrative`.
-* `algorithm` - Frame distribution algorithm. Valid values: `L2`, `L3`, `L4`.
+* `algorithm` - Frame distribution algorithm.
 * `link_up_delay` - Number of milliseconds to wait before considering a link is up.
+* `aggregate_type` - Type of aggregation. Valid values: `physical`, `vxlan`.
 * `priority_override` - Enable/disable fail back to higher priority port once recovered. Valid values: `enable`, `disable`.
 * `aggregate` - Aggregate interface.
 * `redundant_interface` - Redundant interface.
@@ -226,6 +228,7 @@ The following arguments are supported:
 * `switch_controller_access_vlan` - Block FortiSwitch port-to-port traffic. Valid values: `enable`, `disable`.
 * `switch_controller_traffic_policy` - Switch controller traffic policy for the VLAN.
 * `switch_controller_rspan_mode` - Stop Layer2 MAC learning and interception of BPDUs and other packets on this interface. Valid values: `disable`, `enable`.
+* `switch_controller_netflow_collect` - NetFlow collection and processing. Valid values: `disable`, `enable`.
 * `switch_controller_mgmt_vlan` - VLAN to use for FortiLink management purposes.
 * `switch_controller_igmp_snooping` - Switch controller IGMP snooping. Valid values: `enable`, `disable`.
 * `switch_controller_igmp_snooping_proxy` - Switch controller IGMP snooping proxy. Valid values: `enable`, `disable`.

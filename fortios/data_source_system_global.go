@@ -56,6 +56,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_app_detection_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"gui_display_hostname": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -664,6 +668,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fortiextender_provision_on_authorization": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"switch_controller": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1075,6 +1083,10 @@ func dataSourceFlattenSystemGlobalGuiCustomLanguage(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemGlobalGuiWirelessOpensecurity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGuiAppDetectionSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1686,6 +1698,10 @@ func dataSourceFlattenSystemGlobalFortiextenderVlanMode(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemGlobalFortiextenderProvisionOnAuthorization(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalSwitchController(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2083,6 +2099,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gui_wireless_opensecurity", dataSourceFlattenSystemGlobalGuiWirelessOpensecurity(o["gui-wireless-opensecurity"], d, "gui_wireless_opensecurity")); err != nil {
 		if !fortiAPIPatch(o["gui-wireless-opensecurity"]) {
 			return fmt.Errorf("Error reading gui_wireless_opensecurity: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_app_detection_sdwan", dataSourceFlattenSystemGlobalGuiAppDetectionSdwan(o["gui-app-detection-sdwan"], d, "gui_app_detection_sdwan")); err != nil {
+		if !fortiAPIPatch(o["gui-app-detection-sdwan"]) {
+			return fmt.Errorf("Error reading gui_app_detection_sdwan: %v", err)
 		}
 	}
 
@@ -2995,6 +3017,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("fortiextender_vlan_mode", dataSourceFlattenSystemGlobalFortiextenderVlanMode(o["fortiextender-vlan-mode"], d, "fortiextender_vlan_mode")); err != nil {
 		if !fortiAPIPatch(o["fortiextender-vlan-mode"]) {
 			return fmt.Errorf("Error reading fortiextender_vlan_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("fortiextender_provision_on_authorization", dataSourceFlattenSystemGlobalFortiextenderProvisionOnAuthorization(o["fortiextender-provision-on-authorization"], d, "fortiextender_provision_on_authorization")); err != nil {
+		if !fortiAPIPatch(o["fortiextender-provision-on-authorization"]) {
+			return fmt.Errorf("Error reading fortiextender_provision_on_authorization: %v", err)
 		}
 	}
 

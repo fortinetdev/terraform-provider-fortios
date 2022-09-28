@@ -41,6 +41,11 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -584,6 +589,10 @@ func resourceFirewallShapingPolicyRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenFirewallShapingPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallShapingPolicyUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1657,6 +1666,12 @@ func refreshObjectFirewallShapingPolicy(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("uuid", flattenFirewallShapingPolicyUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
 	if err = d.Set("name", flattenFirewallShapingPolicyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
@@ -2143,6 +2158,10 @@ func flattenFirewallShapingPolicyFortiTestDebug(d *schema.ResourceData, fosdebug
 }
 
 func expandFirewallShapingPolicyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallShapingPolicyUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2964,6 +2983,16 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+
+		t, err := expandFirewallShapingPolicyUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
 		}
 	}
 

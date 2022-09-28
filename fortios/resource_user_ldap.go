@@ -106,6 +106,12 @@ func resourceUserLdap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"two_factor_filter": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 2047),
+				Optional:     true,
+				Computed:     true,
+			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -416,6 +422,10 @@ func flattenUserLdapTwoFactorNotification(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenUserLdapTwoFactorFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -590,6 +600,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("two_factor_notification", flattenUserLdapTwoFactorNotification(o["two-factor-notification"], d, "two_factor_notification", sv)); err != nil {
 		if !fortiAPIPatch(o["two-factor-notification"]) {
 			return fmt.Errorf("Error reading two_factor_notification: %v", err)
+		}
+	}
+
+	if err = d.Set("two_factor_filter", flattenUserLdapTwoFactorFilter(o["two-factor-filter"], d, "two_factor_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["two-factor-filter"]) {
+			return fmt.Errorf("Error reading two_factor_filter: %v", err)
 		}
 	}
 
@@ -789,6 +805,10 @@ func expandUserLdapTwoFactorAuthentication(d *schema.ResourceData, v interface{}
 }
 
 func expandUserLdapTwoFactorNotification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapTwoFactorFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1018,6 +1038,16 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["two-factor-notification"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("two_factor_filter"); ok {
+
+		t, err := expandUserLdapTwoFactorFilter(d, v, "two_factor_filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["two-factor-filter"] = t
 		}
 	}
 

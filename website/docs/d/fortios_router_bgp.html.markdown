@@ -55,6 +55,7 @@ The following attributes are exported:
 * `additional_path_vpnv4` - Enable/disable selection of BGP VPNv4 additional paths.
 * `multipath_recursive_distance` - Enable/disable use of recursive distance to select multipath.
 * `recursive_next_hop` - Enable/disable recursive resolution of next-hop using BGP route.
+* `recursive_inherit_priority` - Enable/disable priority inheritance for recursive resolution.
 * `tag_resolve_mode` - Configure tag-match mode. Resolves BGP routes with other routes containing the same tag.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.

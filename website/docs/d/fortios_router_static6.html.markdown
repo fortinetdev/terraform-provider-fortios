@@ -26,11 +26,13 @@ The following attributes are exported:
 * `device` - Gateway out interface or tunnel.
 * `devindex` - Device index (0 - 4294967295).
 * `distance` - Administrative distance (1 - 255).
+* `weight` - Administrative weight (0 - 255).
 * `priority` - Administrative priority (0 - 4294967295).
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
 * `dynamic_gateway` - Enable use of dynamic gateway retrieved from Router Advertisement (RA).
 * `sdwan_zone` - Choose SD-WAN Zone. The structure of `sdwan_zone` block is documented below.
+* `dstaddr` - Name of firewall address or address group.
 * `sdwan` - Enable/disable egress through the SD-WAN.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
 * `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down.

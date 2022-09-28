@@ -23,6 +23,7 @@ The following attributes are exported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable user resource.
 * `type` - User resource type.
+* `update_method` - External resource update method.
 * `category` - User resource category.
 * `username` - HTTP basic authentication user name.
 * `password` - HTTP basic authentication password.

@@ -54,6 +54,7 @@ The following arguments are supported:
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 * `cmp_save_extra_certs` - Enable/disable saving extra certificates in CMP mode. Valid values: `enable`, `disable`.
 * `cmp_key_usage_checking` - Enable/disable server certificate key usage checking in CMP mode (default = enable). Valid values: `enable`, `disable`.
+* `cert_expire_warning` - Number of days before a certificate expires to send a warning. Set to 0 to disable sending of the warning (0 - 100, default = 14).
 * `certname_rsa1024` - (Required) 1024 bit RSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_rsa2048` - (Required) 2048 bit RSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_rsa4096` - 4096 bit RSA key certificate for re-signing server certificates for SSL inspection.

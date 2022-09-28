@@ -69,6 +69,9 @@ The following arguments are supported:
 * `class` - Class attribute name(s). The structure of `class` block is documented below.
 * `password_renewal` - Enable/disable password renewal. Valid values: `enable`, `disable`.
 * `password_encoding` - Password encoding. Valid values: `auto`, `ISO-8859-1`.
+* `mac_username_delimiter` - MAC authentication username delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
+* `mac_password_delimiter` - MAC authentication password delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
+* `mac_case` - MAC authentication case (default = lowercase). Valid values: `uppercase`, `lowercase`.
 * `acct_all_servers` - Enable/disable sending of accounting messages to all configured servers (default = disable). Valid values: `enable`, `disable`.
 * `switch_controller_acct_fast_framedip_detect` - Switch controller accounting message Framed-IP detection from DHCP snooping (seconds, default=2).
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

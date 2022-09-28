@@ -118,6 +118,8 @@ The `ports` block supports:
 * `dhcp_snooping` - Trusted or untrusted DHCP-snooping interface. Valid values: `untrusted`, `trusted`.
 * `dhcp_snoop_option82_trust` - Enable/disable allowance of DHCP with option-82 on untrusted interface. Valid values: `enable`, `disable`.
 * `arp_inspection_trust` - Trusted or untrusted dynamic ARP inspection. Valid values: `untrusted`, `trusted`.
+* `igmp_snooping_flood_reports` - Enable/disable flooding of IGMP reports to this interface when igmp-snooping enabled. Valid values: `enable`, `disable`.
+* `mcast_snooping_flood_traffic` - Enable/disable flooding of IGMP snooping traffic to this interface. Valid values: `enable`, `disable`.
 * `igmp_snooping` - Set IGMP snooping mode for the physical port interface. Valid values: `enable`, `disable`.
 * `igmps_flood_reports` - Enable/disable flooding of IGMP reports to this interface when igmp-snooping enabled. Valid values: `enable`, `disable`.
 * `igmps_flood_traffic` - Enable/disable flooding of IGMP snooping traffic to this interface. Valid values: `enable`, `disable`.

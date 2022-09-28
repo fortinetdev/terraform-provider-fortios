@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_nacsettings
-Configure integrated NAC settings for FortiSwitch. Applies to FortiOS Version `6.4.0,6.4.1,6.4.2,7.0.0`.
+Configure integrated NAC settings for FortiSwitch. Applies to FortiOS Version `6.4.0,6.4.1,6.4.2,6.4.10,7.0.0`.
 
 ## Argument Reference
 

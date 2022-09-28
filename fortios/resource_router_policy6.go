@@ -46,12 +46,60 @@ func resourceRouterPolicy6() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
 			},
+			"input_device_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"src": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
+			"srcaddr": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"src_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dst": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dstaddr": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"dst_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"action": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -104,6 +152,38 @@ func resourceRouterPolicy6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
+			},
+			"internet_service_id": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service_custom": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -238,11 +318,113 @@ func flattenRouterPolicy6InputDevice(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenRouterPolicy6InputDeviceNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterPolicy6Src(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenRouterPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenRouterPolicy6SrcaddrName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenRouterPolicy6SrcaddrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6SrcNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterPolicy6Dst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenRouterPolicy6DstaddrName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenRouterPolicy6DstaddrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6DstNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6Action(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -279,6 +461,92 @@ func flattenRouterPolicy6Status(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterPolicy6Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6InternetServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenRouterPolicy6InternetServiceIdId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenRouterPolicy6InternetServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6InternetServiceCustom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenRouterPolicy6InternetServiceCustomName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenRouterPolicy6InternetServiceCustomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -327,15 +595,71 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("input_device_negate", flattenRouterPolicy6InputDeviceNegate(o["input-device-negate"], d, "input_device_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["input-device-negate"]) {
+			return fmt.Errorf("Error reading input_device_negate: %v", err)
+		}
+	}
+
 	if err = d.Set("src", flattenRouterPolicy6Src(o["src"], d, "src", sv)); err != nil {
 		if !fortiAPIPatch(o["src"]) {
 			return fmt.Errorf("Error reading src: %v", err)
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("srcaddr", flattenRouterPolicy6Srcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
+			if !fortiAPIPatch(o["srcaddr"]) {
+				return fmt.Errorf("Error reading srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr"); ok {
+			if err = d.Set("srcaddr", flattenRouterPolicy6Srcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
+				if !fortiAPIPatch(o["srcaddr"]) {
+					return fmt.Errorf("Error reading srcaddr: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("src_negate", flattenRouterPolicy6SrcNegate(o["src-negate"], d, "src_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["src-negate"]) {
+			return fmt.Errorf("Error reading src_negate: %v", err)
+		}
+	}
+
 	if err = d.Set("dst", flattenRouterPolicy6Dst(o["dst"], d, "dst", sv)); err != nil {
 		if !fortiAPIPatch(o["dst"]) {
 			return fmt.Errorf("Error reading dst: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("dstaddr", flattenRouterPolicy6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
+			if !fortiAPIPatch(o["dstaddr"]) {
+				return fmt.Errorf("Error reading dstaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr"); ok {
+			if err = d.Set("dstaddr", flattenRouterPolicy6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
+				if !fortiAPIPatch(o["dstaddr"]) {
+					return fmt.Errorf("Error reading dstaddr: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("dst_negate", flattenRouterPolicy6DstNegate(o["dst-negate"], d, "dst_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["dst-negate"]) {
+			return fmt.Errorf("Error reading dst_negate: %v", err)
+		}
+	}
+
+	if err = d.Set("action", flattenRouterPolicy6Action(o["action"], d, "action", sv)); err != nil {
+		if !fortiAPIPatch(o["action"]) {
+			return fmt.Errorf("Error reading action: %v", err)
 		}
 	}
 
@@ -393,6 +717,38 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("internet_service_id", flattenRouterPolicy6InternetServiceId(o["internet-service-id"], d, "internet_service_id", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-id"]) {
+				return fmt.Errorf("Error reading internet_service_id: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_id"); ok {
+			if err = d.Set("internet_service_id", flattenRouterPolicy6InternetServiceId(o["internet-service-id"], d, "internet_service_id", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-id"]) {
+					return fmt.Errorf("Error reading internet_service_id: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("internet_service_custom", flattenRouterPolicy6InternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-custom"]) {
+				return fmt.Errorf("Error reading internet_service_custom: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_custom"); ok {
+			if err = d.Set("internet_service_custom", flattenRouterPolicy6InternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-custom"]) {
+					return fmt.Errorf("Error reading internet_service_custom: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -410,11 +766,91 @@ func expandRouterPolicy6InputDevice(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandRouterPolicy6InputDeviceNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterPolicy6Src(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
+func expandRouterPolicy6Srcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandRouterPolicy6SrcaddrName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterPolicy6SrcaddrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6SrcNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterPolicy6Dst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandRouterPolicy6DstaddrName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterPolicy6DstaddrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6DstNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6Action(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -451,6 +887,70 @@ func expandRouterPolicy6Status(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandRouterPolicy6Comments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6InternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandRouterPolicy6InternetServiceIdId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterPolicy6InternetServiceIdId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6InternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandRouterPolicy6InternetServiceCustomName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandRouterPolicy6InternetServiceCustomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -493,6 +993,16 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
+	if v, ok := d.GetOk("input_device_negate"); ok {
+
+		t, err := expandRouterPolicy6InputDeviceNegate(d, v, "input_device_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["input-device-negate"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("src"); ok {
 
 		t, err := expandRouterPolicy6Src(d, v, "src", sv)
@@ -503,6 +1013,26 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
+	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
+
+		t, err := expandRouterPolicy6Srcaddr(d, v, "srcaddr", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["srcaddr"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("src_negate"); ok {
+
+		t, err := expandRouterPolicy6SrcNegate(d, v, "src_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["src-negate"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("dst"); ok {
 
 		t, err := expandRouterPolicy6Dst(d, v, "dst", sv)
@@ -510,6 +1040,36 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["dst"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
+
+		t, err := expandRouterPolicy6Dstaddr(d, v, "dstaddr", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dstaddr"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dst_negate"); ok {
+
+		t, err := expandRouterPolicy6DstNegate(d, v, "dst_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dst-negate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("action"); ok {
+
+		t, err := expandRouterPolicy6Action(d, v, "action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["action"] = t
 		}
 	}
 
@@ -600,6 +1160,26 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["comments"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {
+
+		t, err := expandRouterPolicy6InternetServiceId(d, v, "internet_service_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_custom"); ok || d.HasChange("internet_service_custom") {
+
+		t, err := expandRouterPolicy6InternetServiceCustom(d, v, "internet_service_custom", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-custom"] = t
 		}
 	}
 

@@ -113,6 +113,11 @@ func resourceUserSaml() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"auth_url": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"adfs_claim": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -309,6 +314,10 @@ func flattenUserSamlClockTolerance(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenUserSamlAuthUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserSamlAdfsClaim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -408,6 +417,12 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("auth_url", flattenUserSamlAuthUrl(o["auth-url"], d, "auth_url", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-url"]) {
+			return fmt.Errorf("Error reading auth_url: %v", err)
+		}
+	}
+
 	if err = d.Set("adfs_claim", flattenUserSamlAdfsClaim(o["adfs-claim"], d, "adfs_claim", sv)); err != nil {
 		if !fortiAPIPatch(o["adfs-claim"]) {
 			return fmt.Errorf("Error reading adfs_claim: %v", err)
@@ -488,6 +503,10 @@ func expandUserSamlLimitRelaystate(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandUserSamlClockTolerance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlAuthUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -643,6 +662,16 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["clock-tolerance"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auth_url"); ok {
+
+		t, err := expandUserSamlAuthUrl(d, v, "auth_url", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-url"] = t
 		}
 	}
 

@@ -131,7 +131,7 @@ func resourceLogSyslogd2Filter() *schema.Resource {
 			},
 			"filter": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 511),
+				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 				Computed:     true,
 			},

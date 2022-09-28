@@ -40,6 +40,10 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"system_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"tls_certificate": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -343,6 +347,10 @@ func dataSourceFlattenSystemAutomationActionDescription(v interface{}, d *schema
 }
 
 func dataSourceFlattenSystemAutomationActionActionType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionSystemAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -714,6 +722,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("action_type", dataSourceFlattenSystemAutomationActionActionType(o["action-type"], d, "action_type")); err != nil {
 		if !fortiAPIPatch(o["action-type"]) {
 			return fmt.Errorf("Error reading action_type: %v", err)
+		}
+	}
+
+	if err = d.Set("system_action", dataSourceFlattenSystemAutomationActionSystemAction(o["system-action"], d, "system_action")); err != nil {
+		if !fortiAPIPatch(o["system-action"]) {
+			return fmt.Errorf("Error reading system_action: %v", err)
 		}
 	}
 

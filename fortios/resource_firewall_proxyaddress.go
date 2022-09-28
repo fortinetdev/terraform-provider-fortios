@@ -195,6 +195,20 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"application": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -608,6 +622,49 @@ func flattenFirewallProxyAddressComment(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallProxyAddressApplication(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallProxyAddressApplicationName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyAddressApplicationName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyAddressVisibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -750,6 +807,22 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("comment", flattenFirewallProxyAddressComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("application", flattenFirewallProxyAddressApplication(o["application"], d, "application", sv)); err != nil {
+			if !fortiAPIPatch(o["application"]) {
+				return fmt.Errorf("Error reading application: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("application"); ok {
+			if err = d.Set("application", flattenFirewallProxyAddressApplication(o["application"], d, "application", sv)); err != nil {
+				if !fortiAPIPatch(o["application"]) {
+					return fmt.Errorf("Error reading application: %v", err)
+				}
+			}
 		}
 	}
 
@@ -1004,6 +1077,38 @@ func expandFirewallProxyAddressComment(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallProxyAddressApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallProxyAddressApplicationName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyAddressApplicationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyAddressVisibility(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1188,6 +1293,16 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["comment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
+
+		t, err := expandFirewallProxyAddressApplication(d, v, "application", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["application"] = t
 		}
 	}
 

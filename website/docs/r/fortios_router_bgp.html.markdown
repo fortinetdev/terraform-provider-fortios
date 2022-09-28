@@ -123,6 +123,7 @@ The following arguments are supported:
 * `additional_path_vpnv4` - Enable/disable selection of BGP VPNv4 additional paths. Valid values: `enable`, `disable`.
 * `multipath_recursive_distance` - Enable/disable use of recursive distance to select multipath. Valid values: `enable`, `disable`.
 * `recursive_next_hop` - Enable/disable recursive resolution of next-hop using BGP route. Valid values: `enable`, `disable`.
+* `recursive_inherit_priority` - Enable/disable priority inheritance for recursive resolution. Valid values: `enable`, `disable`.
 * `tag_resolve_mode` - Configure tag-match mode. Resolves BGP routes with other routes containing the same tag. Valid values: `disable`, `preferred`, `merge`.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.

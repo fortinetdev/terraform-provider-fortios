@@ -162,6 +162,18 @@ func resourceSystemDns() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fqdn_cache_ttl": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 86400),
+				Optional:     true,
+				Computed:     true,
+			},
+			"fqdn_min_refresh": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -427,6 +439,14 @@ func flattenSystemDnsLog(v interface{}, d *schema.ResourceData, pre string, sv s
 	return v
 }
 
+func flattenSystemDnsFqdnCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsFqdnMinRefresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -576,6 +596,18 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("fqdn_cache_ttl", flattenSystemDnsFqdnCacheTtl(o["fqdn-cache-ttl"], d, "fqdn_cache_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["fqdn-cache-ttl"]) {
+			return fmt.Errorf("Error reading fqdn_cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("fqdn_min_refresh", flattenSystemDnsFqdnMinRefresh(o["fqdn-min-refresh"], d, "fqdn_min_refresh", sv)); err != nil {
+		if !fortiAPIPatch(o["fqdn-min-refresh"]) {
+			return fmt.Errorf("Error reading fqdn_min_refresh: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -722,6 +754,14 @@ func expandSystemDnsAltSecondary(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemDnsLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsFqdnCacheTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsFqdnMinRefresh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1018,6 +1058,34 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["log"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("fqdn_cache_ttl"); ok {
+		if setArgNil {
+			obj["fqdn-cache-ttl"] = nil
+		} else {
+
+			t, err := expandSystemDnsFqdnCacheTtl(d, v, "fqdn_cache_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fqdn-cache-ttl"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("fqdn_min_refresh"); ok {
+		if setArgNil {
+			obj["fqdn-min-refresh"] = nil
+		} else {
+
+			t, err := expandSystemDnsFqdnMinRefresh(d, v, "fqdn_min_refresh", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fqdn-min-refresh"] = t
 			}
 		}
 	}

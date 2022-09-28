@@ -166,6 +166,21 @@ func resourceUserRadius() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mac_username_delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mac_password_delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mac_case": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"acct_all_servers": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -587,6 +602,18 @@ func flattenUserRadiusPasswordEncoding(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenUserRadiusMacUsernameDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusMacPasswordDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusMacCase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserRadiusAcctAllServers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -915,6 +942,24 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("mac_username_delimiter", flattenUserRadiusMacUsernameDelimiter(o["mac-username-delimiter"], d, "mac_username_delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-username-delimiter"]) {
+			return fmt.Errorf("Error reading mac_username_delimiter: %v", err)
+		}
+	}
+
+	if err = d.Set("mac_password_delimiter", flattenUserRadiusMacPasswordDelimiter(o["mac-password-delimiter"], d, "mac_password_delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-password-delimiter"]) {
+			return fmt.Errorf("Error reading mac_password_delimiter: %v", err)
+		}
+	}
+
+	if err = d.Set("mac_case", flattenUserRadiusMacCase(o["mac-case"], d, "mac_case", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-case"]) {
+			return fmt.Errorf("Error reading mac_case: %v", err)
+		}
+	}
+
 	if err = d.Set("acct_all_servers", flattenUserRadiusAcctAllServers(o["acct-all-servers"], d, "acct_all_servers", sv)); err != nil {
 		if !fortiAPIPatch(o["acct-all-servers"]) {
 			return fmt.Errorf("Error reading acct_all_servers: %v", err)
@@ -1167,6 +1212,18 @@ func expandUserRadiusPasswordRenewal(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandUserRadiusPasswordEncoding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusMacUsernameDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusMacPasswordDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusMacCase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1576,6 +1633,36 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["password-encoding"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mac_username_delimiter"); ok {
+
+		t, err := expandUserRadiusMacUsernameDelimiter(d, v, "mac_username_delimiter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mac-username-delimiter"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mac_password_delimiter"); ok {
+
+		t, err := expandUserRadiusMacPasswordDelimiter(d, v, "mac_password_delimiter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mac-password-delimiter"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mac_case"); ok {
+
+		t, err := expandUserRadiusMacCase(d, v, "mac_case", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mac-case"] = t
 		}
 	}
 

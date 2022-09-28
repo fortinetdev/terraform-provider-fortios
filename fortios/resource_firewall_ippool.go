@@ -95,7 +95,7 @@ func resourceFirewallIppool() *schema.Resource {
 			},
 			"pba_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(3, 300),
+				ValidateFunc: validation.IntBetween(3, 86400),
 				Optional:     true,
 				Computed:     true,
 			},

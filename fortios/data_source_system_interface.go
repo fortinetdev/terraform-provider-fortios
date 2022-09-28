@@ -566,6 +566,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"lacp_ha_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"lacp_ha_slave": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -596,6 +600,10 @@ func dataSourceSystemInterface() *schema.Resource {
 			},
 			"link_up_delay": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"aggregate_type": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"priority_override": &schema.Schema{
@@ -955,6 +963,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"switch_controller_rspan_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"switch_controller_netflow_collect": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -2142,6 +2154,10 @@ func dataSourceFlattenSystemInterfaceLacpMode(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceLacpHaSecondary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceLacpHaSlave(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2171,6 +2187,10 @@ func dataSourceFlattenSystemInterfaceAlgorithm(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemInterfaceLinkUpDelay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceAggregateType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2756,6 +2776,10 @@ func dataSourceFlattenSystemInterfaceSwitchControllerTrafficPolicy(v interface{}
 }
 
 func dataSourceFlattenSystemInterfaceSwitchControllerRspanMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSwitchControllerNetflowCollect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4561,6 +4585,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("lacp_ha_secondary", dataSourceFlattenSystemInterfaceLacpHaSecondary(o["lacp-ha-secondary"], d, "lacp_ha_secondary")); err != nil {
+		if !fortiAPIPatch(o["lacp-ha-secondary"]) {
+			return fmt.Errorf("Error reading lacp_ha_secondary: %v", err)
+		}
+	}
+
 	if err = d.Set("lacp_ha_slave", dataSourceFlattenSystemInterfaceLacpHaSlave(o["lacp-ha-slave"], d, "lacp_ha_slave")); err != nil {
 		if !fortiAPIPatch(o["lacp-ha-slave"]) {
 			return fmt.Errorf("Error reading lacp_ha_slave: %v", err)
@@ -4606,6 +4636,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("link_up_delay", dataSourceFlattenSystemInterfaceLinkUpDelay(o["link-up-delay"], d, "link_up_delay")); err != nil {
 		if !fortiAPIPatch(o["link-up-delay"]) {
 			return fmt.Errorf("Error reading link_up_delay: %v", err)
+		}
+	}
+
+	if err = d.Set("aggregate_type", dataSourceFlattenSystemInterfaceAggregateType(o["aggregate-type"], d, "aggregate_type")); err != nil {
+		if !fortiAPIPatch(o["aggregate-type"]) {
+			return fmt.Errorf("Error reading aggregate_type: %v", err)
 		}
 	}
 
@@ -4960,6 +4996,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("switch_controller_rspan_mode", dataSourceFlattenSystemInterfaceSwitchControllerRspanMode(o["switch-controller-rspan-mode"], d, "switch_controller_rspan_mode")); err != nil {
 		if !fortiAPIPatch(o["switch-controller-rspan-mode"]) {
 			return fmt.Errorf("Error reading switch_controller_rspan_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_netflow_collect", dataSourceFlattenSystemInterfaceSwitchControllerNetflowCollect(o["switch-controller-netflow-collect"], d, "switch_controller_netflow_collect")); err != nil {
+		if !fortiAPIPatch(o["switch-controller-netflow-collect"]) {
+			return fmt.Errorf("Error reading switch_controller_netflow_collect: %v", err)
 		}
 	}
 

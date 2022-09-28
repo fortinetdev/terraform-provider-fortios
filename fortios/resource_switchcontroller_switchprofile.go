@@ -58,6 +58,16 @@ func resourceSwitchControllerSwitchProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"revision_backup_on_logout": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"revision_backup_on_upgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -199,6 +209,14 @@ func flattenSwitchControllerSwitchProfileLogin(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSwitchControllerSwitchProfileRevisionBackupOnLogout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSwitchProfileRevisionBackupOnUpgrade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -217,6 +235,18 @@ func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[st
 	if err = d.Set("login", flattenSwitchControllerSwitchProfileLogin(o["login"], d, "login", sv)); err != nil {
 		if !fortiAPIPatch(o["login"]) {
 			return fmt.Errorf("Error reading login: %v", err)
+		}
+	}
+
+	if err = d.Set("revision_backup_on_logout", flattenSwitchControllerSwitchProfileRevisionBackupOnLogout(o["revision-backup-on-logout"], d, "revision_backup_on_logout", sv)); err != nil {
+		if !fortiAPIPatch(o["revision-backup-on-logout"]) {
+			return fmt.Errorf("Error reading revision_backup_on_logout: %v", err)
+		}
+	}
+
+	if err = d.Set("revision_backup_on_upgrade", flattenSwitchControllerSwitchProfileRevisionBackupOnUpgrade(o["revision-backup-on-upgrade"], d, "revision_backup_on_upgrade", sv)); err != nil {
+		if !fortiAPIPatch(o["revision-backup-on-upgrade"]) {
+			return fmt.Errorf("Error reading revision_backup_on_upgrade: %v", err)
 		}
 	}
 
@@ -242,6 +272,14 @@ func expandSwitchControllerSwitchProfileLoginPasswd(d *schema.ResourceData, v in
 }
 
 func expandSwitchControllerSwitchProfileLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSwitchProfileRevisionBackupOnLogout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSwitchProfileRevisionBackupOnUpgrade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -285,6 +323,26 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["login"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("revision_backup_on_logout"); ok {
+
+		t, err := expandSwitchControllerSwitchProfileRevisionBackupOnLogout(d, v, "revision_backup_on_logout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["revision-backup-on-logout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("revision_backup_on_upgrade"); ok {
+
+		t, err := expandSwitchControllerSwitchProfileRevisionBackupOnUpgrade(d, v, "revision_backup_on_upgrade", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["revision-backup-on-upgrade"] = t
 		}
 	}
 

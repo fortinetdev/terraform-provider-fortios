@@ -44,6 +44,10 @@ func dataSourceSystemExternalResource() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"update_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"category": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -148,6 +152,10 @@ func dataSourceFlattenSystemExternalResourceType(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemExternalResourceUpdateMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemExternalResourceCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -212,6 +220,12 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 	if err = d.Set("type", dataSourceFlattenSystemExternalResourceType(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("update_method", dataSourceFlattenSystemExternalResourceUpdateMethod(o["update-method"], d, "update_method")); err != nil {
+		if !fortiAPIPatch(o["update-method"]) {
+			return fmt.Errorf("Error reading update_method: %v", err)
 		}
 	}
 

@@ -51,6 +51,8 @@ The following arguments are supported:
 * `alt_primary` - Alternate primary DNS server. (This is not used as a failover DNS server.)
 * `alt_secondary` - Alternate secondary DNS server. (This is not used as a failover DNS server.)
 * `log` - Local DNS log setting. Valid values: `disable`, `error`, `all`.
+* `fqdn_cache_ttl` - FQDN cache time to live in seconds (0 - 86400, default = 0).
+* `fqdn_min_refresh` - FQDN cache minimum refresh time in seconds (10 - 3600, default = 60).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

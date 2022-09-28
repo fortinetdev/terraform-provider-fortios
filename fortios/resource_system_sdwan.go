@@ -374,6 +374,17 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"embed_measured_health": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sla_id_redistribute": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 32),
+							Optional:     true,
+							Computed:     true,
+						},
 						"sla_fail_log_period": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
@@ -484,6 +495,18 @@ func resourceSystemSdwan() *schema.Resource {
 									"mos_threshold": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
+									},
+									"priority_in_sla": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 65535),
+										Optional:     true,
+										Computed:     true,
+									},
+									"priority_out_sla": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
 										Computed:     true,
 									},
@@ -1779,6 +1802,18 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 			tmp["update_static_route"] = flattenSystemSdwanHealthCheckUpdateStaticRoute(i["update-static-route"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "embed_measured_health"
+		if _, ok := i["embed-measured-health"]; ok {
+
+			tmp["embed_measured_health"] = flattenSystemSdwanHealthCheckEmbedMeasuredHealth(i["embed-measured-health"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id_redistribute"
+		if _, ok := i["sla-id-redistribute"]; ok {
+
+			tmp["sla_id_redistribute"] = flattenSystemSdwanHealthCheckSlaIdRedistribute(i["sla-id-redistribute"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
 		if _, ok := i["sla-fail-log-period"]; ok {
 
@@ -1982,6 +2017,14 @@ func flattenSystemSdwanHealthCheckUpdateStaticRoute(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenSystemSdwanHealthCheckEmbedMeasuredHealth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckSlaIdRedistribute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanHealthCheckSlaFailLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2129,6 +2172,18 @@ func flattenSystemSdwanHealthCheckSla(v interface{}, d *schema.ResourceData, pre
 			tmp["mos_threshold"] = flattenSystemSdwanHealthCheckSlaMosThreshold(i["mos-threshold"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
+		if _, ok := i["priority-in-sla"]; ok {
+
+			tmp["priority_in_sla"] = flattenSystemSdwanHealthCheckSlaPriorityInSla(i["priority-in-sla"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
+		if _, ok := i["priority-out-sla"]; ok {
+
+			tmp["priority_out_sla"] = flattenSystemSdwanHealthCheckSlaPriorityOutSla(i["priority-out-sla"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2159,6 +2214,14 @@ func flattenSystemSdwanHealthCheckSlaPacketlossThreshold(v interface{}, d *schem
 }
 
 func flattenSystemSdwanHealthCheckSlaMosThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckSlaPriorityInSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckSlaPriorityOutSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4722,6 +4785,18 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 			tmp["update-static-route"], _ = expandSystemSdwanHealthCheckUpdateStaticRoute(d, i["update_static_route"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "embed_measured_health"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["embed-measured-health"], _ = expandSystemSdwanHealthCheckEmbedMeasuredHealth(d, i["embed_measured_health"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id_redistribute"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["sla-id-redistribute"], _ = expandSystemSdwanHealthCheckSlaIdRedistribute(d, i["sla_id_redistribute"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -4928,6 +5003,14 @@ func expandSystemSdwanHealthCheckUpdateStaticRoute(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandSystemSdwanHealthCheckEmbedMeasuredHealth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckSlaIdRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanHealthCheckSlaFailLogPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5054,6 +5137,18 @@ func expandSystemSdwanHealthCheckSla(d *schema.ResourceData, v interface{}, pre 
 			tmp["mos-threshold"], _ = expandSystemSdwanHealthCheckSlaMosThreshold(d, i["mos_threshold"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["priority-in-sla"], _ = expandSystemSdwanHealthCheckSlaPriorityInSla(d, i["priority_in_sla"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["priority-out-sla"], _ = expandSystemSdwanHealthCheckSlaPriorityOutSla(d, i["priority_out_sla"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -5083,6 +5178,14 @@ func expandSystemSdwanHealthCheckSlaPacketlossThreshold(d *schema.ResourceData, 
 }
 
 func expandSystemSdwanHealthCheckSlaMosThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckSlaPriorityInSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckSlaPriorityOutSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

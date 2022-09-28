@@ -181,6 +181,25 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"vci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vci_string": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 255),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -245,6 +264,25 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"vci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vci_string": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 255),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -368,6 +406,25 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"vci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vci_string": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 255),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -704,6 +761,18 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 			tmp["end_ip"] = flattenSystemDhcpServerIpRangeEndIp(i["end-ip"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := i["vci-match"]; ok {
+
+			tmp["vci_match"] = flattenSystemDhcpServerIpRangeVciMatch(i["vci-match"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+
+			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciString(i["vci-string"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -722,6 +791,53 @@ func flattenSystemDhcpServerIpRangeStartIp(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemDhcpServerIpRangeEndIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerIpRangeVciMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerIpRangeVciString(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+
+			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciStringVciString(i["vci-string"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vci_string", d)
+	return result
+}
+
+func flattenSystemDhcpServerIpRangeVciStringVciString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -834,6 +950,18 @@ func flattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceData, pre s
 			tmp["ip"] = flattenSystemDhcpServerOptionsIp(i["ip"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := i["vci-match"]; ok {
+
+			tmp["vci_match"] = flattenSystemDhcpServerOptionsVciMatch(i["vci-match"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+
+			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciString(i["vci-string"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -860,6 +988,53 @@ func flattenSystemDhcpServerOptionsValue(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemDhcpServerOptionsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerOptionsVciMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerOptionsVciString(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+
+			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciStringVciString(i["vci-string"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vci_string", d)
+	return result
+}
+
+func flattenSystemDhcpServerOptionsVciStringVciString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1012,6 +1187,18 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 			tmp["end_ip"] = flattenSystemDhcpServerExcludeRangeEndIp(i["end-ip"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := i["vci-match"]; ok {
+
+			tmp["vci_match"] = flattenSystemDhcpServerExcludeRangeVciMatch(i["vci-match"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+
+			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciString(i["vci-string"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1030,6 +1217,53 @@ func flattenSystemDhcpServerExcludeRangeStartIp(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemDhcpServerExcludeRangeEndIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerExcludeRangeVciMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerExcludeRangeVciString(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+
+			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciStringVciString(i["vci-string"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vci_string", d)
+	return result
+}
+
+func flattenSystemDhcpServerExcludeRangeVciStringVciString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1664,6 +1898,20 @@ func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre st
 			tmp["end-ip"], _ = expandSystemDhcpServerIpRangeEndIp(d, i["end_ip"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vci-match"], _ = expandSystemDhcpServerIpRangeVciMatch(d, i["vci_match"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+
+			tmp["vci-string"], _ = expandSystemDhcpServerIpRangeVciString(d, i["vci_string"], pre_append, sv)
+		} else {
+			tmp["vci-string"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1681,6 +1929,42 @@ func expandSystemDhcpServerIpRangeStartIp(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemDhcpServerIpRangeEndIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerIpRangeVciMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerIpRangeVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vci-string"], _ = expandSystemDhcpServerIpRangeVciStringVciString(d, i["vci_string"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemDhcpServerIpRangeVciStringVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1772,6 +2056,20 @@ func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre st
 			tmp["ip"], _ = expandSystemDhcpServerOptionsIp(d, i["ip"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vci-match"], _ = expandSystemDhcpServerOptionsVciMatch(d, i["vci_match"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+
+			tmp["vci-string"], _ = expandSystemDhcpServerOptionsVciString(d, i["vci_string"], pre_append, sv)
+		} else {
+			tmp["vci-string"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1797,6 +2095,42 @@ func expandSystemDhcpServerOptionsValue(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemDhcpServerOptionsIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerOptionsVciMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerOptionsVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vci-string"], _ = expandSystemDhcpServerOptionsVciStringVciString(d, i["vci_string"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemDhcpServerOptionsVciStringVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1928,6 +2262,20 @@ func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, p
 			tmp["end-ip"], _ = expandSystemDhcpServerExcludeRangeEndIp(d, i["end_ip"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vci-match"], _ = expandSystemDhcpServerExcludeRangeVciMatch(d, i["vci_match"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+
+			tmp["vci-string"], _ = expandSystemDhcpServerExcludeRangeVciString(d, i["vci_string"], pre_append, sv)
+		} else {
+			tmp["vci-string"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1945,6 +2293,42 @@ func expandSystemDhcpServerExcludeRangeStartIp(d *schema.ResourceData, v interfa
 }
 
 func expandSystemDhcpServerExcludeRangeEndIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerExcludeRangeVciMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerExcludeRangeVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["vci-string"], _ = expandSystemDhcpServerExcludeRangeVciStringVciString(d, i["vci_string"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemDhcpServerExcludeRangeVciStringVciString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

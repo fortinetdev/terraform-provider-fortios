@@ -29,7 +29,7 @@ The `node_list` block supports:
 * `time` - Scheduled time for the upgrade. Format hh:mm yyyy/mm/dd UTC.
 * `setup_time` - When the upgrade was configured. Format hh:mm yyyy/mm/dd UTC.
 * `upgrade_path` - Image IDs to upgrade through.
-* `device_type` - What type of device this node represents. Valid values: `fortigate`, `fortiswitch`, `fortiap`.
+* `device_type` - What type of device this node represents.
 * `coordinating_fortigate` - The serial of the FortiGate that controls this device
 
 

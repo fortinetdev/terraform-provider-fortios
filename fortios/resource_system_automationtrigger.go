@@ -120,6 +120,11 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"trigger_datetime": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fields": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -413,6 +418,10 @@ func flattenSystemAutomationTriggerTriggerMinute(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenSystemAutomationTriggerTriggerDatetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationTriggerFields(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -640,6 +649,12 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("trigger_datetime", flattenSystemAutomationTriggerTriggerDatetime(o["trigger-datetime"], d, "trigger_datetime", sv)); err != nil {
+		if !fortiAPIPatch(o["trigger-datetime"]) {
+			return fmt.Errorf("Error reading trigger_datetime: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("fields", flattenSystemAutomationTriggerFields(o["fields"], d, "fields", sv)); err != nil {
 			if !fortiAPIPatch(o["fields"]) {
@@ -798,6 +813,10 @@ func expandSystemAutomationTriggerTriggerHour(d *schema.ResourceData, v interfac
 }
 
 func expandSystemAutomationTriggerTriggerMinute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerTriggerDatetime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1049,6 +1068,16 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["trigger-minute"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("trigger_datetime"); ok {
+
+		t, err := expandSystemAutomationTriggerTriggerDatetime(d, v, "trigger_datetime", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["trigger-datetime"] = t
 		}
 	}
 

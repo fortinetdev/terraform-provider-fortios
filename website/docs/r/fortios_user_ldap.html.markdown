@@ -50,6 +50,7 @@ The following arguments are supported:
 * `two_factor` - Enable/disable two-factor authentication. Valid values: `disable`, `fortitoken-cloud`.
 * `two_factor_authentication` - Authentication method by FortiToken Cloud. Valid values: `fortitoken`, `email`, `sms`.
 * `two_factor_notification` - Notification method for user activation by FortiToken Cloud. Valid values: `email`, `sms`.
+* `two_factor_filter` - Filter used to synchronize users to FortiToken Cloud.
 * `username` - Username (full DN) for initial binding.
 * `password` - Password for initial binding.
 * `group_member_check` - Group member checking methods. Valid values: `user-attr`, `group-object`, `posix-group-object`.

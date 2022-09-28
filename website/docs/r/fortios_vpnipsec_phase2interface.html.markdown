@@ -159,7 +159,7 @@ The following arguments are supported:
 * `keepalive` - Enable/disable keep alive. Valid values: `enable`, `disable`.
 * `auto_negotiate` - Enable/disable IPsec SA auto-negotiation. Valid values: `enable`, `disable`.
 * `add_route` - Enable/disable automatic route addition. Valid values: `phase1`, `enable`, `disable`.
-* `inbound_dscp_copy` - Enable/disable copy the dscp in the ESP header to the inner IP Header. Valid values: `phase1`, `enable`, `disable`.
+* `inbound_dscp_copy` - Enable/disable copying of the DSCP field in the ESP header to the inner IP header. Valid values: `phase1`, `enable`, `disable`.
 * `auto_discovery_sender` - Enable/disable sending short-cut messages. Valid values: `phase1`, `enable`, `disable`.
 * `auto_discovery_forwarder` - Enable/disable forwarding short-cut messages. Valid values: `phase1`, `enable`, `disable`.
 * `keylifeseconds` - Phase2 key life in time in seconds (120 - 172800).

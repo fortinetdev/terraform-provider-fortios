@@ -22,6 +22,7 @@ The following arguments are supported:
 The `entry` block supports:
 
 * `id` - Entry ID(1-255).
+* `addr_mode` - Address mode (IPv4 or IPv6) Valid values: `ipv4`, `ipv6`.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
 * `port_range` - Port ranges in the custom entry. The structure of `port_range` block is documented below.
 

@@ -117,6 +117,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"external_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"region_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -281,6 +285,22 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 					},
 				},
 			},
+			"forwarding_rule": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"rule_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"target": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"gcp_project_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -301,22 +321,6 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 									},
 								},
 							},
-						},
-					},
-				},
-			},
-			"forwarding_rule": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"rule_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"target": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
 						},
 					},
 				},
@@ -552,6 +556,11 @@ func dataSourceFlattenSystemSdnConnectorExternalAccountList(v interface{}, d *sc
 			tmp["role_arn"] = dataSourceFlattenSystemSdnConnectorExternalAccountListRoleArn(i["role-arn"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_id"
+		if _, ok := i["external-id"]; ok {
+			tmp["external_id"] = dataSourceFlattenSystemSdnConnectorExternalAccountListExternalId(i["external-id"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
 		if _, ok := i["region-list"]; ok {
 			tmp["region_list"] = dataSourceFlattenSystemSdnConnectorExternalAccountListRegionList(i["region-list"], d, pre_append)
@@ -566,6 +575,10 @@ func dataSourceFlattenSystemSdnConnectorExternalAccountList(v interface{}, d *sc
 }
 
 func dataSourceFlattenSystemSdnConnectorExternalAccountListRoleArn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorExternalAccountListExternalId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -932,6 +945,51 @@ func dataSourceFlattenSystemSdnConnectorRouteName(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
+		if _, ok := i["rule-name"]; ok {
+			tmp["rule_name"] = dataSourceFlattenSystemSdnConnectorForwardingRuleRuleName(i["rule-name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := i["target"]; ok {
+			tmp["target"] = dataSourceFlattenSystemSdnConnectorForwardingRuleTarget(i["target"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorForwardingRuleRuleName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorForwardingRuleTarget(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1006,51 +1064,6 @@ func dataSourceFlattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{},
 }
 
 func dataSourceFlattenSystemSdnConnectorGcpProjectListGcpZoneListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return v
-}
-
-func dataSourceFlattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
-	if v == nil {
-		return nil
-	}
-
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil
-	}
-
-	result := make([]map[string]interface{}, 0, len(l))
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
-		if _, ok := i["rule-name"]; ok {
-			tmp["rule_name"] = dataSourceFlattenSystemSdnConnectorForwardingRuleRuleName(i["rule-name"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = dataSourceFlattenSystemSdnConnectorForwardingRuleTarget(i["target"], d, pre_append)
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result
-}
-
-func dataSourceFlattenSystemSdnConnectorForwardingRuleRuleName(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return v
-}
-
-func dataSourceFlattenSystemSdnConnectorForwardingRuleTarget(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1299,15 +1312,15 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if err = d.Set("gcp_project_list", dataSourceFlattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list")); err != nil {
-		if !fortiAPIPatch(o["gcp-project-list"]) {
-			return fmt.Errorf("Error reading gcp_project_list: %v", err)
-		}
-	}
-
 	if err = d.Set("forwarding_rule", dataSourceFlattenSystemSdnConnectorForwardingRule(o["forwarding-rule"], d, "forwarding_rule")); err != nil {
 		if !fortiAPIPatch(o["forwarding-rule"]) {
 			return fmt.Errorf("Error reading forwarding_rule: %v", err)
+		}
+	}
+
+	if err = d.Set("gcp_project_list", dataSourceFlattenSystemSdnConnectorGcpProjectList(o["gcp-project-list"], d, "gcp_project_list")); err != nil {
+		if !fortiAPIPatch(o["gcp-project-list"]) {
+			return fmt.Errorf("Error reading gcp_project_list: %v", err)
 		}
 	}
 

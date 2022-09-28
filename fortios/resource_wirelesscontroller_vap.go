@@ -270,7 +270,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 			},
 			"radius_mac_mpsk_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1800, 864000),
+				ValidateFunc: validation.IntBetween(300, 864000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -321,6 +321,22 @@ func resourceWirelessControllerVap() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+			},
+			"sae_h2e_only": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sae_pk": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sae_private_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 359),
+				Optional:     true,
+				Computed:     true,
 			},
 			"radius_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -900,6 +916,18 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rates_11ac_mcs_map": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"rates_11ax_mcs_map": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"rates_11ac_ss12": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1026,6 +1054,12 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"sticky_client_threshold_6g": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 7),
+				Optional:     true,
+				Computed:     true,
+			},
 			"bstm_rssi_disassoc_timer": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 2000),
@@ -1058,6 +1092,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"application_dscp_marking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"application_report_intv": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 864000),
@@ -1065,6 +1104,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed:     true,
 			},
 			"l3_roaming": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"l3_roaming_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1443,6 +1487,18 @@ func flattenWirelessControllerVapPassphrase(v interface{}, d *schema.ResourceDat
 }
 
 func flattenWirelessControllerVapSaePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapSaeH2EOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapSaePk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapSaePrivateKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2133,6 +2189,14 @@ func flattenWirelessControllerVapRates11NSs34(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenWirelessControllerVapRates11AcMcsMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapRates11AxMcsMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapRates11AcSs12(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2272,6 +2336,10 @@ func flattenWirelessControllerVapStickyClientThreshold2G(v interface{}, d *schem
 	return v
 }
 
+func flattenWirelessControllerVapStickyClientThreshold6G(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapBstmRssiDisassocTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2296,11 +2364,19 @@ func flattenWirelessControllerVapApplicationDetectionEngine(v interface{}, d *sc
 	return v
 }
 
+func flattenWirelessControllerVapApplicationDscpMarking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapApplicationReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenWirelessControllerVapL3Roaming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapL3RoamingMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2608,6 +2684,24 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("keyindex", flattenWirelessControllerVapKeyindex(o["keyindex"], d, "keyindex", sv)); err != nil {
 		if !fortiAPIPatch(o["keyindex"]) {
 			return fmt.Errorf("Error reading keyindex: %v", err)
+		}
+	}
+
+	if err = d.Set("sae_h2e_only", flattenWirelessControllerVapSaeH2EOnly(o["sae-h2e-only"], d, "sae_h2e_only", sv)); err != nil {
+		if !fortiAPIPatch(o["sae-h2e-only"]) {
+			return fmt.Errorf("Error reading sae_h2e_only: %v", err)
+		}
+	}
+
+	if err = d.Set("sae_pk", flattenWirelessControllerVapSaePk(o["sae-pk"], d, "sae_pk", sv)); err != nil {
+		if !fortiAPIPatch(o["sae-pk"]) {
+			return fmt.Errorf("Error reading sae_pk: %v", err)
+		}
+	}
+
+	if err = d.Set("sae_private_key", flattenWirelessControllerVapSaePrivateKey(o["sae-private-key"], d, "sae_private_key", sv)); err != nil {
+		if !fortiAPIPatch(o["sae-private-key"]) {
+			return fmt.Errorf("Error reading sae_private_key: %v", err)
 		}
 	}
 
@@ -3199,6 +3293,18 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("rates_11ac_mcs_map", flattenWirelessControllerVapRates11AcMcsMap(o["rates-11ac-mcs-map"], d, "rates_11ac_mcs_map", sv)); err != nil {
+		if !fortiAPIPatch(o["rates-11ac-mcs-map"]) {
+			return fmt.Errorf("Error reading rates_11ac_mcs_map: %v", err)
+		}
+	}
+
+	if err = d.Set("rates_11ax_mcs_map", flattenWirelessControllerVapRates11AxMcsMap(o["rates-11ax-mcs-map"], d, "rates_11ax_mcs_map", sv)); err != nil {
+		if !fortiAPIPatch(o["rates-11ax-mcs-map"]) {
+			return fmt.Errorf("Error reading rates_11ax_mcs_map: %v", err)
+		}
+	}
+
 	if err = d.Set("rates_11ac_ss12", flattenWirelessControllerVapRates11AcSs12(o["rates-11ac-ss12"], d, "rates_11ac_ss12", sv)); err != nil {
 		if !fortiAPIPatch(o["rates-11ac-ss12"]) {
 			return fmt.Errorf("Error reading rates_11ac_ss12: %v", err)
@@ -3329,6 +3435,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("sticky_client_threshold_6g", flattenWirelessControllerVapStickyClientThreshold6G(o["sticky-client-threshold-6g"], d, "sticky_client_threshold_6g", sv)); err != nil {
+		if !fortiAPIPatch(o["sticky-client-threshold-6g"]) {
+			return fmt.Errorf("Error reading sticky_client_threshold_6g: %v", err)
+		}
+	}
+
 	if err = d.Set("bstm_rssi_disassoc_timer", flattenWirelessControllerVapBstmRssiDisassocTimer(o["bstm-rssi-disassoc-timer"], d, "bstm_rssi_disassoc_timer", sv)); err != nil {
 		if !fortiAPIPatch(o["bstm-rssi-disassoc-timer"]) {
 			return fmt.Errorf("Error reading bstm_rssi_disassoc_timer: %v", err)
@@ -3365,6 +3477,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("application_dscp_marking", flattenWirelessControllerVapApplicationDscpMarking(o["application-dscp-marking"], d, "application_dscp_marking", sv)); err != nil {
+		if !fortiAPIPatch(o["application-dscp-marking"]) {
+			return fmt.Errorf("Error reading application_dscp_marking: %v", err)
+		}
+	}
+
 	if err = d.Set("application_report_intv", flattenWirelessControllerVapApplicationReportIntv(o["application-report-intv"], d, "application_report_intv", sv)); err != nil {
 		if !fortiAPIPatch(o["application-report-intv"]) {
 			return fmt.Errorf("Error reading application_report_intv: %v", err)
@@ -3374,6 +3492,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("l3_roaming", flattenWirelessControllerVapL3Roaming(o["l3-roaming"], d, "l3_roaming", sv)); err != nil {
 		if !fortiAPIPatch(o["l3-roaming"]) {
 			return fmt.Errorf("Error reading l3_roaming: %v", err)
+		}
+	}
+
+	if err = d.Set("l3_roaming_mode", flattenWirelessControllerVapL3RoamingMode(o["l3-roaming-mode"], d, "l3_roaming_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["l3-roaming-mode"]) {
+			return fmt.Errorf("Error reading l3_roaming_mode: %v", err)
 		}
 	}
 
@@ -3619,6 +3743,18 @@ func expandWirelessControllerVapPassphrase(d *schema.ResourceData, v interface{}
 }
 
 func expandWirelessControllerVapSaePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapSaeH2EOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapSaePk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapSaePrivateKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4238,6 +4374,14 @@ func expandWirelessControllerVapRates11NSs34(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandWirelessControllerVapRates11AcMcsMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapRates11AxMcsMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapRates11AcSs12(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4366,6 +4510,10 @@ func expandWirelessControllerVapStickyClientThreshold2G(d *schema.ResourceData, 
 	return v, nil
 }
 
+func expandWirelessControllerVapStickyClientThreshold6G(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapBstmRssiDisassocTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4390,11 +4538,19 @@ func expandWirelessControllerVapApplicationDetectionEngine(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerVapApplicationDscpMarking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapApplicationReportIntv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandWirelessControllerVapL3Roaming(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapL3RoamingMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4918,6 +5074,36 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["sae-password"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sae_h2e_only"); ok {
+
+		t, err := expandWirelessControllerVapSaeH2EOnly(d, v, "sae_h2e_only", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sae-h2e-only"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sae_pk"); ok {
+
+		t, err := expandWirelessControllerVapSaePk(d, v, "sae_pk", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sae-pk"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sae_private_key"); ok {
+
+		t, err := expandWirelessControllerVapSaePrivateKey(d, v, "sae_private_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sae-private-key"] = t
 		}
 	}
 
@@ -5787,6 +5973,26 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("rates_11ac_mcs_map"); ok {
+
+		t, err := expandWirelessControllerVapRates11AcMcsMap(d, v, "rates_11ac_mcs_map", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rates-11ac-mcs-map"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rates_11ax_mcs_map"); ok {
+
+		t, err := expandWirelessControllerVapRates11AxMcsMap(d, v, "rates_11ax_mcs_map", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rates-11ax-mcs-map"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("rates_11ac_ss12"); ok {
 
 		t, err := expandWirelessControllerVapRates11AcSs12(d, v, "rates_11ac_ss12", sv)
@@ -5987,6 +6193,16 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("sticky_client_threshold_6g"); ok {
+
+		t, err := expandWirelessControllerVapStickyClientThreshold6G(d, v, "sticky_client_threshold_6g", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sticky-client-threshold-6g"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("bstm_rssi_disassoc_timer"); ok {
 
 		t, err := expandWirelessControllerVapBstmRssiDisassocTimer(d, v, "bstm_rssi_disassoc_timer", sv)
@@ -6047,6 +6263,16 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("application_dscp_marking"); ok {
+
+		t, err := expandWirelessControllerVapApplicationDscpMarking(d, v, "application_dscp_marking", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["application-dscp-marking"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("application_report_intv"); ok {
 
 		t, err := expandWirelessControllerVapApplicationReportIntv(d, v, "application_report_intv", sv)
@@ -6064,6 +6290,16 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["l3-roaming"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("l3_roaming_mode"); ok {
+
+		t, err := expandWirelessControllerVapL3RoamingMode(d, v, "l3_roaming_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["l3-roaming-mode"] = t
 		}
 	}
 

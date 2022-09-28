@@ -58,6 +58,12 @@ func resourceFirewallAccessProxyVirtualHost() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"replacemsg_group": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -199,6 +205,10 @@ func flattenFirewallAccessProxyVirtualHostHostType(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenFirewallAccessProxyVirtualHostReplacemsgGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -226,6 +236,12 @@ func refreshObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, o map[s
 		}
 	}
 
+	if err = d.Set("replacemsg_group", flattenFirewallAccessProxyVirtualHostReplacemsgGroup(o["replacemsg-group"], d, "replacemsg_group", sv)); err != nil {
+		if !fortiAPIPatch(o["replacemsg-group"]) {
+			return fmt.Errorf("Error reading replacemsg_group: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -248,6 +264,10 @@ func expandFirewallAccessProxyVirtualHostHost(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallAccessProxyVirtualHostHostType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxyVirtualHostReplacemsgGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -291,6 +311,16 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 			return &obj, err
 		} else if t != nil {
 			obj["host-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("replacemsg_group"); ok {
+
+		t, err := expandFirewallAccessProxyVirtualHostReplacemsgGroup(d, v, "replacemsg_group", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["replacemsg-group"] = t
 		}
 	}
 

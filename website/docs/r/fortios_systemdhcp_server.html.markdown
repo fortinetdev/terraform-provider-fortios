@@ -91,6 +91,12 @@ The `ip_range` block supports:
 * `id` - ID.
 * `start_ip` - Start of IP range.
 * `end_ip` - End of IP range.
+* `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this range. Valid values: `disable`, `enable`.
+* `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+
+The `vci_string` block supports:
+
+* `vci_string` - VCI strings.
 
 The `tftp_server` block supports:
 
@@ -103,6 +109,12 @@ The `options` block supports:
 * `type` - DHCP option type. Valid values: `hex`, `string`, `ip`, `fqdn`.
 * `value` - DHCP option value.
 * `ip` - DHCP option IPs.
+* `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this option. Valid values: `disable`, `enable`.
+* `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+
+The `vci_string` block supports:
+
+* `vci_string` - VCI strings.
 
 The `vci_string` block supports:
 
@@ -113,6 +125,12 @@ The `exclude_range` block supports:
 * `id` - ID.
 * `start_ip` - Start of IP range.
 * `end_ip` - End of IP range.
+* `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this range. Valid values: `disable`, `enable`.
+* `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+
+The `vci_string` block supports:
+
+* `vci_string` - VCI strings.
 
 The `reserved_address` block supports:
 

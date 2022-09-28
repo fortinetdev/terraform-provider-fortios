@@ -144,6 +144,11 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"private_key_retain": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cmp_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -402,6 +407,10 @@ func flattenVpnCertificateLocalEnrollProtocol(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenVpnCertificateLocalPrivateKeyRetain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateLocalCmpServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -534,6 +543,12 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("enroll_protocol", flattenVpnCertificateLocalEnrollProtocol(o["enroll-protocol"], d, "enroll_protocol", sv)); err != nil {
 		if !fortiAPIPatch(o["enroll-protocol"]) {
 			return fmt.Errorf("Error reading enroll_protocol: %v", err)
+		}
+	}
+
+	if err = d.Set("private_key_retain", flattenVpnCertificateLocalPrivateKeyRetain(o["private-key-retain"], d, "private_key_retain", sv)); err != nil {
+		if !fortiAPIPatch(o["private-key-retain"]) {
+			return fmt.Errorf("Error reading private_key_retain: %v", err)
 		}
 	}
 
@@ -677,6 +692,10 @@ func expandVpnCertificateLocalLastUpdated(d *schema.ResourceData, v interface{},
 }
 
 func expandVpnCertificateLocalEnrollProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalPrivateKeyRetain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -916,6 +935,16 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["enroll-protocol"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("private_key_retain"); ok {
+
+		t, err := expandVpnCertificateLocalPrivateKeyRetain(d, v, "private_key_retain", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["private-key-retain"] = t
 		}
 	}
 

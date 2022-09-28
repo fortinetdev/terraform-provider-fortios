@@ -742,6 +742,11 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"lacp_ha_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"lacp_ha_slave": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -783,6 +788,11 @@ func resourceSystemInterface() *schema.Resource {
 				ValidateFunc: validation.IntBetween(50, 3600000),
 				Optional:     true,
 				Computed:     true,
+			},
+			"aggregate_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"priority_override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1248,6 +1258,11 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"switch_controller_rspan_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_netflow_collect": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -2688,6 +2703,10 @@ func flattenSystemInterfaceLacpMode(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemInterfaceLacpHaSecondary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemInterfaceLacpHaSlave(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2717,6 +2736,10 @@ func flattenSystemInterfaceAlgorithm(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemInterfaceLinkUpDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceAggregateType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3358,6 +3381,10 @@ func flattenSystemInterfaceSwitchControllerTrafficPolicy(v interface{}, d *schem
 }
 
 func flattenSystemInterfaceSwitchControllerRspanMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerNetflowCollect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5330,6 +5357,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("lacp_ha_secondary", flattenSystemInterfaceLacpHaSecondary(o["lacp-ha-secondary"], d, "lacp_ha_secondary", sv)); err != nil {
+		if !fortiAPIPatch(o["lacp-ha-secondary"]) {
+			return fmt.Errorf("Error reading lacp_ha_secondary: %v", err)
+		}
+	}
+
 	if err = d.Set("lacp_ha_slave", flattenSystemInterfaceLacpHaSlave(o["lacp-ha-slave"], d, "lacp_ha_slave", sv)); err != nil {
 		if !fortiAPIPatch(o["lacp-ha-slave"]) {
 			return fmt.Errorf("Error reading lacp_ha_slave: %v", err)
@@ -5375,6 +5408,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("link_up_delay", flattenSystemInterfaceLinkUpDelay(o["link-up-delay"], d, "link_up_delay", sv)); err != nil {
 		if !fortiAPIPatch(o["link-up-delay"]) {
 			return fmt.Errorf("Error reading link_up_delay: %v", err)
+		}
+	}
+
+	if err = d.Set("aggregate_type", flattenSystemInterfaceAggregateType(o["aggregate-type"], d, "aggregate_type", sv)); err != nil {
+		if !fortiAPIPatch(o["aggregate-type"]) {
+			return fmt.Errorf("Error reading aggregate_type: %v", err)
 		}
 	}
 
@@ -5769,6 +5808,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("switch_controller_rspan_mode", flattenSystemInterfaceSwitchControllerRspanMode(o["switch-controller-rspan-mode"], d, "switch_controller_rspan_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-rspan-mode"]) {
 			return fmt.Errorf("Error reading switch_controller_rspan_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_netflow_collect", flattenSystemInterfaceSwitchControllerNetflowCollect(o["switch-controller-netflow-collect"], d, "switch_controller_netflow_collect", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-netflow-collect"]) {
+			return fmt.Errorf("Error reading switch_controller_netflow_collect: %v", err)
 		}
 	}
 
@@ -6581,6 +6626,10 @@ func expandSystemInterfaceLacpMode(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandSystemInterfaceLacpHaSecondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemInterfaceLacpHaSlave(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6610,6 +6659,10 @@ func expandSystemInterfaceAlgorithm(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemInterfaceLinkUpDelay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceAggregateType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7198,6 +7251,10 @@ func expandSystemInterfaceSwitchControllerTrafficPolicy(d *schema.ResourceData, 
 }
 
 func expandSystemInterfaceSwitchControllerRspanMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerNetflowCollect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9518,6 +9575,16 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	if v, ok := d.GetOk("lacp_ha_secondary"); ok {
+
+		t, err := expandSystemInterfaceLacpHaSecondary(d, v, "lacp_ha_secondary", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["lacp-ha-secondary"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("lacp_ha_slave"); ok {
 
 		t, err := expandSystemInterfaceLacpHaSlave(d, v, "lacp_ha_slave", sv)
@@ -9595,6 +9662,16 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["link-up-delay"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("aggregate_type"); ok {
+
+		t, err := expandSystemInterfaceAggregateType(d, v, "aggregate_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["aggregate-type"] = t
 		}
 	}
 
@@ -10185,6 +10262,16 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["switch-controller-rspan-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_netflow_collect"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerNetflowCollect(d, v, "switch_controller_netflow_collect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-netflow-collect"] = t
 		}
 	}
 

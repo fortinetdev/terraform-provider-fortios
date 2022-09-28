@@ -35,6 +35,11 @@ func resourceFirewallInternetServiceAppend() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"addr_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"match_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
@@ -145,6 +150,10 @@ func resourceFirewallInternetServiceAppendRead(d *schema.ResourceData, m interfa
 	return nil
 }
 
+func flattenFirewallInternetServiceAppendAddrMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallInternetServiceAppendMatchPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -155,6 +164,12 @@ func flattenFirewallInternetServiceAppendAppendPort(v interface{}, d *schema.Res
 
 func refreshObjectFirewallInternetServiceAppend(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("addr_mode", flattenFirewallInternetServiceAppendAddrMode(o["addr-mode"], d, "addr_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["addr-mode"]) {
+			return fmt.Errorf("Error reading addr_mode: %v", err)
+		}
+	}
 
 	if err = d.Set("match_port", flattenFirewallInternetServiceAppendMatchPort(o["match-port"], d, "match_port", sv)); err != nil {
 		if !fortiAPIPatch(o["match-port"]) {
@@ -177,6 +192,10 @@ func flattenFirewallInternetServiceAppendFortiTestDebug(d *schema.ResourceData, 
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandFirewallInternetServiceAppendAddrMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallInternetServiceAppendMatchPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -187,6 +206,20 @@ func expandFirewallInternetServiceAppendAppendPort(d *schema.ResourceData, v int
 
 func getObjectFirewallInternetServiceAppend(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("addr_mode"); ok {
+		if setArgNil {
+			obj["addr-mode"] = nil
+		} else {
+
+			t, err := expandFirewallInternetServiceAppendAddrMode(d, v, "addr_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["addr-mode"] = t
+			}
+		}
+	}
 
 	if v, ok := d.GetOkExists("match_port"); ok {
 		if setArgNil {

@@ -16,10 +16,12 @@ The following arguments are supported:
 * `name` - Access Proxy name.
 * `vip` - Virtual IP name.
 * `client_cert` - Enable/disable to request client certificate. Valid values: `disable`, `enable`.
+* `user_agent_detect` - Enable/disable to detect device type by HTTP user-agent if no client certificate provided. Valid values: `disable`, `enable`.
 * `auth_portal` - Enable/disable authentication portal. Valid values: `disable`, `enable`.
 * `auth_virtual_host` - Virtual host for authentication portal.
-* `empty_cert_action` - Action of an empty client certificate. Valid values: `accept`, `block`.
+* `empty_cert_action` - Action of an empty client certificate.
 * `log_blocked_traffic` - Enable/disable logging of blocked traffic. Valid values: `enable`, `disable`.
+* `add_vhost_domain_to_dnsdb` - Enable/disable adding vhost/domain to dnsdb for ztna dox tunnel. Valid values: `enable`, `disable`.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `api_gateway` - Set IPv4 API Gateway. The structure of `api_gateway` block is documented below.
 * `api_gateway6` - Set IPv6 API Gateway. The structure of `api_gateway6` block is documented below.
@@ -35,6 +37,7 @@ The `api_gateway` block supports:
 * `virtual_host` - Virtual host.
 * `url_map_type` - Type of url-map. Valid values: `sub-string`, `wildcard`, `regex`.
 * `realservers` - Select the real servers that this Access Proxy will distribute traffic to. The structure of `realservers` block is documented below.
+* `application` - SaaS application controlled by this Access Proxy. The structure of `application` block is documented below.
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP. Valid values: `disable`, `enable`.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.
@@ -76,6 +79,10 @@ The `ssh_host_key` block supports:
 
 * `name` - Server host key name.
 
+The `application` block supports:
+
+* `name` - SaaS application name.
+
 The `ssl_cipher_suites` block supports:
 
 * `priority` - SSL/TLS cipher suites priority.
@@ -91,6 +98,7 @@ The `api_gateway6` block supports:
 * `virtual_host` - Virtual host.
 * `url_map_type` - Type of url-map. Valid values: `sub-string`, `wildcard`, `regex`.
 * `realservers` - Select the real servers that this Access Proxy will distribute traffic to. The structure of `realservers` block is documented below.
+* `application` - SaaS application controlled by this Access Proxy. The structure of `application` block is documented below.
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP. Valid values: `disable`, `enable`.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.
@@ -131,6 +139,10 @@ The `realservers` block supports:
 The `ssh_host_key` block supports:
 
 * `name` - Server host key name.
+
+The `application` block supports:
+
+* `name` - SaaS application name.
 
 The `ssl_cipher_suites` block supports:
 

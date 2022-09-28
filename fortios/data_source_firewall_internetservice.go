@@ -68,6 +68,14 @@ func dataSourceFirewallInternetService() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"ip6_range_number": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"extra_ip6_range_number": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"singularity": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -163,6 +171,14 @@ func dataSourceFlattenFirewallInternetServiceIpNumber(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenFirewallInternetServiceIp6RangeNumber(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceExtraIp6RangeNumber(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallInternetServiceSingularity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -231,6 +247,18 @@ func dataSourceRefreshObjectFirewallInternetService(d *schema.ResourceData, o ma
 	if err = d.Set("ip_number", dataSourceFlattenFirewallInternetServiceIpNumber(o["ip-number"], d, "ip_number")); err != nil {
 		if !fortiAPIPatch(o["ip-number"]) {
 			return fmt.Errorf("Error reading ip_number: %v", err)
+		}
+	}
+
+	if err = d.Set("ip6_range_number", dataSourceFlattenFirewallInternetServiceIp6RangeNumber(o["ip6-range-number"], d, "ip6_range_number")); err != nil {
+		if !fortiAPIPatch(o["ip6-range-number"]) {
+			return fmt.Errorf("Error reading ip6_range_number: %v", err)
+		}
+	}
+
+	if err = d.Set("extra_ip6_range_number", dataSourceFlattenFirewallInternetServiceExtraIp6RangeNumber(o["extra-ip6-range-number"], d, "extra_ip6_range_number")); err != nil {
+		if !fortiAPIPatch(o["extra-ip6-range-number"]) {
+			return fmt.Errorf("Error reading extra_ip6_range_number: %v", err)
 		}
 	}
 

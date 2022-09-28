@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_nsxt_servicechain
-Configure NSX-T service chain. Applies to FortiOS Version `>= 7.0.0`.
+Configure NSX-T service chain. Applies to FortiOS Version `>= 6.4.10`.
 
 ## Argument Reference
 

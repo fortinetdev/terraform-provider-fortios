@@ -56,6 +56,10 @@ func dataSourceRouterStatic6() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"weight": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -83,6 +87,10 @@ func dataSourceRouterStatic6() *schema.Resource {
 						},
 					},
 				},
+			},
+			"dstaddr": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"sdwan": &schema.Schema{
 				Type:     schema.TypeString,
@@ -179,6 +187,10 @@ func dataSourceFlattenRouterStatic6Distance(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func dataSourceFlattenRouterStatic6Weight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStatic6Priority(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -228,6 +240,10 @@ func dataSourceFlattenRouterStatic6SdwanZone(v interface{}, d *schema.ResourceDa
 }
 
 func dataSourceFlattenRouterStatic6SdwanZoneName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterStatic6Dstaddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -296,6 +312,12 @@ func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("weight", dataSourceFlattenRouterStatic6Weight(o["weight"], d, "weight")); err != nil {
+		if !fortiAPIPatch(o["weight"]) {
+			return fmt.Errorf("Error reading weight: %v", err)
+		}
+	}
+
 	if err = d.Set("priority", dataSourceFlattenRouterStatic6Priority(o["priority"], d, "priority")); err != nil {
 		if !fortiAPIPatch(o["priority"]) {
 			return fmt.Errorf("Error reading priority: %v", err)
@@ -323,6 +345,12 @@ func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]i
 	if err = d.Set("sdwan_zone", dataSourceFlattenRouterStatic6SdwanZone(o["sdwan-zone"], d, "sdwan_zone")); err != nil {
 		if !fortiAPIPatch(o["sdwan-zone"]) {
 			return fmt.Errorf("Error reading sdwan_zone: %v", err)
+		}
+	}
+
+	if err = d.Set("dstaddr", dataSourceFlattenRouterStatic6Dstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+		if !fortiAPIPatch(o["dstaddr"]) {
+			return fmt.Errorf("Error reading dstaddr: %v", err)
 		}
 	}
 

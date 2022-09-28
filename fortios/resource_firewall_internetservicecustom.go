@@ -62,6 +62,11 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"addr_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
@@ -94,6 +99,20 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 							},
 						},
 						"dst": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
+						"dst6": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
@@ -282,6 +301,12 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 			tmp["id"] = flattenFirewallInternetServiceCustomEntryId(i["id"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := i["addr-mode"]; ok {
+
+			tmp["addr_mode"] = flattenFirewallInternetServiceCustomEntryAddrMode(i["addr-mode"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
 
@@ -300,6 +325,12 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 			tmp["dst"] = flattenFirewallInternetServiceCustomEntryDst(i["dst"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if _, ok := i["dst6"]; ok {
+
+			tmp["dst6"] = flattenFirewallInternetServiceCustomEntryDst6(i["dst6"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -310,6 +341,10 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallInternetServiceCustomEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallInternetServiceCustomEntryAddrMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -423,6 +458,49 @@ func flattenFirewallInternetServiceCustomEntryDstName(v interface{}, d *schema.R
 	return v
 }
 
+func flattenFirewallInternetServiceCustomEntryDst6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenFirewallInternetServiceCustomEntryDst6Name(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallInternetServiceCustomEntryDst6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallInternetServiceCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -501,6 +579,12 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 			tmp["id"], _ = expandFirewallInternetServiceCustomEntryId(d, i["id"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["addr-mode"], _ = expandFirewallInternetServiceCustomEntryAddrMode(d, i["addr_mode"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -523,6 +607,14 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 			tmp["dst"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+
+			tmp["dst6"], _ = expandFirewallInternetServiceCustomEntryDst6(d, i["dst6"], pre_append, sv)
+		} else {
+			tmp["dst6"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -532,6 +624,10 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallInternetServiceCustomEntryId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInternetServiceCustomEntryAddrMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -620,6 +716,38 @@ func expandFirewallInternetServiceCustomEntryDst(d *schema.ResourceData, v inter
 }
 
 func expandFirewallInternetServiceCustomEntryDstName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInternetServiceCustomEntryDst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandFirewallInternetServiceCustomEntryDst6Name(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallInternetServiceCustomEntryDst6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -31,6 +31,7 @@ The following arguments are supported:
 * `gui_certificates` - Enable/disable the System > Certificate GUI page, allowing you to add and configure certificates from the GUI. Valid values: `enable`, `disable`.
 * `gui_custom_language` - Enable/disable custom languages in GUI. Valid values: `enable`, `disable`.
 * `gui_wireless_opensecurity` - Enable/disable wireless open security option on the GUI. Valid values: `enable`, `disable`.
+* `gui_app_detection_sdwan` - Enable/disable Allow app-detection based SD-WAN. Valid values: `enable`, `disable`.
 * `gui_display_hostname` - Enable/disable displaying the FortiGate's hostname on the GUI login page. Valid values: `enable`, `disable`.
 * `gui_fortigate_cloud_sandbox` - Enable/disable displaying FortiGate Cloud Sandbox on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortisandbox_cloud` - Enable/disable displaying FortiSandbox Cloud on the GUI. Valid values: `enable`, `disable`.
@@ -183,6 +184,7 @@ The following arguments are supported:
 * `extender_controller_reserved_network` - Configure reserved network subnet for managed LAN extension FortiExtenders. This is available when the extender daemon is running.
 * `fortiextender_discovery_lockdown` - Enable/disable FortiExtender CAPWAP lockdown. Valid values: `disable`, `enable`.
 * `fortiextender_vlan_mode` - Enable/disable FortiExtender VLAN mode. Valid values: `enable`, `disable`.
+* `fortiextender_provision_on_authorization` - Enable/disable automatic provisioning of latest FortiExtender firmware on authorization. Valid values: `enable`, `disable`.
 * `switch_controller` - Enable/disable switch controller feature. Switch controller allows you to manage FortiSwitch from the FortiGate itself. Valid values: `disable`, `enable`.
 * `switch_controller_reserved_network` - Enable reserved network subnet for controlled switches. This is available when the switch controller is enabled.
 * `dnsproxy_worker_count` - DNS proxy worker count.

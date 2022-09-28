@@ -142,6 +142,11 @@ func resourceCertificateLocal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"private_key_retain": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cmp_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -400,6 +405,10 @@ func flattenCertificateLocalEnrollProtocol(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenCertificateLocalPrivateKeyRetain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCertificateLocalCmpServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -538,6 +547,12 @@ func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("enroll_protocol", flattenCertificateLocalEnrollProtocol(o["enroll-protocol"], d, "enroll_protocol", sv)); err != nil {
 		if !fortiAPIPatch(o["enroll-protocol"]) {
 			return fmt.Errorf("Error reading enroll_protocol: %v", err)
+		}
+	}
+
+	if err = d.Set("private_key_retain", flattenCertificateLocalPrivateKeyRetain(o["private-key-retain"], d, "private_key_retain", sv)); err != nil {
+		if !fortiAPIPatch(o["private-key-retain"]) {
+			return fmt.Errorf("Error reading private_key_retain: %v", err)
 		}
 	}
 
@@ -681,6 +696,10 @@ func expandCertificateLocalLastUpdated(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandCertificateLocalEnrollProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalPrivateKeyRetain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -920,6 +939,16 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["enroll-protocol"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("private_key_retain"); ok {
+
+		t, err := expandCertificateLocalPrivateKeyRetain(d, v, "private_key_retain", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["private-key-retain"] = t
 		}
 	}
 

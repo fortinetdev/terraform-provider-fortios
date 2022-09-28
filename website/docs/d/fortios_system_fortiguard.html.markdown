@@ -26,12 +26,17 @@ The following attributes are exported:
 * `auto_join_forticloud` - Automatically connect to and login to FortiCloud.
 * `update_server_location` - Signature update server location.
 * `sandbox_region` - Cloud sandbox region.
+* `sandbox_inline_scan` - Enable/disable FortiCloud Sandbox inline-scan.
 * `update_ffdb` - Enable/disable Internet Service Database update.
 * `update_uwdb` - Enable/disable allowlist update.
 * `update_extdb` - Enable/disable external resource update.
 * `update_build_proxy` - Enable/disable proxy dictionary rebuild.
 * `persistent_connection` - Enable/disable use of persistent connection to receive update notification from FortiGuard.
 * `vdom` - FortiGuard Service virtual domain name.
+* `auto_firmware_upgrade` - Enable/disable automatic patch-level firmware upgrade from FortiGuard. The FortiGate unit searches for new patches only in the same major and minor version.
+* `auto_firmware_upgrade_day` - Allowed day(s) of the week to start automatic patch-level firmware upgrade from FortiGuard.
+* `auto_firmware_upgrade_start_hour` - Start time in the designated time window for automatic patch-level firmware upgrade from FortiGuard in 24 hour time (0 ~ 23, default = 2). The actual upgrade time is selected randomly within the time window.
+* `auto_firmware_upgrade_end_hour` - End time in the designated time window for automatic patch-level firmware upgrade from FortiGuard in 24 hour time (0 ~ 23, default = 4). When the end time is smaller than the start time, the end time is interpreted as the next day. The actual upgrade time is selected randomly within the time window.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service.

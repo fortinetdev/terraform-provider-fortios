@@ -37,6 +37,7 @@ The following attributes are exported:
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Optional comments.
+* `application` - SaaS application. The structure of `application` block is documented below.
 * `visibility` - Enable/disable visibility of the object in the GUI.
 
 The `category` block contains:
@@ -59,4 +60,8 @@ The `tagging` block contains:
 The `tags` block contains:
 
 * `name` - Tag name.
+
+The `application` block contains:
+
+* `name` - SaaS applicaton name.
 

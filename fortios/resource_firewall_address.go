@@ -82,10 +82,12 @@ func resourceFirewallAddress() *schema.Resource {
 			"start_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"end_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1524,8 +1526,6 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["start-mac"] = t
 		}
-	} else if d.HasChange("start_mac") {
-		obj["start-mac"] = nil
 	}
 
 	if v, ok := d.GetOk("end_mac"); ok {
@@ -1536,8 +1536,6 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["end-mac"] = t
 		}
-	} else if d.HasChange("end_mac") {
-		obj["end-mac"] = nil
 	}
 
 	if v, ok := d.GetOk("start_ip"); ok {

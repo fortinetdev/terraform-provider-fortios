@@ -34,8 +34,14 @@ The following arguments are supported:
 
 * `seq_num` - Sequence number.
 * `input_device` - (Required) Incoming interface name. Configuration examples: for FortiOS Version <= "6.2.4": `input_device  = "port2"`, for FortiOS Version >= "6.2.4": `input_device  = "\"fortilink\" \"port1\""`.
+* `input_device_negate` - Enable/disable negation of input device match. Valid values: `enable`, `disable`.
 * `src` - Source IPv6 prefix.
+* `srcaddr` - Source address name. The structure of `srcaddr` block is documented below.
+* `src_negate` - Enable/disable negating source address match. Valid values: `enable`, `disable`.
 * `dst` - Destination IPv6 prefix.
+* `dstaddr` - Destination address name. The structure of `dstaddr` block is documented below.
+* `dst_negate` - Enable/disable negating destination address match. Valid values: `enable`, `disable`.
+* `action` - Action of the policy route. Valid values: `deny`, `permit`.
 * `protocol` - Protocol number (0 - 255).
 * `start_port` - Start destination port number (1 - 65535).
 * `end_port` - End destination port number (1 - 65535).
@@ -45,7 +51,26 @@ The following arguments are supported:
 * `tos_mask` - Type of service evaluated bits.
 * `status` - Enable/disable this policy route. Valid values: `enable`, `disable`.
 * `comments` - Optional comments.
+* `internet_service_id` - Destination Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_custom` - Custom Destination Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `srcaddr` block supports:
+
+* `name` - Address/group name.
+
+The `dstaddr` block supports:
+
+* `name` - Address/group name.
+
+The `internet_service_id` block supports:
+
+* `id` - Destination Internet Service ID.
+
+The `internet_service_custom` block supports:
+
+* `name` - Custom Destination Internet Service name.
 
 
 ## Attribute Reference

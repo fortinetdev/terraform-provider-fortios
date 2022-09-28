@@ -145,6 +145,22 @@ func dataSourceSystemDhcpServer() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"vci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vci_string": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -196,6 +212,22 @@ func dataSourceSystemDhcpServer() *schema.Resource {
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"vci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vci_string": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -293,6 +325,22 @@ func dataSourceSystemDhcpServer() *schema.Resource {
 						"end_ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"vci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vci_string": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -526,6 +574,16 @@ func dataSourceFlattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceD
 			tmp["end_ip"] = dataSourceFlattenSystemDhcpServerIpRangeEndIp(i["end-ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := i["vci-match"]; ok {
+			tmp["vci_match"] = dataSourceFlattenSystemDhcpServerIpRangeVciMatch(i["vci-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerIpRangeVciString(i["vci-string"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -543,6 +601,46 @@ func dataSourceFlattenSystemDhcpServerIpRangeStartIp(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemDhcpServerIpRangeEndIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeVciMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeVciString(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerIpRangeVciStringVciString(i["vci-string"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeVciStringVciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -638,6 +736,16 @@ func dataSourceFlattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceD
 			tmp["ip"] = dataSourceFlattenSystemDhcpServerOptionsIp(i["ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := i["vci-match"]; ok {
+			tmp["vci_match"] = dataSourceFlattenSystemDhcpServerOptionsVciMatch(i["vci-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerOptionsVciString(i["vci-string"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -663,6 +771,46 @@ func dataSourceFlattenSystemDhcpServerOptionsValue(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemDhcpServerOptionsIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerOptionsVciMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerOptionsVciString(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerOptionsVciStringVciString(i["vci-string"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDhcpServerOptionsVciStringVciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -800,6 +948,16 @@ func dataSourceFlattenSystemDhcpServerExcludeRange(v interface{}, d *schema.Reso
 			tmp["end_ip"] = dataSourceFlattenSystemDhcpServerExcludeRangeEndIp(i["end-ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+		if _, ok := i["vci-match"]; ok {
+			tmp["vci_match"] = dataSourceFlattenSystemDhcpServerExcludeRangeVciMatch(i["vci-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerExcludeRangeVciString(i["vci-string"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -817,6 +975,46 @@ func dataSourceFlattenSystemDhcpServerExcludeRangeStartIp(v interface{}, d *sche
 }
 
 func dataSourceFlattenSystemDhcpServerExcludeRangeEndIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeVciMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeVciString(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+		if _, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerExcludeRangeVciStringVciString(i["vci-string"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeVciStringVciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

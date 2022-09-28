@@ -229,6 +229,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"packet_redistribution": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"mode_cfg": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -699,6 +704,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fgsp_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"inbound_dscp_copy": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -812,6 +822,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rsa_signature_hash_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"enforce_unique_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -889,6 +904,12 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"link_cost": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1196,6 +1217,10 @@ func flattenVpnIpsecPhase1InterfaceAggregateMember(v interface{}, d *schema.Reso
 }
 
 func flattenVpnIpsecPhase1InterfaceAggregateWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfacePacketRedistribution(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1680,6 +1705,10 @@ func flattenVpnIpsecPhase1InterfaceHaSyncEspSeqno(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceFgspSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceInboundDscpCopy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1768,6 +1797,10 @@ func flattenVpnIpsecPhase1InterfaceRsaSignatureFormat(v interface{}, d *schema.R
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceRsaSignatureHashOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceEnforceUniqueId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1821,6 +1854,10 @@ func flattenVpnIpsecPhase1InterfaceNetworkId(v interface{}, d *schema.ResourceDa
 }
 
 func flattenVpnIpsecPhase1InterfaceLoopbackAsymroute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceLinkCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2044,6 +2081,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("aggregate_weight", flattenVpnIpsecPhase1InterfaceAggregateWeight(o["aggregate-weight"], d, "aggregate_weight", sv)); err != nil {
 		if !fortiAPIPatch(o["aggregate-weight"]) {
 			return fmt.Errorf("Error reading aggregate_weight: %v", err)
+		}
+	}
+
+	if err = d.Set("packet_redistribution", flattenVpnIpsecPhase1InterfacePacketRedistribution(o["packet-redistribution"], d, "packet_redistribution", sv)); err != nil {
+		if !fortiAPIPatch(o["packet-redistribution"]) {
+			return fmt.Errorf("Error reading packet_redistribution: %v", err)
 		}
 	}
 
@@ -2533,6 +2576,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("fgsp_sync", flattenVpnIpsecPhase1InterfaceFgspSync(o["fgsp-sync"], d, "fgsp_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fgsp-sync"]) {
+			return fmt.Errorf("Error reading fgsp_sync: %v", err)
+		}
+	}
+
 	if err = d.Set("inbound_dscp_copy", flattenVpnIpsecPhase1InterfaceInboundDscpCopy(o["inbound-dscp-copy"], d, "inbound_dscp_copy", sv)); err != nil {
 		if !fortiAPIPatch(o["inbound-dscp-copy"]) {
 			return fmt.Errorf("Error reading inbound_dscp_copy: %v", err)
@@ -2665,6 +2714,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("rsa_signature_hash_override", flattenVpnIpsecPhase1InterfaceRsaSignatureHashOverride(o["rsa-signature-hash-override"], d, "rsa_signature_hash_override", sv)); err != nil {
+		if !fortiAPIPatch(o["rsa-signature-hash-override"]) {
+			return fmt.Errorf("Error reading rsa_signature_hash_override: %v", err)
+		}
+	}
+
 	if err = d.Set("enforce_unique_id", flattenVpnIpsecPhase1InterfaceEnforceUniqueId(o["enforce-unique-id"], d, "enforce_unique_id", sv)); err != nil {
 		if !fortiAPIPatch(o["enforce-unique-id"]) {
 			return fmt.Errorf("Error reading enforce_unique_id: %v", err)
@@ -2746,6 +2801,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("loopback_asymroute", flattenVpnIpsecPhase1InterfaceLoopbackAsymroute(o["loopback-asymroute"], d, "loopback_asymroute", sv)); err != nil {
 		if !fortiAPIPatch(o["loopback-asymroute"]) {
 			return fmt.Errorf("Error reading loopback_asymroute: %v", err)
+		}
+	}
+
+	if err = d.Set("link_cost", flattenVpnIpsecPhase1InterfaceLinkCost(o["link-cost"], d, "link_cost", sv)); err != nil {
+		if !fortiAPIPatch(o["link-cost"]) {
+			return fmt.Errorf("Error reading link_cost: %v", err)
 		}
 	}
 
@@ -2923,6 +2984,10 @@ func expandVpnIpsecPhase1InterfaceAggregateMember(d *schema.ResourceData, v inte
 }
 
 func expandVpnIpsecPhase1InterfaceAggregateWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfacePacketRedistribution(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3374,6 +3439,10 @@ func expandVpnIpsecPhase1InterfaceHaSyncEspSeqno(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceFgspSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceInboundDscpCopy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3462,6 +3531,10 @@ func expandVpnIpsecPhase1InterfaceRsaSignatureFormat(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceRsaSignatureHashOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceEnforceUniqueId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3515,6 +3588,10 @@ func expandVpnIpsecPhase1InterfaceNetworkId(d *schema.ResourceData, v interface{
 }
 
 func expandVpnIpsecPhase1InterfaceLoopbackAsymroute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceLinkCost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3868,6 +3945,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["aggregate-weight"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("packet_redistribution"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfacePacketRedistribution(d, v, "packet_redistribution", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["packet-redistribution"] = t
 		}
 	}
 
@@ -4681,6 +4768,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("fgsp_sync"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceFgspSync(d, v, "fgsp_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fgsp-sync"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceInboundDscpCopy(d, v, "inbound_dscp_copy", sv)
@@ -4901,6 +4998,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("rsa_signature_hash_override"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceRsaSignatureHashOverride(d, v, "rsa_signature_hash_override", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rsa-signature-hash-override"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("enforce_unique_id"); ok {
 
 		t, err := expandVpnIpsecPhase1InterfaceEnforceUniqueId(d, v, "enforce_unique_id", sv)
@@ -5038,6 +5145,16 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["loopback-asymroute"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("link_cost"); ok {
+
+		t, err := expandVpnIpsecPhase1InterfaceLinkCost(d, v, "link_cost", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["link-cost"] = t
 		}
 	}
 

@@ -84,6 +84,10 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"auth_url": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"adfs_claim": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -199,6 +203,10 @@ func dataSourceFlattenUserSamlClockTolerance(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenUserSamlAuthUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenUserSamlAdfsClaim(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -295,6 +303,12 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("clock_tolerance", dataSourceFlattenUserSamlClockTolerance(o["clock-tolerance"], d, "clock_tolerance")); err != nil {
 		if !fortiAPIPatch(o["clock-tolerance"]) {
 			return fmt.Errorf("Error reading clock_tolerance: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_url", dataSourceFlattenUserSamlAuthUrl(o["auth-url"], d, "auth_url")); err != nil {
+		if !fortiAPIPatch(o["auth-url"]) {
+			return fmt.Errorf("Error reading auth_url: %v", err)
 		}
 	}
 

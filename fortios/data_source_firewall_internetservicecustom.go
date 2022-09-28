@@ -49,6 +49,10 @@ func dataSourceFirewallInternetServiceCustom() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"addr_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -74,6 +78,18 @@ func dataSourceFirewallInternetServiceCustom() *schema.Resource {
 							},
 						},
 						"dst": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"dst6": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -171,6 +187,11 @@ func dataSourceFlattenFirewallInternetServiceCustomEntry(v interface{}, d *schem
 			tmp["id"] = dataSourceFlattenFirewallInternetServiceCustomEntryId(i["id"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = dataSourceFlattenFirewallInternetServiceCustomEntryAddrMode(i["addr-mode"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
 			tmp["protocol"] = dataSourceFlattenFirewallInternetServiceCustomEntryProtocol(i["protocol"], d, pre_append)
@@ -186,6 +207,11 @@ func dataSourceFlattenFirewallInternetServiceCustomEntry(v interface{}, d *schem
 			tmp["dst"] = dataSourceFlattenFirewallInternetServiceCustomEntryDst(i["dst"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if _, ok := i["dst6"]; ok {
+			tmp["dst6"] = dataSourceFlattenFirewallInternetServiceCustomEntryDst6(i["dst6"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -195,6 +221,10 @@ func dataSourceFlattenFirewallInternetServiceCustomEntry(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallInternetServiceCustomEntryId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceCustomEntryAddrMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -289,6 +319,42 @@ func dataSourceFlattenFirewallInternetServiceCustomEntryDst(v interface{}, d *sc
 }
 
 func dataSourceFlattenFirewallInternetServiceCustomEntryDstName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceCustomEntryDst6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallInternetServiceCustomEntryDst6Name(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallInternetServiceCustomEntryDst6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

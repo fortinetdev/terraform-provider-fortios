@@ -74,7 +74,7 @@ The following arguments are supported:
 The `server_list` block supports:
 
 * `id` - ID.
-* `server_type` - FortiGuard service type. Valid values: `update`, `rating`.
+* `server_type` - FortiGuard service type.
 * `addr_type` - Indicate whether the FortiGate communicates with the override server using an IPv4 address, an IPv6 address or a FQDN. Valid values: `ipv4`, `ipv6`, `fqdn`.
 * `server_address` - IPv4 address of override server.
 * `server_address6` - IPv6 address of override server.

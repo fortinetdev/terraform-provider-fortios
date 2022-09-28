@@ -56,6 +56,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sandbox_inline_scan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"update_ffdb": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -78,6 +82,22 @@ func dataSourceSystemFortiguard() *schema.Resource {
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auto_firmware_upgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auto_firmware_upgrade_day": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auto_firmware_upgrade_start_hour": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"auto_firmware_upgrade_end_hour": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"fortiguard_anycast": &schema.Schema{
@@ -307,6 +327,10 @@ func dataSourceFlattenSystemFortiguardSandboxRegion(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemFortiguardSandboxInlineScan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortiguardUpdateFfdb(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -328,6 +352,22 @@ func dataSourceFlattenSystemFortiguardPersistentConnection(v interface{}, d *sch
 }
 
 func dataSourceFlattenSystemFortiguardVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardAutoFirmwareUpgrade(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeStartHour(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeEndHour(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -536,6 +576,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("sandbox_inline_scan", dataSourceFlattenSystemFortiguardSandboxInlineScan(o["sandbox-inline-scan"], d, "sandbox_inline_scan")); err != nil {
+		if !fortiAPIPatch(o["sandbox-inline-scan"]) {
+			return fmt.Errorf("Error reading sandbox_inline_scan: %v", err)
+		}
+	}
+
 	if err = d.Set("update_ffdb", dataSourceFlattenSystemFortiguardUpdateFfdb(o["update-ffdb"], d, "update_ffdb")); err != nil {
 		if !fortiAPIPatch(o["update-ffdb"]) {
 			return fmt.Errorf("Error reading update_ffdb: %v", err)
@@ -569,6 +615,30 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("vdom", dataSourceFlattenSystemFortiguardVdom(o["vdom"], d, "vdom")); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_firmware_upgrade", dataSourceFlattenSystemFortiguardAutoFirmwareUpgrade(o["auto-firmware-upgrade"], d, "auto_firmware_upgrade")); err != nil {
+		if !fortiAPIPatch(o["auto-firmware-upgrade"]) {
+			return fmt.Errorf("Error reading auto_firmware_upgrade: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_firmware_upgrade_day", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeDay(o["auto-firmware-upgrade-day"], d, "auto_firmware_upgrade_day")); err != nil {
+		if !fortiAPIPatch(o["auto-firmware-upgrade-day"]) {
+			return fmt.Errorf("Error reading auto_firmware_upgrade_day: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_firmware_upgrade_start_hour", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeStartHour(o["auto-firmware-upgrade-start-hour"], d, "auto_firmware_upgrade_start_hour")); err != nil {
+		if !fortiAPIPatch(o["auto-firmware-upgrade-start-hour"]) {
+			return fmt.Errorf("Error reading auto_firmware_upgrade_start_hour: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_firmware_upgrade_end_hour", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeEndHour(o["auto-firmware-upgrade-end-hour"], d, "auto_firmware_upgrade_end_hour")); err != nil {
+		if !fortiAPIPatch(o["auto-firmware-upgrade-end-hour"]) {
+			return fmt.Errorf("Error reading auto_firmware_upgrade_end_hour: %v", err)
 		}
 	}
 

@@ -92,6 +92,10 @@ func dataSourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"trigger_datetime": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fields": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -280,6 +284,10 @@ func dataSourceFlattenSystemAutomationTriggerTriggerHour(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemAutomationTriggerTriggerMinute(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationTriggerTriggerDatetime(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -481,6 +489,12 @@ func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o ma
 	if err = d.Set("trigger_minute", dataSourceFlattenSystemAutomationTriggerTriggerMinute(o["trigger-minute"], d, "trigger_minute")); err != nil {
 		if !fortiAPIPatch(o["trigger-minute"]) {
 			return fmt.Errorf("Error reading trigger_minute: %v", err)
+		}
+	}
+
+	if err = d.Set("trigger_datetime", dataSourceFlattenSystemAutomationTriggerTriggerDatetime(o["trigger-datetime"], d, "trigger_datetime")); err != nil {
+		if !fortiAPIPatch(o["trigger-datetime"]) {
+			return fmt.Errorf("Error reading trigger_datetime: %v", err)
 		}
 	}
 

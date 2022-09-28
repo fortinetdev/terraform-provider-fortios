@@ -145,6 +145,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"unknown_content_encoding": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"outbreak_prevention": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1219,6 +1224,12 @@ func flattenAntivirusProfileHttp(v interface{}, d *schema.ResourceData, pre stri
 		result["emulator"] = flattenAntivirusProfileHttpEmulator(i["emulator"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "unknown_content_encoding"
+	if _, ok := i["unknown-content-encoding"]; ok {
+
+		result["unknown_content_encoding"] = flattenAntivirusProfileHttpUnknownContentEncoding(i["unknown-content-encoding"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 
@@ -1282,6 +1293,10 @@ func flattenAntivirusProfileHttpArchiveLog(v interface{}, d *schema.ResourceData
 }
 
 func flattenAntivirusProfileHttpEmulator(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileHttpUnknownContentEncoding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3303,6 +3318,11 @@ func expandAntivirusProfileHttp(d *schema.ResourceData, v interface{}, pre strin
 
 		result["emulator"], _ = expandAntivirusProfileHttpEmulator(d, i["emulator"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "unknown_content_encoding"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["unknown-content-encoding"], _ = expandAntivirusProfileHttpUnknownContentEncoding(d, i["unknown_content_encoding"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -3359,6 +3379,10 @@ func expandAntivirusProfileHttpArchiveLog(d *schema.ResourceData, v interface{},
 }
 
 func expandAntivirusProfileHttpEmulator(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileHttpUnknownContentEncoding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

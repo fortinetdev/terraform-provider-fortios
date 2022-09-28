@@ -27,9 +27,11 @@ The following attributes are exported:
 The `entry` block contains:
 
 * `id` - Entry ID(1-255).
+* `addr_mode` - Address mode (IPv4 or IPv6)
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
 * `port_range` - Port ranges in the custom entry. The structure of `port_range` block is documented below.
 * `dst` - Destination address or address group name. The structure of `dst` block is documented below.
+* `dst6` - Destination address6 or address6 group name. The structure of `dst6` block is documented below.
 
 The `port_range` block contains:
 
@@ -41,13 +43,19 @@ The `dst` block contains:
 
 * `name` - Select the destination address or address group object from available options.
 
+The `dst6` block contains:
+
+* `name` - Select the destination address6 or address group object from available options.
+
 The `disable_entry` block contains:
 
 * `id` - Disable entry ID.
+* `addr_mode` - Address mode (IPv4 or IPv6)
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
 * `port_range` - Port ranges in the disable entry. The structure of `port_range` block is documented below.
 * `port` - Integer value for the TCP/IP port (0 - 65535).
 * `ip_range` - IP ranges in the disable entry. The structure of `ip_range` block is documented below.
+* `ip6_range` - IPv6 ranges in the disable entry. The structure of `ip6_range` block is documented below.
 
 The `port_range` block contains:
 
@@ -60,4 +68,10 @@ The `ip_range` block contains:
 * `id` - Disable entry range ID.
 * `start_ip` - Start IP address.
 * `end_ip` - End IP address.
+
+The `ip6_range` block contains:
+
+* `id` - Disable entry range ID.
+* `start_ip6` - Start IPv6 address.
+* `end_ip6` - End IPv6 address.
 

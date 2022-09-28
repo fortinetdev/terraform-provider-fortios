@@ -45,6 +45,10 @@ func dataSourceFirewallInternetServiceExtension() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"addr_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -81,6 +85,18 @@ func dataSourceFirewallInternetServiceExtension() *schema.Resource {
 								},
 							},
 						},
+						"dst6": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -91,6 +107,10 @@ func dataSourceFirewallInternetServiceExtension() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"addr_mode": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"protocol": &schema.Schema{
@@ -135,6 +155,26 @@ func dataSourceFirewallInternetServiceExtension() *schema.Resource {
 										Computed: true,
 									},
 									"end_ip": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"ip6_range": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"start_ip6": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"end_ip6": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -223,6 +263,11 @@ func dataSourceFlattenFirewallInternetServiceExtensionEntry(v interface{}, d *sc
 			tmp["id"] = dataSourceFlattenFirewallInternetServiceExtensionEntryId(i["id"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = dataSourceFlattenFirewallInternetServiceExtensionEntryAddrMode(i["addr-mode"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
 			tmp["protocol"] = dataSourceFlattenFirewallInternetServiceExtensionEntryProtocol(i["protocol"], d, pre_append)
@@ -238,6 +283,11 @@ func dataSourceFlattenFirewallInternetServiceExtensionEntry(v interface{}, d *sc
 			tmp["dst"] = dataSourceFlattenFirewallInternetServiceExtensionEntryDst(i["dst"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if _, ok := i["dst6"]; ok {
+			tmp["dst6"] = dataSourceFlattenFirewallInternetServiceExtensionEntryDst6(i["dst6"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -247,6 +297,10 @@ func dataSourceFlattenFirewallInternetServiceExtensionEntry(v interface{}, d *sc
 }
 
 func dataSourceFlattenFirewallInternetServiceExtensionEntryId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionEntryAddrMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -344,6 +398,42 @@ func dataSourceFlattenFirewallInternetServiceExtensionEntryDstName(v interface{}
 	return v
 }
 
+func dataSourceFlattenFirewallInternetServiceExtensionEntryDst6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallInternetServiceExtensionEntryDst6Name(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionEntryDst6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallInternetServiceExtensionDisableEntry(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -368,6 +458,11 @@ func dataSourceFlattenFirewallInternetServiceExtensionDisableEntry(v interface{}
 			tmp["id"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryId(i["id"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryAddrMode(i["addr-mode"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
 			tmp["protocol"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryProtocol(i["protocol"], d, pre_append)
@@ -388,6 +483,11 @@ func dataSourceFlattenFirewallInternetServiceExtensionDisableEntry(v interface{}
 			tmp["ip_range"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIpRange(i["ip-range"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_range"
+		if _, ok := i["ip6-range"]; ok {
+			tmp["ip6_range"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6Range(i["ip6-range"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -397,6 +497,10 @@ func dataSourceFlattenFirewallInternetServiceExtensionDisableEntry(v interface{}
 }
 
 func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryAddrMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -513,6 +617,60 @@ func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIpRangeStartIp
 }
 
 func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIpRangeEndIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6Range(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6RangeId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip6"
+		if _, ok := i["start-ip6"]; ok {
+			tmp["start_ip6"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6RangeStartIp6(i["start-ip6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip6"
+		if _, ok := i["end-ip6"]; ok {
+			tmp["end_ip6"] = dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6RangeEndIp6(i["end-ip6"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6RangeId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6RangeStartIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceExtensionDisableEntryIp6RangeEndIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

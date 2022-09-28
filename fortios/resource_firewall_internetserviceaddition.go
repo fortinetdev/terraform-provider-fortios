@@ -56,6 +56,11 @@ func resourceFirewallInternetServiceAddition() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"addr_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
@@ -258,6 +263,12 @@ func flattenFirewallInternetServiceAdditionEntry(v interface{}, d *schema.Resour
 			tmp["id"] = flattenFirewallInternetServiceAdditionEntryId(i["id"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := i["addr-mode"]; ok {
+
+			tmp["addr_mode"] = flattenFirewallInternetServiceAdditionEntryAddrMode(i["addr-mode"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
 
@@ -280,6 +291,10 @@ func flattenFirewallInternetServiceAdditionEntry(v interface{}, d *schema.Resour
 }
 
 func flattenFirewallInternetServiceAdditionEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallInternetServiceAdditionEntryAddrMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -418,6 +433,12 @@ func expandFirewallInternetServiceAdditionEntry(d *schema.ResourceData, v interf
 			tmp["id"], _ = expandFirewallInternetServiceAdditionEntryId(d, i["id"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["addr-mode"], _ = expandFirewallInternetServiceAdditionEntryAddrMode(d, i["addr_mode"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -441,6 +462,10 @@ func expandFirewallInternetServiceAdditionEntry(d *schema.ResourceData, v interf
 }
 
 func expandFirewallInternetServiceAdditionEntryId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInternetServiceAdditionEntryAddrMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

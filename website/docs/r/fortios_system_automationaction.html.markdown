@@ -32,6 +32,7 @@ The following arguments are supported:
 * `name` - Name.
 * `description` - Description.
 * `action_type` - Action type.
+* `system_action` - System action type. Valid values: `reboot`, `shutdown`, `backup-config`.
 * `tls_certificate` - Custom TLS certificate for API request.
 * `email_to` - Email addresses. The structure of `email_to` block is documented below.
 * `email_from` - Email sender name.

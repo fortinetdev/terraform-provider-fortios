@@ -371,6 +371,10 @@ func dataSourceSystemHa() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"pingserver_secondary_force_reset": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"pingserver_slave_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -962,6 +966,11 @@ func dataSourceFlattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pr
 			tmp["pingserver_failover_threshold"] = dataSourceFlattenSystemHaVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
+		if _, ok := i["pingserver-secondary-force-reset"]; ok {
+			tmp["pingserver_secondary_force_reset"] = dataSourceFlattenSystemHaVclusterPingserverSecondaryForceReset(i["pingserver-secondary-force-reset"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := i["pingserver-slave-force-reset"]; ok {
 			tmp["pingserver_slave_force_reset"] = dataSourceFlattenSystemHaVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append)
@@ -1005,6 +1014,10 @@ func dataSourceFlattenSystemHaVclusterPingserverMonitorInterface(v interface{}, 
 }
 
 func dataSourceFlattenSystemHaVclusterPingserverFailoverThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterPingserverSecondaryForceReset(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

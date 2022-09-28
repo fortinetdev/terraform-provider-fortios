@@ -66,7 +66,7 @@ The `health_check` block supports:
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `system_dns` - Enable/disable system DNS as the probe server. Valid values: `disable`, `enable`.
 * `server` - IP address or FQDN name of the server.
-* `detect_mode` - The mode determining how to detect the server. Valid values: `active`, `passive`, `prefer-passive`.
+* `detect_mode` - The mode determining how to detect the server.
 * `protocol` - Protocol used to determine if the FortiGate can communicate with the server.
 * `port` - Port number used to communicate with the server over the selected protocol (0-65535, default = 0, auto select. http, twamp: 80, udp-echo, tcp-echo: 7, dns: 53, ftp: 21).
 * `quality_measured_method` - Method to measure the quality of tcp-connect. Valid values: `half-open`, `half-close`.
@@ -90,6 +90,8 @@ The `health_check` block supports:
 * `diffservcode` - Differentiated services code point (DSCP) in the IP header of the probe packet.
 * `update_cascade_interface` - Enable/disable update cascade interface. Valid values: `enable`, `disable`.
 * `update_static_route` - Enable/disable updating the static route. Valid values: `enable`, `disable`.
+* `embed_measured_health` - Enable/disable embedding measured health information. Valid values: `enable`, `disable`.
+* `sla_id_redistribute` - Select the ID from the SLA sub-table. The selected SLA's priority value will be distributed into the routing table (0 - 32, default = 0).
 * `sla_fail_log_period` - Time interval in seconds that SLA fail log messages will be generated (0 - 3600, default = 0).
 * `sla_pass_log_period` - Time interval in seconds that SLA pass log messages will be generated (0 - 3600, default = 0).
 * `threshold_warning_packetloss` - Warning threshold for packet loss (percentage, default = 0).
@@ -116,6 +118,8 @@ The `sla` block supports:
 * `jitter_threshold` - Jitter for SLA to make decision in milliseconds. (0 - 10000000, default = 5).
 * `packetloss_threshold` - Packet loss for SLA to make decision in percentage. (0 - 100, default = 0).
 * `mos_threshold` - Minimum Mean Opinion Score for SLA to be marked as pass. (1.0 - 5.0, default = 3.6).
+* `priority_in_sla` - Value to be distributed into routing table when in-sla (0 - 65535, default = 0).
+* `priority_out_sla` - Value to be distributed into routing table when out-sla (0 - 65535, default = 0).
 
 The `neighbor` block supports:
 

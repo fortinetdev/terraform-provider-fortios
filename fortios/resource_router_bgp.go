@@ -161,6 +161,11 @@ func resourceRouterBgp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"recursive_inherit_priority": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tag_resolve_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -2257,6 +2262,10 @@ func flattenRouterBgpMultipathRecursiveDistance(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterBgpRecursiveNextHop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpRecursiveInheritPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -6247,6 +6256,12 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("recursive_inherit_priority", flattenRouterBgpRecursiveInheritPriority(o["recursive-inherit-priority"], d, "recursive_inherit_priority", sv)); err != nil {
+		if !fortiAPIPatch(o["recursive-inherit-priority"]) {
+			return fmt.Errorf("Error reading recursive_inherit_priority: %v", err)
+		}
+	}
+
 	if err = d.Set("tag_resolve_mode", flattenRouterBgpTagResolveMode(o["tag-resolve-mode"], d, "tag_resolve_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["tag-resolve-mode"]) {
 			return fmt.Errorf("Error reading tag_resolve_mode: %v", err)
@@ -6747,6 +6762,10 @@ func expandRouterBgpMultipathRecursiveDistance(d *schema.ResourceData, v interfa
 }
 
 func expandRouterBgpRecursiveNextHop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpRecursiveInheritPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -10653,6 +10672,20 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["recursive-next-hop"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("recursive_inherit_priority"); ok {
+		if setArgNil {
+			obj["recursive-inherit-priority"] = nil
+		} else {
+
+			t, err := expandRouterBgpRecursiveInheritPriority(d, v, "recursive_inherit_priority", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["recursive-inherit-priority"] = t
 			}
 		}
 	}

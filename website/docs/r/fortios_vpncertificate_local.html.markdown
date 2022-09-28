@@ -33,6 +33,7 @@ The following arguments are supported:
 * `ike_localid_type` - IKE local ID type. Valid values: `asn1dn`, `fqdn`.
 * `last_updated` - Time at which certificate was last updated.
 * `enroll_protocol` - Certificate enrollment protocol.
+* `private_key_retain` - Enable/disable retention of private key during SCEP renewal (default = disable). Valid values: `enable`, `disable`.
 * `cmp_server` - 'ADDRESS:PORT' for CMP server.
 * `cmp_path` - Path location inside CMP server.
 * `cmp_server_cert` - CMP server certificate.

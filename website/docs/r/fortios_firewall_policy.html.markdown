@@ -107,16 +107,30 @@ The following arguments are supported:
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `network_service_dynamic` - Dynamic Network Service name. The structure of `network_service_dynamic` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
 * `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used.  Valid values: `enable`, `disable`.
 * `internet_service_src_name` - Internet Service source name. The structure of `internet_service_src_name` block is documented below.
 * `internet_service_src_id` - Internet Service source ID. The structure of `internet_service_src_id` block is documented below.
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
 * `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
+* `network_service_src_dynamic` - Dynamic Network Service source name. The structure of `network_service_src_dynamic` block is documented below.
 * `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
 * `reputation_minimum` - Minimum Reputation to take action.
 * `reputation_direction` - Direction of the initial traffic for reputation to take effect. Valid values: `source`, `destination`.
 * `src_vendor_mac` - Vendor MAC source ID. The structure of `src_vendor_mac` block is documented below.
+* `internet_service6` - Enable/disable use of IPv6 Internet Services for this policy. If enabled, destination address and service are not used. Valid values: `enable`, `disable`.
+* `internet_service6_name` - IPv6 Internet Service name. The structure of `internet_service6_name` block is documented below.
+* `internet_service6_group` - Internet Service group name. The structure of `internet_service6_group` block is documented below.
+* `internet_service6_custom` - Custom IPv6 Internet Service name. The structure of `internet_service6_custom` block is documented below.
+* `internet_service6_custom_group` - Custom Internet Service6 group name. The structure of `internet_service6_custom_group` block is documented below.
+* `internet_service6_src` - Enable/disable use of IPv6 Internet Services in source for this policy. If enabled, source address is not used. Valid values: `enable`, `disable`.
+* `internet_service6_src_name` - IPv6 Internet Service source name. The structure of `internet_service6_src_name` block is documented below.
+* `internet_service6_src_group` - Internet Service6 source group name. The structure of `internet_service6_src_group` block is documented below.
+* `internet_service6_src_custom` - Custom IPv6 Internet Service source name. The structure of `internet_service6_src_custom` block is documented below.
+* `internet_service6_src_custom_group` - Custom Internet Service6 source group name. The structure of `internet_service6_src_custom_group` block is documented below.
+* `reputation_minimum6` - IPv6 Minimum Reputation to take action.
+* `reputation_direction6` - Direction of the initial traffic for IPv6 reputation to take effect. Valid values: `source`, `destination`.
 * `rtp_nat` - Enable Real Time Protocol (RTP) NAT. Valid values: `disable`, `enable`.
 * `rtp_addr` - Address names if this is an RTP NAT policy. The structure of `rtp_addr` block is documented below.
 * `learning_mode` - Enable to allow everything, but log all of the meaningful data for security information gathering. A learning report will be generated. Valid values: `enable`, `disable`.
@@ -220,6 +234,7 @@ The following arguments are supported:
 * `natip` - Policy-based IPsec VPN: source NAT IP address for outgoing traffic.
 * `match_vip` - Enable to match packets that have had their destination addresses changed by a VIP. Valid values: `enable`, `disable`.
 * `match_vip_only` - Enable/disable matching of only those packets that have had their destination addresses changed by a VIP. Valid values: `enable`, `disable`.
+* `diffserv_copy` - Enable to copy packet's DiffServ values from session's original direction to its reply direction. Valid values: `enable`, `disable`.
 * `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value. Valid values: `enable`, `disable`.
 * `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value. Valid values: `enable`, `disable`.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
@@ -237,10 +252,14 @@ The following arguments are supported:
 * `custom_log_fields` - Custom fields to append to log messages for this policy. The structure of `custom_log_fields` block is documented below.
 * `replacemsg_override_group` - Override the default replacement message group for this policy.
 * `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
+* `srcaddr6_negate` - When enabled srcaddr6 specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
+* `dstaddr6_negate` - When enabled dstaddr6 specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `internet_service_negate` - When enabled internet-service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `internet_service_src_negate` - When enabled internet-service-src specifies what the service must NOT be. Valid values: `enable`, `disable`.
+* `internet_service6_negate` - When enabled internet-service6 specifies what the service must NOT be. Valid values: `enable`, `disable`.
+* `internet_service6_src_negate` - When enabled internet-service6-src specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `timeout_send_rst` - Enable/disable sending RST packets when TCP sessions expire. Valid values: `enable`, `disable`.
 * `captive_portal_exempt` - Enable to exempt some users from the captive portal. Valid values: `enable`, `disable`.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
@@ -304,6 +323,10 @@ The `internet_service_custom` block supports:
 
 * `name` - Custom Internet Service name.
 
+The `network_service_dynamic` block supports:
+
+* `name` - Dynamic Network Service name.
+
 The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
@@ -324,6 +347,10 @@ The `internet_service_src_custom` block supports:
 
 * `name` - Custom Internet Service name.
 
+The `network_service_src_dynamic` block supports:
+
+* `name` - Dynamic Network Service name.
+
 The `internet_service_src_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
@@ -331,6 +358,38 @@ The `internet_service_src_custom_group` block supports:
 The `src_vendor_mac` block supports:
 
 * `id` - Vendor MAC ID.
+
+The `internet_service6_name` block supports:
+
+* `name` - IPv6 Internet Service name.
+
+The `internet_service6_group` block supports:
+
+* `name` - Internet Service group name.
+
+The `internet_service6_custom` block supports:
+
+* `name` - Custom Internet Service name.
+
+The `internet_service6_custom_group` block supports:
+
+* `name` - Custom Internet Service6 group name.
+
+The `internet_service6_src_name` block supports:
+
+* `name` - Internet Service name.
+
+The `internet_service6_src_group` block supports:
+
+* `name` - Internet Service group name.
+
+The `internet_service6_src_custom` block supports:
+
+* `name` - Custom Internet Service name.
+
+The `internet_service6_src_custom_group` block supports:
+
+* `name` - Custom Internet Service6 group name.
 
 The `rtp_addr` block supports:
 

@@ -317,6 +317,16 @@ func resourceSystemAccprofile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"system_execute_ssh": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"system_execute_telnet": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -875,6 +885,14 @@ func flattenSystemAccprofileSystemDiagnostics(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemAccprofileSystemExecuteSsh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileSystemExecuteTelnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -1057,6 +1075,18 @@ func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("system_diagnostics", flattenSystemAccprofileSystemDiagnostics(o["system-diagnostics"], d, "system_diagnostics", sv)); err != nil {
 		if !fortiAPIPatch(o["system-diagnostics"]) {
 			return fmt.Errorf("Error reading system_diagnostics: %v", err)
+		}
+	}
+
+	if err = d.Set("system_execute_ssh", flattenSystemAccprofileSystemExecuteSsh(o["system-execute-ssh"], d, "system_execute_ssh", sv)); err != nil {
+		if !fortiAPIPatch(o["system-execute-ssh"]) {
+			return fmt.Errorf("Error reading system_execute_ssh: %v", err)
+		}
+	}
+
+	if err = d.Set("system_execute_telnet", flattenSystemAccprofileSystemExecuteTelnet(o["system-execute-telnet"], d, "system_execute_telnet", sv)); err != nil {
+		if !fortiAPIPatch(o["system-execute-telnet"]) {
+			return fmt.Errorf("Error reading system_execute_telnet: %v", err)
 		}
 	}
 
@@ -1477,6 +1507,14 @@ func expandSystemAccprofileSystemDiagnostics(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemAccprofileSystemExecuteSsh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileSystemExecuteTelnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1697,6 +1735,26 @@ func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["system-diagnostics"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("system_execute_ssh"); ok {
+
+		t, err := expandSystemAccprofileSystemExecuteSsh(d, v, "system_execute_ssh", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["system-execute-ssh"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("system_execute_telnet"); ok {
+
+		t, err := expandSystemAccprofileSystemExecuteTelnet(d, v, "system_execute_telnet", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["system-execute-telnet"] = t
 		}
 	}
 

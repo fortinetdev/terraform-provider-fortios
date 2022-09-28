@@ -46,6 +46,12 @@ func resourceSwitchControllerIgmpSnooping() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"query_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 1200),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -152,6 +158,10 @@ func flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(v interface{}, d *
 	return v
 }
 
+func flattenSwitchControllerIgmpSnoopingQueryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -164,6 +174,12 @@ func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[str
 	if err = d.Set("flood_unknown_multicast", flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(o["flood-unknown-multicast"], d, "flood_unknown_multicast", sv)); err != nil {
 		if !fortiAPIPatch(o["flood-unknown-multicast"]) {
 			return fmt.Errorf("Error reading flood_unknown_multicast: %v", err)
+		}
+	}
+
+	if err = d.Set("query_interval", flattenSwitchControllerIgmpSnoopingQueryInterval(o["query-interval"], d, "query_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["query-interval"]) {
+			return fmt.Errorf("Error reading query_interval: %v", err)
 		}
 	}
 
@@ -181,6 +197,10 @@ func expandSwitchControllerIgmpSnoopingAgingTime(d *schema.ResourceData, v inter
 }
 
 func expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerIgmpSnoopingQueryInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -211,6 +231,20 @@ func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, setArgNil boo
 				return &obj, err
 			} else if t != nil {
 				obj["flood-unknown-multicast"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("query_interval"); ok {
+		if setArgNil {
+			obj["query-interval"] = nil
+		} else {
+
+			t, err := expandSwitchControllerIgmpSnoopingQueryInterval(d, v, "query_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["query-interval"] = t
 			}
 		}
 	}

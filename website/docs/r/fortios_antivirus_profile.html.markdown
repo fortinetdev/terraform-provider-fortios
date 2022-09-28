@@ -84,6 +84,7 @@ The `http` block supports:
 * `archive_block` - Select the archive types to block.
 * `archive_log` - Select the archive types to log.
 * `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `unknown_content_encoding` - Configure the action the FortiGate unit will take on unknown content-encoding. Valid values: `block`, `inspect`, `bypass`.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 * `external_blocklist` - Enable external-blocklist. Analyzes files including the content of archives. Valid values: `disable`, `block`, `monitor`.
 * `fortindr` - Enable scanning of files by FortiNDR. Valid values: `disable`, `block`, `monitor`.

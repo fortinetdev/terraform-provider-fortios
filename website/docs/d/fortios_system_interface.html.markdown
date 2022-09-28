@@ -46,7 +46,7 @@ The following attributes are exported:
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay.
 * `dhcp_relay_ip` - DHCP relay IP address.
 * `dhcp_relay_link_selection` - DHCP relay link selection.
-* `dhcp_relay_request_all_server` - Enable/disable sending of DHCP requests to all servers.
+* `dhcp_relay_request_all_server` - Enable/disable sending DHCP request to all servers.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec).
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option.
 * `dhcp_classless_route_addition` - Enable/disable addition of classless static routes retrieved from DHCP server.
@@ -155,6 +155,7 @@ The following attributes are exported:
 * `remote_ip` - Remote IP address of tunnel.
 * `member` - Physical interfaces that belong to the aggregate or redundant interface. The structure of `member` block is documented below.
 * `lacp_mode` - LACP mode.
+* `lacp_ha_secondary` - LACP HA secondary member.
 * `lacp_ha_slave` - LACP HA slave.
 * `system_id_type` - Method in which system ID is generated.
 * `system_id` - Define a system ID for the aggregate interface.
@@ -163,6 +164,7 @@ The following attributes are exported:
 * `min_links_down` - Action to take when less than the configured minimum number of links are active.
 * `algorithm` - Frame distribution algorithm.
 * `link_up_delay` - Number of milliseconds to wait before considering a link is up.
+* `aggregate_type` - Type of aggregation.
 * `priority_override` - Enable/disable fail back to higher priority port once recovered.
 * `aggregate` - Aggregate interface.
 * `redundant_interface` - Redundant interface.
@@ -222,6 +224,7 @@ The following attributes are exported:
 * `switch_controller_access_vlan` - Block FortiSwitch port-to-port traffic.
 * `switch_controller_traffic_policy` - Switch controller traffic policy for the VLAN.
 * `switch_controller_rspan_mode` - Stop Layer2 MAC learning and interception of BPDUs and other packets on this interface.
+* `switch_controller_netflow_collect` - NetFlow collection and processing.
 * `switch_controller_mgmt_vlan` - VLAN to use for FortiLink management purposes.
 * `switch_controller_igmp_snooping` - Switch controller IGMP snooping.
 * `switch_controller_igmp_snooping_proxy` - Switch controller IGMP snooping proxy.

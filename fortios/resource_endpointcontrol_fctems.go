@@ -35,12 +35,28 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"ems_id": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 5),
+				Optional:     true,
+				Computed:     true,
+			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
+			},
+			"dirty_reason": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -51,6 +67,12 @@ func resourceEndpointControlFctems() *schema.Resource {
 			"serial_number": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
+				Optional:     true,
+				Computed:     true,
+			},
+			"tenant_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -147,6 +169,12 @@ func resourceEndpointControlFctems() *schema.Resource {
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
+			"status_check_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 180),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -281,7 +309,19 @@ func resourceEndpointControlFctemsRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
+func flattenEndpointControlFctemsEmsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsDirtyReason(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -290,6 +330,10 @@ func flattenEndpointControlFctemsServer(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenEndpointControlFctemsSerialNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsTenantId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -365,6 +409,10 @@ func flattenEndpointControlFctemsInterface(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenEndpointControlFctemsStatusCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -372,9 +420,27 @@ func flattenEndpointControlFctemsCertificate(v interface{}, d *schema.ResourceDa
 func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
+	if err = d.Set("ems_id", flattenEndpointControlFctemsEmsId(o["ems-id"], d, "ems_id", sv)); err != nil {
+		if !fortiAPIPatch(o["ems-id"]) {
+			return fmt.Errorf("Error reading ems_id: %v", err)
+		}
+	}
+
+	if err = d.Set("status", flattenEndpointControlFctemsStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
 	if err = d.Set("name", flattenEndpointControlFctemsName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("dirty_reason", flattenEndpointControlFctemsDirtyReason(o["dirty-reason"], d, "dirty_reason", sv)); err != nil {
+		if !fortiAPIPatch(o["dirty-reason"]) {
+			return fmt.Errorf("Error reading dirty_reason: %v", err)
 		}
 	}
 
@@ -387,6 +453,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 	if err = d.Set("serial_number", flattenEndpointControlFctemsSerialNumber(o["serial-number"], d, "serial_number", sv)); err != nil {
 		if !fortiAPIPatch(o["serial-number"]) {
 			return fmt.Errorf("Error reading serial_number: %v", err)
+		}
+	}
+
+	if err = d.Set("tenant_id", flattenEndpointControlFctemsTenantId(o["tenant-id"], d, "tenant_id", sv)); err != nil {
+		if !fortiAPIPatch(o["tenant-id"]) {
+			return fmt.Errorf("Error reading tenant_id: %v", err)
 		}
 	}
 
@@ -492,6 +564,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("status_check_interval", flattenEndpointControlFctemsStatusCheckInterval(o["status-check-interval"], d, "status_check_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["status-check-interval"]) {
+			return fmt.Errorf("Error reading status_check_interval: %v", err)
+		}
+	}
+
 	if err = d.Set("certificate", flattenEndpointControlFctemsCertificate(o["certificate"], d, "certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["certificate"]) {
 			return fmt.Errorf("Error reading certificate: %v", err)
@@ -507,7 +585,19 @@ func flattenEndpointControlFctemsFortiTestDebug(d *schema.ResourceData, fosdebug
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandEndpointControlFctemsEmsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsDirtyReason(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -516,6 +606,10 @@ func expandEndpointControlFctemsServer(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandEndpointControlFctemsSerialNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsTenantId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -591,12 +685,36 @@ func expandEndpointControlFctemsInterface(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandEndpointControlFctemsStatusCheckInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("ems_id"); ok {
+
+		t, err := expandEndpointControlFctemsEmsId(d, v, "ems_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ems-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("status"); ok {
+
+		t, err := expandEndpointControlFctemsStatus(d, v, "status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("name"); ok {
 
@@ -605,6 +723,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dirty_reason"); ok {
+
+		t, err := expandEndpointControlFctemsDirtyReason(d, v, "dirty_reason", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dirty-reason"] = t
 		}
 	}
 
@@ -625,6 +753,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["serial-number"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tenant_id"); ok {
+
+		t, err := expandEndpointControlFctemsTenantId(d, v, "tenant_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tenant-id"] = t
 		}
 	}
 
@@ -805,6 +943,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("status_check_interval"); ok {
+
+		t, err := expandEndpointControlFctemsStatusCheckInterval(d, v, "status_check_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status-check-interval"] = t
 		}
 	}
 
