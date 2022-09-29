@@ -40,6 +40,7 @@ func resourceFirewallPolicy() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 2147482999),
 				ForceNew:     true,
 				Optional:     true,
+				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -7525,8 +7526,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["policyid"] = t
 		}
-	} else if d.HasChange("policyid") {
-		obj["policyid"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
