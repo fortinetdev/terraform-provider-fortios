@@ -38,7 +38,8 @@ func resourceSystemDhcpServer() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

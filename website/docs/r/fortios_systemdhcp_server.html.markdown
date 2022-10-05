@@ -33,7 +33,7 @@ resource "fortios_systemdhcp_server" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - (Required) ID.
+* `fosid` - ID.
 * `status` - Enable/disable this DHCP configuration. Valid values: `disable`, `enable`.
 * `lease_time` - Lease time in seconds, 0 means unlimited.
 * `mac_acl_default_action` - MAC access control default action (allow or block assigning IP settings). Valid values: `assign`, `block`.
