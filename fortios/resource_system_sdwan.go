@@ -94,6 +94,7 @@ func resourceSystemSdwan() *schema.Resource {
 			},
 			"zone": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
