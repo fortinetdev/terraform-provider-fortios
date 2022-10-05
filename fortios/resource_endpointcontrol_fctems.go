@@ -212,7 +212,7 @@ func resourceEndpointControlFctemsCreate(d *schema.ResourceData, m interface{}) 
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("EndpointControlFctems")
 	}
@@ -245,7 +245,7 @@ func resourceEndpointControlFctemsUpdate(d *schema.ResourceData, m interface{}) 
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("EndpointControlFctems")
 	}
