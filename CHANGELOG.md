@@ -1,5 +1,29 @@
-## 1.16.0 (Unreleased)
+## 1.17.0 (Unreleased)
 
+
+## 1.16.0 (Oct 7, 2022)
+BUG FIXES:
+
+* Improve requirement of argument fosid for resource fortios_systemdhcp_cerver (#221);
+* Fix policyid always forcing replacement issue (#243);
+* Fix issue of static block always shows need to be removed (#245);
+* Fix crash issue caused by mkey type convert;
+* Fix issue of predefined object always shows need to be deleted;
+
+IMPROVEMENTS:
+
+* Support FortiOS v6.4.10, v7.2.1, v7.2.2;
+* Improve certificate parameters' format issue;
+
+FEATURES:
+
+* **New Resource:** `fortios_extensioncontroller_fortigateprofile`
+* **New Resource:** `fortios_extensioncontroller_fortigate`
+* **New Resource:** `fortios_extensioncontroller_extenderprofile`
+* **New Resource:** `fortios_extensioncontroller_extender`
+* **New Resource:** `fortios_extensioncontroller_dataplan`
+* **New Resource:** `fortios_firewall_global`
+* **New Resource:** `fortios_firewall_networkservicedynamic`
 
 # 1.15.0 (Aug 5, 2022)
 
