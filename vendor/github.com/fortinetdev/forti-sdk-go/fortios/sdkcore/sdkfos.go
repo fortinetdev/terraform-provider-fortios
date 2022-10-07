@@ -1906,60 +1906,6 @@ func (c *FortiSDKClient) ReadEmailfilterDnsbl(mkey string, vdomparam string) (ma
 	return
 }
 
-// CreateExtensionControllerFortigateProfile API operation for FortiOS creates a new Fortigate Profile.
-// Returns the index value of the Fortigate Profile and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateExtensionControllerFortigateProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateExtensionControllerFortigateProfile API operation for FortiOS updates the specified Fortigate Profile.
-// Returns the index value of the Fortigate Profile and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateExtensionControllerFortigateProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteExtensionControllerFortigateProfile API operation for FortiOS deletes the specified Fortigate Profile.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteExtensionControllerFortigateProfile(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadExtensionControllerFortigateProfile API operation for FortiOS gets the Fortigate Profile
-// with the specified index value.
-// Returns the requested Fortigate Profile value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadExtensionControllerFortigateProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
-	return
-}
-
 
 // UpdateEmailfilterFortishield API operation for FortiOS updates the specified Fortishield.
 // Returns the index value of the Fortishield and execution result when the request executes successfully.
@@ -1993,60 +1939,6 @@ func (c *FortiSDKClient) ReadEmailfilterFortishield(mkey string, vdomparam strin
 	path := "/api/v2/cmdb/emailfilter/fortishield"
 
 	mapTmp, err = read(c, HTTPMethod, path, true, vdomparam)
-	return
-}
-
-// CreateExtensionControllerFortigate API operation for FortiOS creates a new Fortigate.
-// Returns the index value of the Fortigate and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateExtensionControllerFortigate(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/extension-controller/fortigate"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateExtensionControllerFortigate API operation for FortiOS updates the specified Fortigate.
-// Returns the index value of the Fortigate and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateExtensionControllerFortigate(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/extension-controller/fortigate"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteExtensionControllerFortigate API operation for FortiOS deletes the specified Fortigate.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteExtensionControllerFortigate(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/extension-controller/fortigate"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadExtensionControllerFortigate API operation for FortiOS gets the Fortigate
-// with the specified index value.
-// Returns the requested Fortigate value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadExtensionControllerFortigate(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/extension-controller/fortigate"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
 	return
 }
 
@@ -2098,60 +1990,6 @@ func (c *FortiSDKClient) DeleteEmailfilterIptrust(mkey string, vdomparam string)
 func (c *FortiSDKClient) ReadEmailfilterIptrust(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/emailfilter/iptrust"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
-	return
-}
-
-// CreateExtensionControllerExtenderProfile API operation for FortiOS creates a new Extender Profile.
-// Returns the index value of the Extender Profile and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateExtensionControllerExtenderProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/extension-controller/extender-profile"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateExtensionControllerExtenderProfile API operation for FortiOS updates the specified Extender Profile.
-// Returns the index value of the Extender Profile and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateExtensionControllerExtenderProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/extension-controller/extender-profile"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteExtensionControllerExtenderProfile API operation for FortiOS deletes the specified Extender Profile.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteExtensionControllerExtenderProfile(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/extension-controller/extender-profile"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadExtensionControllerExtenderProfile API operation for FortiOS gets the Extender Profile
-// with the specified index value.
-// Returns the requested Extender Profile value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadExtensionControllerExtenderProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/extension-controller/extender-profile"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
@@ -2212,60 +2050,6 @@ func (c *FortiSDKClient) ReadEmailfilterMheader(mkey string, vdomparam string) (
 	return
 }
 
-// CreateExtensionControllerExtender API operation for FortiOS creates a new Extender.
-// Returns the index value of the Extender and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateExtensionControllerExtender(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/extension-controller/extender"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateExtensionControllerExtender API operation for FortiOS updates the specified Extender.
-// Returns the index value of the Extender and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateExtensionControllerExtender(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/extension-controller/extender"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteExtensionControllerExtender API operation for FortiOS deletes the specified Extender.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteExtensionControllerExtender(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/extension-controller/extender"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadExtensionControllerExtender API operation for FortiOS gets the Extender
-// with the specified index value.
-// Returns the requested Extender value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadExtensionControllerExtender(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/extension-controller/extender"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
-	return
-}
-
 
 // UpdateEmailfilterOptions API operation for FortiOS updates the specified Options.
 // Returns the index value of the Options and execution result when the request executes successfully.
@@ -2299,60 +2083,6 @@ func (c *FortiSDKClient) ReadEmailfilterOptions(mkey string, vdomparam string) (
 	path := "/api/v2/cmdb/emailfilter/options"
 
 	mapTmp, err = read(c, HTTPMethod, path, true, vdomparam)
-	return
-}
-
-// CreateExtensionControllerDataplan API operation for FortiOS creates a new Dataplan.
-// Returns the index value of the Dataplan and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateExtensionControllerDataplan(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/extension-controller/dataplan"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateExtensionControllerDataplan API operation for FortiOS updates the specified Dataplan.
-// Returns the index value of the Dataplan and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateExtensionControllerDataplan(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/extension-controller/dataplan"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteExtensionControllerDataplan API operation for FortiOS deletes the specified Dataplan.
-// Returns error for service API and SDK errors.
-// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteExtensionControllerDataplan(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/extension-controller/dataplan"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadExtensionControllerDataplan API operation for FortiOS gets the Dataplan
-// with the specified index value.
-// Returns the requested Dataplan value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadExtensionControllerDataplan(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/extension-controller/dataplan"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
 	return
 }
 
@@ -2980,6 +2710,276 @@ func (c *FortiSDKClient) DeleteExtenderControllerExtender1(mkey string, vdompara
 func (c *FortiSDKClient) ReadExtenderControllerExtender1(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/extender-controller/extender"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateExtensionControllerDataplan API operation for FortiOS creates a new Dataplan.
+// Returns the index value of the Dataplan and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateExtensionControllerDataplan(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/extension-controller/dataplan"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateExtensionControllerDataplan API operation for FortiOS updates the specified Dataplan.
+// Returns the index value of the Dataplan and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateExtensionControllerDataplan(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/extension-controller/dataplan"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteExtensionControllerDataplan API operation for FortiOS deletes the specified Dataplan.
+// Returns error for service API and SDK errors.
+// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteExtensionControllerDataplan(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/extension-controller/dataplan"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadExtensionControllerDataplan API operation for FortiOS gets the Dataplan
+// with the specified index value.
+// Returns the requested Dataplan value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - dataplan chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadExtensionControllerDataplan(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/extension-controller/dataplan"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateExtensionControllerExtender API operation for FortiOS creates a new Extender.
+// Returns the index value of the Extender and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateExtensionControllerExtender(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/extension-controller/extender"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateExtensionControllerExtender API operation for FortiOS updates the specified Extender.
+// Returns the index value of the Extender and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateExtensionControllerExtender(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/extension-controller/extender"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteExtensionControllerExtender API operation for FortiOS deletes the specified Extender.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteExtensionControllerExtender(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/extension-controller/extender"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadExtensionControllerExtender API operation for FortiOS gets the Extender
+// with the specified index value.
+// Returns the requested Extender value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadExtensionControllerExtender(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/extension-controller/extender"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateExtensionControllerExtenderProfile API operation for FortiOS creates a new Extender Profile.
+// Returns the index value of the Extender Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateExtensionControllerExtenderProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/extension-controller/extender-profile"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateExtensionControllerExtenderProfile API operation for FortiOS updates the specified Extender Profile.
+// Returns the index value of the Extender Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateExtensionControllerExtenderProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/extension-controller/extender-profile"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteExtensionControllerExtenderProfile API operation for FortiOS deletes the specified Extender Profile.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteExtensionControllerExtenderProfile(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/extension-controller/extender-profile"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadExtensionControllerExtenderProfile API operation for FortiOS gets the Extender Profile
+// with the specified index value.
+// Returns the requested Extender Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - extender-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadExtensionControllerExtenderProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/extension-controller/extender-profile"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateExtensionControllerFortigate API operation for FortiOS creates a new Fortigate.
+// Returns the index value of the Fortigate and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateExtensionControllerFortigate(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/extension-controller/fortigate"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateExtensionControllerFortigate API operation for FortiOS updates the specified Fortigate.
+// Returns the index value of the Fortigate and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateExtensionControllerFortigate(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/extension-controller/fortigate"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteExtensionControllerFortigate API operation for FortiOS deletes the specified Fortigate.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteExtensionControllerFortigate(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/extension-controller/fortigate"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadExtensionControllerFortigate API operation for FortiOS gets the Fortigate
+// with the specified index value.
+// Returns the requested Fortigate value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadExtensionControllerFortigate(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/extension-controller/fortigate"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateExtensionControllerFortigateProfile API operation for FortiOS creates a new Fortigate Profile.
+// Returns the index value of the Fortigate Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateExtensionControllerFortigateProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateExtensionControllerFortigateProfile API operation for FortiOS updates the specified Fortigate Profile.
+// Returns the index value of the Fortigate Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateExtensionControllerFortigateProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteExtensionControllerFortigateProfile API operation for FortiOS deletes the specified Fortigate Profile.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteExtensionControllerFortigateProfile(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadExtensionControllerFortigateProfile API operation for FortiOS gets the Fortigate Profile
+// with the specified index value.
+// Returns the requested Fortigate Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extension-controller - fortigate-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadExtensionControllerFortigateProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/extension-controller/fortigate-profile"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
@@ -3832,42 +3832,6 @@ func (c *FortiSDKClient) ReadFirewallCountry(mkey string, vdomparam string) (map
 	return
 }
 
-
-// UpdateFirewallGlobal API operation for FortiOS updates the specified Global.
-// Returns the index value of the Global and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the firewall - global chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateFirewallGlobal(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/firewall/global"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteFirewallGlobal API operation for FortiOS deletes the specified Global.
-// Returns error for service API and SDK errors.
-// See the firewall - global chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteFirewallGlobal(mkey string, vdomparam string) (err error) {
-
-	//No unset API for firewall - global
-	return
-}
-
-// ReadFirewallGlobal API operation for FortiOS gets the Global
-// with the specified index value.
-// Returns the requested Global value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the firewall - global chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadFirewallGlobal(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/firewall/global"
-
-	mapTmp, err = read(c, HTTPMethod, path, true, vdomparam)
-	return
-}
-
 // CreateFirewallDecryptedTrafficMirror API operation for FortiOS creates a new Decrypted Traffic Mirror.
 // Returns the index value of the Decrypted Traffic Mirror and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -3973,6 +3937,42 @@ func (c *FortiSDKClient) ReadFirewallDnstranslation(mkey string, vdomparam strin
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+
+// UpdateFirewallGlobal API operation for FortiOS updates the specified Global.
+// Returns the index value of the Global and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - global chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateFirewallGlobal(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/firewall/global"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteFirewallGlobal API operation for FortiOS deletes the specified Global.
+// Returns error for service API and SDK errors.
+// See the firewall - global chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteFirewallGlobal(mkey string, vdomparam string) (err error) {
+
+	//No unset API for firewall - global
+	return
+}
+
+// ReadFirewallGlobal API operation for FortiOS gets the Global
+// with the specified index value.
+// Returns the requested Global value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - global chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadFirewallGlobal(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/firewall/global"
+
+	mapTmp, err = read(c, HTTPMethod, path, true, vdomparam)
 	return
 }
 
@@ -5398,60 +5398,6 @@ func (c *FortiSDKClient) ReadFirewallMulticastAddress6(mkey string, vdomparam st
 	return
 }
 
-// CreateFirewallNetworkServiceDynamic API operation for FortiOS creates a new Network Service Dynamic.
-// Returns the index value of the Network Service Dynamic and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateFirewallNetworkServiceDynamic(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/firewall/network-service-dynamic"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateFirewallNetworkServiceDynamic API operation for FortiOS updates the specified Network Service Dynamic.
-// Returns the index value of the Network Service Dynamic and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateFirewallNetworkServiceDynamic(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/firewall/network-service-dynamic"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteFirewallNetworkServiceDynamic API operation for FortiOS deletes the specified Network Service Dynamic.
-// Returns error for service API and SDK errors.
-// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteFirewallNetworkServiceDynamic(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/firewall/network-service-dynamic"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadFirewallNetworkServiceDynamic API operation for FortiOS gets the Network Service Dynamic
-// with the specified index value.
-// Returns the requested Network Service Dynamic value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadFirewallNetworkServiceDynamic(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/firewall/network-service-dynamic"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
-	return
-}
-
 // CreateFirewallMulticastPolicy API operation for FortiOS creates a new Multicast Policy.
 // Returns the index value of the Multicast Policy and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -5554,6 +5500,60 @@ func (c *FortiSDKClient) DeleteFirewallMulticastPolicy6(mkey string, vdomparam s
 func (c *FortiSDKClient) ReadFirewallMulticastPolicy6(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/multicast-policy6"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateFirewallNetworkServiceDynamic API operation for FortiOS creates a new Network Service Dynamic.
+// Returns the index value of the Network Service Dynamic and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateFirewallNetworkServiceDynamic(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/firewall/network-service-dynamic"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateFirewallNetworkServiceDynamic API operation for FortiOS updates the specified Network Service Dynamic.
+// Returns the index value of the Network Service Dynamic and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateFirewallNetworkServiceDynamic(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/firewall/network-service-dynamic"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteFirewallNetworkServiceDynamic API operation for FortiOS deletes the specified Network Service Dynamic.
+// Returns error for service API and SDK errors.
+// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteFirewallNetworkServiceDynamic(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/firewall/network-service-dynamic"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadFirewallNetworkServiceDynamic API operation for FortiOS gets the Network Service Dynamic
+// with the specified index value.
+// Returns the requested Network Service Dynamic value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - network-service-dynamic chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadFirewallNetworkServiceDynamic(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/firewall/network-service-dynamic"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
@@ -20626,60 +20626,6 @@ func (c *FortiSDKClient) DeleteSystemReplacemsgAutomation(mkey string, vdomparam
 func (c *FortiSDKClient) ReadSystemReplacemsgAutomation(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system.replacemsg/automation"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
-	return
-}
-
-// CreateSystemReplacemsgCustomMessage API operation for FortiOS creates a new Custom Message.
-// Returns the index value of the Custom Message and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - custom-message chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgCustomMessage(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/custom-message"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// UpdateSystemReplacemsgCustomMessage API operation for FortiOS updates the specified Custom Message.
-// Returns the index value of the Custom Message and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - custom-message chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateSystemReplacemsgCustomMessage(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/system.replacemsg/custom-message"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
-	return
-}
-
-// DeleteSystemReplacemsgCustomMessage API operation for FortiOS deletes the specified Custom Message.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - custom-message chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteSystemReplacemsgCustomMessage(mkey string, vdomparam string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/custom-message"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path, vdomparam)
-	return
-}
-
-// ReadSystemReplacemsgCustomMessage API operation for FortiOS gets the Custom Message
-// with the specified index value.
-// Returns the requested Custom Message value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - custom-message chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadSystemReplacemsgCustomMessage(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/system.replacemsg/custom-message"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
