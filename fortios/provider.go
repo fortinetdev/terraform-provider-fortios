@@ -92,6 +92,27 @@ func Provider() *schema.Provider {
 				Description: "",
 			},
 
+			"passauth": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "disable",
+				Description: "Enable/disable password authentication, can be 'enable' or 'disable'",
+			},
+
+			"username": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "FortiGate Username",
+			},
+
+			"passwd": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "FortiGate Password",
+			},
+
 			"fmg_hostname": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -1031,6 +1052,9 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		CABundleContent: d.Get("cabundlecontent").(string),
 		Vdom:            d.Get("vdom").(string),
 		HTTPProxy:       d.Get("http_proxy").(string),
+		PassAuth:        d.Get("passauth").(string),
+		Username:        d.Get("username").(string),
+		Passwd:          d.Get("passwd").(string),
 		FMG_Hostname:    d.Get("fmg_hostname").(string),
 		FMG_CABundle:    d.Get("fmg_cabundlefile").(string),
 		FMG_Username:    d.Get("fmg_username").(string),
