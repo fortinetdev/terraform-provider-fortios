@@ -35,6 +35,10 @@ type Config struct {
 	CaCert     string
 	ClientCert string
 	ClientKey  string
+
+	PassAuth string
+	Username string
+	Passwd   string
 }
 
 // FortiClient contains the basic FortiOS SDK connection information to FortiOS
@@ -102,7 +106,7 @@ func bFortiManagerHostnameExist(c *Config) bool {
 func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	config := &tls.Config{}
 
-	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy, c.PassAuth, c.Username, c.Passwd)
 
 	if auth.Hostname == "" {
 		_, err := auth.GetEnvHostname()
@@ -150,6 +154,25 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		_, err := auth.GetEnvHTTPProxy()
 		if err != nil {
 			return fmt.Errorf("Error reading HTTP proxy")
+		}
+	}
+
+	if auth.PassAuth == "" {
+		_, err := auth.GetEnvPassAuth()
+		if err != nil {
+			return fmt.Errorf("Error reading PassAuth")
+		}
+	}
+	if auth.Username == "" {
+		_, err := auth.GetEnvUsername()
+		if err != nil {
+			return fmt.Errorf("Error reading Username")
+		}
+	}
+	if auth.Passwd == "" {
+		_, err := auth.GetEnvPasswd()
+		if err != nil {
+			return fmt.Errorf("Error reading Passwd")
 		}
 	}
 

@@ -148,6 +148,11 @@ The following arguments are supported:
 
 * `http_proxy` - (Optional) HTTP proxy address. You can also specify it by the environment variable `HTTPS_PROXY` or `HTTP_PROXY`. 
 
+* `passauth` - (Optional) Enables username/password based authentication. Disables usage of `token`
+
+* `username` - (Optional) Fortigate Username. Requires setting `passauth` to `enable`
+
+* `passwd` - (Optional) Fortigate Password. Requires setting `passauth` to `enable`
 
 
 ## Configuration for FortiManager
