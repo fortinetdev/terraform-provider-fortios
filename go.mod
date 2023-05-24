@@ -1,4 +1,4 @@
-module github.com/terraform-providers/terraform-provider-fortios
+module github.com/aspyrmedia/terraform-provider-fortios
 
 go 1.13
 

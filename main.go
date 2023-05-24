@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/aspyrmedia/terraform-provider-fortios/fortios"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"github.com/terraform-providers/terraform-provider-fortios/fortios"
 )
 
 func main() {
