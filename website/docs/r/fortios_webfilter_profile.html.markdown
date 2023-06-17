@@ -215,7 +215,7 @@ The `ftgd_wf` block supports:
 The `filters` block supports:
 
 * `id` - ID number.
-* `category` - Categories and groups the filter examines.
+* `category` - [Categories](https://docs.fortinet.com/document/fortigate/7.4.0/fortios-log-message-reference/755423/fortiguard-web-filter-categories) and groups the filter examines.
 * `action` - Action to take for matches. Valid values: `block`, `authenticate`, `monitor`, `warning`.
 * `warn_duration` - Duration of warnings.
 * `auth_usr_grp` - Groups with permission to authenticate. The structure of `auth_usr_grp` block is documented below.
