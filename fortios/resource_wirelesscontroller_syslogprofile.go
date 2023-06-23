@@ -332,7 +332,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -342,7 +341,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -352,7 +350,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("server_status"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileServerStatus(d, v, "server_status", sv)
 		if err != nil {
 			return &obj, err
@@ -362,7 +359,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("server_addr_type"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileServerAddrType(d, v, "server_addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -372,7 +368,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("server_fqdn"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileServerFqdn(d, v, "server_fqdn", sv)
 		if err != nil {
 			return &obj, err
@@ -382,7 +377,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("server_ip"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileServerIp(d, v, "server_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -392,7 +386,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOkExists("server_port"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileServerPort(d, v, "server_port", sv)
 		if err != nil {
 			return &obj, err
@@ -402,7 +395,6 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("log_level"); ok {
-
 		t, err := expandWirelessControllerSyslogProfileLogLevel(d, v, "log_level", sv)
 		if err != nil {
 			return &obj, err

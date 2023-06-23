@@ -25,6 +25,7 @@ resource "fortios_system_global" "trname" {
 The following arguments are supported:
 
 * `language` - GUI display language. Valid values: `english`, `french`, `spanish`, `portuguese`, `japanese`, `trach`, `simch`, `korean`.
+* `gui_allow_incompatible_fabric_fgt` - Enable/disable Allow FGT with incompatible firmware to be treated as compatible in security fabric on the GUI. May cause unexpected error. Valid values: `enable`, `disable`.
 * `gui_ipv6` - Enable/disable IPv6 settings on the GUI. Valid values: `enable`, `disable`.
 * `gui_replacement_message_groups` - Enable/disable replacement message groups on the GUI. Valid values: `enable`, `disable`.
 * `gui_local_out` - Enable/disable Local-out traffic on the GUI. Valid values: `enable`, `disable`.
@@ -56,6 +57,9 @@ The following arguments are supported:
 * `failtime` - Fail-time for server lost.
 * `daily_restart` - Enable/disable daily restart of FortiGate unit. Use the restart-time option to set the time of day for the restart. Valid values: `enable`, `disable`.
 * `restart_time` - Daily restart time (hh:mm).
+* `wad_restart_mode` - WAD worker restart mode (default = none). Valid values: `none`, `time`, `memory`.
+* `wad_restart_start_time` - WAD workers daily restart time (hh:mm).
+* `wad_restart_end_time` - WAD workers daily restart end time (hh:mm).
 * `radius_port` - RADIUS service port number.
 * `admin_login_max` - Maximum number of administrators who can be logged in at the same time (1 - 100, default = 100)
 * `remoteauthtimeout` - Number of seconds that the FortiGate waits for responses from remote RADIUS, LDAP, or TACACS+ authentication servers. (0-300 sec, default = 5, 0 means no timeout).
@@ -93,6 +97,7 @@ The following arguments are supported:
 * `ssh_kex_algo` - Select one or more SSH kex algorithms. Valid values: `diffie-hellman-group1-sha1`, `diffie-hellman-group14-sha1`, `diffie-hellman-group-exchange-sha1`, `diffie-hellman-group-exchange-sha256`, `curve25519-sha256@libssh.org`, `ecdh-sha2-nistp256`, `ecdh-sha2-nistp384`, `ecdh-sha2-nistp521`.
 * `ssh_enc_algo` - Select one or more SSH ciphers. Valid values: `chacha20-poly1305@openssh.com`, `aes128-ctr`, `aes192-ctr`, `aes256-ctr`, `arcfour256`, `arcfour128`, `aes128-cbc`, `3des-cbc`, `blowfish-cbc`, `cast128-cbc`, `aes192-cbc`, `aes256-cbc`, `arcfour`, `rijndael-cbc@lysator.liu.se`, `aes128-gcm@openssh.com`, `aes256-gcm@openssh.com`.
 * `ssh_mac_algo` - Select one or more SSH MAC algorithms. Valid values: `hmac-md5`, `hmac-md5-etm@openssh.com`, `hmac-md5-96`, `hmac-md5-96-etm@openssh.com`, `hmac-sha1`, `hmac-sha1-etm@openssh.com`, `hmac-sha2-256`, `hmac-sha2-256-etm@openssh.com`, `hmac-sha2-512`, `hmac-sha2-512-etm@openssh.com`, `hmac-ripemd160`, `hmac-ripemd160@openssh.com`, `hmac-ripemd160-etm@openssh.com`, `umac-64@openssh.com`, `umac-128@openssh.com`, `umac-64-etm@openssh.com`, `umac-128-etm@openssh.com`.
+* `ssh_hostkey_algo` - Select one or more SSH hostkey algorithms. Valid values: `ssh-rsa`, `ecdsa-sha2-nistp521`, `rsa-sha2-256`, `rsa-sha2-512`, `ssh-ed25519`.
 * `snat_route_change` - Enable/disable the ability to change the static NAT route. Valid values: `enable`, `disable`.
 * `speedtest_server` - Enable/disable speed test server. Valid values: `enable`, `disable`.
 * `cli_audit_log` - Enable/disable CLI audit log. Valid values: `enable`, `disable`.
@@ -106,6 +111,8 @@ The following arguments are supported:
 * `lldp_transmission` - Enable/disable Link Layer Discovery Protocol (LLDP) transmission. Valid values: `enable`, `disable`.
 * `lldp_reception` - Enable/disable Link Layer Discovery Protocol (LLDP) reception. Valid values: `enable`, `disable`.
 * `proxy_auth_timeout` - Authentication timeout in minutes for authenticated users (1 - 300 min, default = 10).
+* `proxy_keep_alive_mode` - Control if users must re-authenticate after a session is closed, traffic has been idle, or from the point at which the user was authenticated. Valid values: `session`, `traffic`, `re-authentication`.
+* `proxy_re_authentication_time` - The time limit that users must re-authenticate if proxy-keep-alive-mode is set to re-authenticate (1  - 86400 sec, default=30s.
 * `proxy_re_authentication_mode` - Control if users must re-authenticate after a session is closed, traffic has been idle, or from the point at which the user was first created. Valid values: `session`, `traffic`, `absolute`.
 * `proxy_auth_lifetime` - Enable/disable authenticated users lifetime control.  This is a cap on the total time a proxy user can be authenticated for after which re-authentication will take place. Valid values: `enable`, `disable`.
 * `proxy_auth_lifetime_timeout` - Lifetime timeout in minutes for authenticated users (5  - 65535 min, default=480 (8 hours)).
@@ -133,7 +140,9 @@ The following arguments are supported:
 * `memory_use_threshold_extreme` - Threshold at which memory usage is considered extreme (new sessions are dropped) (% of total RAM, default = 95).
 * `memory_use_threshold_red` - Threshold at which memory usage forces the FortiGate to enter conserve mode (% of total RAM, default = 88).
 * `memory_use_threshold_green` - Threshold at which memory usage forces the FortiGate to exit conserve mode (% of total RAM, default = 82).
+* `ip_fragment_mem_thresholds` - Maximum memory (MB) used to reassemble IPv4/IPv6 fragments.
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
+* `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold. Valid values: `enable`, `disable`.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it. Valid values: `strict`, `disable`.
 * `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). Valid values: `no-vdom`, `split-vdom`, `multi-vdom`.
 * `vdom_admin` - Enable/disable support for multiple virtual domains (VDOMs). Valid values: `enable`, `disable`.
@@ -152,6 +161,7 @@ The following arguments are supported:
 * `admin_telnet` - Enable/disable TELNET service. Valid values: `enable`, `disable`.
 * `admin_telnet_port` - Administrative access port for TELNET. (1 - 65535, default = 23).
 * `admin_forticloud_sso_login` - Enable/disable FortiCloud admin login via SSO. Valid values: `enable`, `disable`.
+* `admin_forticloud_sso_default_profile` - Override access profile.
 * `default_service_source_port` - Default service source port range. (default=1-65535)
 * `admin_maintainer` - Enable/disable maintainer administrator login. When enabled, the maintainer account can be used to log in from the console after a hard reboot. The password is "bcpb" followed by the FortiGate unit serial number. You have limited time to complete this login. Valid values: `enable`, `disable`.
 * `admin_server_cert` - Server certificate that the FortiGate uses for HTTPS administrative connections.
@@ -204,6 +214,7 @@ The following arguments are supported:
 * `wimax_4g_usb` - Enable/disable comparability with WiMAX 4G USB devices. Valid values: `enable`, `disable`.
 * `cert_chain_max` - Maximum number of certificates that can be traversed in a certificate chain.
 * `sslvpn_max_worker_count` - Maximum number of SSL VPN processes. Upper limit for this value is the number of CPUs and depends on the model.
+* `vpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN and IPsec VPN connection. Valid values: `enable`, `disable`.
 * `sslvpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN connection. Valid values: `enable`, `disable`.
 * `sslvpn_kxp_hardware_acceleration` - Enable/disable SSL VPN KXP hardware acceleration. Valid values: `enable`, `disable`.
 * `sslvpn_cipher_hardware_acceleration` - Enable/disable SSL VPN hardware acceleration. Valid values: `enable`, `disable`.
@@ -229,6 +240,7 @@ The following arguments are supported:
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs. Valid values: `enable`, `disable`.
 * `log_ssl_connection` - Enable/disable logging of SSL connection events. Valid values: `enable`, `disable`.
 * `gui_rest_api_cache` - Enable/disable REST API result caching on FortiGate. Valid values: `enable`, `disable`.
+* `gui_cdn_domain_override` - Domain of CDN server.
 * `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments. Valid values: `enable`, `disable`.
 * `arp_max_entry` - Maximum number of dynamically learned MAC addresses that can be added to the ARP table (131072 - 2147483647, default = 131072).
 * `ha_affinity` - Affinity setting for HA daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
@@ -237,6 +249,7 @@ The following arguments are supported:
 * `wad_affinity` - Affinity setting for wad (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `ips_affinity` - Affinity setting for IPS (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx; allowed CPUs must be less than total number of IPS engine daemons).
 * `miglog_affinity` - Affinity setting for logging (64-bit hexadecimal value in the format of xxxxxxxxxxxxxxxx).
+* `syslog_affinity` - Affinity setting for syslog (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `url_filter_affinity` - URL filter CPU affinity.
 * `ndp_max_entry` - Maximum number of NDP table entries (set to 65,536 or higher; if set to 0, kernel holds 65,536 entries).
 * `br_fdb_max_entry` - Maximum number of bridge forwarding database (FDB) entries.
@@ -270,9 +283,20 @@ The following arguments are supported:
 * `management_ip` - Management IP address of this FortiGate. Used to log into this FortiGate from another FortiGate in the Security Fabric.
 * `management_port` - Overriding port for management connection (Overrides admin port).
 * `management_port_use_admin_sport` - Enable/disable use of the admin-sport setting for the management port. If disabled, FortiGate will allow user to specify management-port. Valid values: `enable`, `disable`.
-* `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use. Valid values: `mini`, `standard`, `full`.
+* `forticonverter_integration` - Enable/disable FortiConverter integration service. Valid values: `enable`, `disable`.
+* `forticonverter_config_upload` - Enable/disable config upload to FortiConverter. Valid values: `once`, `disable`.
+* `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use.
+* `internet_service_download_list` - Configure which on-demand Internet Service IDs are to be downloaded. The structure of `internet_service_download_list` block is documented below.
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session. Valid values: `enable`, `disable`.
+* `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable). Valid values: `disable`, `enable`.
+* `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `internet_service_download_list` block supports:
+
+* `id` - Internet Service ID.
 
 
 ## Attribute Reference

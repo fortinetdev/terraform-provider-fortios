@@ -190,7 +190,6 @@ func getObjectSwitchControllerSwitchLog(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSwitchLogStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -204,7 +203,6 @@ func getObjectSwitchControllerSwitchLog(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSwitchLogSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err

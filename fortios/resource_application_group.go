@@ -121,6 +121,11 @@ func resourceApplicationGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -284,7 +289,6 @@ func flattenApplicationGroupApplication(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenApplicationGroupApplicationId(i["id"], d, pre_append, sv)
 		}
 
@@ -327,7 +331,6 @@ func flattenApplicationGroupCategory(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenApplicationGroupCategoryId(i["id"], d, pre_append, sv)
 		}
 
@@ -370,7 +373,6 @@ func flattenApplicationGroupRisk(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := i["level"]; ok {
-
 			tmp["level"] = flattenApplicationGroupRiskLevel(i["level"], d, pre_append, sv)
 		}
 
@@ -409,6 +411,12 @@ func flattenApplicationGroupPopularity(v interface{}, d *schema.ResourceData, pr
 
 func refreshObjectApplicationGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenApplicationGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -428,7 +436,7 @@ func refreshObjectApplicationGroup(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("application", flattenApplicationGroupApplication(o["application"], d, "application", sv)); err != nil {
 			if !fortiAPIPatch(o["application"]) {
 				return fmt.Errorf("Error reading application: %v", err)
@@ -444,7 +452,7 @@ func refreshObjectApplicationGroup(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("category", flattenApplicationGroupCategory(o["category"], d, "category", sv)); err != nil {
 			if !fortiAPIPatch(o["category"]) {
 				return fmt.Errorf("Error reading category: %v", err)
@@ -460,7 +468,7 @@ func refreshObjectApplicationGroup(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("risk", flattenApplicationGroupRisk(o["risk"], d, "risk", sv)); err != nil {
 			if !fortiAPIPatch(o["risk"]) {
 				return fmt.Errorf("Error reading risk: %v", err)
@@ -543,7 +551,6 @@ func expandApplicationGroupApplication(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandApplicationGroupApplicationId(d, i["id"], pre_append, sv)
 		}
 
@@ -575,7 +582,6 @@ func expandApplicationGroupCategory(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandApplicationGroupCategoryId(d, i["id"], pre_append, sv)
 		}
 
@@ -607,7 +613,6 @@ func expandApplicationGroupRisk(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["level"], _ = expandApplicationGroupRiskLevel(d, i["level"], pre_append, sv)
 		}
 
@@ -647,7 +652,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandApplicationGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -657,7 +661,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandApplicationGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -667,7 +670,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandApplicationGroupType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -677,7 +679,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
-
 		t, err := expandApplicationGroupApplication(d, v, "application", sv)
 		if err != nil {
 			return &obj, err
@@ -687,7 +688,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("category"); ok || d.HasChange("category") {
-
 		t, err := expandApplicationGroupCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
@@ -697,7 +697,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("risk"); ok || d.HasChange("risk") {
-
 		t, err := expandApplicationGroupRisk(d, v, "risk", sv)
 		if err != nil {
 			return &obj, err
@@ -707,7 +706,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("protocols"); ok {
-
 		t, err := expandApplicationGroupProtocols(d, v, "protocols", sv)
 		if err != nil {
 			return &obj, err
@@ -717,7 +715,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
-
 		t, err := expandApplicationGroupVendor(d, v, "vendor", sv)
 		if err != nil {
 			return &obj, err
@@ -727,7 +724,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
-
 		t, err := expandApplicationGroupTechnology(d, v, "technology", sv)
 		if err != nil {
 			return &obj, err
@@ -737,7 +733,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
-
 		t, err := expandApplicationGroupBehavior(d, v, "behavior", sv)
 		if err != nil {
 			return &obj, err
@@ -747,7 +742,6 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("popularity"); ok {
-
 		t, err := expandApplicationGroupPopularity(d, v, "popularity", sv)
 		if err != nil {
 			return &obj, err

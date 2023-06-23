@@ -30,6 +30,8 @@ The following attributes are exported:
 * `category` - FortiGuard category ID. The structure of `category` block is documented below.
 * `method` - HTTP request methods to be used.
 * `ua` - Names of browsers to be used as user agent.
+* `ua_min_ver` - Minimum version of the user agent specified in dotted notation. For example, use 90.0.1 with the ua field set to "chrome" to require Google Chrome's minimum version must be 90.0.1.
+* `ua_max_ver` - Maximum version of the user agent specified in dotted notation. For example, use 120 with the ua field set to "chrome" to require Google Chrome's maximum version must be 120.
 * `header_name` - Name of HTTP header.
 * `header` - HTTP header name as a regular expression.
 * `case_sensitivity` - Enable to make the pattern case sensitive.

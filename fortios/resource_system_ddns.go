@@ -173,6 +173,11 @@ func resourceSystemDdns() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -336,7 +341,6 @@ func flattenSystemDdnsDdnsServerAddr(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
 		if _, ok := i["addr"]; ok {
-
 			tmp["addr"] = flattenSystemDdnsDdnsServerAddrAddr(i["addr"], d, pre_append, sv)
 		}
 
@@ -443,7 +447,6 @@ func flattenSystemDdnsMonitorInterface(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenSystemDdnsMonitorInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -462,6 +465,12 @@ func flattenSystemDdnsMonitorInterfaceInterfaceName(v interface{}, d *schema.Res
 
 func refreshObjectSystemDdns(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("ddnsid", flattenSystemDdnsDdnsid(o["ddnsid"], d, "ddnsid", sv)); err != nil {
 		if !fortiAPIPatch(o["ddnsid"]) {
@@ -481,7 +490,7 @@ func refreshObjectSystemDdns(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ddns_server_addr", flattenSystemDdnsDdnsServerAddr(o["ddns-server-addr"], d, "ddns_server_addr", sv)); err != nil {
 			if !fortiAPIPatch(o["ddns-server-addr"]) {
 				return fmt.Errorf("Error reading ddns_server_addr: %v", err)
@@ -581,7 +590,7 @@ func refreshObjectSystemDdns(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("monitor_interface", flattenSystemDdnsMonitorInterface(o["monitor-interface"], d, "monitor_interface", sv)); err != nil {
 			if !fortiAPIPatch(o["monitor-interface"]) {
 				return fmt.Errorf("Error reading monitor_interface: %v", err)
@@ -634,7 +643,6 @@ func expandSystemDdnsDdnsServerAddr(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["addr"], _ = expandSystemDdnsDdnsServerAddrAddr(d, i["addr"], pre_append, sv)
 		}
 
@@ -730,7 +738,6 @@ func expandSystemDdnsMonitorInterface(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandSystemDdnsMonitorInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -750,7 +757,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("ddnsid"); ok {
-
 		t, err := expandSystemDdnsDdnsid(d, v, "ddnsid", sv)
 		if err != nil {
 			return &obj, err
@@ -760,7 +766,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_server"); ok {
-
 		t, err := expandSystemDdnsDdnsServer(d, v, "ddns_server", sv)
 		if err != nil {
 			return &obj, err
@@ -770,7 +775,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-
 		t, err := expandSystemDdnsServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
@@ -780,7 +784,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_server_addr"); ok || d.HasChange("ddns_server_addr") {
-
 		t, err := expandSystemDdnsDdnsServerAddr(d, v, "ddns_server_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -790,7 +793,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_server_ip"); ok {
-
 		t, err := expandSystemDdnsDdnsServerIp(d, v, "ddns_server_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -800,7 +802,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_zone"); ok {
-
 		t, err := expandSystemDdnsDdnsZone(d, v, "ddns_zone", sv)
 		if err != nil {
 			return &obj, err
@@ -810,7 +811,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_ttl"); ok {
-
 		t, err := expandSystemDdnsDdnsTtl(d, v, "ddns_ttl", sv)
 		if err != nil {
 			return &obj, err
@@ -820,7 +820,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_auth"); ok {
-
 		t, err := expandSystemDdnsDdnsAuth(d, v, "ddns_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -830,7 +829,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_keyname"); ok {
-
 		t, err := expandSystemDdnsDdnsKeyname(d, v, "ddns_keyname", sv)
 		if err != nil {
 			return &obj, err
@@ -840,7 +838,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_key"); ok {
-
 		t, err := expandSystemDdnsDdnsKey(d, v, "ddns_key", sv)
 		if err != nil {
 			return &obj, err
@@ -850,7 +847,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_domain"); ok {
-
 		t, err := expandSystemDdnsDdnsDomain(d, v, "ddns_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -860,7 +856,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_username"); ok {
-
 		t, err := expandSystemDdnsDdnsUsername(d, v, "ddns_username", sv)
 		if err != nil {
 			return &obj, err
@@ -870,7 +865,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_sn"); ok {
-
 		t, err := expandSystemDdnsDdnsSn(d, v, "ddns_sn", sv)
 		if err != nil {
 			return &obj, err
@@ -880,7 +874,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ddns_password"); ok {
-
 		t, err := expandSystemDdnsDdnsPassword(d, v, "ddns_password", sv)
 		if err != nil {
 			return &obj, err
@@ -890,7 +883,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("use_public_ip"); ok {
-
 		t, err := expandSystemDdnsUsePublicIp(d, v, "use_public_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -900,7 +892,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("addr_type"); ok {
-
 		t, err := expandSystemDdnsAddrType(d, v, "addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -910,7 +901,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("update_interval"); ok {
-
 		t, err := expandSystemDdnsUpdateInterval(d, v, "update_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -920,7 +910,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("clear_text"); ok {
-
 		t, err := expandSystemDdnsClearText(d, v, "clear_text", sv)
 		if err != nil {
 			return &obj, err
@@ -930,7 +919,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ssl_certificate"); ok {
-
 		t, err := expandSystemDdnsSslCertificate(d, v, "ssl_certificate", sv)
 		if err != nil {
 			return &obj, err
@@ -940,7 +928,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("bound_ip"); ok {
-
 		t, err := expandSystemDdnsBoundIp(d, v, "bound_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -950,7 +937,6 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("monitor_interface"); ok || d.HasChange("monitor_interface") {
-
 		t, err := expandSystemDdnsMonitorInterface(d, v, "monitor_interface", sv)
 		if err != nil {
 			return &obj, err

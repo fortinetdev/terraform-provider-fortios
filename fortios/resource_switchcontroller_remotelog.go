@@ -313,7 +313,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerRemoteLogName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +322,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSwitchControllerRemoteLogStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +331,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandSwitchControllerRemoteLogServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +340,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandSwitchControllerRemoteLogPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -353,7 +349,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
-
 		t, err := expandSwitchControllerRemoteLogSeverity(d, v, "severity", sv)
 		if err != nil {
 			return &obj, err
@@ -363,7 +358,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("csv"); ok {
-
 		t, err := expandSwitchControllerRemoteLogCsv(d, v, "csv", sv)
 		if err != nil {
 			return &obj, err
@@ -373,7 +367,6 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("facility"); ok {
-
 		t, err := expandSwitchControllerRemoteLogFacility(d, v, "facility", sv)
 		if err != nil {
 			return &obj, err

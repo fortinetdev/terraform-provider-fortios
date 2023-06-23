@@ -60,6 +60,11 @@ func resourceFtpProxyExplicit() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"server_data_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ssl": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -199,6 +204,10 @@ func flattenFtpProxyExplicitSecDefaultAction(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenFtpProxyExplicitServerDataMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFtpProxyExplicitSsl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -245,6 +254,12 @@ func refreshObjectFtpProxyExplicit(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("sec_default_action", flattenFtpProxyExplicitSecDefaultAction(o["sec-default-action"], d, "sec_default_action", sv)); err != nil {
 		if !fortiAPIPatch(o["sec-default-action"]) {
 			return fmt.Errorf("Error reading sec_default_action: %v", err)
+		}
+	}
+
+	if err = d.Set("server_data_mode", flattenFtpProxyExplicitServerDataMode(o["server-data-mode"], d, "server_data_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["server-data-mode"]) {
+			return fmt.Errorf("Error reading server_data_mode: %v", err)
 		}
 	}
 
@@ -301,6 +316,10 @@ func expandFtpProxyExplicitSecDefaultAction(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandFtpProxyExplicitServerDataMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFtpProxyExplicitSsl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -324,7 +343,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -338,7 +356,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["incoming-port"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitIncomingPort(d, v, "incoming_port", sv)
 			if err != nil {
 				return &obj, err
@@ -352,7 +369,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["incoming-ip"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -366,7 +382,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outgoing-ip"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -380,7 +395,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sec-default-action"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
 			if err != nil {
 				return &obj, err
@@ -390,11 +404,23 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("server_data_mode"); ok {
+		if setArgNil {
+			obj["server-data-mode"] = nil
+		} else {
+			t, err := expandFtpProxyExplicitServerDataMode(d, v, "server_data_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-data-mode"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ssl"); ok {
 		if setArgNil {
 			obj["ssl"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitSsl(d, v, "ssl", sv)
 			if err != nil {
 				return &obj, err
@@ -408,7 +434,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ssl-cert"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitSslCert(d, v, "ssl_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -422,7 +447,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ssl-dh-bits"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitSslDhBits(d, v, "ssl_dh_bits", sv)
 			if err != nil {
 				return &obj, err
@@ -436,7 +460,6 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ssl-algorithm"] = nil
 		} else {
-
 			t, err := expandFtpProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
 			if err != nil {
 				return &obj, err

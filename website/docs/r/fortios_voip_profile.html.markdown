@@ -81,11 +81,12 @@ resource "fortios_voip_profile" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
-* `feature_set` - Flow or proxy inspection feature set. Valid values: `flow`, `proxy`.
+* `feature_set` - Flow or proxy inspection feature set.
 * `comment` - Comment.
 * `sip` - SIP. The structure of `sip` block is documented below.
 * `sccp` - SCCP. The structure of `sccp` block is documented below.
 * `msrp` - MSRP. The structure of `msrp` block is documented below.
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `sip` block supports:
@@ -157,6 +158,8 @@ The `sip` block supports:
 * `block_geo_red_options` - Enable/disable block OPTIONS requests, but OPTIONS requests still notify for redundancy. Valid values: `disable`, `enable`.
 * `hosted_nat_traversal` - Hosted NAT Traversal (HNT). Valid values: `disable`, `enable`.
 * `hnt_restrict_source_ip` - Enable/disable restrict RTP source IP to be the same as SIP source IP when HNT is enabled. Valid values: `disable`, `enable`.
+* `call_id_regex` - Validate PCRE regular expression for Call-Id header value.
+* `content_type_regex` - Validate PCRE regular expression for Content-Type header value.
 * `max_body_length` - Maximum SIP message body length (0 meaning no limit).
 * `unknown_header` - Action for unknown SIP header. Valid values: `discard`, `pass`, `respond`.
 * `malformed_request_line` - Action for malformed request line. Valid values: `discard`, `pass`, `respond`.

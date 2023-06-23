@@ -279,7 +279,6 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandRouterbgpNetworkId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -289,7 +288,6 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("prefix"); ok {
-
 		t, err := expandRouterbgpNetworkPrefix(d, v, "prefix", sv)
 		if err != nil {
 			return &obj, err
@@ -299,7 +297,6 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("network_import_check"); ok {
-
 		t, err := expandRouterbgpNetworkNetworkImportCheck(d, v, "network_import_check", sv)
 		if err != nil {
 			return &obj, err
@@ -309,7 +306,6 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("backdoor"); ok {
-
 		t, err := expandRouterbgpNetworkBackdoor(d, v, "backdoor", sv)
 		if err != nil {
 			return &obj, err
@@ -319,7 +315,6 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("route_map"); ok {
-
 		t, err := expandRouterbgpNetworkRouteMap(d, v, "route_map", sv)
 		if err != nil {
 			return &obj, err

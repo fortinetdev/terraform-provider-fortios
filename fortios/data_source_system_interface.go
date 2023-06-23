@@ -100,6 +100,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dhcp_broadcast_flag": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"dhcp_relay_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -117,6 +121,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"dhcp_relay_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"dhcp_smart_relay": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -887,6 +895,10 @@ func dataSourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"secip_relay_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"allowaccess": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -1100,6 +1112,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"eap_user_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"default_purdue_level": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1329,6 +1345,10 @@ func dataSourceSystemInterface() *schema.Resource {
 							Computed: true,
 						},
 						"dhcp6_relay_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dhcp6_relay_source_interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1610,16 +1630,22 @@ func dataSourceFlattenSystemInterfaceDhcpRelayInterface(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceDhcpBroadcastFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceDhcpRelayService(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	var temp_v = v.(string)
-	temp_v = strings.TrimRight(temp_v, " ")
-	temp_v = strings.ReplaceAll(temp_v, "\"", "")
-	var rst_v interface{} = temp_v
-	return rst_v
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		temp_v = strings.ReplaceAll(temp_v, "\"", "")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
+	return v
 }
 
 func dataSourceFlattenSystemInterfaceDhcpRelayLinkSelection(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1631,6 +1657,10 @@ func dataSourceFlattenSystemInterfaceDhcpRelayRequestAllServer(v interface{}, d 
 }
 
 func dataSourceFlattenSystemInterfaceDhcpRelayType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpSmartRelay(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2657,6 +2687,11 @@ func dataSourceFlattenSystemInterfaceSecondaryip(v interface{}, d *schema.Resour
 			tmp["ip"] = dataSourceFlattenSystemInterfaceSecondaryipIp(i["ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "secip_relay_ip"
+		if _, ok := i["secip-relay-ip"]; ok {
+			tmp["secip_relay_ip"] = dataSourceFlattenSystemInterfaceSecondaryipSecipRelayIp(i["secip-relay-ip"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowaccess"
 		if _, ok := i["allowaccess"]; ok {
 			tmp["allowaccess"] = dataSourceFlattenSystemInterfaceSecondaryipAllowaccess(i["allowaccess"], d, pre_append)
@@ -2700,6 +2735,10 @@ func dataSourceFlattenSystemInterfaceSecondaryipId(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemInterfaceSecondaryipIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSecondaryipSecipRelayIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3002,6 +3041,10 @@ func dataSourceFlattenSystemInterfaceEapUserCert(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceDefaultPurdueLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceForwardErrorCorrection(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3183,6 +3226,11 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 	pre_append = pre + ".0." + "dhcp6_relay_type"
 	if _, ok := i["dhcp6-relay-type"]; ok {
 		result["dhcp6_relay_type"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6RelayType(i["dhcp6-relay-type"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "dhcp6_relay_source_interface"
+	if _, ok := i["dhcp6-relay-source-interface"]; ok {
+		result["dhcp6_relay_source_interface"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6RelaySourceInterface(i["dhcp6-relay-source-interface"], d, pre_append)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_relay_ip"
@@ -3630,6 +3678,10 @@ func dataSourceFlattenSystemInterfaceIpv6Dhcp6RelayType(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6RelaySourceInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceIpv6Dhcp6RelayIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3925,6 +3977,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("dhcp_broadcast_flag", dataSourceFlattenSystemInterfaceDhcpBroadcastFlag(o["dhcp-broadcast-flag"], d, "dhcp_broadcast_flag")); err != nil {
+		if !fortiAPIPatch(o["dhcp-broadcast-flag"]) {
+			return fmt.Errorf("Error reading dhcp_broadcast_flag: %v", err)
+		}
+	}
+
 	if err = d.Set("dhcp_relay_service", dataSourceFlattenSystemInterfaceDhcpRelayService(o["dhcp-relay-service"], d, "dhcp_relay_service")); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-service"]) {
 			return fmt.Errorf("Error reading dhcp_relay_service: %v", err)
@@ -3952,6 +4010,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("dhcp_relay_type", dataSourceFlattenSystemInterfaceDhcpRelayType(o["dhcp-relay-type"], d, "dhcp_relay_type")); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-type"]) {
 			return fmt.Errorf("Error reading dhcp_relay_type: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_smart_relay", dataSourceFlattenSystemInterfaceDhcpSmartRelay(o["dhcp-smart-relay"], d, "dhcp_smart_relay")); err != nil {
+		if !fortiAPIPatch(o["dhcp-smart-relay"]) {
+			return fmt.Errorf("Error reading dhcp_smart_relay: %v", err)
 		}
 	}
 
@@ -5140,6 +5204,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("eap_user_cert", dataSourceFlattenSystemInterfaceEapUserCert(o["eap-user-cert"], d, "eap_user_cert")); err != nil {
 		if !fortiAPIPatch(o["eap-user-cert"]) {
 			return fmt.Errorf("Error reading eap_user_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("default_purdue_level", dataSourceFlattenSystemInterfaceDefaultPurdueLevel(o["default-purdue-level"], d, "default_purdue_level")); err != nil {
+		if !fortiAPIPatch(o["default-purdue-level"]) {
+			return fmt.Errorf("Error reading default_purdue_level: %v", err)
 		}
 	}
 

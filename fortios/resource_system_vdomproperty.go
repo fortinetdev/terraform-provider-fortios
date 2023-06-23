@@ -578,7 +578,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemVdomPropertyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -588,7 +587,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSystemVdomPropertyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -598,7 +596,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("snmp_index"); ok {
-
 		t, err := expandSystemVdomPropertySnmpIndex(d, v, "snmp_index", sv)
 		if err != nil {
 			return &obj, err
@@ -608,7 +605,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("session"); ok {
-
 		t, err := expandSystemVdomPropertySession(d, v, "session", sv)
 		if err != nil {
 			return &obj, err
@@ -618,7 +614,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ipsec_phase1"); ok {
-
 		t, err := expandSystemVdomPropertyIpsecPhase1(d, v, "ipsec_phase1", sv)
 		if err != nil {
 			return &obj, err
@@ -628,7 +623,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2"); ok {
-
 		t, err := expandSystemVdomPropertyIpsecPhase2(d, v, "ipsec_phase2", sv)
 		if err != nil {
 			return &obj, err
@@ -638,7 +632,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ipsec_phase1_interface"); ok {
-
 		t, err := expandSystemVdomPropertyIpsecPhase1Interface(d, v, "ipsec_phase1_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -648,7 +641,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2_interface"); ok {
-
 		t, err := expandSystemVdomPropertyIpsecPhase2Interface(d, v, "ipsec_phase2_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -658,7 +650,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dialup_tunnel"); ok {
-
 		t, err := expandSystemVdomPropertyDialupTunnel(d, v, "dialup_tunnel", sv)
 		if err != nil {
 			return &obj, err
@@ -668,7 +659,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("firewall_policy"); ok {
-
 		t, err := expandSystemVdomPropertyFirewallPolicy(d, v, "firewall_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -678,7 +668,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("firewall_address"); ok {
-
 		t, err := expandSystemVdomPropertyFirewallAddress(d, v, "firewall_address", sv)
 		if err != nil {
 			return &obj, err
@@ -688,7 +677,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("firewall_addrgrp"); ok {
-
 		t, err := expandSystemVdomPropertyFirewallAddrgrp(d, v, "firewall_addrgrp", sv)
 		if err != nil {
 			return &obj, err
@@ -698,7 +686,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("custom_service"); ok {
-
 		t, err := expandSystemVdomPropertyCustomService(d, v, "custom_service", sv)
 		if err != nil {
 			return &obj, err
@@ -708,7 +695,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("service_group"); ok {
-
 		t, err := expandSystemVdomPropertyServiceGroup(d, v, "service_group", sv)
 		if err != nil {
 			return &obj, err
@@ -718,7 +704,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("onetime_schedule"); ok {
-
 		t, err := expandSystemVdomPropertyOnetimeSchedule(d, v, "onetime_schedule", sv)
 		if err != nil {
 			return &obj, err
@@ -728,7 +713,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("recurring_schedule"); ok {
-
 		t, err := expandSystemVdomPropertyRecurringSchedule(d, v, "recurring_schedule", sv)
 		if err != nil {
 			return &obj, err
@@ -738,7 +722,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("user"); ok {
-
 		t, err := expandSystemVdomPropertyUser(d, v, "user", sv)
 		if err != nil {
 			return &obj, err
@@ -748,7 +731,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("user_group"); ok {
-
 		t, err := expandSystemVdomPropertyUserGroup(d, v, "user_group", sv)
 		if err != nil {
 			return &obj, err
@@ -758,7 +740,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("sslvpn"); ok {
-
 		t, err := expandSystemVdomPropertySslvpn(d, v, "sslvpn", sv)
 		if err != nil {
 			return &obj, err
@@ -768,7 +749,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("proxy"); ok {
-
 		t, err := expandSystemVdomPropertyProxy(d, v, "proxy", sv)
 		if err != nil {
 			return &obj, err
@@ -778,7 +758,6 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("log_disk_quota"); ok {
-
 		t, err := expandSystemVdomPropertyLogDiskQuota(d, v, "log_disk_quota", sv)
 		if err != nil {
 			return &obj, err

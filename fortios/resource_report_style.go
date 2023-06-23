@@ -687,7 +687,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandReportStyleName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -697,7 +696,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("options"); ok {
-
 		t, err := expandReportStyleOptions(d, v, "options", sv)
 		if err != nil {
 			return &obj, err
@@ -707,7 +705,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("font_family"); ok {
-
 		t, err := expandReportStyleFontFamily(d, v, "font_family", sv)
 		if err != nil {
 			return &obj, err
@@ -717,7 +714,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("font_style"); ok {
-
 		t, err := expandReportStyleFontStyle(d, v, "font_style", sv)
 		if err != nil {
 			return &obj, err
@@ -727,7 +723,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("font_weight"); ok {
-
 		t, err := expandReportStyleFontWeight(d, v, "font_weight", sv)
 		if err != nil {
 			return &obj, err
@@ -737,7 +732,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("font_size"); ok {
-
 		t, err := expandReportStyleFontSize(d, v, "font_size", sv)
 		if err != nil {
 			return &obj, err
@@ -747,7 +741,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("line_height"); ok {
-
 		t, err := expandReportStyleLineHeight(d, v, "line_height", sv)
 		if err != nil {
 			return &obj, err
@@ -757,7 +750,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("fg_color"); ok {
-
 		t, err := expandReportStyleFgColor(d, v, "fg_color", sv)
 		if err != nil {
 			return &obj, err
@@ -767,7 +759,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("bg_color"); ok {
-
 		t, err := expandReportStyleBgColor(d, v, "bg_color", sv)
 		if err != nil {
 			return &obj, err
@@ -777,7 +768,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("align"); ok {
-
 		t, err := expandReportStyleAlign(d, v, "align", sv)
 		if err != nil {
 			return &obj, err
@@ -787,7 +777,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("width"); ok {
-
 		t, err := expandReportStyleWidth(d, v, "width", sv)
 		if err != nil {
 			return &obj, err
@@ -797,7 +786,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("height"); ok {
-
 		t, err := expandReportStyleHeight(d, v, "height", sv)
 		if err != nil {
 			return &obj, err
@@ -807,7 +795,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("margin_top"); ok {
-
 		t, err := expandReportStyleMarginTop(d, v, "margin_top", sv)
 		if err != nil {
 			return &obj, err
@@ -817,7 +804,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("margin_right"); ok {
-
 		t, err := expandReportStyleMarginRight(d, v, "margin_right", sv)
 		if err != nil {
 			return &obj, err
@@ -827,7 +813,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("margin_bottom"); ok {
-
 		t, err := expandReportStyleMarginBottom(d, v, "margin_bottom", sv)
 		if err != nil {
 			return &obj, err
@@ -837,7 +822,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("margin_left"); ok {
-
 		t, err := expandReportStyleMarginLeft(d, v, "margin_left", sv)
 		if err != nil {
 			return &obj, err
@@ -847,7 +831,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("border_top"); ok {
-
 		t, err := expandReportStyleBorderTop(d, v, "border_top", sv)
 		if err != nil {
 			return &obj, err
@@ -857,7 +840,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("border_right"); ok {
-
 		t, err := expandReportStyleBorderRight(d, v, "border_right", sv)
 		if err != nil {
 			return &obj, err
@@ -867,7 +849,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("border_bottom"); ok {
-
 		t, err := expandReportStyleBorderBottom(d, v, "border_bottom", sv)
 		if err != nil {
 			return &obj, err
@@ -877,7 +858,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("border_left"); ok {
-
 		t, err := expandReportStyleBorderLeft(d, v, "border_left", sv)
 		if err != nil {
 			return &obj, err
@@ -887,7 +867,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("padding_top"); ok {
-
 		t, err := expandReportStylePaddingTop(d, v, "padding_top", sv)
 		if err != nil {
 			return &obj, err
@@ -897,7 +876,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("padding_right"); ok {
-
 		t, err := expandReportStylePaddingRight(d, v, "padding_right", sv)
 		if err != nil {
 			return &obj, err
@@ -907,7 +885,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("padding_bottom"); ok {
-
 		t, err := expandReportStylePaddingBottom(d, v, "padding_bottom", sv)
 		if err != nil {
 			return &obj, err
@@ -917,7 +894,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("padding_left"); ok {
-
 		t, err := expandReportStylePaddingLeft(d, v, "padding_left", sv)
 		if err != nil {
 			return &obj, err
@@ -927,7 +903,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("column_span"); ok {
-
 		t, err := expandReportStyleColumnSpan(d, v, "column_span", sv)
 		if err != nil {
 			return &obj, err
@@ -937,7 +912,6 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("column_gap"); ok {
-
 		t, err := expandReportStyleColumnGap(d, v, "column_gap", sv)
 		if err != nil {
 			return &obj, err

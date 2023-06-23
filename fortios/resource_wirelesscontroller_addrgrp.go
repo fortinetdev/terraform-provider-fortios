@@ -66,6 +66,11 @@ func resourceWirelessControllerAddrgrp() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -225,7 +230,6 @@ func flattenWirelessControllerAddrgrpAddresses(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerAddrgrpAddressesId(i["id"], d, pre_append, sv)
 		}
 
@@ -244,6 +248,12 @@ func flattenWirelessControllerAddrgrpAddressesId(v interface{}, d *schema.Resour
 
 func refreshObjectWirelessControllerAddrgrp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenWirelessControllerAddrgrpId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -257,7 +267,7 @@ func refreshObjectWirelessControllerAddrgrp(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("addresses", flattenWirelessControllerAddrgrpAddresses(o["addresses"], d, "addresses", sv)); err != nil {
 			if !fortiAPIPatch(o["addresses"]) {
 				return fmt.Errorf("Error reading addresses: %v", err)
@@ -306,7 +316,6 @@ func expandWirelessControllerAddrgrpAddresses(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerAddrgrpAddressesId(d, i["id"], pre_append, sv)
 		}
 
@@ -326,7 +335,6 @@ func getObjectWirelessControllerAddrgrp(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandWirelessControllerAddrgrpId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -336,7 +344,6 @@ func getObjectWirelessControllerAddrgrp(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("default_policy"); ok {
-
 		t, err := expandWirelessControllerAddrgrpDefaultPolicy(d, v, "default_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -346,7 +353,6 @@ func getObjectWirelessControllerAddrgrp(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("addresses"); ok || d.HasChange("addresses") {
-
 		t, err := expandWirelessControllerAddrgrpAddresses(d, v, "addresses", sv)
 		if err != nil {
 			return &obj, err

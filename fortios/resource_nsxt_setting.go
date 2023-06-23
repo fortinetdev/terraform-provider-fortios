@@ -191,7 +191,6 @@ func getObjectNsxtSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["liveness"] = nil
 		} else {
-
 			t, err := expandNsxtSettingLiveness(d, v, "liveness", sv)
 			if err != nil {
 				return &obj, err
@@ -205,7 +204,6 @@ func getObjectNsxtSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["service"] = nil
 		} else {
-
 			t, err := expandNsxtSettingService(d, v, "service", sv)
 			if err != nil {
 				return &obj, err

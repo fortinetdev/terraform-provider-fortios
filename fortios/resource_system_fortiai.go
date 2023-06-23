@@ -230,7 +230,6 @@ func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFortiaiStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortiaiSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemFortiaiInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemFortiaiInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

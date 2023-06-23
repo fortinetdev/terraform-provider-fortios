@@ -326,7 +326,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["eip"] = nil
 		} else {
-
 			t, err := expandVpnL2TpEip(d, v, "eip", sv)
 			if err != nil {
 				return &obj, err
@@ -340,7 +339,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["sip"] = nil
 		} else {
-
 			t, err := expandVpnL2TpSip(d, v, "sip", sv)
 			if err != nil {
 				return &obj, err
@@ -354,7 +352,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandVpnL2TpStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -368,7 +365,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["usrgrp"] = nil
 		} else {
-
 			t, err := expandVpnL2TpUsrgrp(d, v, "usrgrp", sv)
 			if err != nil {
 				return &obj, err
@@ -382,7 +378,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["enforce-ipsec"] = nil
 		} else {
-
 			t, err := expandVpnL2TpEnforceIpsec(d, v, "enforce_ipsec", sv)
 			if err != nil {
 				return &obj, err
@@ -396,7 +391,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["lcp-echo-interval"] = nil
 		} else {
-
 			t, err := expandVpnL2TpLcpEchoInterval(d, v, "lcp_echo_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -410,7 +404,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["lcp-max-echo-fails"] = nil
 		} else {
-
 			t, err := expandVpnL2TpLcpMaxEchoFails(d, v, "lcp_max_echo_fails", sv)
 			if err != nil {
 				return &obj, err
@@ -424,7 +417,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["hello-interval"] = nil
 		} else {
-
 			t, err := expandVpnL2TpHelloInterval(d, v, "hello_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -438,7 +430,6 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["compress"] = nil
 		} else {
-
 			t, err := expandVpnL2TpCompress(d, v, "compress", sv)
 			if err != nil {
 				return &obj, err

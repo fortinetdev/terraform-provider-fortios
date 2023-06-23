@@ -14,10 +14,14 @@ Configure explicit Web proxy settings.
 The following arguments are supported:
 
 * `status` - Enable/disable the explicit Web proxy for HTTP and HTTPS session. Valid values: `enable`, `disable`.
+* `secure_web_proxy` - Enable/disable/require the secure web proxy for HTTP and HTTPS session. Valid values: `disable`, `enable`, `secure`.
 * `ftp_over_http` - Enable to proxy FTP-over-HTTP sessions sent from a web browser. Valid values: `enable`, `disable`.
 * `socks` - Enable/disable the SOCKS proxy. Valid values: `enable`, `disable`.
 * `http_incoming_port` - Accept incoming HTTP requests on one or more ports (0 - 65535, default = 8080).
+* `http_connection_mode` - HTTP connection mode (default = static). Valid values: `static`, `multiplex`, `serverpool`.
 * `https_incoming_port` - Accept incoming HTTPS requests on one or more ports (0 - 65535, default = 0, use the same as HTTP).
+* `secure_web_proxy_cert` - Name of certificates for secure web proxy. The structure of `secure_web_proxy_cert` block is documented below.
+* `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048). Valid values: `768`, `1024`, `1536`, `2048`.
 * `ftp_incoming_port` - Accept incoming FTP-over-HTTP requests on one or more ports (0 - 65535, default = 0; use the same as HTTP).
 * `socks_incoming_port` - Accept incoming SOCKS proxy requests on one or more ports (0 - 65535, default = 0; use the same as HTTP).
 * `incoming_ip` - Restrict the explicit HTTP proxy to only accept sessions from this IP address. An interface must have this IP address.
@@ -42,7 +46,12 @@ The following arguments are supported:
 * `ssl_algorithm` - Relative strength of encryption algorithms accepted in HTTPS deep scan: high, medium, or low. Valid values: `high`, `medium`, `low`.
 * `trace_auth_no_rsp` - Enable/disable logging timed-out authentication requests. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `secure_web_proxy_cert` block supports:
+
+* `name` - Certificate list.
 
 The `pac_policy` block supports:
 

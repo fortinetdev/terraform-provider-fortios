@@ -236,7 +236,6 @@ func getObjectWirelessControllerSsidPolicy(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerSsidPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -246,7 +245,6 @@ func getObjectWirelessControllerSsidPolicy(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandWirelessControllerSsidPolicyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -256,7 +254,6 @@ func getObjectWirelessControllerSsidPolicy(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
-
 		t, err := expandWirelessControllerSsidPolicyVlan(d, v, "vlan", sv)
 		if err != nil {
 			return &obj, err

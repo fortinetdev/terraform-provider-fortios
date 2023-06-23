@@ -66,6 +66,11 @@ func resourceFirewallRegion() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -225,7 +230,6 @@ func flattenFirewallRegionCity(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallRegionCityId(i["id"], d, pre_append, sv)
 		}
 
@@ -244,6 +248,12 @@ func flattenFirewallRegionCityId(v interface{}, d *schema.ResourceData, pre stri
 
 func refreshObjectFirewallRegion(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenFirewallRegionId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -257,7 +267,7 @@ func refreshObjectFirewallRegion(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("city", flattenFirewallRegionCity(o["city"], d, "city", sv)); err != nil {
 			if !fortiAPIPatch(o["city"]) {
 				return fmt.Errorf("Error reading city: %v", err)
@@ -306,7 +316,6 @@ func expandFirewallRegionCity(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallRegionCityId(d, i["id"], pre_append, sv)
 		}
 
@@ -326,7 +335,6 @@ func getObjectFirewallRegion(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallRegionId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -336,7 +344,6 @@ func getObjectFirewallRegion(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallRegionName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -346,7 +353,6 @@ func getObjectFirewallRegion(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("city"); ok || d.HasChange("city") {
-
 		t, err := expandFirewallRegionCity(d, v, "city", sv)
 		if err != nil {
 			return &obj, err

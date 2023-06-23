@@ -160,6 +160,11 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -324,7 +329,6 @@ func flattenWirelessControllerTimersDarrpTime(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if _, ok := i["time"]; ok {
-
 			tmp["time"] = flattenWirelessControllerTimersDarrpTimeTime(i["time"], d, pre_append, sv)
 		}
 
@@ -375,6 +379,12 @@ func flattenWirelessControllerTimersDrmaInterval(v interface{}, d *schema.Resour
 
 func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("echo_interval", flattenWirelessControllerTimersEchoInterval(o["echo-interval"], d, "echo_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["echo-interval"]) {
@@ -436,7 +446,7 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("darrp_time", flattenWirelessControllerTimersDarrpTime(o["darrp-time"], d, "darrp_time", sv)); err != nil {
 			if !fortiAPIPatch(o["darrp-time"]) {
 				return fmt.Errorf("Error reading darrp_time: %v", err)
@@ -565,7 +575,6 @@ func expandWirelessControllerTimersDarrpTime(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["time"], _ = expandWirelessControllerTimersDarrpTimeTime(d, i["time"], pre_append, sv)
 		}
 
@@ -620,7 +629,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["echo-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersEchoInterval(d, v, "echo_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -634,7 +642,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["discovery-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersDiscoveryInterval(d, v, "discovery_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -648,7 +655,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["client-idle-timeout"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersClientIdleTimeout(d, v, "client_idle_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -662,7 +668,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["client-idle-rehome-timeout"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersClientIdleRehomeTimeout(d, v, "client_idle_rehome_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -676,7 +681,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["auth-timeout"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersAuthTimeout(d, v, "auth_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -690,7 +694,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["rogue-ap-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersRogueApLog(d, v, "rogue_ap_log", sv)
 			if err != nil {
 				return &obj, err
@@ -704,7 +707,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["fake-ap-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersFakeApLog(d, v, "fake_ap_log", sv)
 			if err != nil {
 				return &obj, err
@@ -718,7 +720,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["rogue-ap-cleanup"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersRogueApCleanup(d, v, "rogue_ap_cleanup", sv)
 			if err != nil {
 				return &obj, err
@@ -732,7 +733,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["darrp-optimize"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersDarrpOptimize(d, v, "darrp_optimize", sv)
 			if err != nil {
 				return &obj, err
@@ -746,7 +746,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["darrp-day"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersDarrpDay(d, v, "darrp_day", sv)
 			if err != nil {
 				return &obj, err
@@ -760,7 +759,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["darrp-time"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWirelessControllerTimersDarrpTime(d, v, "darrp_time", sv)
 			if err != nil {
 				return &obj, err
@@ -774,7 +772,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["sta-stats-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersStaStatsInterval(d, v, "sta_stats_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -788,7 +785,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["vap-stats-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersVapStatsInterval(d, v, "vap_stats_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -802,7 +798,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["radio-stats-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersRadioStatsInterval(d, v, "radio_stats_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -816,7 +811,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["sta-capability-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersStaCapabilityInterval(d, v, "sta_capability_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -830,7 +824,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["sta-locate-timer"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersStaLocateTimer(d, v, "sta_locate_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -844,7 +837,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["ipsec-intf-cleanup"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersIpsecIntfCleanup(d, v, "ipsec_intf_cleanup", sv)
 			if err != nil {
 				return &obj, err
@@ -858,7 +850,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["ble-scan-report-intv"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersBleScanReportIntv(d, v, "ble_scan_report_intv", sv)
 			if err != nil {
 				return &obj, err
@@ -872,7 +863,6 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["drma-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerTimersDrmaInterval(d, v, "drma_interval", sv)
 			if err != nil {
 				return &obj, err

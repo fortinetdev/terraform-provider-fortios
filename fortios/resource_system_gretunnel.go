@@ -521,7 +521,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemGreTunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -531,7 +530,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemGreTunnelInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -541,7 +539,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
-
 		t, err := expandSystemGreTunnelIpVersion(d, v, "ip_version", sv)
 		if err != nil {
 			return &obj, err
@@ -551,7 +548,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("remote_gw6"); ok {
-
 		t, err := expandSystemGreTunnelRemoteGw6(d, v, "remote_gw6", sv)
 		if err != nil {
 			return &obj, err
@@ -561,7 +557,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("local_gw6"); ok {
-
 		t, err := expandSystemGreTunnelLocalGw6(d, v, "local_gw6", sv)
 		if err != nil {
 			return &obj, err
@@ -571,7 +566,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {
-
 		t, err := expandSystemGreTunnelRemoteGw(d, v, "remote_gw", sv)
 		if err != nil {
 			return &obj, err
@@ -581,7 +575,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("local_gw"); ok {
-
 		t, err := expandSystemGreTunnelLocalGw(d, v, "local_gw", sv)
 		if err != nil {
 			return &obj, err
@@ -591,7 +584,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {
-
 		t, err := expandSystemGreTunnelUseSdwan(d, v, "use_sdwan", sv)
 		if err != nil {
 			return &obj, err
@@ -601,7 +593,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("sequence_number_transmission"); ok {
-
 		t, err := expandSystemGreTunnelSequenceNumberTransmission(d, v, "sequence_number_transmission", sv)
 		if err != nil {
 			return &obj, err
@@ -611,7 +602,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("sequence_number_reception"); ok {
-
 		t, err := expandSystemGreTunnelSequenceNumberReception(d, v, "sequence_number_reception", sv)
 		if err != nil {
 			return &obj, err
@@ -621,7 +611,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("checksum_transmission"); ok {
-
 		t, err := expandSystemGreTunnelChecksumTransmission(d, v, "checksum_transmission", sv)
 		if err != nil {
 			return &obj, err
@@ -631,7 +620,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("checksum_reception"); ok {
-
 		t, err := expandSystemGreTunnelChecksumReception(d, v, "checksum_reception", sv)
 		if err != nil {
 			return &obj, err
@@ -641,7 +629,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("key_outbound"); ok {
-
 		t, err := expandSystemGreTunnelKeyOutbound(d, v, "key_outbound", sv)
 		if err != nil {
 			return &obj, err
@@ -651,7 +638,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("key_inbound"); ok {
-
 		t, err := expandSystemGreTunnelKeyInbound(d, v, "key_inbound", sv)
 		if err != nil {
 			return &obj, err
@@ -661,7 +647,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dscp_copying"); ok {
-
 		t, err := expandSystemGreTunnelDscpCopying(d, v, "dscp_copying", sv)
 		if err != nil {
 			return &obj, err
@@ -671,7 +656,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("diffservcode"); ok {
-
 		t, err := expandSystemGreTunnelDiffservcode(d, v, "diffservcode", sv)
 		if err != nil {
 			return &obj, err
@@ -681,7 +665,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("keepalive_interval"); ok {
-
 		t, err := expandSystemGreTunnelKeepaliveInterval(d, v, "keepalive_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -691,7 +674,6 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("keepalive_failtimes"); ok {
-
 		t, err := expandSystemGreTunnelKeepaliveFailtimes(d, v, "keepalive_failtimes", sv)
 		if err != nil {
 			return &obj, err

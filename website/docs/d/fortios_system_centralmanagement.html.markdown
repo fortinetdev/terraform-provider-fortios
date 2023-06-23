@@ -21,6 +21,7 @@ The following attributes are exported:
 
 * `mode` - Central management mode.
 * `type` - Central management type.
+* `fortigate_cloud_sso_default_profile` - Override access profile.
 * `schedule_config_restore` - Enable/disable allowing the central management server to restore the configuration of this FortiGate.
 * `schedule_script_restore` - Enable/disable allowing the central management server to restore the scripts stored on this FortiGate.
 * `allow_push_configuration` - Enable/disable allowing the central management server to push configuration changes to this FortiGate.

@@ -224,6 +224,11 @@ func resourceDnsfilterProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -368,7 +373,6 @@ func flattenDnsfilterProfileDomainFilter(v interface{}, d *schema.ResourceData, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "domain_filter_table"
 	if _, ok := i["domain-filter-table"]; ok {
-
 		result["domain_filter_table"] = flattenDnsfilterProfileDomainFilterDomainFilterTable(i["domain-filter-table"], d, pre_append, sv)
 	}
 
@@ -391,13 +395,11 @@ func flattenDnsfilterProfileFtgdDns(v interface{}, d *schema.ResourceData, pre s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenDnsfilterProfileFtgdDnsOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "filters"
 	if _, ok := i["filters"]; ok {
-
 		result["filters"] = flattenDnsfilterProfileFtgdDnsFilters(i["filters"], d, pre_append, sv)
 	}
 
@@ -435,25 +437,21 @@ func flattenDnsfilterProfileFtgdDnsFilters(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDnsfilterProfileFtgdDnsFiltersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenDnsfilterProfileFtgdDnsFiltersCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenDnsfilterProfileFtgdDnsFiltersAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenDnsfilterProfileFtgdDnsFiltersLog(i["log"], d, pre_append, sv)
 		}
 
@@ -544,7 +542,6 @@ func flattenDnsfilterProfileExternalIpBlocklist(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDnsfilterProfileExternalIpBlocklistName(i["name"], d, pre_append, sv)
 		}
 
@@ -587,55 +584,46 @@ func flattenDnsfilterProfileDnsTranslation(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDnsfilterProfileDnsTranslationId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := i["addr-type"]; ok {
-
 			tmp["addr_type"] = flattenDnsfilterProfileDnsTranslationAddrType(i["addr-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
 		if _, ok := i["src"]; ok {
-
 			tmp["src"] = flattenDnsfilterProfileDnsTranslationSrc(i["src"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-
 			tmp["dst"] = flattenDnsfilterProfileDnsTranslationDst(i["dst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "netmask"
 		if _, ok := i["netmask"]; ok {
-
 			tmp["netmask"] = flattenDnsfilterProfileDnsTranslationNetmask(i["netmask"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenDnsfilterProfileDnsTranslationStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
 		if _, ok := i["src6"]; ok {
-
 			tmp["src6"] = flattenDnsfilterProfileDnsTranslationSrc6(i["src6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
 		if _, ok := i["dst6"]; ok {
-
 			tmp["dst6"] = flattenDnsfilterProfileDnsTranslationDst6(i["dst6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-
 			tmp["prefix"] = flattenDnsfilterProfileDnsTranslationPrefix(i["prefix"], d, pre_append, sv)
 		}
 
@@ -686,6 +674,12 @@ func flattenDnsfilterProfileDnsTranslationPrefix(v interface{}, d *schema.Resour
 
 func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenDnsfilterProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -699,7 +693,7 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("domain_filter", flattenDnsfilterProfileDomainFilter(o["domain-filter"], d, "domain_filter", sv)); err != nil {
 			if !fortiAPIPatch(o["domain-filter"]) {
 				return fmt.Errorf("Error reading domain_filter: %v", err)
@@ -715,7 +709,7 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ftgd_dns", flattenDnsfilterProfileFtgdDns(o["ftgd-dns"], d, "ftgd_dns", sv)); err != nil {
 			if !fortiAPIPatch(o["ftgd-dns"]) {
 				return fmt.Errorf("Error reading ftgd_dns: %v", err)
@@ -785,7 +779,7 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("external_ip_blocklist", flattenDnsfilterProfileExternalIpBlocklist(o["external-ip-blocklist"], d, "external_ip_blocklist", sv)); err != nil {
 			if !fortiAPIPatch(o["external-ip-blocklist"]) {
 				return fmt.Errorf("Error reading external_ip_blocklist: %v", err)
@@ -801,7 +795,7 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dns_translation", flattenDnsfilterProfileDnsTranslation(o["dns-translation"], d, "dns_translation", sv)); err != nil {
 			if !fortiAPIPatch(o["dns-translation"]) {
 				return fmt.Errorf("Error reading dns_translation: %v", err)
@@ -846,7 +840,6 @@ func expandDnsfilterProfileDomainFilter(d *schema.ResourceData, v interface{}, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "domain_filter_table"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["domain-filter-table"], _ = expandDnsfilterProfileDomainFilterDomainFilterTable(d, i["domain_filter_table"], pre_append, sv)
 	}
 
@@ -869,12 +862,10 @@ func expandDnsfilterProfileFtgdDns(d *schema.ResourceData, v interface{}, pre st
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandDnsfilterProfileFtgdDnsOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "filters"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["filters"], _ = expandDnsfilterProfileFtgdDnsFilters(d, i["filters"], pre_append, sv)
 	} else {
 		result["filters"] = make([]string, 0)
@@ -903,25 +894,21 @@ func expandDnsfilterProfileFtgdDnsFilters(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDnsfilterProfileFtgdDnsFiltersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandDnsfilterProfileFtgdDnsFiltersCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandDnsfilterProfileFtgdDnsFiltersAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandDnsfilterProfileFtgdDnsFiltersLog(d, i["log"], pre_append, sv)
 		}
 
@@ -1001,7 +988,6 @@ func expandDnsfilterProfileExternalIpBlocklist(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDnsfilterProfileExternalIpBlocklistName(d, i["name"], pre_append, sv)
 		}
 
@@ -1033,55 +1019,46 @@ func expandDnsfilterProfileDnsTranslation(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDnsfilterProfileDnsTranslationId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["addr-type"], _ = expandDnsfilterProfileDnsTranslationAddrType(d, i["addr_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["src"], _ = expandDnsfilterProfileDnsTranslationSrc(d, i["src"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst"], _ = expandDnsfilterProfileDnsTranslationDst(d, i["dst"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "netmask"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["netmask"], _ = expandDnsfilterProfileDnsTranslationNetmask(d, i["netmask"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandDnsfilterProfileDnsTranslationStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["src6"], _ = expandDnsfilterProfileDnsTranslationSrc6(d, i["src6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst6"], _ = expandDnsfilterProfileDnsTranslationDst6(d, i["dst6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["prefix"], _ = expandDnsfilterProfileDnsTranslationPrefix(d, i["prefix"], pre_append, sv)
 		}
 
@@ -1133,7 +1110,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDnsfilterProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1143,7 +1119,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandDnsfilterProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1153,7 +1128,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("domain_filter"); ok {
-
 		t, err := expandDnsfilterProfileDomainFilter(d, v, "domain_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1163,7 +1137,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("ftgd_dns"); ok {
-
 		t, err := expandDnsfilterProfileFtgdDns(d, v, "ftgd_dns", sv)
 		if err != nil {
 			return &obj, err
@@ -1173,7 +1146,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("log_all_domain"); ok {
-
 		t, err := expandDnsfilterProfileLogAllDomain(d, v, "log_all_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1183,7 +1155,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("sdns_ftgd_err_log"); ok {
-
 		t, err := expandDnsfilterProfileSdnsFtgdErrLog(d, v, "sdns_ftgd_err_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1193,7 +1164,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("sdns_domain_log"); ok {
-
 		t, err := expandDnsfilterProfileSdnsDomainLog(d, v, "sdns_domain_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1203,7 +1173,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("block_action"); ok {
-
 		t, err := expandDnsfilterProfileBlockAction(d, v, "block_action", sv)
 		if err != nil {
 			return &obj, err
@@ -1213,7 +1182,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("redirect_portal"); ok {
-
 		t, err := expandDnsfilterProfileRedirectPortal(d, v, "redirect_portal", sv)
 		if err != nil {
 			return &obj, err
@@ -1223,7 +1191,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("redirect_portal6"); ok {
-
 		t, err := expandDnsfilterProfileRedirectPortal6(d, v, "redirect_portal6", sv)
 		if err != nil {
 			return &obj, err
@@ -1233,7 +1200,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("block_botnet"); ok {
-
 		t, err := expandDnsfilterProfileBlockBotnet(d, v, "block_botnet", sv)
 		if err != nil {
 			return &obj, err
@@ -1243,7 +1209,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("safe_search"); ok {
-
 		t, err := expandDnsfilterProfileSafeSearch(d, v, "safe_search", sv)
 		if err != nil {
 			return &obj, err
@@ -1253,7 +1218,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("youtube_restrict"); ok {
-
 		t, err := expandDnsfilterProfileYoutubeRestrict(d, v, "youtube_restrict", sv)
 		if err != nil {
 			return &obj, err
@@ -1263,7 +1227,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("external_ip_blocklist"); ok || d.HasChange("external_ip_blocklist") {
-
 		t, err := expandDnsfilterProfileExternalIpBlocklist(d, v, "external_ip_blocklist", sv)
 		if err != nil {
 			return &obj, err
@@ -1273,7 +1236,6 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("dns_translation"); ok || d.HasChange("dns_translation") {
-
 		t, err := expandDnsfilterProfileDnsTranslation(d, v, "dns_translation", sv)
 		if err != nil {
 			return &obj, err

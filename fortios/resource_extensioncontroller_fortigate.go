@@ -334,7 +334,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandExtensionControllerFortigateName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -344,7 +343,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandExtensionControllerFortigateId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -354,7 +352,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {
-
 		t, err := expandExtensionControllerFortigateAuthorized(d, v, "authorized", sv)
 		if err != nil {
 			return &obj, err
@@ -364,7 +361,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
-
 		t, err := expandExtensionControllerFortigateHostname(d, v, "hostname", sv)
 		if err != nil {
 			return &obj, err
@@ -374,7 +370,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandExtensionControllerFortigateDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -384,7 +379,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("vdom"); ok {
-
 		t, err := expandExtensionControllerFortigateVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -394,7 +388,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("device_id"); ok {
-
 		t, err := expandExtensionControllerFortigateDeviceId(d, v, "device_id", sv)
 		if err != nil {
 			return &obj, err
@@ -404,7 +397,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("profile"); ok {
-
 		t, err := expandExtensionControllerFortigateProfile(d, v, "profile", sv)
 		if err != nil {
 			return &obj, err

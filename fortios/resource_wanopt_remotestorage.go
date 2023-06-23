@@ -230,7 +230,6 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandWanoptRemoteStorageStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["local-cache-id"] = nil
 		} else {
-
 			t, err := expandWanoptRemoteStorageLocalCacheId(d, v, "local_cache_id", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["remote-cache-id"] = nil
 		} else {
-
 			t, err := expandWanoptRemoteStorageRemoteCacheId(d, v, "remote_cache_id", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["remote-cache-ip"] = nil
 		} else {
-
 			t, err := expandWanoptRemoteStorageRemoteCacheIp(d, v, "remote_cache_ip", sv)
 			if err != nil {
 				return &obj, err

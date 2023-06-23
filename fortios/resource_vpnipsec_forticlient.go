@@ -254,7 +254,6 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("realm"); ok {
-
 		t, err := expandVpnIpsecForticlientRealm(d, v, "realm", sv)
 		if err != nil {
 			return &obj, err
@@ -264,7 +263,6 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("usergroupname"); ok {
-
 		t, err := expandVpnIpsecForticlientUsergroupname(d, v, "usergroupname", sv)
 		if err != nil {
 			return &obj, err
@@ -274,7 +272,6 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("phase2name"); ok {
-
 		t, err := expandVpnIpsecForticlientPhase2Name(d, v, "phase2name", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +281,6 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandVpnIpsecForticlientStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err

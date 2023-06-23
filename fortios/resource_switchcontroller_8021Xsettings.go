@@ -250,7 +250,6 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["link-down-auth"] = nil
 		} else {
-
 			t, err := expandSwitchController8021XSettingsLinkDownAuth(d, v, "link_down_auth", sv)
 			if err != nil {
 				return &obj, err
@@ -264,7 +263,6 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["reauth-period"] = nil
 		} else {
-
 			t, err := expandSwitchController8021XSettingsReauthPeriod(d, v, "reauth_period", sv)
 			if err != nil {
 				return &obj, err
@@ -278,7 +276,6 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["max-reauth-attempt"] = nil
 		} else {
-
 			t, err := expandSwitchController8021XSettingsMaxReauthAttempt(d, v, "max_reauth_attempt", sv)
 			if err != nil {
 				return &obj, err
@@ -292,7 +289,6 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["tx-period"] = nil
 		} else {
-
 			t, err := expandSwitchController8021XSettingsTxPeriod(d, v, "tx_period", sv)
 			if err != nil {
 				return &obj, err
@@ -306,7 +302,6 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["mab-reauth"] = nil
 		} else {
-
 			t, err := expandSwitchController8021XSettingsMabReauth(d, v, "mab_reauth", sv)
 			if err != nil {
 				return &obj, err

@@ -185,6 +185,11 @@ func resourceRouterPolicy6() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -352,7 +357,6 @@ func flattenRouterPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicy6SrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -403,7 +407,6 @@ func flattenRouterPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicy6DstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -490,7 +493,6 @@ func flattenRouterPolicy6InternetServiceId(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterPolicy6InternetServiceIdId(i["id"], d, pre_append, sv)
 		}
 
@@ -533,7 +535,6 @@ func flattenRouterPolicy6InternetServiceCustom(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicy6InternetServiceCustomName(i["name"], d, pre_append, sv)
 		}
 
@@ -552,6 +553,12 @@ func flattenRouterPolicy6InternetServiceCustomName(v interface{}, d *schema.Reso
 
 func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("seq_num", flattenRouterPolicy6SeqNum(o["seq-num"], d, "seq_num", sv)); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -563,16 +570,19 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		v := flattenRouterPolicy6InputDevice(o["input-device"], d, "input_device", sv)
 		vx := ""
 		bstring := false
-		if i2ss2arrFortiAPIUpgrade(sv, "6.2.4") == true {
+		new_version_map := map[string][]string{
+			">=": []string{"6.2.4"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
 					i := r.(map[string]interface{})
 					if _, ok := i["name"]; ok {
 						if xv, ok := i["name"].(string); ok {
-							vx += "\"" + xv + "\""
+							vx += xv
 							if k < len(l)-1 {
-								vx += " "
+								vx += ", "
 							}
 						}
 					}
@@ -601,13 +611,46 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if err = d.Set("src", flattenRouterPolicy6Src(o["src"], d, "src", sv)); err != nil {
-		if !fortiAPIPatch(o["src"]) {
-			return fmt.Errorf("Error reading src: %v", err)
+	{
+		v := flattenRouterPolicy6Src(o["src"], d, "src", sv)
+		vx := ""
+		bstring := false
+		new_version_map := map[string][]string{
+			">=": []string{"7.2.1"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["addr6"]; ok {
+						if xv, ok := i["addr6"].(string); ok {
+							vx += xv
+							if k < len(l)-1 {
+								vx += ", "
+							}
+						}
+					}
+				}
+			}
+			bstring = true
+		}
+		if bstring == true {
+			if err = d.Set("src", vx); err != nil {
+				if !fortiAPIPatch(o["src"]) {
+					return fmt.Errorf("Error reading src: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("src", v); err != nil {
+				if !fortiAPIPatch(o["src"]) {
+					return fmt.Errorf("Error reading src: %v", err)
+				}
+			}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenRouterPolicy6Srcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -629,13 +672,46 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if err = d.Set("dst", flattenRouterPolicy6Dst(o["dst"], d, "dst", sv)); err != nil {
-		if !fortiAPIPatch(o["dst"]) {
-			return fmt.Errorf("Error reading dst: %v", err)
+	{
+		v := flattenRouterPolicy6Dst(o["dst"], d, "dst", sv)
+		vx := ""
+		bstring := false
+		new_version_map := map[string][]string{
+			">=": []string{"7.2.1"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["addr6"]; ok {
+						if xv, ok := i["addr6"].(string); ok {
+							vx += xv
+							if k < len(l)-1 {
+								vx += ", "
+							}
+						}
+					}
+				}
+			}
+			bstring = true
+		}
+		if bstring == true {
+			if err = d.Set("dst", vx); err != nil {
+				if !fortiAPIPatch(o["dst"]) {
+					return fmt.Errorf("Error reading dst: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("dst", v); err != nil {
+				if !fortiAPIPatch(o["dst"]) {
+					return fmt.Errorf("Error reading dst: %v", err)
+				}
+			}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenRouterPolicy6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -717,7 +793,7 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_id", flattenRouterPolicy6InternetServiceId(o["internet-service-id"], d, "internet_service_id", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-id"]) {
 				return fmt.Errorf("Error reading internet_service_id: %v", err)
@@ -733,7 +809,7 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_custom", flattenRouterPolicy6InternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-custom"]) {
 				return fmt.Errorf("Error reading internet_service_custom: %v", err)
@@ -790,7 +866,6 @@ func expandRouterPolicy6Srcaddr(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicy6SrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -830,7 +905,6 @@ func expandRouterPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicy6DstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -906,7 +980,6 @@ func expandRouterPolicy6InternetServiceId(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterPolicy6InternetServiceIdId(d, i["id"], pre_append, sv)
 		}
 
@@ -938,7 +1011,6 @@ func expandRouterPolicy6InternetServiceCustom(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicy6InternetServiceCustomName(d, i["name"], pre_append, sv)
 		}
 
@@ -958,7 +1030,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("seq_num"); ok {
-
 		t, err := expandRouterPolicy6SeqNum(d, v, "seq_num", sv)
 		if err != nil {
 			return &obj, err
@@ -968,15 +1039,16 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("input_device"); ok {
-
 		t, err := expandRouterPolicy6InputDevice(d, v, "input_device", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "6.2.4") == true {
+			new_version_map := map[string][]string{
+				">=": []string{"6.2.4"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
+				vxx := strings.Split(vx, ", ")
 
 				tmps := make([]map[string]interface{}, 0, len(vxx))
 
@@ -994,7 +1066,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("input_device_negate"); ok {
-
 		t, err := expandRouterPolicy6InputDeviceNegate(d, v, "input_device_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -1004,17 +1075,33 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("src"); ok {
-
 		t, err := expandRouterPolicy6Src(d, v, "src", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["src"] = t
+			new_version_map := map[string][]string{
+				">=": []string{"7.2.1"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				vx := fmt.Sprintf("%v", t)
+				vxx := strings.Split(vx, ", ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["addr6"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["src"] = tmps
+			} else {
+				obj["src"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandRouterPolicy6Srcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -1024,7 +1111,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("src_negate"); ok {
-
 		t, err := expandRouterPolicy6SrcNegate(d, v, "src_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -1034,17 +1120,33 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("dst"); ok {
-
 		t, err := expandRouterPolicy6Dst(d, v, "dst", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["dst"] = t
+			new_version_map := map[string][]string{
+				">=": []string{"7.2.1"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				vx := fmt.Sprintf("%v", t)
+				vxx := strings.Split(vx, ", ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["addr6"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["dst"] = tmps
+			} else {
+				obj["dst"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandRouterPolicy6Dstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -1054,7 +1156,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("dst_negate"); ok {
-
 		t, err := expandRouterPolicy6DstNegate(d, v, "dst_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -1064,7 +1165,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandRouterPolicy6Action(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -1074,7 +1174,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandRouterPolicy6Protocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1084,7 +1183,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("start_port"); ok {
-
 		t, err := expandRouterPolicy6StartPort(d, v, "start_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1094,7 +1192,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("end_port"); ok {
-
 		t, err := expandRouterPolicy6EndPort(d, v, "end_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1104,7 +1201,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
-
 		t, err := expandRouterPolicy6Gateway(d, v, "gateway", sv)
 		if err != nil {
 			return &obj, err
@@ -1114,7 +1210,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("output_device"); ok {
-
 		t, err := expandRouterPolicy6OutputDevice(d, v, "output_device", sv)
 		if err != nil {
 			return &obj, err
@@ -1124,7 +1219,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("tos"); ok {
-
 		t, err := expandRouterPolicy6Tos(d, v, "tos", sv)
 		if err != nil {
 			return &obj, err
@@ -1134,7 +1228,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("tos_mask"); ok {
-
 		t, err := expandRouterPolicy6TosMask(d, v, "tos_mask", sv)
 		if err != nil {
 			return &obj, err
@@ -1144,7 +1237,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandRouterPolicy6Status(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -1154,7 +1246,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandRouterPolicy6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -1164,7 +1255,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {
-
 		t, err := expandRouterPolicy6InternetServiceId(d, v, "internet_service_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1174,7 +1264,6 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("internet_service_custom"); ok || d.HasChange("internet_service_custom") {
-
 		t, err := expandRouterPolicy6InternetServiceCustom(d, v, "internet_service_custom", sv)
 		if err != nil {
 			return &obj, err

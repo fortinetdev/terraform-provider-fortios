@@ -22,6 +22,7 @@ The following attributes are exported:
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
+* `route_tag` - route-tag address.
 * `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.

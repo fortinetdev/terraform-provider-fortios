@@ -79,6 +79,11 @@ func resourceSwitchControllerSwitchGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -242,13 +247,11 @@ func flattenSwitchControllerSwitchGroupMembers(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := i["switch-id"]; ok {
-
 			tmp["switch_id"] = flattenSwitchControllerSwitchGroupMembersSwitchId(i["switch-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerSwitchGroupMembersName(i["name"], d, pre_append, sv)
 		}
 
@@ -271,6 +274,12 @@ func flattenSwitchControllerSwitchGroupMembersName(v interface{}, d *schema.Reso
 
 func refreshObjectSwitchControllerSwitchGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerSwitchGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -290,7 +299,7 @@ func refreshObjectSwitchControllerSwitchGroup(d *schema.ResourceData, o map[stri
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("members", flattenSwitchControllerSwitchGroupMembers(o["members"], d, "members", sv)); err != nil {
 			if !fortiAPIPatch(o["members"]) {
 				return fmt.Errorf("Error reading members: %v", err)
@@ -343,13 +352,11 @@ func expandSwitchControllerSwitchGroupMembers(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["switch-id"], _ = expandSwitchControllerSwitchGroupMembersSwitchId(d, i["switch_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerSwitchGroupMembersName(d, i["name"], pre_append, sv)
 		}
 
@@ -373,7 +380,6 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSwitchGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -383,7 +389,6 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerSwitchGroupDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +398,6 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
-
 		t, err := expandSwitchControllerSwitchGroupFortilink(d, v, "fortilink", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +407,6 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("members"); ok || d.HasChange("members") {
-
 		t, err := expandSwitchControllerSwitchGroupMembers(d, v, "members", sv)
 		if err != nil {
 			return &obj, err

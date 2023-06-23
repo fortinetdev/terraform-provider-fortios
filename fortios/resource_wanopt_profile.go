@@ -334,6 +334,11 @@ func resourceWanoptProfile() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -486,73 +491,61 @@ func flattenWanoptProfileHttp(v interface{}, d *schema.ResourceData, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenWanoptProfileHttpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := i["secure-tunnel"]; ok {
-
 		result["secure_tunnel"] = flattenWanoptProfileHttpSecureTunnel(i["secure-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := i["byte-caching"]; ok {
-
 		result["byte_caching"] = flattenWanoptProfileHttpByteCaching(i["byte-caching"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "prefer_chunking"
 	if _, ok := i["prefer-chunking"]; ok {
-
 		result["prefer_chunking"] = flattenWanoptProfileHttpPreferChunking(i["prefer-chunking"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "protocol_opt"
 	if _, ok := i["protocol-opt"]; ok {
-
 		result["protocol_opt"] = flattenWanoptProfileHttpProtocolOpt(i["protocol-opt"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := i["tunnel-sharing"]; ok {
-
 		result["tunnel_sharing"] = flattenWanoptProfileHttpTunnelSharing(i["tunnel-sharing"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := i["log-traffic"]; ok {
-
 		result["log_traffic"] = flattenWanoptProfileHttpLogTraffic(i["log-traffic"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port"
 	if _, ok := i["port"]; ok {
-
 		result["port"] = flattenWanoptProfileHttpPort(i["port"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := i["ssl"]; ok {
-
 		result["ssl"] = flattenWanoptProfileHttpSsl(i["ssl"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_port"
 	if _, ok := i["ssl-port"]; ok {
-
 		result["ssl_port"] = flattenWanoptProfileHttpSslPort(i["ssl-port"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unknown_http_version"
 	if _, ok := i["unknown-http-version"]; ok {
-
 		result["unknown_http_version"] = flattenWanoptProfileHttpUnknownHttpVersion(i["unknown-http-version"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := i["tunnel-non-http"]; ok {
-
 		result["tunnel_non_http"] = flattenWanoptProfileHttpTunnelNonHttp(i["tunnel-non-http"], d, pre_append, sv)
 	}
 
@@ -619,49 +612,41 @@ func flattenWanoptProfileCifs(v interface{}, d *schema.ResourceData, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenWanoptProfileCifsStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := i["secure-tunnel"]; ok {
-
 		result["secure_tunnel"] = flattenWanoptProfileCifsSecureTunnel(i["secure-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := i["byte-caching"]; ok {
-
 		result["byte_caching"] = flattenWanoptProfileCifsByteCaching(i["byte-caching"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "prefer_chunking"
 	if _, ok := i["prefer-chunking"]; ok {
-
 		result["prefer_chunking"] = flattenWanoptProfileCifsPreferChunking(i["prefer-chunking"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "protocol_opt"
 	if _, ok := i["protocol-opt"]; ok {
-
 		result["protocol_opt"] = flattenWanoptProfileCifsProtocolOpt(i["protocol-opt"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := i["tunnel-sharing"]; ok {
-
 		result["tunnel_sharing"] = flattenWanoptProfileCifsTunnelSharing(i["tunnel-sharing"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := i["log-traffic"]; ok {
-
 		result["log_traffic"] = flattenWanoptProfileCifsLogTraffic(i["log-traffic"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port"
 	if _, ok := i["port"]; ok {
-
 		result["port"] = flattenWanoptProfileCifsPort(i["port"], d, pre_append, sv)
 	}
 
@@ -712,37 +697,31 @@ func flattenWanoptProfileMapi(v interface{}, d *schema.ResourceData, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenWanoptProfileMapiStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := i["secure-tunnel"]; ok {
-
 		result["secure_tunnel"] = flattenWanoptProfileMapiSecureTunnel(i["secure-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := i["byte-caching"]; ok {
-
 		result["byte_caching"] = flattenWanoptProfileMapiByteCaching(i["byte-caching"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := i["tunnel-sharing"]; ok {
-
 		result["tunnel_sharing"] = flattenWanoptProfileMapiTunnelSharing(i["tunnel-sharing"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := i["log-traffic"]; ok {
-
 		result["log_traffic"] = flattenWanoptProfileMapiLogTraffic(i["log-traffic"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port"
 	if _, ok := i["port"]; ok {
-
 		result["port"] = flattenWanoptProfileMapiPort(i["port"], d, pre_append, sv)
 	}
 
@@ -785,55 +764,46 @@ func flattenWanoptProfileFtp(v interface{}, d *schema.ResourceData, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenWanoptProfileFtpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := i["secure-tunnel"]; ok {
-
 		result["secure_tunnel"] = flattenWanoptProfileFtpSecureTunnel(i["secure-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := i["byte-caching"]; ok {
-
 		result["byte_caching"] = flattenWanoptProfileFtpByteCaching(i["byte-caching"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := i["ssl"]; ok {
-
 		result["ssl"] = flattenWanoptProfileFtpSsl(i["ssl"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "prefer_chunking"
 	if _, ok := i["prefer-chunking"]; ok {
-
 		result["prefer_chunking"] = flattenWanoptProfileFtpPreferChunking(i["prefer-chunking"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "protocol_opt"
 	if _, ok := i["protocol-opt"]; ok {
-
 		result["protocol_opt"] = flattenWanoptProfileFtpProtocolOpt(i["protocol-opt"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := i["tunnel-sharing"]; ok {
-
 		result["tunnel_sharing"] = flattenWanoptProfileFtpTunnelSharing(i["tunnel-sharing"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := i["log-traffic"]; ok {
-
 		result["log_traffic"] = flattenWanoptProfileFtpLogTraffic(i["log-traffic"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port"
 	if _, ok := i["port"]; ok {
-
 		result["port"] = flattenWanoptProfileFtpPort(i["port"], d, pre_append, sv)
 	}
 
@@ -888,59 +858,53 @@ func flattenWanoptProfileTcp(v interface{}, d *schema.ResourceData, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenWanoptProfileTcpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := i["secure-tunnel"]; ok {
-
 		result["secure_tunnel"] = flattenWanoptProfileTcpSecureTunnel(i["secure-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := i["byte-caching"]; ok {
-
 		result["byte_caching"] = flattenWanoptProfileTcpByteCaching(i["byte-caching"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "byte_caching_opt"
 	if _, ok := i["byte-caching-opt"]; ok {
-
 		result["byte_caching_opt"] = flattenWanoptProfileTcpByteCachingOpt(i["byte-caching-opt"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := i["tunnel-sharing"]; ok {
-
 		result["tunnel_sharing"] = flattenWanoptProfileTcpTunnelSharing(i["tunnel-sharing"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := i["log-traffic"]; ok {
-
 		result["log_traffic"] = flattenWanoptProfileTcpLogTraffic(i["log-traffic"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port"
 	if _, ok := i["port"]; ok {
-
 		result["port"] = flattenWanoptProfileTcpPort(i["port"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := i["ssl"]; ok {
-
 		result["ssl"] = flattenWanoptProfileTcpSsl(i["ssl"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_port"
 	if _, ok := i["ssl-port"]; ok {
-
 		v := flattenWanoptProfileTcpSslPort(i["ssl-port"], d, pre_append, sv)
 		vx := 0
 		bstring := false
-		if i2ss2arrFortiAPIUpgrade(sv, "6.4.0") == true {
+		new_version_map := map[string][]string{
+			">=": []string{"6.4.0"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 			if vi, ok := v.(string); ok {
 				var err error
 				vx, err = strconv.Atoi(vi)
@@ -998,6 +962,12 @@ func flattenWanoptProfileTcpSslPort(v interface{}, d *schema.ResourceData, pre s
 
 func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWanoptProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1023,7 +993,7 @@ func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("http", flattenWanoptProfileHttp(o["http"], d, "http", sv)); err != nil {
 			if !fortiAPIPatch(o["http"]) {
 				return fmt.Errorf("Error reading http: %v", err)
@@ -1039,7 +1009,7 @@ func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("cifs", flattenWanoptProfileCifs(o["cifs"], d, "cifs", sv)); err != nil {
 			if !fortiAPIPatch(o["cifs"]) {
 				return fmt.Errorf("Error reading cifs: %v", err)
@@ -1055,7 +1025,7 @@ func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("mapi", flattenWanoptProfileMapi(o["mapi"], d, "mapi", sv)); err != nil {
 			if !fortiAPIPatch(o["mapi"]) {
 				return fmt.Errorf("Error reading mapi: %v", err)
@@ -1071,7 +1041,7 @@ func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ftp", flattenWanoptProfileFtp(o["ftp"], d, "ftp", sv)); err != nil {
 			if !fortiAPIPatch(o["ftp"]) {
 				return fmt.Errorf("Error reading ftp: %v", err)
@@ -1087,7 +1057,7 @@ func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tcp", flattenWanoptProfileTcp(o["tcp"], d, "tcp", sv)); err != nil {
 			if !fortiAPIPatch(o["tcp"]) {
 				return fmt.Errorf("Error reading tcp: %v", err)
@@ -1140,62 +1110,50 @@ func expandWanoptProfileHttp(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandWanoptProfileHttpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["secure-tunnel"], _ = expandWanoptProfileHttpSecureTunnel(d, i["secure_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["byte-caching"], _ = expandWanoptProfileHttpByteCaching(d, i["byte_caching"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "prefer_chunking"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["prefer-chunking"], _ = expandWanoptProfileHttpPreferChunking(d, i["prefer_chunking"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "protocol_opt"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["protocol-opt"], _ = expandWanoptProfileHttpProtocolOpt(d, i["protocol_opt"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-sharing"], _ = expandWanoptProfileHttpTunnelSharing(d, i["tunnel_sharing"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log-traffic"], _ = expandWanoptProfileHttpLogTraffic(d, i["log_traffic"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port"], _ = expandWanoptProfileHttpPort(d, i["port"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl"], _ = expandWanoptProfileHttpSsl(d, i["ssl"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-port"], _ = expandWanoptProfileHttpSslPort(d, i["ssl_port"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unknown_http_version"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unknown-http-version"], _ = expandWanoptProfileHttpUnknownHttpVersion(d, i["unknown_http_version"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-non-http"], _ = expandWanoptProfileHttpTunnelNonHttp(d, i["tunnel_non_http"], pre_append, sv)
 	}
 
@@ -1262,42 +1220,34 @@ func expandWanoptProfileCifs(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandWanoptProfileCifsStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["secure-tunnel"], _ = expandWanoptProfileCifsSecureTunnel(d, i["secure_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["byte-caching"], _ = expandWanoptProfileCifsByteCaching(d, i["byte_caching"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "prefer_chunking"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["prefer-chunking"], _ = expandWanoptProfileCifsPreferChunking(d, i["prefer_chunking"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "protocol_opt"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["protocol-opt"], _ = expandWanoptProfileCifsProtocolOpt(d, i["protocol_opt"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-sharing"], _ = expandWanoptProfileCifsTunnelSharing(d, i["tunnel_sharing"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log-traffic"], _ = expandWanoptProfileCifsLogTraffic(d, i["log_traffic"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port"], _ = expandWanoptProfileCifsPort(d, i["port"], pre_append, sv)
 	}
 
@@ -1348,32 +1298,26 @@ func expandWanoptProfileMapi(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandWanoptProfileMapiStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["secure-tunnel"], _ = expandWanoptProfileMapiSecureTunnel(d, i["secure_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["byte-caching"], _ = expandWanoptProfileMapiByteCaching(d, i["byte_caching"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-sharing"], _ = expandWanoptProfileMapiTunnelSharing(d, i["tunnel_sharing"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log-traffic"], _ = expandWanoptProfileMapiLogTraffic(d, i["log_traffic"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port"], _ = expandWanoptProfileMapiPort(d, i["port"], pre_append, sv)
 	}
 
@@ -1416,47 +1360,38 @@ func expandWanoptProfileFtp(d *schema.ResourceData, v interface{}, pre string, s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandWanoptProfileFtpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["secure-tunnel"], _ = expandWanoptProfileFtpSecureTunnel(d, i["secure_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["byte-caching"], _ = expandWanoptProfileFtpByteCaching(d, i["byte_caching"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl"], _ = expandWanoptProfileFtpSsl(d, i["ssl"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "prefer_chunking"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["prefer-chunking"], _ = expandWanoptProfileFtpPreferChunking(d, i["prefer_chunking"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "protocol_opt"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["protocol-opt"], _ = expandWanoptProfileFtpProtocolOpt(d, i["protocol_opt"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-sharing"], _ = expandWanoptProfileFtpTunnelSharing(d, i["tunnel_sharing"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log-traffic"], _ = expandWanoptProfileFtpLogTraffic(d, i["log_traffic"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port"], _ = expandWanoptProfileFtpPort(d, i["port"], pre_append, sv)
 	}
 
@@ -1511,51 +1446,45 @@ func expandWanoptProfileTcp(d *schema.ResourceData, v interface{}, pre string, s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandWanoptProfileTcpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "secure_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["secure-tunnel"], _ = expandWanoptProfileTcpSecureTunnel(d, i["secure_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "byte_caching"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["byte-caching"], _ = expandWanoptProfileTcpByteCaching(d, i["byte_caching"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "byte_caching_opt"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["byte-caching-opt"], _ = expandWanoptProfileTcpByteCachingOpt(d, i["byte_caching_opt"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_sharing"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-sharing"], _ = expandWanoptProfileTcpTunnelSharing(d, i["tunnel_sharing"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log_traffic"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log-traffic"], _ = expandWanoptProfileTcpLogTraffic(d, i["log_traffic"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port"], _ = expandWanoptProfileTcpPort(d, i["port"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl"], _ = expandWanoptProfileTcpSsl(d, i["ssl"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		bstring := false
 		t, _ := expandWanoptProfileTcpSslPort(d, i["ssl_port"], pre_append, sv)
 		if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "6.4.0") == true {
+			new_version_map := map[string][]string{
+				">=": []string{"6.4.0"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				bstring = true
 			}
 		}
@@ -1611,7 +1540,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWanoptProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1621,7 +1549,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("transparent"); ok {
-
 		t, err := expandWanoptProfileTransparent(d, v, "transparent", sv)
 		if err != nil {
 			return &obj, err
@@ -1631,7 +1558,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandWanoptProfileComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -1641,7 +1567,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("auth_group"); ok {
-
 		t, err := expandWanoptProfileAuthGroup(d, v, "auth_group", sv)
 		if err != nil {
 			return &obj, err
@@ -1651,7 +1576,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("http"); ok {
-
 		t, err := expandWanoptProfileHttp(d, v, "http", sv)
 		if err != nil {
 			return &obj, err
@@ -1661,7 +1585,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("cifs"); ok {
-
 		t, err := expandWanoptProfileCifs(d, v, "cifs", sv)
 		if err != nil {
 			return &obj, err
@@ -1671,7 +1594,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("mapi"); ok {
-
 		t, err := expandWanoptProfileMapi(d, v, "mapi", sv)
 		if err != nil {
 			return &obj, err
@@ -1681,7 +1603,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ftp"); ok {
-
 		t, err := expandWanoptProfileFtp(d, v, "ftp", sv)
 		if err != nil {
 			return &obj, err
@@ -1691,7 +1612,6 @@ func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("tcp"); ok {
-
 		t, err := expandWanoptProfileTcp(d, v, "tcp", sv)
 		if err != nil {
 			return &obj, err

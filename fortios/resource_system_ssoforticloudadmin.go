@@ -42,6 +42,12 @@ func resourceSystemSsoForticloudAdmin() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"accprofile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -57,6 +63,11 @@ func resourceSystemSsoForticloudAdmin() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -190,6 +201,10 @@ func flattenSystemSsoForticloudAdminName(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemSsoForticloudAdminAccprofile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSsoForticloudAdminVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -216,7 +231,6 @@ func flattenSystemSsoForticloudAdminVdom(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSsoForticloudAdminVdomName(i["name"], d, pre_append, sv)
 		}
 
@@ -235,6 +249,12 @@ func flattenSystemSsoForticloudAdminVdomName(v interface{}, d *schema.ResourceDa
 
 func refreshObjectSystemSsoForticloudAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemSsoForticloudAdminName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -242,7 +262,13 @@ func refreshObjectSystemSsoForticloudAdmin(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("accprofile", flattenSystemSsoForticloudAdminAccprofile(o["accprofile"], d, "accprofile", sv)); err != nil {
+		if !fortiAPIPatch(o["accprofile"]) {
+			return fmt.Errorf("Error reading accprofile: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("vdom", flattenSystemSsoForticloudAdminVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
@@ -271,6 +297,10 @@ func expandSystemSsoForticloudAdminName(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemSsoForticloudAdminAccprofile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSsoForticloudAdminVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -287,7 +317,6 @@ func expandSystemSsoForticloudAdminVdom(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSsoForticloudAdminVdomName(d, i["name"], pre_append, sv)
 		}
 
@@ -307,7 +336,6 @@ func getObjectSystemSsoForticloudAdmin(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSsoForticloudAdminName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -316,8 +344,16 @@ func getObjectSystemSsoForticloudAdmin(d *schema.ResourceData, sv string) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
+	if v, ok := d.GetOk("accprofile"); ok {
+		t, err := expandSystemSsoForticloudAdminAccprofile(d, v, "accprofile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["accprofile"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
 		t, err := expandSystemSsoForticloudAdminVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err

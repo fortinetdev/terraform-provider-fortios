@@ -90,6 +90,11 @@ func resourceWirelessControllerHotspot20Icon() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -245,37 +250,31 @@ func flattenWirelessControllerHotspot20IconIconList(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerHotspot20IconIconListName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
 		if _, ok := i["lang"]; ok {
-
 			tmp["lang"] = flattenWirelessControllerHotspot20IconIconListLang(i["lang"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
 		if _, ok := i["file"]; ok {
-
 			tmp["file"] = flattenWirelessControllerHotspot20IconIconListFile(i["file"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenWirelessControllerHotspot20IconIconListType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := i["width"]; ok {
-
 			tmp["width"] = flattenWirelessControllerHotspot20IconIconListWidth(i["width"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := i["height"]; ok {
-
 			tmp["height"] = flattenWirelessControllerHotspot20IconIconListHeight(i["height"], d, pre_append, sv)
 		}
 
@@ -314,6 +313,12 @@ func flattenWirelessControllerHotspot20IconIconListHeight(v interface{}, d *sche
 
 func refreshObjectWirelessControllerHotspot20Icon(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20IconName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -321,7 +326,7 @@ func refreshObjectWirelessControllerHotspot20Icon(d *schema.ResourceData, o map[
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("icon_list", flattenWirelessControllerHotspot20IconIconList(o["icon-list"], d, "icon_list", sv)); err != nil {
 			if !fortiAPIPatch(o["icon-list"]) {
 				return fmt.Errorf("Error reading icon_list: %v", err)
@@ -366,37 +371,31 @@ func expandWirelessControllerHotspot20IconIconList(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerHotspot20IconIconListName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["lang"], _ = expandWirelessControllerHotspot20IconIconListLang(d, i["lang"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["file"], _ = expandWirelessControllerHotspot20IconIconListFile(d, i["file"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandWirelessControllerHotspot20IconIconListType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["width"], _ = expandWirelessControllerHotspot20IconIconListWidth(d, i["width"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["height"], _ = expandWirelessControllerHotspot20IconIconListHeight(d, i["height"], pre_append, sv)
 		}
 
@@ -436,7 +435,6 @@ func getObjectWirelessControllerHotspot20Icon(d *schema.ResourceData, sv string)
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20IconName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -446,7 +444,6 @@ func getObjectWirelessControllerHotspot20Icon(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("icon_list"); ok || d.HasChange("icon_list") {
-
 		t, err := expandWirelessControllerHotspot20IconIconList(d, v, "icon_list", sv)
 		if err != nil {
 			return &obj, err

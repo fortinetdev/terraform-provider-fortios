@@ -387,7 +387,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebProxyForwardServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -397,7 +396,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("addr_type"); ok {
-
 		t, err := expandWebProxyForwardServerAddrType(d, v, "addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -407,7 +405,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandWebProxyForwardServerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -417,7 +414,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("fqdn"); ok {
-
 		t, err := expandWebProxyForwardServerFqdn(d, v, "fqdn", sv)
 		if err != nil {
 			return &obj, err
@@ -427,7 +423,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandWebProxyForwardServerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -437,7 +432,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("healthcheck"); ok {
-
 		t, err := expandWebProxyForwardServerHealthcheck(d, v, "healthcheck", sv)
 		if err != nil {
 			return &obj, err
@@ -447,7 +441,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("monitor"); ok {
-
 		t, err := expandWebProxyForwardServerMonitor(d, v, "monitor", sv)
 		if err != nil {
 			return &obj, err
@@ -457,7 +450,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("server_down_option"); ok {
-
 		t, err := expandWebProxyForwardServerServerDownOption(d, v, "server_down_option", sv)
 		if err != nil {
 			return &obj, err
@@ -467,7 +459,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandWebProxyForwardServerUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -477,7 +468,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandWebProxyForwardServerPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -487,7 +477,6 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWebProxyForwardServerComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err

@@ -204,6 +204,11 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -411,7 +416,6 @@ func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmVoId(i["id"], d, pre_append, sv)
 		}
 
@@ -454,7 +458,6 @@ func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmViId(i["id"], d, pre_append, sv)
 		}
 
@@ -497,7 +500,6 @@ func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBeId(i["id"], d, pre_append, sv)
 		}
 
@@ -540,7 +542,6 @@ func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBkId(i["id"], d, pre_append, sv)
 		}
 
@@ -579,6 +580,12 @@ func flattenWirelessControllerQosProfileWmmBkDscp(v interface{}, d *schema.Resou
 
 func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerQosProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -664,7 +671,7 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dscp_wmm_vo", flattenWirelessControllerQosProfileDscpWmmVo(o["dscp-wmm-vo"], d, "dscp_wmm_vo", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-vo"]) {
 				return fmt.Errorf("Error reading dscp_wmm_vo: %v", err)
@@ -680,7 +687,7 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dscp_wmm_vi", flattenWirelessControllerQosProfileDscpWmmVi(o["dscp-wmm-vi"], d, "dscp_wmm_vi", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-vi"]) {
 				return fmt.Errorf("Error reading dscp_wmm_vi: %v", err)
@@ -696,7 +703,7 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dscp_wmm_be", flattenWirelessControllerQosProfileDscpWmmBe(o["dscp-wmm-be"], d, "dscp_wmm_be", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-be"]) {
 				return fmt.Errorf("Error reading dscp_wmm_be: %v", err)
@@ -712,7 +719,7 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dscp_wmm_bk", flattenWirelessControllerQosProfileDscpWmmBk(o["dscp-wmm-bk"], d, "dscp_wmm_bk", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-bk"]) {
 				return fmt.Errorf("Error reading dscp_wmm_bk: %v", err)
@@ -839,7 +846,6 @@ func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmVoId(d, i["id"], pre_append, sv)
 		}
 
@@ -871,7 +877,6 @@ func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmViId(d, i["id"], pre_append, sv)
 		}
 
@@ -903,7 +908,6 @@ func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBeId(d, i["id"], pre_append, sv)
 		}
 
@@ -935,7 +939,6 @@ func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBkId(d, i["id"], pre_append, sv)
 		}
 
@@ -975,7 +978,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerQosProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -985,7 +987,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerQosProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -995,7 +996,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("uplink"); ok {
-
 		t, err := expandWirelessControllerQosProfileUplink(d, v, "uplink", sv)
 		if err != nil {
 			return &obj, err
@@ -1005,7 +1005,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("downlink"); ok {
-
 		t, err := expandWirelessControllerQosProfileDownlink(d, v, "downlink", sv)
 		if err != nil {
 			return &obj, err
@@ -1015,7 +1014,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("uplink_sta"); ok {
-
 		t, err := expandWirelessControllerQosProfileUplinkSta(d, v, "uplink_sta", sv)
 		if err != nil {
 			return &obj, err
@@ -1025,7 +1023,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("downlink_sta"); ok {
-
 		t, err := expandWirelessControllerQosProfileDownlinkSta(d, v, "downlink_sta", sv)
 		if err != nil {
 			return &obj, err
@@ -1035,7 +1032,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("burst"); ok {
-
 		t, err := expandWirelessControllerQosProfileBurst(d, v, "burst", sv)
 		if err != nil {
 			return &obj, err
@@ -1045,7 +1041,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("wmm"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmm(d, v, "wmm", sv)
 		if err != nil {
 			return &obj, err
@@ -1055,7 +1050,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("wmm_uapsd"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmmUapsd(d, v, "wmm_uapsd", sv)
 		if err != nil {
 			return &obj, err
@@ -1065,7 +1059,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("call_admission_control"); ok {
-
 		t, err := expandWirelessControllerQosProfileCallAdmissionControl(d, v, "call_admission_control", sv)
 		if err != nil {
 			return &obj, err
@@ -1075,7 +1068,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("call_capacity"); ok {
-
 		t, err := expandWirelessControllerQosProfileCallCapacity(d, v, "call_capacity", sv)
 		if err != nil {
 			return &obj, err
@@ -1085,7 +1077,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("bandwidth_admission_control"); ok {
-
 		t, err := expandWirelessControllerQosProfileBandwidthAdmissionControl(d, v, "bandwidth_admission_control", sv)
 		if err != nil {
 			return &obj, err
@@ -1095,7 +1086,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("bandwidth_capacity"); ok {
-
 		t, err := expandWirelessControllerQosProfileBandwidthCapacity(d, v, "bandwidth_capacity", sv)
 		if err != nil {
 			return &obj, err
@@ -1105,7 +1095,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_mapping"); ok {
-
 		t, err := expandWirelessControllerQosProfileDscpWmmMapping(d, v, "dscp_wmm_mapping", sv)
 		if err != nil {
 			return &obj, err
@@ -1115,7 +1104,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_vo"); ok || d.HasChange("dscp_wmm_vo") {
-
 		t, err := expandWirelessControllerQosProfileDscpWmmVo(d, v, "dscp_wmm_vo", sv)
 		if err != nil {
 			return &obj, err
@@ -1125,7 +1113,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_vi"); ok || d.HasChange("dscp_wmm_vi") {
-
 		t, err := expandWirelessControllerQosProfileDscpWmmVi(d, v, "dscp_wmm_vi", sv)
 		if err != nil {
 			return &obj, err
@@ -1135,7 +1122,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_be"); ok || d.HasChange("dscp_wmm_be") {
-
 		t, err := expandWirelessControllerQosProfileDscpWmmBe(d, v, "dscp_wmm_be", sv)
 		if err != nil {
 			return &obj, err
@@ -1145,7 +1131,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_bk"); ok || d.HasChange("dscp_wmm_bk") {
-
 		t, err := expandWirelessControllerQosProfileDscpWmmBk(d, v, "dscp_wmm_bk", sv)
 		if err != nil {
 			return &obj, err
@@ -1155,7 +1140,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("wmm_dscp_marking"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmmDscpMarking(d, v, "wmm_dscp_marking", sv)
 		if err != nil {
 			return &obj, err
@@ -1165,7 +1149,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("wmm_vo_dscp"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmmVoDscp(d, v, "wmm_vo_dscp", sv)
 		if err != nil {
 			return &obj, err
@@ -1175,7 +1158,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("wmm_vi_dscp"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmmViDscp(d, v, "wmm_vi_dscp", sv)
 		if err != nil {
 			return &obj, err
@@ -1185,7 +1167,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("wmm_be_dscp"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmmBeDscp(d, v, "wmm_be_dscp", sv)
 		if err != nil {
 			return &obj, err
@@ -1195,7 +1176,6 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("wmm_bk_dscp"); ok {
-
 		t, err := expandWirelessControllerQosProfileWmmBkDscp(d, v, "wmm_bk_dscp", sv)
 		if err != nil {
 			return &obj, err

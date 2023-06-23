@@ -40,6 +40,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"proxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ha_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -105,6 +109,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Computed: true,
 			},
 			"vpc_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"alt_resource_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -241,6 +249,30 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"compartment_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"compartment_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"oci_region_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"region": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"compartment_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -360,6 +392,14 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"server_ca_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"api_key": &schema.Schema{
 				Type:      schema.TypeString,
 				Sensitive: true,
@@ -441,6 +481,10 @@ func dataSourceFlattenSystemSdnConnectorStatus(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemSdnConnectorType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -529,6 +573,10 @@ func dataSourceFlattenSystemSdnConnectorRegion(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemSdnConnectorVpcId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorAltResourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -853,6 +901,78 @@ func dataSourceFlattenSystemSdnConnectorUserId(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorCompartmentList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "compartment_id"
+		if _, ok := i["compartment-id"]; ok {
+			tmp["compartment_id"] = dataSourceFlattenSystemSdnConnectorCompartmentListCompartmentId(i["compartment-id"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorCompartmentListCompartmentId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorOciRegionList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
+		if _, ok := i["region"]; ok {
+			tmp["region"] = dataSourceFlattenSystemSdnConnectorOciRegionListRegion(i["region"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorOciRegionListRegion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorCompartmentId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1099,6 +1219,14 @@ func dataSourceFlattenSystemSdnConnectorGroupName(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorServerCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorServerCaCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorApiKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1141,6 +1269,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("type", dataSourceFlattenSystemSdnConnectorType(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy", dataSourceFlattenSystemSdnConnectorProxy(o["proxy"], d, "proxy")); err != nil {
+		if !fortiAPIPatch(o["proxy"]) {
+			return fmt.Errorf("Error reading proxy: %v", err)
 		}
 	}
 
@@ -1201,6 +1335,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("vpc_id", dataSourceFlattenSystemSdnConnectorVpcId(o["vpc-id"], d, "vpc_id")); err != nil {
 		if !fortiAPIPatch(o["vpc-id"]) {
 			return fmt.Errorf("Error reading vpc_id: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_resource_ip", dataSourceFlattenSystemSdnConnectorAltResourceIp(o["alt-resource-ip"], d, "alt_resource_ip")); err != nil {
+		if !fortiAPIPatch(o["alt-resource-ip"]) {
+			return fmt.Errorf("Error reading alt_resource_ip: %v", err)
 		}
 	}
 
@@ -1267,6 +1407,18 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("user_id", dataSourceFlattenSystemSdnConnectorUserId(o["user-id"], d, "user_id")); err != nil {
 		if !fortiAPIPatch(o["user-id"]) {
 			return fmt.Errorf("Error reading user_id: %v", err)
+		}
+	}
+
+	if err = d.Set("compartment_list", dataSourceFlattenSystemSdnConnectorCompartmentList(o["compartment-list"], d, "compartment_list")); err != nil {
+		if !fortiAPIPatch(o["compartment-list"]) {
+			return fmt.Errorf("Error reading compartment_list: %v", err)
+		}
+	}
+
+	if err = d.Set("oci_region_list", dataSourceFlattenSystemSdnConnectorOciRegionList(o["oci-region-list"], d, "oci_region_list")); err != nil {
+		if !fortiAPIPatch(o["oci-region-list"]) {
+			return fmt.Errorf("Error reading oci_region_list: %v", err)
 		}
 	}
 
@@ -1351,6 +1503,18 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("group_name", dataSourceFlattenSystemSdnConnectorGroupName(o["group-name"], d, "group_name")); err != nil {
 		if !fortiAPIPatch(o["group-name"]) {
 			return fmt.Errorf("Error reading group_name: %v", err)
+		}
+	}
+
+	if err = d.Set("server_cert", dataSourceFlattenSystemSdnConnectorServerCert(o["server-cert"], d, "server_cert")); err != nil {
+		if !fortiAPIPatch(o["server-cert"]) {
+			return fmt.Errorf("Error reading server_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("server_ca_cert", dataSourceFlattenSystemSdnConnectorServerCaCert(o["server-ca-cert"], d, "server_ca_cert")); err != nil {
+		if !fortiAPIPatch(o["server-ca-cert"]) {
+			return fmt.Errorf("Error reading server_ca_cert: %v", err)
 		}
 	}
 

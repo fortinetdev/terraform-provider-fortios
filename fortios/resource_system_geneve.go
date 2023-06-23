@@ -329,7 +329,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemGeneveName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -339,7 +338,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemGeneveInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -349,7 +347,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("vni"); ok {
-
 		t, err := expandSystemGeneveVni(d, v, "vni", sv)
 		if err != nil {
 			return &obj, err
@@ -359,7 +356,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSystemGeneveType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -369,7 +365,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
-
 		t, err := expandSystemGeneveIpVersion(d, v, "ip_version", sv)
 		if err != nil {
 			return &obj, err
@@ -379,7 +374,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("remote_ip"); ok {
-
 		t, err := expandSystemGeneveRemoteIp(d, v, "remote_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -389,7 +383,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("remote_ip6"); ok {
-
 		t, err := expandSystemGeneveRemoteIp6(d, v, "remote_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -399,7 +392,6 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("dstport"); ok {
-
 		t, err := expandSystemGeneveDstport(d, v, "dstport", sv)
 		if err != nil {
 			return &obj, err

@@ -171,7 +171,6 @@ func getObjectFirewallGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["banned-ip-persistency"] = nil
 		} else {
-
 			t, err := expandFirewallGlobalBannedIpPersistency(d, v, "banned_ip_persistency", sv)
 			if err != nil {
 				return &obj, err

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_extendercontroller_extenderprofile
-FortiExtender extender profile configuration. Applies to FortiOS Version `7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.2.0`.
+FortiExtender extender profile configuration. Applies to FortiOS Version `7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.2.0`.
 
 ## Argument Reference
 
@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - FortiExtender profile name
 * `fosid` - id
-* `model` - Model. Valid values: `FX201E`, `FX211E`, `FX200F`, `FXA11F`, `FXE11F`, `FXA21F`, `FXE21F`, `FXA22F`, `FXE22F`, `FX212F`, `FX311F`, `FX312F`, `FX511F`, `FVG21F`, `FVA21F`, `FVG22F`, `FVA22F`, `FX04DA`.
+* `model` - Model.
 * `extension` - Extension option. Valid values: `wan-extension`, `lan-extension`.
 * `allowaccess` - Control management access to the managed extender. Separate entries with a space. Valid values: `ping`, `telnet`, `http`, `https`, `ssh`, `snmp`.
 * `login_password_change` - Change or reset the administrator password of a managed extender (yes, default, or no, default = no). Valid values: `yes`, `default`, `no`.
@@ -24,6 +24,7 @@ The following arguments are supported:
 * `bandwidth_limit` - FortiExtender LAN extension bandwidth limit (Mbps).
 * `cellular` - FortiExtender cellular configuration. The structure of `cellular` block is documented below.
 * `lan_extension` - FortiExtender lan extension configuration. The structure of `lan_extension` block is documented below.
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `cellular` block supports:

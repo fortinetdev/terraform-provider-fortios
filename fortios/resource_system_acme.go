@@ -49,6 +49,11 @@ func resourceSystemAcme() *schema.Resource {
 					},
 				},
 			},
+			"use_ha_direct": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -104,6 +109,11 @@ func resourceSystemAcme() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -232,7 +242,6 @@ func flattenSystemAcmeInterface(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenSystemAcmeInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -246,6 +255,10 @@ func flattenSystemAcmeInterface(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemAcmeInterfaceInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAcmeUseHaDirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -283,37 +296,31 @@ func flattenSystemAcmeAccounts(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemAcmeAccountsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSystemAcmeAccountsStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := i["url"]; ok {
-
 			tmp["url"] = flattenSystemAcmeAccountsUrl(i["url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_url"
 		if _, ok := i["ca_url"]; ok {
-
 			tmp["ca_url"] = flattenSystemAcmeAccountsCa_Url(i["ca_url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := i["email"]; ok {
-
 			tmp["email"] = flattenSystemAcmeAccountsEmail(i["email"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "privatekey"
 		if _, ok := i["privatekey"]; ok {
-
 			tmp["privatekey"] = flattenSystemAcmeAccountsPrivatekey(i["privatekey"], d, pre_append, sv)
 		}
 
@@ -352,8 +359,14 @@ func flattenSystemAcmeAccountsPrivatekey(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectSystemAcme(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("interface", flattenSystemAcmeInterface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
 				return fmt.Errorf("Error reading interface: %v", err)
@@ -369,6 +382,12 @@ func refreshObjectSystemAcme(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("use_ha_direct", flattenSystemAcmeUseHaDirect(o["use-ha-direct"], d, "use_ha_direct", sv)); err != nil {
+		if !fortiAPIPatch(o["use-ha-direct"]) {
+			return fmt.Errorf("Error reading use_ha_direct: %v", err)
+		}
+	}
+
 	if err = d.Set("source_ip", flattenSystemAcmeSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
@@ -381,7 +400,7 @@ func refreshObjectSystemAcme(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("accounts", flattenSystemAcmeAccounts(o["accounts"], d, "accounts", sv)); err != nil {
 			if !fortiAPIPatch(o["accounts"]) {
 				return fmt.Errorf("Error reading accounts: %v", err)
@@ -422,7 +441,6 @@ func expandSystemAcmeInterface(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandSystemAcmeInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -435,6 +453,10 @@ func expandSystemAcmeInterface(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemAcmeInterfaceInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAcmeUseHaDirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -462,37 +484,31 @@ func expandSystemAcmeAccounts(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemAcmeAccountsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSystemAcmeAccountsStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["url"], _ = expandSystemAcmeAccountsUrl(d, i["url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ca_url"], _ = expandSystemAcmeAccountsCa_Url(d, i["ca_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["email"], _ = expandSystemAcmeAccountsEmail(d, i["email"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "privatekey"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["privatekey"], _ = expandSystemAcmeAccountsPrivatekey(d, i["privatekey"], pre_append, sv)
 		}
 
@@ -535,7 +551,6 @@ func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemAcmeInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -545,11 +560,23 @@ func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("use_ha_direct"); ok {
+		if setArgNil {
+			obj["use-ha-direct"] = nil
+		} else {
+			t, err := expandSystemAcmeUseHaDirect(d, v, "use_ha_direct", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["use-ha-direct"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("source_ip"); ok {
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemAcmeSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -563,7 +590,6 @@ func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["source-ip6"] = nil
 		} else {
-
 			t, err := expandSystemAcmeSourceIp6(d, v, "source_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -577,7 +603,6 @@ func getObjectSystemAcme(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["accounts"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemAcmeAccounts(d, v, "accounts", sv)
 			if err != nil {
 				return &obj, err

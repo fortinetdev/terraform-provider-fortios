@@ -81,6 +81,11 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -240,7 +245,6 @@ func flattenFirewallWildcardFqdnGroupMember(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallWildcardFqdnGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
@@ -271,6 +275,12 @@ func flattenFirewallWildcardFqdnGroupVisibility(v interface{}, d *schema.Resourc
 
 func refreshObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallWildcardFqdnGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -284,7 +294,7 @@ func refreshObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenFirewallWildcardFqdnGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -351,7 +361,6 @@ func expandFirewallWildcardFqdnGroupMember(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallWildcardFqdnGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
@@ -383,7 +392,6 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallWildcardFqdnGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +401,6 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallWildcardFqdnGroupUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +410,6 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandFirewallWildcardFqdnGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -413,7 +419,6 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallWildcardFqdnGroupColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -423,7 +428,6 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallWildcardFqdnGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -433,7 +437,6 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-
 		t, err := expandFirewallWildcardFqdnGroupVisibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err

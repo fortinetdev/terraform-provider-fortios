@@ -100,7 +100,10 @@ The following arguments are supported:
 * `srcaddr6` - Source IPv6 address name and address group names. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - Destination IPv6 address name and address group names. The structure of `dstaddr6` block is documented below.
 * `ztna_status` - Enable/disable zero trust access. Valid values: `enable`, `disable`.
+* `ztna_device_ownership` - Enable/disable zero trust device ownership. Valid values: `enable`, `disable`.
 * `ztna_ems_tag` - Source ztna-ems-tag names. The structure of `ztna_ems_tag` block is documented below.
+* `ztna_ems_tag_secondary` - Source ztna-ems-tag-secondary names. The structure of `ztna_ems_tag_secondary` block is documented below.
+* `ztna_tags_match_logic` - ZTNA tag matching logic. Valid values: `or`, `and`.
 * `ztna_geo_tag` - Source ztna-geo-tag names. The structure of `ztna_geo_tag` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.  Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
@@ -144,6 +147,7 @@ The following arguments are supported:
 * `schedule_timeout` - Enable to force current sessions to end when the schedule object times out. Disable allows them to end from inactivity. Valid values: `enable`, `disable`.
 * `policy_expiry` - Enable/disable policy expiry. Valid values: `enable`, `disable`.
 * `policy_expiry_date` - Policy expiry date (YYYY-MM-DD HH:MM:SS).
+* `policy_expiry_date_utc` - Policy expiry date and time, in epoch format.
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
@@ -158,6 +162,7 @@ The following arguments are supported:
 * `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode. Valid values: `proxy`, `flow`.
 * `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy. Valid values: `enable`, `disable`.
 * `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy. Valid values: `enable`, `disable`.
+* `ztna_policy_redirect` - Redirect ZTNA traffic to matching Access-Proxy proxy-policy. Valid values: `enable`, `disable`.
 * `webproxy_profile` - Webproxy profile name.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only. Valid values: `single`, `group`.
 * `profile_group` - Name of profile group.
@@ -172,6 +177,7 @@ The following arguments are supported:
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `voip_profile` - Name of an existing VoIP profile.
+* `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
@@ -201,6 +207,9 @@ The following arguments are supported:
 * `url_category` - URL category ID list. The structure of `url_category` block is documented below.
 * `app_group` - Application group names. The structure of `app_group` block is documented below.
 * `nat` - Enable/disable source NAT. Valid values: `enable`, `disable`.
+* `pcp_outbound` - Enable/disable PCP outbound SNAT. Valid values: `enable`, `disable`.
+* `pcp_inbound` - Enable/disable PCP inbound DNAT. Valid values: `enable`, `disable`.
+* `pcp_poolname` - PCP pool names. The structure of `pcp_poolname` block is documented below.
 * `permit_any_host` - Accept UDP packets from any host. Valid values: `enable`, `disable`.
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host. Valid values: `enable`, `disable`.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port. Valid values: `enable`, `disable`.
@@ -273,6 +282,7 @@ The following arguments are supported:
 * `sgt_check` - Enable/disable security group tags (SGT) check. Valid values: `enable`, `disable`.
 * `sgt` - Security group tags. The structure of `sgt` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `srcintf` block supports:
@@ -300,6 +310,10 @@ The `dstaddr6` block supports:
 * `name` - Address name.
 
 The `ztna_ems_tag` block supports:
+
+* `name` - Address name.
+
+The `ztna_ems_tag_secondary` block supports:
 
 * `name` - Address name.
 
@@ -414,6 +428,10 @@ The `url_category` block supports:
 The `app_group` block supports:
 
 * `name` - Application group names.
+
+The `pcp_poolname` block supports:
+
+* `name` - PCP pool name.
 
 The `poolname` block supports:
 

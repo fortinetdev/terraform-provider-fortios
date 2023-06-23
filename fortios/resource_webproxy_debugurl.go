@@ -254,7 +254,6 @@ func getObjectWebProxyDebugUrl(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebProxyDebugUrlName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -264,7 +263,6 @@ func getObjectWebProxyDebugUrl(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("url_pattern"); ok {
-
 		t, err := expandWebProxyDebugUrlUrlPattern(d, v, "url_pattern", sv)
 		if err != nil {
 			return &obj, err
@@ -274,7 +272,6 @@ func getObjectWebProxyDebugUrl(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandWebProxyDebugUrlStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +281,6 @@ func getObjectWebProxyDebugUrl(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("exact"); ok {
-
 		t, err := expandWebProxyDebugUrlExact(d, v, "exact", sv)
 		if err != nil {
 			return &obj, err

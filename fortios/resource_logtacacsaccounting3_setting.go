@@ -51,6 +51,23 @@ func resourceLogTacacsAccounting3Setting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 			},
+			"source_ip": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -161,6 +178,18 @@ func flattenLogTacacsAccounting3SettingServerKey(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenLogTacacsAccounting3SettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogTacacsAccounting3SettingInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogTacacsAccounting3SettingInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectLogTacacsAccounting3Setting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -179,6 +208,24 @@ func refreshObjectLogTacacsAccounting3Setting(d *schema.ResourceData, o map[stri
 	if err = d.Set("server_key", flattenLogTacacsAccounting3SettingServerKey(o["server-key"], d, "server_key", sv)); err != nil {
 		if !fortiAPIPatch(o["server-key"]) {
 			return fmt.Errorf("Error reading server_key: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip", flattenLogTacacsAccounting3SettingSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenLogTacacsAccounting3SettingInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenLogTacacsAccounting3SettingInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -203,6 +250,18 @@ func expandLogTacacsAccounting3SettingServerKey(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandLogTacacsAccounting3SettingSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogTacacsAccounting3SettingInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogTacacsAccounting3SettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectLogTacacsAccounting3Setting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -210,7 +269,6 @@ func getObjectLogTacacsAccounting3Setting(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogTacacsAccounting3SettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -224,7 +282,6 @@ func getObjectLogTacacsAccounting3Setting(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandLogTacacsAccounting3SettingServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -238,12 +295,50 @@ func getObjectLogTacacsAccounting3Setting(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["server-key"] = nil
 		} else {
-
 			t, err := expandLogTacacsAccounting3SettingServerKey(d, v, "server_key", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["server-key"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
+			t, err := expandLogTacacsAccounting3SettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
+			t, err := expandLogTacacsAccounting3SettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
+			t, err := expandLogTacacsAccounting3SettingInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
 			}
 		}
 	}

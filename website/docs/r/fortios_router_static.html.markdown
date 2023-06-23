@@ -41,6 +41,7 @@ The following arguments are supported:
 * `dst` - Destination IP and mask for this route.
 * `src` - Source prefix for this route.
 * `gateway` - Gateway IP for this route.
+* `preferred_source` - Preferred source IP for this route.
 * `distance` - Administrative distance (1 - 255).
 * `weight` - Administrative weight (0 - 255).
 * `priority` - Administrative priority (0 - 4294967295).
@@ -55,9 +56,11 @@ The following arguments are supported:
 * `internet_service` - Application ID in the Internet service database.
 * `internet_service_custom` - Application name in the Internet service custom database.
 * `link_monitor_exempt` - Enable/disable withdrawing this route when link monitor or health check is down. Valid values: `enable`, `disable`.
+* `tag` - Route tag.
 * `vrf` - Virtual Routing Forwarding ID.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `sdwan_zone` block supports:

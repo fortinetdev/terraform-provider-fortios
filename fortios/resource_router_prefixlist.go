@@ -92,6 +92,11 @@ func resourceRouterPrefixList() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -251,37 +256,31 @@ func flattenRouterPrefixListRule(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterPrefixListRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenRouterPrefixListRuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-
 			tmp["prefix"] = flattenRouterPrefixListRulePrefix(i["prefix"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
 		if _, ok := i["ge"]; ok {
-
 			tmp["ge"] = flattenRouterPrefixListRuleGe(i["ge"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
 		if _, ok := i["le"]; ok {
-
 			tmp["le"] = flattenRouterPrefixListRuleLe(i["le"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := i["flags"]; ok {
-
 			tmp["flags"] = flattenRouterPrefixListRuleFlags(i["flags"], d, pre_append, sv)
 		}
 
@@ -320,6 +319,12 @@ func flattenRouterPrefixListRuleFlags(v interface{}, d *schema.ResourceData, pre
 
 func refreshObjectRouterPrefixList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenRouterPrefixListName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -333,7 +338,7 @@ func refreshObjectRouterPrefixList(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rule", flattenRouterPrefixListRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
@@ -382,37 +387,31 @@ func expandRouterPrefixListRule(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterPrefixListRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandRouterPrefixListRuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["prefix"], _ = expandRouterPrefixListRulePrefix(d, i["prefix"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ge"], _ = expandRouterPrefixListRuleGe(d, i["ge"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["le"], _ = expandRouterPrefixListRuleLe(d, i["le"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flags"], _ = expandRouterPrefixListRuleFlags(d, i["flags"], pre_append, sv)
 		}
 
@@ -452,7 +451,6 @@ func getObjectRouterPrefixList(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandRouterPrefixListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -462,7 +460,6 @@ func getObjectRouterPrefixList(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandRouterPrefixListComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -472,7 +469,6 @@ func getObjectRouterPrefixList(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
-
 		t, err := expandRouterPrefixListRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err

@@ -289,7 +289,6 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallIppool6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -299,7 +298,6 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
-
 		t, err := expandFirewallIppool6Startip(d, v, "startip", sv)
 		if err != nil {
 			return &obj, err
@@ -309,7 +307,6 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("endip"); ok {
-
 		t, err := expandFirewallIppool6Endip(d, v, "endip", sv)
 		if err != nil {
 			return &obj, err
@@ -319,7 +316,6 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallIppool6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -329,7 +325,6 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("nat46"); ok {
-
 		t, err := expandFirewallIppool6Nat46(d, v, "nat46", sv)
 		if err != nil {
 			return &obj, err
@@ -339,7 +334,6 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("add_nat46_route"); ok {
-
 		t, err := expandFirewallIppool6AddNat46Route(d, v, "add_nat46_route", sv)
 		if err != nil {
 			return &obj, err

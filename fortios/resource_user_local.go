@@ -690,7 +690,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserLocalName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -700,7 +699,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandUserLocalId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -710,7 +708,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandUserLocalStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -720,7 +717,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandUserLocalType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -730,7 +726,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("passwd"); ok {
-
 		t, err := expandUserLocalPasswd(d, v, "passwd", sv)
 		if err != nil {
 			return &obj, err
@@ -740,7 +735,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandUserLocalLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
@@ -750,7 +744,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("radius_server"); ok {
-
 		t, err := expandUserLocalRadiusServer(d, v, "radius_server", sv)
 		if err != nil {
 			return &obj, err
@@ -760,7 +753,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("tacacs_server"); ok {
-
 		t, err := expandUserLocalTacacsServer(d, v, "tacacs_server", sv)
 		if err != nil {
 			return &obj, err
@@ -770,7 +762,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
-
 		t, err := expandUserLocalTwoFactor(d, v, "two_factor", sv)
 		if err != nil {
 			return &obj, err
@@ -780,7 +771,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("two_factor_authentication"); ok {
-
 		t, err := expandUserLocalTwoFactorAuthentication(d, v, "two_factor_authentication", sv)
 		if err != nil {
 			return &obj, err
@@ -790,7 +780,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("two_factor_notification"); ok {
-
 		t, err := expandUserLocalTwoFactorNotification(d, v, "two_factor_notification", sv)
 		if err != nil {
 			return &obj, err
@@ -800,7 +789,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("fortitoken"); ok {
-
 		t, err := expandUserLocalFortitoken(d, v, "fortitoken", sv)
 		if err != nil {
 			return &obj, err
@@ -810,7 +798,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("email_to"); ok {
-
 		t, err := expandUserLocalEmailTo(d, v, "email_to", sv)
 		if err != nil {
 			return &obj, err
@@ -820,7 +807,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sms_server"); ok {
-
 		t, err := expandUserLocalSmsServer(d, v, "sms_server", sv)
 		if err != nil {
 			return &obj, err
@@ -830,7 +816,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sms_custom_server"); ok {
-
 		t, err := expandUserLocalSmsCustomServer(d, v, "sms_custom_server", sv)
 		if err != nil {
 			return &obj, err
@@ -840,7 +825,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sms_phone"); ok {
-
 		t, err := expandUserLocalSmsPhone(d, v, "sms_phone", sv)
 		if err != nil {
 			return &obj, err
@@ -850,7 +834,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("passwd_policy"); ok {
-
 		t, err := expandUserLocalPasswdPolicy(d, v, "passwd_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -860,7 +843,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("passwd_time"); ok {
-
 		t, err := expandUserLocalPasswdTime(d, v, "passwd_time", sv)
 		if err != nil {
 			return &obj, err
@@ -870,7 +852,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("authtimeout"); ok {
-
 		t, err := expandUserLocalAuthtimeout(d, v, "authtimeout", sv)
 		if err != nil {
 			return &obj, err
@@ -880,7 +861,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("workstation"); ok {
-
 		t, err := expandUserLocalWorkstation(d, v, "workstation", sv)
 		if err != nil {
 			return &obj, err
@@ -890,7 +870,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("auth_concurrent_override"); ok {
-
 		t, err := expandUserLocalAuthConcurrentOverride(d, v, "auth_concurrent_override", sv)
 		if err != nil {
 			return &obj, err
@@ -900,7 +879,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("auth_concurrent_value"); ok {
-
 		t, err := expandUserLocalAuthConcurrentValue(d, v, "auth_concurrent_value", sv)
 		if err != nil {
 			return &obj, err
@@ -910,7 +888,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("ppk_secret"); ok {
-
 		t, err := expandUserLocalPpkSecret(d, v, "ppk_secret", sv)
 		if err != nil {
 			return &obj, err
@@ -920,7 +897,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("ppk_identity"); ok {
-
 		t, err := expandUserLocalPpkIdentity(d, v, "ppk_identity", sv)
 		if err != nil {
 			return &obj, err
@@ -930,7 +906,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("username_sensitivity"); ok {
-
 		t, err := expandUserLocalUsernameSensitivity(d, v, "username_sensitivity", sv)
 		if err != nil {
 			return &obj, err
@@ -940,7 +915,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("username_case_insensitivity"); ok {
-
 		t, err := expandUserLocalUsernameCaseInsensitivity(d, v, "username_case_insensitivity", sv)
 		if err != nil {
 			return &obj, err
@@ -950,7 +924,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("username_case_sensitivity"); ok {
-
 		t, err := expandUserLocalUsernameCaseSensitivity(d, v, "username_case_sensitivity", sv)
 		if err != nil {
 			return &obj, err

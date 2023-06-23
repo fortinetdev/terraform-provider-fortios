@@ -52,6 +52,11 @@ func resourceDlpDictionary() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"match_around": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -103,6 +108,11 @@ func resourceDlpDictionary() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -244,6 +254,10 @@ func flattenDlpDictionaryMatchType(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenDlpDictionaryMatchAround(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenDlpDictionaryComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -274,43 +288,36 @@ func flattenDlpDictionaryEntries(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDlpDictionaryEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenDlpDictionaryEntriesType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-
 			tmp["pattern"] = flattenDlpDictionaryEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_case"
 		if _, ok := i["ignore-case"]; ok {
-
 			tmp["ignore_case"] = flattenDlpDictionaryEntriesIgnoreCase(i["ignore-case"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "repeat"
 		if _, ok := i["repeat"]; ok {
-
 			tmp["repeat"] = flattenDlpDictionaryEntriesRepeat(i["repeat"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenDlpDictionaryEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenDlpDictionaryEntriesComment(i["comment"], d, pre_append, sv)
 		}
 
@@ -353,6 +360,12 @@ func flattenDlpDictionaryEntriesComment(v interface{}, d *schema.ResourceData, p
 
 func refreshObjectDlpDictionary(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("uuid", flattenDlpDictionaryUuid(o["uuid"], d, "uuid", sv)); err != nil {
 		if !fortiAPIPatch(o["uuid"]) {
@@ -372,13 +385,19 @@ func refreshObjectDlpDictionary(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("match_around", flattenDlpDictionaryMatchAround(o["match-around"], d, "match_around", sv)); err != nil {
+		if !fortiAPIPatch(o["match-around"]) {
+			return fmt.Errorf("Error reading match_around: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenDlpDictionaryComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenDlpDictionaryEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -415,6 +434,10 @@ func expandDlpDictionaryMatchType(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandDlpDictionaryMatchAround(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandDlpDictionaryComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -435,43 +458,36 @@ func expandDlpDictionaryEntries(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDlpDictionaryEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandDlpDictionaryEntriesType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pattern"], _ = expandDlpDictionaryEntriesPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_case"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ignore-case"], _ = expandDlpDictionaryEntriesIgnoreCase(d, i["ignore_case"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "repeat"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["repeat"], _ = expandDlpDictionaryEntriesRepeat(d, i["repeat"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandDlpDictionaryEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandDlpDictionaryEntriesComment(d, i["comment"], pre_append, sv)
 		}
 
@@ -515,7 +531,6 @@ func getObjectDlpDictionary(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandDlpDictionaryUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -525,7 +540,6 @@ func getObjectDlpDictionary(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDlpDictionaryName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -535,7 +549,6 @@ func getObjectDlpDictionary(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("match_type"); ok {
-
 		t, err := expandDlpDictionaryMatchType(d, v, "match_type", sv)
 		if err != nil {
 			return &obj, err
@@ -544,8 +557,16 @@ func getObjectDlpDictionary(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("comment"); ok {
+	if v, ok := d.GetOk("match_around"); ok {
+		t, err := expandDlpDictionaryMatchAround(d, v, "match_around", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-around"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("comment"); ok {
 		t, err := expandDlpDictionaryComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -555,7 +576,6 @@ func getObjectDlpDictionary(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandDlpDictionaryEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

@@ -14,11 +14,16 @@ Configure IP address management services. Applies to FortiOS Version `>= 7.0.2`.
 The following arguments are supported:
 
 * `status` - Enable/disable IP address management services. Valid values: `enable`, `disable`.
-* `server_type` - Configure the type of IPAM server to use. Valid values: `cloud`, `fabric-root`.
+* `server_type` - Configure the type of IPAM server to use.
+* `automatic_conflict_resolution` - Enable/disable automatic conflict resolution. Valid values: `disable`, `enable`.
+* `manage_lan_addresses` - Enable/disable default management of LAN interface addresses. Valid values: `disable`, `enable`.
+* `manage_lan_extension_addresses` - Enable/disable default management of FortiExtender LAN extension interface addresses. Valid values: `disable`, `enable`.
+* `manage_ssid_addresses` - Enable/disable default management of FortiAP SSID addresses. Valid values: `disable`, `enable`.
 * `pools` - Configure IPAM pools. The structure of `pools` block is documented below.
 * `rules` - Configure IPAM allocation rules. The structure of `rules` block is documented below.
 * `pool_subnet` - Configure IPAM pool subnet, Class A - Class B subnet.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `pools` block supports:

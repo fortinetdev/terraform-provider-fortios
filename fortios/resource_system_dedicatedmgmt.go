@@ -286,7 +286,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -300,7 +299,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -314,7 +312,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["default-gateway"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtDefaultGateway(d, v, "default_gateway", sv)
 			if err != nil {
 				return &obj, err
@@ -328,7 +325,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dhcp-server"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtDhcpServer(d, v, "dhcp_server", sv)
 			if err != nil {
 				return &obj, err
@@ -342,7 +338,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dhcp-netmask"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtDhcpNetmask(d, v, "dhcp_netmask", sv)
 			if err != nil {
 				return &obj, err
@@ -356,7 +351,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dhcp-start-ip"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtDhcpStartIp(d, v, "dhcp_start_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -370,7 +364,6 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dhcp-end-ip"] = nil
 		} else {
-
 			t, err := expandSystemDedicatedMgmtDhcpEndIp(d, v, "dhcp_end_ip", sv)
 			if err != nil {
 				return &obj, err

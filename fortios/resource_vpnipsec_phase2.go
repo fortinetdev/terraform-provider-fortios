@@ -1072,7 +1072,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnIpsecPhase2Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1082,7 +1081,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("phase1name"); ok {
-
 		t, err := expandVpnIpsecPhase2Phase1Name(d, v, "phase1name", sv)
 		if err != nil {
 			return &obj, err
@@ -1092,7 +1090,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dhcp_ipsec"); ok {
-
 		t, err := expandVpnIpsecPhase2DhcpIpsec(d, v, "dhcp_ipsec", sv)
 		if err != nil {
 			return &obj, err
@@ -1102,7 +1099,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("use_natip"); ok {
-
 		t, err := expandVpnIpsecPhase2UseNatip(d, v, "use_natip", sv)
 		if err != nil {
 			return &obj, err
@@ -1112,7 +1108,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("selector_match"); ok {
-
 		t, err := expandVpnIpsecPhase2SelectorMatch(d, v, "selector_match", sv)
 		if err != nil {
 			return &obj, err
@@ -1122,7 +1117,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("proposal"); ok {
-
 		t, err := expandVpnIpsecPhase2Proposal(d, v, "proposal", sv)
 		if err != nil {
 			return &obj, err
@@ -1132,7 +1126,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("pfs"); ok {
-
 		t, err := expandVpnIpsecPhase2Pfs(d, v, "pfs", sv)
 		if err != nil {
 			return &obj, err
@@ -1142,7 +1135,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ipv4_df"); ok {
-
 		t, err := expandVpnIpsecPhase2Ipv4Df(d, v, "ipv4_df", sv)
 		if err != nil {
 			return &obj, err
@@ -1152,7 +1144,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dhgrp"); ok {
-
 		t, err := expandVpnIpsecPhase2Dhgrp(d, v, "dhgrp", sv)
 		if err != nil {
 			return &obj, err
@@ -1162,7 +1153,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("replay"); ok {
-
 		t, err := expandVpnIpsecPhase2Replay(d, v, "replay", sv)
 		if err != nil {
 			return &obj, err
@@ -1172,7 +1162,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("keepalive"); ok {
-
 		t, err := expandVpnIpsecPhase2Keepalive(d, v, "keepalive", sv)
 		if err != nil {
 			return &obj, err
@@ -1182,7 +1171,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("auto_negotiate"); ok {
-
 		t, err := expandVpnIpsecPhase2AutoNegotiate(d, v, "auto_negotiate", sv)
 		if err != nil {
 			return &obj, err
@@ -1192,7 +1180,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("add_route"); ok {
-
 		t, err := expandVpnIpsecPhase2AddRoute(d, v, "add_route", sv)
 		if err != nil {
 			return &obj, err
@@ -1202,7 +1189,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("inbound_dscp_copy"); ok {
-
 		t, err := expandVpnIpsecPhase2InboundDscpCopy(d, v, "inbound_dscp_copy", sv)
 		if err != nil {
 			return &obj, err
@@ -1212,7 +1198,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("keylifeseconds"); ok {
-
 		t, err := expandVpnIpsecPhase2Keylifeseconds(d, v, "keylifeseconds", sv)
 		if err != nil {
 			return &obj, err
@@ -1222,7 +1207,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("keylifekbs"); ok {
-
 		t, err := expandVpnIpsecPhase2Keylifekbs(d, v, "keylifekbs", sv)
 		if err != nil {
 			return &obj, err
@@ -1232,7 +1216,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("keylife_type"); ok {
-
 		t, err := expandVpnIpsecPhase2KeylifeType(d, v, "keylife_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1242,7 +1225,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("single_source"); ok {
-
 		t, err := expandVpnIpsecPhase2SingleSource(d, v, "single_source", sv)
 		if err != nil {
 			return &obj, err
@@ -1252,7 +1234,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("route_overlap"); ok {
-
 		t, err := expandVpnIpsecPhase2RouteOverlap(d, v, "route_overlap", sv)
 		if err != nil {
 			return &obj, err
@@ -1262,7 +1243,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("encapsulation"); ok {
-
 		t, err := expandVpnIpsecPhase2Encapsulation(d, v, "encapsulation", sv)
 		if err != nil {
 			return &obj, err
@@ -1272,7 +1252,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("l2tp"); ok {
-
 		t, err := expandVpnIpsecPhase2L2Tp(d, v, "l2tp", sv)
 		if err != nil {
 			return &obj, err
@@ -1282,7 +1261,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandVpnIpsecPhase2Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -1292,7 +1270,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("initiator_ts_narrow"); ok {
-
 		t, err := expandVpnIpsecPhase2InitiatorTsNarrow(d, v, "initiator_ts_narrow", sv)
 		if err != nil {
 			return &obj, err
@@ -1302,7 +1279,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffserv"); ok {
-
 		t, err := expandVpnIpsecPhase2Diffserv(d, v, "diffserv", sv)
 		if err != nil {
 			return &obj, err
@@ -1312,7 +1288,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffservcode"); ok {
-
 		t, err := expandVpnIpsecPhase2Diffservcode(d, v, "diffservcode", sv)
 		if err != nil {
 			return &obj, err
@@ -1322,7 +1297,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandVpnIpsecPhase2Protocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1332,7 +1306,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_name"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcName(d, v, "src_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1342,7 +1315,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_name6"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcName6(d, v, "src_name6", sv)
 		if err != nil {
 			return &obj, err
@@ -1352,7 +1324,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_addr_type"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcAddrType(d, v, "src_addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1362,7 +1333,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_start_ip"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcStartIp(d, v, "src_start_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1372,7 +1342,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_start_ip6"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcStartIp6(d, v, "src_start_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1382,7 +1351,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_end_ip"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcEndIp(d, v, "src_end_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1392,7 +1360,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_end_ip6"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcEndIp6(d, v, "src_end_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1402,7 +1369,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_subnet"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcSubnet(d, v, "src_subnet", sv)
 		if err != nil {
 			return &obj, err
@@ -1412,7 +1378,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_subnet6"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcSubnet6(d, v, "src_subnet6", sv)
 		if err != nil {
 			return &obj, err
@@ -1422,7 +1387,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("src_port"); ok {
-
 		t, err := expandVpnIpsecPhase2SrcPort(d, v, "src_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1432,7 +1396,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_name"); ok {
-
 		t, err := expandVpnIpsecPhase2DstName(d, v, "dst_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1442,7 +1405,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_name6"); ok {
-
 		t, err := expandVpnIpsecPhase2DstName6(d, v, "dst_name6", sv)
 		if err != nil {
 			return &obj, err
@@ -1452,7 +1414,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_addr_type"); ok {
-
 		t, err := expandVpnIpsecPhase2DstAddrType(d, v, "dst_addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1462,7 +1423,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_start_ip"); ok {
-
 		t, err := expandVpnIpsecPhase2DstStartIp(d, v, "dst_start_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1472,7 +1432,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_start_ip6"); ok {
-
 		t, err := expandVpnIpsecPhase2DstStartIp6(d, v, "dst_start_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1482,7 +1441,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_end_ip"); ok {
-
 		t, err := expandVpnIpsecPhase2DstEndIp(d, v, "dst_end_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1492,7 +1450,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_end_ip6"); ok {
-
 		t, err := expandVpnIpsecPhase2DstEndIp6(d, v, "dst_end_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1502,7 +1459,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_subnet"); ok {
-
 		t, err := expandVpnIpsecPhase2DstSubnet(d, v, "dst_subnet", sv)
 		if err != nil {
 			return &obj, err
@@ -1512,7 +1468,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dst_subnet6"); ok {
-
 		t, err := expandVpnIpsecPhase2DstSubnet6(d, v, "dst_subnet6", sv)
 		if err != nil {
 			return &obj, err
@@ -1522,7 +1477,6 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("dst_port"); ok {
-
 		t, err := expandVpnIpsecPhase2DstPort(d, v, "dst_port", sv)
 		if err != nil {
 			return &obj, err

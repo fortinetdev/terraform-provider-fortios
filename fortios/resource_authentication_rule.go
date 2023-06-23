@@ -164,6 +164,11 @@ func resourceAuthenticationRule() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -327,7 +332,6 @@ func flattenAuthenticationRuleSrcintf(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationRuleSrcintfName(i["name"], d, pre_append, sv)
 		}
 
@@ -370,7 +374,6 @@ func flattenAuthenticationRuleSrcaddr(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationRuleSrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -413,7 +416,6 @@ func flattenAuthenticationRuleDstaddr(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationRuleDstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -456,7 +458,6 @@ func flattenAuthenticationRuleSrcaddr6(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationRuleSrcaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -499,7 +500,6 @@ func flattenAuthenticationRuleDstaddr6(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationRuleDstaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -546,6 +546,12 @@ func flattenAuthenticationRuleComments(v interface{}, d *schema.ResourceData, pr
 
 func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenAuthenticationRuleName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -565,7 +571,7 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcintf", flattenAuthenticationRuleSrcintf(o["srcintf"], d, "srcintf", sv)); err != nil {
 			if !fortiAPIPatch(o["srcintf"]) {
 				return fmt.Errorf("Error reading srcintf: %v", err)
@@ -581,7 +587,7 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenAuthenticationRuleSrcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -597,7 +603,7 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenAuthenticationRuleDstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -613,7 +619,7 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr6", flattenAuthenticationRuleSrcaddr6(o["srcaddr6"], d, "srcaddr6", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr6"]) {
 				return fmt.Errorf("Error reading srcaddr6: %v", err)
@@ -629,7 +635,7 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr6", flattenAuthenticationRuleDstaddr6(o["dstaddr6"], d, "dstaddr6", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr6"]) {
 				return fmt.Errorf("Error reading dstaddr6: %v", err)
@@ -724,7 +730,6 @@ func expandAuthenticationRuleSrcintf(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationRuleSrcintfName(d, i["name"], pre_append, sv)
 		}
 
@@ -756,7 +761,6 @@ func expandAuthenticationRuleSrcaddr(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationRuleSrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -788,7 +792,6 @@ func expandAuthenticationRuleDstaddr(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationRuleDstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -820,7 +823,6 @@ func expandAuthenticationRuleSrcaddr6(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationRuleSrcaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -852,7 +854,6 @@ func expandAuthenticationRuleDstaddr6(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationRuleDstaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -900,7 +901,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandAuthenticationRuleName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -910,7 +910,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandAuthenticationRuleStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -920,7 +919,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandAuthenticationRuleProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -930,7 +928,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
-
 		t, err := expandAuthenticationRuleSrcintf(d, v, "srcintf", sv)
 		if err != nil {
 			return &obj, err
@@ -940,7 +937,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandAuthenticationRuleSrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -950,7 +946,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandAuthenticationRuleDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -960,7 +955,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("srcaddr6"); ok || d.HasChange("srcaddr6") {
-
 		t, err := expandAuthenticationRuleSrcaddr6(d, v, "srcaddr6", sv)
 		if err != nil {
 			return &obj, err
@@ -970,7 +964,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dstaddr6"); ok || d.HasChange("dstaddr6") {
-
 		t, err := expandAuthenticationRuleDstaddr6(d, v, "dstaddr6", sv)
 		if err != nil {
 			return &obj, err
@@ -980,7 +973,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ip_based"); ok {
-
 		t, err := expandAuthenticationRuleIpBased(d, v, "ip_based", sv)
 		if err != nil {
 			return &obj, err
@@ -990,7 +982,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("active_auth_method"); ok {
-
 		t, err := expandAuthenticationRuleActiveAuthMethod(d, v, "active_auth_method", sv)
 		if err != nil {
 			return &obj, err
@@ -1000,7 +991,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("sso_auth_method"); ok {
-
 		t, err := expandAuthenticationRuleSsoAuthMethod(d, v, "sso_auth_method", sv)
 		if err != nil {
 			return &obj, err
@@ -1010,7 +1000,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("web_auth_cookie"); ok {
-
 		t, err := expandAuthenticationRuleWebAuthCookie(d, v, "web_auth_cookie", sv)
 		if err != nil {
 			return &obj, err
@@ -1020,7 +1009,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("transaction_based"); ok {
-
 		t, err := expandAuthenticationRuleTransactionBased(d, v, "transaction_based", sv)
 		if err != nil {
 			return &obj, err
@@ -1030,7 +1018,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("web_portal"); ok {
-
 		t, err := expandAuthenticationRuleWebPortal(d, v, "web_portal", sv)
 		if err != nil {
 			return &obj, err
@@ -1040,7 +1027,6 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandAuthenticationRuleComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err

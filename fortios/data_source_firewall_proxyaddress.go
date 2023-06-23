@@ -80,6 +80,14 @@ func dataSourceFirewallProxyAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ua_min_ver": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ua_max_ver": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"header_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -288,6 +296,14 @@ func dataSourceFlattenFirewallProxyAddressMethod(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenFirewallProxyAddressUa(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyAddressUaMinVer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyAddressUaMaxVer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -566,6 +582,18 @@ func dataSourceRefreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[s
 	if err = d.Set("ua", dataSourceFlattenFirewallProxyAddressUa(o["ua"], d, "ua")); err != nil {
 		if !fortiAPIPatch(o["ua"]) {
 			return fmt.Errorf("Error reading ua: %v", err)
+		}
+	}
+
+	if err = d.Set("ua_min_ver", dataSourceFlattenFirewallProxyAddressUaMinVer(o["ua-min-ver"], d, "ua_min_ver")); err != nil {
+		if !fortiAPIPatch(o["ua-min-ver"]) {
+			return fmt.Errorf("Error reading ua_min_ver: %v", err)
+		}
+	}
+
+	if err = d.Set("ua_max_ver", dataSourceFlattenFirewallProxyAddressUaMaxVer(o["ua-max-ver"], d, "ua_max_ver")); err != nil {
+		if !fortiAPIPatch(o["ua-max-ver"]) {
+			return fmt.Errorf("Error reading ua_max_ver: %v", err)
 		}
 	}
 

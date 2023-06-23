@@ -159,6 +159,11 @@ func resourceFirewallMulticastPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -342,7 +347,6 @@ func flattenFirewallMulticastPolicySrcaddr(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallMulticastPolicySrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -385,7 +389,6 @@ func flattenFirewallMulticastPolicyDstaddr(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallMulticastPolicyDstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -440,6 +443,12 @@ func flattenFirewallMulticastPolicyTrafficShaper(v interface{}, d *schema.Resour
 
 func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenFirewallMulticastPolicyId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -489,7 +498,7 @@ func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenFirewallMulticastPolicySrcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -505,7 +514,7 @@ func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenFirewallMulticastPolicyDstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -632,7 +641,6 @@ func expandFirewallMulticastPolicySrcaddr(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallMulticastPolicySrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -664,7 +672,6 @@ func expandFirewallMulticastPolicyDstaddr(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallMulticastPolicyDstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -720,7 +727,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallMulticastPolicyId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -730,7 +736,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallMulticastPolicyUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -740,7 +745,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallMulticastPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -750,7 +754,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallMulticastPolicyComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -760,7 +763,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallMulticastPolicyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -770,7 +772,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("logtraffic"); ok {
-
 		t, err := expandFirewallMulticastPolicyLogtraffic(d, v, "logtraffic", sv)
 		if err != nil {
 			return &obj, err
@@ -780,7 +781,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok {
-
 		t, err := expandFirewallMulticastPolicySrcintf(d, v, "srcintf", sv)
 		if err != nil {
 			return &obj, err
@@ -790,7 +790,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("dstintf"); ok {
-
 		t, err := expandFirewallMulticastPolicyDstintf(d, v, "dstintf", sv)
 		if err != nil {
 			return &obj, err
@@ -800,7 +799,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandFirewallMulticastPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -810,7 +808,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandFirewallMulticastPolicyDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -820,7 +817,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("snat"); ok {
-
 		t, err := expandFirewallMulticastPolicySnat(d, v, "snat", sv)
 		if err != nil {
 			return &obj, err
@@ -830,7 +826,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("snat_ip"); ok {
-
 		t, err := expandFirewallMulticastPolicySnatIp(d, v, "snat_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -840,7 +835,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("dnat"); ok {
-
 		t, err := expandFirewallMulticastPolicyDnat(d, v, "dnat", sv)
 		if err != nil {
 			return &obj, err
@@ -850,7 +844,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandFirewallMulticastPolicyAction(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -860,7 +853,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandFirewallMulticastPolicyProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -870,7 +862,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("start_port"); ok {
-
 		t, err := expandFirewallMulticastPolicyStartPort(d, v, "start_port", sv)
 		if err != nil {
 			return &obj, err
@@ -880,7 +871,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("end_port"); ok {
-
 		t, err := expandFirewallMulticastPolicyEndPort(d, v, "end_port", sv)
 		if err != nil {
 			return &obj, err
@@ -890,7 +880,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
-
 		t, err := expandFirewallMulticastPolicyAutoAsicOffload(d, v, "auto_asic_offload", sv)
 		if err != nil {
 			return &obj, err
@@ -900,7 +889,6 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("traffic_shaper"); ok {
-
 		t, err := expandFirewallMulticastPolicyTrafficShaper(d, v, "traffic_shaper", sv)
 		if err != nil {
 			return &obj, err

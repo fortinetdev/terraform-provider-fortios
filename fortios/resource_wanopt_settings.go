@@ -228,7 +228,6 @@ func getObjectWanoptSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["host-id"] = nil
 		} else {
-
 			t, err := expandWanoptSettingsHostId(d, v, "host_id", sv)
 			if err != nil {
 				return &obj, err
@@ -242,7 +241,6 @@ func getObjectWanoptSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["tunnel-ssl-algorithm"] = nil
 		} else {
-
 			t, err := expandWanoptSettingsTunnelSslAlgorithm(d, v, "tunnel_ssl_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -256,7 +254,6 @@ func getObjectWanoptSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["auto-detect-algorithm"] = nil
 		} else {
-
 			t, err := expandWanoptSettingsAutoDetectAlgorithm(d, v, "auto_detect_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -270,7 +267,6 @@ func getObjectWanoptSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["tunnel-optimization"] = nil
 		} else {
-
 			t, err := expandWanoptSettingsTunnelOptimization(d, v, "tunnel_optimization", sv)
 			if err != nil {
 				return &obj, err

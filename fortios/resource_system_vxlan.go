@@ -96,7 +96,23 @@ func resourceSystemVxlan() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"evpn_id": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"learn_from_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -268,7 +284,6 @@ func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSystemVxlanRemoteIpIp(i["ip"], d, pre_append, sv)
 		}
 
@@ -311,7 +326,6 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := i["ip6"]; ok {
-
 			tmp["ip6"] = flattenSystemVxlanRemoteIp6Ip6(i["ip6"], d, pre_append, sv)
 		}
 
@@ -336,8 +350,22 @@ func flattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemVxlanEvpnId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVxlanLearnFromTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemVxlanName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -363,7 +391,7 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip", sv)); err != nil {
 			if !fortiAPIPatch(o["remote-ip"]) {
 				return fmt.Errorf("Error reading remote_ip: %v", err)
@@ -379,7 +407,7 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6", sv)); err != nil {
 			if !fortiAPIPatch(o["remote-ip6"]) {
 				return fmt.Errorf("Error reading remote_ip6: %v", err)
@@ -404,6 +432,18 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("multicast_ttl", flattenSystemVxlanMulticastTtl(o["multicast-ttl"], d, "multicast_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["multicast-ttl"]) {
 			return fmt.Errorf("Error reading multicast_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("evpn_id", flattenSystemVxlanEvpnId(o["evpn-id"], d, "evpn_id", sv)); err != nil {
+		if !fortiAPIPatch(o["evpn-id"]) {
+			return fmt.Errorf("Error reading evpn_id: %v", err)
+		}
+	}
+
+	if err = d.Set("learn_from_traffic", flattenSystemVxlanLearnFromTraffic(o["learn-from-traffic"], d, "learn_from_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["learn-from-traffic"]) {
+			return fmt.Errorf("Error reading learn_from_traffic: %v", err)
 		}
 	}
 
@@ -448,7 +488,6 @@ func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSystemVxlanRemoteIpIp(d, i["ip"], pre_append, sv)
 		}
 
@@ -480,7 +519,6 @@ func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip6"], _ = expandSystemVxlanRemoteIp6Ip6(d, i["ip6"], pre_append, sv)
 		}
 
@@ -504,11 +542,18 @@ func expandSystemVxlanMulticastTtl(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandSystemVxlanEvpnId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVxlanLearnFromTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemVxlanName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -518,7 +563,6 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemVxlanInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -528,7 +572,6 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("vni"); ok {
-
 		t, err := expandSystemVxlanVni(d, v, "vni", sv)
 		if err != nil {
 			return &obj, err
@@ -538,7 +581,6 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
-
 		t, err := expandSystemVxlanIpVersion(d, v, "ip_version", sv)
 		if err != nil {
 			return &obj, err
@@ -548,7 +590,6 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("remote_ip"); ok || d.HasChange("remote_ip") {
-
 		t, err := expandSystemVxlanRemoteIp(d, v, "remote_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -558,7 +599,6 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("remote_ip6"); ok || d.HasChange("remote_ip6") {
-
 		t, err := expandSystemVxlanRemoteIp6(d, v, "remote_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -568,7 +608,6 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("dstport"); ok {
-
 		t, err := expandSystemVxlanDstport(d, v, "dstport", sv)
 		if err != nil {
 			return &obj, err
@@ -578,12 +617,29 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("multicast_ttl"); ok {
-
 		t, err := expandSystemVxlanMulticastTtl(d, v, "multicast_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["multicast-ttl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("evpn_id"); ok {
+		t, err := expandSystemVxlanEvpnId(d, v, "evpn_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["evpn-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("learn_from_traffic"); ok {
+		t, err := expandSystemVxlanLearnFromTraffic(d, v, "learn_from_traffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["learn-from-traffic"] = t
 		}
 	}
 

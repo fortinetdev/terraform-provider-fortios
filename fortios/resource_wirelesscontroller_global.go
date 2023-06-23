@@ -47,6 +47,18 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"acd_process_count": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"wpad_process_count": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"image_download": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -137,6 +149,11 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dfs_lab_test": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -244,6 +261,14 @@ func flattenWirelessControllerGlobalLocation(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenWirelessControllerGlobalAcdProcessCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalWpadProcessCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerGlobalImageDownload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -312,6 +337,10 @@ func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenWirelessControllerGlobalDfsLabTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -324,6 +353,18 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 	if err = d.Set("location", flattenWirelessControllerGlobalLocation(o["location"], d, "location", sv)); err != nil {
 		if !fortiAPIPatch(o["location"]) {
 			return fmt.Errorf("Error reading location: %v", err)
+		}
+	}
+
+	if err = d.Set("acd_process_count", flattenWirelessControllerGlobalAcdProcessCount(o["acd-process-count"], d, "acd_process_count", sv)); err != nil {
+		if !fortiAPIPatch(o["acd-process-count"]) {
+			return fmt.Errorf("Error reading acd_process_count: %v", err)
+		}
+	}
+
+	if err = d.Set("wpad_process_count", flattenWirelessControllerGlobalWpadProcessCount(o["wpad-process-count"], d, "wpad_process_count", sv)); err != nil {
+		if !fortiAPIPatch(o["wpad-process-count"]) {
+			return fmt.Errorf("Error reading wpad_process_count: %v", err)
 		}
 	}
 
@@ -429,6 +470,12 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("dfs_lab_test", flattenWirelessControllerGlobalDfsLabTest(o["dfs-lab-test"], d, "dfs_lab_test", sv)); err != nil {
+		if !fortiAPIPatch(o["dfs-lab-test"]) {
+			return fmt.Errorf("Error reading dfs_lab_test: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -443,6 +490,14 @@ func expandWirelessControllerGlobalName(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWirelessControllerGlobalLocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalAcdProcessCount(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalWpadProcessCount(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -514,6 +569,10 @@ func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandWirelessControllerGlobalDfsLabTest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -521,7 +580,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["name"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalName(d, v, "name", sv)
 			if err != nil {
 				return &obj, err
@@ -535,7 +593,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["location"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalLocation(d, v, "location", sv)
 			if err != nil {
 				return &obj, err
@@ -545,11 +602,36 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		}
 	}
 
+	if v, ok := d.GetOkExists("acd_process_count"); ok {
+		if setArgNil {
+			obj["acd-process-count"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalAcdProcessCount(d, v, "acd_process_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["acd-process-count"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("wpad_process_count"); ok {
+		if setArgNil {
+			obj["wpad-process-count"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalWpadProcessCount(d, v, "wpad_process_count", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wpad-process-count"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("image_download"); ok {
 		if setArgNil {
 			obj["image-download"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalImageDownload(d, v, "image_download", sv)
 			if err != nil {
 				return &obj, err
@@ -563,7 +645,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["max-retransmit"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalMaxRetransmit(d, v, "max_retransmit", sv)
 			if err != nil {
 				return &obj, err
@@ -577,7 +658,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["control-message-offload"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalControlMessageOffload(d, v, "control_message_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -591,7 +671,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["data-ethernet-II"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalDataEthernetIi(d, v, "data_ethernet_ii", sv)
 			if err != nil {
 				return &obj, err
@@ -605,7 +684,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["link-aggregation"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalLinkAggregation(d, v, "link_aggregation", sv)
 			if err != nil {
 				return &obj, err
@@ -619,7 +697,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["mesh-eth-type"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalMeshEthType(d, v, "mesh_eth_type", sv)
 			if err != nil {
 				return &obj, err
@@ -633,7 +710,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["fiapp-eth-type"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalFiappEthType(d, v, "fiapp_eth_type", sv)
 			if err != nil {
 				return &obj, err
@@ -647,7 +723,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["discovery-mc-addr"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalDiscoveryMcAddr(d, v, "discovery_mc_addr", sv)
 			if err != nil {
 				return &obj, err
@@ -661,7 +736,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["max-clients"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalMaxClients(d, v, "max_clients", sv)
 			if err != nil {
 				return &obj, err
@@ -675,7 +749,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["rogue-scan-mac-adjacency"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalRogueScanMacAdjacency(d, v, "rogue_scan_mac_adjacency", sv)
 			if err != nil {
 				return &obj, err
@@ -689,7 +762,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["ipsec-base-ip"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalIpsecBaseIp(d, v, "ipsec_base_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -703,7 +775,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["wtp-share"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalWtpShare(d, v, "wtp_share", sv)
 			if err != nil {
 				return &obj, err
@@ -717,7 +788,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["tunnel-mode"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalTunnelMode(d, v, "tunnel_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -731,7 +801,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["nac-interval"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalNacInterval(d, v, "nac_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -745,7 +814,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["ap-log-server"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalApLogServer(d, v, "ap_log_server", sv)
 			if err != nil {
 				return &obj, err
@@ -759,7 +827,6 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["ap-log-server-ip"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalApLogServerIp(d, v, "ap_log_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -773,12 +840,24 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["ap-log-server-port"] = nil
 		} else {
-
 			t, err := expandWirelessControllerGlobalApLogServerPort(d, v, "ap_log_server_port", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["ap-log-server-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dfs_lab_test"); ok {
+		if setArgNil {
+			obj["dfs-lab-test"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalDfsLabTest(d, v, "dfs_lab_test", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dfs-lab-test"] = t
 			}
 		}
 	}

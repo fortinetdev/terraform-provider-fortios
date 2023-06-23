@@ -366,7 +366,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandEndpointControlForticlientEmsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -376,7 +375,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("address"); ok {
-
 		t, err := expandEndpointControlForticlientEmsAddress(d, v, "address", sv)
 		if err != nil {
 			return &obj, err
@@ -386,7 +384,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
-
 		t, err := expandEndpointControlForticlientEmsSerialNumber(d, v, "serial_number", sv)
 		if err != nil {
 			return &obj, err
@@ -396,7 +393,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("listen_port"); ok {
-
 		t, err := expandEndpointControlForticlientEmsListenPort(d, v, "listen_port", sv)
 		if err != nil {
 			return &obj, err
@@ -406,7 +402,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("upload_port"); ok {
-
 		t, err := expandEndpointControlForticlientEmsUploadPort(d, v, "upload_port", sv)
 		if err != nil {
 			return &obj, err
@@ -416,7 +411,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("rest_api_auth"); ok {
-
 		t, err := expandEndpointControlForticlientEmsRestApiAuth(d, v, "rest_api_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -426,7 +420,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("https_port"); ok {
-
 		t, err := expandEndpointControlForticlientEmsHttpsPort(d, v, "https_port", sv)
 		if err != nil {
 			return &obj, err
@@ -436,7 +429,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("admin_username"); ok {
-
 		t, err := expandEndpointControlForticlientEmsAdminUsername(d, v, "admin_username", sv)
 		if err != nil {
 			return &obj, err
@@ -446,7 +438,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("admin_password"); ok {
-
 		t, err := expandEndpointControlForticlientEmsAdminPassword(d, v, "admin_password", sv)
 		if err != nil {
 			return &obj, err
@@ -456,7 +447,6 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("admin_type"); ok {
-
 		t, err := expandEndpointControlForticlientEmsAdminType(d, v, "admin_type", sv)
 		if err != nil {
 			return &obj, err

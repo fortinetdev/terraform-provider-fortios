@@ -40,6 +40,10 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"route_tag": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"macaddr": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -248,6 +252,10 @@ func dataSourceFlattenFirewallAddress6Uuid(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenFirewallAddress6Type(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6RouteTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -561,6 +569,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("type", dataSourceFlattenFirewallAddress6Type(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("route_tag", dataSourceFlattenFirewallAddress6RouteTag(o["route-tag"], d, "route_tag")); err != nil {
+		if !fortiAPIPatch(o["route-tag"]) {
+			return fmt.Errorf("Error reading route_tag: %v", err)
 		}
 	}
 

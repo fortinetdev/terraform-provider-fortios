@@ -181,6 +181,12 @@ func resourceSystemCsf() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"index": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 1024),
+							Optional:     true,
+							Computed:     true,
+						},
 					},
 				},
 			},
@@ -206,6 +212,20 @@ func resourceSystemCsf() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"vdom": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -213,6 +233,22 @@ func resourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"file_mgmt": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"file_quota": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"file_quota_warning": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 99),
+				Optional:     true,
+				Computed:     true,
 			},
 			"fabric_device": &schema.Schema{
 				Type:     schema.TypeList,
@@ -262,6 +298,11 @@ func resourceSystemCsf() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -466,44 +507,42 @@ func flattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemCsfTrustedListName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authorization_type"
 		if _, ok := i["authorization-type"]; ok {
-
 			tmp["authorization_type"] = flattenSystemCsfTrustedListAuthorizationType(i["authorization-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := i["serial"]; ok {
-
 			tmp["serial"] = flattenSystemCsfTrustedListSerial(i["serial"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "certificate"
 		if _, ok := i["certificate"]; ok {
-
 			tmp["certificate"] = flattenSystemCsfTrustedListCertificate(i["certificate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenSystemCsfTrustedListAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_members"
 		if _, ok := i["ha-members"]; ok {
-
 			tmp["ha_members"] = flattenSystemCsfTrustedListHaMembers(i["ha-members"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "downstream_authorization"
 		if _, ok := i["downstream-authorization"]; ok {
-
 			tmp["downstream_authorization"] = flattenSystemCsfTrustedListDownstreamAuthorization(i["downstream-authorization"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+		if _, ok := i["index"]; ok {
+			tmp["index"] = flattenSystemCsfTrustedListIndex(i["index"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -543,6 +582,10 @@ func flattenSystemCsfTrustedListDownstreamAuthorization(v interface{}, d *schema
 	return v
 }
 
+func flattenSystemCsfTrustedListIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCsfFabricConnector(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -569,20 +612,22 @@ func flattenSystemCsfFabricConnector(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := i["serial"]; ok {
-
 			tmp["serial"] = flattenSystemCsfFabricConnectorSerial(i["serial"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accprofile"
 		if _, ok := i["accprofile"]; ok {
-
 			tmp["accprofile"] = flattenSystemCsfFabricConnectorAccprofile(i["accprofile"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "configuration_write_access"
 		if _, ok := i["configuration-write-access"]; ok {
-
 			tmp["configuration_write_access"] = flattenSystemCsfFabricConnectorConfigurationWriteAccess(i["configuration-write-access"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+		if _, ok := i["vdom"]; ok {
+			tmp["vdom"] = flattenSystemCsfFabricConnectorVdom(i["vdom"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -606,7 +651,61 @@ func flattenSystemCsfFabricConnectorConfigurationWriteAccess(v interface{}, d *s
 	return v
 }
 
+func flattenSystemCsfFabricConnectorVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemCsfFabricConnectorVdomName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemCsfFabricConnectorVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCsfForticloudAccountEnforcement(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemCsfFileMgmt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemCsfFileQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemCsfFileQuotaWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -636,25 +735,21 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemCsfFabricDeviceName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_ip"
 		if _, ok := i["device-ip"]; ok {
-
 			tmp["device_ip"] = flattenSystemCsfFabricDeviceDeviceIp(i["device-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_port"
 		if _, ok := i["https-port"]; ok {
-
 			tmp["https_port"] = flattenSystemCsfFabricDeviceHttpsPort(i["https-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
 		if _, ok := i["access-token"]; ok {
-
 			tmp["access_token"] = flattenSystemCsfFabricDeviceAccessToken(i["access-token"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -664,19 +759,16 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if _, ok := i["device-type"]; ok {
-
 			tmp["device_type"] = flattenSystemCsfFabricDeviceDeviceType(i["device-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "login"
 		if _, ok := i["login"]; ok {
-
 			tmp["login"] = flattenSystemCsfFabricDeviceLogin(i["login"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
-
 			tmp["password"] = flattenSystemCsfFabricDevicePassword(i["password"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -723,6 +815,12 @@ func flattenSystemCsfFabricDevicePassword(v interface{}, d *schema.ResourceData,
 
 func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemCsfStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -826,7 +924,7 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("trusted_list", flattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list", sv)); err != nil {
 			if !fortiAPIPatch(o["trusted-list"]) {
 				return fmt.Errorf("Error reading trusted_list: %v", err)
@@ -842,7 +940,7 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("fabric_connector", flattenSystemCsfFabricConnector(o["fabric-connector"], d, "fabric_connector", sv)); err != nil {
 			if !fortiAPIPatch(o["fabric-connector"]) {
 				return fmt.Errorf("Error reading fabric_connector: %v", err)
@@ -864,7 +962,25 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("file_mgmt", flattenSystemCsfFileMgmt(o["file-mgmt"], d, "file_mgmt", sv)); err != nil {
+		if !fortiAPIPatch(o["file-mgmt"]) {
+			return fmt.Errorf("Error reading file_mgmt: %v", err)
+		}
+	}
+
+	if err = d.Set("file_quota", flattenSystemCsfFileQuota(o["file-quota"], d, "file_quota", sv)); err != nil {
+		if !fortiAPIPatch(o["file-quota"]) {
+			return fmt.Errorf("Error reading file_quota: %v", err)
+		}
+	}
+
+	if err = d.Set("file_quota_warning", flattenSystemCsfFileQuotaWarning(o["file-quota-warning"], d, "file_quota_warning", sv)); err != nil {
+		if !fortiAPIPatch(o["file-quota-warning"]) {
+			return fmt.Errorf("Error reading file_quota_warning: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("fabric_device", flattenSystemCsfFabricDevice(o["fabric-device"], d, "fabric_device", sv)); err != nil {
 			if !fortiAPIPatch(o["fabric-device"]) {
 				return fmt.Errorf("Error reading fabric_device: %v", err)
@@ -981,44 +1097,42 @@ func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemCsfTrustedListName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authorization_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["authorization-type"], _ = expandSystemCsfTrustedListAuthorizationType(d, i["authorization_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["serial"], _ = expandSystemCsfTrustedListSerial(d, i["serial"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "certificate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["certificate"], _ = expandSystemCsfTrustedListCertificate(d, i["certificate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandSystemCsfTrustedListAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_members"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ha-members"], _ = expandSystemCsfTrustedListHaMembers(d, i["ha_members"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "downstream_authorization"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["downstream-authorization"], _ = expandSystemCsfTrustedListDownstreamAuthorization(d, i["downstream_authorization"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["index"], _ = expandSystemCsfTrustedListIndex(d, i["index"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1057,6 +1171,10 @@ func expandSystemCsfTrustedListDownstreamAuthorization(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandSystemCsfTrustedListIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemCsfFabricConnector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -1073,20 +1191,24 @@ func expandSystemCsfFabricConnector(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["serial"], _ = expandSystemCsfFabricConnectorSerial(d, i["serial"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accprofile"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["accprofile"], _ = expandSystemCsfFabricConnectorAccprofile(d, i["accprofile"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "configuration_write_access"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["configuration-write-access"], _ = expandSystemCsfFabricConnectorConfigurationWriteAccess(d, i["configuration_write_access"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+			tmp["vdom"], _ = expandSystemCsfFabricConnectorVdom(d, i["vdom"], pre_append, sv)
+		} else {
+			tmp["vdom"] = make([]string, 0)
 		}
 
 		result = append(result, tmp)
@@ -1109,7 +1231,50 @@ func expandSystemCsfFabricConnectorConfigurationWriteAccess(d *schema.ResourceDa
 	return v, nil
 }
 
+func expandSystemCsfFabricConnectorVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandSystemCsfFabricConnectorVdomName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemCsfFabricConnectorVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemCsfForticloudAccountEnforcement(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfFileMgmt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfFileQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfFileQuotaWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1129,43 +1294,36 @@ func expandSystemCsfFabricDevice(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemCsfFabricDeviceName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["device-ip"], _ = expandSystemCsfFabricDeviceDeviceIp(d, i["device_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["https-port"], _ = expandSystemCsfFabricDeviceHttpsPort(d, i["https_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["access-token"], _ = expandSystemCsfFabricDeviceAccessToken(d, i["access_token"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["device-type"], _ = expandSystemCsfFabricDeviceDeviceType(d, i["device_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "login"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["login"], _ = expandSystemCsfFabricDeviceLogin(d, i["login"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["password"], _ = expandSystemCsfFabricDevicePassword(d, i["password"], pre_append, sv)
 		}
 
@@ -1212,7 +1370,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemCsfStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -1226,7 +1383,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["upstream"] = nil
 		} else {
-
 			t, err := expandSystemCsfUpstream(d, v, "upstream", sv)
 			if err != nil {
 				return &obj, err
@@ -1240,7 +1396,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["upstream-ip"] = nil
 		} else {
-
 			t, err := expandSystemCsfUpstreamIp(d, v, "upstream_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1254,7 +1409,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["upstream-port"] = nil
 		} else {
-
 			t, err := expandSystemCsfUpstreamPort(d, v, "upstream_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1268,7 +1422,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["group-name"] = nil
 		} else {
-
 			t, err := expandSystemCsfGroupName(d, v, "group_name", sv)
 			if err != nil {
 				return &obj, err
@@ -1282,7 +1435,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["group-password"] = nil
 		} else {
-
 			t, err := expandSystemCsfGroupPassword(d, v, "group_password", sv)
 			if err != nil {
 				return &obj, err
@@ -1296,7 +1448,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["accept-auth-by-cert"] = nil
 		} else {
-
 			t, err := expandSystemCsfAcceptAuthByCert(d, v, "accept_auth_by_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -1310,7 +1461,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["log-unification"] = nil
 		} else {
-
 			t, err := expandSystemCsfLogUnification(d, v, "log_unification", sv)
 			if err != nil {
 				return &obj, err
@@ -1324,7 +1474,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["configuration-sync"] = nil
 		} else {
-
 			t, err := expandSystemCsfConfigurationSync(d, v, "configuration_sync", sv)
 			if err != nil {
 				return &obj, err
@@ -1338,7 +1487,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fabric-object-unification"] = nil
 		} else {
-
 			t, err := expandSystemCsfFabricObjectUnification(d, v, "fabric_object_unification", sv)
 			if err != nil {
 				return &obj, err
@@ -1352,7 +1500,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["saml-configuration-sync"] = nil
 		} else {
-
 			t, err := expandSystemCsfSamlConfigurationSync(d, v, "saml_configuration_sync", sv)
 			if err != nil {
 				return &obj, err
@@ -1366,7 +1513,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["management-ip"] = nil
 		} else {
-
 			t, err := expandSystemCsfManagementIp(d, v, "management_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1380,7 +1526,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["management-port"] = nil
 		} else {
-
 			t, err := expandSystemCsfManagementPort(d, v, "management_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1394,7 +1539,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["authorization-request-type"] = nil
 		} else {
-
 			t, err := expandSystemCsfAuthorizationRequestType(d, v, "authorization_request_type", sv)
 			if err != nil {
 				return &obj, err
@@ -1408,7 +1552,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["certificate"] = nil
 		} else {
-
 			t, err := expandSystemCsfCertificate(d, v, "certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -1422,7 +1565,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fabric-workers"] = nil
 		} else {
-
 			t, err := expandSystemCsfFabricWorkers(d, v, "fabric_workers", sv)
 			if err != nil {
 				return &obj, err
@@ -1436,7 +1578,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["downstream-access"] = nil
 		} else {
-
 			t, err := expandSystemCsfDownstreamAccess(d, v, "downstream_access", sv)
 			if err != nil {
 				return &obj, err
@@ -1450,7 +1591,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["downstream-accprofile"] = nil
 		} else {
-
 			t, err := expandSystemCsfDownstreamAccprofile(d, v, "downstream_accprofile", sv)
 			if err != nil {
 				return &obj, err
@@ -1464,7 +1604,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fixed-key"] = nil
 		} else {
-
 			t, err := expandSystemCsfFixedKey(d, v, "fixed_key", sv)
 			if err != nil {
 				return &obj, err
@@ -1478,7 +1617,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["trusted-list"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemCsfTrustedList(d, v, "trusted_list", sv)
 			if err != nil {
 				return &obj, err
@@ -1492,7 +1630,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fabric-connector"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemCsfFabricConnector(d, v, "fabric_connector", sv)
 			if err != nil {
 				return &obj, err
@@ -1506,7 +1643,6 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["forticloud-account-enforcement"] = nil
 		} else {
-
 			t, err := expandSystemCsfForticloudAccountEnforcement(d, v, "forticloud_account_enforcement", sv)
 			if err != nil {
 				return &obj, err
@@ -1516,11 +1652,49 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
+	if v, ok := d.GetOk("file_mgmt"); ok {
+		if setArgNil {
+			obj["file-mgmt"] = nil
+		} else {
+			t, err := expandSystemCsfFileMgmt(d, v, "file_mgmt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["file-mgmt"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("file_quota"); ok {
+		if setArgNil {
+			obj["file-quota"] = nil
+		} else {
+			t, err := expandSystemCsfFileQuota(d, v, "file_quota", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["file-quota"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("file_quota_warning"); ok {
+		if setArgNil {
+			obj["file-quota-warning"] = nil
+		} else {
+			t, err := expandSystemCsfFileQuotaWarning(d, v, "file_quota_warning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["file-quota-warning"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("fabric_device"); ok || d.HasChange("fabric_device") {
 		if setArgNil {
 			obj["fabric-device"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemCsfFabricDevice(d, v, "fabric_device", sv)
 			if err != nil {
 				return &obj, err

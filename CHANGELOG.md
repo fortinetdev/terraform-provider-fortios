@@ -1,5 +1,41 @@
-## 1.17.0 (Unreleased)
+## 1.18.0 (Unreleased)
 
+
+## 1.17.0 (Jun 22, 2023)
+BUG FIXES:
+
+* Fix issue of can't update admin user (#248);
+* Fix issue of no option to not use HTTP proxy (#253);
+* Fix crash issue with insufficient permissions (#257);
+* Fix type change issue (#258)
+* Fix issue of configuration been destroyed after second apply (#265);
+* Fix range issue (#284)
+* Remove extra quotes in the conversion of argument from block to string;
+* Fix duplicate argument issue; 
+
+IMPROVEMENTS:
+
+* Support FortiOS v6.4.11, v6.4.12, v7.0.7, v7.0.8, v7.0.9, v7.0.10, v7.0.11, v7.2.3, v7.2.4, v7.4.0;
+* Update mergeable arguments with type changes; 
+* Update version check function;
+* Add variable get_all_tables to determine whether get all table or complex items when refresh the state file;
+* Support username/password login;
+
+FEATURES:
+
+* **New Resource:** `fortios_antivirus_exemptlist`
+* **New Resource:** `fortios_endpointcontrol_fctemsoverride`
+* **New Resource:** `fortios_firewall_internetservicesubapp`
+* **New Resource:** `fortios_router_extcommunitylist`
+* **New Resource:** `fortios_switchcontrolleracl_ingress`
+* **New Resource:** `fortios_switchcontrolleracl_group`
+* **New Resource:** `fortios_system_deviceupgrade`
+* **New Resource:** `fortios_system_evpn`
+* **New Resource:** `fortios_system_fabricvpn`
+* **New Resource:** `fortios_system_pcpserver`
+* **New Resource:** `fortios_system_sdnproxy`
+* **New Resource:** `fortios_system_ssofortigatecloudadmin`
+* **New Resource:** `fortios_vpn_kmipserver`
 
 ## 1.16.0 (Oct 7, 2022)
 BUG FIXES:

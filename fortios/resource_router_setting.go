@@ -648,7 +648,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["show-filter"] = nil
 		} else {
-
 			t, err := expandRouterSettingShowFilter(d, v, "show_filter", sv)
 			if err != nil {
 				return &obj, err
@@ -662,7 +661,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["hostname"] = nil
 		} else {
-
 			t, err := expandRouterSettingHostname(d, v, "hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -676,7 +674,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_lsa_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Lsa_Flags(d, v, "ospf_debug_lsa_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -690,7 +687,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_nfsm_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Nfsm_Flags(d, v, "ospf_debug_nfsm_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -704,7 +700,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_packet_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Packet_Flags(d, v, "ospf_debug_packet_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -718,7 +713,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_events_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Events_Flags(d, v, "ospf_debug_events_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -732,7 +726,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_route_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Route_Flags(d, v, "ospf_debug_route_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -746,7 +739,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_ifsm_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Ifsm_Flags(d, v, "ospf_debug_ifsm_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -760,7 +752,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf_debug_nsm_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf_Debug_Nsm_Flags(d, v, "ospf_debug_nsm_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -774,7 +765,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["rip_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingRip_Debug_Flags(d, v, "rip_debug_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -788,7 +778,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["bgp_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingBgp_Debug_Flags(d, v, "bgp_debug_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -802,7 +791,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["igmp_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingIgmp_Debug_Flags(d, v, "igmp_debug_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -816,7 +804,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["pimdm_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingPimdm_Debug_Flags(d, v, "pimdm_debug_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -830,7 +817,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["pimsm_debug_simple_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingPimsm_Debug_Simple_Flags(d, v, "pimsm_debug_simple_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -844,7 +830,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["pimsm_debug_timer_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingPimsm_Debug_Timer_Flags(d, v, "pimsm_debug_timer_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -858,7 +843,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["pimsm_debug_joinprune_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingPimsm_Debug_Joinprune_Flags(d, v, "pimsm_debug_joinprune_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -872,7 +856,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["imi_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingImi_Debug_Flags(d, v, "imi_debug_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -886,7 +869,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["isis_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingIsis_Debug_Flags(d, v, "isis_debug_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -900,7 +882,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_lsa_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Lsa_Flags(d, v, "ospf6_debug_lsa_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -914,7 +895,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_nfsm_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Nfsm_Flags(d, v, "ospf6_debug_nfsm_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -928,7 +908,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_packet_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Packet_Flags(d, v, "ospf6_debug_packet_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -942,7 +921,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_events_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Events_Flags(d, v, "ospf6_debug_events_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -956,7 +934,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_route_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Route_Flags(d, v, "ospf6_debug_route_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -970,7 +947,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_ifsm_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Ifsm_Flags(d, v, "ospf6_debug_ifsm_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -984,7 +960,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ospf6_debug_nsm_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingOspf6_Debug_Nsm_Flags(d, v, "ospf6_debug_nsm_flags", sv)
 			if err != nil {
 				return &obj, err
@@ -998,7 +973,6 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ripng_debug_flags"] = nil
 		} else {
-
 			t, err := expandRouterSettingRipng_Debug_Flags(d, v, "ripng_debug_flags", sv)
 			if err != nil {
 				return &obj, err

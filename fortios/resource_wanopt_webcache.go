@@ -480,7 +480,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-object-size"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheMaxObjectSize(d, v, "max_object_size", sv)
 			if err != nil {
 				return &obj, err
@@ -494,7 +493,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["neg-resp-time"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheNegRespTime(d, v, "neg_resp_time", sv)
 			if err != nil {
 				return &obj, err
@@ -508,7 +506,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["fresh-factor"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheFreshFactor(d, v, "fresh_factor", sv)
 			if err != nil {
 				return &obj, err
@@ -522,7 +519,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-ttl"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheMaxTtl(d, v, "max_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -536,7 +532,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["min-ttl"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheMinTtl(d, v, "min_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -550,7 +545,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["default-ttl"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheDefaultTtl(d, v, "default_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -564,7 +558,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ignore-ims"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheIgnoreIms(d, v, "ignore_ims", sv)
 			if err != nil {
 				return &obj, err
@@ -578,7 +571,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ignore-conditional"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheIgnoreConditional(d, v, "ignore_conditional", sv)
 			if err != nil {
 				return &obj, err
@@ -592,7 +584,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ignore-pnc"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheIgnorePnc(d, v, "ignore_pnc", sv)
 			if err != nil {
 				return &obj, err
@@ -606,7 +597,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ignore-ie-reload"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheIgnoreIeReload(d, v, "ignore_ie_reload", sv)
 			if err != nil {
 				return &obj, err
@@ -620,7 +610,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["cache-expired"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheCacheExpired(d, v, "cache_expired", sv)
 			if err != nil {
 				return &obj, err
@@ -634,7 +623,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["cache-cookie"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheCacheCookie(d, v, "cache_cookie", sv)
 			if err != nil {
 				return &obj, err
@@ -648,7 +636,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["reval-pnc"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheRevalPnc(d, v, "reval_pnc", sv)
 			if err != nil {
 				return &obj, err
@@ -662,7 +649,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["always-revalidate"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheAlwaysRevalidate(d, v, "always_revalidate", sv)
 			if err != nil {
 				return &obj, err
@@ -676,7 +662,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["cache-by-default"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheCacheByDefault(d, v, "cache_by_default", sv)
 			if err != nil {
 				return &obj, err
@@ -690,7 +675,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["host-validate"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheHostValidate(d, v, "host_validate", sv)
 			if err != nil {
 				return &obj, err
@@ -704,7 +688,6 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["external"] = nil
 		} else {
-
 			t, err := expandWanoptWebcacheExternal(d, v, "external", sv)
 			if err != nil {
 				return &obj, err

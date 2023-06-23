@@ -120,6 +120,11 @@ func resourceUserExchange() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -319,7 +324,6 @@ func flattenUserExchangeKdcIp(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4"
 		if _, ok := i["ipv4"]; ok {
-
 			tmp["ipv4"] = flattenUserExchangeKdcIpIpv4(i["ipv4"], d, pre_append, sv)
 		}
 
@@ -338,6 +342,12 @@ func flattenUserExchangeKdcIpIpv4(v interface{}, d *schema.ResourceData, pre str
 
 func refreshObjectUserExchange(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenUserExchangeName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -405,7 +415,7 @@ func refreshObjectUserExchange(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("kdc_ip", flattenUserExchangeKdcIp(o["kdc-ip"], d, "kdc_ip", sv)); err != nil {
 			if !fortiAPIPatch(o["kdc-ip"]) {
 				return fmt.Errorf("Error reading kdc_ip: %v", err)
@@ -494,7 +504,6 @@ func expandUserExchangeKdcIp(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv4"], _ = expandUserExchangeKdcIpIpv4(d, i["ipv4"], pre_append, sv)
 		}
 
@@ -514,7 +523,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserExchangeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -524,7 +532,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("server_name"); ok {
-
 		t, err := expandUserExchangeServerName(d, v, "server_name", sv)
 		if err != nil {
 			return &obj, err
@@ -534,7 +541,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
-
 		t, err := expandUserExchangeDomainName(d, v, "domain_name", sv)
 		if err != nil {
 			return &obj, err
@@ -544,7 +550,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandUserExchangeUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -554,7 +559,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandUserExchangePassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -564,7 +568,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandUserExchangeIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -574,7 +577,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("connect_protocol"); ok {
-
 		t, err := expandUserExchangeConnectProtocol(d, v, "connect_protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -584,7 +586,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("auth_type"); ok {
-
 		t, err := expandUserExchangeAuthType(d, v, "auth_type", sv)
 		if err != nil {
 			return &obj, err
@@ -594,7 +595,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("auth_level"); ok {
-
 		t, err := expandUserExchangeAuthLevel(d, v, "auth_level", sv)
 		if err != nil {
 			return &obj, err
@@ -604,7 +604,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("http_auth_type"); ok {
-
 		t, err := expandUserExchangeHttpAuthType(d, v, "http_auth_type", sv)
 		if err != nil {
 			return &obj, err
@@ -614,7 +613,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
-
 		t, err := expandUserExchangeSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 		if err != nil {
 			return &obj, err
@@ -624,7 +622,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("auto_discover_kdc"); ok {
-
 		t, err := expandUserExchangeAutoDiscoverKdc(d, v, "auto_discover_kdc", sv)
 		if err != nil {
 			return &obj, err
@@ -634,7 +631,6 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("kdc_ip"); ok || d.HasChange("kdc_ip") {
-
 		t, err := expandUserExchangeKdcIp(d, v, "kdc_ip", sv)
 		if err != nil {
 			return &obj, err

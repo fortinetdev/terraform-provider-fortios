@@ -109,6 +109,11 @@ func resourceFirewallAddress6Template() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -272,31 +277,26 @@ func flattenFirewallAddress6TemplateSubnetSegment(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallAddress6TemplateSubnetSegmentId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddress6TemplateSubnetSegmentName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bits"
 		if _, ok := i["bits"]; ok {
-
 			tmp["bits"] = flattenFirewallAddress6TemplateSubnetSegmentBits(i["bits"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusive"
 		if _, ok := i["exclusive"]; ok {
-
 			tmp["exclusive"] = flattenFirewallAddress6TemplateSubnetSegmentExclusive(i["exclusive"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
 		if _, ok := i["values"]; ok {
-
 			tmp["values"] = flattenFirewallAddress6TemplateSubnetSegmentValues(i["values"], d, pre_append, sv)
 		}
 
@@ -351,13 +351,11 @@ func flattenFirewallAddress6TemplateSubnetSegmentValues(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddress6TemplateSubnetSegmentValuesName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenFirewallAddress6TemplateSubnetSegmentValuesValue(i["value"], d, pre_append, sv)
 		}
 
@@ -384,6 +382,12 @@ func flattenFirewallAddress6TemplateFabricObject(v interface{}, d *schema.Resour
 
 func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallAddress6TemplateName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -403,7 +407,7 @@ func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("subnet_segment", flattenFirewallAddress6TemplateSubnetSegment(o["subnet-segment"], d, "subnet_segment", sv)); err != nil {
 			if !fortiAPIPatch(o["subnet-segment"]) {
 				return fmt.Errorf("Error reading subnet_segment: %v", err)
@@ -462,31 +466,26 @@ func expandFirewallAddress6TemplateSubnetSegment(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallAddress6TemplateSubnetSegmentId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddress6TemplateSubnetSegmentName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bits"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["bits"], _ = expandFirewallAddress6TemplateSubnetSegmentBits(d, i["bits"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusive"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["exclusive"], _ = expandFirewallAddress6TemplateSubnetSegmentExclusive(d, i["exclusive"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["values"], _ = expandFirewallAddress6TemplateSubnetSegmentValues(d, i["values"], pre_append, sv)
 		} else {
 			tmp["values"] = make([]string, 0)
@@ -532,13 +531,11 @@ func expandFirewallAddress6TemplateSubnetSegmentValues(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddress6TemplateSubnetSegmentValuesName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandFirewallAddress6TemplateSubnetSegmentValuesValue(d, i["value"], pre_append, sv)
 		}
 
@@ -566,7 +563,6 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallAddress6TemplateName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -576,7 +572,6 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandFirewallAddress6TemplateIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -586,7 +581,6 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("subnet_segment_count"); ok {
-
 		t, err := expandFirewallAddress6TemplateSubnetSegmentCount(d, v, "subnet_segment_count", sv)
 		if err != nil {
 			return &obj, err
@@ -596,7 +590,6 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("subnet_segment"); ok || d.HasChange("subnet_segment") {
-
 		t, err := expandFirewallAddress6TemplateSubnetSegment(d, v, "subnet_segment", sv)
 		if err != nil {
 			return &obj, err
@@ -606,7 +599,6 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallAddress6TemplateFabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

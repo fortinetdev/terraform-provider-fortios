@@ -116,6 +116,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ztna_device_ownership": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ztna_ems_tag": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -127,6 +131,22 @@ func dataSourceFirewallPolicy() *schema.Resource {
 						},
 					},
 				},
+			},
+			"ztna_ems_tag_secondary": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"ztna_tags_match_logic": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"ztna_geo_tag": &schema.Schema{
 				Type:     schema.TypeList,
@@ -484,6 +504,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"policy_expiry_date_utc": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"service": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -548,6 +572,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ztna_policy_redirect": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"webproxy_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -601,6 +629,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"voip_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ips_voip_filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -751,6 +783,26 @@ func dataSourceFirewallPolicy() *schema.Resource {
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"pcp_outbound": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"pcp_inbound": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"pcp_poolname": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"permit_any_host": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1395,6 +1447,10 @@ func dataSourceFlattenFirewallPolicyZtnaStatus(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyZtnaDeviceOwnership(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1428,6 +1484,46 @@ func dataSourceFlattenFirewallPolicyZtnaEmsTag(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenFirewallPolicyZtnaEmsTagName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyZtnaEmsTagSecondary(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyZtnaEmsTagSecondaryName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyZtnaEmsTagSecondaryName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyZtnaTagsMatchLogic(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2339,6 +2435,10 @@ func dataSourceFlattenFirewallPolicyPolicyExpiryDate(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyPolicyExpiryDateUtc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyService(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -2427,6 +2527,10 @@ func dataSourceFlattenFirewallPolicySshPolicyRedirect(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyZtnaPolicyRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyWebproxyProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2480,6 +2584,10 @@ func dataSourceFlattenFirewallPolicyApplicationList(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenFirewallPolicyVoipProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyIpsVoipFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2724,6 +2832,50 @@ func dataSourceFlattenFirewallPolicyAppGroupName(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenFirewallPolicyNat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyPcpOutbound(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyPcpInbound(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyPcpPoolname(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyPcpPoolnameName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyPcpPoolnameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3401,9 +3553,27 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("ztna_device_ownership", dataSourceFlattenFirewallPolicyZtnaDeviceOwnership(o["ztna-device-ownership"], d, "ztna_device_ownership")); err != nil {
+		if !fortiAPIPatch(o["ztna-device-ownership"]) {
+			return fmt.Errorf("Error reading ztna_device_ownership: %v", err)
+		}
+	}
+
 	if err = d.Set("ztna_ems_tag", dataSourceFlattenFirewallPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag")); err != nil {
 		if !fortiAPIPatch(o["ztna-ems-tag"]) {
 			return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_ems_tag_secondary", dataSourceFlattenFirewallPolicyZtnaEmsTagSecondary(o["ztna-ems-tag-secondary"], d, "ztna_ems_tag_secondary")); err != nil {
+		if !fortiAPIPatch(o["ztna-ems-tag-secondary"]) {
+			return fmt.Errorf("Error reading ztna_ems_tag_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_tags_match_logic", dataSourceFlattenFirewallPolicyZtnaTagsMatchLogic(o["ztna-tags-match-logic"], d, "ztna_tags_match_logic")); err != nil {
+		if !fortiAPIPatch(o["ztna-tags-match-logic"]) {
+			return fmt.Errorf("Error reading ztna_tags_match_logic: %v", err)
 		}
 	}
 
@@ -3665,6 +3835,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("policy_expiry_date_utc", dataSourceFlattenFirewallPolicyPolicyExpiryDateUtc(o["policy-expiry-date-utc"], d, "policy_expiry_date_utc")); err != nil {
+		if !fortiAPIPatch(o["policy-expiry-date-utc"]) {
+			return fmt.Errorf("Error reading policy_expiry_date_utc: %v", err)
+		}
+	}
+
 	if err = d.Set("service", dataSourceFlattenFirewallPolicyService(o["service"], d, "service")); err != nil {
 		if !fortiAPIPatch(o["service"]) {
 			return fmt.Errorf("Error reading service: %v", err)
@@ -3749,6 +3925,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("ztna_policy_redirect", dataSourceFlattenFirewallPolicyZtnaPolicyRedirect(o["ztna-policy-redirect"], d, "ztna_policy_redirect")); err != nil {
+		if !fortiAPIPatch(o["ztna-policy-redirect"]) {
+			return fmt.Errorf("Error reading ztna_policy_redirect: %v", err)
+		}
+	}
+
 	if err = d.Set("webproxy_profile", dataSourceFlattenFirewallPolicyWebproxyProfile(o["webproxy-profile"], d, "webproxy_profile")); err != nil {
 		if !fortiAPIPatch(o["webproxy-profile"]) {
 			return fmt.Errorf("Error reading webproxy_profile: %v", err)
@@ -3830,6 +4012,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("voip_profile", dataSourceFlattenFirewallPolicyVoipProfile(o["voip-profile"], d, "voip_profile")); err != nil {
 		if !fortiAPIPatch(o["voip-profile"]) {
 			return fmt.Errorf("Error reading voip_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("ips_voip_filter", dataSourceFlattenFirewallPolicyIpsVoipFilter(o["ips-voip-filter"], d, "ips_voip_filter")); err != nil {
+		if !fortiAPIPatch(o["ips-voip-filter"]) {
+			return fmt.Errorf("Error reading ips_voip_filter: %v", err)
 		}
 	}
 
@@ -4004,6 +4192,24 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("nat", dataSourceFlattenFirewallPolicyNat(o["nat"], d, "nat")); err != nil {
 		if !fortiAPIPatch(o["nat"]) {
 			return fmt.Errorf("Error reading nat: %v", err)
+		}
+	}
+
+	if err = d.Set("pcp_outbound", dataSourceFlattenFirewallPolicyPcpOutbound(o["pcp-outbound"], d, "pcp_outbound")); err != nil {
+		if !fortiAPIPatch(o["pcp-outbound"]) {
+			return fmt.Errorf("Error reading pcp_outbound: %v", err)
+		}
+	}
+
+	if err = d.Set("pcp_inbound", dataSourceFlattenFirewallPolicyPcpInbound(o["pcp-inbound"], d, "pcp_inbound")); err != nil {
+		if !fortiAPIPatch(o["pcp-inbound"]) {
+			return fmt.Errorf("Error reading pcp_inbound: %v", err)
+		}
+	}
+
+	if err = d.Set("pcp_poolname", dataSourceFlattenFirewallPolicyPcpPoolname(o["pcp-poolname"], d, "pcp_poolname")); err != nil {
+		if !fortiAPIPatch(o["pcp-poolname"]) {
+			return fmt.Errorf("Error reading pcp_poolname: %v", err)
 		}
 	}
 

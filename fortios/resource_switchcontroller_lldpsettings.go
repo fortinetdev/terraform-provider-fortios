@@ -269,7 +269,6 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSwitchControllerLldpSettingsStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -283,7 +282,6 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["tx-hold"] = nil
 		} else {
-
 			t, err := expandSwitchControllerLldpSettingsTxHold(d, v, "tx_hold", sv)
 			if err != nil {
 				return &obj, err
@@ -297,7 +295,6 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["tx-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerLldpSettingsTxInterval(d, v, "tx_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -311,7 +308,6 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["fast-start-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerLldpSettingsFastStartInterval(d, v, "fast_start_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -325,7 +321,6 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["management-interface"] = nil
 		} else {
-
 			t, err := expandSwitchControllerLldpSettingsManagementInterface(d, v, "management_interface", sv)
 			if err != nil {
 				return &obj, err
@@ -339,7 +334,6 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["device-detection"] = nil
 		} else {
-
 			t, err := expandSwitchControllerLldpSettingsDeviceDetection(d, v, "device_detection", sv)
 			if err != nil {
 				return &obj, err

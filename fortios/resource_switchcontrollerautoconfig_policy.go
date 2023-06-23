@@ -293,7 +293,6 @@ func getObjectSwitchControllerAutoConfigPolicy(d *schema.ResourceData, sv string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerAutoConfigPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -303,7 +302,6 @@ func getObjectSwitchControllerAutoConfigPolicy(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("qos_policy"); ok {
-
 		t, err := expandSwitchControllerAutoConfigPolicyQosPolicy(d, v, "qos_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -313,7 +311,6 @@ func getObjectSwitchControllerAutoConfigPolicy(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("storm_control_policy"); ok {
-
 		t, err := expandSwitchControllerAutoConfigPolicyStormControlPolicy(d, v, "storm_control_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +320,6 @@ func getObjectSwitchControllerAutoConfigPolicy(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("poe_status"); ok {
-
 		t, err := expandSwitchControllerAutoConfigPolicyPoeStatus(d, v, "poe_status", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +329,6 @@ func getObjectSwitchControllerAutoConfigPolicy(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("igmp_flood_report"); ok {
-
 		t, err := expandSwitchControllerAutoConfigPolicyIgmpFloodReport(d, v, "igmp_flood_report", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +338,6 @@ func getObjectSwitchControllerAutoConfigPolicy(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("igmp_flood_traffic"); ok {
-
 		t, err := expandSwitchControllerAutoConfigPolicyIgmpFloodTraffic(d, v, "igmp_flood_traffic", sv)
 		if err != nil {
 			return &obj, err

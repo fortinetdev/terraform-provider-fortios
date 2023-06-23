@@ -225,7 +225,6 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateScheduleStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -239,7 +238,6 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["frequency"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateScheduleFrequency(d, v, "frequency", sv)
 			if err != nil {
 				return &obj, err
@@ -253,7 +251,6 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["time"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateScheduleTime(d, v, "time", sv)
 			if err != nil {
 				return &obj, err
@@ -267,7 +264,6 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData, setArgNil bool, s
 		if setArgNil {
 			obj["day"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateScheduleDay(d, v, "day", sv)
 			if err != nil {
 				return &obj, err

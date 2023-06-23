@@ -360,7 +360,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["proxy-connect-timeout"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingProxyConnectTimeout(d, v, "proxy_connect_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -374,7 +373,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ssl-dh-bits"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingSslDhBits(d, v, "ssl_dh_bits", sv)
 			if err != nil {
 				return &obj, err
@@ -388,7 +386,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ssl-send-empty-frags"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
 			if err != nil {
 				return &obj, err
@@ -402,7 +399,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["no-matching-cipher-action"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingNoMatchingCipherAction(d, v, "no_matching_cipher_action", sv)
 			if err != nil {
 				return &obj, err
@@ -416,7 +412,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["cert-cache-capacity"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingCertCacheCapacity(d, v, "cert_cache_capacity", sv)
 			if err != nil {
 				return &obj, err
@@ -430,7 +425,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["cert-cache-timeout"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingCertCacheTimeout(d, v, "cert_cache_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -444,7 +438,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["session-cache-capacity"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingSessionCacheCapacity(d, v, "session_cache_capacity", sv)
 			if err != nil {
 				return &obj, err
@@ -458,7 +451,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["session-cache-timeout"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingSessionCacheTimeout(d, v, "session_cache_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -472,7 +464,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["kxp-queue-threshold"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingKxpQueueThreshold(d, v, "kxp_queue_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -486,7 +477,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ssl-queue-threshold"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingSslQueueThreshold(d, v, "ssl_queue_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -500,7 +490,6 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["abbreviate-handshake"] = nil
 		} else {
-
 			t, err := expandFirewallSslSettingAbbreviateHandshake(d, v, "abbreviate_handshake", sv)
 			if err != nil {
 				return &obj, err

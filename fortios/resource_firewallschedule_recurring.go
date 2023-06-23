@@ -289,7 +289,6 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallScheduleRecurringName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -299,7 +298,6 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("start"); ok {
-
 		t, err := expandFirewallScheduleRecurringStart(d, v, "start", sv)
 		if err != nil {
 			return &obj, err
@@ -309,7 +307,6 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("end"); ok {
-
 		t, err := expandFirewallScheduleRecurringEnd(d, v, "end", sv)
 		if err != nil {
 			return &obj, err
@@ -319,7 +316,6 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("day"); ok {
-
 		t, err := expandFirewallScheduleRecurringDay(d, v, "day", sv)
 		if err != nil {
 			return &obj, err
@@ -329,7 +325,6 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallScheduleRecurringColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -339,7 +334,6 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallScheduleRecurringFabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

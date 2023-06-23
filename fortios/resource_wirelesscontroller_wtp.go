@@ -869,6 +869,11 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1124,13 +1129,11 @@ func flattenWirelessControllerWtpSplitTunnelingAcl(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerWtpSplitTunnelingAclId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
 		if _, ok := i["dest-ip"]; ok {
-
 			tmp["dest_ip"] = flattenWirelessControllerWtpSplitTunnelingAclDestIp(i["dest-ip"], d, pre_append, sv)
 		}
 
@@ -1173,121 +1176,101 @@ func flattenWirelessControllerWtpLan(v interface{}, d *schema.ResourceData, pre 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "port_mode"
 	if _, ok := i["port-mode"]; ok {
-
 		result["port_mode"] = flattenWirelessControllerWtpLanPortMode(i["port-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port_ssid"
 	if _, ok := i["port-ssid"]; ok {
-
 		result["port_ssid"] = flattenWirelessControllerWtpLanPortSsid(i["port-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port1_mode"
 	if _, ok := i["port1-mode"]; ok {
-
 		result["port1_mode"] = flattenWirelessControllerWtpLanPort1Mode(i["port1-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port1_ssid"
 	if _, ok := i["port1-ssid"]; ok {
-
 		result["port1_ssid"] = flattenWirelessControllerWtpLanPort1Ssid(i["port1-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port2_mode"
 	if _, ok := i["port2-mode"]; ok {
-
 		result["port2_mode"] = flattenWirelessControllerWtpLanPort2Mode(i["port2-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port2_ssid"
 	if _, ok := i["port2-ssid"]; ok {
-
 		result["port2_ssid"] = flattenWirelessControllerWtpLanPort2Ssid(i["port2-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port3_mode"
 	if _, ok := i["port3-mode"]; ok {
-
 		result["port3_mode"] = flattenWirelessControllerWtpLanPort3Mode(i["port3-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port3_ssid"
 	if _, ok := i["port3-ssid"]; ok {
-
 		result["port3_ssid"] = flattenWirelessControllerWtpLanPort3Ssid(i["port3-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port4_mode"
 	if _, ok := i["port4-mode"]; ok {
-
 		result["port4_mode"] = flattenWirelessControllerWtpLanPort4Mode(i["port4-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port4_ssid"
 	if _, ok := i["port4-ssid"]; ok {
-
 		result["port4_ssid"] = flattenWirelessControllerWtpLanPort4Ssid(i["port4-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port5_mode"
 	if _, ok := i["port5-mode"]; ok {
-
 		result["port5_mode"] = flattenWirelessControllerWtpLanPort5Mode(i["port5-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port5_ssid"
 	if _, ok := i["port5-ssid"]; ok {
-
 		result["port5_ssid"] = flattenWirelessControllerWtpLanPort5Ssid(i["port5-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port6_mode"
 	if _, ok := i["port6-mode"]; ok {
-
 		result["port6_mode"] = flattenWirelessControllerWtpLanPort6Mode(i["port6-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port6_ssid"
 	if _, ok := i["port6-ssid"]; ok {
-
 		result["port6_ssid"] = flattenWirelessControllerWtpLanPort6Ssid(i["port6-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port7_mode"
 	if _, ok := i["port7-mode"]; ok {
-
 		result["port7_mode"] = flattenWirelessControllerWtpLanPort7Mode(i["port7-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port7_ssid"
 	if _, ok := i["port7-ssid"]; ok {
-
 		result["port7_ssid"] = flattenWirelessControllerWtpLanPort7Ssid(i["port7-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port8_mode"
 	if _, ok := i["port8-mode"]; ok {
-
 		result["port8_mode"] = flattenWirelessControllerWtpLanPort8Mode(i["port8-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port8_ssid"
 	if _, ok := i["port8-ssid"]; ok {
-
 		result["port8_ssid"] = flattenWirelessControllerWtpLanPort8Ssid(i["port8-ssid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port_esl_mode"
 	if _, ok := i["port-esl-mode"]; ok {
-
 		result["port_esl_mode"] = flattenWirelessControllerWtpLanPortEslMode(i["port-esl-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "port_esl_ssid"
 	if _, ok := i["port-esl-ssid"]; ok {
-
 		result["port_esl_ssid"] = flattenWirelessControllerWtpLanPortEslSsid(i["port-esl-ssid"], d, pre_append, sv)
 	}
 
@@ -1406,115 +1389,96 @@ func flattenWirelessControllerWtpRadio1(v interface{}, d *schema.ResourceData, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "radio_id"
 	if _, ok := i["radio-id"]; ok {
-
 		result["radio_id"] = flattenWirelessControllerWtpRadio1RadioId(i["radio-id"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := i["override-band"]; ok {
-
 		result["override_band"] = flattenWirelessControllerWtpRadio1OverrideBand(i["override-band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "band"
 	if _, ok := i["band"]; ok {
-
 		result["band"] = flattenWirelessControllerWtpRadio1Band(i["band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := i["override-analysis"]; ok {
-
 		result["override_analysis"] = flattenWirelessControllerWtpRadio1OverrideAnalysis(i["override-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := i["spectrum-analysis"]; ok {
-
 		result["spectrum_analysis"] = flattenWirelessControllerWtpRadio1SpectrumAnalysis(i["spectrum-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := i["override-txpower"]; ok {
-
 		result["override_txpower"] = flattenWirelessControllerWtpRadio1OverrideTxpower(i["override-txpower"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := i["auto-power-level"]; ok {
-
 		result["auto_power_level"] = flattenWirelessControllerWtpRadio1AutoPowerLevel(i["auto-power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := i["auto-power-high"]; ok {
-
 		result["auto_power_high"] = flattenWirelessControllerWtpRadio1AutoPowerHigh(i["auto-power-high"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := i["auto-power-low"]; ok {
-
 		result["auto_power_low"] = flattenWirelessControllerWtpRadio1AutoPowerLow(i["auto-power-low"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := i["auto-power-target"]; ok {
-
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio1AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := i["power-mode"]; ok {
-
 		result["power_mode"] = flattenWirelessControllerWtpRadio1PowerMode(i["power-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
-
 		result["power_level"] = flattenWirelessControllerWtpRadio1PowerLevel(i["power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := i["power-value"]; ok {
-
 		result["power_value"] = flattenWirelessControllerWtpRadio1PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
-
 		result["override_vaps"] = flattenWirelessControllerWtpRadio1OverrideVaps(i["override-vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := i["vap-all"]; ok {
-
 		result["vap_all"] = flattenWirelessControllerWtpRadio1VapAll(i["vap-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := i["vaps"]; ok {
-
 		result["vaps"] = flattenWirelessControllerWtpRadio1Vaps(i["vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := i["override-channel"]; ok {
-
 		result["override_channel"] = flattenWirelessControllerWtpRadio1OverrideChannel(i["override-channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "channel"
 	if _, ok := i["channel"]; ok {
-
 		result["channel"] = flattenWirelessControllerWtpRadio1Channel(i["channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := i["drma-manual-mode"]; ok {
-
 		result["drma_manual_mode"] = flattenWirelessControllerWtpRadio1DrmaManualMode(i["drma-manual-mode"], d, pre_append, sv)
 	}
 
@@ -1608,7 +1572,6 @@ func flattenWirelessControllerWtpRadio1Vaps(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerWtpRadio1VapsName(i["name"], d, pre_append, sv)
 		}
 
@@ -1655,7 +1618,6 @@ func flattenWirelessControllerWtpRadio1Channel(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := i["chan"]; ok {
-
 			tmp["chan"] = flattenWirelessControllerWtpRadio1ChannelChan(i["chan"], d, pre_append, sv)
 		}
 
@@ -1687,115 +1649,96 @@ func flattenWirelessControllerWtpRadio2(v interface{}, d *schema.ResourceData, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "radio_id"
 	if _, ok := i["radio-id"]; ok {
-
 		result["radio_id"] = flattenWirelessControllerWtpRadio2RadioId(i["radio-id"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := i["override-band"]; ok {
-
 		result["override_band"] = flattenWirelessControllerWtpRadio2OverrideBand(i["override-band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "band"
 	if _, ok := i["band"]; ok {
-
 		result["band"] = flattenWirelessControllerWtpRadio2Band(i["band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := i["override-analysis"]; ok {
-
 		result["override_analysis"] = flattenWirelessControllerWtpRadio2OverrideAnalysis(i["override-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := i["spectrum-analysis"]; ok {
-
 		result["spectrum_analysis"] = flattenWirelessControllerWtpRadio2SpectrumAnalysis(i["spectrum-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := i["override-txpower"]; ok {
-
 		result["override_txpower"] = flattenWirelessControllerWtpRadio2OverrideTxpower(i["override-txpower"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := i["auto-power-level"]; ok {
-
 		result["auto_power_level"] = flattenWirelessControllerWtpRadio2AutoPowerLevel(i["auto-power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := i["auto-power-high"]; ok {
-
 		result["auto_power_high"] = flattenWirelessControllerWtpRadio2AutoPowerHigh(i["auto-power-high"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := i["auto-power-low"]; ok {
-
 		result["auto_power_low"] = flattenWirelessControllerWtpRadio2AutoPowerLow(i["auto-power-low"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := i["auto-power-target"]; ok {
-
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio2AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := i["power-mode"]; ok {
-
 		result["power_mode"] = flattenWirelessControllerWtpRadio2PowerMode(i["power-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
-
 		result["power_level"] = flattenWirelessControllerWtpRadio2PowerLevel(i["power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := i["power-value"]; ok {
-
 		result["power_value"] = flattenWirelessControllerWtpRadio2PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
-
 		result["override_vaps"] = flattenWirelessControllerWtpRadio2OverrideVaps(i["override-vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := i["vap-all"]; ok {
-
 		result["vap_all"] = flattenWirelessControllerWtpRadio2VapAll(i["vap-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := i["vaps"]; ok {
-
 		result["vaps"] = flattenWirelessControllerWtpRadio2Vaps(i["vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := i["override-channel"]; ok {
-
 		result["override_channel"] = flattenWirelessControllerWtpRadio2OverrideChannel(i["override-channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "channel"
 	if _, ok := i["channel"]; ok {
-
 		result["channel"] = flattenWirelessControllerWtpRadio2Channel(i["channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := i["drma-manual-mode"]; ok {
-
 		result["drma_manual_mode"] = flattenWirelessControllerWtpRadio2DrmaManualMode(i["drma-manual-mode"], d, pre_append, sv)
 	}
 
@@ -1889,7 +1832,6 @@ func flattenWirelessControllerWtpRadio2Vaps(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerWtpRadio2VapsName(i["name"], d, pre_append, sv)
 		}
 
@@ -1936,7 +1878,6 @@ func flattenWirelessControllerWtpRadio2Channel(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := i["chan"]; ok {
-
 			tmp["chan"] = flattenWirelessControllerWtpRadio2ChannelChan(i["chan"], d, pre_append, sv)
 		}
 
@@ -1968,109 +1909,91 @@ func flattenWirelessControllerWtpRadio3(v interface{}, d *schema.ResourceData, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := i["override-band"]; ok {
-
 		result["override_band"] = flattenWirelessControllerWtpRadio3OverrideBand(i["override-band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "band"
 	if _, ok := i["band"]; ok {
-
 		result["band"] = flattenWirelessControllerWtpRadio3Band(i["band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := i["override-analysis"]; ok {
-
 		result["override_analysis"] = flattenWirelessControllerWtpRadio3OverrideAnalysis(i["override-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := i["spectrum-analysis"]; ok {
-
 		result["spectrum_analysis"] = flattenWirelessControllerWtpRadio3SpectrumAnalysis(i["spectrum-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := i["override-txpower"]; ok {
-
 		result["override_txpower"] = flattenWirelessControllerWtpRadio3OverrideTxpower(i["override-txpower"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := i["auto-power-level"]; ok {
-
 		result["auto_power_level"] = flattenWirelessControllerWtpRadio3AutoPowerLevel(i["auto-power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := i["auto-power-high"]; ok {
-
 		result["auto_power_high"] = flattenWirelessControllerWtpRadio3AutoPowerHigh(i["auto-power-high"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := i["auto-power-low"]; ok {
-
 		result["auto_power_low"] = flattenWirelessControllerWtpRadio3AutoPowerLow(i["auto-power-low"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := i["auto-power-target"]; ok {
-
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio3AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := i["power-mode"]; ok {
-
 		result["power_mode"] = flattenWirelessControllerWtpRadio3PowerMode(i["power-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
-
 		result["power_level"] = flattenWirelessControllerWtpRadio3PowerLevel(i["power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := i["power-value"]; ok {
-
 		result["power_value"] = flattenWirelessControllerWtpRadio3PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
-
 		result["override_vaps"] = flattenWirelessControllerWtpRadio3OverrideVaps(i["override-vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := i["vap-all"]; ok {
-
 		result["vap_all"] = flattenWirelessControllerWtpRadio3VapAll(i["vap-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := i["vaps"]; ok {
-
 		result["vaps"] = flattenWirelessControllerWtpRadio3Vaps(i["vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := i["override-channel"]; ok {
-
 		result["override_channel"] = flattenWirelessControllerWtpRadio3OverrideChannel(i["override-channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "channel"
 	if _, ok := i["channel"]; ok {
-
 		result["channel"] = flattenWirelessControllerWtpRadio3Channel(i["channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := i["drma-manual-mode"]; ok {
-
 		result["drma_manual_mode"] = flattenWirelessControllerWtpRadio3DrmaManualMode(i["drma-manual-mode"], d, pre_append, sv)
 	}
 
@@ -2160,7 +2083,6 @@ func flattenWirelessControllerWtpRadio3Vaps(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerWtpRadio3VapsName(i["name"], d, pre_append, sv)
 		}
 
@@ -2207,7 +2129,6 @@ func flattenWirelessControllerWtpRadio3Channel(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := i["chan"]; ok {
-
 			tmp["chan"] = flattenWirelessControllerWtpRadio3ChannelChan(i["chan"], d, pre_append, sv)
 		}
 
@@ -2239,109 +2160,91 @@ func flattenWirelessControllerWtpRadio4(v interface{}, d *schema.ResourceData, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := i["override-band"]; ok {
-
 		result["override_band"] = flattenWirelessControllerWtpRadio4OverrideBand(i["override-band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "band"
 	if _, ok := i["band"]; ok {
-
 		result["band"] = flattenWirelessControllerWtpRadio4Band(i["band"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := i["override-analysis"]; ok {
-
 		result["override_analysis"] = flattenWirelessControllerWtpRadio4OverrideAnalysis(i["override-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := i["spectrum-analysis"]; ok {
-
 		result["spectrum_analysis"] = flattenWirelessControllerWtpRadio4SpectrumAnalysis(i["spectrum-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := i["override-txpower"]; ok {
-
 		result["override_txpower"] = flattenWirelessControllerWtpRadio4OverrideTxpower(i["override-txpower"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := i["auto-power-level"]; ok {
-
 		result["auto_power_level"] = flattenWirelessControllerWtpRadio4AutoPowerLevel(i["auto-power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := i["auto-power-high"]; ok {
-
 		result["auto_power_high"] = flattenWirelessControllerWtpRadio4AutoPowerHigh(i["auto-power-high"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := i["auto-power-low"]; ok {
-
 		result["auto_power_low"] = flattenWirelessControllerWtpRadio4AutoPowerLow(i["auto-power-low"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := i["auto-power-target"]; ok {
-
 		result["auto_power_target"] = flattenWirelessControllerWtpRadio4AutoPowerTarget(i["auto-power-target"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := i["power-mode"]; ok {
-
 		result["power_mode"] = flattenWirelessControllerWtpRadio4PowerMode(i["power-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := i["power-level"]; ok {
-
 		result["power_level"] = flattenWirelessControllerWtpRadio4PowerLevel(i["power-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := i["power-value"]; ok {
-
 		result["power_value"] = flattenWirelessControllerWtpRadio4PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
-
 		result["override_vaps"] = flattenWirelessControllerWtpRadio4OverrideVaps(i["override-vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := i["vap-all"]; ok {
-
 		result["vap_all"] = flattenWirelessControllerWtpRadio4VapAll(i["vap-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := i["vaps"]; ok {
-
 		result["vaps"] = flattenWirelessControllerWtpRadio4Vaps(i["vaps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := i["override-channel"]; ok {
-
 		result["override_channel"] = flattenWirelessControllerWtpRadio4OverrideChannel(i["override-channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "channel"
 	if _, ok := i["channel"]; ok {
-
 		result["channel"] = flattenWirelessControllerWtpRadio4Channel(i["channel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := i["drma-manual-mode"]; ok {
-
 		result["drma_manual_mode"] = flattenWirelessControllerWtpRadio4DrmaManualMode(i["drma-manual-mode"], d, pre_append, sv)
 	}
 
@@ -2431,7 +2334,6 @@ func flattenWirelessControllerWtpRadio4Vaps(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerWtpRadio4VapsName(i["name"], d, pre_append, sv)
 		}
 
@@ -2478,7 +2380,6 @@ func flattenWirelessControllerWtpRadio4Channel(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := i["chan"]; ok {
-
 			tmp["chan"] = flattenWirelessControllerWtpRadio4ChannelChan(i["chan"], d, pre_append, sv)
 		}
 
@@ -2517,6 +2418,12 @@ func flattenWirelessControllerWtpCoordinateLongitude(v interface{}, d *schema.Re
 
 func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("wtp_id", flattenWirelessControllerWtpWtpId(o["wtp-id"], d, "wtp_id", sv)); err != nil {
 		if !fortiAPIPatch(o["wtp-id"]) {
@@ -2674,7 +2581,7 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("split_tunneling_acl", flattenWirelessControllerWtpSplitTunnelingAcl(o["split-tunneling-acl"], d, "split_tunneling_acl", sv)); err != nil {
 			if !fortiAPIPatch(o["split-tunneling-acl"]) {
 				return fmt.Errorf("Error reading split_tunneling_acl: %v", err)
@@ -2696,7 +2603,7 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("lan", flattenWirelessControllerWtpLan(o["lan"], d, "lan", sv)); err != nil {
 			if !fortiAPIPatch(o["lan"]) {
 				return fmt.Errorf("Error reading lan: %v", err)
@@ -2736,7 +2643,7 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("radio_1", flattenWirelessControllerWtpRadio1(o["radio-1"], d, "radio_1", sv)); err != nil {
 			if !fortiAPIPatch(o["radio-1"]) {
 				return fmt.Errorf("Error reading radio_1: %v", err)
@@ -2752,7 +2659,7 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("radio_2", flattenWirelessControllerWtpRadio2(o["radio-2"], d, "radio_2", sv)); err != nil {
 			if !fortiAPIPatch(o["radio-2"]) {
 				return fmt.Errorf("Error reading radio_2: %v", err)
@@ -2768,7 +2675,7 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("radio_3", flattenWirelessControllerWtpRadio3(o["radio-3"], d, "radio_3", sv)); err != nil {
 			if !fortiAPIPatch(o["radio-3"]) {
 				return fmt.Errorf("Error reading radio_3: %v", err)
@@ -2784,7 +2691,7 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("radio_4", flattenWirelessControllerWtpRadio4(o["radio-4"], d, "radio_4", sv)); err != nil {
 			if !fortiAPIPatch(o["radio-4"]) {
 				return fmt.Errorf("Error reading radio_4: %v", err)
@@ -2953,13 +2860,11 @@ func expandWirelessControllerWtpSplitTunnelingAcl(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerWtpSplitTunnelingAclId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dest-ip"], _ = expandWirelessControllerWtpSplitTunnelingAclDestIp(d, i["dest_ip"], pre_append, sv)
 		}
 
@@ -2995,102 +2900,82 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "port_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port-mode"], _ = expandWirelessControllerWtpLanPortMode(d, i["port_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port-ssid"], _ = expandWirelessControllerWtpLanPortSsid(d, i["port_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port1_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port1-mode"], _ = expandWirelessControllerWtpLanPort1Mode(d, i["port1_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port1_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port1-ssid"], _ = expandWirelessControllerWtpLanPort1Ssid(d, i["port1_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port2_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port2-mode"], _ = expandWirelessControllerWtpLanPort2Mode(d, i["port2_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port2_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port2-ssid"], _ = expandWirelessControllerWtpLanPort2Ssid(d, i["port2_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port3_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port3-mode"], _ = expandWirelessControllerWtpLanPort3Mode(d, i["port3_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port3_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port3-ssid"], _ = expandWirelessControllerWtpLanPort3Ssid(d, i["port3_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port4_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port4-mode"], _ = expandWirelessControllerWtpLanPort4Mode(d, i["port4_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port4_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port4-ssid"], _ = expandWirelessControllerWtpLanPort4Ssid(d, i["port4_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port5_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port5-mode"], _ = expandWirelessControllerWtpLanPort5Mode(d, i["port5_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port5_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port5-ssid"], _ = expandWirelessControllerWtpLanPort5Ssid(d, i["port5_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port6_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port6-mode"], _ = expandWirelessControllerWtpLanPort6Mode(d, i["port6_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port6_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port6-ssid"], _ = expandWirelessControllerWtpLanPort6Ssid(d, i["port6_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port7_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port7-mode"], _ = expandWirelessControllerWtpLanPort7Mode(d, i["port7_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port7_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port7-ssid"], _ = expandWirelessControllerWtpLanPort7Ssid(d, i["port7_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port8_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port8-mode"], _ = expandWirelessControllerWtpLanPort8Mode(d, i["port8_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port8_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port8-ssid"], _ = expandWirelessControllerWtpLanPort8Ssid(d, i["port8_ssid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port_esl_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port-esl-mode"], _ = expandWirelessControllerWtpLanPortEslMode(d, i["port_esl_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "port_esl_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["port-esl-ssid"], _ = expandWirelessControllerWtpLanPortEslSsid(d, i["port_esl_ssid"], pre_append, sv)
 	}
 
@@ -3209,101 +3094,82 @@ func expandWirelessControllerWtpRadio1(d *schema.ResourceData, v interface{}, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "radio_id"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["radio-id"], _ = expandWirelessControllerWtpRadio1RadioId(d, i["radio_id"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-band"], _ = expandWirelessControllerWtpRadio1OverrideBand(d, i["override_band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["band"], _ = expandWirelessControllerWtpRadio1Band(d, i["band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio1OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio1SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-txpower"], _ = expandWirelessControllerWtpRadio1OverrideTxpower(d, i["override_txpower"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-level"], _ = expandWirelessControllerWtpRadio1AutoPowerLevel(d, i["auto_power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-high"], _ = expandWirelessControllerWtpRadio1AutoPowerHigh(d, i["auto_power_high"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-low"], _ = expandWirelessControllerWtpRadio1AutoPowerLow(d, i["auto_power_low"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio1AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-mode"], _ = expandWirelessControllerWtpRadio1PowerMode(d, i["power_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-level"], _ = expandWirelessControllerWtpRadio1PowerLevel(d, i["power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-value"], _ = expandWirelessControllerWtpRadio1PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio1OverrideVaps(d, i["override_vaps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vap-all"], _ = expandWirelessControllerWtpRadio1VapAll(d, i["vap_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vaps"], _ = expandWirelessControllerWtpRadio1Vaps(d, i["vaps"], pre_append, sv)
 	} else {
 		result["vaps"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-channel"], _ = expandWirelessControllerWtpRadio1OverrideChannel(d, i["override_channel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["channel"], _ = expandWirelessControllerWtpRadio1Channel(d, i["channel"], pre_append, sv)
 	} else {
 		result["channel"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["drma-manual-mode"], _ = expandWirelessControllerWtpRadio1DrmaManualMode(d, i["drma_manual_mode"], pre_append, sv)
 	}
 
@@ -3386,7 +3252,6 @@ func expandWirelessControllerWtpRadio1Vaps(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerWtpRadio1VapsName(d, i["name"], pre_append, sv)
 		}
 
@@ -3422,7 +3287,6 @@ func expandWirelessControllerWtpRadio1Channel(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["chan"], _ = expandWirelessControllerWtpRadio1ChannelChan(d, i["chan"], pre_append, sv)
 		}
 
@@ -3454,101 +3318,82 @@ func expandWirelessControllerWtpRadio2(d *schema.ResourceData, v interface{}, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "radio_id"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["radio-id"], _ = expandWirelessControllerWtpRadio2RadioId(d, i["radio_id"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-band"], _ = expandWirelessControllerWtpRadio2OverrideBand(d, i["override_band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["band"], _ = expandWirelessControllerWtpRadio2Band(d, i["band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio2OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio2SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-txpower"], _ = expandWirelessControllerWtpRadio2OverrideTxpower(d, i["override_txpower"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-level"], _ = expandWirelessControllerWtpRadio2AutoPowerLevel(d, i["auto_power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-high"], _ = expandWirelessControllerWtpRadio2AutoPowerHigh(d, i["auto_power_high"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-low"], _ = expandWirelessControllerWtpRadio2AutoPowerLow(d, i["auto_power_low"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio2AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-mode"], _ = expandWirelessControllerWtpRadio2PowerMode(d, i["power_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-level"], _ = expandWirelessControllerWtpRadio2PowerLevel(d, i["power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-value"], _ = expandWirelessControllerWtpRadio2PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio2OverrideVaps(d, i["override_vaps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vap-all"], _ = expandWirelessControllerWtpRadio2VapAll(d, i["vap_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vaps"], _ = expandWirelessControllerWtpRadio2Vaps(d, i["vaps"], pre_append, sv)
 	} else {
 		result["vaps"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-channel"], _ = expandWirelessControllerWtpRadio2OverrideChannel(d, i["override_channel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["channel"], _ = expandWirelessControllerWtpRadio2Channel(d, i["channel"], pre_append, sv)
 	} else {
 		result["channel"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["drma-manual-mode"], _ = expandWirelessControllerWtpRadio2DrmaManualMode(d, i["drma_manual_mode"], pre_append, sv)
 	}
 
@@ -3631,7 +3476,6 @@ func expandWirelessControllerWtpRadio2Vaps(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerWtpRadio2VapsName(d, i["name"], pre_append, sv)
 		}
 
@@ -3667,7 +3511,6 @@ func expandWirelessControllerWtpRadio2Channel(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["chan"], _ = expandWirelessControllerWtpRadio2ChannelChan(d, i["chan"], pre_append, sv)
 		}
 
@@ -3699,96 +3542,78 @@ func expandWirelessControllerWtpRadio3(d *schema.ResourceData, v interface{}, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-band"], _ = expandWirelessControllerWtpRadio3OverrideBand(d, i["override_band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["band"], _ = expandWirelessControllerWtpRadio3Band(d, i["band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio3OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio3SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-txpower"], _ = expandWirelessControllerWtpRadio3OverrideTxpower(d, i["override_txpower"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-level"], _ = expandWirelessControllerWtpRadio3AutoPowerLevel(d, i["auto_power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-high"], _ = expandWirelessControllerWtpRadio3AutoPowerHigh(d, i["auto_power_high"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-low"], _ = expandWirelessControllerWtpRadio3AutoPowerLow(d, i["auto_power_low"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio3AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-mode"], _ = expandWirelessControllerWtpRadio3PowerMode(d, i["power_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-level"], _ = expandWirelessControllerWtpRadio3PowerLevel(d, i["power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-value"], _ = expandWirelessControllerWtpRadio3PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio3OverrideVaps(d, i["override_vaps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vap-all"], _ = expandWirelessControllerWtpRadio3VapAll(d, i["vap_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vaps"], _ = expandWirelessControllerWtpRadio3Vaps(d, i["vaps"], pre_append, sv)
 	} else {
 		result["vaps"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-channel"], _ = expandWirelessControllerWtpRadio3OverrideChannel(d, i["override_channel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["channel"], _ = expandWirelessControllerWtpRadio3Channel(d, i["channel"], pre_append, sv)
 	} else {
 		result["channel"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["drma-manual-mode"], _ = expandWirelessControllerWtpRadio3DrmaManualMode(d, i["drma_manual_mode"], pre_append, sv)
 	}
 
@@ -3867,7 +3692,6 @@ func expandWirelessControllerWtpRadio3Vaps(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerWtpRadio3VapsName(d, i["name"], pre_append, sv)
 		}
 
@@ -3903,7 +3727,6 @@ func expandWirelessControllerWtpRadio3Channel(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["chan"], _ = expandWirelessControllerWtpRadio3ChannelChan(d, i["chan"], pre_append, sv)
 		}
 
@@ -3935,96 +3758,78 @@ func expandWirelessControllerWtpRadio4(d *schema.ResourceData, v interface{}, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-band"], _ = expandWirelessControllerWtpRadio4OverrideBand(d, i["override_band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["band"], _ = expandWirelessControllerWtpRadio4Band(d, i["band"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio4OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio4SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-txpower"], _ = expandWirelessControllerWtpRadio4OverrideTxpower(d, i["override_txpower"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-level"], _ = expandWirelessControllerWtpRadio4AutoPowerLevel(d, i["auto_power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_high"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-high"], _ = expandWirelessControllerWtpRadio4AutoPowerHigh(d, i["auto_power_high"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_low"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-low"], _ = expandWirelessControllerWtpRadio4AutoPowerLow(d, i["auto_power_low"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_power_target"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-power-target"], _ = expandWirelessControllerWtpRadio4AutoPowerTarget(d, i["auto_power_target"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-mode"], _ = expandWirelessControllerWtpRadio4PowerMode(d, i["power_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-level"], _ = expandWirelessControllerWtpRadio4PowerLevel(d, i["power_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "power_value"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["power-value"], _ = expandWirelessControllerWtpRadio4PowerValue(d, i["power_value"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio4OverrideVaps(d, i["override_vaps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vap-all"], _ = expandWirelessControllerWtpRadio4VapAll(d, i["vap_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vaps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vaps"], _ = expandWirelessControllerWtpRadio4Vaps(d, i["vaps"], pre_append, sv)
 	} else {
 		result["vaps"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "override_channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["override-channel"], _ = expandWirelessControllerWtpRadio4OverrideChannel(d, i["override_channel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "channel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["channel"], _ = expandWirelessControllerWtpRadio4Channel(d, i["channel"], pre_append, sv)
 	} else {
 		result["channel"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "drma_manual_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["drma-manual-mode"], _ = expandWirelessControllerWtpRadio4DrmaManualMode(d, i["drma_manual_mode"], pre_append, sv)
 	}
 
@@ -4103,7 +3908,6 @@ func expandWirelessControllerWtpRadio4Vaps(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerWtpRadio4VapsName(d, i["name"], pre_append, sv)
 		}
 
@@ -4139,7 +3943,6 @@ func expandWirelessControllerWtpRadio4Channel(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["chan"], _ = expandWirelessControllerWtpRadio4ChannelChan(d, i["chan"], pre_append, sv)
 		}
 
@@ -4179,7 +3982,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("wtp_id"); ok {
-
 		t, err := expandWirelessControllerWtpWtpId(d, v, "wtp_id", sv)
 		if err != nil {
 			return &obj, err
@@ -4189,7 +3991,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOkExists("index"); ok {
-
 		t, err := expandWirelessControllerWtpIndex(d, v, "index", sv)
 		if err != nil {
 			return &obj, err
@@ -4199,7 +4000,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandWirelessControllerWtpUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -4209,7 +4009,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("admin"); ok {
-
 		t, err := expandWirelessControllerWtpAdmin(d, v, "admin", sv)
 		if err != nil {
 			return &obj, err
@@ -4219,7 +4018,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerWtpName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -4229,7 +4027,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("location"); ok {
-
 		t, err := expandWirelessControllerWtpLocation(d, v, "location", sv)
 		if err != nil {
 			return &obj, err
@@ -4239,7 +4036,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("region"); ok {
-
 		t, err := expandWirelessControllerWtpRegion(d, v, "region", sv)
 		if err != nil {
 			return &obj, err
@@ -4249,7 +4045,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("region_x"); ok {
-
 		t, err := expandWirelessControllerWtpRegionX(d, v, "region_x", sv)
 		if err != nil {
 			return &obj, err
@@ -4259,7 +4054,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("region_y"); ok {
-
 		t, err := expandWirelessControllerWtpRegionY(d, v, "region_y", sv)
 		if err != nil {
 			return &obj, err
@@ -4269,7 +4063,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("firmware_provision"); ok {
-
 		t, err := expandWirelessControllerWtpFirmwareProvision(d, v, "firmware_provision", sv)
 		if err != nil {
 			return &obj, err
@@ -4279,7 +4072,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("firmware_provision_latest"); ok {
-
 		t, err := expandWirelessControllerWtpFirmwareProvisionLatest(d, v, "firmware_provision_latest", sv)
 		if err != nil {
 			return &obj, err
@@ -4289,7 +4081,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("wtp_profile"); ok {
-
 		t, err := expandWirelessControllerWtpWtpProfile(d, v, "wtp_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -4299,7 +4090,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("wtp_mode"); ok {
-
 		t, err := expandWirelessControllerWtpWtpMode(d, v, "wtp_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -4309,7 +4099,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("apcfg_profile"); ok {
-
 		t, err := expandWirelessControllerWtpApcfgProfile(d, v, "apcfg_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -4319,7 +4108,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("bonjour_profile"); ok {
-
 		t, err := expandWirelessControllerWtpBonjourProfile(d, v, "bonjour_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -4329,7 +4117,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_led_state"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideLedState(d, v, "override_led_state", sv)
 		if err != nil {
 			return &obj, err
@@ -4339,7 +4126,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("led_state"); ok {
-
 		t, err := expandWirelessControllerWtpLedState(d, v, "led_state", sv)
 		if err != nil {
 			return &obj, err
@@ -4349,7 +4135,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_wan_port_mode"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideWanPortMode(d, v, "override_wan_port_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -4359,7 +4144,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("wan_port_mode"); ok {
-
 		t, err := expandWirelessControllerWtpWanPortMode(d, v, "wan_port_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -4369,7 +4153,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_ip_fragment"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideIpFragment(d, v, "override_ip_fragment", sv)
 		if err != nil {
 			return &obj, err
@@ -4379,7 +4162,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("ip_fragment_preventing"); ok {
-
 		t, err := expandWirelessControllerWtpIpFragmentPreventing(d, v, "ip_fragment_preventing", sv)
 		if err != nil {
 			return &obj, err
@@ -4389,7 +4171,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("tun_mtu_uplink"); ok {
-
 		t, err := expandWirelessControllerWtpTunMtuUplink(d, v, "tun_mtu_uplink", sv)
 		if err != nil {
 			return &obj, err
@@ -4399,7 +4180,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("tun_mtu_downlink"); ok {
-
 		t, err := expandWirelessControllerWtpTunMtuDownlink(d, v, "tun_mtu_downlink", sv)
 		if err != nil {
 			return &obj, err
@@ -4409,7 +4189,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_split_tunnel"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideSplitTunnel(d, v, "override_split_tunnel", sv)
 		if err != nil {
 			return &obj, err
@@ -4419,7 +4198,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("split_tunneling_acl_path"); ok {
-
 		t, err := expandWirelessControllerWtpSplitTunnelingAclPath(d, v, "split_tunneling_acl_path", sv)
 		if err != nil {
 			return &obj, err
@@ -4429,7 +4207,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("split_tunneling_acl_local_ap_subnet"); ok {
-
 		t, err := expandWirelessControllerWtpSplitTunnelingAclLocalApSubnet(d, v, "split_tunneling_acl_local_ap_subnet", sv)
 		if err != nil {
 			return &obj, err
@@ -4439,7 +4216,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("split_tunneling_acl"); ok || d.HasChange("split_tunneling_acl") {
-
 		t, err := expandWirelessControllerWtpSplitTunnelingAcl(d, v, "split_tunneling_acl", sv)
 		if err != nil {
 			return &obj, err
@@ -4449,7 +4225,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_lan"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideLan(d, v, "override_lan", sv)
 		if err != nil {
 			return &obj, err
@@ -4459,7 +4234,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("lan"); ok {
-
 		t, err := expandWirelessControllerWtpLan(d, v, "lan", sv)
 		if err != nil {
 			return &obj, err
@@ -4469,7 +4243,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_allowaccess"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideAllowaccess(d, v, "override_allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -4479,7 +4252,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("allowaccess"); ok {
-
 		t, err := expandWirelessControllerWtpAllowaccess(d, v, "allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -4489,7 +4261,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("override_login_passwd_change"); ok {
-
 		t, err := expandWirelessControllerWtpOverrideLoginPasswdChange(d, v, "override_login_passwd_change", sv)
 		if err != nil {
 			return &obj, err
@@ -4499,7 +4270,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("login_passwd_change"); ok {
-
 		t, err := expandWirelessControllerWtpLoginPasswdChange(d, v, "login_passwd_change", sv)
 		if err != nil {
 			return &obj, err
@@ -4509,7 +4279,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("login_passwd"); ok {
-
 		t, err := expandWirelessControllerWtpLoginPasswd(d, v, "login_passwd", sv)
 		if err != nil {
 			return &obj, err
@@ -4519,7 +4288,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("radio_1"); ok {
-
 		t, err := expandWirelessControllerWtpRadio1(d, v, "radio_1", sv)
 		if err != nil {
 			return &obj, err
@@ -4529,7 +4297,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("radio_2"); ok {
-
 		t, err := expandWirelessControllerWtpRadio2(d, v, "radio_2", sv)
 		if err != nil {
 			return &obj, err
@@ -4539,7 +4306,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("radio_3"); ok {
-
 		t, err := expandWirelessControllerWtpRadio3(d, v, "radio_3", sv)
 		if err != nil {
 			return &obj, err
@@ -4549,7 +4315,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("radio_4"); ok {
-
 		t, err := expandWirelessControllerWtpRadio4(d, v, "radio_4", sv)
 		if err != nil {
 			return &obj, err
@@ -4559,7 +4324,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("image_download"); ok {
-
 		t, err := expandWirelessControllerWtpImageDownload(d, v, "image_download", sv)
 		if err != nil {
 			return &obj, err
@@ -4569,7 +4333,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("mesh_bridge_enable"); ok {
-
 		t, err := expandWirelessControllerWtpMeshBridgeEnable(d, v, "mesh_bridge_enable", sv)
 		if err != nil {
 			return &obj, err
@@ -4579,7 +4342,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("coordinate_latitude"); ok {
-
 		t, err := expandWirelessControllerWtpCoordinateLatitude(d, v, "coordinate_latitude", sv)
 		if err != nil {
 			return &obj, err
@@ -4589,7 +4351,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("coordinate_longitude"); ok {
-
 		t, err := expandWirelessControllerWtpCoordinateLongitude(d, v, "coordinate_longitude", sv)
 		if err != nil {
 			return &obj, err

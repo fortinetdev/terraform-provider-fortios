@@ -313,7 +313,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerNacSettingsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +322,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
-
 		t, err := expandSwitchControllerNacSettingsMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +331,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("inactive_timer"); ok {
-
 		t, err := expandSwitchControllerNacSettingsInactiveTimer(d, v, "inactive_timer", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +340,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("onboarding_vlan"); ok {
-
 		t, err := expandSwitchControllerNacSettingsOnboardingVlan(d, v, "onboarding_vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -353,7 +349,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("auto_auth"); ok {
-
 		t, err := expandSwitchControllerNacSettingsAutoAuth(d, v, "auto_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -363,7 +358,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("bounce_nac_port"); ok {
-
 		t, err := expandSwitchControllerNacSettingsBounceNacPort(d, v, "bounce_nac_port", sv)
 		if err != nil {
 			return &obj, err
@@ -373,7 +367,6 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("link_down_flush"); ok {
-
 		t, err := expandSwitchControllerNacSettingsLinkDownFlush(d, v, "link_down_flush", sv)
 		if err != nil {
 			return &obj, err

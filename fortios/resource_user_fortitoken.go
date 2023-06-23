@@ -354,7 +354,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("serial_number"); ok {
-
 		t, err := expandUserFortitokenSerialNumber(d, v, "serial_number", sv)
 		if err != nil {
 			return &obj, err
@@ -364,7 +363,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandUserFortitokenStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -374,7 +372,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("seed"); ok {
-
 		t, err := expandUserFortitokenSeed(d, v, "seed", sv)
 		if err != nil {
 			return &obj, err
@@ -384,7 +381,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandUserFortitokenComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -394,7 +390,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("license"); ok {
-
 		t, err := expandUserFortitokenLicense(d, v, "license", sv)
 		if err != nil {
 			return &obj, err
@@ -404,7 +399,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("activation_code"); ok {
-
 		t, err := expandUserFortitokenActivationCode(d, v, "activation_code", sv)
 		if err != nil {
 			return &obj, err
@@ -414,7 +408,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("activation_expire"); ok {
-
 		t, err := expandUserFortitokenActivationExpire(d, v, "activation_expire", sv)
 		if err != nil {
 			return &obj, err
@@ -424,7 +417,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("reg_id"); ok {
-
 		t, err := expandUserFortitokenRegId(d, v, "reg_id", sv)
 		if err != nil {
 			return &obj, err
@@ -434,7 +426,6 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("os_ver"); ok {
-
 		t, err := expandUserFortitokenOsVer(d, v, "os_ver", sv)
 		if err != nil {
 			return &obj, err

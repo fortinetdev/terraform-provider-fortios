@@ -190,6 +190,11 @@ func resourceUserLdap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"account_key_upn_san": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"account_key_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
@@ -482,6 +487,10 @@ func flattenUserLdapAccountKeyProcessing(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenUserLdapAccountKeyUpnSan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapAccountKeyFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -687,6 +696,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("account_key_upn_san", flattenUserLdapAccountKeyUpnSan(o["account-key-upn-san"], d, "account_key_upn_san", sv)); err != nil {
+		if !fortiAPIPatch(o["account-key-upn-san"]) {
+			return fmt.Errorf("Error reading account_key_upn_san: %v", err)
+		}
+	}
+
 	if err = d.Set("account_key_filter", flattenUserLdapAccountKeyFilter(o["account-key-filter"], d, "account_key_filter", sv)); err != nil {
 		if !fortiAPIPatch(o["account-key-filter"]) {
 			return fmt.Errorf("Error reading account_key_filter: %v", err)
@@ -868,6 +883,10 @@ func expandUserLdapAccountKeyProcessing(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandUserLdapAccountKeyUpnSan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserLdapAccountKeyFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -912,7 +931,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserLdapName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -922,7 +940,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandUserLdapServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -932,7 +949,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("secondary_server"); ok {
-
 		t, err := expandUserLdapSecondaryServer(d, v, "secondary_server", sv)
 		if err != nil {
 			return &obj, err
@@ -942,7 +958,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("tertiary_server"); ok {
-
 		t, err := expandUserLdapTertiaryServer(d, v, "tertiary_server", sv)
 		if err != nil {
 			return &obj, err
@@ -952,7 +967,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server_identity_check"); ok {
-
 		t, err := expandUserLdapServerIdentityCheck(d, v, "server_identity_check", sv)
 		if err != nil {
 			return &obj, err
@@ -962,7 +976,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandUserLdapSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -972,7 +985,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOkExists("source_port"); ok {
-
 		t, err := expandUserLdapSourcePort(d, v, "source_port", sv)
 		if err != nil {
 			return &obj, err
@@ -982,7 +994,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("cnid"); ok {
-
 		t, err := expandUserLdapCnid(d, v, "cnid", sv)
 		if err != nil {
 			return &obj, err
@@ -992,7 +1003,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("dn"); ok {
-
 		t, err := expandUserLdapDn(d, v, "dn", sv)
 		if err != nil {
 			return &obj, err
@@ -1002,7 +1012,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandUserLdapType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -1012,7 +1021,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
-
 		t, err := expandUserLdapTwoFactor(d, v, "two_factor", sv)
 		if err != nil {
 			return &obj, err
@@ -1022,7 +1030,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("two_factor_authentication"); ok {
-
 		t, err := expandUserLdapTwoFactorAuthentication(d, v, "two_factor_authentication", sv)
 		if err != nil {
 			return &obj, err
@@ -1032,7 +1039,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("two_factor_notification"); ok {
-
 		t, err := expandUserLdapTwoFactorNotification(d, v, "two_factor_notification", sv)
 		if err != nil {
 			return &obj, err
@@ -1042,7 +1048,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("two_factor_filter"); ok {
-
 		t, err := expandUserLdapTwoFactorFilter(d, v, "two_factor_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1052,7 +1057,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandUserLdapUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -1062,7 +1066,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandUserLdapPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -1072,7 +1075,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_member_check"); ok {
-
 		t, err := expandUserLdapGroupMemberCheck(d, v, "group_member_check", sv)
 		if err != nil {
 			return &obj, err
@@ -1082,7 +1084,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_search_base"); ok {
-
 		t, err := expandUserLdapGroupSearchBase(d, v, "group_search_base", sv)
 		if err != nil {
 			return &obj, err
@@ -1092,7 +1093,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_object_filter"); ok {
-
 		t, err := expandUserLdapGroupObjectFilter(d, v, "group_object_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1102,7 +1102,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_filter"); ok {
-
 		t, err := expandUserLdapGroupFilter(d, v, "group_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1112,7 +1111,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("secure"); ok {
-
 		t, err := expandUserLdapSecure(d, v, "secure", sv)
 		if err != nil {
 			return &obj, err
@@ -1122,7 +1120,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
-
 		t, err := expandUserLdapSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 		if err != nil {
 			return &obj, err
@@ -1132,7 +1129,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ca_cert"); ok {
-
 		t, err := expandUserLdapCaCert(d, v, "ca_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -1142,7 +1138,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandUserLdapPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -1152,7 +1147,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password_expiry_warning"); ok {
-
 		t, err := expandUserLdapPasswordExpiryWarning(d, v, "password_expiry_warning", sv)
 		if err != nil {
 			return &obj, err
@@ -1162,7 +1156,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password_renewal"); ok {
-
 		t, err := expandUserLdapPasswordRenewal(d, v, "password_renewal", sv)
 		if err != nil {
 			return &obj, err
@@ -1172,7 +1165,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("member_attr"); ok {
-
 		t, err := expandUserLdapMemberAttr(d, v, "member_attr", sv)
 		if err != nil {
 			return &obj, err
@@ -1182,7 +1174,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("account_key_processing"); ok {
-
 		t, err := expandUserLdapAccountKeyProcessing(d, v, "account_key_processing", sv)
 		if err != nil {
 			return &obj, err
@@ -1191,8 +1182,16 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("account_key_filter"); ok {
+	if v, ok := d.GetOk("account_key_upn_san"); ok {
+		t, err := expandUserLdapAccountKeyUpnSan(d, v, "account_key_upn_san", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["account-key-upn-san"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("account_key_filter"); ok {
 		t, err := expandUserLdapAccountKeyFilter(d, v, "account_key_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1202,7 +1201,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("search_type"); ok {
-
 		t, err := expandUserLdapSearchType(d, v, "search_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1212,7 +1210,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("client_cert_auth"); ok {
-
 		t, err := expandUserLdapClientCertAuth(d, v, "client_cert_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -1222,7 +1219,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("client_cert"); ok {
-
 		t, err := expandUserLdapClientCert(d, v, "client_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -1232,7 +1228,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("obtain_user_info"); ok {
-
 		t, err := expandUserLdapObtainUserInfo(d, v, "obtain_user_info", sv)
 		if err != nil {
 			return &obj, err
@@ -1242,7 +1237,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("user_info_exchange_server"); ok {
-
 		t, err := expandUserLdapUserInfoExchangeServer(d, v, "user_info_exchange_server", sv)
 		if err != nil {
 			return &obj, err
@@ -1252,7 +1246,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
-
 		t, err := expandUserLdapInterfaceSelectMethod(d, v, "interface_select_method", sv)
 		if err != nil {
 			return &obj, err
@@ -1262,7 +1255,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandUserLdapInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -1272,7 +1264,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("antiphish"); ok {
-
 		t, err := expandUserLdapAntiphish(d, v, "antiphish", sv)
 		if err != nil {
 			return &obj, err
@@ -1282,7 +1273,6 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password_attr"); ok {
-
 		t, err := expandUserLdapPasswordAttr(d, v, "password_attr", sv)
 		if err != nil {
 			return &obj, err

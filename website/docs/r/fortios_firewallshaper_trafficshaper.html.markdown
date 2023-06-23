@@ -40,6 +40,11 @@ The following arguments are supported:
 * `exceed_bandwidth` - Exceed bandwidth used for DSCP multi-stage marking. Units depend on the bandwidth-unit setting.
 * `exceed_dscp` - DSCP mark for traffic in [guaranteed-bandwidth, exceed-bandwidth].
 * `maximum_dscp` - DSCP mark for traffic in [exceed-bandwidth, maximum-bandwidth].
+* `cos_marking` - Enable/disable VLAN CoS marking. Valid values: `enable`, `disable`.
+* `cos_marking_method` - Select VLAN CoS marking method. Valid values: `multi-stage`, `static`.
+* `cos` - VLAN CoS mark.
+* `exceed_cos` - VLAN CoS mark for traffic in [guaranteed-bandwidth, exceed-bandwidth].
+* `maximum_cos` - VLAN CoS mark for traffic in [exceed-bandwidth, maximum-bandwidth].
 * `overhead` - Per-packet size overhead used in rate computations.
 * `exceed_class_id` - Class ID for traffic in [guaranteed-bandwidth, maximum-bandwidth].
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

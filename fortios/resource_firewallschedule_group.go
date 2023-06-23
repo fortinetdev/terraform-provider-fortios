@@ -70,6 +70,11 @@ func resourceFirewallScheduleGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -225,7 +230,6 @@ func flattenFirewallScheduleGroupMember(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallScheduleGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
@@ -252,6 +256,12 @@ func flattenFirewallScheduleGroupFabricObject(v interface{}, d *schema.ResourceD
 
 func refreshObjectFirewallScheduleGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallScheduleGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -259,7 +269,7 @@ func refreshObjectFirewallScheduleGroup(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenFirewallScheduleGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -316,7 +326,6 @@ func expandFirewallScheduleGroupMember(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallScheduleGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
@@ -344,7 +353,6 @@ func getObjectFirewallScheduleGroup(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallScheduleGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -354,7 +362,6 @@ func getObjectFirewallScheduleGroup(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandFirewallScheduleGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -364,7 +371,6 @@ func getObjectFirewallScheduleGroup(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallScheduleGroupColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -374,7 +380,6 @@ func getObjectFirewallScheduleGroup(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallScheduleGroupFabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

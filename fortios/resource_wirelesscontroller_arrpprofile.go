@@ -177,6 +177,11 @@ func resourceWirelessControllerArrpProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -412,7 +417,6 @@ func flattenWirelessControllerArrpProfileDarrpOptimizeSchedules(v interface{}, d
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerArrpProfileDarrpOptimizeSchedulesName(i["name"], d, pre_append, sv)
 		}
 
@@ -431,6 +435,12 @@ func flattenWirelessControllerArrpProfileDarrpOptimizeSchedulesName(v interface{
 
 func refreshObjectWirelessControllerArrpProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerArrpProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -558,7 +568,7 @@ func refreshObjectWirelessControllerArrpProfile(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("darrp_optimize_schedules", flattenWirelessControllerArrpProfileDarrpOptimizeSchedules(o["darrp-optimize-schedules"], d, "darrp_optimize_schedules", sv)); err != nil {
 			if !fortiAPIPatch(o["darrp-optimize-schedules"]) {
 				return fmt.Errorf("Error reading darrp_optimize_schedules: %v", err)
@@ -683,7 +693,6 @@ func expandWirelessControllerArrpProfileDarrpOptimizeSchedules(d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerArrpProfileDarrpOptimizeSchedulesName(d, i["name"], pre_append, sv)
 		}
 
@@ -703,7 +712,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerArrpProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -713,7 +721,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerArrpProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -723,7 +730,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("selection_period"); ok {
-
 		t, err := expandWirelessControllerArrpProfileSelectionPeriod(d, v, "selection_period", sv)
 		if err != nil {
 			return &obj, err
@@ -733,7 +739,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("monitor_period"); ok {
-
 		t, err := expandWirelessControllerArrpProfileMonitorPeriod(d, v, "monitor_period", sv)
 		if err != nil {
 			return &obj, err
@@ -743,7 +748,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_managed_ap"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightManagedAp(d, v, "weight_managed_ap", sv)
 		if err != nil {
 			return &obj, err
@@ -753,7 +757,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_rogue_ap"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightRogueAp(d, v, "weight_rogue_ap", sv)
 		if err != nil {
 			return &obj, err
@@ -763,7 +766,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_noise_floor"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightNoiseFloor(d, v, "weight_noise_floor", sv)
 		if err != nil {
 			return &obj, err
@@ -773,7 +775,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_channel_load"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightChannelLoad(d, v, "weight_channel_load", sv)
 		if err != nil {
 			return &obj, err
@@ -783,7 +784,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_spectral_rssi"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightSpectralRssi(d, v, "weight_spectral_rssi", sv)
 		if err != nil {
 			return &obj, err
@@ -793,7 +793,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_weather_channel"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightWeatherChannel(d, v, "weight_weather_channel", sv)
 		if err != nil {
 			return &obj, err
@@ -803,7 +802,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("weight_dfs_channel"); ok {
-
 		t, err := expandWirelessControllerArrpProfileWeightDfsChannel(d, v, "weight_dfs_channel", sv)
 		if err != nil {
 			return &obj, err
@@ -813,7 +811,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("threshold_ap"); ok {
-
 		t, err := expandWirelessControllerArrpProfileThresholdAp(d, v, "threshold_ap", sv)
 		if err != nil {
 			return &obj, err
@@ -823,7 +820,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("threshold_noise_floor"); ok {
-
 		t, err := expandWirelessControllerArrpProfileThresholdNoiseFloor(d, v, "threshold_noise_floor", sv)
 		if err != nil {
 			return &obj, err
@@ -833,7 +829,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("threshold_channel_load"); ok {
-
 		t, err := expandWirelessControllerArrpProfileThresholdChannelLoad(d, v, "threshold_channel_load", sv)
 		if err != nil {
 			return &obj, err
@@ -843,7 +838,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("threshold_spectral_rssi"); ok {
-
 		t, err := expandWirelessControllerArrpProfileThresholdSpectralRssi(d, v, "threshold_spectral_rssi", sv)
 		if err != nil {
 			return &obj, err
@@ -853,7 +847,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("threshold_tx_retries"); ok {
-
 		t, err := expandWirelessControllerArrpProfileThresholdTxRetries(d, v, "threshold_tx_retries", sv)
 		if err != nil {
 			return &obj, err
@@ -863,7 +856,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("threshold_rx_errors"); ok {
-
 		t, err := expandWirelessControllerArrpProfileThresholdRxErrors(d, v, "threshold_rx_errors", sv)
 		if err != nil {
 			return &obj, err
@@ -873,7 +865,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("include_weather_channel"); ok {
-
 		t, err := expandWirelessControllerArrpProfileIncludeWeatherChannel(d, v, "include_weather_channel", sv)
 		if err != nil {
 			return &obj, err
@@ -883,7 +874,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("include_dfs_channel"); ok {
-
 		t, err := expandWirelessControllerArrpProfileIncludeDfsChannel(d, v, "include_dfs_channel", sv)
 		if err != nil {
 			return &obj, err
@@ -893,7 +883,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("override_darrp_optimize"); ok {
-
 		t, err := expandWirelessControllerArrpProfileOverrideDarrpOptimize(d, v, "override_darrp_optimize", sv)
 		if err != nil {
 			return &obj, err
@@ -903,7 +892,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("darrp_optimize"); ok {
-
 		t, err := expandWirelessControllerArrpProfileDarrpOptimize(d, v, "darrp_optimize", sv)
 		if err != nil {
 			return &obj, err
@@ -913,7 +901,6 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("darrp_optimize_schedules"); ok || d.HasChange("darrp_optimize_schedules") {
-
 		t, err := expandWirelessControllerArrpProfileDarrpOptimizeSchedules(d, v, "darrp_optimize_schedules", sv)
 		if err != nil {
 			return &obj, err

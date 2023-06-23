@@ -79,6 +79,7 @@ The following arguments are supported:
 * `extip` - (Required) IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `mappedip` - (Required) Mapped IP address range in the format startIP-endIP.
 * `nat_source_vip` - Enable to perform SNAT on traffic from mappedip to the extip for all egress interfaces. Valid values: `disable`, `enable`.
+* `ndp_reply` - Enable/disable this FortiGate unit's ability to respond to NDP requests for this virtual IP address (default = enable). Valid values: `disable`, `enable`.
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default. Valid values: `disable`, `enable`.
 * `portforward` - Enable port forwarding. Valid values: `disable`, `enable`.
 * `protocol` - Protocol to use when forwarding packets. Valid values: `tcp`, `udp`, `sctp`.
@@ -111,6 +112,7 @@ The following arguments are supported:
 * `ssl_dh_bits` - Number of bits to use in the Diffie-Hellman exchange for RSA encryption of SSL sessions. Valid values: `768`, `1024`, `1536`, `2048`, `3072`, `4096`.
 * `ssl_algorithm` - Permitted encryption algorithms for SSL sessions according to encryption strength. Valid values: `high`, `medium`, `low`, `custom`.
 * `ssl_cipher_suites` - SSL/TLS cipher suites acceptable from a client, ordered by priority. The structure of `ssl_cipher_suites` block is documented below.
+* `ssl_server_renegotiation` - Enable/disable secure renegotiation to comply with RFC 5746. Valid values: `enable`, `disable`.
 * `ssl_server_algorithm` - Permitted encryption algorithms for the server side of SSL full mode sessions according to encryption strength. Valid values: `high`, `medium`, `low`, `custom`, `client`.
 * `ssl_server_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority. The structure of `ssl_server_cipher_suites` block is documented below.
 * `ssl_pfs` - Select the cipher suites that can be used for SSL perfect forward secrecy (PFS). Applies to both client and server sessions. Valid values: `require`, `deny`, `allow`.
@@ -146,6 +148,7 @@ The following arguments are supported:
 * `ipv4_mappedip` - Start-mapped-IPv4-address [-end mapped-IPv4-address].
 * `ipv4_mappedport` - IPv4 port number range on the destination network to which the external port number range is mapped.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `src_filter` block supports:
@@ -162,6 +165,7 @@ The `realservers` block supports:
 * `holddown_interval` - Time in seconds that the health check monitor continues to monitor an unresponsive server that should be active.
 * `healthcheck` - Enable to check the responsiveness of the real server before forwarding traffic. Valid values: `disable`, `enable`, `vip`.
 * `http_host` - HTTP server domain name in HTTP header.
+* `translate_host` - Enable/disable translation of hostname/IP from virtual server to real server. Valid values: `enable`, `disable`.
 * `max_connections` - Max number of active connections that can directed to the real server. When reached, sessions are sent to other real servers.
 * `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status.
 * `client_ip` - Only clients in this IP range can connect to this real server.

@@ -209,7 +209,6 @@ func getObjectLogGuiDisplay(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["resolve-hosts"] = nil
 		} else {
-
 			t, err := expandLogGuiDisplayResolveHosts(d, v, "resolve_hosts", sv)
 			if err != nil {
 				return &obj, err
@@ -223,7 +222,6 @@ func getObjectLogGuiDisplay(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["resolve-apps"] = nil
 		} else {
-
 			t, err := expandLogGuiDisplayResolveApps(d, v, "resolve_apps", sv)
 			if err != nil {
 				return &obj, err
@@ -237,7 +235,6 @@ func getObjectLogGuiDisplay(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["fortiview-unscanned-apps"] = nil
 		} else {
-
 			t, err := expandLogGuiDisplayFortiviewUnscannedApps(d, v, "fortiview_unscanned_apps", sv)
 			if err != nil {
 				return &obj, err

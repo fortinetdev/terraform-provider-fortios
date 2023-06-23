@@ -234,7 +234,6 @@ func getObjectSystemIpsUrlfilterDns(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("address"); ok {
-
 		t, err := expandSystemIpsUrlfilterDnsAddress(d, v, "address", sv)
 		if err != nil {
 			return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemIpsUrlfilterDns(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemIpsUrlfilterDnsStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -254,7 +252,6 @@ func getObjectSystemIpsUrlfilterDns(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("ipv6_capability"); ok {
-
 		t, err := expandSystemIpsUrlfilterDnsIpv6Capability(d, v, "ipv6_capability", sv)
 		if err != nil {
 			return &obj, err

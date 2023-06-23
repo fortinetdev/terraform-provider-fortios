@@ -287,7 +287,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFmStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -301,7 +300,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["id"] = nil
 		} else {
-
 			t, err := expandSystemFmId(d, v, "fosid", sv)
 			if err != nil {
 				return &obj, err
@@ -315,7 +313,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ip"] = nil
 		} else {
-
 			t, err := expandSystemFmIp(d, v, "ip", sv)
 			if err != nil {
 				return &obj, err
@@ -329,7 +326,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vdom"] = nil
 		} else {
-
 			t, err := expandSystemFmVdom(d, v, "vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -343,7 +339,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["auto-backup"] = nil
 		} else {
-
 			t, err := expandSystemFmAutoBackup(d, v, "auto_backup", sv)
 			if err != nil {
 				return &obj, err
@@ -357,7 +352,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["scheduled-config-restore"] = nil
 		} else {
-
 			t, err := expandSystemFmScheduledConfigRestore(d, v, "scheduled_config_restore", sv)
 			if err != nil {
 				return &obj, err
@@ -371,7 +365,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ipsec"] = nil
 		} else {
-
 			t, err := expandSystemFmIpsec(d, v, "ipsec", sv)
 			if err != nil {
 				return &obj, err

@@ -56,6 +56,7 @@ The following arguments are supported:
 * `mac_auth_bypass` - Enable/disable MAC authentication bypass. Valid values: `enable`, `disable`.
 * `radius_mac_auth` - Enable/disable RADIUS-based MAC authentication of clients (default = disable). Valid values: `enable`, `disable`.
 * `radius_mac_auth_server` - RADIUS-based MAC authentication server.
+* `radius_mac_auth_block_interval` - Don't send RADIUS MAC auth request again if the client has been rejected within specific interval (0 or 30 - 864000 seconds, default = 0, 0 to disable blocking).
 * `radius_mac_mpsk_auth` - Enable/disable RADIUS-based MAC authentication of clients for MPSK authentication (default = disable). Valid values: `enable`, `disable`.
 * `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (1800 - 864000, default = 86400).
 * `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication. The structure of `radius_mac_auth_usergroups` block is documented below.
@@ -107,6 +108,7 @@ The following arguments are supported:
 * `vlanid` - Optional VLAN ID.
 * `vlan_auto` - Enable/disable automatic management of SSID VLAN interface. Valid values: `enable`, `disable`.
 * `dynamic_vlan` - Enable/disable dynamic VLAN assignment. Valid values: `enable`, `disable`.
+* `captive_portal_fw_accounting` - Enable/disable RADIUS accounting for captive portal firewall authentication session. Valid values: `enable`, `disable`.
 * `captive_portal_radius_server` - Captive portal RADIUS server domain name or IP address.
 * `captive_portal_radius_secret` - Secret key to access the RADIUS server.
 * `captive_portal_macauth_radius_server` - Captive portal external RADIUS server domain name or IP address.
@@ -187,6 +189,7 @@ The following arguments are supported:
 * `l3_roaming` - Enable/disable layer 3 roaming (default = disable). Valid values: `enable`, `disable`.
 * `l3_roaming_mode` - Select the way that layer 3 roaming traffic is passed (default = direct). Valid values: `direct`, `indirect`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `radius_mac_auth_usergroups` block supports:

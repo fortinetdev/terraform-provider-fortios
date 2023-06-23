@@ -123,12 +123,22 @@ func resourceFirewallLocalInPolicy6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"virtual_patch": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -296,7 +306,6 @@ func flattenFirewallLocalInPolicy6Srcaddr(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallLocalInPolicy6SrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -343,7 +352,6 @@ func flattenFirewallLocalInPolicy6Dstaddr(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallLocalInPolicy6DstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -394,7 +402,6 @@ func flattenFirewallLocalInPolicy6Service(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallLocalInPolicy6ServiceName(i["name"], d, pre_append, sv)
 		}
 
@@ -423,12 +430,22 @@ func flattenFirewallLocalInPolicy6Status(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenFirewallLocalInPolicy6VirtualPatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallLocalInPolicy6Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("policyid", flattenFirewallLocalInPolicy6Policyid(o["policyid"], d, "policyid", sv)); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -448,7 +465,7 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenFirewallLocalInPolicy6Srcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -470,7 +487,7 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenFirewallLocalInPolicy6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -498,7 +515,7 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("service", flattenFirewallLocalInPolicy6Service(o["service"], d, "service", sv)); err != nil {
 			if !fortiAPIPatch(o["service"]) {
 				return fmt.Errorf("Error reading service: %v", err)
@@ -529,6 +546,12 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 	if err = d.Set("status", flattenFirewallLocalInPolicy6Status(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("virtual_patch", flattenFirewallLocalInPolicy6VirtualPatch(o["virtual-patch"], d, "virtual_patch", sv)); err != nil {
+		if !fortiAPIPatch(o["virtual-patch"]) {
+			return fmt.Errorf("Error reading virtual_patch: %v", err)
 		}
 	}
 
@@ -575,7 +598,6 @@ func expandFirewallLocalInPolicy6Srcaddr(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallLocalInPolicy6SrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -611,7 +633,6 @@ func expandFirewallLocalInPolicy6Dstaddr(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallLocalInPolicy6DstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -651,7 +672,6 @@ func expandFirewallLocalInPolicy6Service(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallLocalInPolicy6ServiceName(d, i["name"], pre_append, sv)
 		}
 
@@ -679,6 +699,10 @@ func expandFirewallLocalInPolicy6Status(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandFirewallLocalInPolicy6VirtualPatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallLocalInPolicy6Comments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -687,7 +711,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("policyid"); ok {
-
 		t, err := expandFirewallLocalInPolicy6Policyid(d, v, "policyid", sv)
 		if err != nil {
 			return &obj, err
@@ -697,7 +720,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallLocalInPolicy6Uuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -707,7 +729,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("intf"); ok {
-
 		t, err := expandFirewallLocalInPolicy6Intf(d, v, "intf", sv)
 		if err != nil {
 			return &obj, err
@@ -717,7 +738,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandFirewallLocalInPolicy6Srcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -727,7 +747,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("srcaddr_negate"); ok {
-
 		t, err := expandFirewallLocalInPolicy6SrcaddrNegate(d, v, "srcaddr_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -737,7 +756,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandFirewallLocalInPolicy6Dstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -747,7 +765,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("dstaddr_negate"); ok {
-
 		t, err := expandFirewallLocalInPolicy6DstaddrNegate(d, v, "dstaddr_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -757,7 +774,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandFirewallLocalInPolicy6Action(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -767,7 +783,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
-
 		t, err := expandFirewallLocalInPolicy6Service(d, v, "service", sv)
 		if err != nil {
 			return &obj, err
@@ -777,7 +792,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("service_negate"); ok {
-
 		t, err := expandFirewallLocalInPolicy6ServiceNegate(d, v, "service_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -787,7 +801,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
-
 		t, err := expandFirewallLocalInPolicy6Schedule(d, v, "schedule", sv)
 		if err != nil {
 			return &obj, err
@@ -797,7 +810,6 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallLocalInPolicy6Status(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -806,8 +818,16 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("comments"); ok {
+	if v, ok := d.GetOk("virtual_patch"); ok {
+		t, err := expandFirewallLocalInPolicy6VirtualPatch(d, v, "virtual_patch", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["virtual-patch"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("comments"); ok {
 		t, err := expandFirewallLocalInPolicy6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err

@@ -165,6 +165,11 @@ func resourceIpsGlobal() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -346,31 +351,26 @@ func flattenIpsGlobalTlsActiveProbe(v interface{}, d *schema.ResourceData, pre s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "interface_select_method"
 	if _, ok := i["interface-select-method"]; ok {
-
 		result["interface_select_method"] = flattenIpsGlobalTlsActiveProbeInterfaceSelectMethod(i["interface-select-method"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "interface"
 	if _, ok := i["interface"]; ok {
-
 		result["interface"] = flattenIpsGlobalTlsActiveProbeInterface(i["interface"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vdom"
 	if _, ok := i["vdom"]; ok {
-
 		result["vdom"] = flattenIpsGlobalTlsActiveProbeVdom(i["vdom"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "source_ip"
 	if _, ok := i["source-ip"]; ok {
-
 		result["source_ip"] = flattenIpsGlobalTlsActiveProbeSourceIp(i["source-ip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "source_ip6"
 	if _, ok := i["source-ip6"]; ok {
-
 		result["source_ip6"] = flattenIpsGlobalTlsActiveProbeSourceIp6(i["source-ip6"], d, pre_append, sv)
 	}
 
@@ -400,6 +400,12 @@ func flattenIpsGlobalTlsActiveProbeSourceIp6(v interface{}, d *schema.ResourceDa
 
 func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fail_open", flattenIpsGlobalFailOpen(o["fail-open"], d, "fail_open", sv)); err != nil {
 		if !fortiAPIPatch(o["fail-open"]) {
@@ -509,7 +515,7 @@ func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tls_active_probe", flattenIpsGlobalTlsActiveProbe(o["tls-active-probe"], d, "tls_active_probe", sv)); err != nil {
 			if !fortiAPIPatch(o["tls-active-probe"]) {
 				return fmt.Errorf("Error reading tls_active_probe: %v", err)
@@ -621,7 +627,6 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		if setArgNil {
 			result["interface-select-method"] = nil
 		} else {
-
 			result["interface-select-method"], _ = expandIpsGlobalTlsActiveProbeInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
 		}
 	}
@@ -630,7 +635,6 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		if setArgNil {
 			result["interface"] = nil
 		} else {
-
 			result["interface"], _ = expandIpsGlobalTlsActiveProbeInterface(d, i["interface"], pre_append, sv)
 		}
 	}
@@ -639,7 +643,6 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		if setArgNil {
 			result["vdom"] = nil
 		} else {
-
 			result["vdom"], _ = expandIpsGlobalTlsActiveProbeVdom(d, i["vdom"], pre_append, sv)
 		}
 	}
@@ -648,7 +651,6 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		if setArgNil {
 			result["source-ip"] = nil
 		} else {
-
 			result["source-ip"], _ = expandIpsGlobalTlsActiveProbeSourceIp(d, i["source_ip"], pre_append, sv)
 		}
 	}
@@ -657,7 +659,6 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		if setArgNil {
 			result["source-ip6"] = nil
 		} else {
-
 			result["source-ip6"], _ = expandIpsGlobalTlsActiveProbeSourceIp6(d, i["source_ip6"], pre_append, sv)
 		}
 	}
@@ -692,7 +693,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fail-open"] = nil
 		} else {
-
 			t, err := expandIpsGlobalFailOpen(d, v, "fail_open", sv)
 			if err != nil {
 				return &obj, err
@@ -706,7 +706,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["database"] = nil
 		} else {
-
 			t, err := expandIpsGlobalDatabase(d, v, "database", sv)
 			if err != nil {
 				return &obj, err
@@ -720,7 +719,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["traffic-submit"] = nil
 		} else {
-
 			t, err := expandIpsGlobalTrafficSubmit(d, v, "traffic_submit", sv)
 			if err != nil {
 				return &obj, err
@@ -734,7 +732,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["anomaly-mode"] = nil
 		} else {
-
 			t, err := expandIpsGlobalAnomalyMode(d, v, "anomaly_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -748,7 +745,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["session-limit-mode"] = nil
 		} else {
-
 			t, err := expandIpsGlobalSessionLimitMode(d, v, "session_limit_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -762,7 +758,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["intelligent-mode"] = nil
 		} else {
-
 			t, err := expandIpsGlobalIntelligentMode(d, v, "intelligent_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -776,7 +771,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["socket-size"] = nil
 		} else {
-
 			t, err := expandIpsGlobalSocketSize(d, v, "socket_size", sv)
 			if err != nil {
 				return &obj, err
@@ -790,7 +784,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["engine-count"] = nil
 		} else {
-
 			t, err := expandIpsGlobalEngineCount(d, v, "engine_count", sv)
 			if err != nil {
 				return &obj, err
@@ -804,7 +797,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["sync-session-ttl"] = nil
 		} else {
-
 			t, err := expandIpsGlobalSyncSessionTtl(d, v, "sync_session_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -818,7 +810,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["np-accel-mode"] = nil
 		} else {
-
 			t, err := expandIpsGlobalNpAccelMode(d, v, "np_accel_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -832,7 +823,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ips-reserve-cpu"] = nil
 		} else {
-
 			t, err := expandIpsGlobalIpsReserveCpu(d, v, "ips_reserve_cpu", sv)
 			if err != nil {
 				return &obj, err
@@ -846,7 +836,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["cp-accel-mode"] = nil
 		} else {
-
 			t, err := expandIpsGlobalCpAccelMode(d, v, "cp_accel_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -860,7 +849,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["skype-client-public-ipaddr"] = nil
 		} else {
-
 			t, err := expandIpsGlobalSkypeClientPublicIpaddr(d, v, "skype_client_public_ipaddr", sv)
 			if err != nil {
 				return &obj, err
@@ -874,7 +862,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["deep-app-insp-timeout"] = nil
 		} else {
-
 			t, err := expandIpsGlobalDeepAppInspTimeout(d, v, "deep_app_insp_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -888,7 +875,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["deep-app-insp-db-limit"] = nil
 		} else {
-
 			t, err := expandIpsGlobalDeepAppInspDbLimit(d, v, "deep_app_insp_db_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -902,7 +888,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["exclude-signatures"] = nil
 		} else {
-
 			t, err := expandIpsGlobalExcludeSignatures(d, v, "exclude_signatures", sv)
 			if err != nil {
 				return &obj, err
@@ -916,7 +901,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["packet-log-queue-depth"] = nil
 		} else {
-
 			t, err := expandIpsGlobalPacketLogQueueDepth(d, v, "packet_log_queue_depth", sv)
 			if err != nil {
 				return &obj, err
@@ -930,7 +914,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ngfw-max-scan-range"] = nil
 		} else {
-
 			t, err := expandIpsGlobalNgfwMaxScanRange(d, v, "ngfw_max_scan_range", sv)
 			if err != nil {
 				return &obj, err
@@ -941,7 +924,6 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("tls_active_probe"); ok {
-
 		t, err := expandIpsGlobalTlsActiveProbe(d, v, "tls_active_probe", sv, setArgNil)
 		if err != nil {
 			return &obj, err

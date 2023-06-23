@@ -370,7 +370,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("tag"); ok {
-
 		t, err := expandApplicationCustomTag(d, v, "tag", sv)
 		if err != nil {
 			return &obj, err
@@ -380,7 +379,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandApplicationCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -390,7 +388,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandApplicationCustomId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -400,7 +397,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandApplicationCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -410,7 +406,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("signature"); ok {
-
 		t, err := expandApplicationCustomSignature(d, v, "signature", sv)
 		if err != nil {
 			return &obj, err
@@ -420,7 +415,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {
-
 		t, err := expandApplicationCustomCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
@@ -430,7 +424,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandApplicationCustomProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -440,7 +433,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
-
 		t, err := expandApplicationCustomTechnology(d, v, "technology", sv)
 		if err != nil {
 			return &obj, err
@@ -450,7 +442,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
-
 		t, err := expandApplicationCustomBehavior(d, v, "behavior", sv)
 		if err != nil {
 			return &obj, err
@@ -460,7 +451,6 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
-
 		t, err := expandApplicationCustomVendor(d, v, "vendor", sv)
 		if err != nil {
 			return &obj, err

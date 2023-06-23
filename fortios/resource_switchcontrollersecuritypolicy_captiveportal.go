@@ -236,7 +236,6 @@ func getObjectSwitchControllerSecurityPolicyCaptivePortal(d *schema.ResourceData
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicyCaptivePortalName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -246,7 +245,6 @@ func getObjectSwitchControllerSecurityPolicyCaptivePortal(d *schema.ResourceData
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicyCaptivePortalVlan(d, v, "vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -256,7 +254,6 @@ func getObjectSwitchControllerSecurityPolicyCaptivePortal(d *schema.ResourceData
 	}
 
 	if v, ok := d.GetOk("policy_type"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicyCaptivePortalPolicyType(d, v, "policy_type", sv)
 		if err != nil {
 			return &obj, err

@@ -371,7 +371,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -381,7 +380,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -391,7 +389,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("policer_status"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyPolicerStatus(d, v, "policer_status", sv)
 		if err != nil {
 			return &obj, err
@@ -401,7 +398,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("guaranteed_bandwidth"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyGuaranteedBandwidth(d, v, "guaranteed_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -411,7 +407,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("guaranteed_burst"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyGuaranteedBurst(d, v, "guaranteed_burst", sv)
 		if err != nil {
 			return &obj, err
@@ -421,7 +416,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("maximum_burst"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyMaximumBurst(d, v, "maximum_burst", sv)
 		if err != nil {
 			return &obj, err
@@ -431,7 +425,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -441,7 +434,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("cos_queue"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyCosQueue(d, v, "cos_queue", sv)
 		if err != nil {
 			return &obj, err
@@ -451,7 +443,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("cos"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyCos(d, v, "cos", sv)
 		if err != nil {
 			return &obj, err
@@ -461,7 +452,6 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSwitchControllerTrafficPolicyId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err

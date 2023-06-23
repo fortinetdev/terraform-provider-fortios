@@ -248,7 +248,6 @@ func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["collector-ip"] = nil
 		} else {
-
 			t, err := expandSystemSflowCollectorIp(d, v, "collector_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -262,7 +261,6 @@ func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["collector-port"] = nil
 		} else {
-
 			t, err := expandSystemSflowCollectorPort(d, v, "collector_port", sv)
 			if err != nil {
 				return &obj, err
@@ -276,7 +274,6 @@ func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemSflowSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -290,7 +287,6 @@ func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemSflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -304,7 +300,6 @@ func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemSflowInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

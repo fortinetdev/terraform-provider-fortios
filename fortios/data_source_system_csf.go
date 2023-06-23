@@ -139,6 +139,10 @@ func dataSourceSystemCsf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"index": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -159,11 +163,35 @@ func dataSourceSystemCsf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"vdom": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
 			"forticloud_account_enforcement": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"file_mgmt": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"file_quota": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"file_quota_warning": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"fabric_device": &schema.Schema{
@@ -372,6 +400,11 @@ func dataSourceFlattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData
 			tmp["downstream_authorization"] = dataSourceFlattenSystemCsfTrustedListDownstreamAuthorization(i["downstream-authorization"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+		if _, ok := i["index"]; ok {
+			tmp["index"] = dataSourceFlattenSystemCsfTrustedListIndex(i["index"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -405,6 +438,10 @@ func dataSourceFlattenSystemCsfTrustedListHaMembers(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemCsfTrustedListDownstreamAuthorization(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfTrustedListIndex(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -442,6 +479,11 @@ func dataSourceFlattenSystemCsfFabricConnector(v interface{}, d *schema.Resource
 			tmp["configuration_write_access"] = dataSourceFlattenSystemCsfFabricConnectorConfigurationWriteAccess(i["configuration-write-access"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+		if _, ok := i["vdom"]; ok {
+			tmp["vdom"] = dataSourceFlattenSystemCsfFabricConnectorVdom(i["vdom"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -462,7 +504,55 @@ func dataSourceFlattenSystemCsfFabricConnectorConfigurationWriteAccess(v interfa
 	return v
 }
 
+func dataSourceFlattenSystemCsfFabricConnectorVdom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemCsfFabricConnectorVdomName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemCsfFabricConnectorVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCsfForticloudAccountEnforcement(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFileMgmt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFileQuota(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFileQuotaWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -684,6 +774,24 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("forticloud_account_enforcement", dataSourceFlattenSystemCsfForticloudAccountEnforcement(o["forticloud-account-enforcement"], d, "forticloud_account_enforcement")); err != nil {
 		if !fortiAPIPatch(o["forticloud-account-enforcement"]) {
 			return fmt.Errorf("Error reading forticloud_account_enforcement: %v", err)
+		}
+	}
+
+	if err = d.Set("file_mgmt", dataSourceFlattenSystemCsfFileMgmt(o["file-mgmt"], d, "file_mgmt")); err != nil {
+		if !fortiAPIPatch(o["file-mgmt"]) {
+			return fmt.Errorf("Error reading file_mgmt: %v", err)
+		}
+	}
+
+	if err = d.Set("file_quota", dataSourceFlattenSystemCsfFileQuota(o["file-quota"], d, "file_quota")); err != nil {
+		if !fortiAPIPatch(o["file-quota"]) {
+			return fmt.Errorf("Error reading file_quota: %v", err)
+		}
+	}
+
+	if err = d.Set("file_quota_warning", dataSourceFlattenSystemCsfFileQuotaWarning(o["file-quota-warning"], d, "file_quota_warning")); err != nil {
+		if !fortiAPIPatch(o["file-quota-warning"]) {
+			return fmt.Errorf("Error reading file_quota_warning: %v", err)
 		}
 	}
 

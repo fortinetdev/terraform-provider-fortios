@@ -158,6 +158,11 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -317,7 +322,6 @@ func flattenSwitchControllerSecurityPolicy8021XUserGroup(v interface{}, d *schem
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerSecurityPolicy8021XUserGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -404,6 +408,12 @@ func flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlanid(v interfa
 
 func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerSecurityPolicy8021XName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -417,7 +427,7 @@ func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("user_group", flattenSwitchControllerSecurityPolicy8021XUserGroup(o["user-group"], d, "user_group", sv)); err != nil {
 			if !fortiAPIPatch(o["user-group"]) {
 				return fmt.Errorf("Error reading user_group: %v", err)
@@ -568,7 +578,6 @@ func expandSwitchControllerSecurityPolicy8021XUserGroup(d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerSecurityPolicy8021XUserGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -656,7 +665,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -666,7 +674,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("security_mode"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XSecurityMode(d, v, "security_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -676,7 +683,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("user_group"); ok || d.HasChange("user_group") {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XUserGroup(d, v, "user_group", sv)
 		if err != nil {
 			return &obj, err
@@ -686,7 +692,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("mac_auth_bypass"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XMacAuthBypass(d, v, "mac_auth_bypass", sv)
 		if err != nil {
 			return &obj, err
@@ -696,7 +701,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("open_auth"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XOpenAuth(d, v, "open_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -706,7 +710,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("eap_passthru"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XEapPassthru(d, v, "eap_passthru", sv)
 		if err != nil {
 			return &obj, err
@@ -716,7 +719,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("eap_auto_untagged_vlans"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XEapAutoUntaggedVlans(d, v, "eap_auto_untagged_vlans", sv)
 		if err != nil {
 			return &obj, err
@@ -726,7 +728,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("guest_vlan"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XGuestVlan(d, v, "guest_vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -736,7 +737,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOkExists("guest_vlanid"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XGuestVlanid(d, v, "guest_vlanid", sv)
 		if err != nil {
 			return &obj, err
@@ -746,7 +746,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("guest_vlan_id"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XGuestVlanId(d, v, "guest_vlan_id", sv)
 		if err != nil {
 			return &obj, err
@@ -756,7 +755,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("guest_auth_delay"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XGuestAuthDelay(d, v, "guest_auth_delay", sv)
 		if err != nil {
 			return &obj, err
@@ -766,7 +764,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("auth_fail_vlan"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthFailVlan(d, v, "auth_fail_vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -776,7 +773,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOkExists("auth_fail_vlanid"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthFailVlanid(d, v, "auth_fail_vlanid", sv)
 		if err != nil {
 			return &obj, err
@@ -786,7 +782,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("auth_fail_vlan_id"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthFailVlanId(d, v, "auth_fail_vlan_id", sv)
 		if err != nil {
 			return &obj, err
@@ -796,7 +791,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("framevid_apply"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XFramevidApply(d, v, "framevid_apply", sv)
 		if err != nil {
 			return &obj, err
@@ -806,7 +800,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("radius_timeout_overwrite"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XRadiusTimeoutOverwrite(d, v, "radius_timeout_overwrite", sv)
 		if err != nil {
 			return &obj, err
@@ -816,7 +809,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("policy_type"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XPolicyType(d, v, "policy_type", sv)
 		if err != nil {
 			return &obj, err
@@ -826,7 +818,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("authserver_timeout_period"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutPeriod(d, v, "authserver_timeout_period", sv)
 		if err != nil {
 			return &obj, err
@@ -836,7 +827,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("authserver_timeout_vlan"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlan(d, v, "authserver_timeout_vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -846,7 +836,6 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("authserver_timeout_vlanid"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlanid(d, v, "authserver_timeout_vlanid", sv)
 		if err != nil {
 			return &obj, err

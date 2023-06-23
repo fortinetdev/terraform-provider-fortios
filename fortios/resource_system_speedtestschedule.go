@@ -116,6 +116,11 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -283,7 +288,6 @@ func flattenSystemSpeedTestScheduleSchedules(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSpeedTestScheduleSchedulesName(i["name"], d, pre_append, sv)
 		}
 
@@ -330,6 +334,12 @@ func flattenSystemSpeedTestScheduleUpdateOutbandwidthMinimum(v interface{}, d *s
 
 func refreshObjectSystemSpeedTestSchedule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("interface", flattenSystemSpeedTestScheduleInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
@@ -355,7 +365,7 @@ func refreshObjectSystemSpeedTestSchedule(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("schedules", flattenSystemSpeedTestScheduleSchedules(o["schedules"], d, "schedules", sv)); err != nil {
 			if !fortiAPIPatch(o["schedules"]) {
 				return fmt.Errorf("Error reading schedules: %v", err)
@@ -454,7 +464,6 @@ func expandSystemSpeedTestScheduleSchedules(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSpeedTestScheduleSchedulesName(d, i["name"], pre_append, sv)
 		}
 
@@ -502,7 +511,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemSpeedTestScheduleInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -512,7 +520,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemSpeedTestScheduleStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -522,7 +529,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("diffserv"); ok {
-
 		t, err := expandSystemSpeedTestScheduleDiffserv(d, v, "diffserv", sv)
 		if err != nil {
 			return &obj, err
@@ -532,7 +538,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("server_name"); ok {
-
 		t, err := expandSystemSpeedTestScheduleServerName(d, v, "server_name", sv)
 		if err != nil {
 			return &obj, err
@@ -542,7 +547,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("schedules"); ok || d.HasChange("schedules") {
-
 		t, err := expandSystemSpeedTestScheduleSchedules(d, v, "schedules", sv)
 		if err != nil {
 			return &obj, err
@@ -552,7 +556,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("dynamic_server"); ok {
-
 		t, err := expandSystemSpeedTestScheduleDynamicServer(d, v, "dynamic_server", sv)
 		if err != nil {
 			return &obj, err
@@ -562,7 +565,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("update_inbandwidth"); ok {
-
 		t, err := expandSystemSpeedTestScheduleUpdateInbandwidth(d, v, "update_inbandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -572,7 +574,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("update_outbandwidth"); ok {
-
 		t, err := expandSystemSpeedTestScheduleUpdateOutbandwidth(d, v, "update_outbandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -582,7 +583,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("update_inbandwidth_maximum"); ok {
-
 		t, err := expandSystemSpeedTestScheduleUpdateInbandwidthMaximum(d, v, "update_inbandwidth_maximum", sv)
 		if err != nil {
 			return &obj, err
@@ -592,7 +592,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("update_inbandwidth_minimum"); ok {
-
 		t, err := expandSystemSpeedTestScheduleUpdateInbandwidthMinimum(d, v, "update_inbandwidth_minimum", sv)
 		if err != nil {
 			return &obj, err
@@ -602,7 +601,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("update_outbandwidth_maximum"); ok {
-
 		t, err := expandSystemSpeedTestScheduleUpdateOutbandwidthMaximum(d, v, "update_outbandwidth_maximum", sv)
 		if err != nil {
 			return &obj, err
@@ -612,7 +610,6 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("update_outbandwidth_minimum"); ok {
-
 		t, err := expandSystemSpeedTestScheduleUpdateOutbandwidthMinimum(d, v, "update_outbandwidth_minimum", sv)
 		if err != nil {
 			return &obj, err

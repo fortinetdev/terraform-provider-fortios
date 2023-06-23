@@ -145,6 +145,10 @@ func dataSourceRouterMulticast() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"pim_use_sdwan": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"rp_address": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -496,6 +500,11 @@ func dataSourceFlattenRouterMulticastPimSmGlobal(v interface{}, d *schema.Resour
 		result["register_rate_limit"] = dataSourceFlattenRouterMulticastPimSmGlobalRegisterRateLimit(i["register-rate-limit"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "pim_use_sdwan"
+	if _, ok := i["pim-use-sdwan"]; ok {
+		result["pim_use_sdwan"] = dataSourceFlattenRouterMulticastPimSmGlobalPimUseSdwan(i["pim-use-sdwan"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "rp_address"
 	if _, ok := i["rp-address"]; ok {
 		result["rp_address"] = dataSourceFlattenRouterMulticastPimSmGlobalRpAddress(i["rp-address"], d, pre_append)
@@ -602,6 +611,10 @@ func dataSourceFlattenRouterMulticastPimSmGlobalSsmRange(v interface{}, d *schem
 }
 
 func dataSourceFlattenRouterMulticastPimSmGlobalRegisterRateLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalPimUseSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

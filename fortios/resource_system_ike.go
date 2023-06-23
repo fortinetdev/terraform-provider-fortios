@@ -515,6 +515,11 @@ func resourceSystemIke() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -652,19 +657,16 @@ func flattenSystemIkeDhGroup1(v interface{}, d *schema.ResourceData, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup1Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup1KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup1KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -695,19 +697,16 @@ func flattenSystemIkeDhGroup2(v interface{}, d *schema.ResourceData, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup2Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup2KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup2KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -738,19 +737,16 @@ func flattenSystemIkeDhGroup5(v interface{}, d *schema.ResourceData, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup5Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup5KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup5KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -781,19 +777,16 @@ func flattenSystemIkeDhGroup14(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup14Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup14KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup14KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -824,19 +817,16 @@ func flattenSystemIkeDhGroup15(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup15Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup15KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup15KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -867,19 +857,16 @@ func flattenSystemIkeDhGroup16(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup16Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup16KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup16KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -910,19 +897,16 @@ func flattenSystemIkeDhGroup17(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup17Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup17KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup17KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -953,19 +937,16 @@ func flattenSystemIkeDhGroup18(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup18Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup18KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup18KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -996,19 +977,16 @@ func flattenSystemIkeDhGroup19(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup19Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup19KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup19KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1039,19 +1017,16 @@ func flattenSystemIkeDhGroup20(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup20Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup20KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup20KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1082,19 +1057,16 @@ func flattenSystemIkeDhGroup21(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup21Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup21KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup21KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1125,19 +1097,16 @@ func flattenSystemIkeDhGroup27(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup27Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup27KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup27KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1168,19 +1137,16 @@ func flattenSystemIkeDhGroup28(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup28Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup28KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup28KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1211,19 +1177,16 @@ func flattenSystemIkeDhGroup29(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup29Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup29KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup29KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1254,19 +1217,16 @@ func flattenSystemIkeDhGroup30(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup30Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup30KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup30KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1297,19 +1257,16 @@ func flattenSystemIkeDhGroup31(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup31Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup31KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup31KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1340,19 +1297,16 @@ func flattenSystemIkeDhGroup32(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "mode"
 	if _, ok := i["mode"]; ok {
-
 		result["mode"] = flattenSystemIkeDhGroup32Mode(i["mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_cache"
 	if _, ok := i["keypair-cache"]; ok {
-
 		result["keypair_cache"] = flattenSystemIkeDhGroup32KeypairCache(i["keypair-cache"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "keypair_count"
 	if _, ok := i["keypair-count"]; ok {
-
 		result["keypair_count"] = flattenSystemIkeDhGroup32KeypairCount(i["keypair-count"], d, pre_append, sv)
 	}
 
@@ -1374,6 +1328,12 @@ func flattenSystemIkeDhGroup32KeypairCount(v interface{}, d *schema.ResourceData
 
 func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("embryonic_limit", flattenSystemIkeEmbryonicLimit(o["embryonic-limit"], d, "embryonic_limit", sv)); err != nil {
 		if !fortiAPIPatch(o["embryonic-limit"]) {
@@ -1417,7 +1377,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_1", flattenSystemIkeDhGroup1(o["dh-group-1"], d, "dh_group_1", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-1"]) {
 				return fmt.Errorf("Error reading dh_group_1: %v", err)
@@ -1433,7 +1393,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_2", flattenSystemIkeDhGroup2(o["dh-group-2"], d, "dh_group_2", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-2"]) {
 				return fmt.Errorf("Error reading dh_group_2: %v", err)
@@ -1449,7 +1409,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_5", flattenSystemIkeDhGroup5(o["dh-group-5"], d, "dh_group_5", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-5"]) {
 				return fmt.Errorf("Error reading dh_group_5: %v", err)
@@ -1465,7 +1425,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_14", flattenSystemIkeDhGroup14(o["dh-group-14"], d, "dh_group_14", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-14"]) {
 				return fmt.Errorf("Error reading dh_group_14: %v", err)
@@ -1481,7 +1441,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_15", flattenSystemIkeDhGroup15(o["dh-group-15"], d, "dh_group_15", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-15"]) {
 				return fmt.Errorf("Error reading dh_group_15: %v", err)
@@ -1497,7 +1457,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_16", flattenSystemIkeDhGroup16(o["dh-group-16"], d, "dh_group_16", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-16"]) {
 				return fmt.Errorf("Error reading dh_group_16: %v", err)
@@ -1513,7 +1473,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_17", flattenSystemIkeDhGroup17(o["dh-group-17"], d, "dh_group_17", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-17"]) {
 				return fmt.Errorf("Error reading dh_group_17: %v", err)
@@ -1529,7 +1489,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_18", flattenSystemIkeDhGroup18(o["dh-group-18"], d, "dh_group_18", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-18"]) {
 				return fmt.Errorf("Error reading dh_group_18: %v", err)
@@ -1545,7 +1505,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_19", flattenSystemIkeDhGroup19(o["dh-group-19"], d, "dh_group_19", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-19"]) {
 				return fmt.Errorf("Error reading dh_group_19: %v", err)
@@ -1561,7 +1521,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_20", flattenSystemIkeDhGroup20(o["dh-group-20"], d, "dh_group_20", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-20"]) {
 				return fmt.Errorf("Error reading dh_group_20: %v", err)
@@ -1577,7 +1537,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_21", flattenSystemIkeDhGroup21(o["dh-group-21"], d, "dh_group_21", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-21"]) {
 				return fmt.Errorf("Error reading dh_group_21: %v", err)
@@ -1593,7 +1553,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_27", flattenSystemIkeDhGroup27(o["dh-group-27"], d, "dh_group_27", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-27"]) {
 				return fmt.Errorf("Error reading dh_group_27: %v", err)
@@ -1609,7 +1569,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_28", flattenSystemIkeDhGroup28(o["dh-group-28"], d, "dh_group_28", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-28"]) {
 				return fmt.Errorf("Error reading dh_group_28: %v", err)
@@ -1625,7 +1585,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_29", flattenSystemIkeDhGroup29(o["dh-group-29"], d, "dh_group_29", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-29"]) {
 				return fmt.Errorf("Error reading dh_group_29: %v", err)
@@ -1641,7 +1601,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_30", flattenSystemIkeDhGroup30(o["dh-group-30"], d, "dh_group_30", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-30"]) {
 				return fmt.Errorf("Error reading dh_group_30: %v", err)
@@ -1657,7 +1617,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_31", flattenSystemIkeDhGroup31(o["dh-group-31"], d, "dh_group_31", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-31"]) {
 				return fmt.Errorf("Error reading dh_group_31: %v", err)
@@ -1673,7 +1633,7 @@ func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dh_group_32", flattenSystemIkeDhGroup32(o["dh-group-32"], d, "dh_group_32", sv)); err != nil {
 			if !fortiAPIPatch(o["dh-group-32"]) {
 				return fmt.Errorf("Error reading dh_group_32: %v", err)
@@ -1741,7 +1701,6 @@ func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup1Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -1750,7 +1709,6 @@ func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup1KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -1759,7 +1717,6 @@ func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup1KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -1794,7 +1751,6 @@ func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup2Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -1803,7 +1759,6 @@ func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup2KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -1812,7 +1767,6 @@ func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup2KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -1847,7 +1801,6 @@ func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup5Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -1856,7 +1809,6 @@ func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup5KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -1865,7 +1817,6 @@ func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, 
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup5KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -1900,7 +1851,6 @@ func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup14Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -1909,7 +1859,6 @@ func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup14KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -1918,7 +1867,6 @@ func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup14KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -1953,7 +1901,6 @@ func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup15Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -1962,7 +1909,6 @@ func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup15KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -1971,7 +1917,6 @@ func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup15KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2006,7 +1951,6 @@ func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup16Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2015,7 +1959,6 @@ func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup16KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2024,7 +1967,6 @@ func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup16KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2059,7 +2001,6 @@ func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup17Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2068,7 +2009,6 @@ func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup17KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2077,7 +2017,6 @@ func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup17KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2112,7 +2051,6 @@ func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup18Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2121,7 +2059,6 @@ func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup18KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2130,7 +2067,6 @@ func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup18KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2165,7 +2101,6 @@ func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup19Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2174,7 +2109,6 @@ func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup19KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2183,7 +2117,6 @@ func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup19KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2218,7 +2151,6 @@ func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup20Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2227,7 +2159,6 @@ func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup20KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2236,7 +2167,6 @@ func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup20KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2271,7 +2201,6 @@ func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup21Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2280,7 +2209,6 @@ func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup21KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2289,7 +2217,6 @@ func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup21KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2324,7 +2251,6 @@ func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup27Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2333,7 +2259,6 @@ func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup27KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2342,7 +2267,6 @@ func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup27KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2377,7 +2301,6 @@ func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup28Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2386,7 +2309,6 @@ func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup28KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2395,7 +2317,6 @@ func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup28KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2430,7 +2351,6 @@ func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup29Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2439,7 +2359,6 @@ func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup29KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2448,7 +2367,6 @@ func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup29KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2483,7 +2401,6 @@ func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup30Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2492,7 +2409,6 @@ func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup30KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2501,7 +2417,6 @@ func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup30KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2536,7 +2451,6 @@ func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup31Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2545,7 +2459,6 @@ func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup31KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2554,7 +2467,6 @@ func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup31KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2589,7 +2501,6 @@ func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["mode"] = nil
 		} else {
-
 			result["mode"], _ = expandSystemIkeDhGroup32Mode(d, i["mode"], pre_append, sv)
 		}
 	}
@@ -2598,7 +2509,6 @@ func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-cache"] = nil
 		} else {
-
 			result["keypair-cache"], _ = expandSystemIkeDhGroup32KeypairCache(d, i["keypair_cache"], pre_append, sv)
 		}
 	}
@@ -2607,7 +2517,6 @@ func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["keypair-count"] = nil
 		} else {
-
 			result["keypair-count"], _ = expandSystemIkeDhGroup32KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
 	}
@@ -2634,7 +2543,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["embryonic-limit"] = nil
 		} else {
-
 			t, err := expandSystemIkeEmbryonicLimit(d, v, "embryonic_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -2648,7 +2556,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dh-multiprocess"] = nil
 		} else {
-
 			t, err := expandSystemIkeDhMultiprocess(d, v, "dh_multiprocess", sv)
 			if err != nil {
 				return &obj, err
@@ -2662,7 +2569,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dh-worker-count"] = nil
 		} else {
-
 			t, err := expandSystemIkeDhWorkerCount(d, v, "dh_worker_count", sv)
 			if err != nil {
 				return &obj, err
@@ -2676,7 +2582,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dh-mode"] = nil
 		} else {
-
 			t, err := expandSystemIkeDhMode(d, v, "dh_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -2690,7 +2595,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dh-keypair-cache"] = nil
 		} else {
-
 			t, err := expandSystemIkeDhKeypairCache(d, v, "dh_keypair_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -2704,7 +2608,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dh-keypair-count"] = nil
 		} else {
-
 			t, err := expandSystemIkeDhKeypairCount(d, v, "dh_keypair_count", sv)
 			if err != nil {
 				return &obj, err
@@ -2718,7 +2621,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dh-keypair-throttle"] = nil
 		} else {
-
 			t, err := expandSystemIkeDhKeypairThrottle(d, v, "dh_keypair_throttle", sv)
 			if err != nil {
 				return &obj, err
@@ -2729,7 +2631,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_1"); ok {
-
 		t, err := expandSystemIkeDhGroup1(d, v, "dh_group_1", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2739,7 +2640,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_2"); ok {
-
 		t, err := expandSystemIkeDhGroup2(d, v, "dh_group_2", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2749,7 +2649,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_5"); ok {
-
 		t, err := expandSystemIkeDhGroup5(d, v, "dh_group_5", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2759,7 +2658,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_14"); ok {
-
 		t, err := expandSystemIkeDhGroup14(d, v, "dh_group_14", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2769,7 +2667,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_15"); ok {
-
 		t, err := expandSystemIkeDhGroup15(d, v, "dh_group_15", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2779,7 +2676,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_16"); ok {
-
 		t, err := expandSystemIkeDhGroup16(d, v, "dh_group_16", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2789,7 +2685,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_17"); ok {
-
 		t, err := expandSystemIkeDhGroup17(d, v, "dh_group_17", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2799,7 +2694,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_18"); ok {
-
 		t, err := expandSystemIkeDhGroup18(d, v, "dh_group_18", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2809,7 +2703,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_19"); ok {
-
 		t, err := expandSystemIkeDhGroup19(d, v, "dh_group_19", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2819,7 +2712,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_20"); ok {
-
 		t, err := expandSystemIkeDhGroup20(d, v, "dh_group_20", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2829,7 +2721,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_21"); ok {
-
 		t, err := expandSystemIkeDhGroup21(d, v, "dh_group_21", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2839,7 +2730,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_27"); ok {
-
 		t, err := expandSystemIkeDhGroup27(d, v, "dh_group_27", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2849,7 +2739,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_28"); ok {
-
 		t, err := expandSystemIkeDhGroup28(d, v, "dh_group_28", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2859,7 +2748,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_29"); ok {
-
 		t, err := expandSystemIkeDhGroup29(d, v, "dh_group_29", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2869,7 +2757,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_30"); ok {
-
 		t, err := expandSystemIkeDhGroup30(d, v, "dh_group_30", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2879,7 +2766,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_31"); ok {
-
 		t, err := expandSystemIkeDhGroup31(d, v, "dh_group_31", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -2889,7 +2775,6 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dh_group_32"); ok {
-
 		t, err := expandSystemIkeDhGroup32(d, v, "dh_group_32", sv, setArgNil)
 		if err != nil {
 			return &obj, err

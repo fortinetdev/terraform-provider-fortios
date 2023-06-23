@@ -75,6 +75,11 @@ func resourceRouterMulticastFlow() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -234,19 +239,16 @@ func flattenRouterMulticastFlowFlows(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterMulticastFlowFlowsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_addr"
 		if _, ok := i["group-addr"]; ok {
-
 			tmp["group_addr"] = flattenRouterMulticastFlowFlowsGroupAddr(i["group-addr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_addr"
 		if _, ok := i["source-addr"]; ok {
-
 			tmp["source_addr"] = flattenRouterMulticastFlowFlowsSourceAddr(i["source-addr"], d, pre_append, sv)
 		}
 
@@ -273,6 +275,12 @@ func flattenRouterMulticastFlowFlowsSourceAddr(v interface{}, d *schema.Resource
 
 func refreshObjectRouterMulticastFlow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenRouterMulticastFlowName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -286,7 +294,7 @@ func refreshObjectRouterMulticastFlow(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("flows", flattenRouterMulticastFlowFlows(o["flows"], d, "flows", sv)); err != nil {
 			if !fortiAPIPatch(o["flows"]) {
 				return fmt.Errorf("Error reading flows: %v", err)
@@ -335,19 +343,16 @@ func expandRouterMulticastFlowFlows(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterMulticastFlowFlowsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_addr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["group-addr"], _ = expandRouterMulticastFlowFlowsGroupAddr(d, i["group_addr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_addr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["source-addr"], _ = expandRouterMulticastFlowFlowsSourceAddr(d, i["source_addr"], pre_append, sv)
 		}
 
@@ -375,7 +380,6 @@ func getObjectRouterMulticastFlow(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandRouterMulticastFlowName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -385,7 +389,6 @@ func getObjectRouterMulticastFlow(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandRouterMulticastFlowComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -395,7 +398,6 @@ func getObjectRouterMulticastFlow(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("flows"); ok || d.HasChange("flows") {
-
 		t, err := expandRouterMulticastFlowFlows(d, v, "flows", sv)
 		if err != nil {
 			return &obj, err

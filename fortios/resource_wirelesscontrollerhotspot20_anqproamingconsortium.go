@@ -73,6 +73,11 @@ func resourceWirelessControllerHotspot20AnqpRoamingConsortium() *schema.Resource
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -228,19 +233,16 @@ func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiList(v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
-
 			tmp["index"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListIndex(i["index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "oi"
 		if _, ok := i["oi"]; ok {
-
 			tmp["oi"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListOi(i["oi"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListComment(i["comment"], d, pre_append, sv)
 		}
 
@@ -267,6 +269,12 @@ func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListComment(v inte
 
 func refreshObjectWirelessControllerHotspot20AnqpRoamingConsortium(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpRoamingConsortiumName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -274,7 +282,7 @@ func refreshObjectWirelessControllerHotspot20AnqpRoamingConsortium(d *schema.Res
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("oi_list", flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiList(o["oi-list"], d, "oi_list", sv)); err != nil {
 			if !fortiAPIPatch(o["oi-list"]) {
 				return fmt.Errorf("Error reading oi_list: %v", err)
@@ -319,19 +327,16 @@ func expandWirelessControllerHotspot20AnqpRoamingConsortiumOiList(d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["index"], _ = expandWirelessControllerHotspot20AnqpRoamingConsortiumOiListIndex(d, i["index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "oi"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["oi"], _ = expandWirelessControllerHotspot20AnqpRoamingConsortiumOiListOi(d, i["oi"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandWirelessControllerHotspot20AnqpRoamingConsortiumOiListComment(d, i["comment"], pre_append, sv)
 		}
 
@@ -359,7 +364,6 @@ func getObjectWirelessControllerHotspot20AnqpRoamingConsortium(d *schema.Resourc
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20AnqpRoamingConsortiumName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -369,7 +373,6 @@ func getObjectWirelessControllerHotspot20AnqpRoamingConsortium(d *schema.Resourc
 	}
 
 	if v, ok := d.GetOk("oi_list"); ok || d.HasChange("oi_list") {
-
 		t, err := expandWirelessControllerHotspot20AnqpRoamingConsortiumOiList(d, v, "oi_list", sv)
 		if err != nil {
 			return &obj, err

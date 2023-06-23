@@ -286,7 +286,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ip"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerIp(d, v, "ip", sv)
 			if err != nil {
 				return &obj, err
@@ -300,7 +299,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["vdom"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerVdom(d, v, "vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -314,7 +312,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ipsec"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerIpsec(d, v, "ipsec", sv)
 			if err != nil {
 				return &obj, err
@@ -328,7 +325,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["central-management"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerCentralManagement(d, v, "central_management", sv)
 			if err != nil {
 				return &obj, err
@@ -342,7 +338,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["central-mgmt-auto-backup"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerCentralMgmtAutoBackup(d, v, "central_mgmt_auto_backup", sv)
 			if err != nil {
 				return &obj, err
@@ -356,7 +351,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["central-mgmt-schedule-config-restore"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d, v, "central_mgmt_schedule_config_restore", sv)
 			if err != nil {
 				return &obj, err
@@ -370,7 +364,6 @@ func getObjectSystemFortimanager(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["central-mgmt-schedule-script-restore"] = nil
 		} else {
-
 			t, err := expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d, v, "central_mgmt_schedule_script_restore", sv)
 			if err != nil {
 				return &obj, err

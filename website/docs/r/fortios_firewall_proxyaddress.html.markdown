@@ -36,7 +36,9 @@ The following arguments are supported:
 * `referrer` - Enable/disable use of referrer field in the HTTP header to match the address. Valid values: `enable`, `disable`.
 * `category` - FortiGuard category ID. The structure of `category` block is documented below.
 * `method` - HTTP request methods to be used. Valid values: `get`, `post`, `put`, `head`, `connect`, `trace`, `options`, `delete`.
-* `ua` - Names of browsers to be used as user agent. Valid values: `chrome`, `ms`, `firefox`, `safari`, `other`.
+* `ua` - Names of browsers to be used as user agent.
+* `ua_min_ver` - Minimum version of the user agent specified in dotted notation. For example, use 90.0.1 with the ua field set to "chrome" to require Google Chrome's minimum version must be 90.0.1.
+* `ua_max_ver` - Maximum version of the user agent specified in dotted notation. For example, use 120 with the ua field set to "chrome" to require Google Chrome's maximum version must be 120.
 * `header_name` - Name of HTTP header.
 * `header` - HTTP header name as a regular expression.
 * `case_sensitivity` - Enable to make the pattern case sensitive. Valid values: `disable`, `enable`.
@@ -47,6 +49,7 @@ The following arguments are supported:
 * `application` - SaaS application. The structure of `application` block is documented below.
 * `visibility` - Enable/disable visibility of the object in the GUI. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `category` block supports:

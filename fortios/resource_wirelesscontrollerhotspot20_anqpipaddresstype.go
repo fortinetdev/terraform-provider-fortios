@@ -235,7 +235,6 @@ func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceDat
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceDat
 	}
 
 	if v, ok := d.GetOk("ipv6_address_type"); ok {
-
 		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(d, v, "ipv6_address_type", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceDat
 	}
 
 	if v, ok := d.GetOk("ipv4_address_type"); ok {
-
 		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(d, v, "ipv4_address_type", sv)
 		if err != nil {
 			return &obj, err

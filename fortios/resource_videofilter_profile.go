@@ -47,6 +47,16 @@ func resourceVideofilterProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"default_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"youtube_channel_filter": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -110,6 +120,11 @@ func resourceVideofilterProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -244,6 +259,14 @@ func flattenVideofilterProfileComment(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenVideofilterProfileDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVideofilterProfileYoutubeChannelFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -259,7 +282,6 @@ func flattenVideofilterProfileFortiguardCategory(v interface{}, d *schema.Resour
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "filters"
 	if _, ok := i["filters"]; ok {
-
 		result["filters"] = flattenVideofilterProfileFortiguardCategoryFilters(i["filters"], d, pre_append, sv)
 	}
 
@@ -293,25 +315,21 @@ func flattenVideofilterProfileFortiguardCategoryFilters(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenVideofilterProfileFortiguardCategoryFiltersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenVideofilterProfileFortiguardCategoryFiltersAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category_id"
 		if _, ok := i["category-id"]; ok {
-
 			tmp["category_id"] = flattenVideofilterProfileFortiguardCategoryFiltersCategoryId(i["category-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenVideofilterProfileFortiguardCategoryFiltersLog(i["log"], d, pre_append, sv)
 		}
 
@@ -358,6 +376,12 @@ func flattenVideofilterProfileReplacemsgGroup(v interface{}, d *schema.ResourceD
 
 func refreshObjectVideofilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenVideofilterProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -371,13 +395,25 @@ func refreshObjectVideofilterProfile(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("default_action", flattenVideofilterProfileDefaultAction(o["default-action"], d, "default_action", sv)); err != nil {
+		if !fortiAPIPatch(o["default-action"]) {
+			return fmt.Errorf("Error reading default_action: %v", err)
+		}
+	}
+
+	if err = d.Set("log", flattenVideofilterProfileLog(o["log"], d, "log", sv)); err != nil {
+		if !fortiAPIPatch(o["log"]) {
+			return fmt.Errorf("Error reading log: %v", err)
+		}
+	}
+
 	if err = d.Set("youtube_channel_filter", flattenVideofilterProfileYoutubeChannelFilter(o["youtube-channel-filter"], d, "youtube_channel_filter", sv)); err != nil {
 		if !fortiAPIPatch(o["youtube-channel-filter"]) {
 			return fmt.Errorf("Error reading youtube_channel_filter: %v", err)
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("fortiguard_category", flattenVideofilterProfileFortiguardCategory(o["fortiguard-category"], d, "fortiguard_category", sv)); err != nil {
 			if !fortiAPIPatch(o["fortiguard-category"]) {
 				return fmt.Errorf("Error reading fortiguard_category: %v", err)
@@ -434,6 +470,14 @@ func expandVideofilterProfileComment(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandVideofilterProfileDefaultAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVideofilterProfileYoutubeChannelFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -450,7 +494,6 @@ func expandVideofilterProfileFortiguardCategory(d *schema.ResourceData, v interf
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "filters"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["filters"], _ = expandVideofilterProfileFortiguardCategoryFilters(d, i["filters"], pre_append, sv)
 	} else {
 		result["filters"] = make([]string, 0)
@@ -475,25 +518,21 @@ func expandVideofilterProfileFortiguardCategoryFilters(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandVideofilterProfileFortiguardCategoryFiltersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandVideofilterProfileFortiguardCategoryFiltersAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category-id"], _ = expandVideofilterProfileFortiguardCategoryFiltersCategoryId(d, i["category_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandVideofilterProfileFortiguardCategoryFiltersLog(d, i["log"], pre_append, sv)
 		}
 
@@ -541,7 +580,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVideofilterProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -551,7 +589,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandVideofilterProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -560,8 +597,25 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOkExists("youtube_channel_filter"); ok {
+	if v, ok := d.GetOk("default_action"); ok {
+		t, err := expandVideofilterProfileDefaultAction(d, v, "default_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-action"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("log"); ok {
+		t, err := expandVideofilterProfileLog(d, v, "log", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["log"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("youtube_channel_filter"); ok {
 		t, err := expandVideofilterProfileYoutubeChannelFilter(d, v, "youtube_channel_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -571,7 +625,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("fortiguard_category"); ok {
-
 		t, err := expandVideofilterProfileFortiguardCategory(d, v, "fortiguard_category", sv)
 		if err != nil {
 			return &obj, err
@@ -581,7 +634,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("youtube"); ok {
-
 		t, err := expandVideofilterProfileYoutube(d, v, "youtube", sv)
 		if err != nil {
 			return &obj, err
@@ -591,7 +643,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("vimeo"); ok {
-
 		t, err := expandVideofilterProfileVimeo(d, v, "vimeo", sv)
 		if err != nil {
 			return &obj, err
@@ -601,7 +652,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dailymotion"); ok {
-
 		t, err := expandVideofilterProfileDailymotion(d, v, "dailymotion", sv)
 		if err != nil {
 			return &obj, err
@@ -611,7 +661,6 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandVideofilterProfileReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err

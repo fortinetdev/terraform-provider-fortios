@@ -136,6 +136,11 @@ func resourceSwitchControllerSnmpCommunity() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -299,13 +304,11 @@ func flattenSwitchControllerSnmpCommunityHosts(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSwitchControllerSnmpCommunityHostsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSwitchControllerSnmpCommunityHostsIp(i["ip"], d, pre_append, sv)
 		}
 
@@ -372,6 +375,12 @@ func flattenSwitchControllerSnmpCommunityEvents(v interface{}, d *schema.Resourc
 
 func refreshObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSwitchControllerSnmpCommunityId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -391,7 +400,7 @@ func refreshObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("hosts", flattenSwitchControllerSnmpCommunityHosts(o["hosts"], d, "hosts", sv)); err != nil {
 			if !fortiAPIPatch(o["hosts"]) {
 				return fmt.Errorf("Error reading hosts: %v", err)
@@ -510,13 +519,11 @@ func expandSwitchControllerSnmpCommunityHosts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSwitchControllerSnmpCommunityHostsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSwitchControllerSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
 		}
 
@@ -584,7 +591,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -594,7 +600,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -604,7 +609,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -614,7 +618,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("hosts"); ok || d.HasChange("hosts") {
-
 		t, err := expandSwitchControllerSnmpCommunityHosts(d, v, "hosts", sv)
 		if err != nil {
 			return &obj, err
@@ -624,7 +627,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("query_v1_status"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityQueryV1Status(d, v, "query_v1_status", sv)
 		if err != nil {
 			return &obj, err
@@ -634,7 +636,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("query_v1_port"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityQueryV1Port(d, v, "query_v1_port", sv)
 		if err != nil {
 			return &obj, err
@@ -644,7 +645,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("query_v2c_status"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityQueryV2CStatus(d, v, "query_v2c_status", sv)
 		if err != nil {
 			return &obj, err
@@ -654,7 +654,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("query_v2c_port"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityQueryV2CPort(d, v, "query_v2c_port", sv)
 		if err != nil {
 			return &obj, err
@@ -664,7 +663,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("trap_v1_status"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityTrapV1Status(d, v, "trap_v1_status", sv)
 		if err != nil {
 			return &obj, err
@@ -674,7 +672,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("trap_v1_lport"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityTrapV1Lport(d, v, "trap_v1_lport", sv)
 		if err != nil {
 			return &obj, err
@@ -684,7 +681,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("trap_v1_rport"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityTrapV1Rport(d, v, "trap_v1_rport", sv)
 		if err != nil {
 			return &obj, err
@@ -694,7 +690,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("trap_v2c_status"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityTrapV2CStatus(d, v, "trap_v2c_status", sv)
 		if err != nil {
 			return &obj, err
@@ -704,7 +699,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("trap_v2c_lport"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityTrapV2CLport(d, v, "trap_v2c_lport", sv)
 		if err != nil {
 			return &obj, err
@@ -714,7 +708,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("trap_v2c_rport"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityTrapV2CRport(d, v, "trap_v2c_rport", sv)
 		if err != nil {
 			return &obj, err
@@ -724,7 +717,6 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("events"); ok {
-
 		t, err := expandSwitchControllerSnmpCommunityEvents(d, v, "events", sv)
 		if err != nil {
 			return &obj, err

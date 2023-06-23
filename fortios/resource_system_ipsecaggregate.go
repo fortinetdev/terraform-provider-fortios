@@ -66,6 +66,11 @@ func resourceSystemIpsecAggregate() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -221,7 +226,6 @@ func flattenSystemIpsecAggregateMember(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tunnel_name"
 		if _, ok := i["tunnel-name"]; ok {
-
 			tmp["tunnel_name"] = flattenSystemIpsecAggregateMemberTunnelName(i["tunnel-name"], d, pre_append, sv)
 		}
 
@@ -244,6 +248,12 @@ func flattenSystemIpsecAggregateAlgorithm(v interface{}, d *schema.ResourceData,
 
 func refreshObjectSystemIpsecAggregate(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemIpsecAggregateName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -251,7 +261,7 @@ func refreshObjectSystemIpsecAggregate(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenSystemIpsecAggregateMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -302,7 +312,6 @@ func expandSystemIpsecAggregateMember(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tunnel_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["tunnel-name"], _ = expandSystemIpsecAggregateMemberTunnelName(d, i["tunnel_name"], pre_append, sv)
 		}
 
@@ -326,7 +335,6 @@ func getObjectSystemIpsecAggregate(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemIpsecAggregateName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -336,7 +344,6 @@ func getObjectSystemIpsecAggregate(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandSystemIpsecAggregateMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -346,7 +353,6 @@ func getObjectSystemIpsecAggregate(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("algorithm"); ok {
-
 		t, err := expandSystemIpsecAggregateAlgorithm(d, v, "algorithm", sv)
 		if err != nil {
 			return &obj, err

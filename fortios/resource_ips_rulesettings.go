@@ -195,7 +195,6 @@ func getObjectIpsRuleSettings(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandIpsRuleSettingsId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err

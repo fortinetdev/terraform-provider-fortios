@@ -421,7 +421,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -435,7 +434,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["upload-option"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingUploadOption(d, v, "upload_option", sv)
 			if err != nil {
 				return &obj, err
@@ -449,7 +447,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["upload-interval"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingUploadInterval(d, v, "upload_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -463,7 +460,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["upload-day"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingUploadDay(d, v, "upload_day", sv)
 			if err != nil {
 				return &obj, err
@@ -477,7 +473,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["upload-time"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingUploadTime(d, v, "upload_time", sv)
 			if err != nil {
 				return &obj, err
@@ -491,7 +486,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -505,7 +499,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -519,7 +512,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["access-config"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingAccessConfig(d, v, "access_config", sv)
 			if err != nil {
 				return &obj, err
@@ -533,7 +525,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -547,7 +538,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -561,7 +551,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["conn-timeout"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingConnTimeout(d, v, "conn_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -575,7 +564,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -589,7 +577,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -603,7 +590,6 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogFortiguardSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

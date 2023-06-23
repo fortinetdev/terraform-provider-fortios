@@ -48,6 +48,10 @@ func dataSourceRouterStatic() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"preferred_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"distance": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -110,6 +114,10 @@ func dataSourceRouterStatic() *schema.Resource {
 			},
 			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"tag": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"vrf": &schema.Schema{
@@ -201,6 +209,10 @@ func dataSourceFlattenRouterStaticGateway(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func dataSourceFlattenRouterStaticPreferredSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStaticDistance(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -289,6 +301,10 @@ func dataSourceFlattenRouterStaticLinkMonitorExempt(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenRouterStaticTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStaticVrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -327,6 +343,12 @@ func dataSourceRefreshObjectRouterStatic(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gateway", dataSourceFlattenRouterStaticGateway(o["gateway"], d, "gateway")); err != nil {
 		if !fortiAPIPatch(o["gateway"]) {
 			return fmt.Errorf("Error reading gateway: %v", err)
+		}
+	}
+
+	if err = d.Set("preferred_source", dataSourceFlattenRouterStaticPreferredSource(o["preferred-source"], d, "preferred_source")); err != nil {
+		if !fortiAPIPatch(o["preferred-source"]) {
+			return fmt.Errorf("Error reading preferred_source: %v", err)
 		}
 	}
 
@@ -411,6 +433,12 @@ func dataSourceRefreshObjectRouterStatic(d *schema.ResourceData, o map[string]in
 	if err = d.Set("link_monitor_exempt", dataSourceFlattenRouterStaticLinkMonitorExempt(o["link-monitor-exempt"], d, "link_monitor_exempt")); err != nil {
 		if !fortiAPIPatch(o["link-monitor-exempt"]) {
 			return fmt.Errorf("Error reading link_monitor_exempt: %v", err)
+		}
+	}
+
+	if err = d.Set("tag", dataSourceFlattenRouterStaticTag(o["tag"], d, "tag")); err != nil {
+		if !fortiAPIPatch(o["tag"]) {
+			return fmt.Errorf("Error reading tag: %v", err)
 		}
 	}
 

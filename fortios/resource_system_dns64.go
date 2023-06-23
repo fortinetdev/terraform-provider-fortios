@@ -209,7 +209,6 @@ func getObjectSystemDns64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemDns64Status(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -223,7 +222,6 @@ func getObjectSystemDns64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dns64-prefix"] = nil
 		} else {
-
 			t, err := expandSystemDns64Dns64Prefix(d, v, "dns64_prefix", sv)
 			if err != nil {
 				return &obj, err
@@ -237,7 +235,6 @@ func getObjectSystemDns64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["always-synthesize-aaaa-record"] = nil
 		} else {
-
 			t, err := expandSystemDns64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record", sv)
 			if err != nil {
 				return &obj, err

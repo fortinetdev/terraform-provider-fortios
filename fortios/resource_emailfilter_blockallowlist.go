@@ -117,6 +117,11 @@ func resourceEmailfilterBlockAllowList() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -280,61 +285,51 @@ func flattenEmailfilterBlockAllowListEntries(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenEmailfilterBlockAllowListEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenEmailfilterBlockAllowListEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenEmailfilterBlockAllowListEntriesType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenEmailfilterBlockAllowListEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := i["addr-type"]; ok {
-
 			tmp["addr_type"] = flattenEmailfilterBlockAllowListEntriesAddrType(i["addr-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
 		if _, ok := i["ip4-subnet"]; ok {
-
 			tmp["ip4_subnet"] = flattenEmailfilterBlockAllowListEntriesIp4Subnet(i["ip4-subnet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
 		if _, ok := i["ip6-subnet"]; ok {
-
 			tmp["ip6_subnet"] = flattenEmailfilterBlockAllowListEntriesIp6Subnet(i["ip6-subnet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := i["pattern-type"]; ok {
-
 			tmp["pattern_type"] = flattenEmailfilterBlockAllowListEntriesPatternType(i["pattern-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-
 			tmp["pattern"] = flattenEmailfilterBlockAllowListEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if _, ok := i["email-pattern"]; ok {
-
 			tmp["email_pattern"] = flattenEmailfilterBlockAllowListEntriesEmailPattern(i["email-pattern"], d, pre_append, sv)
 		}
 
@@ -396,6 +391,12 @@ func flattenEmailfilterBlockAllowListEntriesEmailPattern(v interface{}, d *schem
 
 func refreshObjectEmailfilterBlockAllowList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenEmailfilterBlockAllowListId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -415,7 +416,7 @@ func refreshObjectEmailfilterBlockAllowList(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenEmailfilterBlockAllowListEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -468,61 +469,51 @@ func expandEmailfilterBlockAllowListEntries(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandEmailfilterBlockAllowListEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandEmailfilterBlockAllowListEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandEmailfilterBlockAllowListEntriesType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandEmailfilterBlockAllowListEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["addr-type"], _ = expandEmailfilterBlockAllowListEntriesAddrType(d, i["addr_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip4-subnet"], _ = expandEmailfilterBlockAllowListEntriesIp4Subnet(d, i["ip4_subnet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip6-subnet"], _ = expandEmailfilterBlockAllowListEntriesIp6Subnet(d, i["ip6_subnet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pattern-type"], _ = expandEmailfilterBlockAllowListEntriesPatternType(d, i["pattern_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pattern"], _ = expandEmailfilterBlockAllowListEntriesPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["email-pattern"], _ = expandEmailfilterBlockAllowListEntriesEmailPattern(d, i["email_pattern"], pre_append, sv)
 		}
 
@@ -578,7 +569,6 @@ func getObjectEmailfilterBlockAllowList(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandEmailfilterBlockAllowListId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -588,7 +578,6 @@ func getObjectEmailfilterBlockAllowList(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandEmailfilterBlockAllowListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -598,7 +587,6 @@ func getObjectEmailfilterBlockAllowList(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandEmailfilterBlockAllowListComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -608,7 +596,6 @@ func getObjectEmailfilterBlockAllowList(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandEmailfilterBlockAllowListEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

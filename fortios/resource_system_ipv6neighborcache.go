@@ -250,7 +250,6 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemIpv6NeighborCacheId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -260,7 +259,6 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemIpv6NeighborCacheInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -270,7 +268,6 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("ipv6"); ok {
-
 		t, err := expandSystemIpv6NeighborCacheIpv6(d, v, "ipv6", sv)
 		if err != nil {
 			return &obj, err
@@ -280,7 +277,6 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandSystemIpv6NeighborCacheMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err

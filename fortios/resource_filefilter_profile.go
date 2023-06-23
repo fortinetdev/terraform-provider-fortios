@@ -131,6 +131,11 @@ func resourceFileFilterProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -310,43 +315,36 @@ func flattenFileFilterProfileRules(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFileFilterProfileRulesName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenFileFilterProfileRulesComment(i["comment"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenFileFilterProfileRulesProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenFileFilterProfileRulesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := i["direction"]; ok {
-
 			tmp["direction"] = flattenFileFilterProfileRulesDirection(i["direction"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if _, ok := i["password-protected"]; ok {
-
 			tmp["password_protected"] = flattenFileFilterProfileRulesPasswordProtected(i["password-protected"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := i["file-type"]; ok {
-
 			tmp["file_type"] = flattenFileFilterProfileRulesFileType(i["file-type"], d, pre_append, sv)
 		}
 
@@ -409,7 +407,6 @@ func flattenFileFilterProfileRulesFileType(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFileFilterProfileRulesFileTypeName(i["name"], d, pre_append, sv)
 		}
 
@@ -428,6 +425,12 @@ func flattenFileFilterProfileRulesFileTypeName(v interface{}, d *schema.Resource
 
 func refreshObjectFileFilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFileFilterProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -471,7 +474,7 @@ func refreshObjectFileFilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rules", flattenFileFilterProfileRules(o["rules"], d, "rules", sv)); err != nil {
 			if !fortiAPIPatch(o["rules"]) {
 				return fmt.Errorf("Error reading rules: %v", err)
@@ -540,43 +543,36 @@ func expandFileFilterProfileRules(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFileFilterProfileRulesName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandFileFilterProfileRulesComment(d, i["comment"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandFileFilterProfileRulesProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandFileFilterProfileRulesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["direction"], _ = expandFileFilterProfileRulesDirection(d, i["direction"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["password-protected"], _ = expandFileFilterProfileRulesPasswordProtected(d, i["password_protected"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["file-type"], _ = expandFileFilterProfileRulesFileType(d, i["file_type"], pre_append, sv)
 		} else {
 			tmp["file-type"] = make([]string, 0)
@@ -630,7 +626,6 @@ func expandFileFilterProfileRulesFileType(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFileFilterProfileRulesFileTypeName(d, i["name"], pre_append, sv)
 		}
 
@@ -650,7 +645,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFileFilterProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -660,7 +654,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFileFilterProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -670,7 +663,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
-
 		t, err := expandFileFilterProfileFeatureSet(d, v, "feature_set", sv)
 		if err != nil {
 			return &obj, err
@@ -680,7 +672,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandFileFilterProfileReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -690,7 +681,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("log"); ok {
-
 		t, err := expandFileFilterProfileLog(d, v, "log", sv)
 		if err != nil {
 			return &obj, err
@@ -700,7 +690,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("extended_log"); ok {
-
 		t, err := expandFileFilterProfileExtendedLog(d, v, "extended_log", sv)
 		if err != nil {
 			return &obj, err
@@ -710,7 +699,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("scan_archive_contents"); ok {
-
 		t, err := expandFileFilterProfileScanArchiveContents(d, v, "scan_archive_contents", sv)
 		if err != nil {
 			return &obj, err
@@ -720,7 +708,6 @@ func getObjectFileFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("rules"); ok || d.HasChange("rules") {
-
 		t, err := expandFileFilterProfileRules(d, v, "rules", sv)
 		if err != nil {
 			return &obj, err

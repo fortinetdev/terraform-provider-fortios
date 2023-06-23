@@ -75,6 +75,11 @@ func resourceUserDeviceAccessList() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -234,19 +239,16 @@ func flattenUserDeviceAccessListDeviceList(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenUserDeviceAccessListDeviceListId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := i["device"]; ok {
-
 			tmp["device"] = flattenUserDeviceAccessListDeviceListDevice(i["device"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenUserDeviceAccessListDeviceListAction(i["action"], d, pre_append, sv)
 		}
 
@@ -273,6 +275,12 @@ func flattenUserDeviceAccessListDeviceListAction(v interface{}, d *schema.Resour
 
 func refreshObjectUserDeviceAccessList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenUserDeviceAccessListName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -286,7 +294,7 @@ func refreshObjectUserDeviceAccessList(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("device_list", flattenUserDeviceAccessListDeviceList(o["device-list"], d, "device_list", sv)); err != nil {
 			if !fortiAPIPatch(o["device-list"]) {
 				return fmt.Errorf("Error reading device_list: %v", err)
@@ -335,19 +343,16 @@ func expandUserDeviceAccessListDeviceList(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandUserDeviceAccessListDeviceListId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["device"], _ = expandUserDeviceAccessListDeviceListDevice(d, i["device"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandUserDeviceAccessListDeviceListAction(d, i["action"], pre_append, sv)
 		}
 
@@ -375,7 +380,6 @@ func getObjectUserDeviceAccessList(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserDeviceAccessListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -385,7 +389,6 @@ func getObjectUserDeviceAccessList(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("default_action"); ok {
-
 		t, err := expandUserDeviceAccessListDefaultAction(d, v, "default_action", sv)
 		if err != nil {
 			return &obj, err
@@ -395,7 +398,6 @@ func getObjectUserDeviceAccessList(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("device_list"); ok || d.HasChange("device_list") {
-
 		t, err := expandUserDeviceAccessListDeviceList(d, v, "device_list", sv)
 		if err != nil {
 			return &obj, err

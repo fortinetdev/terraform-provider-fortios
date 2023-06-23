@@ -230,7 +230,6 @@ func getObjectSystemReplacemsgFortiguardWf(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["msg-type"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgFortiguardWfMsgType(d, v, "msg_type", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemReplacemsgFortiguardWf(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["buffer"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgFortiguardWfBuffer(d, v, "buffer", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemReplacemsgFortiguardWf(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["header"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgFortiguardWfHeader(d, v, "header", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemReplacemsgFortiguardWf(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgFortiguardWfFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err

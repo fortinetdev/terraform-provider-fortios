@@ -268,7 +268,6 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["destination-visibility"] = nil
 		} else {
-
 			t, err := expandSystemNetworkVisibilityDestinationVisibility(d, v, "destination_visibility", sv)
 			if err != nil {
 				return &obj, err
@@ -282,7 +281,6 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["source-location"] = nil
 		} else {
-
 			t, err := expandSystemNetworkVisibilitySourceLocation(d, v, "source_location", sv)
 			if err != nil {
 				return &obj, err
@@ -296,7 +294,6 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["destination-hostname-visibility"] = nil
 		} else {
-
 			t, err := expandSystemNetworkVisibilityDestinationHostnameVisibility(d, v, "destination_hostname_visibility", sv)
 			if err != nil {
 				return &obj, err
@@ -310,7 +307,6 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["hostname-ttl"] = nil
 		} else {
-
 			t, err := expandSystemNetworkVisibilityHostnameTtl(d, v, "hostname_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -324,7 +320,6 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["hostname-limit"] = nil
 		} else {
-
 			t, err := expandSystemNetworkVisibilityHostnameLimit(d, v, "hostname_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -338,7 +333,6 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["destination-location"] = nil
 		} else {
-
 			t, err := expandSystemNetworkVisibilityDestinationLocation(d, v, "destination_location", sv)
 			if err != nil {
 				return &obj, err

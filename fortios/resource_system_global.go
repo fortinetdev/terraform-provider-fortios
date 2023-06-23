@@ -40,6 +40,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_allow_incompatible_fabric_fgt": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_ipv6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -198,6 +203,21 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"restart_time": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wad_restart_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wad_restart_start_time": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wad_restart_end_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -395,6 +415,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssh_hostkey_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"snat_route_change": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -459,6 +484,17 @@ func resourceSystemGlobal() *schema.Resource {
 			"proxy_auth_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 300),
+				Optional:     true,
+				Computed:     true,
+			},
+			"proxy_keep_alive_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"proxy_re_authentication_time": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 86400),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -608,11 +644,22 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ip_fragment_mem_thresholds": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(32, 2047),
+				Optional:     true,
+				Computed:     true,
+			},
 			"cpu_use_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(50, 99),
 				Optional:     true,
 				Computed:     true,
+			},
+			"log_single_cpu_high": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"check_reset_range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -709,6 +756,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"admin_forticloud_sso_default_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_service_source_port": &schema.Schema{
 				Type:     schema.TypeString,
@@ -989,6 +1042,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"vpn_ems_sn_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"sslvpn_ems_sn_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1125,6 +1183,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_cdn_domain_override": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"gui_fortiguard_resource_fetch": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1166,6 +1230,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed:     true,
 			},
 			"miglog_affinity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"syslog_affinity": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
@@ -1221,19 +1291,19 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"user_device_store_max_devices": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10526, 240381),
+				ValidateFunc: validation.IntBetween(10455, 240381),
 				Optional:     true,
 				Computed:     true,
 			},
 			"user_device_store_max_users": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10526, 240381),
+				ValidateFunc: validation.IntBetween(10455, 240381),
 				Optional:     true,
 				Computed:     true,
 			},
 			"user_device_store_max_unified_mem": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(21052579, 1682668748),
+				ValidateFunc: validation.IntBetween(20910899, 1682668748),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1351,15 +1421,59 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"forticonverter_integration": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"forticonverter_config_upload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"internet_service_database": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
+			"internet_service_download_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"early_tcp_npu_session": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"interface_subnet_usage": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sflowd_max_children_num": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 6),
+				Optional:     true,
+				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -1460,6 +1574,10 @@ func resourceSystemGlobalRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemGlobalLanguage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalGuiAllowIncompatibleFabricFgt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1584,6 +1702,18 @@ func flattenSystemGlobalDailyRestart(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemGlobalRestartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalWadRestartMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalWadRestartStartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalWadRestartEndTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1735,6 +1865,10 @@ func flattenSystemGlobalSshMacAlgo(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemGlobalSshHostkeyAlgo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalSnatRouteChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1784,6 +1918,14 @@ func flattenSystemGlobalLldpReception(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemGlobalProxyAuthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalProxyKeepAliveMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalProxyReAuthenticationTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1895,7 +2037,15 @@ func flattenSystemGlobalMemoryUseThresholdGreen(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemGlobalIpFragmentMemThresholds(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalCpuUseThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalLogSingleCpuHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1968,6 +2118,10 @@ func flattenSystemGlobalAdminTelnetPort(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemGlobalAdminForticloudSsoLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalAdminForticloudSsoDefaultProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2186,6 +2340,10 @@ func flattenSystemGlobalSslvpnMaxWorkerCount(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemGlobalVpnEmsSnCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalSslvpnEmsSnCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2286,6 +2444,10 @@ func flattenSystemGlobalGuiRestApiCache(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemGlobalGuiCdnDomainOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalGuiFortiguardResourceFetch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2315,6 +2477,10 @@ func flattenSystemGlobalIpsAffinity(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemGlobalMiglogAffinity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSyslogAffinity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2450,7 +2616,57 @@ func flattenSystemGlobalManagementPortUseAdminSport(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenSystemGlobalForticonverterIntegration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalForticonverterConfigUpload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalInternetServiceDatabase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalInternetServiceDownloadList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemGlobalInternetServiceDownloadListId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemGlobalInternetServiceDownloadListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2458,12 +2674,32 @@ func flattenSystemGlobalEarlyTcpNpuSession(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSystemGlobalInterfaceSubnetUsage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSflowdMaxChildrenNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("language", flattenSystemGlobalLanguage(o["language"], d, "language", sv)); err != nil {
 		if !fortiAPIPatch(o["language"]) {
 			return fmt.Errorf("Error reading language: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_allow_incompatible_fabric_fgt", flattenSystemGlobalGuiAllowIncompatibleFabricFgt(o["gui-allow-incompatible-fabric-fgt"], d, "gui_allow_incompatible_fabric_fgt", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-allow-incompatible-fabric-fgt"]) {
+			return fmt.Errorf("Error reading gui_allow_incompatible_fabric_fgt: %v", err)
 		}
 	}
 
@@ -2650,6 +2886,24 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("restart_time", flattenSystemGlobalRestartTime(o["restart-time"], d, "restart_time", sv)); err != nil {
 		if !fortiAPIPatch(o["restart-time"]) {
 			return fmt.Errorf("Error reading restart_time: %v", err)
+		}
+	}
+
+	if err = d.Set("wad_restart_mode", flattenSystemGlobalWadRestartMode(o["wad-restart-mode"], d, "wad_restart_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["wad-restart-mode"]) {
+			return fmt.Errorf("Error reading wad_restart_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("wad_restart_start_time", flattenSystemGlobalWadRestartStartTime(o["wad-restart-start-time"], d, "wad_restart_start_time", sv)); err != nil {
+		if !fortiAPIPatch(o["wad-restart-start-time"]) {
+			return fmt.Errorf("Error reading wad_restart_start_time: %v", err)
+		}
+	}
+
+	if err = d.Set("wad_restart_end_time", flattenSystemGlobalWadRestartEndTime(o["wad-restart-end-time"], d, "wad_restart_end_time", sv)); err != nil {
+		if !fortiAPIPatch(o["wad-restart-end-time"]) {
+			return fmt.Errorf("Error reading wad_restart_end_time: %v", err)
 		}
 	}
 
@@ -2875,6 +3129,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ssh_hostkey_algo", flattenSystemGlobalSshHostkeyAlgo(o["ssh-hostkey-algo"], d, "ssh_hostkey_algo", sv)); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey-algo"]) {
+			return fmt.Errorf("Error reading ssh_hostkey_algo: %v", err)
+		}
+	}
+
 	if err = d.Set("snat_route_change", flattenSystemGlobalSnatRouteChange(o["snat-route-change"], d, "snat_route_change", sv)); err != nil {
 		if !fortiAPIPatch(o["snat-route-change"]) {
 			return fmt.Errorf("Error reading snat_route_change: %v", err)
@@ -2950,6 +3210,18 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("proxy_auth_timeout", flattenSystemGlobalProxyAuthTimeout(o["proxy-auth-timeout"], d, "proxy_auth_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy-auth-timeout"]) {
 			return fmt.Errorf("Error reading proxy_auth_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_keep_alive_mode", flattenSystemGlobalProxyKeepAliveMode(o["proxy-keep-alive-mode"], d, "proxy_keep_alive_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-keep-alive-mode"]) {
+			return fmt.Errorf("Error reading proxy_keep_alive_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_re_authentication_time", flattenSystemGlobalProxyReAuthenticationTime(o["proxy-re-authentication-time"], d, "proxy_re_authentication_time", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-re-authentication-time"]) {
+			return fmt.Errorf("Error reading proxy_re_authentication_time: %v", err)
 		}
 	}
 
@@ -3115,9 +3387,21 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ip_fragment_mem_thresholds", flattenSystemGlobalIpFragmentMemThresholds(o["ip-fragment-mem-thresholds"], d, "ip_fragment_mem_thresholds", sv)); err != nil {
+		if !fortiAPIPatch(o["ip-fragment-mem-thresholds"]) {
+			return fmt.Errorf("Error reading ip_fragment_mem_thresholds: %v", err)
+		}
+	}
+
 	if err = d.Set("cpu_use_threshold", flattenSystemGlobalCpuUseThreshold(o["cpu-use-threshold"], d, "cpu_use_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["cpu-use-threshold"]) {
 			return fmt.Errorf("Error reading cpu_use_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("log_single_cpu_high", flattenSystemGlobalLogSingleCpuHigh(o["log-single-cpu-high"], d, "log_single_cpu_high", sv)); err != nil {
+		if !fortiAPIPatch(o["log-single-cpu-high"]) {
+			return fmt.Errorf("Error reading log_single_cpu_high: %v", err)
 		}
 	}
 
@@ -3226,6 +3510,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("admin_forticloud_sso_login", flattenSystemGlobalAdminForticloudSsoLogin(o["admin-forticloud-sso-login"], d, "admin_forticloud_sso_login", sv)); err != nil {
 		if !fortiAPIPatch(o["admin-forticloud-sso-login"]) {
 			return fmt.Errorf("Error reading admin_forticloud_sso_login: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_forticloud_sso_default_profile", flattenSystemGlobalAdminForticloudSsoDefaultProfile(o["admin-forticloud-sso-default-profile"], d, "admin_forticloud_sso_default_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-forticloud-sso-default-profile"]) {
+			return fmt.Errorf("Error reading admin_forticloud_sso_default_profile: %v", err)
 		}
 	}
 
@@ -3541,6 +3831,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("vpn_ems_sn_check", flattenSystemGlobalVpnEmsSnCheck(o["vpn-ems-sn-check"], d, "vpn_ems_sn_check", sv)); err != nil {
+		if !fortiAPIPatch(o["vpn-ems-sn-check"]) {
+			return fmt.Errorf("Error reading vpn_ems_sn_check: %v", err)
+		}
+	}
+
 	if err = d.Set("sslvpn_ems_sn_check", flattenSystemGlobalSslvpnEmsSnCheck(o["sslvpn-ems-sn-check"], d, "sslvpn_ems_sn_check", sv)); err != nil {
 		if !fortiAPIPatch(o["sslvpn-ems-sn-check"]) {
 			return fmt.Errorf("Error reading sslvpn_ems_sn_check: %v", err)
@@ -3691,6 +3987,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("gui_cdn_domain_override", flattenSystemGlobalGuiCdnDomainOverride(o["gui-cdn-domain-override"], d, "gui_cdn_domain_override", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-cdn-domain-override"]) {
+			return fmt.Errorf("Error reading gui_cdn_domain_override: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_fortiguard_resource_fetch", flattenSystemGlobalGuiFortiguardResourceFetch(o["gui-fortiguard-resource-fetch"], d, "gui_fortiguard_resource_fetch", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-fortiguard-resource-fetch"]) {
 			return fmt.Errorf("Error reading gui_fortiguard_resource_fetch: %v", err)
@@ -3736,6 +4038,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("miglog_affinity", flattenSystemGlobalMiglogAffinity(o["miglog-affinity"], d, "miglog_affinity", sv)); err != nil {
 		if !fortiAPIPatch(o["miglog-affinity"]) {
 			return fmt.Errorf("Error reading miglog_affinity: %v", err)
+		}
+	}
+
+	if err = d.Set("syslog_affinity", flattenSystemGlobalSyslogAffinity(o["syslog-affinity"], d, "syslog_affinity", sv)); err != nil {
+		if !fortiAPIPatch(o["syslog-affinity"]) {
+			return fmt.Errorf("Error reading syslog_affinity: %v", err)
 		}
 	}
 
@@ -3937,15 +4245,55 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("forticonverter_integration", flattenSystemGlobalForticonverterIntegration(o["forticonverter-integration"], d, "forticonverter_integration", sv)); err != nil {
+		if !fortiAPIPatch(o["forticonverter-integration"]) {
+			return fmt.Errorf("Error reading forticonverter_integration: %v", err)
+		}
+	}
+
+	if err = d.Set("forticonverter_config_upload", flattenSystemGlobalForticonverterConfigUpload(o["forticonverter-config-upload"], d, "forticonverter_config_upload", sv)); err != nil {
+		if !fortiAPIPatch(o["forticonverter-config-upload"]) {
+			return fmt.Errorf("Error reading forticonverter_config_upload: %v", err)
+		}
+	}
+
 	if err = d.Set("internet_service_database", flattenSystemGlobalInternetServiceDatabase(o["internet-service-database"], d, "internet_service_database", sv)); err != nil {
 		if !fortiAPIPatch(o["internet-service-database"]) {
 			return fmt.Errorf("Error reading internet_service_database: %v", err)
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("internet_service_download_list", flattenSystemGlobalInternetServiceDownloadList(o["internet-service-download-list"], d, "internet_service_download_list", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-download-list"]) {
+				return fmt.Errorf("Error reading internet_service_download_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_download_list"); ok {
+			if err = d.Set("internet_service_download_list", flattenSystemGlobalInternetServiceDownloadList(o["internet-service-download-list"], d, "internet_service_download_list", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-download-list"]) {
+					return fmt.Errorf("Error reading internet_service_download_list: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("early_tcp_npu_session", flattenSystemGlobalEarlyTcpNpuSession(o["early-tcp-npu-session"], d, "early_tcp_npu_session", sv)); err != nil {
 		if !fortiAPIPatch(o["early-tcp-npu-session"]) {
 			return fmt.Errorf("Error reading early_tcp_npu_session: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_subnet_usage", flattenSystemGlobalInterfaceSubnetUsage(o["interface-subnet-usage"], d, "interface_subnet_usage", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-subnet-usage"]) {
+			return fmt.Errorf("Error reading interface_subnet_usage: %v", err)
+		}
+	}
+
+	if err = d.Set("sflowd_max_children_num", flattenSystemGlobalSflowdMaxChildrenNum(o["sflowd-max-children-num"], d, "sflowd_max_children_num", sv)); err != nil {
+		if !fortiAPIPatch(o["sflowd-max-children-num"]) {
+			return fmt.Errorf("Error reading sflowd_max_children_num: %v", err)
 		}
 	}
 
@@ -3959,6 +4307,10 @@ func flattenSystemGlobalFortiTestDebug(d *schema.ResourceData, fosdebugsn int, f
 }
 
 func expandSystemGlobalLanguage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalGuiAllowIncompatibleFabricFgt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4083,6 +4435,18 @@ func expandSystemGlobalDailyRestart(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemGlobalRestartTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalWadRestartMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalWadRestartStartTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalWadRestartEndTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4234,6 +4598,10 @@ func expandSystemGlobalSshMacAlgo(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandSystemGlobalSshHostkeyAlgo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalSnatRouteChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4283,6 +4651,14 @@ func expandSystemGlobalLldpReception(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSystemGlobalProxyAuthTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalProxyKeepAliveMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalProxyReAuthenticationTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4394,7 +4770,15 @@ func expandSystemGlobalMemoryUseThresholdGreen(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemGlobalIpFragmentMemThresholds(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalCpuUseThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalLogSingleCpuHigh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4467,6 +4851,10 @@ func expandSystemGlobalAdminTelnetPort(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemGlobalAdminForticloudSsoLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalAdminForticloudSsoDefaultProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4678,6 +5066,10 @@ func expandSystemGlobalSslvpnMaxWorkerCount(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSystemGlobalVpnEmsSnCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalSslvpnEmsSnCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4778,6 +5170,10 @@ func expandSystemGlobalGuiRestApiCache(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemGlobalGuiCdnDomainOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalGuiFortiguardResourceFetch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4807,6 +5203,10 @@ func expandSystemGlobalIpsAffinity(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemGlobalMiglogAffinity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSyslogAffinity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4942,11 +5342,58 @@ func expandSystemGlobalManagementPortUseAdminSport(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandSystemGlobalForticonverterIntegration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalForticonverterConfigUpload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalInternetServiceDatabase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
+func expandSystemGlobalInternetServiceDownloadList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemGlobalInternetServiceDownloadListId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemGlobalInternetServiceDownloadListId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalEarlyTcpNpuSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalInterfaceSubnetUsage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSflowdMaxChildrenNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4957,7 +5404,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["language"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLanguage(d, v, "language", sv)
 			if err != nil {
 				return &obj, err
@@ -4967,11 +5413,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("gui_allow_incompatible_fabric_fgt"); ok {
+		if setArgNil {
+			obj["gui-allow-incompatible-fabric-fgt"] = nil
+		} else {
+			t, err := expandSystemGlobalGuiAllowIncompatibleFabricFgt(d, v, "gui_allow_incompatible_fabric_fgt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-allow-incompatible-fabric-fgt"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_ipv6"); ok {
 		if setArgNil {
 			obj["gui-ipv6"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiIpv6(d, v, "gui_ipv6", sv)
 			if err != nil {
 				return &obj, err
@@ -4985,7 +5443,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-replacement-message-groups"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiReplacementMessageGroups(d, v, "gui_replacement_message_groups", sv)
 			if err != nil {
 				return &obj, err
@@ -4999,7 +5456,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-local-out"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiLocalOut(d, v, "gui_local_out", sv)
 			if err != nil {
 				return &obj, err
@@ -5013,7 +5469,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-certificates"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiCertificates(d, v, "gui_certificates", sv)
 			if err != nil {
 				return &obj, err
@@ -5027,7 +5482,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-custom-language"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiCustomLanguage(d, v, "gui_custom_language", sv)
 			if err != nil {
 				return &obj, err
@@ -5041,7 +5495,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-wireless-opensecurity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiWirelessOpensecurity(d, v, "gui_wireless_opensecurity", sv)
 			if err != nil {
 				return &obj, err
@@ -5055,7 +5508,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-app-detection-sdwan"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiAppDetectionSdwan(d, v, "gui_app_detection_sdwan", sv)
 			if err != nil {
 				return &obj, err
@@ -5069,7 +5521,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-display-hostname"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiDisplayHostname(d, v, "gui_display_hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -5083,7 +5534,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-fortigate-cloud-sandbox"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiFortigateCloudSandbox(d, v, "gui_fortigate_cloud_sandbox", sv)
 			if err != nil {
 				return &obj, err
@@ -5097,7 +5547,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-fortisandbox-cloud"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiFortisandboxCloud(d, v, "gui_fortisandbox_cloud", sv)
 			if err != nil {
 				return &obj, err
@@ -5111,7 +5560,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-firmware-upgrade-warning"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiFirmwareUpgradeWarning(d, v, "gui_firmware_upgrade_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -5125,7 +5573,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-firmware-upgrade-setup-warning"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiFirmwareUpgradeSetupWarning(d, v, "gui_firmware_upgrade_setup_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -5139,7 +5586,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-lines-per-page"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiLinesPerPage(d, v, "gui_lines_per_page", sv)
 			if err != nil {
 				return &obj, err
@@ -5153,7 +5599,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-https-ssl-versions"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHttpsSslVersions(d, v, "admin_https_ssl_versions", sv)
 			if err != nil {
 				return &obj, err
@@ -5167,7 +5612,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-https-ssl-ciphersuites"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHttpsSslCiphersuites(d, v, "admin_https_ssl_ciphersuites", sv)
 			if err != nil {
 				return &obj, err
@@ -5181,7 +5625,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-https-ssl-banned-ciphers"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHttpsSslBannedCiphers(d, v, "admin_https_ssl_banned_ciphers", sv)
 			if err != nil {
 				return &obj, err
@@ -5195,7 +5638,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admintimeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdmintimeout(d, v, "admintimeout", sv)
 			if err != nil {
 				return &obj, err
@@ -5209,7 +5651,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-console-timeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminConsoleTimeout(d, v, "admin_console_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -5223,7 +5664,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssd-trim-freq"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSsdTrimFreq(d, v, "ssd_trim_freq", sv)
 			if err != nil {
 				return &obj, err
@@ -5237,7 +5677,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssd-trim-hour"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSsdTrimHour(d, v, "ssd_trim_hour", sv)
 			if err != nil {
 				return &obj, err
@@ -5251,7 +5690,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssd-trim-min"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSsdTrimMin(d, v, "ssd_trim_min", sv)
 			if err != nil {
 				return &obj, err
@@ -5265,7 +5703,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssd-trim-weekday"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSsdTrimWeekday(d, v, "ssd_trim_weekday", sv)
 			if err != nil {
 				return &obj, err
@@ -5279,7 +5716,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssd-trim-date"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSsdTrimDate(d, v, "ssd_trim_date", sv)
 			if err != nil {
 				return &obj, err
@@ -5293,7 +5729,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-concurrent"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminConcurrent(d, v, "admin_concurrent", sv)
 			if err != nil {
 				return &obj, err
@@ -5307,7 +5742,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-lockout-threshold"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminLockoutThreshold(d, v, "admin_lockout_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -5321,7 +5755,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-lockout-duration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminLockoutDuration(d, v, "admin_lockout_duration", sv)
 			if err != nil {
 				return &obj, err
@@ -5335,7 +5768,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["refresh"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRefresh(d, v, "refresh", sv)
 			if err != nil {
 				return &obj, err
@@ -5349,7 +5781,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["interval"] = nil
 		} else {
-
 			t, err := expandSystemGlobalInterval(d, v, "interval", sv)
 			if err != nil {
 				return &obj, err
@@ -5363,7 +5794,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["failtime"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFailtime(d, v, "failtime", sv)
 			if err != nil {
 				return &obj, err
@@ -5377,7 +5807,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["daily-restart"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDailyRestart(d, v, "daily_restart", sv)
 			if err != nil {
 				return &obj, err
@@ -5391,7 +5820,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["restart-time"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRestartTime(d, v, "restart_time", sv)
 			if err != nil {
 				return &obj, err
@@ -5401,11 +5829,49 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("wad_restart_mode"); ok {
+		if setArgNil {
+			obj["wad-restart-mode"] = nil
+		} else {
+			t, err := expandSystemGlobalWadRestartMode(d, v, "wad_restart_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-restart-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("wad_restart_start_time"); ok {
+		if setArgNil {
+			obj["wad-restart-start-time"] = nil
+		} else {
+			t, err := expandSystemGlobalWadRestartStartTime(d, v, "wad_restart_start_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-restart-start-time"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("wad_restart_end_time"); ok {
+		if setArgNil {
+			obj["wad-restart-end-time"] = nil
+		} else {
+			t, err := expandSystemGlobalWadRestartEndTime(d, v, "wad_restart_end_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-restart-end-time"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("radius_port"); ok {
 		if setArgNil {
 			obj["radius-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRadiusPort(d, v, "radius_port", sv)
 			if err != nil {
 				return &obj, err
@@ -5419,7 +5885,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-login-max"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminLoginMax(d, v, "admin_login_max", sv)
 			if err != nil {
 				return &obj, err
@@ -5433,7 +5898,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["remoteauthtimeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRemoteauthtimeout(d, v, "remoteauthtimeout", sv)
 			if err != nil {
 				return &obj, err
@@ -5447,7 +5911,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ldapconntimeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLdapconntimeout(d, v, "ldapconntimeout", sv)
 			if err != nil {
 				return &obj, err
@@ -5461,7 +5924,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["batch-cmdb"] = nil
 		} else {
-
 			t, err := expandSystemGlobalBatchCmdb(d, v, "batch_cmdb", sv)
 			if err != nil {
 				return &obj, err
@@ -5475,7 +5937,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["max-dlpstat-memory"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMaxDlpstatMemory(d, v, "max_dlpstat_memory", sv)
 			if err != nil {
 				return &obj, err
@@ -5489,7 +5950,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["multi-factor-authentication"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMultiFactorAuthentication(d, v, "multi_factor_authentication", sv)
 			if err != nil {
 				return &obj, err
@@ -5503,7 +5963,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -5517,7 +5976,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["autorun-log-fsck"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAutorunLogFsck(d, v, "autorun_log_fsck", sv)
 			if err != nil {
 				return &obj, err
@@ -5531,7 +5989,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["dst"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDst(d, v, "dst", sv)
 			if err != nil {
 				return &obj, err
@@ -5545,7 +6002,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["timezone"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTimezone(d, v, "timezone", sv)
 			if err != nil {
 				return &obj, err
@@ -5559,7 +6015,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["traffic-priority"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTrafficPriority(d, v, "traffic_priority", sv)
 			if err != nil {
 				return &obj, err
@@ -5573,7 +6028,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["traffic-priority-level"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTrafficPriorityLevel(d, v, "traffic_priority_level", sv)
 			if err != nil {
 				return &obj, err
@@ -5587,7 +6041,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["anti-replay"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAntiReplay(d, v, "anti_replay", sv)
 			if err != nil {
 				return &obj, err
@@ -5601,7 +6054,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["send-pmtu-icmp"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSendPmtuIcmp(d, v, "send_pmtu_icmp", sv)
 			if err != nil {
 				return &obj, err
@@ -5615,7 +6067,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["honor-df"] = nil
 		} else {
-
 			t, err := expandSystemGlobalHonorDf(d, v, "honor_df", sv)
 			if err != nil {
 				return &obj, err
@@ -5629,7 +6080,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["pmtu-discovery"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPmtuDiscovery(d, v, "pmtu_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -5643,7 +6093,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["virtual-switch-vlan"] = nil
 		} else {
-
 			t, err := expandSystemGlobalVirtualSwitchVlan(d, v, "virtual_switch_vlan", sv)
 			if err != nil {
 				return &obj, err
@@ -5657,7 +6106,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["split-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSplitPort(d, v, "split_port", sv)
 			if err != nil {
 				return &obj, err
@@ -5671,7 +6119,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["revision-image-auto-backup"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRevisionImageAutoBackup(d, v, "revision_image_auto_backup", sv)
 			if err != nil {
 				return &obj, err
@@ -5685,7 +6132,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["revision-backup-on-logout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRevisionBackupOnLogout(d, v, "revision_backup_on_logout", sv)
 			if err != nil {
 				return &obj, err
@@ -5699,7 +6145,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["management-vdom"] = nil
 		} else {
-
 			t, err := expandSystemGlobalManagementVdom(d, v, "management_vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -5713,7 +6158,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["hostname"] = nil
 		} else {
-
 			t, err := expandSystemGlobalHostname(d, v, "hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -5727,7 +6171,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-allow-default-hostname"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiAllowDefaultHostname(d, v, "gui_allow_default_hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -5741,7 +6184,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-forticare-registration-setup-warning"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiForticareRegistrationSetupWarning(d, v, "gui_forticare_registration_setup_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -5755,7 +6197,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-workflow-management"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiWorkflowManagement(d, v, "gui_workflow_management", sv)
 			if err != nil {
 				return &obj, err
@@ -5769,7 +6210,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-cdn-usage"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiCdnUsage(d, v, "gui_cdn_usage", sv)
 			if err != nil {
 				return &obj, err
@@ -5783,7 +6223,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["alias"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAlias(d, v, "alias", sv)
 			if err != nil {
 				return &obj, err
@@ -5797,7 +6236,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["strong-crypto"] = nil
 		} else {
-
 			t, err := expandSystemGlobalStrongCrypto(d, v, "strong_crypto", sv)
 			if err != nil {
 				return &obj, err
@@ -5811,7 +6249,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-cbc-cipher"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshCbcCipher(d, v, "ssh_cbc_cipher", sv)
 			if err != nil {
 				return &obj, err
@@ -5825,7 +6262,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-hmac-md5"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshHmacMd5(d, v, "ssh_hmac_md5", sv)
 			if err != nil {
 				return &obj, err
@@ -5839,7 +6275,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-kex-sha1"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshKexSha1(d, v, "ssh_kex_sha1", sv)
 			if err != nil {
 				return &obj, err
@@ -5853,7 +6288,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-mac-weak"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshMacWeak(d, v, "ssh_mac_weak", sv)
 			if err != nil {
 				return &obj, err
@@ -5867,7 +6301,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssl-static-key-ciphers"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslStaticKeyCiphers(d, v, "ssl_static_key_ciphers", sv)
 			if err != nil {
 				return &obj, err
@@ -5881,7 +6314,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-kex-algo"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshKexAlgo(d, v, "ssh_kex_algo", sv)
 			if err != nil {
 				return &obj, err
@@ -5895,7 +6327,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-enc-algo"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshEncAlgo(d, v, "ssh_enc_algo", sv)
 			if err != nil {
 				return &obj, err
@@ -5909,7 +6340,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ssh-mac-algo"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSshMacAlgo(d, v, "ssh_mac_algo", sv)
 			if err != nil {
 				return &obj, err
@@ -5919,11 +6349,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("ssh_hostkey_algo"); ok {
+		if setArgNil {
+			obj["ssh-hostkey-algo"] = nil
+		} else {
+			t, err := expandSystemGlobalSshHostkeyAlgo(d, v, "ssh_hostkey_algo", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-hostkey-algo"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("snat_route_change"); ok {
 		if setArgNil {
 			obj["snat-route-change"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSnatRouteChange(d, v, "snat_route_change", sv)
 			if err != nil {
 				return &obj, err
@@ -5937,7 +6379,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["speedtest-server"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSpeedtestServer(d, v, "speedtest_server", sv)
 			if err != nil {
 				return &obj, err
@@ -5951,7 +6392,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["cli-audit-log"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCliAuditLog(d, v, "cli_audit_log", sv)
 			if err != nil {
 				return &obj, err
@@ -5965,7 +6405,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["dh-params"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDhParams(d, v, "dh_params", sv)
 			if err != nil {
 				return &obj, err
@@ -5979,7 +6418,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fds-statistics"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFdsStatistics(d, v, "fds_statistics", sv)
 			if err != nil {
 				return &obj, err
@@ -5993,7 +6431,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fds-statistics-period"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFdsStatisticsPeriod(d, v, "fds_statistics_period", sv)
 			if err != nil {
 				return &obj, err
@@ -6007,7 +6444,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["multicast-forward"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMulticastForward(d, v, "multicast_forward", sv)
 			if err != nil {
 				return &obj, err
@@ -6021,7 +6457,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["mc-ttl-notchange"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMcTtlNotchange(d, v, "mc_ttl_notchange", sv)
 			if err != nil {
 				return &obj, err
@@ -6035,7 +6470,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["asymroute"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAsymroute(d, v, "asymroute", sv)
 			if err != nil {
 				return &obj, err
@@ -6049,7 +6483,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tcp-option"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTcpOption(d, v, "tcp_option", sv)
 			if err != nil {
 				return &obj, err
@@ -6063,7 +6496,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["lldp-transmission"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLldpTransmission(d, v, "lldp_transmission", sv)
 			if err != nil {
 				return &obj, err
@@ -6077,7 +6509,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["lldp-reception"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLldpReception(d, v, "lldp_reception", sv)
 			if err != nil {
 				return &obj, err
@@ -6091,7 +6522,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-auth-timeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyAuthTimeout(d, v, "proxy_auth_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -6101,11 +6531,36 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("proxy_keep_alive_mode"); ok {
+		if setArgNil {
+			obj["proxy-keep-alive-mode"] = nil
+		} else {
+			t, err := expandSystemGlobalProxyKeepAliveMode(d, v, "proxy_keep_alive_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-keep-alive-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_re_authentication_time"); ok {
+		if setArgNil {
+			obj["proxy-re-authentication-time"] = nil
+		} else {
+			t, err := expandSystemGlobalProxyReAuthenticationTime(d, v, "proxy_re_authentication_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-re-authentication-time"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("proxy_re_authentication_mode"); ok {
 		if setArgNil {
 			obj["proxy-re-authentication-mode"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyReAuthenticationMode(d, v, "proxy_re_authentication_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -6119,7 +6574,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-auth-lifetime"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyAuthLifetime(d, v, "proxy_auth_lifetime", sv)
 			if err != nil {
 				return &obj, err
@@ -6133,7 +6587,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-auth-lifetime-timeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyAuthLifetimeTimeout(d, v, "proxy_auth_lifetime_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -6147,7 +6600,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-resource-mode"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyResourceMode(d, v, "proxy_resource_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -6161,7 +6613,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-cert-use-mgmt-vdom"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyCertUseMgmtVdom(d, v, "proxy_cert_use_mgmt_vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -6175,7 +6626,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["sys-perf-log-interval"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSysPerfLogInterval(d, v, "sys_perf_log_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -6189,7 +6639,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["check-protocol-header"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCheckProtocolHeader(d, v, "check_protocol_header", sv)
 			if err != nil {
 				return &obj, err
@@ -6203,7 +6652,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["vip-arp-range"] = nil
 		} else {
-
 			t, err := expandSystemGlobalVipArpRange(d, v, "vip_arp_range", sv)
 			if err != nil {
 				return &obj, err
@@ -6217,7 +6665,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["reset-sessionless-tcp"] = nil
 		} else {
-
 			t, err := expandSystemGlobalResetSessionlessTcp(d, v, "reset_sessionless_tcp", sv)
 			if err != nil {
 				return &obj, err
@@ -6231,7 +6678,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["allow-traffic-redirect"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAllowTrafficRedirect(d, v, "allow_traffic_redirect", sv)
 			if err != nil {
 				return &obj, err
@@ -6245,7 +6691,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipv6-allow-traffic-redirect"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpv6AllowTrafficRedirect(d, v, "ipv6_allow_traffic_redirect", sv)
 			if err != nil {
 				return &obj, err
@@ -6259,7 +6704,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["strict-dirty-session-check"] = nil
 		} else {
-
 			t, err := expandSystemGlobalStrictDirtySessionCheck(d, v, "strict_dirty_session_check", sv)
 			if err != nil {
 				return &obj, err
@@ -6273,7 +6717,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tcp-halfclose-timer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTcpHalfcloseTimer(d, v, "tcp_halfclose_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -6287,7 +6730,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tcp-halfopen-timer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTcpHalfopenTimer(d, v, "tcp_halfopen_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -6301,7 +6743,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tcp-timewait-timer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTcpTimewaitTimer(d, v, "tcp_timewait_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -6315,7 +6756,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tcp-rst-timer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTcpRstTimer(d, v, "tcp_rst_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -6329,7 +6769,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["udp-idle-timer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUdpIdleTimer(d, v, "udp_idle_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -6343,7 +6782,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["block-session-timer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalBlockSessionTimer(d, v, "block_session_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -6357,7 +6795,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ip-src-port-range"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpSrcPortRange(d, v, "ip_src_port_range", sv)
 			if err != nil {
 				return &obj, err
@@ -6371,7 +6808,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["pre-login-banner"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPreLoginBanner(d, v, "pre_login_banner", sv)
 			if err != nil {
 				return &obj, err
@@ -6385,7 +6821,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["post-login-banner"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPostLoginBanner(d, v, "post_login_banner", sv)
 			if err != nil {
 				return &obj, err
@@ -6399,7 +6834,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tftp"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTftp(d, v, "tftp", sv)
 			if err != nil {
 				return &obj, err
@@ -6413,7 +6847,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["av-failopen"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAvFailopen(d, v, "av_failopen", sv)
 			if err != nil {
 				return &obj, err
@@ -6427,7 +6860,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["av-failopen-session"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAvFailopenSession(d, v, "av_failopen_session", sv)
 			if err != nil {
 				return &obj, err
@@ -6441,7 +6873,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["memory-use-threshold-extreme"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMemoryUseThresholdExtreme(d, v, "memory_use_threshold_extreme", sv)
 			if err != nil {
 				return &obj, err
@@ -6455,7 +6886,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["memory-use-threshold-red"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMemoryUseThresholdRed(d, v, "memory_use_threshold_red", sv)
 			if err != nil {
 				return &obj, err
@@ -6469,7 +6899,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["memory-use-threshold-green"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMemoryUseThresholdGreen(d, v, "memory_use_threshold_green", sv)
 			if err != nil {
 				return &obj, err
@@ -6479,11 +6908,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("ip_fragment_mem_thresholds"); ok {
+		if setArgNil {
+			obj["ip-fragment-mem-thresholds"] = nil
+		} else {
+			t, err := expandSystemGlobalIpFragmentMemThresholds(d, v, "ip_fragment_mem_thresholds", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ip-fragment-mem-thresholds"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("cpu_use_threshold"); ok {
 		if setArgNil {
 			obj["cpu-use-threshold"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCpuUseThreshold(d, v, "cpu_use_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -6493,11 +6934,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("log_single_cpu_high"); ok {
+		if setArgNil {
+			obj["log-single-cpu-high"] = nil
+		} else {
+			t, err := expandSystemGlobalLogSingleCpuHigh(d, v, "log_single_cpu_high", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-single-cpu-high"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("check_reset_range"); ok {
 		if setArgNil {
 			obj["check-reset-range"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCheckResetRange(d, v, "check_reset_range", sv)
 			if err != nil {
 				return &obj, err
@@ -6511,7 +6964,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["vdom-mode"] = nil
 		} else {
-
 			t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -6525,7 +6977,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["vdom-admin"] = nil
 		} else {
-
 			t, err := expandSystemGlobalVdomAdmin(d, v, "vdom_admin", sv)
 			if err != nil {
 				return &obj, err
@@ -6539,7 +6990,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["long-vdom-name"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLongVdomName(d, v, "long_vdom_name", sv)
 			if err != nil {
 				return &obj, err
@@ -6553,7 +7003,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["edit-vdom-prompt"] = nil
 		} else {
-
 			t, err := expandSystemGlobalEditVdomPrompt(d, v, "edit_vdom_prompt", sv)
 			if err != nil {
 				return &obj, err
@@ -6567,7 +7016,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminPort(d, v, "admin_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6581,7 +7029,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-sport"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminSport(d, v, "admin_sport", sv)
 			if err != nil {
 				return &obj, err
@@ -6595,7 +7042,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-host"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHost(d, v, "admin_host", sv)
 			if err != nil {
 				return &obj, err
@@ -6609,7 +7055,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-https-redirect"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHttpsRedirect(d, v, "admin_https_redirect", sv)
 			if err != nil {
 				return &obj, err
@@ -6623,7 +7068,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-hsts-max-age"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHstsMaxAge(d, v, "admin_hsts_max_age", sv)
 			if err != nil {
 				return &obj, err
@@ -6637,7 +7081,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-ssh-password"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminSshPassword(d, v, "admin_ssh_password", sv)
 			if err != nil {
 				return &obj, err
@@ -6651,7 +7094,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-restrict-local"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminRestrictLocal(d, v, "admin_restrict_local", sv)
 			if err != nil {
 				return &obj, err
@@ -6665,7 +7107,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-ssh-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminSshPort(d, v, "admin_ssh_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6679,7 +7120,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-ssh-grace-time"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminSshGraceTime(d, v, "admin_ssh_grace_time", sv)
 			if err != nil {
 				return &obj, err
@@ -6693,7 +7133,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-ssh-v1"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminSshV1(d, v, "admin_ssh_v1", sv)
 			if err != nil {
 				return &obj, err
@@ -6707,7 +7146,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-telnet"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminTelnet(d, v, "admin_telnet", sv)
 			if err != nil {
 				return &obj, err
@@ -6721,7 +7159,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-telnet-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminTelnetPort(d, v, "admin_telnet_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6735,7 +7172,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-forticloud-sso-login"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminForticloudSsoLogin(d, v, "admin_forticloud_sso_login", sv)
 			if err != nil {
 				return &obj, err
@@ -6745,11 +7181,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("admin_forticloud_sso_default_profile"); ok {
+		if setArgNil {
+			obj["admin-forticloud-sso-default-profile"] = nil
+		} else {
+			t, err := expandSystemGlobalAdminForticloudSsoDefaultProfile(d, v, "admin_forticloud_sso_default_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-forticloud-sso-default-profile"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("default_service_source_port"); ok {
 		if setArgNil {
 			obj["default-service-source-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDefaultServiceSourcePort(d, v, "default_service_source_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6763,7 +7211,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-maintainer"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminMaintainer(d, v, "admin_maintainer", sv)
 			if err != nil {
 				return &obj, err
@@ -6777,7 +7224,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-server-cert"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminServerCert(d, v, "admin_server_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -6791,7 +7237,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["user-server-cert"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUserServerCert(d, v, "user_server_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -6805,7 +7250,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-https-pki-required"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminHttpsPkiRequired(d, v, "admin_https_pki_required", sv)
 			if err != nil {
 				return &obj, err
@@ -6819,7 +7263,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wifi-certificate"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWifiCertificate(d, v, "wifi_certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -6833,7 +7276,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wifi-ca-certificate"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWifiCaCertificate(d, v, "wifi_ca_certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -6847,7 +7289,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auth-http-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAuthHttpPort(d, v, "auth_http_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6861,7 +7302,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auth-https-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAuthHttpsPort(d, v, "auth_https_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6875,7 +7315,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auth-ike-saml-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAuthIkeSamlPort(d, v, "auth_ike_saml_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6889,7 +7328,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auth-keepalive"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAuthKeepalive(d, v, "auth_keepalive", sv)
 			if err != nil {
 				return &obj, err
@@ -6903,7 +7341,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["policy-auth-concurrent"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPolicyAuthConcurrent(d, v, "policy_auth_concurrent", sv)
 			if err != nil {
 				return &obj, err
@@ -6917,7 +7354,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auth-session-limit"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAuthSessionLimit(d, v, "auth_session_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -6931,7 +7367,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auth-cert"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAuthCert(d, v, "auth_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -6945,7 +7380,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["clt-cert-req"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCltCertReq(d, v, "clt_cert_req", sv)
 			if err != nil {
 				return &obj, err
@@ -6959,7 +7393,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiservice-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiservicePort(d, v, "fortiservice_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6973,7 +7406,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["endpoint-control-portal-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalEndpointControlPortalPort(d, v, "endpoint_control_portal_port", sv)
 			if err != nil {
 				return &obj, err
@@ -6987,7 +7419,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["endpoint-control-fds-access"] = nil
 		} else {
-
 			t, err := expandSystemGlobalEndpointControlFdsAccess(d, v, "endpoint_control_fds_access", sv)
 			if err != nil {
 				return &obj, err
@@ -7001,7 +7432,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["tp-mc-skip-policy"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTpMcSkipPolicy(d, v, "tp_mc_skip_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -7015,7 +7445,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["cfg-save"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCfgSave(d, v, "cfg_save", sv)
 			if err != nil {
 				return &obj, err
@@ -7029,7 +7458,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["cfg-revert-timeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCfgRevertTimeout(d, v, "cfg_revert_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -7043,7 +7471,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["reboot-upon-config-restore"] = nil
 		} else {
-
 			t, err := expandSystemGlobalRebootUponConfigRestore(d, v, "reboot_upon_config_restore", sv)
 			if err != nil {
 				return &obj, err
@@ -7057,7 +7484,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["admin-scp"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAdminScp(d, v, "admin_scp", sv)
 			if err != nil {
 				return &obj, err
@@ -7071,7 +7497,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["security-rating-result-submission"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSecurityRatingResultSubmission(d, v, "security_rating_result_submission", sv)
 			if err != nil {
 				return &obj, err
@@ -7085,7 +7510,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["security-rating-run-on-schedule"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSecurityRatingRunOnSchedule(d, v, "security_rating_run_on_schedule", sv)
 			if err != nil {
 				return &obj, err
@@ -7099,7 +7523,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wireless-controller"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWirelessController(d, v, "wireless_controller", sv)
 			if err != nil {
 				return &obj, err
@@ -7113,7 +7536,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wireless-controller-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWirelessControllerPort(d, v, "wireless_controller_port", sv)
 			if err != nil {
 				return &obj, err
@@ -7127,7 +7549,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiextender-data-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiextenderDataPort(d, v, "fortiextender_data_port", sv)
 			if err != nil {
 				return &obj, err
@@ -7141,7 +7562,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiextender"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiextender(d, v, "fortiextender", sv)
 			if err != nil {
 				return &obj, err
@@ -7155,7 +7575,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["extender-controller-reserved-network"] = nil
 		} else {
-
 			t, err := expandSystemGlobalExtenderControllerReservedNetwork(d, v, "extender_controller_reserved_network", sv)
 			if err != nil {
 				return &obj, err
@@ -7169,7 +7588,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiextender-discovery-lockdown"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiextenderDiscoveryLockdown(d, v, "fortiextender_discovery_lockdown", sv)
 			if err != nil {
 				return &obj, err
@@ -7183,7 +7601,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiextender-vlan-mode"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiextenderVlanMode(d, v, "fortiextender_vlan_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -7197,7 +7614,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiextender-provision-on-authorization"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiextenderProvisionOnAuthorization(d, v, "fortiextender_provision_on_authorization", sv)
 			if err != nil {
 				return &obj, err
@@ -7211,7 +7627,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["switch-controller"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSwitchController(d, v, "switch_controller", sv)
 			if err != nil {
 				return &obj, err
@@ -7225,7 +7640,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["switch-controller-reserved-network"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSwitchControllerReservedNetwork(d, v, "switch_controller_reserved_network", sv)
 			if err != nil {
 				return &obj, err
@@ -7239,7 +7653,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["dnsproxy-worker-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDnsproxyWorkerCount(d, v, "dnsproxy_worker_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7253,7 +7666,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["url-filter-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUrlFilterCount(d, v, "url_filter_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7267,7 +7679,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-worker-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyWorkerCount(d, v, "proxy_worker_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7281,7 +7692,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["scanunit-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalScanunitCount(d, v, "scanunit_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7295,7 +7705,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-hardware-acceleration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyHardwareAcceleration(d, v, "proxy_hardware_acceleration", sv)
 			if err != nil {
 				return &obj, err
@@ -7309,7 +7718,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-kxp-hardware-acceleration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyKxpHardwareAcceleration(d, v, "proxy_kxp_hardware_acceleration", sv)
 			if err != nil {
 				return &obj, err
@@ -7323,7 +7731,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["proxy-cipher-hardware-acceleration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalProxyCipherHardwareAcceleration(d, v, "proxy_cipher_hardware_acceleration", sv)
 			if err != nil {
 				return &obj, err
@@ -7337,7 +7744,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fgd-alert-subscription"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFgdAlertSubscription(d, v, "fgd_alert_subscription", sv)
 			if err != nil {
 				return &obj, err
@@ -7351,7 +7757,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipsec-hmac-offload"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpsecHmacOffload(d, v, "ipsec_hmac_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -7365,7 +7770,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipv6-accept-dad"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpv6AcceptDad(d, v, "ipv6_accept_dad", sv)
 			if err != nil {
 				return &obj, err
@@ -7379,7 +7783,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipv6-allow-anycast-probe"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpv6AllowAnycastProbe(d, v, "ipv6_allow_anycast_probe", sv)
 			if err != nil {
 				return &obj, err
@@ -7393,7 +7796,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipv6-allow-multicast-probe"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpv6AllowMulticastProbe(d, v, "ipv6_allow_multicast_probe", sv)
 			if err != nil {
 				return &obj, err
@@ -7407,7 +7809,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipv6-allow-local-in-slient-drop"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpv6AllowLocalInSlientDrop(d, v, "ipv6_allow_local_in_slient_drop", sv)
 			if err != nil {
 				return &obj, err
@@ -7421,7 +7822,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["csr-ca-attribute"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCsrCaAttribute(d, v, "csr_ca_attribute", sv)
 			if err != nil {
 				return &obj, err
@@ -7435,7 +7835,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wimax-4g-usb"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWimax4GUsb(d, v, "wimax_4g_usb", sv)
 			if err != nil {
 				return &obj, err
@@ -7449,7 +7848,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["cert-chain-max"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCertChainMax(d, v, "cert_chain_max", sv)
 			if err != nil {
 				return &obj, err
@@ -7463,7 +7861,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["sslvpn-max-worker-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslvpnMaxWorkerCount(d, v, "sslvpn_max_worker_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7473,11 +7870,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("vpn_ems_sn_check"); ok {
+		if setArgNil {
+			obj["vpn-ems-sn-check"] = nil
+		} else {
+			t, err := expandSystemGlobalVpnEmsSnCheck(d, v, "vpn_ems_sn_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vpn-ems-sn-check"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("sslvpn_ems_sn_check"); ok {
 		if setArgNil {
 			obj["sslvpn-ems-sn-check"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslvpnEmsSnCheck(d, v, "sslvpn_ems_sn_check", sv)
 			if err != nil {
 				return &obj, err
@@ -7491,7 +7900,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["sslvpn-kxp-hardware-acceleration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslvpnKxpHardwareAcceleration(d, v, "sslvpn_kxp_hardware_acceleration", sv)
 			if err != nil {
 				return &obj, err
@@ -7505,7 +7913,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["sslvpn-cipher-hardware-acceleration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslvpnCipherHardwareAcceleration(d, v, "sslvpn_cipher_hardware_acceleration", sv)
 			if err != nil {
 				return &obj, err
@@ -7519,7 +7926,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["sslvpn-plugin-version-check"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSslvpnPluginVersionCheck(d, v, "sslvpn_plugin_version_check", sv)
 			if err != nil {
 				return &obj, err
@@ -7533,7 +7939,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["two-factor-ftk-expiry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTwoFactorFtkExpiry(d, v, "two_factor_ftk_expiry", sv)
 			if err != nil {
 				return &obj, err
@@ -7547,7 +7952,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["two-factor-email-expiry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTwoFactorEmailExpiry(d, v, "two_factor_email_expiry", sv)
 			if err != nil {
 				return &obj, err
@@ -7561,7 +7965,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["two-factor-sms-expiry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTwoFactorSmsExpiry(d, v, "two_factor_sms_expiry", sv)
 			if err != nil {
 				return &obj, err
@@ -7575,7 +7978,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["two-factor-fac-expiry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTwoFactorFacExpiry(d, v, "two_factor_fac_expiry", sv)
 			if err != nil {
 				return &obj, err
@@ -7589,7 +7991,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["two-factor-ftm-expiry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalTwoFactorFtmExpiry(d, v, "two_factor_ftm_expiry", sv)
 			if err != nil {
 				return &obj, err
@@ -7603,7 +8004,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["per-user-bal"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPerUserBal(d, v, "per_user_bal", sv)
 			if err != nil {
 				return &obj, err
@@ -7617,7 +8017,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["per-user-bwl"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPerUserBwl(d, v, "per_user_bwl", sv)
 			if err != nil {
 				return &obj, err
@@ -7631,7 +8030,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["virtual-server-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalVirtualServerCount(d, v, "virtual_server_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7645,7 +8043,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["virtual-server-hardware-acceleration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalVirtualServerHardwareAcceleration(d, v, "virtual_server_hardware_acceleration", sv)
 			if err != nil {
 				return &obj, err
@@ -7659,7 +8056,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wad-worker-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWadWorkerCount(d, v, "wad_worker_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7673,7 +8069,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wad-csvc-cs-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWadCsvcCsCount(d, v, "wad_csvc_cs_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7687,7 +8082,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wad-csvc-db-count"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWadCsvcDbCount(d, v, "wad_csvc_db_count", sv)
 			if err != nil {
 				return &obj, err
@@ -7701,7 +8095,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wad-source-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWadSourceAffinity(d, v, "wad_source_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7715,7 +8108,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wad-memory-change-granularity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWadMemoryChangeGranularity(d, v, "wad_memory_change_granularity", sv)
 			if err != nil {
 				return &obj, err
@@ -7729,7 +8121,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["login-timestamp"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLoginTimestamp(d, v, "login_timestamp", sv)
 			if err != nil {
 				return &obj, err
@@ -7743,7 +8134,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["miglogd-children"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMiglogdChildren(d, v, "miglogd_children", sv)
 			if err != nil {
 				return &obj, err
@@ -7757,7 +8147,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["special-file-23-support"] = nil
 		} else {
-
 			t, err := expandSystemGlobalSpecialFile23Support(d, v, "special_file_23_support", sv)
 			if err != nil {
 				return &obj, err
@@ -7771,7 +8160,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["log-uuid-policy"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLogUuidPolicy(d, v, "log_uuid_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -7785,7 +8173,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["log-uuid-address"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLogUuidAddress(d, v, "log_uuid_address", sv)
 			if err != nil {
 				return &obj, err
@@ -7799,7 +8186,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["log-ssl-connection"] = nil
 		} else {
-
 			t, err := expandSystemGlobalLogSslConnection(d, v, "log_ssl_connection", sv)
 			if err != nil {
 				return &obj, err
@@ -7813,7 +8199,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-rest-api-cache"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiRestApiCache(d, v, "gui_rest_api_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -7823,11 +8208,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("gui_cdn_domain_override"); ok {
+		if setArgNil {
+			obj["gui-cdn-domain-override"] = nil
+		} else {
+			t, err := expandSystemGlobalGuiCdnDomainOverride(d, v, "gui_cdn_domain_override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-cdn-domain-override"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_fortiguard_resource_fetch"); ok {
 		if setArgNil {
 			obj["gui-fortiguard-resource-fetch"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiFortiguardResourceFetch(d, v, "gui_fortiguard_resource_fetch", sv)
 			if err != nil {
 				return &obj, err
@@ -7841,7 +8238,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["arp-max-entry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalArpMaxEntry(d, v, "arp_max_entry", sv)
 			if err != nil {
 				return &obj, err
@@ -7855,7 +8251,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ha-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalHaAffinity(d, v, "ha_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7869,7 +8264,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["cmdbsvr-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCmdbsvrAffinity(d, v, "cmdbsvr_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7883,7 +8277,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["av-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAvAffinity(d, v, "av_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7897,7 +8290,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["wad-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalWadAffinity(d, v, "wad_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7911,7 +8303,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ips-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpsAffinity(d, v, "ips_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7925,7 +8316,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["miglog-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMiglogAffinity(d, v, "miglog_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7935,11 +8325,23 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("syslog_affinity"); ok {
+		if setArgNil {
+			obj["syslog-affinity"] = nil
+		} else {
+			t, err := expandSystemGlobalSyslogAffinity(d, v, "syslog_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["syslog-affinity"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("url_filter_affinity"); ok {
 		if setArgNil {
 			obj["url-filter-affinity"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUrlFilterAffinity(d, v, "url_filter_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -7953,7 +8355,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ndp-max-entry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalNdpMaxEntry(d, v, "ndp_max_entry", sv)
 			if err != nil {
 				return &obj, err
@@ -7967,7 +8368,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["br-fdb-max-entry"] = nil
 		} else {
-
 			t, err := expandSystemGlobalBrFdbMaxEntry(d, v, "br_fdb_max_entry", sv)
 			if err != nil {
 				return &obj, err
@@ -7981,7 +8381,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["max-route-cache-size"] = nil
 		} else {
-
 			t, err := expandSystemGlobalMaxRouteCacheSize(d, v, "max_route_cache_size", sv)
 			if err != nil {
 				return &obj, err
@@ -7995,7 +8394,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipsec-round-robin"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpsecRoundRobin(d, v, "ipsec_round_robin", sv)
 			if err != nil {
 				return &obj, err
@@ -8009,7 +8407,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipsec-asic-offload"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpsecAsicOffload(d, v, "ipsec_asic_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -8023,7 +8420,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipsec-soft-dec-async"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpsecSoftDecAsync(d, v, "ipsec_soft_dec_async", sv)
 			if err != nil {
 				return &obj, err
@@ -8037,7 +8433,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ike-embryonic-limit"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIkeEmbryonicLimit(d, v, "ike_embryonic_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -8051,7 +8446,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["device-idle-timeout"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDeviceIdleTimeout(d, v, "device_idle_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -8065,7 +8459,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["user-device-store-max-devices"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUserDeviceStoreMaxDevices(d, v, "user_device_store_max_devices", sv)
 			if err != nil {
 				return &obj, err
@@ -8079,7 +8472,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["user-device-store-max-users"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUserDeviceStoreMaxUsers(d, v, "user_device_store_max_users", sv)
 			if err != nil {
 				return &obj, err
@@ -8093,7 +8485,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["user-device-store-max-unified-mem"] = nil
 		} else {
-
 			t, err := expandSystemGlobalUserDeviceStoreMaxUnifiedMem(d, v, "user_device_store_max_unified_mem", sv)
 			if err != nil {
 				return &obj, err
@@ -8107,7 +8498,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["device-identification-active-scan-delay"] = nil
 		} else {
-
 			t, err := expandSystemGlobalDeviceIdentificationActiveScanDelay(d, v, "device_identification_active_scan_delay", sv)
 			if err != nil {
 				return &obj, err
@@ -8121,7 +8511,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["compliance-check"] = nil
 		} else {
-
 			t, err := expandSystemGlobalComplianceCheck(d, v, "compliance_check", sv)
 			if err != nil {
 				return &obj, err
@@ -8135,7 +8524,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["compliance-check-time"] = nil
 		} else {
-
 			t, err := expandSystemGlobalComplianceCheckTime(d, v, "compliance_check_time", sv)
 			if err != nil {
 				return &obj, err
@@ -8149,7 +8537,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-device-latitude"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiDeviceLatitude(d, v, "gui_device_latitude", sv)
 			if err != nil {
 				return &obj, err
@@ -8163,7 +8550,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-device-longitude"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiDeviceLongitude(d, v, "gui_device_longitude", sv)
 			if err != nil {
 				return &obj, err
@@ -8177,7 +8563,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["private-data-encryption"] = nil
 		} else {
-
 			t, err := expandSystemGlobalPrivateDataEncryption(d, v, "private_data_encryption", sv)
 			if err != nil {
 				return &obj, err
@@ -8191,7 +8576,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["auto-auth-extension-device"] = nil
 		} else {
-
 			t, err := expandSystemGlobalAutoAuthExtensionDevice(d, v, "auto_auth_extension_device", sv)
 			if err != nil {
 				return &obj, err
@@ -8205,7 +8589,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-theme"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiTheme(d, v, "gui_theme", sv)
 			if err != nil {
 				return &obj, err
@@ -8219,7 +8602,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-date-format"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiDateFormat(d, v, "gui_date_format", sv)
 			if err != nil {
 				return &obj, err
@@ -8233,7 +8615,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["gui-date-time-source"] = nil
 		} else {
-
 			t, err := expandSystemGlobalGuiDateTimeSource(d, v, "gui_date_time_source", sv)
 			if err != nil {
 				return &obj, err
@@ -8247,7 +8628,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["igmp-state-limit"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIgmpStateLimit(d, v, "igmp_state_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -8261,7 +8641,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["cloud-communication"] = nil
 		} else {
-
 			t, err := expandSystemGlobalCloudCommunication(d, v, "cloud_communication", sv)
 			if err != nil {
 				return &obj, err
@@ -8275,7 +8654,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fec-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFecPort(d, v, "fec_port", sv)
 			if err != nil {
 				return &obj, err
@@ -8289,7 +8667,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["ipsec-ha-seqjump-rate"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIpsecHaSeqjumpRate(d, v, "ipsec_ha_seqjump_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -8303,7 +8680,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortitoken-cloud"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortitokenCloud(d, v, "fortitoken_cloud", sv)
 			if err != nil {
 				return &obj, err
@@ -8317,7 +8693,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["faz-disk-buffer-size"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFazDiskBufferSize(d, v, "faz_disk_buffer_size", sv)
 			if err != nil {
 				return &obj, err
@@ -8331,7 +8706,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["irq-time-accounting"] = nil
 		} else {
-
 			t, err := expandSystemGlobalIrqTimeAccounting(d, v, "irq_time_accounting", sv)
 			if err != nil {
 				return &obj, err
@@ -8345,7 +8719,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["fortiipam-integration"] = nil
 		} else {
-
 			t, err := expandSystemGlobalFortiipamIntegration(d, v, "fortiipam_integration", sv)
 			if err != nil {
 				return &obj, err
@@ -8359,7 +8732,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["management-ip"] = nil
 		} else {
-
 			t, err := expandSystemGlobalManagementIp(d, v, "management_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -8373,7 +8745,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["management-port"] = nil
 		} else {
-
 			t, err := expandSystemGlobalManagementPort(d, v, "management_port", sv)
 			if err != nil {
 				return &obj, err
@@ -8387,7 +8758,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["management-port-use-admin-sport"] = nil
 		} else {
-
 			t, err := expandSystemGlobalManagementPortUseAdminSport(d, v, "management_port_use_admin_sport", sv)
 			if err != nil {
 				return &obj, err
@@ -8397,11 +8767,36 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("forticonverter_integration"); ok {
+		if setArgNil {
+			obj["forticonverter-integration"] = nil
+		} else {
+			t, err := expandSystemGlobalForticonverterIntegration(d, v, "forticonverter_integration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticonverter-integration"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("forticonverter_config_upload"); ok {
+		if setArgNil {
+			obj["forticonverter-config-upload"] = nil
+		} else {
+			t, err := expandSystemGlobalForticonverterConfigUpload(d, v, "forticonverter_config_upload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forticonverter-config-upload"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("internet_service_database"); ok {
 		if setArgNil {
 			obj["internet-service-database"] = nil
 		} else {
-
 			t, err := expandSystemGlobalInternetServiceDatabase(d, v, "internet_service_database", sv)
 			if err != nil {
 				return &obj, err
@@ -8411,16 +8806,54 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("internet_service_download_list"); ok || d.HasChange("internet_service_download_list") {
+		if setArgNil {
+			obj["internet-service-download-list"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemGlobalInternetServiceDownloadList(d, v, "internet_service_download_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["internet-service-download-list"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("early_tcp_npu_session"); ok {
 		if setArgNil {
 			obj["early-tcp-npu-session"] = nil
 		} else {
-
 			t, err := expandSystemGlobalEarlyTcpNpuSession(d, v, "early_tcp_npu_session", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["early-tcp-npu-session"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("interface_subnet_usage"); ok {
+		if setArgNil {
+			obj["interface-subnet-usage"] = nil
+		} else {
+			t, err := expandSystemGlobalInterfaceSubnetUsage(d, v, "interface_subnet_usage", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-subnet-usage"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("sflowd_max_children_num"); ok {
+		if setArgNil {
+			obj["sflowd-max-children-num"] = nil
+		} else {
+			t, err := expandSystemGlobalSflowdMaxChildrenNum(d, v, "sflowd_max_children_num", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sflowd-max-children-num"] = t
 			}
 		}
 	}

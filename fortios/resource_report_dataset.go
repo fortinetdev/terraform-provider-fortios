@@ -117,6 +117,11 @@ func resourceReportDataset() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -280,25 +285,21 @@ func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenReportDatasetFieldId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenReportDatasetFieldType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenReportDatasetFieldName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := i["displayname"]; ok {
-
 			tmp["displayname"] = flattenReportDatasetFieldDisplayname(i["displayname"], d, pre_append, sv)
 		}
 
@@ -353,25 +354,21 @@ func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenReportDatasetParametersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "display_name"
 		if _, ok := i["display-name"]; ok {
-
 			tmp["display_name"] = flattenReportDatasetParametersDisplayName(i["display-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field"
 		if _, ok := i["field"]; ok {
-
 			tmp["field"] = flattenReportDatasetParametersField(i["field"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data_type"
 		if _, ok := i["data-type"]; ok {
-
 			tmp["data_type"] = flattenReportDatasetParametersDataType(i["data-type"], d, pre_append, sv)
 		}
 
@@ -402,6 +399,12 @@ func flattenReportDatasetParametersDataType(v interface{}, d *schema.ResourceDat
 
 func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenReportDatasetName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -421,7 +424,7 @@ func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field", sv)); err != nil {
 			if !fortiAPIPatch(o["field"]) {
 				return fmt.Errorf("Error reading field: %v", err)
@@ -437,7 +440,7 @@ func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters", sv)); err != nil {
 			if !fortiAPIPatch(o["parameters"]) {
 				return fmt.Errorf("Error reading parameters: %v", err)
@@ -490,25 +493,21 @@ func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandReportDatasetFieldId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandReportDatasetFieldType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandReportDatasetFieldName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["displayname"], _ = expandReportDatasetFieldDisplayname(d, i["displayname"], pre_append, sv)
 		}
 
@@ -552,25 +551,21 @@ func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandReportDatasetParametersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "display_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["display-name"], _ = expandReportDatasetParametersDisplayName(d, i["display_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["field"], _ = expandReportDatasetParametersField(d, i["field"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["data-type"], _ = expandReportDatasetParametersDataType(d, i["data_type"], pre_append, sv)
 		}
 
@@ -602,7 +597,6 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandReportDatasetName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -612,7 +606,6 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("policy"); ok {
-
 		t, err := expandReportDatasetPolicy(d, v, "policy", sv)
 		if err != nil {
 			return &obj, err
@@ -622,7 +615,6 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("query"); ok {
-
 		t, err := expandReportDatasetQuery(d, v, "query", sv)
 		if err != nil {
 			return &obj, err
@@ -632,7 +624,6 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("field"); ok || d.HasChange("field") {
-
 		t, err := expandReportDatasetField(d, v, "field", sv)
 		if err != nil {
 			return &obj, err
@@ -642,7 +633,6 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
-
 		t, err := expandReportDatasetParameters(d, v, "parameters", sv)
 		if err != nil {
 			return &obj, err

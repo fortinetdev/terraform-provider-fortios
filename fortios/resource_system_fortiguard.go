@@ -88,6 +88,11 @@ func resourceSystemFortiguard() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"update_dldb": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"update_extdb": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -119,6 +124,12 @@ func resourceSystemFortiguard() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auto_firmware_upgrade_delay": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 14),
+				Optional:     true,
+				Computed:     true,
+			},
 			"auto_firmware_upgrade_start_hour": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 23),
@@ -128,6 +139,12 @@ func resourceSystemFortiguard() *schema.Resource {
 			"auto_firmware_upgrade_end_hour": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 23),
+				Optional:     true,
+				Computed:     true,
+			},
+			"fds_license_expiring_days": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 100),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -154,6 +171,12 @@ func resourceSystemFortiguard() *schema.Resource {
 			"antispam_cache_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(300, 86400),
+				Optional:     true,
+				Computed:     true,
+			},
+			"antispam_cache_mpermille": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 150),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -191,6 +214,12 @@ func resourceSystemFortiguard() *schema.Resource {
 			"outbreak_prevention_cache_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(300, 86400),
+				Optional:     true,
+				Computed:     true,
+			},
+			"outbreak_prevention_cache_mpermille": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 150),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -481,6 +510,10 @@ func flattenSystemFortiguardUpdateUwdb(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemFortiguardUpdateDldb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortiguardUpdateExtdb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -505,11 +538,19 @@ func flattenSystemFortiguardAutoFirmwareUpgradeDay(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSystemFortiguardAutoFirmwareUpgradeDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortiguardAutoFirmwareUpgradeStartHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemFortiguardAutoFirmwareUpgradeEndHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -530,6 +571,10 @@ func flattenSystemFortiguardAntispamCache(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemFortiguardAntispamCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFortiguardAntispamCacheMpermille(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -558,6 +603,10 @@ func flattenSystemFortiguardOutbreakPreventionCache(v interface{}, d *schema.Res
 }
 
 func flattenSystemFortiguardOutbreakPreventionCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFortiguardOutbreakPreventionCacheMpermille(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -736,6 +785,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("update_dldb", flattenSystemFortiguardUpdateDldb(o["update-dldb"], d, "update_dldb", sv)); err != nil {
+		if !fortiAPIPatch(o["update-dldb"]) {
+			return fmt.Errorf("Error reading update_dldb: %v", err)
+		}
+	}
+
 	if err = d.Set("update_extdb", flattenSystemFortiguardUpdateExtdb(o["update-extdb"], d, "update_extdb", sv)); err != nil {
 		if !fortiAPIPatch(o["update-extdb"]) {
 			return fmt.Errorf("Error reading update_extdb: %v", err)
@@ -772,6 +827,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("auto_firmware_upgrade_delay", flattenSystemFortiguardAutoFirmwareUpgradeDelay(o["auto-firmware-upgrade-delay"], d, "auto_firmware_upgrade_delay", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-firmware-upgrade-delay"]) {
+			return fmt.Errorf("Error reading auto_firmware_upgrade_delay: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_firmware_upgrade_start_hour", flattenSystemFortiguardAutoFirmwareUpgradeStartHour(o["auto-firmware-upgrade-start-hour"], d, "auto_firmware_upgrade_start_hour", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-firmware-upgrade-start-hour"]) {
 			return fmt.Errorf("Error reading auto_firmware_upgrade_start_hour: %v", err)
@@ -781,6 +842,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("auto_firmware_upgrade_end_hour", flattenSystemFortiguardAutoFirmwareUpgradeEndHour(o["auto-firmware-upgrade-end-hour"], d, "auto_firmware_upgrade_end_hour", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-firmware-upgrade-end-hour"]) {
 			return fmt.Errorf("Error reading auto_firmware_upgrade_end_hour: %v", err)
+		}
+	}
+
+	if err = d.Set("fds_license_expiring_days", flattenSystemFortiguardFdsLicenseExpiringDays(o["FDS-license-expiring-days"], d, "fds_license_expiring_days", sv)); err != nil {
+		if !fortiAPIPatch(o["FDS-license-expiring-days"]) {
+			return fmt.Errorf("Error reading fds_license_expiring_days: %v", err)
 		}
 	}
 
@@ -811,6 +878,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("antispam_cache_ttl", flattenSystemFortiguardAntispamCacheTtl(o["antispam-cache-ttl"], d, "antispam_cache_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["antispam-cache-ttl"]) {
 			return fmt.Errorf("Error reading antispam_cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("antispam_cache_mpermille", flattenSystemFortiguardAntispamCacheMpermille(o["antispam-cache-mpermille"], d, "antispam_cache_mpermille", sv)); err != nil {
+		if !fortiAPIPatch(o["antispam-cache-mpermille"]) {
+			return fmt.Errorf("Error reading antispam_cache_mpermille: %v", err)
 		}
 	}
 
@@ -853,6 +926,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("outbreak_prevention_cache_ttl", flattenSystemFortiguardOutbreakPreventionCacheTtl(o["outbreak-prevention-cache-ttl"], d, "outbreak_prevention_cache_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["outbreak-prevention-cache-ttl"]) {
 			return fmt.Errorf("Error reading outbreak_prevention_cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("outbreak_prevention_cache_mpermille", flattenSystemFortiguardOutbreakPreventionCacheMpermille(o["outbreak-prevention-cache-mpermille"], d, "outbreak_prevention_cache_mpermille", sv)); err != nil {
+		if !fortiAPIPatch(o["outbreak-prevention-cache-mpermille"]) {
+			return fmt.Errorf("Error reading outbreak_prevention_cache_mpermille: %v", err)
 		}
 	}
 
@@ -1067,6 +1146,10 @@ func expandSystemFortiguardUpdateUwdb(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemFortiguardUpdateDldb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortiguardUpdateExtdb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1091,11 +1174,19 @@ func expandSystemFortiguardAutoFirmwareUpgradeDay(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandSystemFortiguardAutoFirmwareUpgradeDelay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortiguardAutoFirmwareUpgradeStartHour(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandSystemFortiguardAutoFirmwareUpgradeEndHour(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortiguardFdsLicenseExpiringDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1116,6 +1207,10 @@ func expandSystemFortiguardAntispamCache(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemFortiguardAntispamCacheTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortiguardAntispamCacheMpermille(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1144,6 +1239,10 @@ func expandSystemFortiguardOutbreakPreventionCache(d *schema.ResourceData, v int
 }
 
 func expandSystemFortiguardOutbreakPreventionCacheTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortiguardOutbreakPreventionCacheMpermille(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1266,7 +1365,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["protocol"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardProtocol(d, v, "protocol", sv)
 			if err != nil {
 				return &obj, err
@@ -1280,7 +1378,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardPort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err
@@ -1294,7 +1391,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["service-account-id"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardServiceAccountId(d, v, "service_account_id", sv)
 			if err != nil {
 				return &obj, err
@@ -1308,7 +1404,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["load-balance-servers"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardLoadBalanceServers(d, v, "load_balance_servers", sv)
 			if err != nil {
 				return &obj, err
@@ -1322,7 +1417,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["auto-join-forticloud"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAutoJoinForticloud(d, v, "auto_join_forticloud", sv)
 			if err != nil {
 				return &obj, err
@@ -1336,7 +1430,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["update-server-location"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardUpdateServerLocation(d, v, "update_server_location", sv)
 			if err != nil {
 				return &obj, err
@@ -1350,7 +1443,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sandbox-region"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSandboxRegion(d, v, "sandbox_region", sv)
 			if err != nil {
 				return &obj, err
@@ -1364,7 +1456,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sandbox-inline-scan"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSandboxInlineScan(d, v, "sandbox_inline_scan", sv)
 			if err != nil {
 				return &obj, err
@@ -1378,7 +1469,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["update-ffdb"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardUpdateFfdb(d, v, "update_ffdb", sv)
 			if err != nil {
 				return &obj, err
@@ -1392,7 +1482,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["update-uwdb"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardUpdateUwdb(d, v, "update_uwdb", sv)
 			if err != nil {
 				return &obj, err
@@ -1402,11 +1491,23 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("update_dldb"); ok {
+		if setArgNil {
+			obj["update-dldb"] = nil
+		} else {
+			t, err := expandSystemFortiguardUpdateDldb(d, v, "update_dldb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["update-dldb"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("update_extdb"); ok {
 		if setArgNil {
 			obj["update-extdb"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardUpdateExtdb(d, v, "update_extdb", sv)
 			if err != nil {
 				return &obj, err
@@ -1420,7 +1521,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["update-build-proxy"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardUpdateBuildProxy(d, v, "update_build_proxy", sv)
 			if err != nil {
 				return &obj, err
@@ -1434,7 +1534,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["persistent-connection"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardPersistentConnection(d, v, "persistent_connection", sv)
 			if err != nil {
 				return &obj, err
@@ -1448,7 +1547,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["vdom"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardVdom(d, v, "vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -1462,7 +1560,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["auto-firmware-upgrade"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAutoFirmwareUpgrade(d, v, "auto_firmware_upgrade", sv)
 			if err != nil {
 				return &obj, err
@@ -1476,7 +1573,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["auto-firmware-upgrade-day"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAutoFirmwareUpgradeDay(d, v, "auto_firmware_upgrade_day", sv)
 			if err != nil {
 				return &obj, err
@@ -1486,11 +1582,23 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOkExists("auto_firmware_upgrade_delay"); ok {
+		if setArgNil {
+			obj["auto-firmware-upgrade-delay"] = nil
+		} else {
+			t, err := expandSystemFortiguardAutoFirmwareUpgradeDelay(d, v, "auto_firmware_upgrade_delay", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-firmware-upgrade-delay"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOkExists("auto_firmware_upgrade_start_hour"); ok {
 		if setArgNil {
 			obj["auto-firmware-upgrade-start-hour"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAutoFirmwareUpgradeStartHour(d, v, "auto_firmware_upgrade_start_hour", sv)
 			if err != nil {
 				return &obj, err
@@ -1504,7 +1612,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["auto-firmware-upgrade-end-hour"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAutoFirmwareUpgradeEndHour(d, v, "auto_firmware_upgrade_end_hour", sv)
 			if err != nil {
 				return &obj, err
@@ -1514,11 +1621,23 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("fds_license_expiring_days"); ok {
+		if setArgNil {
+			obj["FDS-license-expiring-days"] = nil
+		} else {
+			t, err := expandSystemFortiguardFdsLicenseExpiringDays(d, v, "fds_license_expiring_days", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["FDS-license-expiring-days"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("fortiguard_anycast"); ok {
 		if setArgNil {
 			obj["fortiguard-anycast"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardFortiguardAnycast(d, v, "fortiguard_anycast", sv)
 			if err != nil {
 				return &obj, err
@@ -1532,7 +1651,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["fortiguard-anycast-source"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardFortiguardAnycastSource(d, v, "fortiguard_anycast_source", sv)
 			if err != nil {
 				return &obj, err
@@ -1546,7 +1664,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["antispam-force-off"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamForceOff(d, v, "antispam_force_off", sv)
 			if err != nil {
 				return &obj, err
@@ -1560,7 +1677,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["antispam-cache"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamCache(d, v, "antispam_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -1574,7 +1690,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["antispam-cache-ttl"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamCacheTtl(d, v, "antispam_cache_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -1584,11 +1699,23 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("antispam_cache_mpermille"); ok {
+		if setArgNil {
+			obj["antispam-cache-mpermille"] = nil
+		} else {
+			t, err := expandSystemFortiguardAntispamCacheMpermille(d, v, "antispam_cache_mpermille", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["antispam-cache-mpermille"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("antispam_cache_mpercent"); ok {
 		if setArgNil {
 			obj["antispam-cache-mpercent"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamCacheMpercent(d, v, "antispam_cache_mpercent", sv)
 			if err != nil {
 				return &obj, err
@@ -1602,7 +1729,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["antispam-license"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamLicense(d, v, "antispam_license", sv)
 			if err != nil {
 				return &obj, err
@@ -1616,7 +1742,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["antispam-expiration"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamExpiration(d, v, "antispam_expiration", sv)
 			if err != nil {
 				return &obj, err
@@ -1630,7 +1755,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["antispam-timeout"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAntispamTimeout(d, v, "antispam_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -1644,7 +1768,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outbreak-prevention-force-off"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionForceOff(d, v, "outbreak_prevention_force_off", sv)
 			if err != nil {
 				return &obj, err
@@ -1658,7 +1781,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outbreak-prevention-cache"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionCache(d, v, "outbreak_prevention_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -1672,7 +1794,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outbreak-prevention-cache-ttl"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionCacheTtl(d, v, "outbreak_prevention_cache_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -1682,11 +1803,23 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("outbreak_prevention_cache_mpermille"); ok {
+		if setArgNil {
+			obj["outbreak-prevention-cache-mpermille"] = nil
+		} else {
+			t, err := expandSystemFortiguardOutbreakPreventionCacheMpermille(d, v, "outbreak_prevention_cache_mpermille", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["outbreak-prevention-cache-mpermille"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("outbreak_prevention_cache_mpercent"); ok {
 		if setArgNil {
 			obj["outbreak-prevention-cache-mpercent"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionCacheMpercent(d, v, "outbreak_prevention_cache_mpercent", sv)
 			if err != nil {
 				return &obj, err
@@ -1700,7 +1833,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outbreak-prevention-license"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionLicense(d, v, "outbreak_prevention_license", sv)
 			if err != nil {
 				return &obj, err
@@ -1714,7 +1846,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outbreak-prevention-expiration"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionExpiration(d, v, "outbreak_prevention_expiration", sv)
 			if err != nil {
 				return &obj, err
@@ -1728,7 +1859,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outbreak-prevention-timeout"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardOutbreakPreventionTimeout(d, v, "outbreak_prevention_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -1742,7 +1872,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["webfilter-force-off"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardWebfilterForceOff(d, v, "webfilter_force_off", sv)
 			if err != nil {
 				return &obj, err
@@ -1756,7 +1885,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["webfilter-cache"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardWebfilterCache(d, v, "webfilter_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -1770,7 +1898,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["webfilter-cache-ttl"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardWebfilterCacheTtl(d, v, "webfilter_cache_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -1784,7 +1911,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["webfilter-license"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardWebfilterLicense(d, v, "webfilter_license", sv)
 			if err != nil {
 				return &obj, err
@@ -1798,7 +1924,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["webfilter-expiration"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardWebfilterExpiration(d, v, "webfilter_expiration", sv)
 			if err != nil {
 				return &obj, err
@@ -1812,7 +1937,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["webfilter-timeout"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardWebfilterTimeout(d, v, "webfilter_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -1826,7 +1950,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sdns-server-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSdnsServerIp(d, v, "sdns_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1840,7 +1963,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sdns-server-port"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSdnsServerPort(d, v, "sdns_server_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1854,7 +1976,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["anycast-sdns-server-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAnycastSdnsServerIp(d, v, "anycast_sdns_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1868,7 +1989,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["anycast-sdns-server-port"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardAnycastSdnsServerPort(d, v, "anycast_sdns_server_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1882,7 +2002,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sdns-options"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSdnsOptions(d, v, "sdns_options", sv)
 			if err != nil {
 				return &obj, err
@@ -1896,7 +2015,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1910,7 +2028,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["source-ip6"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardSourceIp6(d, v, "source_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -1924,7 +2041,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["proxy-server-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardProxyServerIp(d, v, "proxy_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1938,7 +2054,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["proxy-server-port"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardProxyServerPort(d, v, "proxy_server_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1952,7 +2067,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["proxy-username"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardProxyUsername(d, v, "proxy_username", sv)
 			if err != nil {
 				return &obj, err
@@ -1966,7 +2080,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["proxy-password"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardProxyPassword(d, v, "proxy_password", sv)
 			if err != nil {
 				return &obj, err
@@ -1980,7 +2093,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["videofilter-license"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardVideofilterLicense(d, v, "videofilter_license", sv)
 			if err != nil {
 				return &obj, err
@@ -1994,7 +2106,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["videofilter-expiration"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardVideofilterExpiration(d, v, "videofilter_expiration", sv)
 			if err != nil {
 				return &obj, err
@@ -2008,7 +2119,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ddns-server-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardDdnsServerIp(d, v, "ddns_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -2022,7 +2132,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ddns-server-ip6"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardDdnsServerIp6(d, v, "ddns_server_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -2036,7 +2145,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ddns-server-port"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardDdnsServerPort(d, v, "ddns_server_port", sv)
 			if err != nil {
 				return &obj, err
@@ -2050,7 +2158,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -2064,7 +2171,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemFortiguardInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

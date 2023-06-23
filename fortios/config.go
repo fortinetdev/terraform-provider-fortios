@@ -179,21 +179,36 @@ func convintflist2str(v interface{}) interface{} {
 	return res
 }
 
-func i2ss2arrFortiAPIUpgrade(v string, splitv string) bool {
-	splitv = strings.ReplaceAll(splitv, "v", "")
-
+func i2ss2arrFortiAPIUpgrade(v string, new_version_map map[string][]string) bool {
 	v1, err := version.NewVersion(v)
 	if err != nil {
 		return false
 	}
 
-	v2, err := version.NewVersion(splitv)
-	if err != nil {
-		return false
-	}
-
-	if v1.GreaterThanOrEqual(v2) {
-		return true
+	for operator, version_list := range new_version_map {
+		if operator == "=" {
+			for _, cur_version := range version_list {
+				if cur_version == v {
+					return true
+				}
+			}
+		} else if operator == ">=" {
+			min_version, err := version.NewVersion(version_list[0])
+			if err != nil {
+				continue
+			}
+			if v1.GreaterThanOrEqual(min_version) {
+				return true
+			}
+		} else if operator == "<=" {
+			max_version, err := version.NewVersion(version_list[0])
+			if err != nil {
+				continue
+			}
+			if v1.LessThanOrEqual(max_version) {
+				return true
+			}
+		}
 	}
 
 	return false

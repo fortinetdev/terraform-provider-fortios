@@ -88,6 +88,11 @@ func resourceSystemNat64() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -224,13 +229,11 @@ func flattenSystemNat64SecondaryPrefix(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemNat64SecondaryPrefixName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat64_prefix"
 		if _, ok := i["nat64-prefix"]; ok {
-
 			tmp["nat64_prefix"] = flattenSystemNat64SecondaryPrefixNat64Prefix(i["nat64-prefix"], d, pre_append, sv)
 		}
 
@@ -265,6 +268,12 @@ func flattenSystemNat64Nat46ForceIpv4PacketForwarding(v interface{}, d *schema.R
 
 func refreshObjectSystemNat64(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemNat64Status(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -284,7 +293,7 @@ func refreshObjectSystemNat64(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("secondary_prefix", flattenSystemNat64SecondaryPrefix(o["secondary-prefix"], d, "secondary_prefix", sv)); err != nil {
 			if !fortiAPIPatch(o["secondary-prefix"]) {
 				return fmt.Errorf("Error reading secondary_prefix: %v", err)
@@ -355,13 +364,11 @@ func expandSystemNat64SecondaryPrefix(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemNat64SecondaryPrefixName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat64_prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["nat64-prefix"], _ = expandSystemNat64SecondaryPrefixNat64Prefix(d, i["nat64_prefix"], pre_append, sv)
 		}
 
@@ -400,7 +407,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemNat64Status(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -414,7 +420,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["nat64-prefix"] = nil
 		} else {
-
 			t, err := expandSystemNat64Nat64Prefix(d, v, "nat64_prefix", sv)
 			if err != nil {
 				return &obj, err
@@ -428,7 +433,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["secondary-prefix-status"] = nil
 		} else {
-
 			t, err := expandSystemNat64SecondaryPrefixStatus(d, v, "secondary_prefix_status", sv)
 			if err != nil {
 				return &obj, err
@@ -442,7 +446,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["secondary-prefix"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemNat64SecondaryPrefix(d, v, "secondary_prefix", sv)
 			if err != nil {
 				return &obj, err
@@ -456,7 +459,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["always-synthesize-aaaa-record"] = nil
 		} else {
-
 			t, err := expandSystemNat64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record", sv)
 			if err != nil {
 				return &obj, err
@@ -470,7 +472,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["generate-ipv6-fragment-header"] = nil
 		} else {
-
 			t, err := expandSystemNat64GenerateIpv6FragmentHeader(d, v, "generate_ipv6_fragment_header", sv)
 			if err != nil {
 				return &obj, err
@@ -484,7 +485,6 @@ func getObjectSystemNat64(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["nat46-force-ipv4-packet-forwarding"] = nil
 		} else {
-
 			t, err := expandSystemNat64Nat46ForceIpv4PacketForwarding(d, v, "nat46_force_ipv4_packet_forwarding", sv)
 			if err != nil {
 				return &obj, err

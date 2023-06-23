@@ -249,6 +249,11 @@ func resourceDlpSensor() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -416,25 +421,21 @@ func flattenDlpSensorEntries(v interface{}, d *schema.ResourceData, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDlpSensorEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dictionary"
 		if _, ok := i["dictionary"]; ok {
-
 			tmp["dictionary"] = flattenDlpSensorEntriesDictionary(i["dictionary"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "count"
 		if _, ok := i["count"]; ok {
-
 			tmp["count"] = flattenDlpSensorEntriesCount(i["count"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenDlpSensorEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
@@ -497,97 +498,81 @@ func flattenDlpSensorFilter(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDlpSensorFilterId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDlpSensorFilterName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := i["severity"]; ok {
-
 			tmp["severity"] = flattenDlpSensorFilterSeverity(i["severity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenDlpSensorFilterType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
 		if _, ok := i["proto"]; ok {
-
 			tmp["proto"] = flattenDlpSensorFilterProto(i["proto"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
 		if _, ok := i["filter-by"]; ok {
-
 			tmp["filter_by"] = flattenDlpSensorFilterFilterBy(i["filter-by"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
 		if _, ok := i["file-size"]; ok {
-
 			tmp["file_size"] = flattenDlpSensorFilterFileSize(i["file-size"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company_identifier"
 		if _, ok := i["company-identifier"]; ok {
-
 			tmp["company_identifier"] = flattenDlpSensorFilterCompanyIdentifier(i["company-identifier"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
 		if _, ok := i["sensitivity"]; ok {
-
 			tmp["sensitivity"] = flattenDlpSensorFilterSensitivity(i["sensitivity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fp_sensitivity"
 		if _, ok := i["fp-sensitivity"]; ok {
-
 			tmp["fp_sensitivity"] = flattenDlpSensorFilterFpSensitivity(i["fp-sensitivity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_percentage"
 		if _, ok := i["match-percentage"]; ok {
-
 			tmp["match_percentage"] = flattenDlpSensorFilterMatchPercentage(i["match-percentage"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := i["file-type"]; ok {
-
 			tmp["file_type"] = flattenDlpSensorFilterFileType(i["file-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := i["regexp"]; ok {
-
 			tmp["regexp"] = flattenDlpSensorFilterRegexp(i["regexp"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
 		if _, ok := i["archive"]; ok {
-
 			tmp["archive"] = flattenDlpSensorFilterArchive(i["archive"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenDlpSensorFilterAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiry"
 		if _, ok := i["expiry"]; ok {
-
 			tmp["expiry"] = flattenDlpSensorFilterExpiry(i["expiry"], d, pre_append, sv)
 		}
 
@@ -658,7 +643,6 @@ func flattenDlpSensorFilterSensitivity(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDlpSensorFilterSensitivityName(i["name"], d, pre_append, sv)
 		}
 
@@ -701,7 +685,6 @@ func flattenDlpSensorFilterFpSensitivity(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDlpSensorFilterFpSensitivityName(i["name"], d, pre_append, sv)
 		}
 
@@ -772,6 +755,12 @@ func flattenDlpSensorSummaryProto(v interface{}, d *schema.ResourceData, pre str
 
 func refreshObjectDlpSensor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenDlpSensorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -797,7 +786,7 @@ func refreshObjectDlpSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenDlpSensorEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -825,7 +814,7 @@ func refreshObjectDlpSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("filter", flattenDlpSensorFilter(o["filter"], d, "filter", sv)); err != nil {
 			if !fortiAPIPatch(o["filter"]) {
 				return fmt.Errorf("Error reading filter: %v", err)
@@ -924,25 +913,21 @@ func expandDlpSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDlpSensorEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dictionary"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dictionary"], _ = expandDlpSensorEntriesDictionary(d, i["dictionary"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "count"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["count"], _ = expandDlpSensorEntriesCount(d, i["count"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandDlpSensorEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
@@ -994,55 +979,46 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDlpSensorFilterId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDlpSensorFilterName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["severity"], _ = expandDlpSensorFilterSeverity(d, i["severity"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandDlpSensorFilterType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["proto"], _ = expandDlpSensorFilterProto(d, i["proto"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-by"], _ = expandDlpSensorFilterFilterBy(d, i["filter_by"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["file-size"], _ = expandDlpSensorFilterFileSize(d, i["file_size"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company_identifier"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["company-identifier"], _ = expandDlpSensorFilterCompanyIdentifier(d, i["company_identifier"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["sensitivity"], _ = expandDlpSensorFilterSensitivity(d, i["sensitivity"], pre_append, sv)
 		} else {
 			tmp["sensitivity"] = make([]string, 0)
@@ -1050,7 +1026,6 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fp_sensitivity"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["fp-sensitivity"], _ = expandDlpSensorFilterFpSensitivity(d, i["fp_sensitivity"], pre_append, sv)
 		} else {
 			tmp["fp-sensitivity"] = make([]string, 0)
@@ -1058,37 +1033,31 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_percentage"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["match-percentage"], _ = expandDlpSensorFilterMatchPercentage(d, i["match_percentage"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["file-type"], _ = expandDlpSensorFilterFileType(d, i["file_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["regexp"], _ = expandDlpSensorFilterRegexp(d, i["regexp"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["archive"], _ = expandDlpSensorFilterArchive(d, i["archive"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandDlpSensorFilterAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["expiry"], _ = expandDlpSensorFilterExpiry(d, i["expiry"], pre_append, sv)
 		}
 
@@ -1148,7 +1117,6 @@ func expandDlpSensorFilterSensitivity(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDlpSensorFilterSensitivityName(d, i["name"], pre_append, sv)
 		}
 
@@ -1180,7 +1148,6 @@ func expandDlpSensorFilterFpSensitivity(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDlpSensorFilterFpSensitivityName(d, i["name"], pre_append, sv)
 		}
 
@@ -1252,7 +1219,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDlpSensorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1262,7 +1228,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("match_type"); ok {
-
 		t, err := expandDlpSensorMatchType(d, v, "match_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1272,7 +1237,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("eval"); ok {
-
 		t, err := expandDlpSensorEval(d, v, "eval", sv)
 		if err != nil {
 			return &obj, err
@@ -1282,7 +1246,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandDlpSensorComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1292,7 +1255,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandDlpSensorEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
@@ -1302,7 +1264,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
-
 		t, err := expandDlpSensorFeatureSet(d, v, "feature_set", sv)
 		if err != nil {
 			return &obj, err
@@ -1312,7 +1273,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandDlpSensorReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -1322,7 +1282,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("filter"); ok || d.HasChange("filter") {
-
 		t, err := expandDlpSensorFilter(d, v, "filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1332,7 +1291,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("dlp_log"); ok {
-
 		t, err := expandDlpSensorDlpLog(d, v, "dlp_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1342,7 +1300,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("extended_log"); ok {
-
 		t, err := expandDlpSensorExtendedLog(d, v, "extended_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1352,7 +1309,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("nac_quar_log"); ok {
-
 		t, err := expandDlpSensorNacQuarLog(d, v, "nac_quar_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1362,7 +1318,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("flow_based"); ok {
-
 		t, err := expandDlpSensorFlowBased(d, v, "flow_based", sv)
 		if err != nil {
 			return &obj, err
@@ -1372,7 +1327,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("options"); ok {
-
 		t, err := expandDlpSensorOptions(d, v, "options", sv)
 		if err != nil {
 			return &obj, err
@@ -1382,7 +1336,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("full_archive_proto"); ok {
-
 		t, err := expandDlpSensorFullArchiveProto(d, v, "full_archive_proto", sv)
 		if err != nil {
 			return &obj, err
@@ -1392,7 +1345,6 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("summary_proto"); ok {
-
 		t, err := expandDlpSensorSummaryProto(d, v, "summary_proto", sv)
 		if err != nil {
 			return &obj, err

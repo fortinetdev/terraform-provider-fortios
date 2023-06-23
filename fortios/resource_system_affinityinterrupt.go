@@ -233,7 +233,6 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemAffinityInterruptId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -243,7 +242,6 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("interrupt"); ok {
-
 		t, err := expandSystemAffinityInterruptInterrupt(d, v, "interrupt", sv)
 		if err != nil {
 			return &obj, err
@@ -253,7 +251,6 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("affinity_cpumask"); ok {
-
 		t, err := expandSystemAffinityInterruptAffinityCpumask(d, v, "affinity_cpumask", sv)
 		if err != nil {
 			return &obj, err

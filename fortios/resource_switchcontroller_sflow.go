@@ -190,7 +190,6 @@ func getObjectSwitchControllerSflow(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["collector-ip"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSflowCollectorIp(d, v, "collector_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -204,7 +203,6 @@ func getObjectSwitchControllerSflow(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["collector-port"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSflowCollectorPort(d, v, "collector_port", sv)
 			if err != nil {
 				return &obj, err

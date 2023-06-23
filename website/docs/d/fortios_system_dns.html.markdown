@@ -41,6 +41,7 @@ The following attributes are exported:
 * `alt_secondary` - Alternate secondary DNS server. (This is not used as a failover DNS server.)
 * `log` - Local DNS log setting.
 * `fqdn_cache_ttl` - FQDN cache time to live in seconds (0 - 86400, default = 0).
+* `fqdn_max_refresh` - FQDN cache maximum refresh time in seconds (3600 - 86400, default = 3600).
 * `fqdn_min_refresh` - FQDN cache minimum refresh time in seconds (10 - 3600, default = 60).
 
 The `server_hostname` block contains:

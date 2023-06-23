@@ -45,6 +45,35 @@ func resourceVpnCertificateSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"proxy": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+				Computed:     true,
+			},
+			"proxy_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"proxy_username": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"proxy_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+			},
+			"source_ip": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ssl_ocsp_source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -207,6 +236,11 @@ func resourceVpnCertificateSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -313,6 +347,26 @@ func flattenVpnCertificateSettingOcspOption(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenVpnCertificateSettingProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingProxyPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingProxyUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingProxyPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateSettingSslOcspSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -364,19 +418,16 @@ func flattenVpnCertificateSettingCrlVerification(v interface{}, d *schema.Resour
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "expiry"
 	if _, ok := i["expiry"]; ok {
-
 		result["expiry"] = flattenVpnCertificateSettingCrlVerificationExpiry(i["expiry"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "leaf_crl_absence"
 	if _, ok := i["leaf-crl-absence"]; ok {
-
 		result["leaf_crl_absence"] = flattenVpnCertificateSettingCrlVerificationLeafCrlAbsence(i["leaf-crl-absence"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "chain_crl_absence"
 	if _, ok := i["chain-crl-absence"]; ok {
-
 		result["chain_crl_absence"] = flattenVpnCertificateSettingCrlVerificationChainCrlAbsence(i["chain-crl-absence"], d, pre_append, sv)
 	}
 
@@ -462,6 +513,12 @@ func flattenVpnCertificateSettingCertnameEd448(v interface{}, d *schema.Resource
 
 func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("ocsp_status", flattenVpnCertificateSettingOcspStatus(o["ocsp-status"], d, "ocsp_status", sv)); err != nil {
 		if !fortiAPIPatch(o["ocsp-status"]) {
@@ -472,6 +529,36 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 	if err = d.Set("ocsp_option", flattenVpnCertificateSettingOcspOption(o["ocsp-option"], d, "ocsp_option", sv)); err != nil {
 		if !fortiAPIPatch(o["ocsp-option"]) {
 			return fmt.Errorf("Error reading ocsp_option: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy", flattenVpnCertificateSettingProxy(o["proxy"], d, "proxy", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy"]) {
+			return fmt.Errorf("Error reading proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_port", flattenVpnCertificateSettingProxyPort(o["proxy-port"], d, "proxy_port", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-port"]) {
+			return fmt.Errorf("Error reading proxy_port: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_username", flattenVpnCertificateSettingProxyUsername(o["proxy-username"], d, "proxy_username", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-username"]) {
+			return fmt.Errorf("Error reading proxy_username: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_password", flattenVpnCertificateSettingProxyPassword(o["proxy-password"], d, "proxy_password", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-password"]) {
+			return fmt.Errorf("Error reading proxy_password: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip", flattenVpnCertificateSettingSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
@@ -535,7 +622,7 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("crl_verification", flattenVpnCertificateSettingCrlVerification(o["crl-verification"], d, "crl_verification", sv)); err != nil {
 			if !fortiAPIPatch(o["crl-verification"]) {
 				return fmt.Errorf("Error reading crl_verification: %v", err)
@@ -664,6 +751,26 @@ func expandVpnCertificateSettingOcspOption(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandVpnCertificateSettingProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingProxyPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingProxyUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingProxyPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnCertificateSettingSslOcspSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -719,7 +826,6 @@ func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interf
 		if setArgNil {
 			result["expiry"] = nil
 		} else {
-
 			result["expiry"], _ = expandVpnCertificateSettingCrlVerificationExpiry(d, i["expiry"], pre_append, sv)
 		}
 	}
@@ -728,7 +834,6 @@ func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interf
 		if setArgNil {
 			result["leaf-crl-absence"] = nil
 		} else {
-
 			result["leaf-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationLeafCrlAbsence(d, i["leaf_crl_absence"], pre_append, sv)
 		}
 	}
@@ -737,7 +842,6 @@ func expandVpnCertificateSettingCrlVerification(d *schema.ResourceData, v interf
 		if setArgNil {
 			result["chain-crl-absence"] = nil
 		} else {
-
 			result["chain-crl-absence"], _ = expandVpnCertificateSettingCrlVerificationChainCrlAbsence(d, i["chain_crl_absence"], pre_append, sv)
 		}
 	}
@@ -828,7 +932,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["ocsp-status"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingOcspStatus(d, v, "ocsp_status", sv)
 			if err != nil {
 				return &obj, err
@@ -842,7 +945,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["ocsp-option"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingOcspOption(d, v, "ocsp_option", sv)
 			if err != nil {
 				return &obj, err
@@ -852,11 +954,75 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		}
 	}
 
+	if v, ok := d.GetOk("proxy"); ok {
+		if setArgNil {
+			obj["proxy"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingProxy(d, v, "proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_port"); ok {
+		if setArgNil {
+			obj["proxy-port"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingProxyPort(d, v, "proxy_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_username"); ok {
+		if setArgNil {
+			obj["proxy-username"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingProxyUsername(d, v, "proxy_username", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-username"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_password"); ok {
+		if setArgNil {
+			obj["proxy-password"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingProxyPassword(d, v, "proxy_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-password"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ssl_ocsp_source_ip"); ok {
 		if setArgNil {
 			obj["ssl-ocsp-source-ip"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingSslOcspSourceIp(d, v, "ssl_ocsp_source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -870,7 +1036,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["ocsp-default-server"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingOcspDefaultServer(d, v, "ocsp_default_server", sv)
 			if err != nil {
 				return &obj, err
@@ -884,7 +1049,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -898,7 +1062,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -912,7 +1075,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["check-ca-cert"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCheckCaCert(d, v, "check_ca_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -926,7 +1088,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["check-ca-chain"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCheckCaChain(d, v, "check_ca_chain", sv)
 			if err != nil {
 				return &obj, err
@@ -940,7 +1101,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["subject-match"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingSubjectMatch(d, v, "subject_match", sv)
 			if err != nil {
 				return &obj, err
@@ -954,7 +1114,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["subject-set"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingSubjectSet(d, v, "subject_set", sv)
 			if err != nil {
 				return &obj, err
@@ -968,7 +1127,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cn-match"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCnMatch(d, v, "cn_match", sv)
 			if err != nil {
 				return &obj, err
@@ -982,7 +1140,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cn-allow-multi"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCnAllowMulti(d, v, "cn_allow_multi", sv)
 			if err != nil {
 				return &obj, err
@@ -993,7 +1150,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 	}
 
 	if v, ok := d.GetOk("crl_verification"); ok {
-
 		t, err := expandVpnCertificateSettingCrlVerification(d, v, "crl_verification", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -1006,7 +1162,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["strict-crl-check"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingStrictCrlCheck(d, v, "strict_crl_check", sv)
 			if err != nil {
 				return &obj, err
@@ -1020,7 +1175,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["strict-ocsp-check"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingStrictOcspCheck(d, v, "strict_ocsp_check", sv)
 			if err != nil {
 				return &obj, err
@@ -1034,7 +1188,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -1048,7 +1201,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cmp-save-extra-certs"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCmpSaveExtraCerts(d, v, "cmp_save_extra_certs", sv)
 			if err != nil {
 				return &obj, err
@@ -1062,7 +1214,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cmp-key-usage-checking"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCmpKeyUsageChecking(d, v, "cmp_key_usage_checking", sv)
 			if err != nil {
 				return &obj, err
@@ -1076,7 +1227,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cert-expire-warning"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertExpireWarning(d, v, "cert_expire_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -1090,7 +1240,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-rsa1024"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameRsa1024(d, v, "certname_rsa1024", sv)
 			if err != nil {
 				return &obj, err
@@ -1104,7 +1253,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-rsa2048"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameRsa2048(d, v, "certname_rsa2048", sv)
 			if err != nil {
 				return &obj, err
@@ -1118,7 +1266,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-rsa4096"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameRsa4096(d, v, "certname_rsa4096", sv)
 			if err != nil {
 				return &obj, err
@@ -1132,7 +1279,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-dsa1024"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameDsa1024(d, v, "certname_dsa1024", sv)
 			if err != nil {
 				return &obj, err
@@ -1146,7 +1292,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-dsa2048"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameDsa2048(d, v, "certname_dsa2048", sv)
 			if err != nil {
 				return &obj, err
@@ -1160,7 +1305,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-ecdsa256"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameEcdsa256(d, v, "certname_ecdsa256", sv)
 			if err != nil {
 				return &obj, err
@@ -1174,7 +1318,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-ecdsa384"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameEcdsa384(d, v, "certname_ecdsa384", sv)
 			if err != nil {
 				return &obj, err
@@ -1188,7 +1331,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-ecdsa521"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameEcdsa521(d, v, "certname_ecdsa521", sv)
 			if err != nil {
 				return &obj, err
@@ -1202,7 +1344,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-ed25519"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameEd25519(d, v, "certname_ed25519", sv)
 			if err != nil {
 				return &obj, err
@@ -1216,7 +1357,6 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["certname-ed448"] = nil
 		} else {
-
 			t, err := expandVpnCertificateSettingCertnameEd448(d, v, "certname_ed448", sv)
 			if err != nil {
 				return &obj, err

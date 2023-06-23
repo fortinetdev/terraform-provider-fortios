@@ -410,7 +410,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandIcapServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -420,7 +419,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("addr_type"); ok {
-
 		t, err := expandIcapServerAddrType(d, v, "addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -430,7 +428,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
-
 		t, err := expandIcapServerIpVersion(d, v, "ip_version", sv)
 		if err != nil {
 			return &obj, err
@@ -440,7 +437,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ip_address"); ok {
-
 		t, err := expandIcapServerIpAddress(d, v, "ip_address", sv)
 		if err != nil {
 			return &obj, err
@@ -450,7 +446,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ip6_address"); ok {
-
 		t, err := expandIcapServerIp6Address(d, v, "ip6_address", sv)
 		if err != nil {
 			return &obj, err
@@ -460,7 +455,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("fqdn"); ok {
-
 		t, err := expandIcapServerFqdn(d, v, "fqdn", sv)
 		if err != nil {
 			return &obj, err
@@ -470,7 +464,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandIcapServerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -480,7 +473,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("max_connections"); ok {
-
 		t, err := expandIcapServerMaxConnections(d, v, "max_connections", sv)
 		if err != nil {
 			return &obj, err
@@ -490,7 +482,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("secure"); ok {
-
 		t, err := expandIcapServerSecure(d, v, "secure", sv)
 		if err != nil {
 			return &obj, err
@@ -500,7 +491,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ssl_cert"); ok {
-
 		t, err := expandIcapServerSslCert(d, v, "ssl_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -510,7 +500,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("healthcheck"); ok {
-
 		t, err := expandIcapServerHealthcheck(d, v, "healthcheck", sv)
 		if err != nil {
 			return &obj, err
@@ -520,7 +509,6 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("healthcheck_service"); ok {
-
 		t, err := expandIcapServerHealthcheckService(d, v, "healthcheck_service", sv)
 		if err != nil {
 			return &obj, err

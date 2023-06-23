@@ -272,7 +272,6 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandIpsViewMapId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -282,7 +281,6 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("vdom_id"); ok {
-
 		t, err := expandIpsViewMapVdomId(d, v, "vdom_id", sv)
 		if err != nil {
 			return &obj, err
@@ -292,7 +290,6 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("policy_id"); ok {
-
 		t, err := expandIpsViewMapPolicyId(d, v, "policy_id", sv)
 		if err != nil {
 			return &obj, err
@@ -302,7 +299,6 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("id_policy_id"); ok {
-
 		t, err := expandIpsViewMapIdPolicyId(d, v, "id_policy_id", sv)
 		if err != nil {
 			return &obj, err
@@ -312,7 +308,6 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("which"); ok {
-
 		t, err := expandIpsViewMapWhich(d, v, "which", sv)
 		if err != nil {
 			return &obj, err

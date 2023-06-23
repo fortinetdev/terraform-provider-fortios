@@ -159,6 +159,11 @@ func resourceWirelessControllerAccessControlList() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -318,49 +323,41 @@ func flattenWirelessControllerAccessControlListLayer3Ipv4Rules(v interface{}, d 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := i["rule-id"]; ok {
-
 			tmp["rule_id"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesRuleId(i["rule-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesComment(i["comment"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := i["srcaddr"]; ok {
-
 			tmp["srcaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcaddr(i["srcaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
 		if _, ok := i["srcport"]; ok {
-
 			tmp["srcport"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcport(i["srcport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := i["dstaddr"]; ok {
-
 			tmp["dstaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(i["dstaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
 		if _, ok := i["dstport"]; ok {
-
 			tmp["dstport"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstport(i["dstport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesAction(i["action"], d, pre_append, sv)
 		}
 
@@ -431,49 +428,41 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6Rules(v interface{}, d 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := i["rule-id"]; ok {
-
 			tmp["rule_id"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesRuleId(i["rule-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesComment(i["comment"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := i["srcaddr"]; ok {
-
 			tmp["srcaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcaddr(i["srcaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
 		if _, ok := i["srcport"]; ok {
-
 			tmp["srcport"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcport(i["srcport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := i["dstaddr"]; ok {
-
 			tmp["dstaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(i["dstaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
 		if _, ok := i["dstport"]; ok {
-
 			tmp["dstport"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstport(i["dstport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesAction(i["action"], d, pre_append, sv)
 		}
 
@@ -520,6 +509,12 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6RulesAction(v interface
 
 func refreshObjectWirelessControllerAccessControlList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerAccessControlListName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -533,7 +528,7 @@ func refreshObjectWirelessControllerAccessControlList(d *schema.ResourceData, o 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("layer3_ipv4_rules", flattenWirelessControllerAccessControlListLayer3Ipv4Rules(o["layer3-ipv4-rules"], d, "layer3_ipv4_rules", sv)); err != nil {
 			if !fortiAPIPatch(o["layer3-ipv4-rules"]) {
 				return fmt.Errorf("Error reading layer3_ipv4_rules: %v", err)
@@ -549,7 +544,7 @@ func refreshObjectWirelessControllerAccessControlList(d *schema.ResourceData, o 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("layer3_ipv6_rules", flattenWirelessControllerAccessControlListLayer3Ipv6Rules(o["layer3-ipv6-rules"], d, "layer3_ipv6_rules", sv)); err != nil {
 			if !fortiAPIPatch(o["layer3-ipv6-rules"]) {
 				return fmt.Errorf("Error reading layer3_ipv6_rules: %v", err)
@@ -598,49 +593,41 @@ func expandWirelessControllerAccessControlListLayer3Ipv4Rules(d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rule-id"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesRuleId(d, i["rule_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesComment(d, i["comment"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["srcaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesSrcaddr(d, i["srcaddr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["srcport"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesSrcport(d, i["srcport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dstaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(d, i["dstaddr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dstport"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesDstport(d, i["dstport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesAction(d, i["action"], pre_append, sv)
 		}
 
@@ -700,49 +687,41 @@ func expandWirelessControllerAccessControlListLayer3Ipv6Rules(d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rule-id"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesRuleId(d, i["rule_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesComment(d, i["comment"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["srcaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesSrcaddr(d, i["srcaddr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["srcport"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesSrcport(d, i["srcport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dstaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(d, i["dstaddr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dstport"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesDstport(d, i["dstport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesAction(d, i["action"], pre_append, sv)
 		}
 
@@ -790,7 +769,6 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerAccessControlListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -800,7 +778,6 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerAccessControlListComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -810,7 +787,6 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("layer3_ipv4_rules"); ok || d.HasChange("layer3_ipv4_rules") {
-
 		t, err := expandWirelessControllerAccessControlListLayer3Ipv4Rules(d, v, "layer3_ipv4_rules", sv)
 		if err != nil {
 			return &obj, err
@@ -820,7 +796,6 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("layer3_ipv6_rules"); ok || d.HasChange("layer3_ipv6_rules") {
-
 		t, err := expandWirelessControllerAccessControlListLayer3Ipv6Rules(d, v, "layer3_ipv6_rules", sv)
 		if err != nil {
 			return &obj, err

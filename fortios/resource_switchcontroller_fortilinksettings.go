@@ -117,6 +117,11 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -269,43 +274,36 @@ func flattenSwitchControllerFortilinkSettingsNacPorts(v interface{}, d *schema.R
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "onboarding_vlan"
 	if _, ok := i["onboarding-vlan"]; ok {
-
 		result["onboarding_vlan"] = flattenSwitchControllerFortilinkSettingsNacPortsOnboardingVlan(i["onboarding-vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "bounce_nac_port"
 	if _, ok := i["bounce-nac-port"]; ok {
-
 		result["bounce_nac_port"] = flattenSwitchControllerFortilinkSettingsNacPortsBounceNacPort(i["bounce-nac-port"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "lan_segment"
 	if _, ok := i["lan-segment"]; ok {
-
 		result["lan_segment"] = flattenSwitchControllerFortilinkSettingsNacPortsLanSegment(i["lan-segment"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nac_lan_interface"
 	if _, ok := i["nac-lan-interface"]; ok {
-
 		result["nac_lan_interface"] = flattenSwitchControllerFortilinkSettingsNacPortsNacLanInterface(i["nac-lan-interface"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nac_segment_vlans"
 	if _, ok := i["nac-segment-vlans"]; ok {
-
 		result["nac_segment_vlans"] = flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(i["nac-segment-vlans"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := i["parent-key"]; ok {
-
 		result["parent_key"] = flattenSwitchControllerFortilinkSettingsNacPortsParentKey(i["parent-key"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "member_change"
 	if _, ok := i["member-change"]; ok {
-
 		result["member_change"] = flattenSwitchControllerFortilinkSettingsNacPortsMemberChange(i["member-change"], d, pre_append, sv)
 	}
 
@@ -355,7 +353,6 @@ func flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlansVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
@@ -382,6 +379,12 @@ func flattenSwitchControllerFortilinkSettingsNacPortsMemberChange(v interface{},
 
 func refreshObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerFortilinkSettingsName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -407,7 +410,7 @@ func refreshObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, o ma
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("nac_ports", flattenSwitchControllerFortilinkSettingsNacPorts(o["nac-ports"], d, "nac_ports", sv)); err != nil {
 			if !fortiAPIPatch(o["nac-ports"]) {
 				return fmt.Errorf("Error reading nac_ports: %v", err)
@@ -460,39 +463,32 @@ func expandSwitchControllerFortilinkSettingsNacPorts(d *schema.ResourceData, v i
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "onboarding_vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["onboarding-vlan"], _ = expandSwitchControllerFortilinkSettingsNacPortsOnboardingVlan(d, i["onboarding_vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "bounce_nac_port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["bounce-nac-port"], _ = expandSwitchControllerFortilinkSettingsNacPortsBounceNacPort(d, i["bounce_nac_port"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "lan_segment"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["lan-segment"], _ = expandSwitchControllerFortilinkSettingsNacPortsLanSegment(d, i["lan_segment"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nac_lan_interface"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["nac-lan-interface"], _ = expandSwitchControllerFortilinkSettingsNacPortsNacLanInterface(d, i["nac_lan_interface"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nac_segment_vlans"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["nac-segment-vlans"], _ = expandSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(d, i["nac_segment_vlans"], pre_append, sv)
 	} else {
 		result["nac-segment-vlans"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["parent-key"], _ = expandSwitchControllerFortilinkSettingsNacPortsParentKey(d, i["parent_key"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "member_change"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["member-change"], _ = expandSwitchControllerFortilinkSettingsNacPortsMemberChange(d, i["member_change"], pre_append, sv)
 	}
 
@@ -531,7 +527,6 @@ func expandSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerFortilinkSettingsNacPortsNacSegmentVlansVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
@@ -559,7 +554,6 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerFortilinkSettingsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -569,7 +563,6 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
-
 		t, err := expandSwitchControllerFortilinkSettingsFortilink(d, v, "fortilink", sv)
 		if err != nil {
 			return &obj, err
@@ -579,7 +572,6 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("inactive_timer"); ok {
-
 		t, err := expandSwitchControllerFortilinkSettingsInactiveTimer(d, v, "inactive_timer", sv)
 		if err != nil {
 			return &obj, err
@@ -589,7 +581,6 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("link_down_flush"); ok {
-
 		t, err := expandSwitchControllerFortilinkSettingsLinkDownFlush(d, v, "link_down_flush", sv)
 		if err != nil {
 			return &obj, err
@@ -599,7 +590,6 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("nac_ports"); ok {
-
 		t, err := expandSwitchControllerFortilinkSettingsNacPorts(d, v, "nac_ports", sv)
 		if err != nil {
 			return &obj, err

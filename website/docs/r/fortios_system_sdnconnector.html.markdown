@@ -34,6 +34,7 @@ The following arguments are supported:
 * `name` - SDN connector name.
 * `status` - (Required) Enable/disable connection to the remote SDN connector. Valid values: `disable`, `enable`.
 * `type` - (Required) Type of SDN connector.
+* `proxy` - SDN proxy.
 * `ha_status` - Enable/disable use for FortiGate HA service. Valid values: `disable`, `enable`.
 * `verify_certificate` - Enable/disable server certificate verification. Valid values: `disable`, `enable`.
 * `server` - Server address of the remote SDN connector.
@@ -48,6 +49,7 @@ The following arguments are supported:
 * `secret_key` - AWS secret access key.
 * `region` - AWS region name.
 * `vpc_id` - AWS VPC ID.
+* `alt_resource_ip` - Enable/disable AWS alternative resource IP. Valid values: `disable`, `enable`.
 * `external_account_list` - Configure AWS external account list. The structure of `external_account_list` block is documented below.
 * `tenant_id` - Tenant ID (directory ID).
 * `subscription_id` - Azure subscription ID.
@@ -60,6 +62,8 @@ The following arguments are supported:
 * `nic` - Configure Azure network interface. The structure of `nic` block is documented below.
 * `route_table` - Configure Azure route table. The structure of `route_table` block is documented below.
 * `user_id` - User ID.
+* `compartment_list` - Configure OCI compartment list. The structure of `compartment_list` block is documented below.
+* `oci_region_list` - Configure OCI region list. The structure of `oci_region_list` block is documented below.
 * `compartment_id` - Compartment ID.
 * `oci_region` - OCI server region.
 * `oci_region_type` - OCI region type. Valid values: `commercial`, `government`.
@@ -77,6 +81,8 @@ The following arguments are supported:
 * `secret_token` - Secret token of Kubernetes service account.
 * `domain` - Domain name.
 * `group_name` - Group name of computers.
+* `server_cert` - Trust servers that contain this certificate only.
+* `server_ca_cert` - Trust only those servers whose certificate is directly/indirectly signed by this certificate.
 * `api_key` - IBM cloud API key or service ID API key.
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
 * `ibm_region_gen1` - IBM cloud compute generation 1 region name. Valid values: `us-south`, `us-east`, `germany`, `great-britain`, `japan`, `australia`.
@@ -84,6 +90,7 @@ The following arguments are supported:
 * `ibm_region` - IBM cloud region name.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `server_list` block supports:
@@ -122,6 +129,14 @@ The `route` block supports:
 
 * `name` - Route name.
 * `next_hop` - Next hop address.
+
+The `compartment_list` block supports:
+
+* `compartment_id` - OCI compartment ID.
+
+The `oci_region_list` block supports:
+
+* `region` - OCI region.
 
 The `external_ip` block supports:
 

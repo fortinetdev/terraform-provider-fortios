@@ -225,6 +225,11 @@ func resourceRouterPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -380,7 +385,6 @@ func flattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicyInputDeviceName(i["name"], d, pre_append, sv)
 		}
 
@@ -427,7 +431,6 @@ func flattenRouterPolicySrc(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := i["subnet"]; ok {
-
 			tmp["subnet"] = flattenRouterPolicySrcSubnet(i["subnet"], d, pre_append, sv)
 		}
 
@@ -470,7 +473,6 @@ func flattenRouterPolicySrcaddr(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicySrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -517,7 +519,6 @@ func flattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := i["subnet"]; ok {
-
 			tmp["subnet"] = flattenRouterPolicyDstSubnet(i["subnet"], d, pre_append, sv)
 		}
 
@@ -560,7 +561,6 @@ func flattenRouterPolicyDstaddr(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicyDstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -655,7 +655,6 @@ func flattenRouterPolicyInternetServiceId(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterPolicyInternetServiceIdId(i["id"], d, pre_append, sv)
 		}
 
@@ -698,7 +697,6 @@ func flattenRouterPolicyInternetServiceCustom(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterPolicyInternetServiceCustomName(i["name"], d, pre_append, sv)
 		}
 
@@ -717,6 +715,12 @@ func flattenRouterPolicyInternetServiceCustomName(v interface{}, d *schema.Resou
 
 func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("seq_num", flattenRouterPolicySeqNum(o["seq-num"], d, "seq_num", sv)); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -724,7 +728,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("input_device", flattenRouterPolicyInputDevice(o["input-device"], d, "input_device", sv)); err != nil {
 			if !fortiAPIPatch(o["input-device"]) {
 				return fmt.Errorf("Error reading input_device: %v", err)
@@ -746,7 +750,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("src", flattenRouterPolicySrc(o["src"], d, "src", sv)); err != nil {
 			if !fortiAPIPatch(o["src"]) {
 				return fmt.Errorf("Error reading src: %v", err)
@@ -762,7 +766,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenRouterPolicySrcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -784,7 +788,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dst", flattenRouterPolicyDst(o["dst"], d, "dst", sv)); err != nil {
 			if !fortiAPIPatch(o["dst"]) {
 				return fmt.Errorf("Error reading dst: %v", err)
@@ -800,7 +804,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenRouterPolicyDstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -894,7 +898,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_id", flattenRouterPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-id"]) {
 				return fmt.Errorf("Error reading internet_service_id: %v", err)
@@ -910,7 +914,7 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_custom", flattenRouterPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-custom"]) {
 				return fmt.Errorf("Error reading internet_service_custom: %v", err)
@@ -955,7 +959,6 @@ func expandRouterPolicyInputDevice(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicyInputDeviceName(d, i["name"], pre_append, sv)
 		}
 
@@ -991,7 +994,6 @@ func expandRouterPolicySrc(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["subnet"], _ = expandRouterPolicySrcSubnet(d, i["subnet"], pre_append, sv)
 		}
 
@@ -1023,7 +1025,6 @@ func expandRouterPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicySrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -1059,7 +1060,6 @@ func expandRouterPolicyDst(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["subnet"], _ = expandRouterPolicyDstSubnet(d, i["subnet"], pre_append, sv)
 		}
 
@@ -1091,7 +1091,6 @@ func expandRouterPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicyDstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -1175,7 +1174,6 @@ func expandRouterPolicyInternetServiceId(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterPolicyInternetServiceIdId(d, i["id"], pre_append, sv)
 		}
 
@@ -1207,7 +1205,6 @@ func expandRouterPolicyInternetServiceCustom(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterPolicyInternetServiceCustomName(d, i["name"], pre_append, sv)
 		}
 
@@ -1227,7 +1224,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("seq_num"); ok {
-
 		t, err := expandRouterPolicySeqNum(d, v, "seq_num", sv)
 		if err != nil {
 			return &obj, err
@@ -1237,7 +1233,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("input_device"); ok || d.HasChange("input_device") {
-
 		t, err := expandRouterPolicyInputDevice(d, v, "input_device", sv)
 		if err != nil {
 			return &obj, err
@@ -1247,7 +1242,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("input_device_negate"); ok {
-
 		t, err := expandRouterPolicyInputDeviceNegate(d, v, "input_device_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -1257,7 +1251,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("src"); ok || d.HasChange("src") {
-
 		t, err := expandRouterPolicySrc(d, v, "src", sv)
 		if err != nil {
 			return &obj, err
@@ -1267,7 +1260,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandRouterPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -1277,7 +1269,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("src_negate"); ok {
-
 		t, err := expandRouterPolicySrcNegate(d, v, "src_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -1287,7 +1278,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("dst"); ok || d.HasChange("dst") {
-
 		t, err := expandRouterPolicyDst(d, v, "dst", sv)
 		if err != nil {
 			return &obj, err
@@ -1297,7 +1287,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandRouterPolicyDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -1307,7 +1296,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("dst_negate"); ok {
-
 		t, err := expandRouterPolicyDstNegate(d, v, "dst_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -1317,7 +1305,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandRouterPolicyAction(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -1327,7 +1314,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandRouterPolicyProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1337,7 +1323,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("start_port"); ok {
-
 		t, err := expandRouterPolicyStartPort(d, v, "start_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1347,7 +1332,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("end_port"); ok {
-
 		t, err := expandRouterPolicyEndPort(d, v, "end_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1357,7 +1341,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("start_source_port"); ok {
-
 		t, err := expandRouterPolicyStartSourcePort(d, v, "start_source_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1367,7 +1350,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("end_source_port"); ok {
-
 		t, err := expandRouterPolicyEndSourcePort(d, v, "end_source_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1377,7 +1359,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
-
 		t, err := expandRouterPolicyGateway(d, v, "gateway", sv)
 		if err != nil {
 			return &obj, err
@@ -1387,7 +1368,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("output_device"); ok {
-
 		t, err := expandRouterPolicyOutputDevice(d, v, "output_device", sv)
 		if err != nil {
 			return &obj, err
@@ -1397,7 +1377,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("tos"); ok {
-
 		t, err := expandRouterPolicyTos(d, v, "tos", sv)
 		if err != nil {
 			return &obj, err
@@ -1407,7 +1386,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("tos_mask"); ok {
-
 		t, err := expandRouterPolicyTosMask(d, v, "tos_mask", sv)
 		if err != nil {
 			return &obj, err
@@ -1417,7 +1395,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandRouterPolicyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -1427,7 +1404,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandRouterPolicyComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -1437,7 +1413,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {
-
 		t, err := expandRouterPolicyInternetServiceId(d, v, "internet_service_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1447,7 +1422,6 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("internet_service_custom"); ok || d.HasChange("internet_service_custom") {
-
 		t, err := expandRouterPolicyInternetServiceCustom(d, v, "internet_service_custom", sv)
 		if err != nil {
 			return &obj, err

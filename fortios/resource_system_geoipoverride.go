@@ -106,6 +106,11 @@ func resourceSystemGeoipOverride() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -269,19 +274,16 @@ func flattenSystemGeoipOverrideIpRange(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemGeoipOverrideIpRangeId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if _, ok := i["start-ip"]; ok {
-
 			tmp["start_ip"] = flattenSystemGeoipOverrideIpRangeStartIp(i["start-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if _, ok := i["end-ip"]; ok {
-
 			tmp["end_ip"] = flattenSystemGeoipOverrideIpRangeEndIp(i["end-ip"], d, pre_append, sv)
 		}
 
@@ -332,19 +334,16 @@ func flattenSystemGeoipOverrideIp6Range(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemGeoipOverrideIp6RangeId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if _, ok := i["start-ip"]; ok {
-
 			tmp["start_ip"] = flattenSystemGeoipOverrideIp6RangeStartIp(i["start-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if _, ok := i["end-ip"]; ok {
-
 			tmp["end_ip"] = flattenSystemGeoipOverrideIp6RangeEndIp(i["end-ip"], d, pre_append, sv)
 		}
 
@@ -371,6 +370,12 @@ func flattenSystemGeoipOverrideIp6RangeEndIp(v interface{}, d *schema.ResourceDa
 
 func refreshObjectSystemGeoipOverride(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemGeoipOverrideName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -390,7 +395,7 @@ func refreshObjectSystemGeoipOverride(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ip_range", flattenSystemGeoipOverrideIpRange(o["ip-range"], d, "ip_range", sv)); err != nil {
 			if !fortiAPIPatch(o["ip-range"]) {
 				return fmt.Errorf("Error reading ip_range: %v", err)
@@ -406,7 +411,7 @@ func refreshObjectSystemGeoipOverride(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ip6_range", flattenSystemGeoipOverrideIp6Range(o["ip6-range"], d, "ip6_range", sv)); err != nil {
 			if !fortiAPIPatch(o["ip6-range"]) {
 				return fmt.Errorf("Error reading ip6_range: %v", err)
@@ -459,19 +464,16 @@ func expandSystemGeoipOverrideIpRange(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemGeoipOverrideIpRangeId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["start-ip"], _ = expandSystemGeoipOverrideIpRangeStartIp(d, i["start_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["end-ip"], _ = expandSystemGeoipOverrideIpRangeEndIp(d, i["end_ip"], pre_append, sv)
 		}
 
@@ -511,19 +513,16 @@ func expandSystemGeoipOverrideIp6Range(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemGeoipOverrideIp6RangeId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["start-ip"], _ = expandSystemGeoipOverrideIp6RangeStartIp(d, i["start_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["end-ip"], _ = expandSystemGeoipOverrideIp6RangeEndIp(d, i["end_ip"], pre_append, sv)
 		}
 
@@ -551,7 +550,6 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemGeoipOverrideName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -561,7 +559,6 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSystemGeoipOverrideDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -571,7 +568,6 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("country_id"); ok {
-
 		t, err := expandSystemGeoipOverrideCountryId(d, v, "country_id", sv)
 		if err != nil {
 			return &obj, err
@@ -581,7 +577,6 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("ip_range"); ok || d.HasChange("ip_range") {
-
 		t, err := expandSystemGeoipOverrideIpRange(d, v, "ip_range", sv)
 		if err != nil {
 			return &obj, err
@@ -591,7 +586,6 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("ip6_range"); ok || d.HasChange("ip6_range") {
-
 		t, err := expandSystemGeoipOverrideIp6Range(d, v, "ip6_range", sv)
 		if err != nil {
 			return &obj, err

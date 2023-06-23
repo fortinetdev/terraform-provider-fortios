@@ -252,7 +252,6 @@ func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["rx-cpus"] = nil
 		} else {
-
 			t, err := expandDpdkCpusRxCpus(d, v, "rx_cpus", sv)
 			if err != nil {
 				return &obj, err
@@ -266,7 +265,6 @@ func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vnp-cpus"] = nil
 		} else {
-
 			t, err := expandDpdkCpusVnpCpus(d, v, "vnp_cpus", sv)
 			if err != nil {
 				return &obj, err
@@ -280,7 +278,6 @@ func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ips-cpus"] = nil
 		} else {
-
 			t, err := expandDpdkCpusIpsCpus(d, v, "ips_cpus", sv)
 			if err != nil {
 				return &obj, err
@@ -294,7 +291,6 @@ func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["tx-cpus"] = nil
 		} else {
-
 			t, err := expandDpdkCpusTxCpus(d, v, "tx_cpus", sv)
 			if err != nil {
 				return &obj, err
@@ -308,7 +304,6 @@ func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["isolated-cpus"] = nil
 		} else {
-
 			t, err := expandDpdkCpusIsolatedCpus(d, v, "isolated_cpus", sv)
 			if err != nil {
 				return &obj, err

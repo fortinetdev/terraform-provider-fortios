@@ -37,6 +37,8 @@ The following arguments are supported:
 
 * `name` - Name of the wireless controller.
 * `location` - Description of the location of the wireless controller.
+* `acd_process_count` - Configure the number cw_acd daemons for multi-core CPU support (default = 0).
+* `wpad_process_count` - Wpad daemon process count for multi-core CPU support.
 * `image_download` - Enable/disable WTP image download at join time. Valid values: `enable`, `disable`.
 * `max_retransmit` - Maximum number of tunnel packet retransmissions (0 - 64, default = 3).
 * `control_message_offload` - Configure CAPWAP control message data channel offload.
@@ -54,6 +56,7 @@ The following arguments are supported:
 * `ap_log_server` - Enable/disable configuring APs or FortiAPs to send log messages to a syslog server (default = disable). Valid values: `enable`, `disable`.
 * `ap_log_server_ip` - IP address that APs or FortiAPs send log messages to.
 * `ap_log_server_port` - Port that APs or FortiAPs send log messages to.
+* `dfs_lab_test` - Enable/disable DFS certificate lab test mode. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

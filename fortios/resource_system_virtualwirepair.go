@@ -71,6 +71,11 @@ func resourceSystemVirtualWirePair() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -226,7 +231,6 @@ func flattenSystemVirtualWirePairMember(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenSystemVirtualWirePairMemberInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -253,6 +257,12 @@ func flattenSystemVirtualWirePairVlanFilter(v interface{}, d *schema.ResourceDat
 
 func refreshObjectSystemVirtualWirePair(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemVirtualWirePairName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -260,7 +270,7 @@ func refreshObjectSystemVirtualWirePair(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenSystemVirtualWirePairMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -317,7 +327,6 @@ func expandSystemVirtualWirePairMember(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandSystemVirtualWirePairMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -345,7 +354,6 @@ func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemVirtualWirePairName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -355,7 +363,6 @@ func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandSystemVirtualWirePairMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -365,7 +372,6 @@ func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("wildcard_vlan"); ok {
-
 		t, err := expandSystemVirtualWirePairWildcardVlan(d, v, "wildcard_vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -375,7 +381,6 @@ func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("vlan_filter"); ok {
-
 		t, err := expandSystemVirtualWirePairVlanFilter(d, v, "vlan_filter", sv)
 		if err != nil {
 			return &obj, err

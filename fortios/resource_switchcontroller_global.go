@@ -92,6 +92,38 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_option82_format": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dhcp_option82_circuit_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dhcp_option82_remote_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dhcp_snoop_client_req": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dhcp_snoop_client_db_exp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(300, 259200),
+				Optional:     true,
+				Computed:     true,
+			},
+			"dhcp_snoop_db_per_port_learn_limit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 2048),
+				Optional:     true,
+				Computed:     true,
+			},
 			"log_mac_limit_violations": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -158,6 +190,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -306,7 +343,6 @@ func flattenSwitchControllerGlobalDisableDiscovery(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerGlobalDisableDiscoveryName(i["name"], d, pre_append, sv)
 		}
 
@@ -332,6 +368,30 @@ func flattenSwitchControllerGlobalDefaultVirtualSwitchVlan(v interface{}, d *sch
 }
 
 func flattenSwitchControllerGlobalDhcpServerAccessList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalDhcpOption82Format(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalDhcpOption82CircuitId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalDhcpOption82RemoteId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalDhcpSnoopClientReq(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalDhcpSnoopClientDbExp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalDhcpSnoopDbPerPortLearnLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -389,13 +449,11 @@ func flattenSwitchControllerGlobalCustomCommand(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
 		if _, ok := i["command-entry"]; ok {
-
 			tmp["command_entry"] = flattenSwitchControllerGlobalCustomCommandCommandEntry(i["command-entry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
 		if _, ok := i["command-name"]; ok {
-
 			tmp["command_name"] = flattenSwitchControllerGlobalCustomCommandCommandName(i["command-name"], d, pre_append, sv)
 		}
 
@@ -426,6 +484,12 @@ func flattenSwitchControllerGlobalFirmwareProvisionOnAuthorization(v interface{}
 
 func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("mac_aging_interval", flattenSwitchControllerGlobalMacAgingInterval(o["mac-aging-interval"], d, "mac_aging_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-aging-interval"]) {
@@ -457,7 +521,7 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("disable_discovery", flattenSwitchControllerGlobalDisableDiscovery(o["disable-discovery"], d, "disable_discovery", sv)); err != nil {
 			if !fortiAPIPatch(o["disable-discovery"]) {
 				return fmt.Errorf("Error reading disable_discovery: %v", err)
@@ -488,6 +552,42 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("dhcp_server_access_list", flattenSwitchControllerGlobalDhcpServerAccessList(o["dhcp-server-access-list"], d, "dhcp_server_access_list", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-server-access-list"]) {
 			return fmt.Errorf("Error reading dhcp_server_access_list: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_option82_format", flattenSwitchControllerGlobalDhcpOption82Format(o["dhcp-option82-format"], d, "dhcp_option82_format", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-option82-format"]) {
+			return fmt.Errorf("Error reading dhcp_option82_format: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_option82_circuit_id", flattenSwitchControllerGlobalDhcpOption82CircuitId(o["dhcp-option82-circuit-id"], d, "dhcp_option82_circuit_id", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-option82-circuit-id"]) {
+			return fmt.Errorf("Error reading dhcp_option82_circuit_id: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_option82_remote_id", flattenSwitchControllerGlobalDhcpOption82RemoteId(o["dhcp-option82-remote-id"], d, "dhcp_option82_remote_id", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-option82-remote-id"]) {
+			return fmt.Errorf("Error reading dhcp_option82_remote_id: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_snoop_client_req", flattenSwitchControllerGlobalDhcpSnoopClientReq(o["dhcp-snoop-client-req"], d, "dhcp_snoop_client_req", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-snoop-client-req"]) {
+			return fmt.Errorf("Error reading dhcp_snoop_client_req: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_snoop_client_db_exp", flattenSwitchControllerGlobalDhcpSnoopClientDbExp(o["dhcp-snoop-client-db-exp"], d, "dhcp_snoop_client_db_exp", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-snoop-client-db-exp"]) {
+			return fmt.Errorf("Error reading dhcp_snoop_client_db_exp: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_snoop_db_per_port_learn_limit", flattenSwitchControllerGlobalDhcpSnoopDbPerPortLearnLimit(o["dhcp-snoop-db-per-port-learn-limit"], d, "dhcp_snoop_db_per_port_learn_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-snoop-db-per-port-learn-limit"]) {
+			return fmt.Errorf("Error reading dhcp_snoop_db_per_port_learn_limit: %v", err)
 		}
 	}
 
@@ -533,7 +633,7 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("custom_command", flattenSwitchControllerGlobalCustomCommand(o["custom-command"], d, "custom_command", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-command"]) {
 				return fmt.Errorf("Error reading custom_command: %v", err)
@@ -606,7 +706,6 @@ func expandSwitchControllerGlobalDisableDiscovery(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerGlobalDisableDiscoveryName(d, i["name"], pre_append, sv)
 		}
 
@@ -631,6 +730,30 @@ func expandSwitchControllerGlobalDefaultVirtualSwitchVlan(d *schema.ResourceData
 }
 
 func expandSwitchControllerGlobalDhcpServerAccessList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpOption82Format(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpOption82CircuitId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpOption82RemoteId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpSnoopClientReq(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpSnoopClientDbExp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalDhcpSnoopDbPerPortLearnLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -678,13 +801,11 @@ func expandSwitchControllerGlobalCustomCommand(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["command-entry"], _ = expandSwitchControllerGlobalCustomCommandCommandEntry(d, i["command_entry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["command-name"], _ = expandSwitchControllerGlobalCustomCommandCommandName(d, i["command_name"], pre_append, sv)
 		}
 
@@ -719,7 +840,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["mac-aging-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalMacAgingInterval(d, v, "mac_aging_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -733,7 +853,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["allow-multiple-interfaces"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalAllowMultipleInterfaces(d, v, "allow_multiple_interfaces", sv)
 			if err != nil {
 				return &obj, err
@@ -747,7 +866,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["https-image-push"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalHttpsImagePush(d, v, "https_image_push", sv)
 			if err != nil {
 				return &obj, err
@@ -761,7 +879,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["vlan-all-mode"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalVlanAllMode(d, v, "vlan_all_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -775,7 +892,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["vlan-optimization"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalVlanOptimization(d, v, "vlan_optimization", sv)
 			if err != nil {
 				return &obj, err
@@ -789,7 +905,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["disable-discovery"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerGlobalDisableDiscovery(d, v, "disable_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -803,7 +918,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["mac-retention-period"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalMacRetentionPeriod(d, v, "mac_retention_period", sv)
 			if err != nil {
 				return &obj, err
@@ -817,7 +931,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["default-virtual-switch-vlan"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalDefaultVirtualSwitchVlan(d, v, "default_virtual_switch_vlan", sv)
 			if err != nil {
 				return &obj, err
@@ -831,7 +944,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["dhcp-server-access-list"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalDhcpServerAccessList(d, v, "dhcp_server_access_list", sv)
 			if err != nil {
 				return &obj, err
@@ -841,11 +953,88 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
+	if v, ok := d.GetOk("dhcp_option82_format"); ok {
+		if setArgNil {
+			obj["dhcp-option82-format"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalDhcpOption82Format(d, v, "dhcp_option82_format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-option82-format"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_option82_circuit_id"); ok {
+		if setArgNil {
+			obj["dhcp-option82-circuit-id"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalDhcpOption82CircuitId(d, v, "dhcp_option82_circuit_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-option82-circuit-id"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_option82_remote_id"); ok {
+		if setArgNil {
+			obj["dhcp-option82-remote-id"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalDhcpOption82RemoteId(d, v, "dhcp_option82_remote_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-option82-remote-id"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_snoop_client_req"); ok {
+		if setArgNil {
+			obj["dhcp-snoop-client-req"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalDhcpSnoopClientReq(d, v, "dhcp_snoop_client_req", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-snoop-client-req"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_snoop_client_db_exp"); ok {
+		if setArgNil {
+			obj["dhcp-snoop-client-db-exp"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalDhcpSnoopClientDbExp(d, v, "dhcp_snoop_client_db_exp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-snoop-client-db-exp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("dhcp_snoop_db_per_port_learn_limit"); ok {
+		if setArgNil {
+			obj["dhcp-snoop-db-per-port-learn-limit"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalDhcpSnoopDbPerPortLearnLimit(d, v, "dhcp_snoop_db_per_port_learn_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-snoop-db-per-port-learn-limit"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("log_mac_limit_violations"); ok {
 		if setArgNil {
 			obj["log-mac-limit-violations"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalLogMacLimitViolations(d, v, "log_mac_limit_violations", sv)
 			if err != nil {
 				return &obj, err
@@ -859,7 +1048,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["mac-violation-timer"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalMacViolationTimer(d, v, "mac_violation_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -873,7 +1061,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["sn-dns-resolution"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalSnDnsResolution(d, v, "sn_dns_resolution", sv)
 			if err != nil {
 				return &obj, err
@@ -887,7 +1074,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["mac-event-logging"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalMacEventLogging(d, v, "mac_event_logging", sv)
 			if err != nil {
 				return &obj, err
@@ -901,7 +1087,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["bounce-quarantined-link"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalBounceQuarantinedLink(d, v, "bounce_quarantined_link", sv)
 			if err != nil {
 				return &obj, err
@@ -915,7 +1100,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["quarantine-mode"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalQuarantineMode(d, v, "quarantine_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -929,7 +1113,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["update-user-device"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalUpdateUserDevice(d, v, "update_user_device", sv)
 			if err != nil {
 				return &obj, err
@@ -943,7 +1126,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["custom-command"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerGlobalCustomCommand(d, v, "custom_command", sv)
 			if err != nil {
 				return &obj, err
@@ -957,7 +1139,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["fips-enforce"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalFipsEnforce(d, v, "fips_enforce", sv)
 			if err != nil {
 				return &obj, err
@@ -971,7 +1152,6 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["firmware-provision-on-authorization"] = nil
 		} else {
-
 			t, err := expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
 			if err != nil {
 				return &obj, err

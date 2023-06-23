@@ -70,6 +70,7 @@ The following arguments are supported:
 * `nat46_generate_ipv6_fragment_header` - Enable/disable NAT46 IPv6 fragment header generation. Valid values: `enable`, `disable`.
 * `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in NAT46. Valid values: `enable`, `disable`.
 * `nat64_force_ipv6_packet_forwarding` - Enable/disable mandatory IPv6 packet forwarding in NAT64. Valid values: `enable`, `disable`.
+* `detect_unknown_esp` - Enable/disable detection of unknown ESP packets (default = enable). Valid values: `enable`, `disable`.
 * `auxiliary_session` - Enable/disable auxiliary session. Valid values: `enable`, `disable`.
 * `asymroute` - Enable/disable IPv4 asymmetric routing. Valid values: `enable`, `disable`.
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing. Valid values: `enable`, `disable`.
@@ -106,6 +107,7 @@ The following arguments are supported:
 * `gui_multicast_policy` - Enable/disable multicast firewall policies on the GUI. Valid values: `enable`, `disable`.
 * `gui_dos_policy` - Enable/disable DoS policies on the GUI. Valid values: `enable`, `disable`.
 * `gui_object_colors` - Enable/disable object colors on the GUI. Valid values: `enable`, `disable`.
+* `gui_route_tag_address_creation` - Enable/disable route-tag addresses on the GUI. Valid values: `enable`, `disable`.
 * `gui_replacement_message_groups` - Enable/disable replacement message groups on the GUI. Valid values: `enable`, `disable`.
 * `gui_voip_profile` - Enable/disable VoIP profiles on the GUI. Valid values: `enable`, `disable`.
 * `gui_ap_profile` - Enable/disable FortiAP profiles on the GUI. Valid values: `enable`, `disable`.
@@ -142,7 +144,9 @@ The following arguments are supported:
 * `gui_videofilter` - Enable/disable Video filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_dnsfilter` - Enable/disable DNS Filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_waf_profile` - Enable/disable Web Application Firewall on the GUI. Valid values: `enable`, `disable`.
+* `gui_dlp_profile` - Enable/disable Data Leak Prevention on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortiextender_controller` - Enable/disable FortiExtender on the GUI. Valid values: `enable`, `disable`.
+* `gui_proxy_inspection` - Enable/disable the proxy features on the GUI. Valid values: `enable`, `disable`.
 * `gui_advanced_policy` - Enable/disable advanced policy configuration on the GUI. Valid values: `enable`, `disable`.
 * `gui_allow_unnamed_policy` - Enable/disable the requirement for policy naming on the GUI. Valid values: `enable`, `disable`.
 * `gui_email_collection` - Enable/disable email collection on the GUI. Valid values: `enable`, `disable`.
@@ -151,6 +155,7 @@ The following arguments are supported:
 * `gui_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_ztna` - Enable/disable Zero Trust Network Access features on the GUI. Valid values: `enable`, `disable`.
 * `gui_ot` - Enable/disable Show Operational Technology Purdue Model. Valid values: `enable`, `disable`.
+* `gui_dynamic_device_os_id` - Enable/disable Create dynamic addresses to manage known devices. Valid values: `enable`, `disable`.
 * `location_id` - Local location ID in the form of an IPv4 address.
 * `gui_per_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_learning` - Enable/disable firewall policy learning mode on the GUI. Valid values: `enable`, `disable`.
@@ -169,7 +174,9 @@ The following arguments are supported:
 * `dyn_addr_session_check` - Enable/disable dirty session check caused by dynamic address updates. Valid values: `enable`, `disable`.
 * `default_policy_expiry_days` - Default policy expiry in days (0 - 365 days, default = 30).
 * `gui_enforce_change_summary` - Enforce change summaries for select tables in the GUI. Valid values: `disable`, `require`, `optional`.
+* `internet_service_database_cache` - Enable/disable Internet Service database caching. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `gui_default_policy_columns` block supports:

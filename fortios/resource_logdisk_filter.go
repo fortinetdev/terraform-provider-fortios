@@ -240,6 +240,11 @@ func resourceLogDiskFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -412,25 +417,21 @@ func flattenLogDiskFilterFreeStyle(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogDiskFilterFreeStyleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogDiskFilterFreeStyleCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenLogDiskFilterFreeStyleFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-
 			tmp["filter_type"] = flattenLogDiskFilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
@@ -549,6 +550,12 @@ func flattenLogDiskFilterFilterType(v interface{}, d *schema.ResourceData, pre s
 
 func refreshObjectLogDiskFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("severity", flattenLogDiskFilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -622,7 +629,7 @@ func refreshObjectLogDiskFilter(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogDiskFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
 				return fmt.Errorf("Error reading free_style: %v", err)
@@ -843,25 +850,21 @@ func expandLogDiskFilterFreeStyle(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogDiskFilterFreeStyleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogDiskFilterFreeStyleCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandLogDiskFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-type"], _ = expandLogDiskFilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
@@ -984,7 +987,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err
@@ -998,7 +1000,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["forward-traffic"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterForwardTraffic(d, v, "forward_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1012,7 +1013,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["local-traffic"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterLocalTraffic(d, v, "local_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1026,7 +1026,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["multicast-traffic"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterMulticastTraffic(d, v, "multicast_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1040,7 +1039,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["sniffer-traffic"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1054,7 +1052,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ztna-traffic"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterZtnaTraffic(d, v, "ztna_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1068,7 +1065,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["anomaly"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterAnomaly(d, v, "anomaly", sv)
 			if err != nil {
 				return &obj, err
@@ -1082,7 +1078,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["netscan-discovery"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -1096,7 +1091,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["netscan-vulnerability"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
 			if err != nil {
 				return &obj, err
@@ -1110,7 +1104,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["voip"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterVoip(d, v, "voip", sv)
 			if err != nil {
 				return &obj, err
@@ -1124,7 +1117,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["dlp-archive"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterDlpArchive(d, v, "dlp_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -1138,7 +1130,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["gtp"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterGtp(d, v, "gtp", sv)
 			if err != nil {
 				return &obj, err
@@ -1152,7 +1143,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogDiskFilterFreeStyle(d, v, "free_style", sv)
 			if err != nil {
 				return &obj, err
@@ -1166,7 +1156,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["dns"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterDns(d, v, "dns", sv)
 			if err != nil {
 				return &obj, err
@@ -1180,7 +1169,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ssh"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSsh(d, v, "ssh", sv)
 			if err != nil {
 				return &obj, err
@@ -1194,7 +1182,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["event"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterEvent(d, v, "event", sv)
 			if err != nil {
 				return &obj, err
@@ -1208,7 +1195,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["system"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSystem(d, v, "system", sv)
 			if err != nil {
 				return &obj, err
@@ -1222,7 +1208,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["radius"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterRadius(d, v, "radius", sv)
 			if err != nil {
 				return &obj, err
@@ -1236,7 +1221,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ipsec"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterIpsec(d, v, "ipsec", sv)
 			if err != nil {
 				return &obj, err
@@ -1250,7 +1234,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["dhcp"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterDhcp(d, v, "dhcp", sv)
 			if err != nil {
 				return &obj, err
@@ -1264,7 +1247,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ppp"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterPpp(d, v, "ppp", sv)
 			if err != nil {
 				return &obj, err
@@ -1278,7 +1260,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["admin"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterAdmin(d, v, "admin", sv)
 			if err != nil {
 				return &obj, err
@@ -1292,7 +1273,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ha"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterHa(d, v, "ha", sv)
 			if err != nil {
 				return &obj, err
@@ -1306,7 +1286,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["auth"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterAuth(d, v, "auth", sv)
 			if err != nil {
 				return &obj, err
@@ -1320,7 +1299,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["pattern"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterPattern(d, v, "pattern", sv)
 			if err != nil {
 				return &obj, err
@@ -1334,7 +1312,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["sslvpn-log-auth"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSslvpnLogAuth(d, v, "sslvpn_log_auth", sv)
 			if err != nil {
 				return &obj, err
@@ -1348,7 +1325,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["sslvpn-log-adm"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSslvpnLogAdm(d, v, "sslvpn_log_adm", sv)
 			if err != nil {
 				return &obj, err
@@ -1362,7 +1338,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["sslvpn-log-session"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterSslvpnLogSession(d, v, "sslvpn_log_session", sv)
 			if err != nil {
 				return &obj, err
@@ -1376,7 +1351,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["vip-ssl"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterVipSsl(d, v, "vip_ssl", sv)
 			if err != nil {
 				return &obj, err
@@ -1390,7 +1364,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ldb-monitor"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterLdbMonitor(d, v, "ldb_monitor", sv)
 			if err != nil {
 				return &obj, err
@@ -1404,7 +1377,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["wan-opt"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterWanOpt(d, v, "wan_opt", sv)
 			if err != nil {
 				return &obj, err
@@ -1418,7 +1390,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["wireless-activity"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterWirelessActivity(d, v, "wireless_activity", sv)
 			if err != nil {
 				return &obj, err
@@ -1432,7 +1403,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["cpu-memory-usage"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterCpuMemoryUsage(d, v, "cpu_memory_usage", sv)
 			if err != nil {
 				return &obj, err
@@ -1446,7 +1416,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["filter"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterFilter(d, v, "filter", sv)
 			if err != nil {
 				return &obj, err
@@ -1460,7 +1429,6 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["filter-type"] = nil
 		} else {
-
 			t, err := expandLogDiskFilterFilterType(d, v, "filter_type", sv)
 			if err != nil {
 				return &obj, err

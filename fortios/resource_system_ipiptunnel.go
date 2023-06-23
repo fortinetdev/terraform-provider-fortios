@@ -290,7 +290,6 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemIpipTunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -300,7 +299,6 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemIpipTunnelInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -310,7 +308,6 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {
-
 		t, err := expandSystemIpipTunnelRemoteGw(d, v, "remote_gw", sv)
 		if err != nil {
 			return &obj, err
@@ -320,7 +317,6 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("local_gw"); ok {
-
 		t, err := expandSystemIpipTunnelLocalGw(d, v, "local_gw", sv)
 		if err != nil {
 			return &obj, err
@@ -330,7 +326,6 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {
-
 		t, err := expandSystemIpipTunnelUseSdwan(d, v, "use_sdwan", sv)
 		if err != nil {
 			return &obj, err
@@ -340,7 +335,6 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
-
 		t, err := expandSystemIpipTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
 		if err != nil {
 			return &obj, err

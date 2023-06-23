@@ -152,6 +152,10 @@ func dataSourceFirewallCentralSnatMap() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dst_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -531,6 +535,10 @@ func dataSourceFlattenFirewallCentralSnatMapNatPort(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenFirewallCentralSnatMapDstPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallCentralSnatMapNat(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -637,6 +645,12 @@ func dataSourceRefreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map
 	if err = d.Set("nat_port", dataSourceFlattenFirewallCentralSnatMapNatPort(o["nat-port"], d, "nat_port")); err != nil {
 		if !fortiAPIPatch(o["nat-port"]) {
 			return fmt.Errorf("Error reading nat_port: %v", err)
+		}
+	}
+
+	if err = d.Set("dst_port", dataSourceFlattenFirewallCentralSnatMapDstPort(o["dst-port"], d, "dst_port")); err != nil {
+		if !fortiAPIPatch(o["dst-port"]) {
+			return fmt.Errorf("Error reading dst_port: %v", err)
 		}
 	}
 

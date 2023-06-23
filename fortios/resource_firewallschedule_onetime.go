@@ -44,9 +44,19 @@ func resourceFirewallScheduleOnetime() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"start_utc": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"end": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"end_utc": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -198,7 +208,15 @@ func flattenFirewallScheduleOnetimeStart(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenFirewallScheduleOnetimeStartUtc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallScheduleOnetimeEnd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallScheduleOnetimeEndUtc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -229,9 +247,21 @@ func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("start_utc", flattenFirewallScheduleOnetimeStartUtc(o["start-utc"], d, "start_utc", sv)); err != nil {
+		if !fortiAPIPatch(o["start-utc"]) {
+			return fmt.Errorf("Error reading start_utc: %v", err)
+		}
+	}
+
 	if err = d.Set("end", flattenFirewallScheduleOnetimeEnd(o["end"], d, "end", sv)); err != nil {
 		if !fortiAPIPatch(o["end"]) {
 			return fmt.Errorf("Error reading end: %v", err)
+		}
+	}
+
+	if err = d.Set("end_utc", flattenFirewallScheduleOnetimeEndUtc(o["end-utc"], d, "end_utc", sv)); err != nil {
+		if !fortiAPIPatch(o["end-utc"]) {
+			return fmt.Errorf("Error reading end_utc: %v", err)
 		}
 	}
 
@@ -270,7 +300,15 @@ func expandFirewallScheduleOnetimeStart(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandFirewallScheduleOnetimeStartUtc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallScheduleOnetimeEnd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallScheduleOnetimeEndUtc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -290,7 +328,6 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallScheduleOnetimeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -300,7 +337,6 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("start"); ok {
-
 		t, err := expandFirewallScheduleOnetimeStart(d, v, "start", sv)
 		if err != nil {
 			return &obj, err
@@ -309,8 +345,16 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("end"); ok {
+	if v, ok := d.GetOk("start_utc"); ok {
+		t, err := expandFirewallScheduleOnetimeStartUtc(d, v, "start_utc", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["start-utc"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("end"); ok {
 		t, err := expandFirewallScheduleOnetimeEnd(d, v, "end", sv)
 		if err != nil {
 			return &obj, err
@@ -319,8 +363,16 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOkExists("color"); ok {
+	if v, ok := d.GetOk("end_utc"); ok {
+		t, err := expandFirewallScheduleOnetimeEndUtc(d, v, "end_utc", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["end-utc"] = t
+		}
+	}
 
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallScheduleOnetimeColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -330,7 +382,6 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("expiration_days"); ok {
-
 		t, err := expandFirewallScheduleOnetimeExpirationDays(d, v, "expiration_days", sv)
 		if err != nil {
 			return &obj, err
@@ -340,7 +391,6 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallScheduleOnetimeFabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

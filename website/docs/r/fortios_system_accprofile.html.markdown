@@ -99,6 +99,7 @@ The following arguments are supported:
 * `system_diagnostics` - Enable/disable permission to run system diagnostic commands. Valid values: `enable`, `disable`.
 * `system_execute_ssh` - Enable/disable permission to execute SSH commands. Valid values: `enable`, `disable`.
 * `system_execute_telnet` - Enable/disable permission to execute TELNET commands. Valid values: `enable`, `disable`.
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `netgrp_permission` block supports:
@@ -135,6 +136,7 @@ The `utmgrp_permission` block supports:
 * `ips` - IPS profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `webfilter` - Web Filter profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `emailfilter` - AntiSpam filter and settings. Valid values: `none`, `read`, `read-write`.
+* `data_leak_prevention` - DLP profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `spamfilter` - AntiSpam filter and settings. Valid values: `none`, `read`, `read-write`.
 * `data_loss_prevention` - DLP profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `file_filter` - File-filter profiles and settings. Valid values: `none`, `read`, `read-write`.

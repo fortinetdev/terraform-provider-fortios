@@ -172,7 +172,6 @@ func getObjectSpamfilterOptions(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["dns-timeout"] = nil
 		} else {
-
 			t, err := expandSpamfilterOptionsDnsTimeout(d, v, "dns_timeout", sv)
 			if err != nil {
 				return &obj, err

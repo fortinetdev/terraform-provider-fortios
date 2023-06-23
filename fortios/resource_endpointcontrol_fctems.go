@@ -37,7 +37,7 @@ func resourceEndpointControlFctems() *schema.Resource {
 			},
 			"ems_id": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 5),
+				ValidateFunc: validation.IntBetween(1, 7),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -171,6 +171,11 @@ func resourceEndpointControlFctems() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"trust_ca_cn": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"status_check_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -409,6 +414,10 @@ func flattenEndpointControlFctemsInterface(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenEndpointControlFctemsTrustCaCn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsStatusCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -564,6 +573,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("trust_ca_cn", flattenEndpointControlFctemsTrustCaCn(o["trust-ca-cn"], d, "trust_ca_cn", sv)); err != nil {
+		if !fortiAPIPatch(o["trust-ca-cn"]) {
+			return fmt.Errorf("Error reading trust_ca_cn: %v", err)
+		}
+	}
+
 	if err = d.Set("status_check_interval", flattenEndpointControlFctemsStatusCheckInterval(o["status-check-interval"], d, "status_check_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["status-check-interval"]) {
 			return fmt.Errorf("Error reading status_check_interval: %v", err)
@@ -685,6 +700,10 @@ func expandEndpointControlFctemsInterface(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandEndpointControlFctemsTrustCaCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsStatusCheckInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -697,7 +716,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("ems_id"); ok {
-
 		t, err := expandEndpointControlFctemsEmsId(d, v, "ems_id", sv)
 		if err != nil {
 			return &obj, err
@@ -707,7 +725,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandEndpointControlFctemsStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -717,7 +734,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandEndpointControlFctemsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -727,7 +743,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("dirty_reason"); ok {
-
 		t, err := expandEndpointControlFctemsDirtyReason(d, v, "dirty_reason", sv)
 		if err != nil {
 			return &obj, err
@@ -737,7 +752,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandEndpointControlFctemsServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -747,7 +761,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
-
 		t, err := expandEndpointControlFctemsSerialNumber(d, v, "serial_number", sv)
 		if err != nil {
 			return &obj, err
@@ -757,7 +770,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("tenant_id"); ok {
-
 		t, err := expandEndpointControlFctemsTenantId(d, v, "tenant_id", sv)
 		if err != nil {
 			return &obj, err
@@ -767,7 +779,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("fortinetone_cloud_authentication"); ok {
-
 		t, err := expandEndpointControlFctemsFortinetoneCloudAuthentication(d, v, "fortinetone_cloud_authentication", sv)
 		if err != nil {
 			return &obj, err
@@ -777,7 +788,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("https_port"); ok {
-
 		t, err := expandEndpointControlFctemsHttpsPort(d, v, "https_port", sv)
 		if err != nil {
 			return &obj, err
@@ -787,7 +797,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("admin_username"); ok {
-
 		t, err := expandEndpointControlFctemsAdminUsername(d, v, "admin_username", sv)
 		if err != nil {
 			return &obj, err
@@ -797,7 +806,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("admin_password"); ok {
-
 		t, err := expandEndpointControlFctemsAdminPassword(d, v, "admin_password", sv)
 		if err != nil {
 			return &obj, err
@@ -807,7 +815,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandEndpointControlFctemsSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -817,7 +824,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("pull_sysinfo"); ok {
-
 		t, err := expandEndpointControlFctemsPullSysinfo(d, v, "pull_sysinfo", sv)
 		if err != nil {
 			return &obj, err
@@ -827,7 +833,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("pull_vulnerabilities"); ok {
-
 		t, err := expandEndpointControlFctemsPullVulnerabilities(d, v, "pull_vulnerabilities", sv)
 		if err != nil {
 			return &obj, err
@@ -837,7 +842,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("pull_avatars"); ok {
-
 		t, err := expandEndpointControlFctemsPullAvatars(d, v, "pull_avatars", sv)
 		if err != nil {
 			return &obj, err
@@ -847,7 +851,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("pull_tags"); ok {
-
 		t, err := expandEndpointControlFctemsPullTags(d, v, "pull_tags", sv)
 		if err != nil {
 			return &obj, err
@@ -857,7 +860,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("pull_malware_hash"); ok {
-
 		t, err := expandEndpointControlFctemsPullMalwareHash(d, v, "pull_malware_hash", sv)
 		if err != nil {
 			return &obj, err
@@ -867,7 +869,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("cloud_server_type"); ok {
-
 		t, err := expandEndpointControlFctemsCloudServerType(d, v, "cloud_server_type", sv)
 		if err != nil {
 			return &obj, err
@@ -877,7 +878,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("capabilities"); ok {
-
 		t, err := expandEndpointControlFctemsCapabilities(d, v, "capabilities", sv)
 		if err != nil {
 			return &obj, err
@@ -887,7 +887,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("call_timeout"); ok {
-
 		t, err := expandEndpointControlFctemsCallTimeout(d, v, "call_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -897,7 +896,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("out_of_sync_threshold"); ok {
-
 		t, err := expandEndpointControlFctemsOutOfSyncThreshold(d, v, "out_of_sync_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -907,7 +905,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("websocket_override"); ok {
-
 		t, err := expandEndpointControlFctemsWebsocketOverride(d, v, "websocket_override", sv)
 		if err != nil {
 			return &obj, err
@@ -917,7 +914,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("preserve_ssl_session"); ok {
-
 		t, err := expandEndpointControlFctemsPreserveSslSession(d, v, "preserve_ssl_session", sv)
 		if err != nil {
 			return &obj, err
@@ -927,7 +923,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
-
 		t, err := expandEndpointControlFctemsInterfaceSelectMethod(d, v, "interface_select_method", sv)
 		if err != nil {
 			return &obj, err
@@ -937,7 +932,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandEndpointControlFctemsInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -946,8 +940,16 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("status_check_interval"); ok {
+	if v, ok := d.GetOk("trust_ca_cn"); ok {
+		t, err := expandEndpointControlFctemsTrustCaCn(d, v, "trust_ca_cn", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["trust-ca-cn"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("status_check_interval"); ok {
 		t, err := expandEndpointControlFctemsStatusCheckInterval(d, v, "status_check_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -957,7 +959,6 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-
 		t, err := expandEndpointControlFctemsCertificate(d, v, "certificate", sv)
 		if err != nil {
 			return &obj, err

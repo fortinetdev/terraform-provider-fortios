@@ -128,6 +128,11 @@ func resourceSystemApiUser() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -295,7 +300,6 @@ func flattenSystemApiUserVdom(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemApiUserVdomName(i["name"], d, pre_append, sv)
 		}
 
@@ -354,25 +358,21 @@ func flattenSystemApiUserTrusthost(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemApiUserTrusthostId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSystemApiUserTrusthostType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_trusthost"
 		if _, ok := i["ipv4-trusthost"]; ok {
-
 			tmp["ipv4_trusthost"] = flattenSystemApiUserTrusthostIpv4Trusthost(i["ipv4-trusthost"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_trusthost"
 		if _, ok := i["ipv6-trusthost"]; ok {
-
 			tmp["ipv6_trusthost"] = flattenSystemApiUserTrusthostIpv6Trusthost(i["ipv6-trusthost"], d, pre_append, sv)
 		}
 
@@ -410,6 +410,12 @@ func flattenSystemApiUserTrusthostIpv6Trusthost(v interface{}, d *schema.Resourc
 
 func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemApiUserName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -429,7 +435,7 @@ func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vdom", flattenSystemApiUserVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
@@ -469,7 +475,7 @@ func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("trusthost", flattenSystemApiUserTrusthost(o["trusthost"], d, "trusthost", sv)); err != nil {
 			if !fortiAPIPatch(o["trusthost"]) {
 				return fmt.Errorf("Error reading trusthost: %v", err)
@@ -526,7 +532,6 @@ func expandSystemApiUserVdom(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemApiUserVdomName(d, i["name"], pre_append, sv)
 		}
 
@@ -574,25 +579,21 @@ func expandSystemApiUserTrusthost(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemApiUserTrusthostId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSystemApiUserTrusthostType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_trusthost"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv4-trusthost"], _ = expandSystemApiUserTrusthostIpv4Trusthost(d, i["ipv4_trusthost"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_trusthost"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv6-trusthost"], _ = expandSystemApiUserTrusthostIpv6Trusthost(d, i["ipv6_trusthost"], pre_append, sv)
 		}
 
@@ -624,7 +625,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemApiUserName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -634,7 +634,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandSystemApiUserComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -644,7 +643,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("api_key"); ok {
-
 		t, err := expandSystemApiUserApiKey(d, v, "api_key", sv)
 		if err != nil {
 			return &obj, err
@@ -654,7 +652,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("accprofile"); ok {
-
 		t, err := expandSystemApiUserAccprofile(d, v, "accprofile", sv)
 		if err != nil {
 			return &obj, err
@@ -664,7 +661,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
-
 		t, err := expandSystemApiUserVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -674,7 +670,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
-
 		t, err := expandSystemApiUserSchedule(d, v, "schedule", sv)
 		if err != nil {
 			return &obj, err
@@ -684,7 +679,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("cors_allow_origin"); ok {
-
 		t, err := expandSystemApiUserCorsAllowOrigin(d, v, "cors_allow_origin", sv)
 		if err != nil {
 			return &obj, err
@@ -694,7 +688,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("peer_auth"); ok {
-
 		t, err := expandSystemApiUserPeerAuth(d, v, "peer_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -704,7 +697,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("peer_group"); ok {
-
 		t, err := expandSystemApiUserPeerGroup(d, v, "peer_group", sv)
 		if err != nil {
 			return &obj, err
@@ -714,7 +706,6 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("trusthost"); ok || d.HasChange("trusthost") {
-
 		t, err := expandSystemApiUserTrusthost(d, v, "trusthost", sv)
 		if err != nil {
 			return &obj, err

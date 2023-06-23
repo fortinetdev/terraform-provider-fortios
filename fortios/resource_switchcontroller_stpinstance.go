@@ -61,6 +61,11 @@ func resourceSwitchControllerStpInstance() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -216,7 +221,6 @@ func flattenSwitchControllerStpInstanceVlanRange(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerStpInstanceVlanRangeVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
@@ -235,6 +239,12 @@ func flattenSwitchControllerStpInstanceVlanRangeVlanName(v interface{}, d *schem
 
 func refreshObjectSwitchControllerStpInstance(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSwitchControllerStpInstanceId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -242,7 +252,7 @@ func refreshObjectSwitchControllerStpInstance(d *schema.ResourceData, o map[stri
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vlan_range", flattenSwitchControllerStpInstanceVlanRange(o["vlan-range"], d, "vlan_range", sv)); err != nil {
 			if !fortiAPIPatch(o["vlan-range"]) {
 				return fmt.Errorf("Error reading vlan_range: %v", err)
@@ -287,7 +297,6 @@ func expandSwitchControllerStpInstanceVlanRange(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerStpInstanceVlanRangeVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
@@ -307,7 +316,6 @@ func getObjectSwitchControllerStpInstance(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandSwitchControllerStpInstanceId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -317,7 +325,6 @@ func getObjectSwitchControllerStpInstance(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("vlan_range"); ok || d.HasChange("vlan_range") {
-
 		t, err := expandSwitchControllerStpInstanceVlanRange(d, v, "vlan_range", sv)
 		if err != nil {
 			return &obj, err

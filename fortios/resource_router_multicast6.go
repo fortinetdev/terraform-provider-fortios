@@ -110,6 +110,11 @@ func resourceRouterMulticast6() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -242,19 +247,16 @@ func flattenRouterMulticast6Interface(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterMulticast6InterfaceName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
 		if _, ok := i["hello-interval"]; ok {
-
 			tmp["hello_interval"] = flattenRouterMulticast6InterfaceHelloInterval(i["hello-interval"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_holdtime"
 		if _, ok := i["hello-holdtime"]; ok {
-
 			tmp["hello_holdtime"] = flattenRouterMulticast6InterfaceHelloHoldtime(i["hello-holdtime"], d, pre_append, sv)
 		}
 
@@ -290,13 +292,11 @@ func flattenRouterMulticast6PimSmGlobal(v interface{}, d *schema.ResourceData, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "register_rate_limit"
 	if _, ok := i["register-rate-limit"]; ok {
-
 		result["register_rate_limit"] = flattenRouterMulticast6PimSmGlobalRegisterRateLimit(i["register-rate-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "rp_address"
 	if _, ok := i["rp-address"]; ok {
-
 		result["rp_address"] = flattenRouterMulticast6PimSmGlobalRpAddress(i["rp-address"], d, pre_append, sv)
 	}
 
@@ -334,13 +334,11 @@ func flattenRouterMulticast6PimSmGlobalRpAddress(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterMulticast6PimSmGlobalRpAddressId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_address"
 		if _, ok := i["ip6-address"]; ok {
-
 			tmp["ip6_address"] = flattenRouterMulticast6PimSmGlobalRpAddressIp6Address(i["ip6-address"], d, pre_append, sv)
 		}
 
@@ -363,6 +361,12 @@ func flattenRouterMulticast6PimSmGlobalRpAddressIp6Address(v interface{}, d *sch
 
 func refreshObjectRouterMulticast6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("multicast_routing", flattenRouterMulticast6MulticastRouting(o["multicast-routing"], d, "multicast_routing", sv)); err != nil {
 		if !fortiAPIPatch(o["multicast-routing"]) {
@@ -376,7 +380,7 @@ func refreshObjectRouterMulticast6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("interface", flattenRouterMulticast6Interface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
 				return fmt.Errorf("Error reading interface: %v", err)
@@ -392,7 +396,7 @@ func refreshObjectRouterMulticast6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("pim_sm_global", flattenRouterMulticast6PimSmGlobal(o["pim-sm-global"], d, "pim_sm_global", sv)); err != nil {
 			if !fortiAPIPatch(o["pim-sm-global"]) {
 				return fmt.Errorf("Error reading pim_sm_global: %v", err)
@@ -441,19 +445,16 @@ func expandRouterMulticast6Interface(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterMulticast6InterfaceName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["hello-interval"], _ = expandRouterMulticast6InterfaceHelloInterval(d, i["hello_interval"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_holdtime"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["hello-holdtime"], _ = expandRouterMulticast6InterfaceHelloHoldtime(d, i["hello_holdtime"], pre_append, sv)
 		}
 
@@ -492,7 +493,6 @@ func expandRouterMulticast6PimSmGlobal(d *schema.ResourceData, v interface{}, pr
 		if setArgNil {
 			result["register-rate-limit"] = nil
 		} else {
-
 			result["register-rate-limit"], _ = expandRouterMulticast6PimSmGlobalRegisterRateLimit(d, i["register_rate_limit"], pre_append, sv)
 		}
 	}
@@ -501,7 +501,6 @@ func expandRouterMulticast6PimSmGlobal(d *schema.ResourceData, v interface{}, pr
 		if setArgNil {
 			result["rp-address"] = make([]struct{}, 0)
 		} else {
-
 			result["rp-address"], _ = expandRouterMulticast6PimSmGlobalRpAddress(d, i["rp_address"], pre_append, sv)
 		}
 	} else {
@@ -531,13 +530,11 @@ func expandRouterMulticast6PimSmGlobalRpAddress(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterMulticast6PimSmGlobalRpAddressId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_address"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip6-address"], _ = expandRouterMulticast6PimSmGlobalRpAddressIp6Address(d, i["ip6_address"], pre_append, sv)
 		}
 
@@ -564,7 +561,6 @@ func getObjectRouterMulticast6(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["multicast-routing"] = nil
 		} else {
-
 			t, err := expandRouterMulticast6MulticastRouting(d, v, "multicast_routing", sv)
 			if err != nil {
 				return &obj, err
@@ -578,7 +574,6 @@ func getObjectRouterMulticast6(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["multicast-pmtu"] = nil
 		} else {
-
 			t, err := expandRouterMulticast6MulticastPmtu(d, v, "multicast_pmtu", sv)
 			if err != nil {
 				return &obj, err
@@ -592,7 +587,6 @@ func getObjectRouterMulticast6(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandRouterMulticast6Interface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -603,7 +597,6 @@ func getObjectRouterMulticast6(d *schema.ResourceData, setArgNil bool, sv string
 	}
 
 	if v, ok := d.GetOk("pim_sm_global"); ok {
-
 		t, err := expandRouterMulticast6PimSmGlobal(d, v, "pim_sm_global", sv, setArgNil)
 		if err != nil {
 			return &obj, err

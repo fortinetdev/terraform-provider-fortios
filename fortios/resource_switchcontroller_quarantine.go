@@ -83,6 +83,11 @@ func resourceSwitchControllerQuarantine() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -211,25 +216,21 @@ func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-
 			tmp["mac"] = flattenSwitchControllerQuarantineTargetsMac(i["mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := i["entry-id"]; ok {
-
 			tmp["entry_id"] = flattenSwitchControllerQuarantineTargetsEntryId(i["entry-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerQuarantineTargetsDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := i["tag"]; ok {
-
 			tmp["tag"] = flattenSwitchControllerQuarantineTargetsTag(i["tag"], d, pre_append, sv)
 		}
 
@@ -280,7 +281,6 @@ func flattenSwitchControllerQuarantineTargetsTag(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenSwitchControllerQuarantineTargetsTagTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -299,6 +299,12 @@ func flattenSwitchControllerQuarantineTargetsTagTags(v interface{}, d *schema.Re
 
 func refreshObjectSwitchControllerQuarantine(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("quarantine", flattenSwitchControllerQuarantineQuarantine(o["quarantine"], d, "quarantine", sv)); err != nil {
 		if !fortiAPIPatch(o["quarantine"]) {
@@ -306,7 +312,7 @@ func refreshObjectSwitchControllerQuarantine(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("targets", flattenSwitchControllerQuarantineTargets(o["targets"], d, "targets", sv)); err != nil {
 			if !fortiAPIPatch(o["targets"]) {
 				return fmt.Errorf("Error reading targets: %v", err)
@@ -351,25 +357,21 @@ func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac"], _ = expandSwitchControllerQuarantineTargetsMac(d, i["mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["entry-id"], _ = expandSwitchControllerQuarantineTargetsEntryId(d, i["entry_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerQuarantineTargetsDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tag"], _ = expandSwitchControllerQuarantineTargetsTag(d, i["tag"], pre_append, sv)
 		} else {
 			tmp["tag"] = make([]string, 0)
@@ -411,7 +413,6 @@ func expandSwitchControllerQuarantineTargetsTag(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["tags"], _ = expandSwitchControllerQuarantineTargetsTagTags(d, i["tags"], pre_append, sv)
 		}
 
@@ -434,7 +435,6 @@ func getObjectSwitchControllerQuarantine(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["quarantine"] = nil
 		} else {
-
 			t, err := expandSwitchControllerQuarantineQuarantine(d, v, "quarantine", sv)
 			if err != nil {
 				return &obj, err
@@ -448,7 +448,6 @@ func getObjectSwitchControllerQuarantine(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["targets"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerQuarantineTargets(d, v, "targets", sv)
 			if err != nil {
 				return &obj, err

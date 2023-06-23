@@ -216,7 +216,6 @@ func getObjectFirewallTrafficClass(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("class_id"); ok {
-
 		t, err := expandFirewallTrafficClassClassId(d, v, "class_id", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectFirewallTrafficClass(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("class_name"); ok {
-
 		t, err := expandFirewallTrafficClassClassName(d, v, "class_name", sv)
 		if err != nil {
 			return &obj, err

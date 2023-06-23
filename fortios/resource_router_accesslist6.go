@@ -85,6 +85,11 @@ func resourceRouterAccessList6() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -244,31 +249,26 @@ func flattenRouterAccessList6Rule(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterAccessList6RuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenRouterAccessList6RuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if _, ok := i["prefix6"]; ok {
-
 			tmp["prefix6"] = flattenRouterAccessList6RulePrefix6(i["prefix6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
 		if _, ok := i["exact-match"]; ok {
-
 			tmp["exact_match"] = flattenRouterAccessList6RuleExactMatch(i["exact-match"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := i["flags"]; ok {
-
 			tmp["flags"] = flattenRouterAccessList6RuleFlags(i["flags"], d, pre_append, sv)
 		}
 
@@ -303,6 +303,12 @@ func flattenRouterAccessList6RuleFlags(v interface{}, d *schema.ResourceData, pr
 
 func refreshObjectRouterAccessList6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenRouterAccessList6Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -316,7 +322,7 @@ func refreshObjectRouterAccessList6(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rule", flattenRouterAccessList6Rule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
@@ -365,31 +371,26 @@ func expandRouterAccessList6Rule(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterAccessList6RuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandRouterAccessList6RuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["prefix6"], _ = expandRouterAccessList6RulePrefix6(d, i["prefix6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["exact-match"], _ = expandRouterAccessList6RuleExactMatch(d, i["exact_match"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flags"], _ = expandRouterAccessList6RuleFlags(d, i["flags"], pre_append, sv)
 		}
 
@@ -425,7 +426,6 @@ func getObjectRouterAccessList6(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandRouterAccessList6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -435,7 +435,6 @@ func getObjectRouterAccessList6(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandRouterAccessList6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -445,7 +444,6 @@ func getObjectRouterAccessList6(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
-
 		t, err := expandRouterAccessList6Rule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err

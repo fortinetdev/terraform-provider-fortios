@@ -143,7 +143,7 @@ func resourceWebProxyProfile() *schema.Resource {
 						},
 						"content": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 511),
+							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -166,6 +166,11 @@ func resourceWebProxyProfile() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -365,55 +370,46 @@ func flattenWebProxyProfileHeaders(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWebProxyProfileHeadersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyProfileHeadersName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := i["dstaddr"]; ok {
-
 			tmp["dstaddr"] = flattenWebProxyProfileHeadersDstaddr(i["dstaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
 		if _, ok := i["dstaddr6"]; ok {
-
 			tmp["dstaddr6"] = flattenWebProxyProfileHeadersDstaddr6(i["dstaddr6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenWebProxyProfileHeadersAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := i["content"]; ok {
-
 			tmp["content"] = flattenWebProxyProfileHeadersContent(i["content"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
 		if _, ok := i["base64-encoding"]; ok {
-
 			tmp["base64_encoding"] = flattenWebProxyProfileHeadersBase64Encoding(i["base64-encoding"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "add_option"
 		if _, ok := i["add-option"]; ok {
-
 			tmp["add_option"] = flattenWebProxyProfileHeadersAddOption(i["add-option"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenWebProxyProfileHeadersProtocol(i["protocol"], d, pre_append, sv)
 		}
 
@@ -460,7 +456,6 @@ func flattenWebProxyProfileHeadersDstaddr(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyProfileHeadersDstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -503,7 +498,6 @@ func flattenWebProxyProfileHeadersDstaddr6(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyProfileHeadersDstaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -542,6 +536,12 @@ func flattenWebProxyProfileHeadersProtocol(v interface{}, d *schema.ResourceData
 
 func refreshObjectWebProxyProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWebProxyProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -609,7 +609,7 @@ func refreshObjectWebProxyProfile(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("headers", flattenWebProxyProfileHeaders(o["headers"], d, "headers", sv)); err != nil {
 			if !fortiAPIPatch(o["headers"]) {
 				return fmt.Errorf("Error reading headers: %v", err)
@@ -694,19 +694,16 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWebProxyProfileHeadersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyProfileHeadersName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["dstaddr"], _ = expandWebProxyProfileHeadersDstaddr(d, i["dstaddr"], pre_append, sv)
 		} else {
 			tmp["dstaddr"] = make([]string, 0)
@@ -714,7 +711,6 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["dstaddr6"], _ = expandWebProxyProfileHeadersDstaddr6(d, i["dstaddr6"], pre_append, sv)
 		} else {
 			tmp["dstaddr6"] = make([]string, 0)
@@ -722,31 +718,26 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandWebProxyProfileHeadersAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["content"], _ = expandWebProxyProfileHeadersContent(d, i["content"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["base64-encoding"], _ = expandWebProxyProfileHeadersBase64Encoding(d, i["base64_encoding"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "add_option"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["add-option"], _ = expandWebProxyProfileHeadersAddOption(d, i["add_option"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandWebProxyProfileHeadersProtocol(d, i["protocol"], pre_append, sv)
 		}
 
@@ -782,7 +773,6 @@ func expandWebProxyProfileHeadersDstaddr(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyProfileHeadersDstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -814,7 +804,6 @@ func expandWebProxyProfileHeadersDstaddr6(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyProfileHeadersDstaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -854,7 +843,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebProxyProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -864,7 +852,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_client_ip"); ok {
-
 		t, err := expandWebProxyProfileHeaderClientIp(d, v, "header_client_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -874,7 +861,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_via_request"); ok {
-
 		t, err := expandWebProxyProfileHeaderViaRequest(d, v, "header_via_request", sv)
 		if err != nil {
 			return &obj, err
@@ -884,7 +870,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_via_response"); ok {
-
 		t, err := expandWebProxyProfileHeaderViaResponse(d, v, "header_via_response", sv)
 		if err != nil {
 			return &obj, err
@@ -894,7 +879,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_x_forwarded_for"); ok {
-
 		t, err := expandWebProxyProfileHeaderXForwardedFor(d, v, "header_x_forwarded_for", sv)
 		if err != nil {
 			return &obj, err
@@ -904,7 +888,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_x_forwarded_client_cert"); ok {
-
 		t, err := expandWebProxyProfileHeaderXForwardedClientCert(d, v, "header_x_forwarded_client_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -914,7 +897,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_front_end_https"); ok {
-
 		t, err := expandWebProxyProfileHeaderFrontEndHttps(d, v, "header_front_end_https", sv)
 		if err != nil {
 			return &obj, err
@@ -924,7 +906,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_x_authenticated_user"); ok {
-
 		t, err := expandWebProxyProfileHeaderXAuthenticatedUser(d, v, "header_x_authenticated_user", sv)
 		if err != nil {
 			return &obj, err
@@ -934,7 +915,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("header_x_authenticated_groups"); ok {
-
 		t, err := expandWebProxyProfileHeaderXAuthenticatedGroups(d, v, "header_x_authenticated_groups", sv)
 		if err != nil {
 			return &obj, err
@@ -944,7 +924,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("strip_encoding"); ok {
-
 		t, err := expandWebProxyProfileStripEncoding(d, v, "strip_encoding", sv)
 		if err != nil {
 			return &obj, err
@@ -954,7 +933,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("log_header_change"); ok {
-
 		t, err := expandWebProxyProfileLogHeaderChange(d, v, "log_header_change", sv)
 		if err != nil {
 			return &obj, err
@@ -964,7 +942,6 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("headers"); ok || d.HasChange("headers") {
-
 		t, err := expandWebProxyProfileHeaders(d, v, "headers", sv)
 		if err != nil {
 			return &obj, err

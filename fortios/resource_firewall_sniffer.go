@@ -288,6 +288,11 @@ func resourceFirewallSniffer() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -551,7 +556,6 @@ func flattenFirewallSnifferIpThreatfeed(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallSnifferIpThreatfeedName(i["name"], d, pre_append, sv)
 		}
 
@@ -606,55 +610,46 @@ func flattenFirewallSnifferAnomaly(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallSnifferAnomalyName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenFirewallSnifferAnomalyStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenFirewallSnifferAnomalyLog(i["log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenFirewallSnifferAnomalyAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := i["quarantine"]; ok {
-
 			tmp["quarantine"] = flattenFirewallSnifferAnomalyQuarantine(i["quarantine"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := i["quarantine-expiry"]; ok {
-
 			tmp["quarantine_expiry"] = flattenFirewallSnifferAnomalyQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := i["quarantine-log"]; ok {
-
 			tmp["quarantine_log"] = flattenFirewallSnifferAnomalyQuarantineLog(i["quarantine-log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := i["threshold"]; ok {
-
 			tmp["threshold"] = flattenFirewallSnifferAnomalyThreshold(i["threshold"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
 		if _, ok := i["threshold(default)"]; ok {
-
 			tmp["thresholddefault"] = flattenFirewallSnifferAnomalyThresholdDefault(i["threshold(default)"], d, pre_append, sv)
 		}
 
@@ -713,6 +708,12 @@ func flattenFirewallSnifferMaxPacketCount(v interface{}, d *schema.ResourceData,
 
 func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenFirewallSnifferId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -882,7 +883,7 @@ func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ip_threatfeed", flattenFirewallSnifferIpThreatfeed(o["ip-threatfeed"], d, "ip_threatfeed", sv)); err != nil {
 			if !fortiAPIPatch(o["ip-threatfeed"]) {
 				return fmt.Errorf("Error reading ip_threatfeed: %v", err)
@@ -916,7 +917,7 @@ func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("anomaly", flattenFirewallSnifferAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 			if !fortiAPIPatch(o["anomaly"]) {
 				return fmt.Errorf("Error reading anomaly: %v", err)
@@ -1081,7 +1082,6 @@ func expandFirewallSnifferIpThreatfeed(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallSnifferIpThreatfeedName(d, i["name"], pre_append, sv)
 		}
 
@@ -1125,55 +1125,46 @@ func expandFirewallSnifferAnomaly(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallSnifferAnomalyName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandFirewallSnifferAnomalyStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandFirewallSnifferAnomalyLog(d, i["log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandFirewallSnifferAnomalyAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine"], _ = expandFirewallSnifferAnomalyQuarantine(d, i["quarantine"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-expiry"], _ = expandFirewallSnifferAnomalyQuarantineExpiry(d, i["quarantine_expiry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-log"], _ = expandFirewallSnifferAnomalyQuarantineLog(d, i["quarantine_log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["threshold"], _ = expandFirewallSnifferAnomalyThreshold(d, i["threshold"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["threshold(default)"], _ = expandFirewallSnifferAnomalyThresholdDefault(d, i["thresholddefault"], pre_append, sv)
 		}
 
@@ -1233,7 +1224,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallSnifferId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -1243,7 +1233,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallSnifferStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -1253,7 +1242,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("logtraffic"); ok {
-
 		t, err := expandFirewallSnifferLogtraffic(d, v, "logtraffic", sv)
 		if err != nil {
 			return &obj, err
@@ -1263,7 +1251,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ipv6"); ok {
-
 		t, err := expandFirewallSnifferIpv6(d, v, "ipv6", sv)
 		if err != nil {
 			return &obj, err
@@ -1273,7 +1260,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("non_ip"); ok {
-
 		t, err := expandFirewallSnifferNonIp(d, v, "non_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1283,7 +1269,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandFirewallSnifferInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -1293,7 +1278,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("host"); ok {
-
 		t, err := expandFirewallSnifferHost(d, v, "host", sv)
 		if err != nil {
 			return &obj, err
@@ -1303,7 +1287,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandFirewallSnifferPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -1313,7 +1296,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandFirewallSnifferProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1323,7 +1305,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
-
 		t, err := expandFirewallSnifferVlan(d, v, "vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -1333,7 +1314,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("application_list_status"); ok {
-
 		t, err := expandFirewallSnifferApplicationListStatus(d, v, "application_list_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1343,7 +1323,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
-
 		t, err := expandFirewallSnifferApplicationList(d, v, "application_list", sv)
 		if err != nil {
 			return &obj, err
@@ -1353,7 +1332,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ips_sensor_status"); ok {
-
 		t, err := expandFirewallSnifferIpsSensorStatus(d, v, "ips_sensor_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1363,7 +1341,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
-
 		t, err := expandFirewallSnifferIpsSensor(d, v, "ips_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -1373,7 +1350,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dsri"); ok {
-
 		t, err := expandFirewallSnifferDsri(d, v, "dsri", sv)
 		if err != nil {
 			return &obj, err
@@ -1383,7 +1359,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("av_profile_status"); ok {
-
 		t, err := expandFirewallSnifferAvProfileStatus(d, v, "av_profile_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1393,7 +1368,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("av_profile"); ok {
-
 		t, err := expandFirewallSnifferAvProfile(d, v, "av_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -1403,7 +1377,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("webfilter_profile_status"); ok {
-
 		t, err := expandFirewallSnifferWebfilterProfileStatus(d, v, "webfilter_profile_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1413,7 +1386,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
-
 		t, err := expandFirewallSnifferWebfilterProfile(d, v, "webfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -1423,7 +1395,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile_status"); ok {
-
 		t, err := expandFirewallSnifferEmailfilterProfileStatus(d, v, "emailfilter_profile_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1433,7 +1404,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile"); ok {
-
 		t, err := expandFirewallSnifferEmailfilterProfile(d, v, "emailfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -1443,7 +1413,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dlp_profile_status"); ok {
-
 		t, err := expandFirewallSnifferDlpProfileStatus(d, v, "dlp_profile_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1453,7 +1422,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dlp_profile"); ok {
-
 		t, err := expandFirewallSnifferDlpProfile(d, v, "dlp_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -1463,7 +1431,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile_status"); ok {
-
 		t, err := expandFirewallSnifferSpamfilterProfileStatus(d, v, "spamfilter_profile_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1473,7 +1440,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
-
 		t, err := expandFirewallSnifferSpamfilterProfile(d, v, "spamfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -1483,7 +1449,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dlp_sensor_status"); ok {
-
 		t, err := expandFirewallSnifferDlpSensorStatus(d, v, "dlp_sensor_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1493,7 +1458,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dlp_sensor"); ok {
-
 		t, err := expandFirewallSnifferDlpSensor(d, v, "dlp_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -1503,7 +1467,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ip_threatfeed_status"); ok {
-
 		t, err := expandFirewallSnifferIpThreatfeedStatus(d, v, "ip_threatfeed_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1513,7 +1476,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ip_threatfeed"); ok || d.HasChange("ip_threatfeed") {
-
 		t, err := expandFirewallSnifferIpThreatfeed(d, v, "ip_threatfeed", sv)
 		if err != nil {
 			return &obj, err
@@ -1523,7 +1485,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("file_filter_profile_status"); ok {
-
 		t, err := expandFirewallSnifferFileFilterProfileStatus(d, v, "file_filter_profile_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1533,7 +1494,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("file_filter_profile"); ok {
-
 		t, err := expandFirewallSnifferFileFilterProfile(d, v, "file_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -1543,7 +1503,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ips_dos_status"); ok {
-
 		t, err := expandFirewallSnifferIpsDosStatus(d, v, "ips_dos_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1553,7 +1512,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("anomaly"); ok || d.HasChange("anomaly") {
-
 		t, err := expandFirewallSnifferAnomaly(d, v, "anomaly", sv)
 		if err != nil {
 			return &obj, err
@@ -1563,7 +1521,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
-
 		t, err := expandFirewallSnifferScanBotnetConnections(d, v, "scan_botnet_connections", sv)
 		if err != nil {
 			return &obj, err
@@ -1573,7 +1530,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("max_packet_count"); ok {
-
 		t, err := expandFirewallSnifferMaxPacketCount(d, v, "max_packet_count", sv)
 		if err != nil {
 			return &obj, err

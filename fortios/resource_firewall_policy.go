@@ -141,6 +141,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_device_ownership": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ztna_ems_tag": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -154,6 +159,25 @@ func resourceFirewallPolicy() *schema.Resource {
 						},
 					},
 				},
+			},
+			"ztna_ems_tag_secondary": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"ztna_tags_match_logic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ztna_geo_tag": &schema.Schema{
 				Type:     schema.TypeList,
@@ -572,6 +596,10 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"policy_expiry_date_utc": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"service": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -651,6 +679,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_policy_redirect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"webproxy_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -717,6 +750,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional:     true,
 			},
 			"voip_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"ips_voip_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -900,6 +938,30 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"pcp_outbound": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"pcp_inbound": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"pcp_poolname": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
 			},
 			"permit_any_host": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1346,6 +1408,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1509,7 +1576,6 @@ func flattenFirewallPolicySrcintf(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicySrcintfName(i["name"], d, pre_append, sv)
 		}
 
@@ -1552,7 +1618,6 @@ func flattenFirewallPolicyDstintf(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyDstintfName(i["name"], d, pre_append, sv)
 		}
 
@@ -1595,7 +1660,6 @@ func flattenFirewallPolicySrcaddr(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicySrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -1638,7 +1702,6 @@ func flattenFirewallPolicyDstaddr(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyDstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -1681,7 +1744,6 @@ func flattenFirewallPolicySrcaddr6(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicySrcaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -1724,7 +1786,6 @@ func flattenFirewallPolicyDstaddr6(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyDstaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -1742,6 +1803,10 @@ func flattenFirewallPolicyDstaddr6Name(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallPolicyZtnaStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaDeviceOwnership(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1771,7 +1836,6 @@ func flattenFirewallPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyZtnaEmsTagName(i["name"], d, pre_append, sv)
 		}
 
@@ -1785,6 +1849,52 @@ func flattenFirewallPolicyZtnaEmsTag(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenFirewallPolicyZtnaEmsTagName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaEmsTagSecondary(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyZtnaEmsTagSecondaryName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyZtnaEmsTagSecondaryName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaTagsMatchLogic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1814,7 +1924,6 @@ func flattenFirewallPolicyZtnaGeoTag(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyZtnaGeoTagName(i["name"], d, pre_append, sv)
 		}
 
@@ -1861,7 +1970,6 @@ func flattenFirewallPolicyInternetServiceName(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceNameName(i["name"], d, pre_append, sv)
 		}
 
@@ -1904,7 +2012,6 @@ func flattenFirewallPolicyInternetServiceId(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicyInternetServiceIdId(i["id"], d, pre_append, sv)
 		}
 
@@ -1947,7 +2054,6 @@ func flattenFirewallPolicyInternetServiceGroup(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -1990,7 +2096,6 @@ func flattenFirewallPolicyInternetServiceCustom(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceCustomName(i["name"], d, pre_append, sv)
 		}
 
@@ -2033,7 +2138,6 @@ func flattenFirewallPolicyNetworkServiceDynamic(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyNetworkServiceDynamicName(i["name"], d, pre_append, sv)
 		}
 
@@ -2076,7 +2180,6 @@ func flattenFirewallPolicyInternetServiceCustomGroup(v interface{}, d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceCustomGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2123,7 +2226,6 @@ func flattenFirewallPolicyInternetServiceSrcName(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceSrcNameName(i["name"], d, pre_append, sv)
 		}
 
@@ -2166,7 +2268,6 @@ func flattenFirewallPolicyInternetServiceSrcId(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicyInternetServiceSrcIdId(i["id"], d, pre_append, sv)
 		}
 
@@ -2209,7 +2310,6 @@ func flattenFirewallPolicyInternetServiceSrcGroup(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceSrcGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2252,7 +2352,6 @@ func flattenFirewallPolicyInternetServiceSrcCustom(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceSrcCustomName(i["name"], d, pre_append, sv)
 		}
 
@@ -2295,7 +2394,6 @@ func flattenFirewallPolicyNetworkServiceSrcDynamic(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyNetworkServiceSrcDynamicName(i["name"], d, pre_append, sv)
 		}
 
@@ -2338,7 +2436,6 @@ func flattenFirewallPolicyInternetServiceSrcCustomGroup(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetServiceSrcCustomGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2389,7 +2486,6 @@ func flattenFirewallPolicySrcVendorMac(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicySrcVendorMacId(i["id"], d, pre_append, sv)
 		}
 
@@ -2436,7 +2532,6 @@ func flattenFirewallPolicyInternetService6Name(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6NameName(i["name"], d, pre_append, sv)
 		}
 
@@ -2479,7 +2574,6 @@ func flattenFirewallPolicyInternetService6Group(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6GroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2522,7 +2616,6 @@ func flattenFirewallPolicyInternetService6Custom(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6CustomName(i["name"], d, pre_append, sv)
 		}
 
@@ -2565,7 +2658,6 @@ func flattenFirewallPolicyInternetService6CustomGroup(v interface{}, d *schema.R
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6CustomGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2612,7 +2704,6 @@ func flattenFirewallPolicyInternetService6SrcName(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6SrcNameName(i["name"], d, pre_append, sv)
 		}
 
@@ -2655,7 +2746,6 @@ func flattenFirewallPolicyInternetService6SrcGroup(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6SrcGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2698,7 +2788,6 @@ func flattenFirewallPolicyInternetService6SrcCustom(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6SrcCustomName(i["name"], d, pre_append, sv)
 		}
 
@@ -2741,7 +2830,6 @@ func flattenFirewallPolicyInternetService6SrcCustomGroup(v interface{}, d *schem
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyInternetService6SrcCustomGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -2796,7 +2884,6 @@ func flattenFirewallPolicyRtpAddr(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyRtpAddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -2857,6 +2944,10 @@ func flattenFirewallPolicyPolicyExpiryDate(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallPolicyPolicyExpiryDateUtc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -2883,7 +2974,6 @@ func flattenFirewallPolicyService(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyServiceName(i["name"], d, pre_append, sv)
 		}
 
@@ -2952,6 +3042,10 @@ func flattenFirewallPolicySshPolicyRedirect(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallPolicyZtnaPolicyRedirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyWebproxyProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3005,6 +3099,10 @@ func flattenFirewallPolicyApplicationList(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallPolicyVoipProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyIpsVoipFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3130,7 +3228,6 @@ func flattenFirewallPolicyApplication(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicyApplicationId(i["id"], d, pre_append, sv)
 		}
 
@@ -3173,7 +3270,6 @@ func flattenFirewallPolicyAppCategory(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicyAppCategoryId(i["id"], d, pre_append, sv)
 		}
 
@@ -3216,7 +3312,6 @@ func flattenFirewallPolicyUrlCategory(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicyUrlCategoryId(i["id"], d, pre_append, sv)
 		}
 
@@ -3259,7 +3354,6 @@ func flattenFirewallPolicyAppGroup(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyAppGroupName(i["name"], d, pre_append, sv)
 		}
 
@@ -3277,6 +3371,56 @@ func flattenFirewallPolicyAppGroupName(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallPolicyNat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyPcpOutbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyPcpInbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyPcpPoolname(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyPcpPoolnameName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyPcpPoolnameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3322,7 +3466,6 @@ func flattenFirewallPolicyPoolname(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyPoolnameName(i["name"], d, pre_append, sv)
 		}
 
@@ -3365,7 +3508,6 @@ func flattenFirewallPolicyPoolname6(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyPoolname6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -3452,7 +3594,6 @@ func flattenFirewallPolicyNtlmEnabledBrowsers(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_agent_string"
 		if _, ok := i["user-agent-string"]; ok {
-
 			tmp["user_agent_string"] = flattenFirewallPolicyNtlmEnabledBrowsersUserAgentString(i["user-agent-string"], d, pre_append, sv)
 		}
 
@@ -3511,7 +3652,6 @@ func flattenFirewallPolicyGroups(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyGroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -3554,7 +3694,6 @@ func flattenFirewallPolicyUsers(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyUsersName(i["name"], d, pre_append, sv)
 		}
 
@@ -3597,7 +3736,6 @@ func flattenFirewallPolicyFssoGroups(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyFssoGroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -3640,7 +3778,6 @@ func flattenFirewallPolicyDevices(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicyDevicesName(i["name"], d, pre_append, sv)
 		}
 
@@ -3778,7 +3915,6 @@ func flattenFirewallPolicyCustomLogFields(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if _, ok := i["field-id"]; ok {
-
 			tmp["field_id"] = flattenFirewallPolicyCustomLogFieldsFieldId(i["field-id"], d, pre_append, sv)
 		}
 
@@ -3877,7 +4013,6 @@ func flattenFirewallPolicySslMirrorIntf(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallPolicySslMirrorIntfName(i["name"], d, pre_append, sv)
 		}
 
@@ -3944,7 +4079,6 @@ func flattenFirewallPolicySgt(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallPolicySgtId(i["id"], d, pre_append, sv)
 		}
 
@@ -3963,6 +4097,12 @@ func flattenFirewallPolicySgtId(v interface{}, d *schema.ResourceData, pre strin
 
 func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("policyid", flattenFirewallPolicyPolicyid(o["policyid"], d, "policyid", sv)); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -3982,7 +4122,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcintf", flattenFirewallPolicySrcintf(o["srcintf"], d, "srcintf", sv)); err != nil {
 			if !fortiAPIPatch(o["srcintf"]) {
 				return fmt.Errorf("Error reading srcintf: %v", err)
@@ -3998,7 +4138,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstintf", flattenFirewallPolicyDstintf(o["dstintf"], d, "dstintf", sv)); err != nil {
 			if !fortiAPIPatch(o["dstintf"]) {
 				return fmt.Errorf("Error reading dstintf: %v", err)
@@ -4014,7 +4154,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenFirewallPolicySrcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -4030,7 +4170,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenFirewallPolicyDstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -4046,7 +4186,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr6", flattenFirewallPolicySrcaddr6(o["srcaddr6"], d, "srcaddr6", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr6"]) {
 				return fmt.Errorf("Error reading srcaddr6: %v", err)
@@ -4062,7 +4202,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr6", flattenFirewallPolicyDstaddr6(o["dstaddr6"], d, "dstaddr6", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr6"]) {
 				return fmt.Errorf("Error reading dstaddr6: %v", err)
@@ -4084,7 +4224,13 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("ztna_device_ownership", flattenFirewallPolicyZtnaDeviceOwnership(o["ztna-device-ownership"], d, "ztna_device_ownership", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-device-ownership"]) {
+			return fmt.Errorf("Error reading ztna_device_ownership: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("ztna_ems_tag", flattenFirewallPolicyZtnaEmsTag(o["ztna-ems-tag"], d, "ztna_ems_tag", sv)); err != nil {
 			if !fortiAPIPatch(o["ztna-ems-tag"]) {
 				return fmt.Errorf("Error reading ztna_ems_tag: %v", err)
@@ -4100,7 +4246,29 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
+		if err = d.Set("ztna_ems_tag_secondary", flattenFirewallPolicyZtnaEmsTagSecondary(o["ztna-ems-tag-secondary"], d, "ztna_ems_tag_secondary", sv)); err != nil {
+			if !fortiAPIPatch(o["ztna-ems-tag-secondary"]) {
+				return fmt.Errorf("Error reading ztna_ems_tag_secondary: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ztna_ems_tag_secondary"); ok {
+			if err = d.Set("ztna_ems_tag_secondary", flattenFirewallPolicyZtnaEmsTagSecondary(o["ztna-ems-tag-secondary"], d, "ztna_ems_tag_secondary", sv)); err != nil {
+				if !fortiAPIPatch(o["ztna-ems-tag-secondary"]) {
+					return fmt.Errorf("Error reading ztna_ems_tag_secondary: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("ztna_tags_match_logic", flattenFirewallPolicyZtnaTagsMatchLogic(o["ztna-tags-match-logic"], d, "ztna_tags_match_logic", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-tags-match-logic"]) {
+			return fmt.Errorf("Error reading ztna_tags_match_logic: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("ztna_geo_tag", flattenFirewallPolicyZtnaGeoTag(o["ztna-geo-tag"], d, "ztna_geo_tag", sv)); err != nil {
 			if !fortiAPIPatch(o["ztna-geo-tag"]) {
 				return fmt.Errorf("Error reading ztna_geo_tag: %v", err)
@@ -4122,7 +4290,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_name", flattenFirewallPolicyInternetServiceName(o["internet-service-name"], d, "internet_service_name", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-name"]) {
 				return fmt.Errorf("Error reading internet_service_name: %v", err)
@@ -4138,7 +4306,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_id", flattenFirewallPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-id"]) {
 				return fmt.Errorf("Error reading internet_service_id: %v", err)
@@ -4154,7 +4322,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_group", flattenFirewallPolicyInternetServiceGroup(o["internet-service-group"], d, "internet_service_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-group"]) {
 				return fmt.Errorf("Error reading internet_service_group: %v", err)
@@ -4170,7 +4338,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_custom", flattenFirewallPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-custom"]) {
 				return fmt.Errorf("Error reading internet_service_custom: %v", err)
@@ -4186,7 +4354,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("network_service_dynamic", flattenFirewallPolicyNetworkServiceDynamic(o["network-service-dynamic"], d, "network_service_dynamic", sv)); err != nil {
 			if !fortiAPIPatch(o["network-service-dynamic"]) {
 				return fmt.Errorf("Error reading network_service_dynamic: %v", err)
@@ -4202,7 +4370,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_custom_group", flattenFirewallPolicyInternetServiceCustomGroup(o["internet-service-custom-group"], d, "internet_service_custom_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-custom-group"]) {
 				return fmt.Errorf("Error reading internet_service_custom_group: %v", err)
@@ -4224,7 +4392,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_src_name", flattenFirewallPolicyInternetServiceSrcName(o["internet-service-src-name"], d, "internet_service_src_name", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-src-name"]) {
 				return fmt.Errorf("Error reading internet_service_src_name: %v", err)
@@ -4240,7 +4408,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_src_id", flattenFirewallPolicyInternetServiceSrcId(o["internet-service-src-id"], d, "internet_service_src_id", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-src-id"]) {
 				return fmt.Errorf("Error reading internet_service_src_id: %v", err)
@@ -4256,7 +4424,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_src_group", flattenFirewallPolicyInternetServiceSrcGroup(o["internet-service-src-group"], d, "internet_service_src_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-src-group"]) {
 				return fmt.Errorf("Error reading internet_service_src_group: %v", err)
@@ -4272,7 +4440,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_src_custom", flattenFirewallPolicyInternetServiceSrcCustom(o["internet-service-src-custom"], d, "internet_service_src_custom", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-src-custom"]) {
 				return fmt.Errorf("Error reading internet_service_src_custom: %v", err)
@@ -4288,7 +4456,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("network_service_src_dynamic", flattenFirewallPolicyNetworkServiceSrcDynamic(o["network-service-src-dynamic"], d, "network_service_src_dynamic", sv)); err != nil {
 			if !fortiAPIPatch(o["network-service-src-dynamic"]) {
 				return fmt.Errorf("Error reading network_service_src_dynamic: %v", err)
@@ -4304,7 +4472,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service_src_custom_group", flattenFirewallPolicyInternetServiceSrcCustomGroup(o["internet-service-src-custom-group"], d, "internet_service_src_custom_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service-src-custom-group"]) {
 				return fmt.Errorf("Error reading internet_service_src_custom_group: %v", err)
@@ -4332,7 +4500,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("src_vendor_mac", flattenFirewallPolicySrcVendorMac(o["src-vendor-mac"], d, "src_vendor_mac", sv)); err != nil {
 			if !fortiAPIPatch(o["src-vendor-mac"]) {
 				return fmt.Errorf("Error reading src_vendor_mac: %v", err)
@@ -4354,7 +4522,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_name", flattenFirewallPolicyInternetService6Name(o["internet-service6-name"], d, "internet_service6_name", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-name"]) {
 				return fmt.Errorf("Error reading internet_service6_name: %v", err)
@@ -4370,7 +4538,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_group", flattenFirewallPolicyInternetService6Group(o["internet-service6-group"], d, "internet_service6_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-group"]) {
 				return fmt.Errorf("Error reading internet_service6_group: %v", err)
@@ -4386,7 +4554,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_custom", flattenFirewallPolicyInternetService6Custom(o["internet-service6-custom"], d, "internet_service6_custom", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-custom"]) {
 				return fmt.Errorf("Error reading internet_service6_custom: %v", err)
@@ -4402,7 +4570,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_custom_group", flattenFirewallPolicyInternetService6CustomGroup(o["internet-service6-custom-group"], d, "internet_service6_custom_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-custom-group"]) {
 				return fmt.Errorf("Error reading internet_service6_custom_group: %v", err)
@@ -4424,7 +4592,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_src_name", flattenFirewallPolicyInternetService6SrcName(o["internet-service6-src-name"], d, "internet_service6_src_name", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-src-name"]) {
 				return fmt.Errorf("Error reading internet_service6_src_name: %v", err)
@@ -4440,7 +4608,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_src_group", flattenFirewallPolicyInternetService6SrcGroup(o["internet-service6-src-group"], d, "internet_service6_src_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-src-group"]) {
 				return fmt.Errorf("Error reading internet_service6_src_group: %v", err)
@@ -4456,7 +4624,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_src_custom", flattenFirewallPolicyInternetService6SrcCustom(o["internet-service6-src-custom"], d, "internet_service6_src_custom", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-src-custom"]) {
 				return fmt.Errorf("Error reading internet_service6_src_custom: %v", err)
@@ -4472,7 +4640,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("internet_service6_src_custom_group", flattenFirewallPolicyInternetService6SrcCustomGroup(o["internet-service6-src-custom-group"], d, "internet_service6_src_custom_group", sv)); err != nil {
 			if !fortiAPIPatch(o["internet-service6-src-custom-group"]) {
 				return fmt.Errorf("Error reading internet_service6_src_custom_group: %v", err)
@@ -4506,7 +4674,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rtp_addr", flattenFirewallPolicyRtpAddr(o["rtp-addr"], d, "rtp_addr", sv)); err != nil {
 			if !fortiAPIPatch(o["rtp-addr"]) {
 				return fmt.Errorf("Error reading rtp_addr: %v", err)
@@ -4588,7 +4756,13 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("policy_expiry_date_utc", flattenFirewallPolicyPolicyExpiryDateUtc(o["policy-expiry-date-utc"], d, "policy_expiry_date_utc", sv)); err != nil {
+		if !fortiAPIPatch(o["policy-expiry-date-utc"]) {
+			return fmt.Errorf("Error reading policy_expiry_date_utc: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("service", flattenFirewallPolicyService(o["service"], d, "service", sv)); err != nil {
 			if !fortiAPIPatch(o["service"]) {
 				return fmt.Errorf("Error reading service: %v", err)
@@ -4682,6 +4856,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("ztna_policy_redirect", flattenFirewallPolicyZtnaPolicyRedirect(o["ztna-policy-redirect"], d, "ztna_policy_redirect", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-policy-redirect"]) {
+			return fmt.Errorf("Error reading ztna_policy_redirect: %v", err)
+		}
+	}
+
 	if err = d.Set("webproxy_profile", flattenFirewallPolicyWebproxyProfile(o["webproxy-profile"], d, "webproxy_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["webproxy-profile"]) {
 			return fmt.Errorf("Error reading webproxy_profile: %v", err)
@@ -4763,6 +4943,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("voip_profile", flattenFirewallPolicyVoipProfile(o["voip-profile"], d, "voip_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["voip-profile"]) {
 			return fmt.Errorf("Error reading voip_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("ips_voip_filter", flattenFirewallPolicyIpsVoipFilter(o["ips-voip-filter"], d, "ips_voip_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["ips-voip-filter"]) {
+			return fmt.Errorf("Error reading ips_voip_filter: %v", err)
 		}
 	}
 
@@ -4910,7 +5096,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("application", flattenFirewallPolicyApplication(o["application"], d, "application", sv)); err != nil {
 			if !fortiAPIPatch(o["application"]) {
 				return fmt.Errorf("Error reading application: %v", err)
@@ -4926,7 +5112,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("app_category", flattenFirewallPolicyAppCategory(o["app-category"], d, "app_category", sv)); err != nil {
 			if !fortiAPIPatch(o["app-category"]) {
 				return fmt.Errorf("Error reading app_category: %v", err)
@@ -4942,7 +5128,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("url_category", flattenFirewallPolicyUrlCategory(o["url-category"], d, "url_category", sv)); err != nil {
 			if !fortiAPIPatch(o["url-category"]) {
 				return fmt.Errorf("Error reading url_category: %v", err)
@@ -4958,7 +5144,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("app_group", flattenFirewallPolicyAppGroup(o["app-group"], d, "app_group", sv)); err != nil {
 			if !fortiAPIPatch(o["app-group"]) {
 				return fmt.Errorf("Error reading app_group: %v", err)
@@ -4977,6 +5163,34 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("nat", flattenFirewallPolicyNat(o["nat"], d, "nat", sv)); err != nil {
 		if !fortiAPIPatch(o["nat"]) {
 			return fmt.Errorf("Error reading nat: %v", err)
+		}
+	}
+
+	if err = d.Set("pcp_outbound", flattenFirewallPolicyPcpOutbound(o["pcp-outbound"], d, "pcp_outbound", sv)); err != nil {
+		if !fortiAPIPatch(o["pcp-outbound"]) {
+			return fmt.Errorf("Error reading pcp_outbound: %v", err)
+		}
+	}
+
+	if err = d.Set("pcp_inbound", flattenFirewallPolicyPcpInbound(o["pcp-inbound"], d, "pcp_inbound", sv)); err != nil {
+		if !fortiAPIPatch(o["pcp-inbound"]) {
+			return fmt.Errorf("Error reading pcp_inbound: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("pcp_poolname", flattenFirewallPolicyPcpPoolname(o["pcp-poolname"], d, "pcp_poolname", sv)); err != nil {
+			if !fortiAPIPatch(o["pcp-poolname"]) {
+				return fmt.Errorf("Error reading pcp_poolname: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("pcp_poolname"); ok {
+			if err = d.Set("pcp_poolname", flattenFirewallPolicyPcpPoolname(o["pcp-poolname"], d, "pcp_poolname", sv)); err != nil {
+				if !fortiAPIPatch(o["pcp-poolname"]) {
+					return fmt.Errorf("Error reading pcp_poolname: %v", err)
+				}
+			}
 		}
 	}
 
@@ -5004,7 +5218,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("poolname", flattenFirewallPolicyPoolname(o["poolname"], d, "poolname", sv)); err != nil {
 			if !fortiAPIPatch(o["poolname"]) {
 				return fmt.Errorf("Error reading poolname: %v", err)
@@ -5020,7 +5234,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("poolname6", flattenFirewallPolicyPoolname6(o["poolname6"], d, "poolname6", sv)); err != nil {
 			if !fortiAPIPatch(o["poolname6"]) {
 				return fmt.Errorf("Error reading poolname6: %v", err)
@@ -5038,7 +5252,10 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 
 	{
 		v := flattenFirewallPolicySessionTtl(o["session-ttl"], d, "session_ttl", sv)
-		if i2ss2arrFortiAPIUpgrade(sv, "6.2.4") == true {
+		new_version_map := map[string][]string{
+			">=": []string{"6.2.4"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 			if vx, ok := v.(string); ok {
 				vxx, err := strconv.Atoi(vx)
 				if err == nil {
@@ -5114,7 +5331,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ntlm_enabled_browsers", flattenFirewallPolicyNtlmEnabledBrowsers(o["ntlm-enabled-browsers"], d, "ntlm_enabled_browsers", sv)); err != nil {
 			if !fortiAPIPatch(o["ntlm-enabled-browsers"]) {
 				return fmt.Errorf("Error reading ntlm_enabled_browsers: %v", err)
@@ -5154,7 +5371,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("groups", flattenFirewallPolicyGroups(o["groups"], d, "groups", sv)); err != nil {
 			if !fortiAPIPatch(o["groups"]) {
 				return fmt.Errorf("Error reading groups: %v", err)
@@ -5170,7 +5387,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("users", flattenFirewallPolicyUsers(o["users"], d, "users", sv)); err != nil {
 			if !fortiAPIPatch(o["users"]) {
 				return fmt.Errorf("Error reading users: %v", err)
@@ -5186,7 +5403,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("fsso_groups", flattenFirewallPolicyFssoGroups(o["fsso-groups"], d, "fsso_groups", sv)); err != nil {
 			if !fortiAPIPatch(o["fsso-groups"]) {
 				return fmt.Errorf("Error reading fsso_groups: %v", err)
@@ -5202,7 +5419,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("devices", flattenFirewallPolicyDevices(o["devices"], d, "devices", sv)); err != nil {
 			if !fortiAPIPatch(o["devices"]) {
 				return fmt.Errorf("Error reading devices: %v", err)
@@ -5350,7 +5567,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("custom_log_fields", flattenFirewallPolicyCustomLogFields(o["custom-log-fields"], d, "custom_log_fields", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-log-fields"]) {
 				return fmt.Errorf("Error reading custom_log_fields: %v", err)
@@ -5450,7 +5667,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ssl_mirror_intf", flattenFirewallPolicySslMirrorIntf(o["ssl-mirror-intf"], d, "ssl_mirror_intf", sv)); err != nil {
 			if !fortiAPIPatch(o["ssl-mirror-intf"]) {
 				return fmt.Errorf("Error reading ssl_mirror_intf: %v", err)
@@ -5502,7 +5719,7 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("sgt", flattenFirewallPolicySgt(o["sgt"], d, "sgt", sv)); err != nil {
 			if !fortiAPIPatch(o["sgt"]) {
 				return fmt.Errorf("Error reading sgt: %v", err)
@@ -5555,7 +5772,6 @@ func expandFirewallPolicySrcintf(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicySrcintfName(d, i["name"], pre_append, sv)
 		}
 
@@ -5587,7 +5803,6 @@ func expandFirewallPolicyDstintf(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyDstintfName(d, i["name"], pre_append, sv)
 		}
 
@@ -5619,7 +5834,6 @@ func expandFirewallPolicySrcaddr(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicySrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -5651,7 +5865,6 @@ func expandFirewallPolicyDstaddr(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyDstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -5683,7 +5896,6 @@ func expandFirewallPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicySrcaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -5715,7 +5927,6 @@ func expandFirewallPolicyDstaddr6(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyDstaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -5735,6 +5946,10 @@ func expandFirewallPolicyZtnaStatus(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandFirewallPolicyZtnaDeviceOwnership(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyZtnaEmsTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -5751,7 +5966,6 @@ func expandFirewallPolicyZtnaEmsTag(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyZtnaEmsTagName(d, i["name"], pre_append, sv)
 		}
 
@@ -5764,6 +5978,41 @@ func expandFirewallPolicyZtnaEmsTag(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandFirewallPolicyZtnaEmsTagName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyZtnaEmsTagSecondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandFirewallPolicyZtnaEmsTagSecondaryName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyZtnaEmsTagSecondaryName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyZtnaTagsMatchLogic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5783,7 +6032,6 @@ func expandFirewallPolicyZtnaGeoTag(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyZtnaGeoTagName(d, i["name"], pre_append, sv)
 		}
 
@@ -5819,7 +6067,6 @@ func expandFirewallPolicyInternetServiceName(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceNameName(d, i["name"], pre_append, sv)
 		}
 
@@ -5851,7 +6098,6 @@ func expandFirewallPolicyInternetServiceId(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicyInternetServiceIdId(d, i["id"], pre_append, sv)
 		}
 
@@ -5883,7 +6129,6 @@ func expandFirewallPolicyInternetServiceGroup(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -5915,7 +6160,6 @@ func expandFirewallPolicyInternetServiceCustom(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceCustomName(d, i["name"], pre_append, sv)
 		}
 
@@ -5947,7 +6191,6 @@ func expandFirewallPolicyNetworkServiceDynamic(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyNetworkServiceDynamicName(d, i["name"], pre_append, sv)
 		}
 
@@ -5979,7 +6222,6 @@ func expandFirewallPolicyInternetServiceCustomGroup(d *schema.ResourceData, v in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceCustomGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6015,7 +6257,6 @@ func expandFirewallPolicyInternetServiceSrcName(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceSrcNameName(d, i["name"], pre_append, sv)
 		}
 
@@ -6047,7 +6288,6 @@ func expandFirewallPolicyInternetServiceSrcId(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicyInternetServiceSrcIdId(d, i["id"], pre_append, sv)
 		}
 
@@ -6079,7 +6319,6 @@ func expandFirewallPolicyInternetServiceSrcGroup(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceSrcGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6111,7 +6350,6 @@ func expandFirewallPolicyInternetServiceSrcCustom(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceSrcCustomName(d, i["name"], pre_append, sv)
 		}
 
@@ -6143,7 +6381,6 @@ func expandFirewallPolicyNetworkServiceSrcDynamic(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyNetworkServiceSrcDynamicName(d, i["name"], pre_append, sv)
 		}
 
@@ -6175,7 +6412,6 @@ func expandFirewallPolicyInternetServiceSrcCustomGroup(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetServiceSrcCustomGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6215,7 +6451,6 @@ func expandFirewallPolicySrcVendorMac(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicySrcVendorMacId(d, i["id"], pre_append, sv)
 		}
 
@@ -6251,7 +6486,6 @@ func expandFirewallPolicyInternetService6Name(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6NameName(d, i["name"], pre_append, sv)
 		}
 
@@ -6283,7 +6517,6 @@ func expandFirewallPolicyInternetService6Group(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6GroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6315,7 +6548,6 @@ func expandFirewallPolicyInternetService6Custom(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6CustomName(d, i["name"], pre_append, sv)
 		}
 
@@ -6347,7 +6579,6 @@ func expandFirewallPolicyInternetService6CustomGroup(d *schema.ResourceData, v i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6CustomGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6383,7 +6614,6 @@ func expandFirewallPolicyInternetService6SrcName(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6SrcNameName(d, i["name"], pre_append, sv)
 		}
 
@@ -6415,7 +6645,6 @@ func expandFirewallPolicyInternetService6SrcGroup(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6SrcGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6447,7 +6676,6 @@ func expandFirewallPolicyInternetService6SrcCustom(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6SrcCustomName(d, i["name"], pre_append, sv)
 		}
 
@@ -6479,7 +6707,6 @@ func expandFirewallPolicyInternetService6SrcCustomGroup(d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyInternetService6SrcCustomGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6523,7 +6750,6 @@ func expandFirewallPolicyRtpAddr(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyRtpAddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -6583,6 +6809,10 @@ func expandFirewallPolicyPolicyExpiryDate(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandFirewallPolicyPolicyExpiryDateUtc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -6599,7 +6829,6 @@ func expandFirewallPolicyService(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyServiceName(d, i["name"], pre_append, sv)
 		}
 
@@ -6667,6 +6896,10 @@ func expandFirewallPolicySshPolicyRedirect(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandFirewallPolicyZtnaPolicyRedirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyWebproxyProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6720,6 +6953,10 @@ func expandFirewallPolicyApplicationList(d *schema.ResourceData, v interface{}, 
 }
 
 func expandFirewallPolicyVoipProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyIpsVoipFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6835,7 +7072,6 @@ func expandFirewallPolicyApplication(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicyApplicationId(d, i["id"], pre_append, sv)
 		}
 
@@ -6867,7 +7103,6 @@ func expandFirewallPolicyAppCategory(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicyAppCategoryId(d, i["id"], pre_append, sv)
 		}
 
@@ -6899,7 +7134,6 @@ func expandFirewallPolicyUrlCategory(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicyUrlCategoryId(d, i["id"], pre_append, sv)
 		}
 
@@ -6931,7 +7165,6 @@ func expandFirewallPolicyAppGroup(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyAppGroupName(d, i["name"], pre_append, sv)
 		}
 
@@ -6948,6 +7181,45 @@ func expandFirewallPolicyAppGroupName(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandFirewallPolicyNat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyPcpOutbound(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyPcpInbound(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyPcpPoolname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandFirewallPolicyPcpPoolnameName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyPcpPoolnameName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6983,7 +7255,6 @@ func expandFirewallPolicyPoolname(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyPoolnameName(d, i["name"], pre_append, sv)
 		}
 
@@ -7015,7 +7286,6 @@ func expandFirewallPolicyPoolname6(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyPoolname6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -7091,7 +7361,6 @@ func expandFirewallPolicyNtlmEnabledBrowsers(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_agent_string"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["user-agent-string"], _ = expandFirewallPolicyNtlmEnabledBrowsersUserAgentString(d, i["user_agent_string"], pre_append, sv)
 		}
 
@@ -7139,7 +7408,6 @@ func expandFirewallPolicyGroups(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyGroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -7171,7 +7439,6 @@ func expandFirewallPolicyUsers(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyUsersName(d, i["name"], pre_append, sv)
 		}
 
@@ -7203,7 +7470,6 @@ func expandFirewallPolicyFssoGroups(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyFssoGroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -7235,7 +7501,6 @@ func expandFirewallPolicyDevices(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicyDevicesName(d, i["name"], pre_append, sv)
 		}
 
@@ -7355,7 +7620,6 @@ func expandFirewallPolicyCustomLogFields(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["field-id"], _ = expandFirewallPolicyCustomLogFieldsFieldId(d, i["field_id"], pre_append, sv)
 		}
 
@@ -7443,7 +7707,6 @@ func expandFirewallPolicySslMirrorIntf(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallPolicySslMirrorIntfName(d, i["name"], pre_append, sv)
 		}
 
@@ -7499,7 +7762,6 @@ func expandFirewallPolicySgt(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallPolicySgtId(d, i["id"], pre_append, sv)
 		}
 
@@ -7519,7 +7781,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("policyid"); ok {
-
 		t, err := expandFirewallPolicyPolicyid(d, v, "policyid", sv)
 		if err != nil {
 			return &obj, err
@@ -7529,7 +7790,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -7541,7 +7801,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallPolicyUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -7551,7 +7810,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
-
 		t, err := expandFirewallPolicySrcintf(d, v, "srcintf", sv)
 		if err != nil {
 			return &obj, err
@@ -7561,7 +7819,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dstintf"); ok || d.HasChange("dstintf") {
-
 		t, err := expandFirewallPolicyDstintf(d, v, "dstintf", sv)
 		if err != nil {
 			return &obj, err
@@ -7571,7 +7828,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandFirewallPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -7581,7 +7837,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandFirewallPolicyDstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -7591,7 +7846,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("srcaddr6"); ok || d.HasChange("srcaddr6") {
-
 		t, err := expandFirewallPolicySrcaddr6(d, v, "srcaddr6", sv)
 		if err != nil {
 			return &obj, err
@@ -7601,7 +7855,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dstaddr6"); ok || d.HasChange("dstaddr6") {
-
 		t, err := expandFirewallPolicyDstaddr6(d, v, "dstaddr6", sv)
 		if err != nil {
 			return &obj, err
@@ -7611,7 +7864,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ztna_status"); ok {
-
 		t, err := expandFirewallPolicyZtnaStatus(d, v, "ztna_status", sv)
 		if err != nil {
 			return &obj, err
@@ -7620,8 +7872,16 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("ztna_ems_tag"); ok || d.HasChange("ztna_ems_tag") {
+	if v, ok := d.GetOk("ztna_device_ownership"); ok {
+		t, err := expandFirewallPolicyZtnaDeviceOwnership(d, v, "ztna_device_ownership", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-device-ownership"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("ztna_ems_tag"); ok || d.HasChange("ztna_ems_tag") {
 		t, err := expandFirewallPolicyZtnaEmsTag(d, v, "ztna_ems_tag", sv)
 		if err != nil {
 			return &obj, err
@@ -7630,8 +7890,25 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("ztna_geo_tag"); ok || d.HasChange("ztna_geo_tag") {
+	if v, ok := d.GetOk("ztna_ems_tag_secondary"); ok || d.HasChange("ztna_ems_tag_secondary") {
+		t, err := expandFirewallPolicyZtnaEmsTagSecondary(d, v, "ztna_ems_tag_secondary", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-ems-tag-secondary"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("ztna_tags_match_logic"); ok {
+		t, err := expandFirewallPolicyZtnaTagsMatchLogic(d, v, "ztna_tags_match_logic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-tags-match-logic"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_geo_tag"); ok || d.HasChange("ztna_geo_tag") {
 		t, err := expandFirewallPolicyZtnaGeoTag(d, v, "ztna_geo_tag", sv)
 		if err != nil {
 			return &obj, err
@@ -7641,7 +7918,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service"); ok {
-
 		t, err := expandFirewallPolicyInternetService(d, v, "internet_service", sv)
 		if err != nil {
 			return &obj, err
@@ -7651,7 +7927,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_name"); ok || d.HasChange("internet_service_name") {
-
 		t, err := expandFirewallPolicyInternetServiceName(d, v, "internet_service_name", sv)
 		if err != nil {
 			return &obj, err
@@ -7661,7 +7936,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {
-
 		t, err := expandFirewallPolicyInternetServiceId(d, v, "internet_service_id", sv)
 		if err != nil {
 			return &obj, err
@@ -7671,7 +7945,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_group"); ok || d.HasChange("internet_service_group") {
-
 		t, err := expandFirewallPolicyInternetServiceGroup(d, v, "internet_service_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7681,7 +7954,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_custom"); ok || d.HasChange("internet_service_custom") {
-
 		t, err := expandFirewallPolicyInternetServiceCustom(d, v, "internet_service_custom", sv)
 		if err != nil {
 			return &obj, err
@@ -7691,7 +7963,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("network_service_dynamic"); ok || d.HasChange("network_service_dynamic") {
-
 		t, err := expandFirewallPolicyNetworkServiceDynamic(d, v, "network_service_dynamic", sv)
 		if err != nil {
 			return &obj, err
@@ -7701,7 +7972,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_custom_group"); ok || d.HasChange("internet_service_custom_group") {
-
 		t, err := expandFirewallPolicyInternetServiceCustomGroup(d, v, "internet_service_custom_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7711,7 +7981,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src"); ok {
-
 		t, err := expandFirewallPolicyInternetServiceSrc(d, v, "internet_service_src", sv)
 		if err != nil {
 			return &obj, err
@@ -7721,7 +7990,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src_name"); ok || d.HasChange("internet_service_src_name") {
-
 		t, err := expandFirewallPolicyInternetServiceSrcName(d, v, "internet_service_src_name", sv)
 		if err != nil {
 			return &obj, err
@@ -7731,7 +7999,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src_id"); ok || d.HasChange("internet_service_src_id") {
-
 		t, err := expandFirewallPolicyInternetServiceSrcId(d, v, "internet_service_src_id", sv)
 		if err != nil {
 			return &obj, err
@@ -7741,7 +8008,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src_group"); ok || d.HasChange("internet_service_src_group") {
-
 		t, err := expandFirewallPolicyInternetServiceSrcGroup(d, v, "internet_service_src_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7751,7 +8017,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src_custom"); ok || d.HasChange("internet_service_src_custom") {
-
 		t, err := expandFirewallPolicyInternetServiceSrcCustom(d, v, "internet_service_src_custom", sv)
 		if err != nil {
 			return &obj, err
@@ -7761,7 +8026,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("network_service_src_dynamic"); ok || d.HasChange("network_service_src_dynamic") {
-
 		t, err := expandFirewallPolicyNetworkServiceSrcDynamic(d, v, "network_service_src_dynamic", sv)
 		if err != nil {
 			return &obj, err
@@ -7771,7 +8035,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src_custom_group"); ok || d.HasChange("internet_service_src_custom_group") {
-
 		t, err := expandFirewallPolicyInternetServiceSrcCustomGroup(d, v, "internet_service_src_custom_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7781,7 +8044,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("reputation_minimum"); ok {
-
 		t, err := expandFirewallPolicyReputationMinimum(d, v, "reputation_minimum", sv)
 		if err != nil {
 			return &obj, err
@@ -7793,7 +8055,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("reputation_direction"); ok {
-
 		t, err := expandFirewallPolicyReputationDirection(d, v, "reputation_direction", sv)
 		if err != nil {
 			return &obj, err
@@ -7803,7 +8064,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("src_vendor_mac"); ok || d.HasChange("src_vendor_mac") {
-
 		t, err := expandFirewallPolicySrcVendorMac(d, v, "src_vendor_mac", sv)
 		if err != nil {
 			return &obj, err
@@ -7813,7 +8073,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6"); ok {
-
 		t, err := expandFirewallPolicyInternetService6(d, v, "internet_service6", sv)
 		if err != nil {
 			return &obj, err
@@ -7823,7 +8082,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_name"); ok || d.HasChange("internet_service6_name") {
-
 		t, err := expandFirewallPolicyInternetService6Name(d, v, "internet_service6_name", sv)
 		if err != nil {
 			return &obj, err
@@ -7833,7 +8091,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_group"); ok || d.HasChange("internet_service6_group") {
-
 		t, err := expandFirewallPolicyInternetService6Group(d, v, "internet_service6_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7843,7 +8100,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_custom"); ok || d.HasChange("internet_service6_custom") {
-
 		t, err := expandFirewallPolicyInternetService6Custom(d, v, "internet_service6_custom", sv)
 		if err != nil {
 			return &obj, err
@@ -7853,7 +8109,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_custom_group"); ok || d.HasChange("internet_service6_custom_group") {
-
 		t, err := expandFirewallPolicyInternetService6CustomGroup(d, v, "internet_service6_custom_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7863,7 +8118,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_src"); ok {
-
 		t, err := expandFirewallPolicyInternetService6Src(d, v, "internet_service6_src", sv)
 		if err != nil {
 			return &obj, err
@@ -7873,7 +8127,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_src_name"); ok || d.HasChange("internet_service6_src_name") {
-
 		t, err := expandFirewallPolicyInternetService6SrcName(d, v, "internet_service6_src_name", sv)
 		if err != nil {
 			return &obj, err
@@ -7883,7 +8136,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_src_group"); ok || d.HasChange("internet_service6_src_group") {
-
 		t, err := expandFirewallPolicyInternetService6SrcGroup(d, v, "internet_service6_src_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7893,7 +8145,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_src_custom"); ok || d.HasChange("internet_service6_src_custom") {
-
 		t, err := expandFirewallPolicyInternetService6SrcCustom(d, v, "internet_service6_src_custom", sv)
 		if err != nil {
 			return &obj, err
@@ -7903,7 +8154,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_src_custom_group"); ok || d.HasChange("internet_service6_src_custom_group") {
-
 		t, err := expandFirewallPolicyInternetService6SrcCustomGroup(d, v, "internet_service6_src_custom_group", sv)
 		if err != nil {
 			return &obj, err
@@ -7913,7 +8163,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("reputation_minimum6"); ok {
-
 		t, err := expandFirewallPolicyReputationMinimum6(d, v, "reputation_minimum6", sv)
 		if err != nil {
 			return &obj, err
@@ -7925,7 +8174,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("reputation_direction6"); ok {
-
 		t, err := expandFirewallPolicyReputationDirection6(d, v, "reputation_direction6", sv)
 		if err != nil {
 			return &obj, err
@@ -7935,7 +8183,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("rtp_nat"); ok {
-
 		t, err := expandFirewallPolicyRtpNat(d, v, "rtp_nat", sv)
 		if err != nil {
 			return &obj, err
@@ -7945,7 +8192,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("rtp_addr"); ok || d.HasChange("rtp_addr") {
-
 		t, err := expandFirewallPolicyRtpAddr(d, v, "rtp_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -7955,7 +8201,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("learning_mode"); ok {
-
 		t, err := expandFirewallPolicyLearningMode(d, v, "learning_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -7967,7 +8212,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandFirewallPolicyAction(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -7977,7 +8221,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("nat64"); ok {
-
 		t, err := expandFirewallPolicyNat64(d, v, "nat64", sv)
 		if err != nil {
 			return &obj, err
@@ -7987,7 +8230,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("nat46"); ok {
-
 		t, err := expandFirewallPolicyNat46(d, v, "nat46", sv)
 		if err != nil {
 			return &obj, err
@@ -7997,7 +8239,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("send_deny_packet"); ok {
-
 		t, err := expandFirewallPolicySendDenyPacket(d, v, "send_deny_packet", sv)
 		if err != nil {
 			return &obj, err
@@ -8007,7 +8248,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("firewall_session_dirty"); ok {
-
 		t, err := expandFirewallPolicyFirewallSessionDirty(d, v, "firewall_session_dirty", sv)
 		if err != nil {
 			return &obj, err
@@ -8017,7 +8257,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallPolicyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -8027,7 +8266,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
-
 		t, err := expandFirewallPolicySchedule(d, v, "schedule", sv)
 		if err != nil {
 			return &obj, err
@@ -8037,7 +8275,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("schedule_timeout"); ok {
-
 		t, err := expandFirewallPolicyScheduleTimeout(d, v, "schedule_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -8047,7 +8284,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("policy_expiry"); ok {
-
 		t, err := expandFirewallPolicyPolicyExpiry(d, v, "policy_expiry", sv)
 		if err != nil {
 			return &obj, err
@@ -8057,7 +8293,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("policy_expiry_date"); ok {
-
 		t, err := expandFirewallPolicyPolicyExpiryDate(d, v, "policy_expiry_date", sv)
 		if err != nil {
 			return &obj, err
@@ -8066,8 +8301,18 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
+	if v, ok := d.GetOk("policy_expiry_date_utc"); ok {
+		t, err := expandFirewallPolicyPolicyExpiryDateUtc(d, v, "policy_expiry_date_utc", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["policy-expiry-date-utc"] = t
+		}
+	} else if d.HasChange("policy_expiry_date_utc") {
+		obj["policy-expiry-date-utc"] = nil
+	}
 
+	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
 		t, err := expandFirewallPolicyService(d, v, "service", sv)
 		if err != nil {
 			return &obj, err
@@ -8077,7 +8322,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("tos"); ok {
-
 		t, err := expandFirewallPolicyTos(d, v, "tos", sv)
 		if err != nil {
 			return &obj, err
@@ -8087,7 +8331,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("tos_mask"); ok {
-
 		t, err := expandFirewallPolicyTosMask(d, v, "tos_mask", sv)
 		if err != nil {
 			return &obj, err
@@ -8097,7 +8340,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("tos_negate"); ok {
-
 		t, err := expandFirewallPolicyTosNegate(d, v, "tos_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -8107,7 +8349,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("anti_replay"); ok {
-
 		t, err := expandFirewallPolicyAntiReplay(d, v, "anti_replay", sv)
 		if err != nil {
 			return &obj, err
@@ -8117,7 +8358,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("tcp_session_without_syn"); ok {
-
 		t, err := expandFirewallPolicyTcpSessionWithoutSyn(d, v, "tcp_session_without_syn", sv)
 		if err != nil {
 			return &obj, err
@@ -8127,7 +8367,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("geoip_anycast"); ok {
-
 		t, err := expandFirewallPolicyGeoipAnycast(d, v, "geoip_anycast", sv)
 		if err != nil {
 			return &obj, err
@@ -8137,7 +8376,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("geoip_match"); ok {
-
 		t, err := expandFirewallPolicyGeoipMatch(d, v, "geoip_match", sv)
 		if err != nil {
 			return &obj, err
@@ -8147,7 +8385,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dynamic_shaping"); ok {
-
 		t, err := expandFirewallPolicyDynamicShaping(d, v, "dynamic_shaping", sv)
 		if err != nil {
 			return &obj, err
@@ -8157,7 +8394,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("passive_wan_health_measurement"); ok {
-
 		t, err := expandFirewallPolicyPassiveWanHealthMeasurement(d, v, "passive_wan_health_measurement", sv)
 		if err != nil {
 			return &obj, err
@@ -8167,7 +8403,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("utm_status"); ok {
-
 		t, err := expandFirewallPolicyUtmStatus(d, v, "utm_status", sv)
 		if err != nil {
 			return &obj, err
@@ -8177,7 +8412,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("inspection_mode"); ok {
-
 		t, err := expandFirewallPolicyInspectionMode(d, v, "inspection_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -8187,7 +8421,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("http_policy_redirect"); ok {
-
 		t, err := expandFirewallPolicyHttpPolicyRedirect(d, v, "http_policy_redirect", sv)
 		if err != nil {
 			return &obj, err
@@ -8197,7 +8430,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ssh_policy_redirect"); ok {
-
 		t, err := expandFirewallPolicySshPolicyRedirect(d, v, "ssh_policy_redirect", sv)
 		if err != nil {
 			return &obj, err
@@ -8206,8 +8438,16 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("webproxy_profile"); ok {
+	if v, ok := d.GetOk("ztna_policy_redirect"); ok {
+		t, err := expandFirewallPolicyZtnaPolicyRedirect(d, v, "ztna_policy_redirect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-policy-redirect"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("webproxy_profile"); ok {
 		t, err := expandFirewallPolicyWebproxyProfile(d, v, "webproxy_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8219,7 +8459,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("profile_type"); ok {
-
 		t, err := expandFirewallPolicyProfileType(d, v, "profile_type", sv)
 		if err != nil {
 			return &obj, err
@@ -8229,7 +8468,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("profile_group"); ok {
-
 		t, err := expandFirewallPolicyProfileGroup(d, v, "profile_group", sv)
 		if err != nil {
 			return &obj, err
@@ -8241,7 +8479,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("av_profile"); ok {
-
 		t, err := expandFirewallPolicyAvProfile(d, v, "av_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8253,7 +8490,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
-
 		t, err := expandFirewallPolicyWebfilterProfile(d, v, "webfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8265,7 +8501,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
-
 		t, err := expandFirewallPolicyDnsfilterProfile(d, v, "dnsfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8277,7 +8512,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile"); ok {
-
 		t, err := expandFirewallPolicyEmailfilterProfile(d, v, "emailfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8289,7 +8523,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dlp_profile"); ok {
-
 		t, err := expandFirewallPolicyDlpProfile(d, v, "dlp_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8301,7 +8534,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
-
 		t, err := expandFirewallPolicySpamfilterProfile(d, v, "spamfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8313,7 +8545,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dlp_sensor"); ok {
-
 		t, err := expandFirewallPolicyDlpSensor(d, v, "dlp_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -8325,7 +8556,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("file_filter_profile"); ok {
-
 		t, err := expandFirewallPolicyFileFilterProfile(d, v, "file_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8337,7 +8567,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
-
 		t, err := expandFirewallPolicyIpsSensor(d, v, "ips_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -8349,7 +8578,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
-
 		t, err := expandFirewallPolicyApplicationList(d, v, "application_list", sv)
 		if err != nil {
 			return &obj, err
@@ -8361,7 +8589,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("voip_profile"); ok {
-
 		t, err := expandFirewallPolicyVoipProfile(d, v, "voip_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8372,8 +8599,18 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		obj["voip-profile"] = nil
 	}
 
-	if v, ok := d.GetOk("sctp_filter_profile"); ok {
+	if v, ok := d.GetOk("ips_voip_filter"); ok {
+		t, err := expandFirewallPolicyIpsVoipFilter(d, v, "ips_voip_filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ips-voip-filter"] = t
+		}
+	} else if d.HasChange("ips_voip_filter") {
+		obj["ips-voip-filter"] = nil
+	}
 
+	if v, ok := d.GetOk("sctp_filter_profile"); ok {
 		t, err := expandFirewallPolicySctpFilterProfile(d, v, "sctp_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8385,7 +8622,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("icap_profile"); ok {
-
 		t, err := expandFirewallPolicyIcapProfile(d, v, "icap_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8397,7 +8633,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("cifs_profile"); ok {
-
 		t, err := expandFirewallPolicyCifsProfile(d, v, "cifs_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8409,7 +8644,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("videofilter_profile"); ok {
-
 		t, err := expandFirewallPolicyVideofilterProfile(d, v, "videofilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8421,7 +8655,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("waf_profile"); ok {
-
 		t, err := expandFirewallPolicyWafProfile(d, v, "waf_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8433,7 +8666,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ssh_filter_profile"); ok {
-
 		t, err := expandFirewallPolicySshFilterProfile(d, v, "ssh_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8445,7 +8677,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("profile_protocol_options"); ok {
-
 		t, err := expandFirewallPolicyProfileProtocolOptions(d, v, "profile_protocol_options", sv)
 		if err != nil {
 			return &obj, err
@@ -8455,7 +8686,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ssl_ssh_profile"); ok {
-
 		t, err := expandFirewallPolicySslSshProfile(d, v, "ssl_ssh_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8465,7 +8695,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("logtraffic"); ok {
-
 		t, err := expandFirewallPolicyLogtraffic(d, v, "logtraffic", sv)
 		if err != nil {
 			return &obj, err
@@ -8475,7 +8704,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("logtraffic_start"); ok {
-
 		t, err := expandFirewallPolicyLogtrafficStart(d, v, "logtraffic_start", sv)
 		if err != nil {
 			return &obj, err
@@ -8485,7 +8713,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("capture_packet"); ok {
-
 		t, err := expandFirewallPolicyCapturePacket(d, v, "capture_packet", sv)
 		if err != nil {
 			return &obj, err
@@ -8495,7 +8722,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
-
 		t, err := expandFirewallPolicyAutoAsicOffload(d, v, "auto_asic_offload", sv)
 		if err != nil {
 			return &obj, err
@@ -8505,7 +8731,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("np_acceleration"); ok {
-
 		t, err := expandFirewallPolicyNpAcceleration(d, v, "np_acceleration", sv)
 		if err != nil {
 			return &obj, err
@@ -8515,7 +8740,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wanopt"); ok {
-
 		t, err := expandFirewallPolicyWanopt(d, v, "wanopt", sv)
 		if err != nil {
 			return &obj, err
@@ -8525,7 +8749,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wanopt_detection"); ok {
-
 		t, err := expandFirewallPolicyWanoptDetection(d, v, "wanopt_detection", sv)
 		if err != nil {
 			return &obj, err
@@ -8535,7 +8758,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wanopt_passive_opt"); ok {
-
 		t, err := expandFirewallPolicyWanoptPassiveOpt(d, v, "wanopt_passive_opt", sv)
 		if err != nil {
 			return &obj, err
@@ -8545,7 +8767,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wanopt_profile"); ok {
-
 		t, err := expandFirewallPolicyWanoptProfile(d, v, "wanopt_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -8557,7 +8778,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wanopt_peer"); ok {
-
 		t, err := expandFirewallPolicyWanoptPeer(d, v, "wanopt_peer", sv)
 		if err != nil {
 			return &obj, err
@@ -8569,7 +8789,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("webcache"); ok {
-
 		t, err := expandFirewallPolicyWebcache(d, v, "webcache", sv)
 		if err != nil {
 			return &obj, err
@@ -8579,7 +8798,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("webcache_https"); ok {
-
 		t, err := expandFirewallPolicyWebcacheHttps(d, v, "webcache_https", sv)
 		if err != nil {
 			return &obj, err
@@ -8589,7 +8807,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("webproxy_forward_server"); ok {
-
 		t, err := expandFirewallPolicyWebproxyForwardServer(d, v, "webproxy_forward_server", sv)
 		if err != nil {
 			return &obj, err
@@ -8601,7 +8818,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("traffic_shaper"); ok {
-
 		t, err := expandFirewallPolicyTrafficShaper(d, v, "traffic_shaper", sv)
 		if err != nil {
 			return &obj, err
@@ -8613,7 +8829,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("traffic_shaper_reverse"); ok {
-
 		t, err := expandFirewallPolicyTrafficShaperReverse(d, v, "traffic_shaper_reverse", sv)
 		if err != nil {
 			return &obj, err
@@ -8625,7 +8840,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("per_ip_shaper"); ok {
-
 		t, err := expandFirewallPolicyPerIpShaper(d, v, "per_ip_shaper", sv)
 		if err != nil {
 			return &obj, err
@@ -8637,7 +8851,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
-
 		t, err := expandFirewallPolicyApplication(d, v, "application", sv)
 		if err != nil {
 			return &obj, err
@@ -8647,7 +8860,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("app_category"); ok || d.HasChange("app_category") {
-
 		t, err := expandFirewallPolicyAppCategory(d, v, "app_category", sv)
 		if err != nil {
 			return &obj, err
@@ -8657,7 +8869,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("url_category"); ok || d.HasChange("url_category") {
-
 		t, err := expandFirewallPolicyUrlCategory(d, v, "url_category", sv)
 		if err != nil {
 			return &obj, err
@@ -8667,7 +8878,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("app_group"); ok || d.HasChange("app_group") {
-
 		t, err := expandFirewallPolicyAppGroup(d, v, "app_group", sv)
 		if err != nil {
 			return &obj, err
@@ -8677,7 +8887,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("nat"); ok {
-
 		t, err := expandFirewallPolicyNat(d, v, "nat", sv)
 		if err != nil {
 			return &obj, err
@@ -8686,8 +8895,34 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("permit_any_host"); ok {
+	if v, ok := d.GetOk("pcp_outbound"); ok {
+		t, err := expandFirewallPolicyPcpOutbound(d, v, "pcp_outbound", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pcp-outbound"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("pcp_inbound"); ok {
+		t, err := expandFirewallPolicyPcpInbound(d, v, "pcp_inbound", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pcp-inbound"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("pcp_poolname"); ok || d.HasChange("pcp_poolname") {
+		t, err := expandFirewallPolicyPcpPoolname(d, v, "pcp_poolname", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pcp-poolname"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("permit_any_host"); ok {
 		t, err := expandFirewallPolicyPermitAnyHost(d, v, "permit_any_host", sv)
 		if err != nil {
 			return &obj, err
@@ -8697,7 +8932,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("permit_stun_host"); ok {
-
 		t, err := expandFirewallPolicyPermitStunHost(d, v, "permit_stun_host", sv)
 		if err != nil {
 			return &obj, err
@@ -8707,7 +8941,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("fixedport"); ok {
-
 		t, err := expandFirewallPolicyFixedport(d, v, "fixedport", sv)
 		if err != nil {
 			return &obj, err
@@ -8717,7 +8950,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ippool"); ok {
-
 		t, err := expandFirewallPolicyIppool(d, v, "ippool", sv)
 		if err != nil {
 			return &obj, err
@@ -8727,7 +8959,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("poolname"); ok || d.HasChange("poolname") {
-
 		t, err := expandFirewallPolicyPoolname(d, v, "poolname", sv)
 		if err != nil {
 			return &obj, err
@@ -8737,7 +8968,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("poolname6"); ok || d.HasChange("poolname6") {
-
 		t, err := expandFirewallPolicyPoolname6(d, v, "poolname6", sv)
 		if err != nil {
 			return &obj, err
@@ -8747,12 +8977,14 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("session_ttl"); ok {
-
 		t, err := expandFirewallPolicySessionTtl(d, v, "session_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "6.2.4") == true {
+			new_version_map := map[string][]string{
+				">=": []string{"6.2.4"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				obj["session-ttl"] = fmt.Sprintf("%v", t)
 			} else {
 				obj["session-ttl"] = t
@@ -8763,7 +8995,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("vlan_cos_fwd"); ok {
-
 		t, err := expandFirewallPolicyVlanCosFwd(d, v, "vlan_cos_fwd", sv)
 		if err != nil {
 			return &obj, err
@@ -8773,7 +9004,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("vlan_cos_rev"); ok {
-
 		t, err := expandFirewallPolicyVlanCosRev(d, v, "vlan_cos_rev", sv)
 		if err != nil {
 			return &obj, err
@@ -8783,7 +9013,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("inbound"); ok {
-
 		t, err := expandFirewallPolicyInbound(d, v, "inbound", sv)
 		if err != nil {
 			return &obj, err
@@ -8793,7 +9022,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("outbound"); ok {
-
 		t, err := expandFirewallPolicyOutbound(d, v, "outbound", sv)
 		if err != nil {
 			return &obj, err
@@ -8803,7 +9031,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("natinbound"); ok {
-
 		t, err := expandFirewallPolicyNatinbound(d, v, "natinbound", sv)
 		if err != nil {
 			return &obj, err
@@ -8813,7 +9040,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("natoutbound"); ok {
-
 		t, err := expandFirewallPolicyNatoutbound(d, v, "natoutbound", sv)
 		if err != nil {
 			return &obj, err
@@ -8823,7 +9049,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("fec"); ok {
-
 		t, err := expandFirewallPolicyFec(d, v, "fec", sv)
 		if err != nil {
 			return &obj, err
@@ -8833,7 +9058,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wccp"); ok {
-
 		t, err := expandFirewallPolicyWccp(d, v, "wccp", sv)
 		if err != nil {
 			return &obj, err
@@ -8843,7 +9067,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ntlm"); ok {
-
 		t, err := expandFirewallPolicyNtlm(d, v, "ntlm", sv)
 		if err != nil {
 			return &obj, err
@@ -8853,7 +9076,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ntlm_guest"); ok {
-
 		t, err := expandFirewallPolicyNtlmGuest(d, v, "ntlm_guest", sv)
 		if err != nil {
 			return &obj, err
@@ -8863,7 +9085,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ntlm_enabled_browsers"); ok || d.HasChange("ntlm_enabled_browsers") {
-
 		t, err := expandFirewallPolicyNtlmEnabledBrowsers(d, v, "ntlm_enabled_browsers", sv)
 		if err != nil {
 			return &obj, err
@@ -8873,7 +9094,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("fsso"); ok {
-
 		t, err := expandFirewallPolicyFsso(d, v, "fsso", sv)
 		if err != nil {
 			return &obj, err
@@ -8885,7 +9105,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("wsso"); ok {
-
 		t, err := expandFirewallPolicyWsso(d, v, "wsso", sv)
 		if err != nil {
 			return &obj, err
@@ -8897,7 +9116,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("rsso"); ok {
-
 		t, err := expandFirewallPolicyRsso(d, v, "rsso", sv)
 		if err != nil {
 			return &obj, err
@@ -8909,7 +9127,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("fsso_agent_for_ntlm"); ok {
-
 		t, err := expandFirewallPolicyFssoAgentForNtlm(d, v, "fsso_agent_for_ntlm", sv)
 		if err != nil {
 			return &obj, err
@@ -8921,7 +9138,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("groups"); ok || d.HasChange("groups") {
-
 		t, err := expandFirewallPolicyGroups(d, v, "groups", sv)
 		if err != nil {
 			return &obj, err
@@ -8931,7 +9147,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("users"); ok || d.HasChange("users") {
-
 		t, err := expandFirewallPolicyUsers(d, v, "users", sv)
 		if err != nil {
 			return &obj, err
@@ -8941,7 +9156,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("fsso_groups"); ok || d.HasChange("fsso_groups") {
-
 		t, err := expandFirewallPolicyFssoGroups(d, v, "fsso_groups", sv)
 		if err != nil {
 			return &obj, err
@@ -8951,7 +9165,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("devices"); ok || d.HasChange("devices") {
-
 		t, err := expandFirewallPolicyDevices(d, v, "devices", sv)
 		if err != nil {
 			return &obj, err
@@ -8961,7 +9174,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("auth_path"); ok {
-
 		t, err := expandFirewallPolicyAuthPath(d, v, "auth_path", sv)
 		if err != nil {
 			return &obj, err
@@ -8971,7 +9183,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("disclaimer"); ok {
-
 		t, err := expandFirewallPolicyDisclaimer(d, v, "disclaimer", sv)
 		if err != nil {
 			return &obj, err
@@ -8981,7 +9192,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("email_collect"); ok {
-
 		t, err := expandFirewallPolicyEmailCollect(d, v, "email_collect", sv)
 		if err != nil {
 			return &obj, err
@@ -8991,7 +9201,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("vpntunnel"); ok {
-
 		t, err := expandFirewallPolicyVpntunnel(d, v, "vpntunnel", sv)
 		if err != nil {
 			return &obj, err
@@ -9003,7 +9212,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("natip"); ok {
-
 		t, err := expandFirewallPolicyNatip(d, v, "natip", sv)
 		if err != nil {
 			return &obj, err
@@ -9013,7 +9221,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("match_vip"); ok {
-
 		t, err := expandFirewallPolicyMatchVip(d, v, "match_vip", sv)
 		if err != nil {
 			return &obj, err
@@ -9023,7 +9230,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("match_vip_only"); ok {
-
 		t, err := expandFirewallPolicyMatchVipOnly(d, v, "match_vip_only", sv)
 		if err != nil {
 			return &obj, err
@@ -9033,7 +9239,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffserv_copy"); ok {
-
 		t, err := expandFirewallPolicyDiffservCopy(d, v, "diffserv_copy", sv)
 		if err != nil {
 			return &obj, err
@@ -9043,7 +9248,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffserv_forward"); ok {
-
 		t, err := expandFirewallPolicyDiffservForward(d, v, "diffserv_forward", sv)
 		if err != nil {
 			return &obj, err
@@ -9053,7 +9257,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffserv_reverse"); ok {
-
 		t, err := expandFirewallPolicyDiffservReverse(d, v, "diffserv_reverse", sv)
 		if err != nil {
 			return &obj, err
@@ -9063,7 +9266,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffservcode_forward"); ok {
-
 		t, err := expandFirewallPolicyDiffservcodeForward(d, v, "diffservcode_forward", sv)
 		if err != nil {
 			return &obj, err
@@ -9073,7 +9275,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("diffservcode_rev"); ok {
-
 		t, err := expandFirewallPolicyDiffservcodeRev(d, v, "diffservcode_rev", sv)
 		if err != nil {
 			return &obj, err
@@ -9083,7 +9284,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("tcp_mss_sender"); ok {
-
 		t, err := expandFirewallPolicyTcpMssSender(d, v, "tcp_mss_sender", sv)
 		if err != nil {
 			return &obj, err
@@ -9095,7 +9295,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("tcp_mss_receiver"); ok {
-
 		t, err := expandFirewallPolicyTcpMssReceiver(d, v, "tcp_mss_receiver", sv)
 		if err != nil {
 			return &obj, err
@@ -9107,7 +9306,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallPolicyComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -9119,7 +9317,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("label"); ok {
-
 		t, err := expandFirewallPolicyLabel(d, v, "label", sv)
 		if err != nil {
 			return &obj, err
@@ -9131,7 +9328,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("global_label"); ok {
-
 		t, err := expandFirewallPolicyGlobalLabel(d, v, "global_label", sv)
 		if err != nil {
 			return &obj, err
@@ -9143,7 +9339,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("auth_cert"); ok {
-
 		t, err := expandFirewallPolicyAuthCert(d, v, "auth_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -9155,7 +9350,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("auth_redirect_addr"); ok {
-
 		t, err := expandFirewallPolicyAuthRedirectAddr(d, v, "auth_redirect_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -9167,7 +9361,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("redirect_url"); ok {
-
 		t, err := expandFirewallPolicyRedirectUrl(d, v, "redirect_url", sv)
 		if err != nil {
 			return &obj, err
@@ -9179,7 +9372,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("identity_based_route"); ok {
-
 		t, err := expandFirewallPolicyIdentityBasedRoute(d, v, "identity_based_route", sv)
 		if err != nil {
 			return &obj, err
@@ -9191,7 +9383,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("block_notification"); ok {
-
 		t, err := expandFirewallPolicyBlockNotification(d, v, "block_notification", sv)
 		if err != nil {
 			return &obj, err
@@ -9201,7 +9392,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("custom_log_fields"); ok || d.HasChange("custom_log_fields") {
-
 		t, err := expandFirewallPolicyCustomLogFields(d, v, "custom_log_fields", sv)
 		if err != nil {
 			return &obj, err
@@ -9211,7 +9401,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("replacemsg_override_group"); ok {
-
 		t, err := expandFirewallPolicyReplacemsgOverrideGroup(d, v, "replacemsg_override_group", sv)
 		if err != nil {
 			return &obj, err
@@ -9223,7 +9412,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("srcaddr_negate"); ok {
-
 		t, err := expandFirewallPolicySrcaddrNegate(d, v, "srcaddr_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9233,7 +9421,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("srcaddr6_negate"); ok {
-
 		t, err := expandFirewallPolicySrcaddr6Negate(d, v, "srcaddr6_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9243,7 +9430,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dstaddr_negate"); ok {
-
 		t, err := expandFirewallPolicyDstaddrNegate(d, v, "dstaddr_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9253,7 +9439,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dstaddr6_negate"); ok {
-
 		t, err := expandFirewallPolicyDstaddr6Negate(d, v, "dstaddr6_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9263,7 +9448,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("service_negate"); ok {
-
 		t, err := expandFirewallPolicyServiceNegate(d, v, "service_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9273,7 +9457,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_negate"); ok {
-
 		t, err := expandFirewallPolicyInternetServiceNegate(d, v, "internet_service_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9283,7 +9466,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service_src_negate"); ok {
-
 		t, err := expandFirewallPolicyInternetServiceSrcNegate(d, v, "internet_service_src_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9293,7 +9475,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_negate"); ok {
-
 		t, err := expandFirewallPolicyInternetService6Negate(d, v, "internet_service6_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9303,7 +9484,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("internet_service6_src_negate"); ok {
-
 		t, err := expandFirewallPolicyInternetService6SrcNegate(d, v, "internet_service6_src_negate", sv)
 		if err != nil {
 			return &obj, err
@@ -9313,7 +9493,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("timeout_send_rst"); ok {
-
 		t, err := expandFirewallPolicyTimeoutSendRst(d, v, "timeout_send_rst", sv)
 		if err != nil {
 			return &obj, err
@@ -9323,7 +9502,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("captive_portal_exempt"); ok {
-
 		t, err := expandFirewallPolicyCaptivePortalExempt(d, v, "captive_portal_exempt", sv)
 		if err != nil {
 			return &obj, err
@@ -9333,7 +9511,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("decrypted_traffic_mirror"); ok {
-
 		t, err := expandFirewallPolicyDecryptedTrafficMirror(d, v, "decrypted_traffic_mirror", sv)
 		if err != nil {
 			return &obj, err
@@ -9345,7 +9522,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ssl_mirror"); ok {
-
 		t, err := expandFirewallPolicySslMirror(d, v, "ssl_mirror", sv)
 		if err != nil {
 			return &obj, err
@@ -9357,7 +9533,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ssl_mirror_intf"); ok || d.HasChange("ssl_mirror_intf") {
-
 		t, err := expandFirewallPolicySslMirrorIntf(d, v, "ssl_mirror_intf", sv)
 		if err != nil {
 			return &obj, err
@@ -9367,7 +9542,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
-
 		t, err := expandFirewallPolicyScanBotnetConnections(d, v, "scan_botnet_connections", sv)
 		if err != nil {
 			return &obj, err
@@ -9379,7 +9553,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("dsri"); ok {
-
 		t, err := expandFirewallPolicyDsri(d, v, "dsri", sv)
 		if err != nil {
 			return &obj, err
@@ -9389,7 +9562,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("radius_mac_auth_bypass"); ok {
-
 		t, err := expandFirewallPolicyRadiusMacAuthBypass(d, v, "radius_mac_auth_bypass", sv)
 		if err != nil {
 			return &obj, err
@@ -9399,7 +9571,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("delay_tcp_npu_session"); ok {
-
 		t, err := expandFirewallPolicyDelayTcpNpuSession(d, v, "delay_tcp_npu_session", sv)
 		if err != nil {
 			return &obj, err
@@ -9409,7 +9580,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("vlan_filter"); ok {
-
 		t, err := expandFirewallPolicyVlanFilter(d, v, "vlan_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -9421,7 +9591,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("sgt_check"); ok {
-
 		t, err := expandFirewallPolicySgtCheck(d, v, "sgt_check", sv)
 		if err != nil {
 			return &obj, err
@@ -9431,7 +9600,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("sgt"); ok || d.HasChange("sgt") {
-
 		t, err := expandFirewallPolicySgt(d, v, "sgt", sv)
 		if err != nil {
 			return &obj, err

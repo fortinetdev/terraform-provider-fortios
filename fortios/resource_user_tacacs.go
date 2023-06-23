@@ -416,7 +416,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserTacacsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -426,7 +425,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandUserTacacsServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -436,7 +434,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("secondary_server"); ok {
-
 		t, err := expandUserTacacsSecondaryServer(d, v, "secondary_server", sv)
 		if err != nil {
 			return &obj, err
@@ -446,7 +443,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("tertiary_server"); ok {
-
 		t, err := expandUserTacacsTertiaryServer(d, v, "tertiary_server", sv)
 		if err != nil {
 			return &obj, err
@@ -456,7 +452,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandUserTacacsPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -466,7 +461,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("key"); ok {
-
 		t, err := expandUserTacacsKey(d, v, "key", sv)
 		if err != nil {
 			return &obj, err
@@ -476,7 +470,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("secondary_key"); ok {
-
 		t, err := expandUserTacacsSecondaryKey(d, v, "secondary_key", sv)
 		if err != nil {
 			return &obj, err
@@ -486,7 +479,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("tertiary_key"); ok {
-
 		t, err := expandUserTacacsTertiaryKey(d, v, "tertiary_key", sv)
 		if err != nil {
 			return &obj, err
@@ -496,7 +488,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("authen_type"); ok {
-
 		t, err := expandUserTacacsAuthenType(d, v, "authen_type", sv)
 		if err != nil {
 			return &obj, err
@@ -506,7 +497,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("authorization"); ok {
-
 		t, err := expandUserTacacsAuthorization(d, v, "authorization", sv)
 		if err != nil {
 			return &obj, err
@@ -516,7 +506,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandUserTacacsSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -526,7 +515,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
-
 		t, err := expandUserTacacsInterfaceSelectMethod(d, v, "interface_select_method", sv)
 		if err != nil {
 			return &obj, err
@@ -536,7 +524,6 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandUserTacacsInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err

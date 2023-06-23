@@ -36,7 +36,15 @@ func dataSourceFirewallScheduleOnetime() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"start_utc": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"end": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"end_utc": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -107,7 +115,15 @@ func dataSourceFlattenFirewallScheduleOnetimeStart(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenFirewallScheduleOnetimeStartUtc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallScheduleOnetimeEnd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallScheduleOnetimeEndUtc(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -138,9 +154,21 @@ func dataSourceRefreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o ma
 		}
 	}
 
+	if err = d.Set("start_utc", dataSourceFlattenFirewallScheduleOnetimeStartUtc(o["start-utc"], d, "start_utc")); err != nil {
+		if !fortiAPIPatch(o["start-utc"]) {
+			return fmt.Errorf("Error reading start_utc: %v", err)
+		}
+	}
+
 	if err = d.Set("end", dataSourceFlattenFirewallScheduleOnetimeEnd(o["end"], d, "end")); err != nil {
 		if !fortiAPIPatch(o["end"]) {
 			return fmt.Errorf("Error reading end: %v", err)
+		}
+	}
+
+	if err = d.Set("end_utc", dataSourceFlattenFirewallScheduleOnetimeEndUtc(o["end-utc"], d, "end_utc")); err != nil {
+		if !fortiAPIPatch(o["end-utc"]) {
+			return fmt.Errorf("Error reading end_utc: %v", err)
 		}
 	}
 

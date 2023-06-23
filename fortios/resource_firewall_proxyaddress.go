@@ -37,7 +37,7 @@ func resourceFirewallProxyAddress() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -102,6 +102,18 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"ua_min_ver": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ua_max_ver": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
 			},
 			"header_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -215,6 +227,11 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -402,7 +419,6 @@ func flattenFirewallProxyAddressCategory(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallProxyAddressCategoryId(i["id"], d, pre_append, sv)
 		}
 
@@ -424,6 +440,14 @@ func flattenFirewallProxyAddressMethod(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallProxyAddressUa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyAddressUaMinVer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyAddressUaMaxVer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -465,25 +489,21 @@ func flattenFirewallProxyAddressHeaderGroup(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallProxyAddressHeaderGroupId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
 		if _, ok := i["header-name"]; ok {
-
 			tmp["header_name"] = flattenFirewallProxyAddressHeaderGroupHeaderName(i["header-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := i["header"]; ok {
-
 			tmp["header"] = flattenFirewallProxyAddressHeaderGroupHeader(i["header"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
 		if _, ok := i["case-sensitivity"]; ok {
-
 			tmp["case_sensitivity"] = flattenFirewallProxyAddressHeaderGroupCaseSensitivity(i["case-sensitivity"], d, pre_append, sv)
 		}
 
@@ -542,19 +562,16 @@ func flattenFirewallProxyAddressTagging(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallProxyAddressTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenFirewallProxyAddressTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenFirewallProxyAddressTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -601,7 +618,6 @@ func flattenFirewallProxyAddressTaggingTags(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallProxyAddressTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -648,7 +664,6 @@ func flattenFirewallProxyAddressApplication(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallProxyAddressApplicationName(i["name"], d, pre_append, sv)
 		}
 
@@ -671,6 +686,12 @@ func flattenFirewallProxyAddressVisibility(v interface{}, d *schema.ResourceData
 
 func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallProxyAddressName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -720,7 +741,7 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("category", flattenFirewallProxyAddressCategory(o["category"], d, "category", sv)); err != nil {
 			if !fortiAPIPatch(o["category"]) {
 				return fmt.Errorf("Error reading category: %v", err)
@@ -748,6 +769,18 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("ua_min_ver", flattenFirewallProxyAddressUaMinVer(o["ua-min-ver"], d, "ua_min_ver", sv)); err != nil {
+		if !fortiAPIPatch(o["ua-min-ver"]) {
+			return fmt.Errorf("Error reading ua_min_ver: %v", err)
+		}
+	}
+
+	if err = d.Set("ua_max_ver", flattenFirewallProxyAddressUaMaxVer(o["ua-max-ver"], d, "ua_max_ver", sv)); err != nil {
+		if !fortiAPIPatch(o["ua-max-ver"]) {
+			return fmt.Errorf("Error reading ua_max_ver: %v", err)
+		}
+	}
+
 	if err = d.Set("header_name", flattenFirewallProxyAddressHeaderName(o["header-name"], d, "header_name", sv)); err != nil {
 		if !fortiAPIPatch(o["header-name"]) {
 			return fmt.Errorf("Error reading header_name: %v", err)
@@ -766,7 +799,7 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("header_group", flattenFirewallProxyAddressHeaderGroup(o["header-group"], d, "header_group", sv)); err != nil {
 			if !fortiAPIPatch(o["header-group"]) {
 				return fmt.Errorf("Error reading header_group: %v", err)
@@ -788,7 +821,7 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenFirewallProxyAddressTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -810,7 +843,7 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("application", flattenFirewallProxyAddressApplication(o["application"], d, "application", sv)); err != nil {
 			if !fortiAPIPatch(o["application"]) {
 				return fmt.Errorf("Error reading application: %v", err)
@@ -889,7 +922,6 @@ func expandFirewallProxyAddressCategory(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallProxyAddressCategoryId(d, i["id"], pre_append, sv)
 		}
 
@@ -910,6 +942,14 @@ func expandFirewallProxyAddressMethod(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandFirewallProxyAddressUa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyAddressUaMinVer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyAddressUaMaxVer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -941,25 +981,21 @@ func expandFirewallProxyAddressHeaderGroup(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallProxyAddressHeaderGroupId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["header-name"], _ = expandFirewallProxyAddressHeaderGroupHeaderName(d, i["header_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["header"], _ = expandFirewallProxyAddressHeaderGroupHeader(d, i["header"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["case-sensitivity"], _ = expandFirewallProxyAddressHeaderGroupCaseSensitivity(d, i["case_sensitivity"], pre_append, sv)
 		}
 
@@ -1007,19 +1043,16 @@ func expandFirewallProxyAddressTagging(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallProxyAddressTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandFirewallProxyAddressTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandFirewallProxyAddressTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -1057,7 +1090,6 @@ func expandFirewallProxyAddressTaggingTags(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallProxyAddressTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -1093,7 +1125,6 @@ func expandFirewallProxyAddressApplication(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallProxyAddressApplicationName(d, i["name"], pre_append, sv)
 		}
 
@@ -1117,7 +1148,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallProxyAddressName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1127,7 +1157,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallProxyAddressUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -1137,7 +1166,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallProxyAddressType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -1147,7 +1175,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("host"); ok {
-
 		t, err := expandFirewallProxyAddressHost(d, v, "host", sv)
 		if err != nil {
 			return &obj, err
@@ -1157,7 +1184,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("host_regex"); ok {
-
 		t, err := expandFirewallProxyAddressHostRegex(d, v, "host_regex", sv)
 		if err != nil {
 			return &obj, err
@@ -1167,7 +1193,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("path"); ok {
-
 		t, err := expandFirewallProxyAddressPath(d, v, "path", sv)
 		if err != nil {
 			return &obj, err
@@ -1177,7 +1202,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("query"); ok {
-
 		t, err := expandFirewallProxyAddressQuery(d, v, "query", sv)
 		if err != nil {
 			return &obj, err
@@ -1187,7 +1211,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("referrer"); ok {
-
 		t, err := expandFirewallProxyAddressReferrer(d, v, "referrer", sv)
 		if err != nil {
 			return &obj, err
@@ -1197,7 +1220,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("category"); ok || d.HasChange("category") {
-
 		t, err := expandFirewallProxyAddressCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
@@ -1207,7 +1229,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("method"); ok {
-
 		t, err := expandFirewallProxyAddressMethod(d, v, "method", sv)
 		if err != nil {
 			return &obj, err
@@ -1217,7 +1238,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ua"); ok {
-
 		t, err := expandFirewallProxyAddressUa(d, v, "ua", sv)
 		if err != nil {
 			return &obj, err
@@ -1226,8 +1246,25 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("header_name"); ok {
+	if v, ok := d.GetOk("ua_min_ver"); ok {
+		t, err := expandFirewallProxyAddressUaMinVer(d, v, "ua_min_ver", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ua-min-ver"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("ua_max_ver"); ok {
+		t, err := expandFirewallProxyAddressUaMaxVer(d, v, "ua_max_ver", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ua-max-ver"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("header_name"); ok {
 		t, err := expandFirewallProxyAddressHeaderName(d, v, "header_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1237,7 +1274,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("header"); ok {
-
 		t, err := expandFirewallProxyAddressHeader(d, v, "header", sv)
 		if err != nil {
 			return &obj, err
@@ -1247,7 +1283,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("case_sensitivity"); ok {
-
 		t, err := expandFirewallProxyAddressCaseSensitivity(d, v, "case_sensitivity", sv)
 		if err != nil {
 			return &obj, err
@@ -1257,7 +1292,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("header_group"); ok || d.HasChange("header_group") {
-
 		t, err := expandFirewallProxyAddressHeaderGroup(d, v, "header_group", sv)
 		if err != nil {
 			return &obj, err
@@ -1267,7 +1301,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallProxyAddressColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -1277,7 +1310,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
-
 		t, err := expandFirewallProxyAddressTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
@@ -1287,7 +1319,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallProxyAddressComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1297,7 +1328,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
-
 		t, err := expandFirewallProxyAddressApplication(d, v, "application", sv)
 		if err != nil {
 			return &obj, err
@@ -1307,7 +1337,6 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-
 		t, err := expandFirewallProxyAddressVisibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err

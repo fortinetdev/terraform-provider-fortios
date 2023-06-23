@@ -41,6 +41,12 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"sn": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 16),
+				Optional:     true,
+				Computed:     true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -326,6 +332,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"link_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"poe_capable": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
@@ -374,6 +385,27 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"poe_mode_bt_cabable": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 1),
+							Optional:     true,
+							Computed:     true,
+						},
+						"poe_port_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"poe_port_priority": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"poe_port_power": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"flags": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -398,6 +430,12 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed:     true,
 						},
 						"isl_peer_device_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 16),
+							Optional:     true,
+							Computed:     true,
+						},
+						"isl_peer_device_sn": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
@@ -476,6 +514,33 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"acl_group": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
+						},
+						"fortiswitch_acls": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"dhcp_snooping": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -485,6 +550,32 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"dhcp_snoop_option82_override": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vlan_name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 15),
+										Optional:     true,
+										Computed:     true,
+									},
+									"circuit_id": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 254),
+										Optional:     true,
+										Computed:     true,
+									},
+									"remote_id": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 254),
+										Optional:     true,
+										Computed:     true,
+									},
+								},
+							},
 						},
 						"arp_inspection_trust": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1254,7 +1345,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						},
 						"rate": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 10000000),
+							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1395,6 +1486,42 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 					},
 				},
 			},
+			"dhcp_snooping_static_client": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
+						"vlan": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"mac": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"port": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"igmp_snooping": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -1500,6 +1627,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -1630,6 +1762,10 @@ func resourceSwitchControllerManagedSwitchRead(d *schema.ResourceData, m interfa
 }
 
 func flattenSwitchControllerManagedSwitchSwitchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchSn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1783,559 +1919,511 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_name"
 		if _, ok := i["port-name"]; ok {
-
 			tmp["port_name"] = flattenSwitchControllerManagedSwitchPortsPortName(i["port-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_owner"
 		if _, ok := i["port-owner"]; ok {
-
 			tmp["port_owner"] = flattenSwitchControllerManagedSwitchPortsPortOwner(i["port-owner"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := i["switch-id"]; ok {
-
 			tmp["switch_id"] = flattenSwitchControllerManagedSwitchPortsSwitchId(i["switch-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed"
 		if _, ok := i["speed"]; ok {
-
 			tmp["speed"] = flattenSwitchControllerManagedSwitchPortsSpeed(i["speed"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed_mask"
 		if _, ok := i["speed-mask"]; ok {
-
 			tmp["speed_mask"] = flattenSwitchControllerManagedSwitchPortsSpeedMask(i["speed-mask"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSwitchControllerManagedSwitchPortsStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_status"
 		if _, ok := i["poe-status"]; ok {
-
 			tmp["poe_status"] = flattenSwitchControllerManagedSwitchPortsPoeStatus(i["poe-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_source_guard"
 		if _, ok := i["ip-source-guard"]; ok {
-
 			tmp["ip_source_guard"] = flattenSwitchControllerManagedSwitchPortsIpSourceGuard(i["ip-source-guard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ptp_policy"
 		if _, ok := i["ptp-policy"]; ok {
-
 			tmp["ptp_policy"] = flattenSwitchControllerManagedSwitchPortsPtpPolicy(i["ptp-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "aggregator_mode"
 		if _, ok := i["aggregator-mode"]; ok {
-
 			tmp["aggregator_mode"] = flattenSwitchControllerManagedSwitchPortsAggregatorMode(i["aggregator-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flapguard"
 		if _, ok := i["flapguard"]; ok {
-
 			tmp["flapguard"] = flattenSwitchControllerManagedSwitchPortsFlapguard(i["flapguard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_rate"
 		if _, ok := i["flap-rate"]; ok {
-
 			tmp["flap_rate"] = flattenSwitchControllerManagedSwitchPortsFlapRate(i["flap-rate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_duration"
 		if _, ok := i["flap-duration"]; ok {
-
 			tmp["flap_duration"] = flattenSwitchControllerManagedSwitchPortsFlapDuration(i["flap-duration"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_timeout"
 		if _, ok := i["flap-timeout"]; ok {
-
 			tmp["flap_timeout"] = flattenSwitchControllerManagedSwitchPortsFlapTimeout(i["flap-timeout"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpvst_port"
 		if _, ok := i["rpvst-port"]; ok {
-
 			tmp["rpvst_port"] = flattenSwitchControllerManagedSwitchPortsRpvstPort(i["rpvst-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_pre_standard_detection"
 		if _, ok := i["poe-pre-standard-detection"]; ok {
-
 			tmp["poe_pre_standard_detection"] = flattenSwitchControllerManagedSwitchPortsPoePreStandardDetection(i["poe-pre-standard-detection"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_number"
 		if _, ok := i["port-number"]; ok {
-
 			tmp["port_number"] = flattenSwitchControllerManagedSwitchPortsPortNumber(i["port-number"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_prefix_type"
 		if _, ok := i["port-prefix-type"]; ok {
-
 			tmp["port_prefix_type"] = flattenSwitchControllerManagedSwitchPortsPortPrefixType(i["port-prefix-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortilink_port"
 		if _, ok := i["fortilink-port"]; ok {
-
 			tmp["fortilink_port"] = flattenSwitchControllerManagedSwitchPortsFortilinkPort(i["fortilink-port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_status"
+		if _, ok := i["link-status"]; ok {
+			tmp["link_status"] = flattenSwitchControllerManagedSwitchPortsLinkStatus(i["link-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_capable"
 		if _, ok := i["poe-capable"]; ok {
-
 			tmp["poe_capable"] = flattenSwitchControllerManagedSwitchPortsPoeCapable(i["poe-capable"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stacking_port"
 		if _, ok := i["stacking-port"]; ok {
-
 			tmp["stacking_port"] = flattenSwitchControllerManagedSwitchPortsStackingPort(i["stacking-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "p2p_port"
 		if _, ok := i["p2p-port"]; ok {
-
 			tmp["p2p_port"] = flattenSwitchControllerManagedSwitchPortsP2PPort(i["p2p-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag_icl_port"
 		if _, ok := i["mclag-icl-port"]; ok {
-
 			tmp["mclag_icl_port"] = flattenSwitchControllerManagedSwitchPortsMclagIclPort(i["mclag-icl-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fiber_port"
 		if _, ok := i["fiber-port"]; ok {
-
 			tmp["fiber_port"] = flattenSwitchControllerManagedSwitchPortsFiberPort(i["fiber-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "media_type"
 		if _, ok := i["media-type"]; ok {
-
 			tmp["media_type"] = flattenSwitchControllerManagedSwitchPortsMediaType(i["media-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_standard"
 		if _, ok := i["poe-standard"]; ok {
-
 			tmp["poe_standard"] = flattenSwitchControllerManagedSwitchPortsPoeStandard(i["poe-standard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_max_power"
 		if _, ok := i["poe-max-power"]; ok {
-
 			tmp["poe_max_power"] = flattenSwitchControllerManagedSwitchPortsPoeMaxPower(i["poe-max-power"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_mode_bt_cabable"
+		if _, ok := i["poe-mode-bt-cabable"]; ok {
+			tmp["poe_mode_bt_cabable"] = flattenSwitchControllerManagedSwitchPortsPoeModeBtCabable(i["poe-mode-bt-cabable"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_mode"
+		if _, ok := i["poe-port-mode"]; ok {
+			tmp["poe_port_mode"] = flattenSwitchControllerManagedSwitchPortsPoePortMode(i["poe-port-mode"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_priority"
+		if _, ok := i["poe-port-priority"]; ok {
+			tmp["poe_port_priority"] = flattenSwitchControllerManagedSwitchPortsPoePortPriority(i["poe-port-priority"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_power"
+		if _, ok := i["poe-port-power"]; ok {
+			tmp["poe_port_power"] = flattenSwitchControllerManagedSwitchPortsPoePortPower(i["poe-port-power"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := i["flags"]; ok {
-
 			tmp["flags"] = flattenSwitchControllerManagedSwitchPortsFlags(i["flags"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_port"
 		if _, ok := i["virtual-port"]; ok {
-
 			tmp["virtual_port"] = flattenSwitchControllerManagedSwitchPortsVirtualPort(i["virtual-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_local_trunk_name"
 		if _, ok := i["isl-local-trunk-name"]; ok {
-
 			tmp["isl_local_trunk_name"] = flattenSwitchControllerManagedSwitchPortsIslLocalTrunkName(i["isl-local-trunk-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_port_name"
 		if _, ok := i["isl-peer-port-name"]; ok {
-
 			tmp["isl_peer_port_name"] = flattenSwitchControllerManagedSwitchPortsIslPeerPortName(i["isl-peer-port-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_device_name"
 		if _, ok := i["isl-peer-device-name"]; ok {
-
 			tmp["isl_peer_device_name"] = flattenSwitchControllerManagedSwitchPortsIslPeerDeviceName(i["isl-peer-device-name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_device_sn"
+		if _, ok := i["isl-peer-device-sn"]; ok {
+			tmp["isl_peer_device_sn"] = flattenSwitchControllerManagedSwitchPortsIslPeerDeviceSn(i["isl-peer-device-sn"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fgt_peer_port_name"
 		if _, ok := i["fgt-peer-port-name"]; ok {
-
 			tmp["fgt_peer_port_name"] = flattenSwitchControllerManagedSwitchPortsFgtPeerPortName(i["fgt-peer-port-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fgt_peer_device_name"
 		if _, ok := i["fgt-peer-device-name"]; ok {
-
 			tmp["fgt_peer_device_name"] = flattenSwitchControllerManagedSwitchPortsFgtPeerDeviceName(i["fgt-peer-device-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := i["vlan"]; ok {
-
 			tmp["vlan"] = flattenSwitchControllerManagedSwitchPortsVlan(i["vlan"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans_all"
 		if _, ok := i["allowed-vlans-all"]; ok {
-
 			tmp["allowed_vlans_all"] = flattenSwitchControllerManagedSwitchPortsAllowedVlansAll(i["allowed-vlans-all"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans"
 		if _, ok := i["allowed-vlans"]; ok {
-
 			tmp["allowed_vlans"] = flattenSwitchControllerManagedSwitchPortsAllowedVlans(i["allowed-vlans"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "untagged_vlans"
 		if _, ok := i["untagged-vlans"]; ok {
-
 			tmp["untagged_vlans"] = flattenSwitchControllerManagedSwitchPortsUntaggedVlans(i["untagged-vlans"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSwitchControllerManagedSwitchPortsType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_mode"
 		if _, ok := i["access-mode"]; ok {
-
 			tmp["access_mode"] = flattenSwitchControllerManagedSwitchPortsAccessMode(i["access-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_policy"
 		if _, ok := i["matched-dpp-policy"]; ok {
-
 			tmp["matched_dpp_policy"] = flattenSwitchControllerManagedSwitchPortsMatchedDppPolicy(i["matched-dpp-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_intf_tags"
 		if _, ok := i["matched-dpp-intf-tags"]; ok {
-
 			tmp["matched_dpp_intf_tags"] = flattenSwitchControllerManagedSwitchPortsMatchedDppIntfTags(i["matched-dpp-intf-tags"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "acl_group"
+		if _, ok := i["acl-group"]; ok {
+			tmp["acl_group"] = flattenSwitchControllerManagedSwitchPortsAclGroup(i["acl-group"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiswitch_acls"
+		if _, ok := i["fortiswitch-acls"]; ok {
+			tmp["fortiswitch_acls"] = flattenSwitchControllerManagedSwitchPortsFortiswitchAcls(i["fortiswitch-acls"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snooping"
 		if _, ok := i["dhcp-snooping"]; ok {
-
 			tmp["dhcp_snooping"] = flattenSwitchControllerManagedSwitchPortsDhcpSnooping(i["dhcp-snooping"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snoop_option82_trust"
 		if _, ok := i["dhcp-snoop-option82-trust"]; ok {
-
 			tmp["dhcp_snoop_option82_trust"] = flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82Trust(i["dhcp-snoop-option82-trust"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snoop_option82_override"
+		if _, ok := i["dhcp-snoop-option82-override"]; ok {
+			tmp["dhcp_snoop_option82_override"] = flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82Override(i["dhcp-snoop-option82-override"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "arp_inspection_trust"
 		if _, ok := i["arp-inspection-trust"]; ok {
-
 			tmp["arp_inspection_trust"] = flattenSwitchControllerManagedSwitchPortsArpInspectionTrust(i["arp-inspection-trust"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping_flood_reports"
 		if _, ok := i["igmp-snooping-flood-reports"]; ok {
-
 			tmp["igmp_snooping_flood_reports"] = flattenSwitchControllerManagedSwitchPortsIgmpSnoopingFloodReports(i["igmp-snooping-flood-reports"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mcast_snooping_flood_traffic"
 		if _, ok := i["mcast-snooping-flood-traffic"]; ok {
-
 			tmp["mcast_snooping_flood_traffic"] = flattenSwitchControllerManagedSwitchPortsMcastSnoopingFloodTraffic(i["mcast-snooping-flood-traffic"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping"
 		if _, ok := i["igmp-snooping"]; ok {
-
 			tmp["igmp_snooping"] = flattenSwitchControllerManagedSwitchPortsIgmpSnooping(i["igmp-snooping"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmps_flood_reports"
 		if _, ok := i["igmps-flood-reports"]; ok {
-
 			tmp["igmps_flood_reports"] = flattenSwitchControllerManagedSwitchPortsIgmpsFloodReports(i["igmps-flood-reports"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmps_flood_traffic"
 		if _, ok := i["igmps-flood-traffic"]; ok {
-
 			tmp["igmps_flood_traffic"] = flattenSwitchControllerManagedSwitchPortsIgmpsFloodTraffic(i["igmps-flood-traffic"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_state"
 		if _, ok := i["stp-state"]; ok {
-
 			tmp["stp_state"] = flattenSwitchControllerManagedSwitchPortsStpState(i["stp-state"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_root_guard"
 		if _, ok := i["stp-root-guard"]; ok {
-
 			tmp["stp_root_guard"] = flattenSwitchControllerManagedSwitchPortsStpRootGuard(i["stp-root-guard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_bpdu_guard"
 		if _, ok := i["stp-bpdu-guard"]; ok {
-
 			tmp["stp_bpdu_guard"] = flattenSwitchControllerManagedSwitchPortsStpBpduGuard(i["stp-bpdu-guard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_bpdu_guard_timeout"
 		if _, ok := i["stp-bpdu-guard-timeout"]; ok {
-
 			tmp["stp_bpdu_guard_timeout"] = flattenSwitchControllerManagedSwitchPortsStpBpduGuardTimeout(i["stp-bpdu-guard-timeout"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "edge_port"
 		if _, ok := i["edge-port"]; ok {
-
 			tmp["edge_port"] = flattenSwitchControllerManagedSwitchPortsEdgePort(i["edge-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "discard_mode"
 		if _, ok := i["discard-mode"]; ok {
-
 			tmp["discard_mode"] = flattenSwitchControllerManagedSwitchPortsDiscardMode(i["discard-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_sampler"
 		if _, ok := i["packet-sampler"]; ok {
-
 			tmp["packet_sampler"] = flattenSwitchControllerManagedSwitchPortsPacketSampler(i["packet-sampler"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_sample_rate"
 		if _, ok := i["packet-sample-rate"]; ok {
-
 			tmp["packet_sample_rate"] = flattenSwitchControllerManagedSwitchPortsPacketSampleRate(i["packet-sample-rate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_sampler"
 		if _, ok := i["sflow-sampler"]; ok {
-
 			tmp["sflow_sampler"] = flattenSwitchControllerManagedSwitchPortsSflowSampler(i["sflow-sampler"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_sample_rate"
 		if _, ok := i["sflow-sample-rate"]; ok {
-
 			tmp["sflow_sample_rate"] = flattenSwitchControllerManagedSwitchPortsSflowSampleRate(i["sflow-sample-rate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_counter_interval"
 		if _, ok := i["sflow-counter-interval"]; ok {
-
 			tmp["sflow_counter_interval"] = flattenSwitchControllerManagedSwitchPortsSflowCounterInterval(i["sflow-counter-interval"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sample_direction"
 		if _, ok := i["sample-direction"]; ok {
-
 			tmp["sample_direction"] = flattenSwitchControllerManagedSwitchPortsSampleDirection(i["sample-direction"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fec_capable"
 		if _, ok := i["fec-capable"]; ok {
-
 			tmp["fec_capable"] = flattenSwitchControllerManagedSwitchPortsFecCapable(i["fec-capable"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fec_state"
 		if _, ok := i["fec-state"]; ok {
-
 			tmp["fec_state"] = flattenSwitchControllerManagedSwitchPortsFecState(i["fec-state"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flow_control"
 		if _, ok := i["flow-control"]; ok {
-
 			tmp["flow_control"] = flattenSwitchControllerManagedSwitchPortsFlowControl(i["flow-control"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pause_meter"
 		if _, ok := i["pause-meter"]; ok {
-
 			tmp["pause_meter"] = flattenSwitchControllerManagedSwitchPortsPauseMeter(i["pause-meter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pause_meter_resume"
 		if _, ok := i["pause-meter-resume"]; ok {
-
 			tmp["pause_meter_resume"] = flattenSwitchControllerManagedSwitchPortsPauseMeterResume(i["pause-meter-resume"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "loop_guard"
 		if _, ok := i["loop-guard"]; ok {
-
 			tmp["loop_guard"] = flattenSwitchControllerManagedSwitchPortsLoopGuard(i["loop-guard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "loop_guard_timeout"
 		if _, ok := i["loop-guard-timeout"]; ok {
-
 			tmp["loop_guard_timeout"] = flattenSwitchControllerManagedSwitchPortsLoopGuardTimeout(i["loop-guard-timeout"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_policy"
 		if _, ok := i["port-policy"]; ok {
-
 			tmp["port_policy"] = flattenSwitchControllerManagedSwitchPortsPortPolicy(i["port-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := i["qos-policy"]; ok {
-
 			tmp["qos_policy"] = flattenSwitchControllerManagedSwitchPortsQosPolicy(i["qos-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "storm_control_policy"
 		if _, ok := i["storm-control-policy"]; ok {
-
 			tmp["storm_control_policy"] = flattenSwitchControllerManagedSwitchPortsStormControlPolicy(i["storm-control-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_security_policy"
 		if _, ok := i["port-security-policy"]; ok {
-
 			tmp["port_security_policy"] = flattenSwitchControllerManagedSwitchPortsPortSecurityPolicy(i["port-security-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool"
 		if _, ok := i["export-to-pool"]; ok {
-
 			tmp["export_to_pool"] = flattenSwitchControllerManagedSwitchPortsExportToPool(i["export-to-pool"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if _, ok := i["interface-tags"]; ok {
-
 			tmp["interface_tags"] = flattenSwitchControllerManagedSwitchPortsInterfaceTags(i["interface-tags"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_tags"
 		if _, ok := i["export-tags"]; ok {
-
 			tmp["export_tags"] = flattenSwitchControllerManagedSwitchPortsExportTags(i["export-tags"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool_flag"
 		if _, ok := i["export-to-pool_flag"]; ok {
-
 			tmp["export_to_pool_flag"] = flattenSwitchControllerManagedSwitchPortsExportToPool_Flag(i["export-to-pool_flag"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "learning_limit"
 		if _, ok := i["learning-limit"]; ok {
-
 			tmp["learning_limit"] = flattenSwitchControllerManagedSwitchPortsLearningLimit(i["learning-limit"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sticky_mac"
 		if _, ok := i["sticky-mac"]; ok {
-
 			tmp["sticky_mac"] = flattenSwitchControllerManagedSwitchPortsStickyMac(i["sticky-mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_status"
 		if _, ok := i["lldp-status"]; ok {
-
 			tmp["lldp_status"] = flattenSwitchControllerManagedSwitchPortsLldpStatus(i["lldp-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_profile"
 		if _, ok := i["lldp-profile"]; ok {
-
 			tmp["lldp_profile"] = flattenSwitchControllerManagedSwitchPortsLldpProfile(i["lldp-profile"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to"
 		if _, ok := i["export-to"]; ok {
-
 			tmp["export_to"] = flattenSwitchControllerManagedSwitchPortsExportTo(i["export-to"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr"
 		if _, ok := i["mac-addr"]; ok {
-
 			tmp["mac_addr"] = flattenSwitchControllerManagedSwitchPortsMacAddr(i["mac-addr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_selection_criteria"
 		if _, ok := i["port-selection-criteria"]; ok {
-
 			tmp["port_selection_criteria"] = flattenSwitchControllerManagedSwitchPortsPortSelectionCriteria(i["port-selection-criteria"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerManagedSwitchPortsDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lacp_speed"
 		if _, ok := i["lacp-speed"]; ok {
-
 			tmp["lacp_speed"] = flattenSwitchControllerManagedSwitchPortsLacpSpeed(i["lacp-speed"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := i["mode"]; ok {
-
 			tmp["mode"] = flattenSwitchControllerManagedSwitchPortsMode(i["mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bundle"
 		if _, ok := i["bundle"]; ok {
-
 			tmp["bundle"] = flattenSwitchControllerManagedSwitchPortsBundle(i["bundle"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_withdrawal_behavior"
 		if _, ok := i["member-withdrawal-behavior"]; ok {
-
 			tmp["member_withdrawal_behavior"] = flattenSwitchControllerManagedSwitchPortsMemberWithdrawalBehavior(i["member-withdrawal-behavior"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag"
 		if _, ok := i["mclag"]; ok {
-
 			tmp["mclag"] = flattenSwitchControllerManagedSwitchPortsMclag(i["mclag"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_bundle"
 		if _, ok := i["min-bundle"]; ok {
-
 			tmp["min_bundle"] = flattenSwitchControllerManagedSwitchPortsMinBundle(i["min-bundle"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_bundle"
 		if _, ok := i["max-bundle"]; ok {
-
 			tmp["max_bundle"] = flattenSwitchControllerManagedSwitchPortsMaxBundle(i["max-bundle"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
 		if _, ok := i["members"]; ok {
-
 			tmp["members"] = flattenSwitchControllerManagedSwitchPortsMembers(i["members"], d, pre_append, sv)
 		}
 
@@ -2424,6 +2512,10 @@ func flattenSwitchControllerManagedSwitchPortsFortilinkPort(v interface{}, d *sc
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsLinkStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsPoeCapable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2456,6 +2548,22 @@ func flattenSwitchControllerManagedSwitchPortsPoeMaxPower(v interface{}, d *sche
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsPoeModeBtCabable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsPoePortMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsPoePortPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsPoePortPower(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2473,6 +2581,10 @@ func flattenSwitchControllerManagedSwitchPortsIslPeerPortName(v interface{}, d *
 }
 
 func flattenSwitchControllerManagedSwitchPortsIslPeerDeviceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsIslPeerDeviceSn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2518,7 +2630,6 @@ func flattenSwitchControllerManagedSwitchPortsAllowedVlans(v interface{}, d *sch
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerManagedSwitchPortsAllowedVlansVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
@@ -2561,7 +2672,6 @@ func flattenSwitchControllerManagedSwitchPortsUntaggedVlans(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerManagedSwitchPortsUntaggedVlansVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
@@ -2594,11 +2704,155 @@ func flattenSwitchControllerManagedSwitchPortsMatchedDppIntfTags(v interface{}, 
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsAclGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerManagedSwitchPortsAclGroupName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchPortsAclGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsFortiswitchAcls(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = flattenSwitchControllerManagedSwitchPortsFortiswitchAclsId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchPortsFortiswitchAclsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsDhcpSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82Trust(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82Override(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
+		if _, ok := i["vlan-name"]; ok {
+			tmp["vlan_name"] = flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideVlanName(i["vlan-name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
+		if _, ok := i["circuit-id"]; ok {
+			tmp["circuit_id"] = flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideCircuitId(i["circuit-id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
+		if _, ok := i["remote-id"]; ok {
+			tmp["remote_id"] = flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideRemoteId(i["remote-id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vlan_name", d)
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideVlanName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideCircuitId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideRemoteId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2748,7 +3002,6 @@ func flattenSwitchControllerManagedSwitchPortsInterfaceTags(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
 		if _, ok := i["tag-name"]; ok {
-
 			tmp["tag_name"] = flattenSwitchControllerManagedSwitchPortsInterfaceTagsTagName(i["tag-name"], d, pre_append, sv)
 		}
 
@@ -2791,7 +3044,6 @@ func flattenSwitchControllerManagedSwitchPortsExportTags(v interface{}, d *schem
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
 		if _, ok := i["tag-name"]; ok {
-
 			tmp["tag_name"] = flattenSwitchControllerManagedSwitchPortsExportTagsTagName(i["tag-name"], d, pre_append, sv)
 		}
 
@@ -2898,7 +3150,6 @@ func flattenSwitchControllerManagedSwitchPortsMembers(v interface{}, d *schema.R
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_name"
 		if _, ok := i["member-name"]; ok {
-
 			tmp["member_name"] = flattenSwitchControllerManagedSwitchPortsMembersMemberName(i["member-name"], d, pre_append, sv)
 		}
 
@@ -2941,19 +3192,16 @@ func flattenSwitchControllerManagedSwitchIpSourceGuard(v interface{}, d *schema.
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenSwitchControllerManagedSwitchIpSourceGuardPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerManagedSwitchIpSourceGuardDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "binding_entry"
 		if _, ok := i["binding-entry"]; ok {
-
 			tmp["binding_entry"] = flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntry(i["binding-entry"], d, pre_append, sv)
 		}
 
@@ -3000,19 +3248,16 @@ func flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntry(v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_name"
 		if _, ok := i["entry-name"]; ok {
-
 			tmp["entry_name"] = flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntryEntryName(i["entry-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntryIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-
 			tmp["mac"] = flattenSwitchControllerManagedSwitchIpSourceGuardBindingEntryMac(i["mac"], d, pre_append, sv)
 		}
 
@@ -3048,55 +3293,46 @@ func flattenSwitchControllerManagedSwitchStpSettings(v interface{}, d *schema.Re
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
-
 		result["local_override"] = flattenSwitchControllerManagedSwitchStpSettingsLocalOverride(i["local-override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "name"
 	if _, ok := i["name"]; ok {
-
 		result["name"] = flattenSwitchControllerManagedSwitchStpSettingsName(i["name"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSwitchControllerManagedSwitchStpSettingsStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "revision"
 	if _, ok := i["revision"]; ok {
-
 		result["revision"] = flattenSwitchControllerManagedSwitchStpSettingsRevision(i["revision"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "hello_time"
 	if _, ok := i["hello-time"]; ok {
-
 		result["hello_time"] = flattenSwitchControllerManagedSwitchStpSettingsHelloTime(i["hello-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forward_time"
 	if _, ok := i["forward-time"]; ok {
-
 		result["forward_time"] = flattenSwitchControllerManagedSwitchStpSettingsForwardTime(i["forward-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_age"
 	if _, ok := i["max-age"]; ok {
-
 		result["max_age"] = flattenSwitchControllerManagedSwitchStpSettingsMaxAge(i["max-age"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_hops"
 	if _, ok := i["max-hops"]; ok {
-
 		result["max_hops"] = flattenSwitchControllerManagedSwitchStpSettingsMaxHops(i["max-hops"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "pending_timer"
 	if _, ok := i["pending-timer"]; ok {
-
 		result["pending_timer"] = flattenSwitchControllerManagedSwitchStpSettingsPendingTimer(i["pending-timer"], d, pre_append, sv)
 	}
 
@@ -3166,13 +3402,11 @@ func flattenSwitchControllerManagedSwitchStpInstance(v interface{}, d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSwitchControllerManagedSwitchStpInstanceId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-
 			tmp["priority"] = flattenSwitchControllerManagedSwitchStpInstancePriority(i["priority"], d, pre_append, sv)
 		}
 
@@ -3208,31 +3442,26 @@ func flattenSwitchControllerManagedSwitchSnmpSysinfo(v interface{}, d *schema.Re
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSwitchControllerManagedSwitchSnmpSysinfoStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "engine_id"
 	if _, ok := i["engine-id"]; ok {
-
 		result["engine_id"] = flattenSwitchControllerManagedSwitchSnmpSysinfoEngineId(i["engine-id"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "description"
 	if _, ok := i["description"]; ok {
-
 		result["description"] = flattenSwitchControllerManagedSwitchSnmpSysinfoDescription(i["description"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "contact_info"
 	if _, ok := i["contact-info"]; ok {
-
 		result["contact_info"] = flattenSwitchControllerManagedSwitchSnmpSysinfoContactInfo(i["contact-info"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "location"
 	if _, ok := i["location"]; ok {
-
 		result["location"] = flattenSwitchControllerManagedSwitchSnmpSysinfoLocation(i["location"], d, pre_append, sv)
 	}
 
@@ -3275,19 +3504,16 @@ func flattenSwitchControllerManagedSwitchSnmpTrapThreshold(v interface{}, d *sch
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "trap_high_cpu_threshold"
 	if _, ok := i["trap-high-cpu-threshold"]; ok {
-
 		result["trap_high_cpu_threshold"] = flattenSwitchControllerManagedSwitchSnmpTrapThresholdTrapHighCpuThreshold(i["trap-high-cpu-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "trap_low_memory_threshold"
 	if _, ok := i["trap-low-memory-threshold"]; ok {
-
 		result["trap_low_memory_threshold"] = flattenSwitchControllerManagedSwitchSnmpTrapThresholdTrapLowMemoryThreshold(i["trap-low-memory-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "trap_log_full_threshold"
 	if _, ok := i["trap-log-full-threshold"]; ok {
-
 		result["trap_log_full_threshold"] = flattenSwitchControllerManagedSwitchSnmpTrapThresholdTrapLogFullThreshold(i["trap-log-full-threshold"], d, pre_append, sv)
 	}
 
@@ -3337,91 +3563,76 @@ func flattenSwitchControllerManagedSwitchSnmpCommunity(v interface{}, d *schema.
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSwitchControllerManagedSwitchSnmpCommunityId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerManagedSwitchSnmpCommunityName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSwitchControllerManagedSwitchSnmpCommunityStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
 		if _, ok := i["hosts"]; ok {
-
 			tmp["hosts"] = flattenSwitchControllerManagedSwitchSnmpCommunityHosts(i["hosts"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_status"
 		if _, ok := i["query-v1-status"]; ok {
-
 			tmp["query_v1_status"] = flattenSwitchControllerManagedSwitchSnmpCommunityQueryV1Status(i["query-v1-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_port"
 		if _, ok := i["query-v1-port"]; ok {
-
 			tmp["query_v1_port"] = flattenSwitchControllerManagedSwitchSnmpCommunityQueryV1Port(i["query-v1-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_status"
 		if _, ok := i["query-v2c-status"]; ok {
-
 			tmp["query_v2c_status"] = flattenSwitchControllerManagedSwitchSnmpCommunityQueryV2CStatus(i["query-v2c-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_port"
 		if _, ok := i["query-v2c-port"]; ok {
-
 			tmp["query_v2c_port"] = flattenSwitchControllerManagedSwitchSnmpCommunityQueryV2CPort(i["query-v2c-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_status"
 		if _, ok := i["trap-v1-status"]; ok {
-
 			tmp["trap_v1_status"] = flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Status(i["trap-v1-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_lport"
 		if _, ok := i["trap-v1-lport"]; ok {
-
 			tmp["trap_v1_lport"] = flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Lport(i["trap-v1-lport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_rport"
 		if _, ok := i["trap-v1-rport"]; ok {
-
 			tmp["trap_v1_rport"] = flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Rport(i["trap-v1-rport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_status"
 		if _, ok := i["trap-v2c-status"]; ok {
-
 			tmp["trap_v2c_status"] = flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CStatus(i["trap-v2c-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_lport"
 		if _, ok := i["trap-v2c-lport"]; ok {
-
 			tmp["trap_v2c_lport"] = flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CLport(i["trap-v2c-lport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_rport"
 		if _, ok := i["trap-v2c-rport"]; ok {
-
 			tmp["trap_v2c_rport"] = flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CRport(i["trap-v2c-rport"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "events"
 		if _, ok := i["events"]; ok {
-
 			tmp["events"] = flattenSwitchControllerManagedSwitchSnmpCommunityEvents(i["events"], d, pre_append, sv)
 		}
 
@@ -3472,13 +3683,11 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityHosts(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSwitchControllerManagedSwitchSnmpCommunityHostsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSwitchControllerManagedSwitchSnmpCommunityHostsIp(i["ip"], d, pre_append, sv)
 		}
 
@@ -3573,37 +3782,31 @@ func flattenSwitchControllerManagedSwitchSnmpUser(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerManagedSwitchSnmpUserName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
 		if _, ok := i["queries"]; ok {
-
 			tmp["queries"] = flattenSwitchControllerManagedSwitchSnmpUserQueries(i["queries"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_port"
 		if _, ok := i["query-port"]; ok {
-
 			tmp["query_port"] = flattenSwitchControllerManagedSwitchSnmpUserQueryPort(i["query-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_level"
 		if _, ok := i["security-level"]; ok {
-
 			tmp["security_level"] = flattenSwitchControllerManagedSwitchSnmpUserSecurityLevel(i["security-level"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_proto"
 		if _, ok := i["auth-proto"]; ok {
-
 			tmp["auth_proto"] = flattenSwitchControllerManagedSwitchSnmpUserAuthProto(i["auth-proto"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
 		if _, ok := i["auth-pwd"]; ok {
-
 			tmp["auth_pwd"] = flattenSwitchControllerManagedSwitchSnmpUserAuthPwd(i["auth-pwd"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -3613,13 +3816,11 @@ func flattenSwitchControllerManagedSwitchSnmpUser(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
 		if _, ok := i["priv-proto"]; ok {
-
 			tmp["priv_proto"] = flattenSwitchControllerManagedSwitchSnmpUserPrivProto(i["priv-proto"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
 		if _, ok := i["priv-pwd"]; ok {
-
 			tmp["priv_pwd"] = flattenSwitchControllerManagedSwitchSnmpUserPrivPwd(i["priv-pwd"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -3687,7 +3888,6 @@ func flattenSwitchControllerManagedSwitchSwitchStpSettings(v interface{}, d *sch
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSwitchControllerManagedSwitchSwitchStpSettingsStatus(i["status"], d, pre_append, sv)
 	}
 
@@ -3710,19 +3910,16 @@ func flattenSwitchControllerManagedSwitchSwitchLog(v interface{}, d *schema.Reso
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
-
 		result["local_override"] = flattenSwitchControllerManagedSwitchSwitchLogLocalOverride(i["local-override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSwitchControllerManagedSwitchSwitchLogStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
-
 		result["severity"] = flattenSwitchControllerManagedSwitchSwitchLogSeverity(i["severity"], d, pre_append, sv)
 	}
 
@@ -3768,43 +3965,36 @@ func flattenSwitchControllerManagedSwitchRemoteLog(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerManagedSwitchRemoteLogName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSwitchControllerManagedSwitchRemoteLogStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := i["server"]; ok {
-
 			tmp["server"] = flattenSwitchControllerManagedSwitchRemoteLogServer(i["server"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenSwitchControllerManagedSwitchRemoteLogPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := i["severity"]; ok {
-
 			tmp["severity"] = flattenSwitchControllerManagedSwitchRemoteLogSeverity(i["severity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "csv"
 		if _, ok := i["csv"]; ok {
-
 			tmp["csv"] = flattenSwitchControllerManagedSwitchRemoteLogCsv(i["csv"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "facility"
 		if _, ok := i["facility"]; ok {
-
 			tmp["facility"] = flattenSwitchControllerManagedSwitchRemoteLogFacility(i["facility"], d, pre_append, sv)
 		}
 
@@ -3856,31 +4046,26 @@ func flattenSwitchControllerManagedSwitchStormControl(v interface{}, d *schema.R
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
-
 		result["local_override"] = flattenSwitchControllerManagedSwitchStormControlLocalOverride(i["local-override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "rate"
 	if _, ok := i["rate"]; ok {
-
 		result["rate"] = flattenSwitchControllerManagedSwitchStormControlRate(i["rate"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unknown_unicast"
 	if _, ok := i["unknown-unicast"]; ok {
-
 		result["unknown_unicast"] = flattenSwitchControllerManagedSwitchStormControlUnknownUnicast(i["unknown-unicast"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unknown_multicast"
 	if _, ok := i["unknown-multicast"]; ok {
-
 		result["unknown_multicast"] = flattenSwitchControllerManagedSwitchStormControlUnknownMulticast(i["unknown-multicast"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "broadcast"
 	if _, ok := i["broadcast"]; ok {
-
 		result["broadcast"] = flattenSwitchControllerManagedSwitchStormControlBroadcast(i["broadcast"], d, pre_append, sv)
 	}
 
@@ -3934,37 +4119,31 @@ func flattenSwitchControllerManagedSwitchMirror(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerManagedSwitchMirrorName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSwitchControllerManagedSwitchMirrorStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switching_packet"
 		if _, ok := i["switching-packet"]; ok {
-
 			tmp["switching_packet"] = flattenSwitchControllerManagedSwitchMirrorSwitchingPacket(i["switching-packet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-
 			tmp["dst"] = flattenSwitchControllerManagedSwitchMirrorDst(i["dst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ingress"
 		if _, ok := i["src-ingress"]; ok {
-
 			tmp["src_ingress"] = flattenSwitchControllerManagedSwitchMirrorSrcIngress(i["src-ingress"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_egress"
 		if _, ok := i["src-egress"]; ok {
-
 			tmp["src_egress"] = flattenSwitchControllerManagedSwitchMirrorSrcEgress(i["src-egress"], d, pre_append, sv)
 		}
 
@@ -4019,7 +4198,6 @@ func flattenSwitchControllerManagedSwitchMirrorSrcIngress(v interface{}, d *sche
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerManagedSwitchMirrorSrcIngressName(i["name"], d, pre_append, sv)
 		}
 
@@ -4062,7 +4240,6 @@ func flattenSwitchControllerManagedSwitchMirrorSrcEgress(v interface{}, d *schem
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerManagedSwitchMirrorSrcEgressName(i["name"], d, pre_append, sv)
 		}
 
@@ -4105,37 +4282,31 @@ func flattenSwitchControllerManagedSwitchStaticMac(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSwitchControllerManagedSwitchStaticMacId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSwitchControllerManagedSwitchStaticMacType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := i["vlan"]; ok {
-
 			tmp["vlan"] = flattenSwitchControllerManagedSwitchStaticMacVlan(i["vlan"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-
 			tmp["mac"] = flattenSwitchControllerManagedSwitchStaticMacMac(i["mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenSwitchControllerManagedSwitchStaticMacInterface(i["interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerManagedSwitchStaticMacDescription(i["description"], d, pre_append, sv)
 		}
 
@@ -4198,13 +4369,11 @@ func flattenSwitchControllerManagedSwitchCustomCommand(v interface{}, d *schema.
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
 		if _, ok := i["command-entry"]; ok {
-
 			tmp["command_entry"] = flattenSwitchControllerManagedSwitchCustomCommandCommandEntry(i["command-entry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
 		if _, ok := i["command-name"]; ok {
-
 			tmp["command_name"] = flattenSwitchControllerManagedSwitchCustomCommandCommandName(i["command-name"], d, pre_append, sv)
 		}
 
@@ -4225,6 +4394,84 @@ func flattenSwitchControllerManagedSwitchCustomCommandCommandName(v interface{},
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClient(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientName(i["name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
+		if _, ok := i["vlan"]; ok {
+			tmp["vlan"] = flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientVlan(i["vlan"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientIp(i["ip"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
+		if _, ok := i["mac"]; ok {
+			tmp["mac"] = flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientMac(i["mac"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := i["port"]; ok {
+			tmp["port"] = flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientPort(i["port"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClientPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchIgmpSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -4236,25 +4483,21 @@ func flattenSwitchControllerManagedSwitchIgmpSnooping(v interface{}, d *schema.R
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
-
 		result["local_override"] = flattenSwitchControllerManagedSwitchIgmpSnoopingLocalOverride(i["local-override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "aging_time"
 	if _, ok := i["aging-time"]; ok {
-
 		result["aging_time"] = flattenSwitchControllerManagedSwitchIgmpSnoopingAgingTime(i["aging-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "flood_unknown_multicast"
 	if _, ok := i["flood-unknown-multicast"]; ok {
-
 		result["flood_unknown_multicast"] = flattenSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(i["flood-unknown-multicast"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlans"
 	if _, ok := i["vlans"]; ok {
-
 		result["vlans"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlans(i["vlans"], d, pre_append, sv)
 	}
 
@@ -4300,31 +4543,26 @@ func flattenSwitchControllerManagedSwitchIgmpSnoopingVlans(v interface{}, d *sch
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy"
 		if _, ok := i["proxy"]; ok {
-
 			tmp["proxy"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansProxy(i["proxy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier"
 		if _, ok := i["querier"]; ok {
-
 			tmp["querier"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerier(i["querier"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier_addr"
 		if _, ok := i["querier-addr"]; ok {
-
 			tmp["querier_addr"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(i["querier-addr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := i["version"]; ok {
-
 			tmp["version"] = flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(i["version"], d, pre_append, sv)
 		}
 
@@ -4368,37 +4606,31 @@ func flattenSwitchControllerManagedSwitch8021XSettings(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
-
 		result["local_override"] = flattenSwitchControllerManagedSwitch8021XSettingsLocalOverride(i["local-override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "link_down_auth"
 	if _, ok := i["link-down-auth"]; ok {
-
 		result["link_down_auth"] = flattenSwitchControllerManagedSwitch8021XSettingsLinkDownAuth(i["link-down-auth"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "reauth_period"
 	if _, ok := i["reauth-period"]; ok {
-
 		result["reauth_period"] = flattenSwitchControllerManagedSwitch8021XSettingsReauthPeriod(i["reauth-period"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "max_reauth_attempt"
 	if _, ok := i["max-reauth-attempt"]; ok {
-
 		result["max_reauth_attempt"] = flattenSwitchControllerManagedSwitch8021XSettingsMaxReauthAttempt(i["max-reauth-attempt"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tx_period"
 	if _, ok := i["tx-period"]; ok {
-
 		result["tx_period"] = flattenSwitchControllerManagedSwitch8021XSettingsTxPeriod(i["tx-period"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "mab_reauth"
 	if _, ok := i["mab-reauth"]; ok {
-
 		result["mab_reauth"] = flattenSwitchControllerManagedSwitch8021XSettingsMabReauth(i["mab-reauth"], d, pre_append, sv)
 	}
 
@@ -4432,10 +4664,22 @@ func flattenSwitchControllerManagedSwitch8021XSettingsMabReauth(v interface{}, d
 
 func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("switch_id", flattenSwitchControllerManagedSwitchSwitchId(o["switch-id"], d, "switch_id", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-id"]) {
 			return fmt.Errorf("Error reading switch_id: %v", err)
+		}
+	}
+
+	if err = d.Set("sn", flattenSwitchControllerManagedSwitchSn(o["sn"], d, "sn", sv)); err != nil {
+		if !fortiAPIPatch(o["sn"]) {
+			return fmt.Errorf("Error reading sn: %v", err)
 		}
 	}
 
@@ -4549,7 +4793,10 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 
 	{
 		v := flattenSwitchControllerManagedSwitchDynamicCapability(o["dynamic-capability"], d, "dynamic_capability", sv)
-		if i2ss2arrFortiAPIUpgrade(sv, "6.4.2") == true {
+		new_version_map := map[string][]string{
+			">=": []string{"6.4.2"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 			if vx, ok := v.(string); ok {
 				vxx, err := strconv.Atoi(vx)
 				if err == nil {
@@ -4637,7 +4884,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ports", flattenSwitchControllerManagedSwitchPorts(o["ports"], d, "ports", sv)); err != nil {
 			if !fortiAPIPatch(o["ports"]) {
 				return fmt.Errorf("Error reading ports: %v", err)
@@ -4653,7 +4900,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ip_source_guard", flattenSwitchControllerManagedSwitchIpSourceGuard(o["ip-source-guard"], d, "ip_source_guard", sv)); err != nil {
 			if !fortiAPIPatch(o["ip-source-guard"]) {
 				return fmt.Errorf("Error reading ip_source_guard: %v", err)
@@ -4669,7 +4916,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("stp_settings", flattenSwitchControllerManagedSwitchStpSettings(o["stp-settings"], d, "stp_settings", sv)); err != nil {
 			if !fortiAPIPatch(o["stp-settings"]) {
 				return fmt.Errorf("Error reading stp_settings: %v", err)
@@ -4685,7 +4932,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("stp_instance", flattenSwitchControllerManagedSwitchStpInstance(o["stp-instance"], d, "stp_instance", sv)); err != nil {
 			if !fortiAPIPatch(o["stp-instance"]) {
 				return fmt.Errorf("Error reading stp_instance: %v", err)
@@ -4707,7 +4954,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("snmp_sysinfo", flattenSwitchControllerManagedSwitchSnmpSysinfo(o["snmp-sysinfo"], d, "snmp_sysinfo", sv)); err != nil {
 			if !fortiAPIPatch(o["snmp-sysinfo"]) {
 				return fmt.Errorf("Error reading snmp_sysinfo: %v", err)
@@ -4729,7 +4976,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("snmp_trap_threshold", flattenSwitchControllerManagedSwitchSnmpTrapThreshold(o["snmp-trap-threshold"], d, "snmp_trap_threshold", sv)); err != nil {
 			if !fortiAPIPatch(o["snmp-trap-threshold"]) {
 				return fmt.Errorf("Error reading snmp_trap_threshold: %v", err)
@@ -4751,7 +4998,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("snmp_community", flattenSwitchControllerManagedSwitchSnmpCommunity(o["snmp-community"], d, "snmp_community", sv)); err != nil {
 			if !fortiAPIPatch(o["snmp-community"]) {
 				return fmt.Errorf("Error reading snmp_community: %v", err)
@@ -4773,7 +5020,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("snmp_user", flattenSwitchControllerManagedSwitchSnmpUser(o["snmp-user"], d, "snmp_user", sv)); err != nil {
 			if !fortiAPIPatch(o["snmp-user"]) {
 				return fmt.Errorf("Error reading snmp_user: %v", err)
@@ -4801,7 +5048,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("switch_stp_settings", flattenSwitchControllerManagedSwitchSwitchStpSettings(o["switch-stp-settings"], d, "switch_stp_settings", sv)); err != nil {
 			if !fortiAPIPatch(o["switch-stp-settings"]) {
 				return fmt.Errorf("Error reading switch_stp_settings: %v", err)
@@ -4817,7 +5064,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("switch_log", flattenSwitchControllerManagedSwitchSwitchLog(o["switch-log"], d, "switch_log", sv)); err != nil {
 			if !fortiAPIPatch(o["switch-log"]) {
 				return fmt.Errorf("Error reading switch_log: %v", err)
@@ -4833,7 +5080,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("remote_log", flattenSwitchControllerManagedSwitchRemoteLog(o["remote-log"], d, "remote_log", sv)); err != nil {
 			if !fortiAPIPatch(o["remote-log"]) {
 				return fmt.Errorf("Error reading remote_log: %v", err)
@@ -4849,7 +5096,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("storm_control", flattenSwitchControllerManagedSwitchStormControl(o["storm-control"], d, "storm_control", sv)); err != nil {
 			if !fortiAPIPatch(o["storm-control"]) {
 				return fmt.Errorf("Error reading storm_control: %v", err)
@@ -4865,7 +5112,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("mirror", flattenSwitchControllerManagedSwitchMirror(o["mirror"], d, "mirror", sv)); err != nil {
 			if !fortiAPIPatch(o["mirror"]) {
 				return fmt.Errorf("Error reading mirror: %v", err)
@@ -4881,7 +5128,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("static_mac", flattenSwitchControllerManagedSwitchStaticMac(o["static-mac"], d, "static_mac", sv)); err != nil {
 			if !fortiAPIPatch(o["static-mac"]) {
 				return fmt.Errorf("Error reading static_mac: %v", err)
@@ -4897,7 +5144,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("custom_command", flattenSwitchControllerManagedSwitchCustomCommand(o["custom-command"], d, "custom_command", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-command"]) {
 				return fmt.Errorf("Error reading custom_command: %v", err)
@@ -4913,7 +5160,23 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
+		if err = d.Set("dhcp_snooping_static_client", flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClient(o["dhcp-snooping-static-client"], d, "dhcp_snooping_static_client", sv)); err != nil {
+			if !fortiAPIPatch(o["dhcp-snooping-static-client"]) {
+				return fmt.Errorf("Error reading dhcp_snooping_static_client: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dhcp_snooping_static_client"); ok {
+			if err = d.Set("dhcp_snooping_static_client", flattenSwitchControllerManagedSwitchDhcpSnoopingStaticClient(o["dhcp-snooping-static-client"], d, "dhcp_snooping_static_client", sv)); err != nil {
+				if !fortiAPIPatch(o["dhcp-snooping-static-client"]) {
+					return fmt.Errorf("Error reading dhcp_snooping_static_client: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("igmp_snooping", flattenSwitchControllerManagedSwitchIgmpSnooping(o["igmp-snooping"], d, "igmp_snooping", sv)); err != nil {
 			if !fortiAPIPatch(o["igmp-snooping"]) {
 				return fmt.Errorf("Error reading igmp_snooping: %v", err)
@@ -4929,7 +5192,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("n802_1x_settings", flattenSwitchControllerManagedSwitch8021XSettings(o["802-1X-settings"], d, "n802_1x_settings", sv)); err != nil {
 			if !fortiAPIPatch(o["802-1X-settings"]) {
 				return fmt.Errorf("Error reading n802_1x_settings: %v", err)
@@ -4955,6 +5218,10 @@ func flattenSwitchControllerManagedSwitchFortiTestDebug(d *schema.ResourceData, 
 }
 
 func expandSwitchControllerManagedSwitchSwitchId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchSn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5098,223 +5365,216 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-name"], _ = expandSwitchControllerManagedSwitchPortsPortName(d, i["port_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_owner"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-owner"], _ = expandSwitchControllerManagedSwitchPortsPortOwner(d, i["port_owner"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["switch-id"], _ = expandSwitchControllerManagedSwitchPortsSwitchId(d, i["switch_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["speed"], _ = expandSwitchControllerManagedSwitchPortsSpeed(d, i["speed"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed_mask"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["speed-mask"], _ = expandSwitchControllerManagedSwitchPortsSpeedMask(d, i["speed_mask"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSwitchControllerManagedSwitchPortsStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["poe-status"], _ = expandSwitchControllerManagedSwitchPortsPoeStatus(d, i["poe_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_source_guard"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip-source-guard"], _ = expandSwitchControllerManagedSwitchPortsIpSourceGuard(d, i["ip_source_guard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ptp_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ptp-policy"], _ = expandSwitchControllerManagedSwitchPortsPtpPolicy(d, i["ptp_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "aggregator_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["aggregator-mode"], _ = expandSwitchControllerManagedSwitchPortsAggregatorMode(d, i["aggregator_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flapguard"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flapguard"], _ = expandSwitchControllerManagedSwitchPortsFlapguard(d, i["flapguard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_rate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flap-rate"], _ = expandSwitchControllerManagedSwitchPortsFlapRate(d, i["flap_rate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_duration"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flap-duration"], _ = expandSwitchControllerManagedSwitchPortsFlapDuration(d, i["flap_duration"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_timeout"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flap-timeout"], _ = expandSwitchControllerManagedSwitchPortsFlapTimeout(d, i["flap_timeout"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpvst_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rpvst-port"], _ = expandSwitchControllerManagedSwitchPortsRpvstPort(d, i["rpvst_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_pre_standard_detection"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["poe-pre-standard-detection"], _ = expandSwitchControllerManagedSwitchPortsPoePreStandardDetection(d, i["poe_pre_standard_detection"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_number"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-number"], _ = expandSwitchControllerManagedSwitchPortsPortNumber(d, i["port_number"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_prefix_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-prefix-type"], _ = expandSwitchControllerManagedSwitchPortsPortPrefixType(d, i["port_prefix_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortilink_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fortilink-port"], _ = expandSwitchControllerManagedSwitchPortsFortilinkPort(d, i["fortilink_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_status"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["link-status"], _ = expandSwitchControllerManagedSwitchPortsLinkStatus(d, i["link_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_capable"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["poe-capable"], _ = expandSwitchControllerManagedSwitchPortsPoeCapable(d, i["poe_capable"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stacking_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["stacking-port"], _ = expandSwitchControllerManagedSwitchPortsStackingPort(d, i["stacking_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "p2p_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["p2p-port"], _ = expandSwitchControllerManagedSwitchPortsP2PPort(d, i["p2p_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag_icl_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mclag-icl-port"], _ = expandSwitchControllerManagedSwitchPortsMclagIclPort(d, i["mclag_icl_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fiber_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fiber-port"], _ = expandSwitchControllerManagedSwitchPortsFiberPort(d, i["fiber_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "media_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["media-type"], _ = expandSwitchControllerManagedSwitchPortsMediaType(d, i["media_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_standard"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["poe-standard"], _ = expandSwitchControllerManagedSwitchPortsPoeStandard(d, i["poe_standard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_max_power"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["poe-max-power"], _ = expandSwitchControllerManagedSwitchPortsPoeMaxPower(d, i["poe_max_power"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_mode_bt_cabable"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["poe-mode-bt-cabable"], _ = expandSwitchControllerManagedSwitchPortsPoeModeBtCabable(d, i["poe_mode_bt_cabable"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["poe-port-mode"], _ = expandSwitchControllerManagedSwitchPortsPoePortMode(d, i["poe_port_mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_priority"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["poe-port-priority"], _ = expandSwitchControllerManagedSwitchPortsPoePortPriority(d, i["poe_port_priority"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_power"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["poe-port-power"], _ = expandSwitchControllerManagedSwitchPortsPoePortPower(d, i["poe_port_power"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flags"], _ = expandSwitchControllerManagedSwitchPortsFlags(d, i["flags"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["virtual-port"], _ = expandSwitchControllerManagedSwitchPortsVirtualPort(d, i["virtual_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_local_trunk_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["isl-local-trunk-name"], _ = expandSwitchControllerManagedSwitchPortsIslLocalTrunkName(d, i["isl_local_trunk_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_port_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["isl-peer-port-name"], _ = expandSwitchControllerManagedSwitchPortsIslPeerPortName(d, i["isl_peer_port_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_device_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["isl-peer-device-name"], _ = expandSwitchControllerManagedSwitchPortsIslPeerDeviceName(d, i["isl_peer_device_name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_device_sn"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["isl-peer-device-sn"], _ = expandSwitchControllerManagedSwitchPortsIslPeerDeviceSn(d, i["isl_peer_device_sn"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fgt_peer_port_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fgt-peer-port-name"], _ = expandSwitchControllerManagedSwitchPortsFgtPeerPortName(d, i["fgt_peer_port_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fgt_peer_device_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fgt-peer-device-name"], _ = expandSwitchControllerManagedSwitchPortsFgtPeerDeviceName(d, i["fgt_peer_device_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan"], _ = expandSwitchControllerManagedSwitchPortsVlan(d, i["vlan"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans_all"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["allowed-vlans-all"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlansAll(d, i["allowed_vlans_all"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["allowed-vlans"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlans(d, i["allowed_vlans"], pre_append, sv)
 		} else {
 			tmp["allowed-vlans"] = make([]string, 0)
@@ -5322,7 +5582,6 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "untagged_vlans"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["untagged-vlans"], _ = expandSwitchControllerManagedSwitchPortsUntaggedVlans(d, i["untagged_vlans"], pre_append, sv)
 		} else {
 			tmp["untagged-vlans"] = make([]string, 0)
@@ -5330,223 +5589,207 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSwitchControllerManagedSwitchPortsType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["access-mode"], _ = expandSwitchControllerManagedSwitchPortsAccessMode(d, i["access_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["matched-dpp-policy"], _ = expandSwitchControllerManagedSwitchPortsMatchedDppPolicy(d, i["matched_dpp_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_intf_tags"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["matched-dpp-intf-tags"], _ = expandSwitchControllerManagedSwitchPortsMatchedDppIntfTags(d, i["matched_dpp_intf_tags"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "acl_group"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+			tmp["acl-group"], _ = expandSwitchControllerManagedSwitchPortsAclGroup(d, i["acl_group"], pre_append, sv)
+		} else {
+			tmp["acl-group"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiswitch_acls"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+			tmp["fortiswitch-acls"], _ = expandSwitchControllerManagedSwitchPortsFortiswitchAcls(d, i["fortiswitch_acls"], pre_append, sv)
+		} else {
+			tmp["fortiswitch-acls"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snooping"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dhcp-snooping"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnooping(d, i["dhcp_snooping"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snoop_option82_trust"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dhcp-snoop-option82-trust"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Trust(d, i["dhcp_snoop_option82_trust"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snoop_option82_override"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+			tmp["dhcp-snoop-option82-override"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Override(d, i["dhcp_snoop_option82_override"], pre_append, sv)
+		} else {
+			tmp["dhcp-snoop-option82-override"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "arp_inspection_trust"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["arp-inspection-trust"], _ = expandSwitchControllerManagedSwitchPortsArpInspectionTrust(d, i["arp_inspection_trust"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping_flood_reports"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["igmp-snooping-flood-reports"], _ = expandSwitchControllerManagedSwitchPortsIgmpSnoopingFloodReports(d, i["igmp_snooping_flood_reports"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mcast_snooping_flood_traffic"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mcast-snooping-flood-traffic"], _ = expandSwitchControllerManagedSwitchPortsMcastSnoopingFloodTraffic(d, i["mcast_snooping_flood_traffic"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["igmp-snooping"], _ = expandSwitchControllerManagedSwitchPortsIgmpSnooping(d, i["igmp_snooping"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmps_flood_reports"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["igmps-flood-reports"], _ = expandSwitchControllerManagedSwitchPortsIgmpsFloodReports(d, i["igmps_flood_reports"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmps_flood_traffic"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["igmps-flood-traffic"], _ = expandSwitchControllerManagedSwitchPortsIgmpsFloodTraffic(d, i["igmps_flood_traffic"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_state"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["stp-state"], _ = expandSwitchControllerManagedSwitchPortsStpState(d, i["stp_state"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_root_guard"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["stp-root-guard"], _ = expandSwitchControllerManagedSwitchPortsStpRootGuard(d, i["stp_root_guard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_bpdu_guard"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["stp-bpdu-guard"], _ = expandSwitchControllerManagedSwitchPortsStpBpduGuard(d, i["stp_bpdu_guard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stp_bpdu_guard_timeout"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["stp-bpdu-guard-timeout"], _ = expandSwitchControllerManagedSwitchPortsStpBpduGuardTimeout(d, i["stp_bpdu_guard_timeout"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "edge_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["edge-port"], _ = expandSwitchControllerManagedSwitchPortsEdgePort(d, i["edge_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "discard_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["discard-mode"], _ = expandSwitchControllerManagedSwitchPortsDiscardMode(d, i["discard_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_sampler"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["packet-sampler"], _ = expandSwitchControllerManagedSwitchPortsPacketSampler(d, i["packet_sampler"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_sample_rate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["packet-sample-rate"], _ = expandSwitchControllerManagedSwitchPortsPacketSampleRate(d, i["packet_sample_rate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_sampler"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sflow-sampler"], _ = expandSwitchControllerManagedSwitchPortsSflowSampler(d, i["sflow_sampler"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_sample_rate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sflow-sample-rate"], _ = expandSwitchControllerManagedSwitchPortsSflowSampleRate(d, i["sflow_sample_rate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_counter_interval"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sflow-counter-interval"], _ = expandSwitchControllerManagedSwitchPortsSflowCounterInterval(d, i["sflow_counter_interval"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sample_direction"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sample-direction"], _ = expandSwitchControllerManagedSwitchPortsSampleDirection(d, i["sample_direction"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fec_capable"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fec-capable"], _ = expandSwitchControllerManagedSwitchPortsFecCapable(d, i["fec_capable"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fec_state"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fec-state"], _ = expandSwitchControllerManagedSwitchPortsFecState(d, i["fec_state"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flow_control"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["flow-control"], _ = expandSwitchControllerManagedSwitchPortsFlowControl(d, i["flow_control"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pause_meter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pause-meter"], _ = expandSwitchControllerManagedSwitchPortsPauseMeter(d, i["pause_meter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pause_meter_resume"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pause-meter-resume"], _ = expandSwitchControllerManagedSwitchPortsPauseMeterResume(d, i["pause_meter_resume"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "loop_guard"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["loop-guard"], _ = expandSwitchControllerManagedSwitchPortsLoopGuard(d, i["loop_guard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "loop_guard_timeout"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["loop-guard-timeout"], _ = expandSwitchControllerManagedSwitchPortsLoopGuardTimeout(d, i["loop_guard_timeout"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-policy"], _ = expandSwitchControllerManagedSwitchPortsPortPolicy(d, i["port_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["qos-policy"], _ = expandSwitchControllerManagedSwitchPortsQosPolicy(d, i["qos_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "storm_control_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["storm-control-policy"], _ = expandSwitchControllerManagedSwitchPortsStormControlPolicy(d, i["storm_control_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_security_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-security-policy"], _ = expandSwitchControllerManagedSwitchPortsPortSecurityPolicy(d, i["port_security_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["export-to-pool"], _ = expandSwitchControllerManagedSwitchPortsExportToPool(d, i["export_to_pool"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["interface-tags"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTags(d, i["interface_tags"], pre_append, sv)
 		} else {
 			tmp["interface-tags"] = make([]string, 0)
@@ -5554,7 +5797,6 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["export-tags"], _ = expandSwitchControllerManagedSwitchPortsExportTags(d, i["export_tags"], pre_append, sv)
 		} else {
 			tmp["export-tags"] = make([]string, 0)
@@ -5562,103 +5804,86 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool_flag"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["export-to-pool_flag"], _ = expandSwitchControllerManagedSwitchPortsExportToPool_Flag(d, i["export_to_pool_flag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "learning_limit"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["learning-limit"], _ = expandSwitchControllerManagedSwitchPortsLearningLimit(d, i["learning_limit"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sticky_mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sticky-mac"], _ = expandSwitchControllerManagedSwitchPortsStickyMac(d, i["sticky_mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["lldp-status"], _ = expandSwitchControllerManagedSwitchPortsLldpStatus(d, i["lldp_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_profile"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["lldp-profile"], _ = expandSwitchControllerManagedSwitchPortsLldpProfile(d, i["lldp_profile"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["export-to"], _ = expandSwitchControllerManagedSwitchPortsExportTo(d, i["export_to"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac-addr"], _ = expandSwitchControllerManagedSwitchPortsMacAddr(d, i["mac_addr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_selection_criteria"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port-selection-criteria"], _ = expandSwitchControllerManagedSwitchPortsPortSelectionCriteria(d, i["port_selection_criteria"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerManagedSwitchPortsDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lacp_speed"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["lacp-speed"], _ = expandSwitchControllerManagedSwitchPortsLacpSpeed(d, i["lacp_speed"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mode"], _ = expandSwitchControllerManagedSwitchPortsMode(d, i["mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bundle"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["bundle"], _ = expandSwitchControllerManagedSwitchPortsBundle(d, i["bundle"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_withdrawal_behavior"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["member-withdrawal-behavior"], _ = expandSwitchControllerManagedSwitchPortsMemberWithdrawalBehavior(d, i["member_withdrawal_behavior"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mclag"], _ = expandSwitchControllerManagedSwitchPortsMclag(d, i["mclag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_bundle"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["min-bundle"], _ = expandSwitchControllerManagedSwitchPortsMinBundle(d, i["min_bundle"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_bundle"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["max-bundle"], _ = expandSwitchControllerManagedSwitchPortsMaxBundle(d, i["max_bundle"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["members"], _ = expandSwitchControllerManagedSwitchPortsMembers(d, i["members"], pre_append, sv)
 		} else {
 			tmp["members"] = make([]string, 0)
@@ -5748,6 +5973,10 @@ func expandSwitchControllerManagedSwitchPortsFortilinkPort(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsLinkStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsPoeCapable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5780,6 +6009,22 @@ func expandSwitchControllerManagedSwitchPortsPoeMaxPower(d *schema.ResourceData,
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsPoeModeBtCabable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsPoePortMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsPoePortPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsPoePortPower(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsFlags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5797,6 +6042,10 @@ func expandSwitchControllerManagedSwitchPortsIslPeerPortName(d *schema.ResourceD
 }
 
 func expandSwitchControllerManagedSwitchPortsIslPeerDeviceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsIslPeerDeviceSn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5832,7 +6081,6 @@ func expandSwitchControllerManagedSwitchPortsAllowedVlans(d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
@@ -5864,7 +6112,6 @@ func expandSwitchControllerManagedSwitchPortsUntaggedVlans(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsUntaggedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
@@ -5896,11 +6143,122 @@ func expandSwitchControllerManagedSwitchPortsMatchedDppIntfTags(d *schema.Resour
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsAclGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandSwitchControllerManagedSwitchPortsAclGroupName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsAclGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFortiswitchAcls(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSwitchControllerManagedSwitchPortsFortiswitchAclsId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFortiswitchAclsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsDhcpSnooping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Trust(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Override(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideVlanName(d, i["vlan_name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["circuit-id"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideCircuitId(d, i["circuit_id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["remote-id"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideRemoteId(d, i["remote_id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideVlanName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideCircuitId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideRemoteId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6040,7 +6398,6 @@ func expandSwitchControllerManagedSwitchPortsInterfaceTags(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d, i["tag_name"], pre_append, sv)
 		}
 
@@ -6072,7 +6429,6 @@ func expandSwitchControllerManagedSwitchPortsExportTags(d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsExportTagsTagName(d, i["tag_name"], pre_append, sv)
 		}
 
@@ -6168,7 +6524,6 @@ func expandSwitchControllerManagedSwitchPortsMembers(d *schema.ResourceData, v i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["member-name"], _ = expandSwitchControllerManagedSwitchPortsMembersMemberName(d, i["member_name"], pre_append, sv)
 		}
 
@@ -6200,19 +6555,16 @@ func expandSwitchControllerManagedSwitchIpSourceGuard(d *schema.ResourceData, v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandSwitchControllerManagedSwitchIpSourceGuardPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerManagedSwitchIpSourceGuardDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "binding_entry"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["binding-entry"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntry(d, i["binding_entry"], pre_append, sv)
 		} else {
 			tmp["binding-entry"] = make([]string, 0)
@@ -6250,19 +6602,16 @@ func expandSwitchControllerManagedSwitchIpSourceGuardBindingEntry(d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["entry-name"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntryEntryName(d, i["entry_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntryIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntryMac(d, i["mac"], pre_append, sv)
 		}
 
@@ -6298,47 +6647,38 @@ func expandSwitchControllerManagedSwitchStpSettings(d *schema.ResourceData, v in
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["local-override"], _ = expandSwitchControllerManagedSwitchStpSettingsLocalOverride(d, i["local_override"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "name"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["name"], _ = expandSwitchControllerManagedSwitchStpSettingsName(d, i["name"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSwitchControllerManagedSwitchStpSettingsStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "revision"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["revision"], _ = expandSwitchControllerManagedSwitchStpSettingsRevision(d, i["revision"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "hello_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["hello-time"], _ = expandSwitchControllerManagedSwitchStpSettingsHelloTime(d, i["hello_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forward_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forward-time"], _ = expandSwitchControllerManagedSwitchStpSettingsForwardTime(d, i["forward_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_age"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["max-age"], _ = expandSwitchControllerManagedSwitchStpSettingsMaxAge(d, i["max_age"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_hops"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["max-hops"], _ = expandSwitchControllerManagedSwitchStpSettingsMaxHops(d, i["max_hops"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "pending_timer"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["pending-timer"], _ = expandSwitchControllerManagedSwitchStpSettingsPendingTimer(d, i["pending_timer"], pre_append, sv)
 	}
 
@@ -6397,13 +6737,11 @@ func expandSwitchControllerManagedSwitchStpInstance(d *schema.ResourceData, v in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSwitchControllerManagedSwitchStpInstanceId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priority"], _ = expandSwitchControllerManagedSwitchStpInstancePriority(d, i["priority"], pre_append, sv)
 		}
 
@@ -6439,27 +6777,22 @@ func expandSwitchControllerManagedSwitchSnmpSysinfo(d *schema.ResourceData, v in
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSwitchControllerManagedSwitchSnmpSysinfoStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "engine_id"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["engine-id"], _ = expandSwitchControllerManagedSwitchSnmpSysinfoEngineId(d, i["engine_id"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "description"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["description"], _ = expandSwitchControllerManagedSwitchSnmpSysinfoDescription(d, i["description"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "contact_info"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["contact-info"], _ = expandSwitchControllerManagedSwitchSnmpSysinfoContactInfo(d, i["contact_info"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "location"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["location"], _ = expandSwitchControllerManagedSwitchSnmpSysinfoLocation(d, i["location"], pre_append, sv)
 	}
 
@@ -6502,17 +6835,14 @@ func expandSwitchControllerManagedSwitchSnmpTrapThreshold(d *schema.ResourceData
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "trap_high_cpu_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["trap-high-cpu-threshold"], _ = expandSwitchControllerManagedSwitchSnmpTrapThresholdTrapHighCpuThreshold(d, i["trap_high_cpu_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "trap_low_memory_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["trap-low-memory-threshold"], _ = expandSwitchControllerManagedSwitchSnmpTrapThresholdTrapLowMemoryThreshold(d, i["trap_low_memory_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "trap_log_full_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["trap-log-full-threshold"], _ = expandSwitchControllerManagedSwitchSnmpTrapThresholdTrapLogFullThreshold(d, i["trap_log_full_threshold"], pre_append, sv)
 	}
 
@@ -6551,25 +6881,21 @@ func expandSwitchControllerManagedSwitchSnmpCommunity(d *schema.ResourceData, v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSwitchControllerManagedSwitchSnmpCommunityId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerManagedSwitchSnmpCommunityName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSwitchControllerManagedSwitchSnmpCommunityStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["hosts"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHosts(d, i["hosts"], pre_append, sv)
 		} else {
 			tmp["hosts"] = make([]string, 0)
@@ -6577,67 +6903,56 @@ func expandSwitchControllerManagedSwitchSnmpCommunity(d *schema.ResourceData, v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-v1-status"], _ = expandSwitchControllerManagedSwitchSnmpCommunityQueryV1Status(d, i["query_v1_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-v1-port"], _ = expandSwitchControllerManagedSwitchSnmpCommunityQueryV1Port(d, i["query_v1_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-v2c-status"], _ = expandSwitchControllerManagedSwitchSnmpCommunityQueryV2CStatus(d, i["query_v2c_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-v2c-port"], _ = expandSwitchControllerManagedSwitchSnmpCommunityQueryV2CPort(d, i["query_v2c_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v1-status"], _ = expandSwitchControllerManagedSwitchSnmpCommunityTrapV1Status(d, i["trap_v1_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_lport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v1-lport"], _ = expandSwitchControllerManagedSwitchSnmpCommunityTrapV1Lport(d, i["trap_v1_lport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_rport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v1-rport"], _ = expandSwitchControllerManagedSwitchSnmpCommunityTrapV1Rport(d, i["trap_v1_rport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v2c-status"], _ = expandSwitchControllerManagedSwitchSnmpCommunityTrapV2CStatus(d, i["trap_v2c_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_lport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v2c-lport"], _ = expandSwitchControllerManagedSwitchSnmpCommunityTrapV2CLport(d, i["trap_v2c_lport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_rport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v2c-rport"], _ = expandSwitchControllerManagedSwitchSnmpCommunityTrapV2CRport(d, i["trap_v2c_rport"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "events"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["events"], _ = expandSwitchControllerManagedSwitchSnmpCommunityEvents(d, i["events"], pre_append, sv)
 		}
 
@@ -6677,13 +6992,11 @@ func expandSwitchControllerManagedSwitchSnmpCommunityHosts(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHostsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
 		}
 
@@ -6767,49 +7080,41 @@ func expandSwitchControllerManagedSwitchSnmpUser(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerManagedSwitchSnmpUserName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["queries"], _ = expandSwitchControllerManagedSwitchSnmpUserQueries(d, i["queries"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-port"], _ = expandSwitchControllerManagedSwitchSnmpUserQueryPort(d, i["query_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_level"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["security-level"], _ = expandSwitchControllerManagedSwitchSnmpUserSecurityLevel(d, i["security_level"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_proto"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-proto"], _ = expandSwitchControllerManagedSwitchSnmpUserAuthProto(d, i["auth_proto"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-pwd"], _ = expandSwitchControllerManagedSwitchSnmpUserAuthPwd(d, i["auth_pwd"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priv-proto"], _ = expandSwitchControllerManagedSwitchSnmpUserPrivProto(d, i["priv_proto"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priv-pwd"], _ = expandSwitchControllerManagedSwitchSnmpUserPrivPwd(d, i["priv_pwd"], pre_append, sv)
 		}
 
@@ -6873,7 +7178,6 @@ func expandSwitchControllerManagedSwitchSwitchStpSettings(d *schema.ResourceData
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSwitchControllerManagedSwitchSwitchStpSettingsStatus(d, i["status"], pre_append, sv)
 	}
 
@@ -6896,17 +7200,14 @@ func expandSwitchControllerManagedSwitchSwitchLog(d *schema.ResourceData, v inte
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["local-override"], _ = expandSwitchControllerManagedSwitchSwitchLogLocalOverride(d, i["local_override"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSwitchControllerManagedSwitchSwitchLogStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["severity"], _ = expandSwitchControllerManagedSwitchSwitchLogSeverity(d, i["severity"], pre_append, sv)
 	}
 
@@ -6941,43 +7242,36 @@ func expandSwitchControllerManagedSwitchRemoteLog(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerManagedSwitchRemoteLogName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSwitchControllerManagedSwitchRemoteLogStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server"], _ = expandSwitchControllerManagedSwitchRemoteLogServer(d, i["server"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandSwitchControllerManagedSwitchRemoteLogPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["severity"], _ = expandSwitchControllerManagedSwitchRemoteLogSeverity(d, i["severity"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "csv"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["csv"], _ = expandSwitchControllerManagedSwitchRemoteLogCsv(d, i["csv"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "facility"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["facility"], _ = expandSwitchControllerManagedSwitchRemoteLogFacility(d, i["facility"], pre_append, sv)
 		}
 
@@ -7029,27 +7323,22 @@ func expandSwitchControllerManagedSwitchStormControl(d *schema.ResourceData, v i
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["local-override"], _ = expandSwitchControllerManagedSwitchStormControlLocalOverride(d, i["local_override"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "rate"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["rate"], _ = expandSwitchControllerManagedSwitchStormControlRate(d, i["rate"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unknown_unicast"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unknown-unicast"], _ = expandSwitchControllerManagedSwitchStormControlUnknownUnicast(d, i["unknown_unicast"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unknown_multicast"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unknown-multicast"], _ = expandSwitchControllerManagedSwitchStormControlUnknownMulticast(d, i["unknown_multicast"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "broadcast"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["broadcast"], _ = expandSwitchControllerManagedSwitchStormControlBroadcast(d, i["broadcast"], pre_append, sv)
 	}
 
@@ -7092,31 +7381,26 @@ func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSwitchControllerManagedSwitchMirrorStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switching_packet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["switching-packet"], _ = expandSwitchControllerManagedSwitchMirrorSwitchingPacket(d, i["switching_packet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst"], _ = expandSwitchControllerManagedSwitchMirrorDst(d, i["dst"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ingress"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["src-ingress"], _ = expandSwitchControllerManagedSwitchMirrorSrcIngress(d, i["src_ingress"], pre_append, sv)
 		} else {
 			tmp["src-ingress"] = make([]string, 0)
@@ -7124,7 +7408,6 @@ func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_egress"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["src-egress"], _ = expandSwitchControllerManagedSwitchMirrorSrcEgress(d, i["src_egress"], pre_append, sv)
 		} else {
 			tmp["src-egress"] = make([]string, 0)
@@ -7170,7 +7453,6 @@ func expandSwitchControllerManagedSwitchMirrorSrcIngress(d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorSrcIngressName(d, i["name"], pre_append, sv)
 		}
 
@@ -7202,7 +7484,6 @@ func expandSwitchControllerManagedSwitchMirrorSrcEgress(d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorSrcEgressName(d, i["name"], pre_append, sv)
 		}
 
@@ -7234,37 +7515,31 @@ func expandSwitchControllerManagedSwitchStaticMac(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSwitchControllerManagedSwitchStaticMacId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSwitchControllerManagedSwitchStaticMacType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan"], _ = expandSwitchControllerManagedSwitchStaticMacVlan(d, i["vlan"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac"], _ = expandSwitchControllerManagedSwitchStaticMacMac(d, i["mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface"], _ = expandSwitchControllerManagedSwitchStaticMacInterface(d, i["interface"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerManagedSwitchStaticMacDescription(d, i["description"], pre_append, sv)
 		}
 
@@ -7316,13 +7591,11 @@ func expandSwitchControllerManagedSwitchCustomCommand(d *schema.ResourceData, v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["command-entry"], _ = expandSwitchControllerManagedSwitchCustomCommandCommandEntry(d, i["command_entry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["command-name"], _ = expandSwitchControllerManagedSwitchCustomCommandCommandName(d, i["command_name"], pre_append, sv)
 		}
 
@@ -7342,6 +7615,73 @@ func expandSwitchControllerManagedSwitchCustomCommandCommandName(d *schema.Resou
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientName(d, i["name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vlan"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientVlan(d, i["vlan"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ip"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientIp(d, i["ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["mac"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientMac(d, i["mac"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["port"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientPort(d, i["port"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchIgmpSnooping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -7354,22 +7694,18 @@ func expandSwitchControllerManagedSwitchIgmpSnooping(d *schema.ResourceData, v i
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["local-override"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingLocalOverride(d, i["local_override"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "aging_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["aging-time"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingAgingTime(d, i["aging_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "flood_unknown_multicast"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["flood-unknown-multicast"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(d, i["flood_unknown_multicast"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlans"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlans"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlans(d, i["vlans"], pre_append, sv)
 	} else {
 		result["vlans"] = make([]string, 0)
@@ -7406,31 +7742,26 @@ func expandSwitchControllerManagedSwitchIgmpSnoopingVlans(d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["proxy"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansProxy(d, i["proxy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["querier"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansQuerier(d, i["querier"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "querier_addr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["querier-addr"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(d, i["querier_addr"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["version"], _ = expandSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(d, i["version"], pre_append, sv)
 		}
 
@@ -7474,32 +7805,26 @@ func expandSwitchControllerManagedSwitch8021XSettings(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["local-override"], _ = expandSwitchControllerManagedSwitch8021XSettingsLocalOverride(d, i["local_override"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "link_down_auth"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["link-down-auth"], _ = expandSwitchControllerManagedSwitch8021XSettingsLinkDownAuth(d, i["link_down_auth"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "reauth_period"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["reauth-period"], _ = expandSwitchControllerManagedSwitch8021XSettingsReauthPeriod(d, i["reauth_period"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "max_reauth_attempt"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["max-reauth-attempt"], _ = expandSwitchControllerManagedSwitch8021XSettingsMaxReauthAttempt(d, i["max_reauth_attempt"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tx_period"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tx-period"], _ = expandSwitchControllerManagedSwitch8021XSettingsTxPeriod(d, i["tx_period"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "mab_reauth"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["mab-reauth"], _ = expandSwitchControllerManagedSwitch8021XSettingsMabReauth(d, i["mab_reauth"], pre_append, sv)
 	}
 
@@ -7534,7 +7859,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("switch_id"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSwitchId(d, v, "switch_id", sv)
 		if err != nil {
 			return &obj, err
@@ -7543,8 +7867,16 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("name"); ok {
+	if v, ok := d.GetOk("sn"); ok {
+		t, err := expandSwitchControllerManagedSwitchSn(d, v, "sn", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sn"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerManagedSwitchName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -7554,7 +7886,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -7564,7 +7895,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("switch_profile"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSwitchProfile(d, v, "switch_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -7574,7 +7904,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("access_profile"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchAccessProfile(d, v, "access_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -7584,7 +7913,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("fsw_wan1_peer"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFswWan1Peer(d, v, "fsw_wan1_peer", sv)
 		if err != nil {
 			return &obj, err
@@ -7594,7 +7922,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("fsw_wan1_admin"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFswWan1Admin(d, v, "fsw_wan1_admin", sv)
 		if err != nil {
 			return &obj, err
@@ -7604,7 +7931,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("fsw_wan2_peer"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFswWan2Peer(d, v, "fsw_wan2_peer", sv)
 		if err != nil {
 			return &obj, err
@@ -7614,7 +7940,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("fsw_wan2_admin"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFswWan2Admin(d, v, "fsw_wan2_admin", sv)
 		if err != nil {
 			return &obj, err
@@ -7624,7 +7949,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("poe_pre_standard_detection"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchPoePreStandardDetection(d, v, "poe_pre_standard_detection", sv)
 		if err != nil {
 			return &obj, err
@@ -7634,7 +7958,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("dhcp_server_access_list"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchDhcpServerAccessList(d, v, "dhcp_server_access_list", sv)
 		if err != nil {
 			return &obj, err
@@ -7644,7 +7967,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("poe_detection_type"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchPoeDetectionType(d, v, "poe_detection_type", sv)
 		if err != nil {
 			return &obj, err
@@ -7654,7 +7976,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("poe_lldp_detection"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchPoeLldpDetection(d, v, "poe_lldp_detection", sv)
 		if err != nil {
 			return &obj, err
@@ -7664,7 +7985,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("directly_connected"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchDirectlyConnected(d, v, "directly_connected", sv)
 		if err != nil {
 			return &obj, err
@@ -7674,7 +7994,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("version"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchVersion(d, v, "version", sv)
 		if err != nil {
 			return &obj, err
@@ -7684,7 +8003,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("max_allowed_trunk_members"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchMaxAllowedTrunkMembers(d, v, "max_allowed_trunk_members", sv)
 		if err != nil {
 			return &obj, err
@@ -7694,7 +8012,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("pre_provisioned"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchPreProvisioned(d, v, "pre_provisioned", sv)
 		if err != nil {
 			return &obj, err
@@ -7704,7 +8021,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("l3_discovered"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchL3Discovered(d, v, "l3_discovered", sv)
 		if err != nil {
 			return &obj, err
@@ -7714,7 +8030,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("tdr_supported"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchTdrSupported(d, v, "tdr_supported", sv)
 		if err != nil {
 			return &obj, err
@@ -7724,12 +8039,14 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("dynamic_capability"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchDynamicCapability(d, v, "dynamic_capability", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "6.4.2") == true {
+			new_version_map := map[string][]string{
+				">=": []string{"6.4.2"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				obj["dynamic-capability"] = fmt.Sprintf("%v", t)
 			} else {
 				obj["dynamic-capability"] = t
@@ -7738,7 +8055,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("switch_device_tag"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSwitchDeviceTag(d, v, "switch_device_tag", sv)
 		if err != nil {
 			return &obj, err
@@ -7748,7 +8064,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("switch_dhcp_opt43_key"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSwitchDhcp_Opt43_Key(d, v, "switch_dhcp_opt43_key", sv)
 		if err != nil {
 			return &obj, err
@@ -7758,7 +8073,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("mclag_igmp_snooping_aware"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchMclagIgmpSnoopingAware(d, v, "mclag_igmp_snooping_aware", sv)
 		if err != nil {
 			return &obj, err
@@ -7768,7 +8082,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("dynamically_discovered"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchDynamicallyDiscovered(d, v, "dynamically_discovered", sv)
 		if err != nil {
 			return &obj, err
@@ -7778,7 +8091,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -7788,7 +8100,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("owner_vdom"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchOwnerVdom(d, v, "owner_vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -7798,7 +8109,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("flow_identity"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFlowIdentity(d, v, "flow_identity", sv)
 		if err != nil {
 			return &obj, err
@@ -7808,7 +8118,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("staged_image_version"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchStagedImageVersion(d, v, "staged_image_version", sv)
 		if err != nil {
 			return &obj, err
@@ -7818,7 +8127,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("delayed_restart_trigger"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchDelayedRestartTrigger(d, v, "delayed_restart_trigger", sv)
 		if err != nil {
 			return &obj, err
@@ -7828,7 +8136,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("firmware_provision"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFirmwareProvision(d, v, "firmware_provision", sv)
 		if err != nil {
 			return &obj, err
@@ -7838,7 +8145,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("firmware_provision_version"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFirmwareProvisionVersion(d, v, "firmware_provision_version", sv)
 		if err != nil {
 			return &obj, err
@@ -7848,7 +8154,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("firmware_provision_latest"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchFirmwareProvisionLatest(d, v, "firmware_provision_latest", sv)
 		if err != nil {
 			return &obj, err
@@ -7858,7 +8163,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ports"); ok || d.HasChange("ports") {
-
 		t, err := expandSwitchControllerManagedSwitchPorts(d, v, "ports", sv)
 		if err != nil {
 			return &obj, err
@@ -7868,7 +8172,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ip_source_guard"); ok || d.HasChange("ip_source_guard") {
-
 		t, err := expandSwitchControllerManagedSwitchIpSourceGuard(d, v, "ip_source_guard", sv)
 		if err != nil {
 			return &obj, err
@@ -7878,7 +8181,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("stp_settings"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchStpSettings(d, v, "stp_settings", sv)
 		if err != nil {
 			return &obj, err
@@ -7888,7 +8190,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("stp_instance"); ok || d.HasChange("stp_instance") {
-
 		t, err := expandSwitchControllerManagedSwitchStpInstance(d, v, "stp_instance", sv)
 		if err != nil {
 			return &obj, err
@@ -7898,7 +8199,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("override_snmp_sysinfo"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchOverrideSnmpSysinfo(d, v, "override_snmp_sysinfo", sv)
 		if err != nil {
 			return &obj, err
@@ -7908,7 +8208,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("snmp_sysinfo"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSnmpSysinfo(d, v, "snmp_sysinfo", sv)
 		if err != nil {
 			return &obj, err
@@ -7918,7 +8217,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("override_snmp_trap_threshold"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchOverrideSnmpTrapThreshold(d, v, "override_snmp_trap_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -7928,7 +8226,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("snmp_trap_threshold"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSnmpTrapThreshold(d, v, "snmp_trap_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -7938,7 +8235,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("override_snmp_community"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchOverrideSnmpCommunity(d, v, "override_snmp_community", sv)
 		if err != nil {
 			return &obj, err
@@ -7948,7 +8244,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("snmp_community"); ok || d.HasChange("snmp_community") {
-
 		t, err := expandSwitchControllerManagedSwitchSnmpCommunity(d, v, "snmp_community", sv)
 		if err != nil {
 			return &obj, err
@@ -7958,7 +8253,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("override_snmp_user"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchOverrideSnmpUser(d, v, "override_snmp_user", sv)
 		if err != nil {
 			return &obj, err
@@ -7968,7 +8262,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("snmp_user"); ok || d.HasChange("snmp_user") {
-
 		t, err := expandSwitchControllerManagedSwitchSnmpUser(d, v, "snmp_user", sv)
 		if err != nil {
 			return &obj, err
@@ -7978,7 +8271,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("qos_drop_policy"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchQosDropPolicy(d, v, "qos_drop_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -7988,7 +8280,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("qos_red_probability"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchQosRedProbability(d, v, "qos_red_probability", sv)
 		if err != nil {
 			return &obj, err
@@ -7998,7 +8289,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("switch_stp_settings"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSwitchStpSettings(d, v, "switch_stp_settings", sv)
 		if err != nil {
 			return &obj, err
@@ -8008,7 +8298,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("switch_log"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchSwitchLog(d, v, "switch_log", sv)
 		if err != nil {
 			return &obj, err
@@ -8018,7 +8307,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("remote_log"); ok || d.HasChange("remote_log") {
-
 		t, err := expandSwitchControllerManagedSwitchRemoteLog(d, v, "remote_log", sv)
 		if err != nil {
 			return &obj, err
@@ -8028,7 +8316,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("storm_control"); ok {
-
 		t, err := expandSwitchControllerManagedSwitchStormControl(d, v, "storm_control", sv)
 		if err != nil {
 			return &obj, err
@@ -8038,7 +8325,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("mirror"); ok || d.HasChange("mirror") {
-
 		t, err := expandSwitchControllerManagedSwitchMirror(d, v, "mirror", sv)
 		if err != nil {
 			return &obj, err
@@ -8048,7 +8334,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("static_mac"); ok || d.HasChange("static_mac") {
-
 		t, err := expandSwitchControllerManagedSwitchStaticMac(d, v, "static_mac", sv)
 		if err != nil {
 			return &obj, err
@@ -8058,7 +8343,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("custom_command"); ok || d.HasChange("custom_command") {
-
 		t, err := expandSwitchControllerManagedSwitchCustomCommand(d, v, "custom_command", sv)
 		if err != nil {
 			return &obj, err
@@ -8067,8 +8351,16 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		}
 	}
 
-	if v, ok := d.GetOk("igmp_snooping"); ok {
+	if v, ok := d.GetOk("dhcp_snooping_static_client"); ok || d.HasChange("dhcp_snooping_static_client") {
+		t, err := expandSwitchControllerManagedSwitchDhcpSnoopingStaticClient(d, v, "dhcp_snooping_static_client", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-snooping-static-client"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("igmp_snooping"); ok {
 		t, err := expandSwitchControllerManagedSwitchIgmpSnooping(d, v, "igmp_snooping", sv)
 		if err != nil {
 			return &obj, err
@@ -8078,7 +8370,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("n802_1x_settings"); ok {
-
 		t, err := expandSwitchControllerManagedSwitch8021XSettings(d, v, "n802_1x_settings", sv)
 		if err != nil {
 			return &obj, err

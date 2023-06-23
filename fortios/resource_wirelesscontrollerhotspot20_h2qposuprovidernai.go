@@ -67,6 +67,11 @@ func resourceWirelessControllerHotspot20H2QpOsuProviderNai() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -222,13 +227,11 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "osu_nai"
 		if _, ok := i["osu-nai"]; ok {
-
 			tmp["osu_nai"] = flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListOsuNai(i["osu-nai"], d, pre_append, sv)
 		}
 
@@ -251,6 +254,12 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListOsuNai(v interfa
 
 func refreshObjectWirelessControllerHotspot20H2QpOsuProviderNai(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20H2QpOsuProviderNaiName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -258,7 +267,7 @@ func refreshObjectWirelessControllerHotspot20H2QpOsuProviderNai(d *schema.Resour
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("nai_list", flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(o["nai-list"], d, "nai_list", sv)); err != nil {
 			if !fortiAPIPatch(o["nai-list"]) {
 				return fmt.Errorf("Error reading nai_list: %v", err)
@@ -303,13 +312,11 @@ func expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiListName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "osu_nai"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["osu-nai"], _ = expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiListOsuNai(d, i["osu_nai"], pre_append, sv)
 		}
 
@@ -333,7 +340,6 @@ func getObjectWirelessControllerHotspot20H2QpOsuProviderNai(d *schema.ResourceDa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpOsuProviderNaiName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +349,6 @@ func getObjectWirelessControllerHotspot20H2QpOsuProviderNai(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("nai_list"); ok || d.HasChange("nai_list") {
-
 		t, err := expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(d, v, "nai_list", sv)
 		if err != nil {
 			return &obj, err

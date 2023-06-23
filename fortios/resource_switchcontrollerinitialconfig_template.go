@@ -293,7 +293,6 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerInitialConfigTemplateName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -303,7 +302,6 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 	}
 
 	if v, ok := d.GetOk("vlanid"); ok {
-
 		t, err := expandSwitchControllerInitialConfigTemplateVlanid(d, v, "vlanid", sv)
 		if err != nil {
 			return &obj, err
@@ -313,7 +311,6 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandSwitchControllerInitialConfigTemplateIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +320,6 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 	}
 
 	if v, ok := d.GetOk("allowaccess"); ok {
-
 		t, err := expandSwitchControllerInitialConfigTemplateAllowaccess(d, v, "allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +329,6 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 	}
 
 	if v, ok := d.GetOk("auto_ip"); ok {
-
 		t, err := expandSwitchControllerInitialConfigTemplateAutoIp(d, v, "auto_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +338,6 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 	}
 
 	if v, ok := d.GetOk("dhcp_server"); ok {
-
 		t, err := expandSwitchControllerInitialConfigTemplateDhcpServer(d, v, "dhcp_server", sv)
 		if err != nil {
 			return &obj, err

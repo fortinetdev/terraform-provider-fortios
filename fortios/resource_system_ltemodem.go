@@ -348,7 +348,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemLteModemStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -362,7 +361,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["extra-init"] = nil
 		} else {
-
 			t, err := expandSystemLteModemExtraInit(d, v, "extra_init", sv)
 			if err != nil {
 				return &obj, err
@@ -376,7 +374,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["authtype"] = nil
 		} else {
-
 			t, err := expandSystemLteModemAuthtype(d, v, "authtype", sv)
 			if err != nil {
 				return &obj, err
@@ -390,7 +387,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["username"] = nil
 		} else {
-
 			t, err := expandSystemLteModemUsername(d, v, "username", sv)
 			if err != nil {
 				return &obj, err
@@ -404,7 +400,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["passwd"] = nil
 		} else {
-
 			t, err := expandSystemLteModemPasswd(d, v, "passwd", sv)
 			if err != nil {
 				return &obj, err
@@ -418,7 +413,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["apn"] = nil
 		} else {
-
 			t, err := expandSystemLteModemApn(d, v, "apn", sv)
 			if err != nil {
 				return &obj, err
@@ -432,7 +426,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["modem-port"] = nil
 		} else {
-
 			t, err := expandSystemLteModemModemPort(d, v, "modem_port", sv)
 			if err != nil {
 				return &obj, err
@@ -446,7 +439,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemLteModemMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -460,7 +452,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["holddown-timer"] = nil
 		} else {
-
 			t, err := expandSystemLteModemHolddownTimer(d, v, "holddown_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -474,7 +465,6 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemLteModemInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

@@ -235,7 +235,6 @@ func getObjectWirelessControllerAddress(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandWirelessControllerAddressId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectWirelessControllerAddress(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandWirelessControllerAddressMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectWirelessControllerAddress(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("policy"); ok {
-
 		t, err := expandWirelessControllerAddressPolicy(d, v, "policy", sv)
 		if err != nil {
 			return &obj, err

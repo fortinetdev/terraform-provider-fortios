@@ -60,6 +60,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ip4_mapped_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"entries": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -122,6 +127,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -271,6 +281,10 @@ func flattenWebfilterUrlfilterIpAddrBlock(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenWebfilterUrlfilterIp4MappedIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebfilterUrlfilterEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -297,61 +311,51 @@ func flattenWebfilterUrlfilterEntries(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWebfilterUrlfilterEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := i["url"]; ok {
-
 			tmp["url"] = flattenWebfilterUrlfilterEntriesUrl(i["url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenWebfilterUrlfilterEntriesType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenWebfilterUrlfilterEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "antiphish_action"
 		if _, ok := i["antiphish-action"]; ok {
-
 			tmp["antiphish_action"] = flattenWebfilterUrlfilterEntriesAntiphishAction(i["antiphish-action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenWebfilterUrlfilterEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt"
 		if _, ok := i["exempt"]; ok {
-
 			tmp["exempt"] = flattenWebfilterUrlfilterEntriesExempt(i["exempt"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "web_proxy_profile"
 		if _, ok := i["web-proxy-profile"]; ok {
-
 			tmp["web_proxy_profile"] = flattenWebfilterUrlfilterEntriesWebProxyProfile(i["web-proxy-profile"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "referrer_host"
 		if _, ok := i["referrer-host"]; ok {
-
 			tmp["referrer_host"] = flattenWebfilterUrlfilterEntriesReferrerHost(i["referrer-host"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_address_family"
 		if _, ok := i["dns-address-family"]; ok {
-
 			tmp["dns_address_family"] = flattenWebfilterUrlfilterEntriesDnsAddressFamily(i["dns-address-family"], d, pre_append, sv)
 		}
 
@@ -406,6 +410,12 @@ func flattenWebfilterUrlfilterEntriesDnsAddressFamily(v interface{}, d *schema.R
 
 func refreshObjectWebfilterUrlfilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenWebfilterUrlfilterId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -437,7 +447,13 @@ func refreshObjectWebfilterUrlfilter(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("ip4_mapped_ip6", flattenWebfilterUrlfilterIp4MappedIp6(o["ip4-mapped-ip6"], d, "ip4_mapped_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["ip4-mapped-ip6"]) {
+			return fmt.Errorf("Error reading ip4_mapped_ip6: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenWebfilterUrlfilterEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -482,6 +498,10 @@ func expandWebfilterUrlfilterIpAddrBlock(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandWebfilterUrlfilterIp4MappedIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebfilterUrlfilterEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -498,61 +518,51 @@ func expandWebfilterUrlfilterEntries(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWebfilterUrlfilterEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["url"], _ = expandWebfilterUrlfilterEntriesUrl(d, i["url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandWebfilterUrlfilterEntriesType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandWebfilterUrlfilterEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "antiphish_action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["antiphish-action"], _ = expandWebfilterUrlfilterEntriesAntiphishAction(d, i["antiphish_action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandWebfilterUrlfilterEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["exempt"], _ = expandWebfilterUrlfilterEntriesExempt(d, i["exempt"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "web_proxy_profile"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["web-proxy-profile"], _ = expandWebfilterUrlfilterEntriesWebProxyProfile(d, i["web_proxy_profile"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "referrer_host"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["referrer-host"], _ = expandWebfilterUrlfilterEntriesReferrerHost(d, i["referrer_host"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_address_family"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dns-address-family"], _ = expandWebfilterUrlfilterEntriesDnsAddressFamily(d, i["dns_address_family"], pre_append, sv)
 		}
 
@@ -608,7 +618,6 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandWebfilterUrlfilterId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -618,7 +627,6 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebfilterUrlfilterName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -628,7 +636,6 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWebfilterUrlfilterComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -638,7 +645,6 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("one_arm_ips_urlfilter"); ok {
-
 		t, err := expandWebfilterUrlfilterOneArmIpsUrlfilter(d, v, "one_arm_ips_urlfilter", sv)
 		if err != nil {
 			return &obj, err
@@ -648,7 +654,6 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ip_addr_block"); ok {
-
 		t, err := expandWebfilterUrlfilterIpAddrBlock(d, v, "ip_addr_block", sv)
 		if err != nil {
 			return &obj, err
@@ -657,8 +662,16 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
+	if v, ok := d.GetOk("ip4_mapped_ip6"); ok {
+		t, err := expandWebfilterUrlfilterIp4MappedIp6(d, v, "ip4_mapped_ip6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ip4-mapped-ip6"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
 		t, err := expandWebfilterUrlfilterEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

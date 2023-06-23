@@ -230,7 +230,6 @@ func getObjectSystemFortindr(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFortindrStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemFortindr(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortindrSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemFortindr(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemFortindrInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemFortindr(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemFortindrInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

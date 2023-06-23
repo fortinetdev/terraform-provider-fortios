@@ -85,6 +85,11 @@ func resourceNsxtServiceChain() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -244,25 +249,21 @@ func flattenNsxtServiceChainServiceIndex(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenNsxtServiceChainServiceIndexId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "reverse_index"
 		if _, ok := i["reverse-index"]; ok {
-
 			tmp["reverse_index"] = flattenNsxtServiceChainServiceIndexReverseIndex(i["reverse-index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenNsxtServiceChainServiceIndexName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vd"
 		if _, ok := i["vd"]; ok {
-
 			tmp["vd"] = flattenNsxtServiceChainServiceIndexVd(i["vd"], d, pre_append, sv)
 		}
 
@@ -293,6 +294,12 @@ func flattenNsxtServiceChainServiceIndexVd(v interface{}, d *schema.ResourceData
 
 func refreshObjectNsxtServiceChain(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenNsxtServiceChainId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -306,7 +313,7 @@ func refreshObjectNsxtServiceChain(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("service_index", flattenNsxtServiceChainServiceIndex(o["service-index"], d, "service_index", sv)); err != nil {
 			if !fortiAPIPatch(o["service-index"]) {
 				return fmt.Errorf("Error reading service_index: %v", err)
@@ -355,25 +362,21 @@ func expandNsxtServiceChainServiceIndex(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandNsxtServiceChainServiceIndexId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "reverse_index"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["reverse-index"], _ = expandNsxtServiceChainServiceIndexReverseIndex(d, i["reverse_index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandNsxtServiceChainServiceIndexName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vd"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vd"], _ = expandNsxtServiceChainServiceIndexVd(d, i["vd"], pre_append, sv)
 		}
 
@@ -405,7 +408,6 @@ func getObjectNsxtServiceChain(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandNsxtServiceChainId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -415,7 +417,6 @@ func getObjectNsxtServiceChain(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandNsxtServiceChainName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -425,7 +426,6 @@ func getObjectNsxtServiceChain(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("service_index"); ok || d.HasChange("service_index") {
-
 		t, err := expandNsxtServiceChainServiceIndex(d, v, "service_index", sv)
 		if err != nil {
 			return &obj, err

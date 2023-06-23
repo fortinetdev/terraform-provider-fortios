@@ -216,6 +216,62 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 					},
 				},
 			},
+			"internet_service6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"internet_service6_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"internet_service6_name": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service6_group": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service6_custom": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service6_custom_group": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"service": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -385,6 +441,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"application_list": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ips_voip_filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1007,6 +1067,158 @@ func dataSourceFlattenFirewallProxyPolicyInternetServiceCustomGroupName(v interf
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyInternetService6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6Negate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6Name(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyInternetService6NameName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6NameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6Group(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyInternetService6GroupName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6GroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6Custom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyInternetService6CustomName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6CustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6CustomGroup(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyInternetService6CustomGroupName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyInternetService6CustomGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyService(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1299,6 +1511,10 @@ func dataSourceFlattenFirewallProxyPolicyApplicationList(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyIpsVoipFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyVoipProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1500,6 +1716,42 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("internet_service6", dataSourceFlattenFirewallProxyPolicyInternetService6(o["internet-service6"], d, "internet_service6")); err != nil {
+		if !fortiAPIPatch(o["internet-service6"]) {
+			return fmt.Errorf("Error reading internet_service6: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_negate", dataSourceFlattenFirewallProxyPolicyInternetService6Negate(o["internet-service6-negate"], d, "internet_service6_negate")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-negate"]) {
+			return fmt.Errorf("Error reading internet_service6_negate: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_name", dataSourceFlattenFirewallProxyPolicyInternetService6Name(o["internet-service6-name"], d, "internet_service6_name")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-name"]) {
+			return fmt.Errorf("Error reading internet_service6_name: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_group", dataSourceFlattenFirewallProxyPolicyInternetService6Group(o["internet-service6-group"], d, "internet_service6_group")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-group"]) {
+			return fmt.Errorf("Error reading internet_service6_group: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_custom", dataSourceFlattenFirewallProxyPolicyInternetService6Custom(o["internet-service6-custom"], d, "internet_service6_custom")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-custom"]) {
+			return fmt.Errorf("Error reading internet_service6_custom: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_custom_group", dataSourceFlattenFirewallProxyPolicyInternetService6CustomGroup(o["internet-service6-custom-group"], d, "internet_service6_custom_group")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-custom-group"]) {
+			return fmt.Errorf("Error reading internet_service6_custom_group: %v", err)
+		}
+	}
+
 	if err = d.Set("service", dataSourceFlattenFirewallProxyPolicyService(o["service"], d, "service")); err != nil {
 		if !fortiAPIPatch(o["service"]) {
 			return fmt.Errorf("Error reading service: %v", err)
@@ -1695,6 +1947,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("application_list", dataSourceFlattenFirewallProxyPolicyApplicationList(o["application-list"], d, "application_list")); err != nil {
 		if !fortiAPIPatch(o["application-list"]) {
 			return fmt.Errorf("Error reading application_list: %v", err)
+		}
+	}
+
+	if err = d.Set("ips_voip_filter", dataSourceFlattenFirewallProxyPolicyIpsVoipFilter(o["ips-voip-filter"], d, "ips_voip_filter")); err != nil {
+		if !fortiAPIPatch(o["ips-voip-filter"]) {
+			return fmt.Errorf("Error reading ips_voip_filter: %v", err)
 		}
 	}
 

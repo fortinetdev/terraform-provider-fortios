@@ -1047,7 +1047,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemModemStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -1061,7 +1060,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["pin-init"] = nil
 		} else {
-
 			t, err := expandSystemModemPinInit(d, v, "pin_init", sv)
 			if err != nil {
 				return &obj, err
@@ -1075,7 +1073,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["network-init"] = nil
 		} else {
-
 			t, err := expandSystemModemNetworkInit(d, v, "network_init", sv)
 			if err != nil {
 				return &obj, err
@@ -1089,7 +1086,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["lockdown-lac"] = nil
 		} else {
-
 			t, err := expandSystemModemLockdownLac(d, v, "lockdown_lac", sv)
 			if err != nil {
 				return &obj, err
@@ -1103,7 +1099,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemModemMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -1117,7 +1112,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auto-dial"] = nil
 		} else {
-
 			t, err := expandSystemModemAutoDial(d, v, "auto_dial", sv)
 			if err != nil {
 				return &obj, err
@@ -1131,7 +1125,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dial-on-demand"] = nil
 		} else {
-
 			t, err := expandSystemModemDialOnDemand(d, v, "dial_on_demand", sv)
 			if err != nil {
 				return &obj, err
@@ -1145,7 +1138,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["idle-timer"] = nil
 		} else {
-
 			t, err := expandSystemModemIdleTimer(d, v, "idle_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -1159,7 +1151,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["redial"] = nil
 		} else {
-
 			t, err := expandSystemModemRedial(d, v, "redial", sv)
 			if err != nil {
 				return &obj, err
@@ -1173,7 +1164,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["reset"] = nil
 		} else {
-
 			t, err := expandSystemModemReset(d, v, "reset", sv)
 			if err != nil {
 				return &obj, err
@@ -1187,7 +1177,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["holddown-timer"] = nil
 		} else {
-
 			t, err := expandSystemModemHolddownTimer(d, v, "holddown_timer", sv)
 			if err != nil {
 				return &obj, err
@@ -1201,7 +1190,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["connect-timeout"] = nil
 		} else {
-
 			t, err := expandSystemModemConnectTimeout(d, v, "connect_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -1215,7 +1203,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemModemInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -1229,7 +1216,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["wireless-port"] = nil
 		} else {
-
 			t, err := expandSystemModemWirelessPort(d, v, "wireless_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1243,7 +1229,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dont-send-CR1"] = nil
 		} else {
-
 			t, err := expandSystemModemDontSendCr1(d, v, "dont_send_cr1", sv)
 			if err != nil {
 				return &obj, err
@@ -1257,7 +1242,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["phone1"] = nil
 		} else {
-
 			t, err := expandSystemModemPhone1(d, v, "phone1", sv)
 			if err != nil {
 				return &obj, err
@@ -1271,7 +1255,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dial-cmd1"] = nil
 		} else {
-
 			t, err := expandSystemModemDialCmd1(d, v, "dial_cmd1", sv)
 			if err != nil {
 				return &obj, err
@@ -1285,7 +1268,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["username1"] = nil
 		} else {
-
 			t, err := expandSystemModemUsername1(d, v, "username1", sv)
 			if err != nil {
 				return &obj, err
@@ -1299,7 +1281,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["passwd1"] = nil
 		} else {
-
 			t, err := expandSystemModemPasswd1(d, v, "passwd1", sv)
 			if err != nil {
 				return &obj, err
@@ -1313,7 +1294,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["extra-init1"] = nil
 		} else {
-
 			t, err := expandSystemModemExtraInit1(d, v, "extra_init1", sv)
 			if err != nil {
 				return &obj, err
@@ -1327,7 +1307,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["peer-modem1"] = nil
 		} else {
-
 			t, err := expandSystemModemPeerModem1(d, v, "peer_modem1", sv)
 			if err != nil {
 				return &obj, err
@@ -1341,7 +1320,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["ppp-echo-request1"] = nil
 		} else {
-
 			t, err := expandSystemModemPppEchoRequest1(d, v, "ppp_echo_request1", sv)
 			if err != nil {
 				return &obj, err
@@ -1355,7 +1333,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["authtype1"] = nil
 		} else {
-
 			t, err := expandSystemModemAuthtype1(d, v, "authtype1", sv)
 			if err != nil {
 				return &obj, err
@@ -1369,7 +1346,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dont-send-CR2"] = nil
 		} else {
-
 			t, err := expandSystemModemDontSendCr2(d, v, "dont_send_cr2", sv)
 			if err != nil {
 				return &obj, err
@@ -1383,7 +1359,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["phone2"] = nil
 		} else {
-
 			t, err := expandSystemModemPhone2(d, v, "phone2", sv)
 			if err != nil {
 				return &obj, err
@@ -1397,7 +1372,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dial-cmd2"] = nil
 		} else {
-
 			t, err := expandSystemModemDialCmd2(d, v, "dial_cmd2", sv)
 			if err != nil {
 				return &obj, err
@@ -1411,7 +1385,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["username2"] = nil
 		} else {
-
 			t, err := expandSystemModemUsername2(d, v, "username2", sv)
 			if err != nil {
 				return &obj, err
@@ -1425,7 +1398,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["passwd2"] = nil
 		} else {
-
 			t, err := expandSystemModemPasswd2(d, v, "passwd2", sv)
 			if err != nil {
 				return &obj, err
@@ -1439,7 +1411,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["extra-init2"] = nil
 		} else {
-
 			t, err := expandSystemModemExtraInit2(d, v, "extra_init2", sv)
 			if err != nil {
 				return &obj, err
@@ -1453,7 +1424,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["peer-modem2"] = nil
 		} else {
-
 			t, err := expandSystemModemPeerModem2(d, v, "peer_modem2", sv)
 			if err != nil {
 				return &obj, err
@@ -1467,7 +1437,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["ppp-echo-request2"] = nil
 		} else {
-
 			t, err := expandSystemModemPppEchoRequest2(d, v, "ppp_echo_request2", sv)
 			if err != nil {
 				return &obj, err
@@ -1481,7 +1450,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["authtype2"] = nil
 		} else {
-
 			t, err := expandSystemModemAuthtype2(d, v, "authtype2", sv)
 			if err != nil {
 				return &obj, err
@@ -1495,7 +1463,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dont-send-CR3"] = nil
 		} else {
-
 			t, err := expandSystemModemDontSendCr3(d, v, "dont_send_cr3", sv)
 			if err != nil {
 				return &obj, err
@@ -1509,7 +1476,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["phone3"] = nil
 		} else {
-
 			t, err := expandSystemModemPhone3(d, v, "phone3", sv)
 			if err != nil {
 				return &obj, err
@@ -1523,7 +1489,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["dial-cmd3"] = nil
 		} else {
-
 			t, err := expandSystemModemDialCmd3(d, v, "dial_cmd3", sv)
 			if err != nil {
 				return &obj, err
@@ -1537,7 +1502,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["username3"] = nil
 		} else {
-
 			t, err := expandSystemModemUsername3(d, v, "username3", sv)
 			if err != nil {
 				return &obj, err
@@ -1551,7 +1515,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["passwd3"] = nil
 		} else {
-
 			t, err := expandSystemModemPasswd3(d, v, "passwd3", sv)
 			if err != nil {
 				return &obj, err
@@ -1565,7 +1528,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["extra-init3"] = nil
 		} else {
-
 			t, err := expandSystemModemExtraInit3(d, v, "extra_init3", sv)
 			if err != nil {
 				return &obj, err
@@ -1579,7 +1541,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["peer-modem3"] = nil
 		} else {
-
 			t, err := expandSystemModemPeerModem3(d, v, "peer_modem3", sv)
 			if err != nil {
 				return &obj, err
@@ -1593,7 +1554,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["ppp-echo-request3"] = nil
 		} else {
-
 			t, err := expandSystemModemPppEchoRequest3(d, v, "ppp_echo_request3", sv)
 			if err != nil {
 				return &obj, err
@@ -1607,7 +1567,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["altmode"] = nil
 		} else {
-
 			t, err := expandSystemModemAltmode(d, v, "altmode", sv)
 			if err != nil {
 				return &obj, err
@@ -1621,7 +1580,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["authtype3"] = nil
 		} else {
-
 			t, err := expandSystemModemAuthtype3(d, v, "authtype3", sv)
 			if err != nil {
 				return &obj, err
@@ -1635,7 +1593,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["traffic-check"] = nil
 		} else {
-
 			t, err := expandSystemModemTrafficCheck(d, v, "traffic_check", sv)
 			if err != nil {
 				return &obj, err
@@ -1649,7 +1606,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["action"] = nil
 		} else {
-
 			t, err := expandSystemModemAction(d, v, "action", sv)
 			if err != nil {
 				return &obj, err
@@ -1663,7 +1619,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["distance"] = nil
 		} else {
-
 			t, err := expandSystemModemDistance(d, v, "distance", sv)
 			if err != nil {
 				return &obj, err
@@ -1677,7 +1632,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandSystemModemPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err

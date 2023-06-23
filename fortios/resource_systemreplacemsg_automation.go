@@ -254,7 +254,6 @@ func getObjectSystemReplacemsgAutomation(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
-
 		t, err := expandSystemReplacemsgAutomationMsgType(d, v, "msg_type", sv)
 		if err != nil {
 			return &obj, err
@@ -264,7 +263,6 @@ func getObjectSystemReplacemsgAutomation(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
-
 		t, err := expandSystemReplacemsgAutomationBuffer(d, v, "buffer", sv)
 		if err != nil {
 			return &obj, err
@@ -274,7 +272,6 @@ func getObjectSystemReplacemsgAutomation(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("header"); ok {
-
 		t, err := expandSystemReplacemsgAutomationHeader(d, v, "header", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +281,6 @@ func getObjectSystemReplacemsgAutomation(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("format"); ok {
-
 		t, err := expandSystemReplacemsgAutomationFormat(d, v, "format", sv)
 		if err != nil {
 			return &obj, err

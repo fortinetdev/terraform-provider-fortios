@@ -50,6 +50,11 @@ func resourceSystemAffinityPacketRedistribution() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 255),
 				Required:     true,
 			},
+			"round_robin": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"affinity_cpumask": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -192,6 +197,10 @@ func flattenSystemAffinityPacketRedistributionRxqid(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenSystemAffinityPacketRedistributionRoundRobin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAffinityPacketRedistributionAffinityCpumask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -214,6 +223,12 @@ func refreshObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, o m
 	if err = d.Set("rxqid", flattenSystemAffinityPacketRedistributionRxqid(o["rxqid"], d, "rxqid", sv)); err != nil {
 		if !fortiAPIPatch(o["rxqid"]) {
 			return fmt.Errorf("Error reading rxqid: %v", err)
+		}
+	}
+
+	if err = d.Set("round_robin", flattenSystemAffinityPacketRedistributionRoundRobin(o["round-robin"], d, "round_robin", sv)); err != nil {
+		if !fortiAPIPatch(o["round-robin"]) {
+			return fmt.Errorf("Error reading round_robin: %v", err)
 		}
 	}
 
@@ -244,6 +259,10 @@ func expandSystemAffinityPacketRedistributionRxqid(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandSystemAffinityPacketRedistributionRoundRobin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAffinityPacketRedistributionAffinityCpumask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -252,7 +271,6 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemAffinityPacketRedistributionId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -262,7 +280,6 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemAffinityPacketRedistributionInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -272,7 +289,6 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOkExists("rxqid"); ok {
-
 		t, err := expandSystemAffinityPacketRedistributionRxqid(d, v, "rxqid", sv)
 		if err != nil {
 			return &obj, err
@@ -281,8 +297,16 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 		}
 	}
 
-	if v, ok := d.GetOk("affinity_cpumask"); ok {
+	if v, ok := d.GetOk("round_robin"); ok {
+		t, err := expandSystemAffinityPacketRedistributionRoundRobin(d, v, "round_robin", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["round-robin"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("affinity_cpumask"); ok {
 		t, err := expandSystemAffinityPacketRedistributionAffinityCpumask(d, v, "affinity_cpumask", sv)
 		if err != nil {
 			return &obj, err

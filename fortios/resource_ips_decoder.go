@@ -67,6 +67,11 @@ func resourceIpsDecoder() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -222,13 +227,11 @@ func flattenIpsDecoderParameter(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenIpsDecoderParameterName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenIpsDecoderParameterValue(i["value"], d, pre_append, sv)
 		}
 
@@ -251,6 +254,12 @@ func flattenIpsDecoderParameterValue(v interface{}, d *schema.ResourceData, pre 
 
 func refreshObjectIpsDecoder(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenIpsDecoderName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -258,7 +267,7 @@ func refreshObjectIpsDecoder(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("parameter", flattenIpsDecoderParameter(o["parameter"], d, "parameter", sv)); err != nil {
 			if !fortiAPIPatch(o["parameter"]) {
 				return fmt.Errorf("Error reading parameter: %v", err)
@@ -303,13 +312,11 @@ func expandIpsDecoderParameter(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandIpsDecoderParameterName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandIpsDecoderParameterValue(d, i["value"], pre_append, sv)
 		}
 
@@ -333,7 +340,6 @@ func getObjectIpsDecoder(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandIpsDecoderName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +349,6 @@ func getObjectIpsDecoder(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("parameter"); ok || d.HasChange("parameter") {
-
 		t, err := expandIpsDecoderParameter(d, v, "parameter", sv)
 		if err != nil {
 			return &obj, err

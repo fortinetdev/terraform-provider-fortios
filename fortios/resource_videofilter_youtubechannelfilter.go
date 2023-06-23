@@ -101,6 +101,11 @@ func resourceVideofilterYoutubeChannelFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -268,25 +273,21 @@ func flattenVideofilterYoutubeChannelFilterEntries(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenVideofilterYoutubeChannelFilterEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenVideofilterYoutubeChannelFilterEntriesComment(i["comment"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenVideofilterYoutubeChannelFilterEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
 		if _, ok := i["channel-id"]; ok {
-
 			tmp["channel_id"] = flattenVideofilterYoutubeChannelFilterEntriesChannelId(i["channel-id"], d, pre_append, sv)
 		}
 
@@ -325,6 +326,12 @@ func flattenVideofilterYoutubeChannelFilterLog(v interface{}, d *schema.Resource
 
 func refreshObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenVideofilterYoutubeChannelFilterId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -350,7 +357,7 @@ func refreshObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, o map[
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenVideofilterYoutubeChannelFilterEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -419,25 +426,21 @@ func expandVideofilterYoutubeChannelFilterEntries(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandVideofilterYoutubeChannelFilterEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandVideofilterYoutubeChannelFilterEntriesComment(d, i["comment"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandVideofilterYoutubeChannelFilterEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["channel-id"], _ = expandVideofilterYoutubeChannelFilterEntriesChannelId(d, i["channel_id"], pre_append, sv)
 		}
 
@@ -477,7 +480,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandVideofilterYoutubeChannelFilterId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -487,7 +489,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVideofilterYoutubeChannelFilterName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -497,7 +498,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandVideofilterYoutubeChannelFilterComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -507,7 +507,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("default_action"); ok {
-
 		t, err := expandVideofilterYoutubeChannelFilterDefaultAction(d, v, "default_action", sv)
 		if err != nil {
 			return &obj, err
@@ -517,7 +516,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandVideofilterYoutubeChannelFilterEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
@@ -527,7 +525,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("override_category"); ok {
-
 		t, err := expandVideofilterYoutubeChannelFilterOverrideCategory(d, v, "override_category", sv)
 		if err != nil {
 			return &obj, err
@@ -537,7 +534,6 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("log"); ok {
-
 		t, err := expandVideofilterYoutubeChannelFilterLog(d, v, "log", sv)
 		if err != nil {
 			return &obj, err

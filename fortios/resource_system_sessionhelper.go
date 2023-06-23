@@ -252,7 +252,6 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemSessionHelperId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -262,7 +261,6 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSessionHelperName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -272,7 +270,6 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandSystemSessionHelperProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -282,7 +279,6 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandSystemSessionHelperPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err

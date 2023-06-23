@@ -233,16 +233,19 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 		v := flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server", sv)
 		vx := ""
 		bstring := false
-		if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
+		new_version_map := map[string][]string{
+			">=": []string{"6.4.10"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
 					i := r.(map[string]interface{})
 					if _, ok := i["name"]; ok {
 						if xv, ok := i["name"].(string); ok {
-							vx += "\"" + xv + "\""
+							vx += xv
 							if k < len(l)-1 {
-								vx += " "
+								vx += ", "
 							}
 						}
 					}
@@ -298,7 +301,6 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserKrbKeytabName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -308,7 +310,6 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("pac_data"); ok {
-
 		t, err := expandUserKrbKeytabPacData(d, v, "pac_data", sv)
 		if err != nil {
 			return &obj, err
@@ -318,7 +319,6 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("principal"); ok {
-
 		t, err := expandUserKrbKeytabPrincipal(d, v, "principal", sv)
 		if err != nil {
 			return &obj, err
@@ -328,15 +328,16 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandUserKrbKeytabLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
+			new_version_map := map[string][]string{
+				">=": []string{"6.4.10"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
+				vxx := strings.Split(vx, ", ")
 
 				tmps := make([]map[string]interface{}, 0, len(vxx))
 
@@ -354,7 +355,6 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("keytab"); ok {
-
 		t, err := expandUserKrbKeytabKeytab(d, v, "keytab", sv)
 		if err != nil {
 			return &obj, err

@@ -274,7 +274,6 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserPop3Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +283,6 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandUserPop3Server(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -294,7 +292,6 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandUserPop3Port(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -304,7 +301,6 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("secure"); ok {
-
 		t, err := expandUserPop3Secure(d, v, "secure", sv)
 		if err != nil {
 			return &obj, err
@@ -314,7 +310,6 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
-
 		t, err := expandUserPop3SslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 		if err != nil {
 			return &obj, err

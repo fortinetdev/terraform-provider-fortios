@@ -230,7 +230,6 @@ func getObjectSystemAutoInstall(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["auto-install-config"] = nil
 		} else {
-
 			t, err := expandSystemAutoInstallAutoInstallConfig(d, v, "auto_install_config", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemAutoInstall(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["auto-install-image"] = nil
 		} else {
-
 			t, err := expandSystemAutoInstallAutoInstallImage(d, v, "auto_install_image", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemAutoInstall(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["default-config-file"] = nil
 		} else {
-
 			t, err := expandSystemAutoInstallDefaultConfigFile(d, v, "default_config_file", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemAutoInstall(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["default-image-file"] = nil
 		} else {
-
 			t, err := expandSystemAutoInstallDefaultImageFile(d, v, "default_image_file", sv)
 			if err != nil {
 				return &obj, err

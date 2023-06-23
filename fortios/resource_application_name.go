@@ -143,6 +143,11 @@ func resourceApplicationName() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -338,7 +343,6 @@ func flattenApplicationNameParameters(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenApplicationNameParametersName(i["name"], d, pre_append, sv)
 		}
 
@@ -385,19 +389,16 @@ func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenApplicationNameMetadataId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := i["metaid"]; ok {
-
 			tmp["metaid"] = flattenApplicationNameMetadataMetaid(i["metaid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := i["valueid"]; ok {
-
 			tmp["valueid"] = flattenApplicationNameMetadataValueid(i["valueid"], d, pre_append, sv)
 		}
 
@@ -424,6 +425,12 @@ func flattenApplicationNameMetadataValueid(v interface{}, d *schema.ResourceData
 
 func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenApplicationNameName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -491,7 +498,7 @@ func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("parameters", flattenApplicationNameParameters(o["parameters"], d, "parameters", sv)); err != nil {
 			if !fortiAPIPatch(o["parameters"]) {
 				return fmt.Errorf("Error reading parameters: %v", err)
@@ -513,7 +520,7 @@ func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("metadata", flattenApplicationNameMetadata(o["metadata"], d, "metadata", sv)); err != nil {
 			if !fortiAPIPatch(o["metadata"]) {
 				return fmt.Errorf("Error reading metadata: %v", err)
@@ -598,7 +605,6 @@ func expandApplicationNameParameters(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandApplicationNameParametersName(d, i["name"], pre_append, sv)
 		}
 
@@ -634,19 +640,16 @@ func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandApplicationNameMetadataId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["metaid"], _ = expandApplicationNameMetadataMetaid(d, i["metaid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["valueid"], _ = expandApplicationNameMetadataValueid(d, i["valueid"], pre_append, sv)
 		}
 
@@ -674,7 +677,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandApplicationNameName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -684,7 +686,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandApplicationNameId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -694,7 +695,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {
-
 		t, err := expandApplicationNameCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
@@ -704,7 +704,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("sub_category"); ok {
-
 		t, err := expandApplicationNameSubCategory(d, v, "sub_category", sv)
 		if err != nil {
 			return &obj, err
@@ -714,7 +713,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("popularity"); ok {
-
 		t, err := expandApplicationNamePopularity(d, v, "popularity", sv)
 		if err != nil {
 			return &obj, err
@@ -724,7 +722,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("risk"); ok {
-
 		t, err := expandApplicationNameRisk(d, v, "risk", sv)
 		if err != nil {
 			return &obj, err
@@ -734,7 +731,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("weight"); ok {
-
 		t, err := expandApplicationNameWeight(d, v, "weight", sv)
 		if err != nil {
 			return &obj, err
@@ -744,7 +740,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandApplicationNameProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -754,7 +749,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
-
 		t, err := expandApplicationNameTechnology(d, v, "technology", sv)
 		if err != nil {
 			return &obj, err
@@ -764,7 +758,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
-
 		t, err := expandApplicationNameBehavior(d, v, "behavior", sv)
 		if err != nil {
 			return &obj, err
@@ -774,7 +767,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
-
 		t, err := expandApplicationNameVendor(d, v, "vendor", sv)
 		if err != nil {
 			return &obj, err
@@ -784,7 +776,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
-
 		t, err := expandApplicationNameParameters(d, v, "parameters", sv)
 		if err != nil {
 			return &obj, err
@@ -794,7 +785,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("parameter"); ok {
-
 		t, err := expandApplicationNameParameter(d, v, "parameter", sv)
 		if err != nil {
 			return &obj, err
@@ -804,7 +794,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
-
 		t, err := expandApplicationNameMetadata(d, v, "metadata", sv)
 		if err != nil {
 			return &obj, err

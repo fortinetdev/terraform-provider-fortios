@@ -43,6 +43,7 @@ The following arguments are supported:
 * `log_header_change` - Enable/disable logging HTTP header changes. Valid values: `enable`, `disable`.
 * `headers` - Configure HTTP forwarded requests headers. The structure of `headers` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `headers` block supports:
@@ -51,7 +52,7 @@ The `headers` block supports:
 * `name` - HTTP forwarded header name.
 * `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `dstaddr6` - Destination address and address group names (IPv6). The structure of `dstaddr6` block is documented below.
-* `action` - Action when the HTTP header is forwarded. Valid values: `add-to-request`, `add-to-response`, `remove-from-request`, `remove-from-response`.
+* `action` - Action when the HTTP header is forwarded.
 * `content` - HTTP header content.
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content. Valid values: `disable`, `enable`.
 * `add_option` - Configure options to append content to existing HTTP header or add new HTTP header. Valid values: `append`, `new-on-not-found`, `new`.

@@ -235,6 +235,11 @@ func resourceLogMemoryFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -403,25 +408,21 @@ func flattenLogMemoryFilterFreeStyle(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogMemoryFilterFreeStyleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogMemoryFilterFreeStyleCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenLogMemoryFilterFreeStyleFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-
 			tmp["filter_type"] = flattenLogMemoryFilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
@@ -540,6 +541,12 @@ func flattenLogMemoryFilterFilterType(v interface{}, d *schema.ResourceData, pre
 
 func refreshObjectLogMemoryFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("severity", flattenLogMemoryFilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -607,7 +614,7 @@ func refreshObjectLogMemoryFilter(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogMemoryFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
 				return fmt.Errorf("Error reading free_style: %v", err)
@@ -824,25 +831,21 @@ func expandLogMemoryFilterFreeStyle(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogMemoryFilterFreeStyleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogMemoryFilterFreeStyleCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandLogMemoryFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-type"], _ = expandLogMemoryFilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
@@ -965,7 +968,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err
@@ -979,7 +981,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["forward-traffic"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterForwardTraffic(d, v, "forward_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -993,7 +994,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["local-traffic"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterLocalTraffic(d, v, "local_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1007,7 +1007,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["multicast-traffic"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterMulticastTraffic(d, v, "multicast_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1021,7 +1020,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["sniffer-traffic"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1035,7 +1033,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ztna-traffic"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterZtnaTraffic(d, v, "ztna_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -1049,7 +1046,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["anomaly"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterAnomaly(d, v, "anomaly", sv)
 			if err != nil {
 				return &obj, err
@@ -1063,7 +1059,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["netscan-discovery"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -1077,7 +1072,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["netscan-vulnerability"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
 			if err != nil {
 				return &obj, err
@@ -1091,7 +1085,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["voip"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterVoip(d, v, "voip", sv)
 			if err != nil {
 				return &obj, err
@@ -1105,7 +1098,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["gtp"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterGtp(d, v, "gtp", sv)
 			if err != nil {
 				return &obj, err
@@ -1119,7 +1111,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogMemoryFilterFreeStyle(d, v, "free_style", sv)
 			if err != nil {
 				return &obj, err
@@ -1133,7 +1124,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["dns"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterDns(d, v, "dns", sv)
 			if err != nil {
 				return &obj, err
@@ -1147,7 +1137,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ssh"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSsh(d, v, "ssh", sv)
 			if err != nil {
 				return &obj, err
@@ -1161,7 +1150,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["event"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterEvent(d, v, "event", sv)
 			if err != nil {
 				return &obj, err
@@ -1175,7 +1163,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["system"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSystem(d, v, "system", sv)
 			if err != nil {
 				return &obj, err
@@ -1189,7 +1176,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["radius"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterRadius(d, v, "radius", sv)
 			if err != nil {
 				return &obj, err
@@ -1203,7 +1189,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ipsec"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterIpsec(d, v, "ipsec", sv)
 			if err != nil {
 				return &obj, err
@@ -1217,7 +1202,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["dhcp"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterDhcp(d, v, "dhcp", sv)
 			if err != nil {
 				return &obj, err
@@ -1231,7 +1215,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ppp"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterPpp(d, v, "ppp", sv)
 			if err != nil {
 				return &obj, err
@@ -1245,7 +1228,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["admin"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterAdmin(d, v, "admin", sv)
 			if err != nil {
 				return &obj, err
@@ -1259,7 +1241,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ha"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterHa(d, v, "ha", sv)
 			if err != nil {
 				return &obj, err
@@ -1273,7 +1254,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["auth"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterAuth(d, v, "auth", sv)
 			if err != nil {
 				return &obj, err
@@ -1287,7 +1267,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["pattern"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterPattern(d, v, "pattern", sv)
 			if err != nil {
 				return &obj, err
@@ -1301,7 +1280,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["sslvpn-log-auth"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSslvpnLogAuth(d, v, "sslvpn_log_auth", sv)
 			if err != nil {
 				return &obj, err
@@ -1315,7 +1293,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["sslvpn-log-adm"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSslvpnLogAdm(d, v, "sslvpn_log_adm", sv)
 			if err != nil {
 				return &obj, err
@@ -1329,7 +1306,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["sslvpn-log-session"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterSslvpnLogSession(d, v, "sslvpn_log_session", sv)
 			if err != nil {
 				return &obj, err
@@ -1343,7 +1319,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["vip-ssl"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterVipSsl(d, v, "vip_ssl", sv)
 			if err != nil {
 				return &obj, err
@@ -1357,7 +1332,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ldb-monitor"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterLdbMonitor(d, v, "ldb_monitor", sv)
 			if err != nil {
 				return &obj, err
@@ -1371,7 +1345,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["wan-opt"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterWanOpt(d, v, "wan_opt", sv)
 			if err != nil {
 				return &obj, err
@@ -1385,7 +1358,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["wireless-activity"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterWirelessActivity(d, v, "wireless_activity", sv)
 			if err != nil {
 				return &obj, err
@@ -1399,7 +1371,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["cpu-memory-usage"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterCpuMemoryUsage(d, v, "cpu_memory_usage", sv)
 			if err != nil {
 				return &obj, err
@@ -1413,7 +1384,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["filter"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterFilter(d, v, "filter", sv)
 			if err != nil {
 				return &obj, err
@@ -1427,7 +1397,6 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["filter-type"] = nil
 		} else {
-
 			t, err := expandLogMemoryFilterFilterType(d, v, "filter_type", sv)
 			if err != nil {
 				return &obj, err

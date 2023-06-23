@@ -285,7 +285,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -299,7 +298,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["allow-config-restore"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelAllowConfigRestore(d, v, "allow_config_restore", sv)
 			if err != nil {
 				return &obj, err
@@ -313,7 +311,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["allow-push-configuration"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelAllowPushConfiguration(d, v, "allow_push_configuration", sv)
 			if err != nil {
 				return &obj, err
@@ -327,7 +324,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["allow-push-firmware"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelAllowPushFirmware(d, v, "allow_push_firmware", sv)
 			if err != nil {
 				return &obj, err
@@ -341,7 +337,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["allow-collect-statistics"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelAllowCollectStatistics(d, v, "allow_collect_statistics", sv)
 			if err != nil {
 				return &obj, err
@@ -355,7 +350,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["authorized-manager-only"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelAuthorizedManagerOnly(d, v, "authorized_manager_only", sv)
 			if err != nil {
 				return &obj, err
@@ -369,7 +363,6 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["serial-number"] = nil
 		} else {
-
 			t, err := expandSystemManagementTunnelSerialNumber(d, v, "serial_number", sv)
 			if err != nil {
 				return &obj, err

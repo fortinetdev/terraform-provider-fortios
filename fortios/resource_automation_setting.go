@@ -41,6 +41,11 @@ func resourceAutomationSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fabric_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -143,12 +148,22 @@ func flattenAutomationSettingMaxConcurrentStitches(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenAutomationSettingFabricSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectAutomationSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if err = d.Set("max_concurrent_stitches", flattenAutomationSettingMaxConcurrentStitches(o["max-concurrent-stitches"], d, "max_concurrent_stitches", sv)); err != nil {
 		if !fortiAPIPatch(o["max-concurrent-stitches"]) {
 			return fmt.Errorf("Error reading max_concurrent_stitches: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_sync", flattenAutomationSettingFabricSync(o["fabric-sync"], d, "fabric_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-sync"]) {
+			return fmt.Errorf("Error reading fabric_sync: %v", err)
 		}
 	}
 
@@ -165,6 +180,10 @@ func expandAutomationSettingMaxConcurrentStitches(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandAutomationSettingFabricSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectAutomationSetting(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -172,12 +191,24 @@ func getObjectAutomationSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["max-concurrent-stitches"] = nil
 		} else {
-
 			t, err := expandAutomationSettingMaxConcurrentStitches(d, v, "max_concurrent_stitches", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["max-concurrent-stitches"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_sync"); ok {
+		if setArgNil {
+			obj["fabric-sync"] = nil
+		} else {
+			t, err := expandAutomationSettingFabricSync(d, v, "fabric_sync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fabric-sync"] = t
 			}
 		}
 	}

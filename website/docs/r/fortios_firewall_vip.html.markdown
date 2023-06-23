@@ -116,6 +116,9 @@ The following arguments are supported:
 * `http_cookie_share` - Control sharing of cookies across virtual servers. same-ip means a cookie from one virtual server can be used by another. Disable stops cookie sharing. Valid values: `disable`, `same-ip`.
 * `https_cookie_secure` - Enable/disable verification that inserted HTTPS cookies are secure. Valid values: `disable`, `enable`.
 * `http_multiplex` - Enable/disable HTTP multiplexing. Valid values: `enable`, `disable`.
+* `http_multiplex_ttl` - Time-to-live for idle connections to servers.
+* `http_multiplex_max_request` - Maximum number of requests that a multiplex server can handle before disconnecting sessions (default = unlimited).
+* `http_supported_max_version` - Maximum supported HTTP versions. default = HTTP2 Valid values: `http1`, `http2`.
 * `http_ip_header` - For HTTP multiplexing, enable to add the original client IP address in the XForwarded-For HTTP header. Valid values: `enable`, `disable`.
 * `http_ip_header_name` - For HTTP multiplexing, enter a custom HTTPS header name. The original client IP address is added to this header. If empty, X-Forwarded-For is used.
 * `outlook_web_access` - Enable to add the Front-End-Https header for Microsoft Outlook Web Access. Valid values: `disable`, `enable`.
@@ -141,6 +144,7 @@ The following arguments are supported:
 * `ssl_client_session_state_timeout` - Number of minutes to keep client to FortiGate SSL session state.
 * `ssl_client_session_state_max` - Maximum number of client to FortiGate SSL session states to keep.
 * `ssl_client_rekey_count` - Maximum length of data in MB before triggering a client rekey (0 = disable).
+* `ssl_server_renegotiation` - Enable/disable secure renegotiation to comply with RFC 5746. Valid values: `enable`, `disable`.
 * `ssl_server_session_state_type` - How to expire SSL sessions for the segment of the SSL connection between the server and the FortiGate. Valid values: `disable`, `time`, `count`, `both`.
 * `ssl_server_session_state_timeout` - Number of minutes to keep FortiGate to Server SSL session state.
 * `ssl_server_session_state_max` - Maximum number of FortiGate to Server SSL session states to keep.
@@ -161,6 +165,7 @@ The following arguments are supported:
 * `ipv6_mappedip` - Start-mapped-IPv6-address [-end mapped-IPv6-address].
 * `ipv6_mappedport` - IPv6 port number range on the destination network to which the external port number range is mapped.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `src_filter` block supports:
@@ -195,6 +200,7 @@ The `realservers` block supports:
 * `holddown_interval` - Time in seconds that the health check monitor continues to monitor and unresponsive server that should be active.
 * `healthcheck` - Enable to check the responsiveness of the real server before forwarding traffic. Valid values: `disable`, `enable`, `vip`.
 * `http_host` - HTTP server domain name in HTTP header.
+* `translate_host` - Enable/disable translation of hostname/IP from virtual server to real server. Valid values: `enable`, `disable`.
 * `max_connections` - Max number of active connections that can be directed to the real server. When reached, sessions are sent to other real servers.
 * `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status.
 * `client_ip` - Only clients in this IP range can connect to this real server.

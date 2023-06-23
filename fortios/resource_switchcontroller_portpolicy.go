@@ -336,7 +336,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerPortPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -346,7 +345,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerPortPolicyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -356,7 +354,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
-
 		t, err := expandSwitchControllerPortPolicyFortilink(d, v, "fortilink", sv)
 		if err != nil {
 			return &obj, err
@@ -366,7 +363,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("lldp_profile"); ok {
-
 		t, err := expandSwitchControllerPortPolicyLldpProfile(d, v, "lldp_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -376,7 +372,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("qos_policy"); ok {
-
 		t, err := expandSwitchControllerPortPolicyQosPolicy(d, v, "qos_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -386,7 +381,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("n802_1x"); ok {
-
 		t, err := expandSwitchControllerPortPolicy8021X(d, v, "n802_1x", sv)
 		if err != nil {
 			return &obj, err
@@ -396,7 +390,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("vlan_policy"); ok {
-
 		t, err := expandSwitchControllerPortPolicyVlanPolicy(d, v, "vlan_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -406,7 +399,6 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("bounce_port_link"); ok {
-
 		t, err := expandSwitchControllerPortPolicyBouncePortLink(d, v, "bounce_port_link", sv)
 		if err != nil {
 			return &obj, err

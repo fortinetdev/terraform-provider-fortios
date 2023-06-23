@@ -329,7 +329,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["collector-ip"] = nil
 		} else {
-
 			t, err := expandSystemNetflowCollectorIp(d, v, "collector_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -343,7 +342,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["collector-port"] = nil
 		} else {
-
 			t, err := expandSystemNetflowCollectorPort(d, v, "collector_port", sv)
 			if err != nil {
 				return &obj, err
@@ -357,7 +355,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemNetflowSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -371,7 +368,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["active-flow-timeout"] = nil
 		} else {
-
 			t, err := expandSystemNetflowActiveFlowTimeout(d, v, "active_flow_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -385,7 +381,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["inactive-flow-timeout"] = nil
 		} else {
-
 			t, err := expandSystemNetflowInactiveFlowTimeout(d, v, "inactive_flow_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -399,7 +394,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["template-tx-timeout"] = nil
 		} else {
-
 			t, err := expandSystemNetflowTemplateTxTimeout(d, v, "template_tx_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -413,7 +407,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["template-tx-counter"] = nil
 		} else {
-
 			t, err := expandSystemNetflowTemplateTxCounter(d, v, "template_tx_counter", sv)
 			if err != nil {
 				return &obj, err
@@ -427,7 +420,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemNetflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -441,7 +433,6 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemNetflowInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

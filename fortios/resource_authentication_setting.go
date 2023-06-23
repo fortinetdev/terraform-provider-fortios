@@ -173,6 +173,11 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -373,7 +378,6 @@ func flattenAuthenticationSettingUserCertCa(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationSettingUserCertCaName(i["name"], d, pre_append, sv)
 		}
 
@@ -416,7 +420,6 @@ func flattenAuthenticationSettingDevRange(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenAuthenticationSettingDevRangeName(i["name"], d, pre_append, sv)
 		}
 
@@ -435,6 +438,12 @@ func flattenAuthenticationSettingDevRangeName(v interface{}, d *schema.ResourceD
 
 func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("active_auth_scheme", flattenAuthenticationSettingActiveAuthScheme(o["active-auth-scheme"], d, "active_auth_scheme", sv)); err != nil {
 		if !fortiAPIPatch(o["active-auth-scheme"]) {
@@ -550,7 +559,7 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("user_cert_ca", flattenAuthenticationSettingUserCertCa(o["user-cert-ca"], d, "user_cert_ca", sv)); err != nil {
 			if !fortiAPIPatch(o["user-cert-ca"]) {
 				return fmt.Errorf("Error reading user_cert_ca: %v", err)
@@ -566,7 +575,7 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dev_range", flattenAuthenticationSettingDevRange(o["dev-range"], d, "dev_range", sv)); err != nil {
 			if !fortiAPIPatch(o["dev-range"]) {
 				return fmt.Errorf("Error reading dev_range: %v", err)
@@ -683,7 +692,6 @@ func expandAuthenticationSettingUserCertCa(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationSettingUserCertCaName(d, i["name"], pre_append, sv)
 		}
 
@@ -715,7 +723,6 @@ func expandAuthenticationSettingDevRange(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandAuthenticationSettingDevRangeName(d, i["name"], pre_append, sv)
 		}
 
@@ -738,7 +745,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["active-auth-scheme"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingActiveAuthScheme(d, v, "active_auth_scheme", sv)
 			if err != nil {
 				return &obj, err
@@ -752,7 +758,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["sso-auth-scheme"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingSsoAuthScheme(d, v, "sso_auth_scheme", sv)
 			if err != nil {
 				return &obj, err
@@ -766,7 +771,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["update-time"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingUpdateTime(d, v, "update_time", sv)
 			if err != nil {
 				return &obj, err
@@ -780,7 +784,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["persistent-cookie"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingPersistentCookie(d, v, "persistent_cookie", sv)
 			if err != nil {
 				return &obj, err
@@ -794,7 +797,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["ip-auth-cookie"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingIpAuthCookie(d, v, "ip_auth_cookie", sv)
 			if err != nil {
 				return &obj, err
@@ -808,7 +810,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cookie-max-age"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCookieMaxAge(d, v, "cookie_max_age", sv)
 			if err != nil {
 				return &obj, err
@@ -822,7 +823,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cookie-refresh-div"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCookieRefreshDiv(d, v, "cookie_refresh_div", sv)
 			if err != nil {
 				return &obj, err
@@ -836,7 +836,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal-type"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortalType(d, v, "captive_portal_type", sv)
 			if err != nil {
 				return &obj, err
@@ -850,7 +849,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal-ip"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortalIp(d, v, "captive_portal_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -864,7 +862,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal-ip6"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortalIp6(d, v, "captive_portal_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -878,7 +875,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortal(d, v, "captive_portal", sv)
 			if err != nil {
 				return &obj, err
@@ -892,7 +888,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal6"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortal6(d, v, "captive_portal6", sv)
 			if err != nil {
 				return &obj, err
@@ -906,7 +901,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cert-auth"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCertAuth(d, v, "cert_auth", sv)
 			if err != nil {
 				return &obj, err
@@ -920,7 +914,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cert-captive-portal"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCertCaptivePortal(d, v, "cert_captive_portal", sv)
 			if err != nil {
 				return &obj, err
@@ -934,7 +927,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cert-captive-portal-ip"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCertCaptivePortalIp(d, v, "cert_captive_portal_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -948,7 +940,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["cert-captive-portal-port"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCertCaptivePortalPort(d, v, "cert_captive_portal_port", sv)
 			if err != nil {
 				return &obj, err
@@ -962,7 +953,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal-port"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortalPort(d, v, "captive_portal_port", sv)
 			if err != nil {
 				return &obj, err
@@ -976,7 +966,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["auth-https"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingAuthHttps(d, v, "auth_https", sv)
 			if err != nil {
 				return &obj, err
@@ -990,7 +979,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["captive-portal-ssl-port"] = nil
 		} else {
-
 			t, err := expandAuthenticationSettingCaptivePortalSslPort(d, v, "captive_portal_ssl_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1004,7 +992,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["user-cert-ca"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandAuthenticationSettingUserCertCa(d, v, "user_cert_ca", sv)
 			if err != nil {
 				return &obj, err
@@ -1018,7 +1005,6 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["dev-range"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandAuthenticationSettingDevRange(d, v, "dev_range", sv)
 			if err != nil {
 				return &obj, err

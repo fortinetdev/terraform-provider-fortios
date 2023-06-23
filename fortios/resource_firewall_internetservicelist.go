@@ -215,7 +215,6 @@ func getObjectFirewallInternetServiceList(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallInternetServiceListId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -225,7 +224,6 @@ func getObjectFirewallInternetServiceList(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallInternetServiceListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err

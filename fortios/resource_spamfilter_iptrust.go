@@ -88,6 +88,11 @@ func resourceSpamfilterIptrust() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -251,31 +256,26 @@ func flattenSpamfilterIptrustEntries(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSpamfilterIptrustEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSpamfilterIptrustEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := i["addr-type"]; ok {
-
 			tmp["addr_type"] = flattenSpamfilterIptrustEntriesAddrType(i["addr-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
 		if _, ok := i["ip4-subnet"]; ok {
-
 			tmp["ip4_subnet"] = flattenSpamfilterIptrustEntriesIp4Subnet(i["ip4-subnet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
 		if _, ok := i["ip6-subnet"]; ok {
-
 			tmp["ip6_subnet"] = flattenSpamfilterIptrustEntriesIp6Subnet(i["ip6-subnet"], d, pre_append, sv)
 		}
 
@@ -317,6 +317,12 @@ func flattenSpamfilterIptrustEntriesIp6Subnet(v interface{}, d *schema.ResourceD
 
 func refreshObjectSpamfilterIptrust(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSpamfilterIptrustId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -336,7 +342,7 @@ func refreshObjectSpamfilterIptrust(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenSpamfilterIptrustEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -389,31 +395,26 @@ func expandSpamfilterIptrustEntries(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSpamfilterIptrustEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSpamfilterIptrustEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["addr-type"], _ = expandSpamfilterIptrustEntriesAddrType(d, i["addr_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip4-subnet"], _ = expandSpamfilterIptrustEntriesIp4Subnet(d, i["ip4_subnet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip6-subnet"], _ = expandSpamfilterIptrustEntriesIp6Subnet(d, i["ip6_subnet"], pre_append, sv)
 		}
 
@@ -449,7 +450,6 @@ func getObjectSpamfilterIptrust(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSpamfilterIptrustId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -459,7 +459,6 @@ func getObjectSpamfilterIptrust(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSpamfilterIptrustName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -469,7 +468,6 @@ func getObjectSpamfilterIptrust(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandSpamfilterIptrustComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -479,7 +477,6 @@ func getObjectSpamfilterIptrust(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandSpamfilterIptrustEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

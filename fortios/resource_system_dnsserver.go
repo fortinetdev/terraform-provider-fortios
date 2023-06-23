@@ -255,7 +255,6 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemDnsServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -265,7 +264,6 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
-
 		t, err := expandSystemDnsServerMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
@@ -275,7 +273,6 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
-
 		t, err := expandSystemDnsServerDnsfilterProfile(d, v, "dnsfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -285,7 +282,6 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("doh"); ok {
-
 		t, err := expandSystemDnsServerDoh(d, v, "doh", sv)
 		if err != nil {
 			return &obj, err

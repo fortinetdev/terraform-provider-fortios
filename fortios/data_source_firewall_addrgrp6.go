@@ -60,6 +60,22 @@ func dataSourceFirewallAddrgrp6() *schema.Resource {
 					},
 				},
 			},
+			"exclude": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"exclude_member": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"tagging": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -195,6 +211,46 @@ func dataSourceFlattenFirewallAddrgrp6MemberName(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenFirewallAddrgrp6Exclude(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddrgrp6ExcludeMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallAddrgrp6ExcludeMemberName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddrgrp6ExcludeMemberName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddrgrp6Tagging(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -321,6 +377,18 @@ func dataSourceRefreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[strin
 	if err = d.Set("member", dataSourceFlattenFirewallAddrgrp6Member(o["member"], d, "member")); err != nil {
 		if !fortiAPIPatch(o["member"]) {
 			return fmt.Errorf("Error reading member: %v", err)
+		}
+	}
+
+	if err = d.Set("exclude", dataSourceFlattenFirewallAddrgrp6Exclude(o["exclude"], d, "exclude")); err != nil {
+		if !fortiAPIPatch(o["exclude"]) {
+			return fmt.Errorf("Error reading exclude: %v", err)
+		}
+	}
+
+	if err = d.Set("exclude_member", dataSourceFlattenFirewallAddrgrp6ExcludeMember(o["exclude-member"], d, "exclude_member")); err != nil {
+		if !fortiAPIPatch(o["exclude-member"]) {
+			return fmt.Errorf("Error reading exclude_member: %v", err)
 		}
 	}
 

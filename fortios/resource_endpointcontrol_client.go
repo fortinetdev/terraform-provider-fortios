@@ -292,7 +292,6 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandEndpointControlClientId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -302,7 +301,6 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("ftcl_uid"); ok {
-
 		t, err := expandEndpointControlClientFtclUid(d, v, "ftcl_uid", sv)
 		if err != nil {
 			return &obj, err
@@ -312,7 +310,6 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("src_ip"); ok {
-
 		t, err := expandEndpointControlClientSrcIp(d, v, "src_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -322,7 +319,6 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("src_mac"); ok {
-
 		t, err := expandEndpointControlClientSrcMac(d, v, "src_mac", sv)
 		if err != nil {
 			return &obj, err
@@ -332,7 +328,6 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("info"); ok {
-
 		t, err := expandEndpointControlClientInfo(d, v, "info", sv)
 		if err != nil {
 			return &obj, err
@@ -342,7 +337,6 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("ad_groups"); ok {
-
 		t, err := expandEndpointControlClientAdGroups(d, v, "ad_groups", sv)
 		if err != nil {
 			return &obj, err

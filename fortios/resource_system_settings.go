@@ -277,6 +277,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"detect_unknown_esp": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auxiliary_session": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -463,6 +468,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_route_tag_address_creation": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_replacement_message_groups": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -643,7 +653,17 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_dlp_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_fortiextender_controller": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_proxy_inspection": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -684,6 +704,11 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"gui_ot": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_dynamic_device_os_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -781,7 +806,17 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"internet_service_database_cache": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -1062,7 +1097,6 @@ func flattenSystemSettingsGuiDefaultPolicyColumns(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSettingsGuiDefaultPolicyColumnsName(i["name"], d, pre_append, sv)
 		}
 
@@ -1100,6 +1134,10 @@ func flattenSystemSettingsNat46ForceIpv4PacketForwarding(v interface{}, d *schem
 }
 
 func flattenSystemSettingsNat64ForceIpv6PacketForwarding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsDetectUnknownEsp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1247,6 +1285,10 @@ func flattenSystemSettingsGuiObjectColors(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemSettingsGuiRouteTagAddressCreation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsGuiReplacementMessageGroups(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1391,7 +1433,15 @@ func flattenSystemSettingsGuiWafProfile(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemSettingsGuiDlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsGuiFortiextenderController(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsGuiProxyInspection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1424,6 +1474,10 @@ func flattenSystemSettingsGuiZtna(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSettingsGuiOt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsGuiDynamicDeviceOsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1499,8 +1553,18 @@ func flattenSystemSettingsGuiEnforceChangeSummary(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenSystemSettingsInternetServiceDatabaseCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("comments", flattenSystemSettingsComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
@@ -1730,7 +1794,7 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("gui_default_policy_columns", flattenSystemSettingsGuiDefaultPolicyColumns(o["gui-default-policy-columns"], d, "gui_default_policy_columns", sv)); err != nil {
 			if !fortiAPIPatch(o["gui-default-policy-columns"]) {
 				return fmt.Errorf("Error reading gui_default_policy_columns: %v", err)
@@ -1779,6 +1843,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("nat64_force_ipv6_packet_forwarding", flattenSystemSettingsNat64ForceIpv6PacketForwarding(o["nat64-force-ipv6-packet-forwarding"], d, "nat64_force_ipv6_packet_forwarding", sv)); err != nil {
 		if !fortiAPIPatch(o["nat64-force-ipv6-packet-forwarding"]) {
 			return fmt.Errorf("Error reading nat64_force_ipv6_packet_forwarding: %v", err)
+		}
+	}
+
+	if err = d.Set("detect_unknown_esp", flattenSystemSettingsDetectUnknownEsp(o["detect-unknown-esp"], d, "detect_unknown_esp", sv)); err != nil {
+		if !fortiAPIPatch(o["detect-unknown-esp"]) {
+			return fmt.Errorf("Error reading detect_unknown_esp: %v", err)
 		}
 	}
 
@@ -1998,6 +2068,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_route_tag_address_creation", flattenSystemSettingsGuiRouteTagAddressCreation(o["gui-route-tag-address-creation"], d, "gui_route_tag_address_creation", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-route-tag-address-creation"]) {
+			return fmt.Errorf("Error reading gui_route_tag_address_creation: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_replacement_message_groups", flattenSystemSettingsGuiReplacementMessageGroups(o["gui-replacement-message-groups"], d, "gui_replacement_message_groups", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-replacement-message-groups"]) {
 			return fmt.Errorf("Error reading gui_replacement_message_groups: %v", err)
@@ -2214,9 +2290,21 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_dlp_profile", flattenSystemSettingsGuiDlpProfile(o["gui-dlp-profile"], d, "gui_dlp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-dlp-profile"]) {
+			return fmt.Errorf("Error reading gui_dlp_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_fortiextender_controller", flattenSystemSettingsGuiFortiextenderController(o["gui-fortiextender-controller"], d, "gui_fortiextender_controller", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-fortiextender-controller"]) {
 			return fmt.Errorf("Error reading gui_fortiextender_controller: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_proxy_inspection", flattenSystemSettingsGuiProxyInspection(o["gui-proxy-inspection"], d, "gui_proxy_inspection", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-proxy-inspection"]) {
+			return fmt.Errorf("Error reading gui_proxy_inspection: %v", err)
 		}
 	}
 
@@ -2265,6 +2353,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("gui_ot", flattenSystemSettingsGuiOt(o["gui-ot"], d, "gui_ot", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-ot"]) {
 			return fmt.Errorf("Error reading gui_ot: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_dynamic_device_os_id", flattenSystemSettingsGuiDynamicDeviceOsId(o["gui-dynamic-device-os-id"], d, "gui_dynamic_device_os_id", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-dynamic-device-os-id"]) {
+			return fmt.Errorf("Error reading gui_dynamic_device_os_id: %v", err)
 		}
 	}
 
@@ -2373,6 +2467,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("gui_enforce_change_summary", flattenSystemSettingsGuiEnforceChangeSummary(o["gui-enforce-change-summary"], d, "gui_enforce_change_summary", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-enforce-change-summary"]) {
 			return fmt.Errorf("Error reading gui_enforce_change_summary: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_database_cache", flattenSystemSettingsInternetServiceDatabaseCache(o["internet-service-database-cache"], d, "internet_service_database_cache", sv)); err != nil {
+		if !fortiAPIPatch(o["internet-service-database-cache"]) {
+			return fmt.Errorf("Error reading internet_service_database_cache: %v", err)
 		}
 	}
 
@@ -2553,7 +2653,6 @@ func expandSystemSettingsGuiDefaultPolicyColumns(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSettingsGuiDefaultPolicyColumnsName(d, i["name"], pre_append, sv)
 		}
 
@@ -2590,6 +2689,10 @@ func expandSystemSettingsNat46ForceIpv4PacketForwarding(d *schema.ResourceData, 
 }
 
 func expandSystemSettingsNat64ForceIpv6PacketForwarding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsDetectUnknownEsp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2737,6 +2840,10 @@ func expandSystemSettingsGuiObjectColors(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSystemSettingsGuiRouteTagAddressCreation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsGuiReplacementMessageGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2881,7 +2988,15 @@ func expandSystemSettingsGuiWafProfile(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemSettingsGuiDlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsGuiFortiextenderController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsGuiProxyInspection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2914,6 +3029,10 @@ func expandSystemSettingsGuiZtna(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemSettingsGuiOt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsGuiDynamicDeviceOsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2989,6 +3108,10 @@ func expandSystemSettingsGuiEnforceChangeSummary(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandSystemSettingsInternetServiceDatabaseCache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -2996,7 +3119,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["comments"] = nil
 		} else {
-
 			t, err := expandSystemSettingsComments(d, v, "comments", sv)
 			if err != nil {
 				return &obj, err
@@ -3010,7 +3132,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["vdom-type"] = nil
 		} else {
-
 			t, err := expandSystemSettingsVdomType(d, v, "vdom_type", sv)
 			if err != nil {
 				return &obj, err
@@ -3024,7 +3145,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["lan-extension-controller-addr"] = nil
 		} else {
-
 			t, err := expandSystemSettingsLanExtensionControllerAddr(d, v, "lan_extension_controller_addr", sv)
 			if err != nil {
 				return &obj, err
@@ -3038,7 +3158,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["opmode"] = nil
 		} else {
-
 			t, err := expandSystemSettingsOpmode(d, v, "opmode", sv)
 			if err != nil {
 				return &obj, err
@@ -3052,7 +3171,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["inspection-mode"] = nil
 		} else {
-
 			t, err := expandSystemSettingsInspectionMode(d, v, "inspection_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -3066,7 +3184,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ngfw-mode"] = nil
 		} else {
-
 			t, err := expandSystemSettingsNgfwMode(d, v, "ngfw_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -3080,7 +3197,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["implicit-allow-dns"] = nil
 		} else {
-
 			t, err := expandSystemSettingsImplicitAllowDns(d, v, "implicit_allow_dns", sv)
 			if err != nil {
 				return &obj, err
@@ -3094,7 +3210,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ssl-ssh-profile"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSslSshProfile(d, v, "ssl_ssh_profile", sv)
 			if err != nil {
 				return &obj, err
@@ -3108,7 +3223,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["consolidated-firewall-mode"] = nil
 		} else {
-
 			t, err := expandSystemSettingsConsolidatedFirewallMode(d, v, "consolidated_firewall_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -3122,7 +3236,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["http-external-dest"] = nil
 		} else {
-
 			t, err := expandSystemSettingsHttpExternalDest(d, v, "http_external_dest", sv)
 			if err != nil {
 				return &obj, err
@@ -3136,7 +3249,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["firewall-session-dirty"] = nil
 		} else {
-
 			t, err := expandSystemSettingsFirewallSessionDirty(d, v, "firewall_session_dirty", sv)
 			if err != nil {
 				return &obj, err
@@ -3150,7 +3262,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["manageip"] = nil
 		} else {
-
 			t, err := expandSystemSettingsManageip(d, v, "manageip", sv)
 			if err != nil {
 				return &obj, err
@@ -3164,7 +3275,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gateway"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGateway(d, v, "gateway", sv)
 			if err != nil {
 				return &obj, err
@@ -3178,7 +3288,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ip"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIp(d, v, "ip", sv)
 			if err != nil {
 				return &obj, err
@@ -3192,7 +3301,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["manageip6"] = nil
 		} else {
-
 			t, err := expandSystemSettingsManageip6(d, v, "manageip6", sv)
 			if err != nil {
 				return &obj, err
@@ -3206,7 +3314,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gateway6"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGateway6(d, v, "gateway6", sv)
 			if err != nil {
 				return &obj, err
@@ -3220,7 +3327,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ip6"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIp6(d, v, "ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -3234,7 +3340,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["device"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDevice(d, v, "device", sv)
 			if err != nil {
 				return &obj, err
@@ -3248,7 +3353,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["bfd"] = nil
 		} else {
-
 			t, err := expandSystemSettingsBfd(d, v, "bfd", sv)
 			if err != nil {
 				return &obj, err
@@ -3262,7 +3366,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["bfd-desired-min-tx"] = nil
 		} else {
-
 			t, err := expandSystemSettingsBfdDesiredMinTx(d, v, "bfd_desired_min_tx", sv)
 			if err != nil {
 				return &obj, err
@@ -3276,7 +3379,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["bfd-required-min-rx"] = nil
 		} else {
-
 			t, err := expandSystemSettingsBfdRequiredMinRx(d, v, "bfd_required_min_rx", sv)
 			if err != nil {
 				return &obj, err
@@ -3290,7 +3392,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["bfd-detect-mult"] = nil
 		} else {
-
 			t, err := expandSystemSettingsBfdDetectMult(d, v, "bfd_detect_mult", sv)
 			if err != nil {
 				return &obj, err
@@ -3304,7 +3405,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["bfd-dont-enforce-src-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsBfdDontEnforceSrcPort(d, v, "bfd_dont_enforce_src_port", sv)
 			if err != nil {
 				return &obj, err
@@ -3318,7 +3418,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["utf8-spam-tagging"] = nil
 		} else {
-
 			t, err := expandSystemSettingsUtf8SpamTagging(d, v, "utf8_spam_tagging", sv)
 			if err != nil {
 				return &obj, err
@@ -3332,7 +3431,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["wccp-cache-engine"] = nil
 		} else {
-
 			t, err := expandSystemSettingsWccpCacheEngine(d, v, "wccp_cache_engine", sv)
 			if err != nil {
 				return &obj, err
@@ -3346,7 +3444,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["vpn-stats-log"] = nil
 		} else {
-
 			t, err := expandSystemSettingsVpnStatsLog(d, v, "vpn_stats_log", sv)
 			if err != nil {
 				return &obj, err
@@ -3360,7 +3457,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["vpn-stats-period"] = nil
 		} else {
-
 			t, err := expandSystemSettingsVpnStatsPeriod(d, v, "vpn_stats_period", sv)
 			if err != nil {
 				return &obj, err
@@ -3374,7 +3470,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["v4-ecmp-mode"] = nil
 		} else {
-
 			t, err := expandSystemSettingsV4EcmpMode(d, v, "v4_ecmp_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -3388,7 +3483,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["mac-ttl"] = nil
 		} else {
-
 			t, err := expandSystemSettingsMacTtl(d, v, "mac_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -3402,7 +3496,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["fw-session-hairpin"] = nil
 		} else {
-
 			t, err := expandSystemSettingsFwSessionHairpin(d, v, "fw_session_hairpin", sv)
 			if err != nil {
 				return &obj, err
@@ -3416,7 +3509,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["prp-trailer-action"] = nil
 		} else {
-
 			t, err := expandSystemSettingsPrpTrailerAction(d, v, "prp_trailer_action", sv)
 			if err != nil {
 				return &obj, err
@@ -3430,7 +3522,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["snat-hairpin-traffic"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSnatHairpinTraffic(d, v, "snat_hairpin_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -3444,7 +3535,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dhcp-proxy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDhcpProxy(d, v, "dhcp_proxy", sv)
 			if err != nil {
 				return &obj, err
@@ -3458,7 +3548,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dhcp-proxy-interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDhcpProxyInterfaceSelectMethod(d, v, "dhcp_proxy_interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -3472,7 +3561,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dhcp-proxy-interface"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDhcpProxyInterface(d, v, "dhcp_proxy_interface", sv)
 			if err != nil {
 				return &obj, err
@@ -3486,7 +3574,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dhcp-server-ip"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDhcpServerIp(d, v, "dhcp_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -3500,7 +3587,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dhcp6-server-ip"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDhcp6ServerIp(d, v, "dhcp6_server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -3514,7 +3600,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["central-nat"] = nil
 		} else {
-
 			t, err := expandSystemSettingsCentralNat(d, v, "central_nat", sv)
 			if err != nil {
 				return &obj, err
@@ -3528,7 +3613,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-default-policy-columns"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemSettingsGuiDefaultPolicyColumns(d, v, "gui_default_policy_columns", sv)
 			if err != nil {
 				return &obj, err
@@ -3542,7 +3626,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["lldp-reception"] = nil
 		} else {
-
 			t, err := expandSystemSettingsLldpReception(d, v, "lldp_reception", sv)
 			if err != nil {
 				return &obj, err
@@ -3556,7 +3639,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["lldp-transmission"] = nil
 		} else {
-
 			t, err := expandSystemSettingsLldpTransmission(d, v, "lldp_transmission", sv)
 			if err != nil {
 				return &obj, err
@@ -3570,7 +3652,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["link-down-access"] = nil
 		} else {
-
 			t, err := expandSystemSettingsLinkDownAccess(d, v, "link_down_access", sv)
 			if err != nil {
 				return &obj, err
@@ -3584,7 +3665,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["nat46-generate-ipv6-fragment-header"] = nil
 		} else {
-
 			t, err := expandSystemSettingsNat46GenerateIpv6FragmentHeader(d, v, "nat46_generate_ipv6_fragment_header", sv)
 			if err != nil {
 				return &obj, err
@@ -3598,7 +3678,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["nat46-force-ipv4-packet-forwarding"] = nil
 		} else {
-
 			t, err := expandSystemSettingsNat46ForceIpv4PacketForwarding(d, v, "nat46_force_ipv4_packet_forwarding", sv)
 			if err != nil {
 				return &obj, err
@@ -3612,7 +3691,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["nat64-force-ipv6-packet-forwarding"] = nil
 		} else {
-
 			t, err := expandSystemSettingsNat64ForceIpv6PacketForwarding(d, v, "nat64_force_ipv6_packet_forwarding", sv)
 			if err != nil {
 				return &obj, err
@@ -3622,11 +3700,23 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("detect_unknown_esp"); ok {
+		if setArgNil {
+			obj["detect-unknown-esp"] = nil
+		} else {
+			t, err := expandSystemSettingsDetectUnknownEsp(d, v, "detect_unknown_esp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["detect-unknown-esp"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("auxiliary_session"); ok {
 		if setArgNil {
 			obj["auxiliary-session"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAuxiliarySession(d, v, "auxiliary_session", sv)
 			if err != nil {
 				return &obj, err
@@ -3640,7 +3730,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["asymroute"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAsymroute(d, v, "asymroute", sv)
 			if err != nil {
 				return &obj, err
@@ -3654,7 +3743,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["asymroute-icmp"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAsymrouteIcmp(d, v, "asymroute_icmp", sv)
 			if err != nil {
 				return &obj, err
@@ -3668,7 +3756,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["tcp-session-without-syn"] = nil
 		} else {
-
 			t, err := expandSystemSettingsTcpSessionWithoutSyn(d, v, "tcp_session_without_syn", sv)
 			if err != nil {
 				return &obj, err
@@ -3682,7 +3769,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ses-denied-traffic"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSesDeniedTraffic(d, v, "ses_denied_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -3696,7 +3782,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["strict-src-check"] = nil
 		} else {
-
 			t, err := expandSystemSettingsStrictSrcCheck(d, v, "strict_src_check", sv)
 			if err != nil {
 				return &obj, err
@@ -3710,7 +3795,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["allow-linkdown-path"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAllowLinkdownPath(d, v, "allow_linkdown_path", sv)
 			if err != nil {
 				return &obj, err
@@ -3724,7 +3808,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["asymroute6"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAsymroute6(d, v, "asymroute6", sv)
 			if err != nil {
 				return &obj, err
@@ -3738,7 +3821,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["asymroute6-icmp"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAsymroute6Icmp(d, v, "asymroute6_icmp", sv)
 			if err != nil {
 				return &obj, err
@@ -3752,7 +3834,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sctp-session-without-init"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSctpSessionWithoutInit(d, v, "sctp_session_without_init", sv)
 			if err != nil {
 				return &obj, err
@@ -3766,7 +3847,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sip-expectation"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSipExpectation(d, v, "sip_expectation", sv)
 			if err != nil {
 				return &obj, err
@@ -3780,7 +3860,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sip-helper"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSipHelper(d, v, "sip_helper", sv)
 			if err != nil {
 				return &obj, err
@@ -3794,7 +3873,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sip-nat-trace"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSipNatTrace(d, v, "sip_nat_trace", sv)
 			if err != nil {
 				return &obj, err
@@ -3808,7 +3886,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["h323-direct-model"] = nil
 		} else {
-
 			t, err := expandSystemSettingsH323DirectModel(d, v, "h323_direct_model", sv)
 			if err != nil {
 				return &obj, err
@@ -3822,7 +3899,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemSettingsStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -3836,7 +3912,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sip-tcp-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSipTcpPort(d, v, "sip_tcp_port", sv)
 			if err != nil {
 				return &obj, err
@@ -3850,7 +3925,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sip-udp-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSipUdpPort(d, v, "sip_udp_port", sv)
 			if err != nil {
 				return &obj, err
@@ -3864,7 +3938,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sip-ssl-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSipSslPort(d, v, "sip_ssl_port", sv)
 			if err != nil {
 				return &obj, err
@@ -3878,7 +3951,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sccp-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsSccpPort(d, v, "sccp_port", sv)
 			if err != nil {
 				return &obj, err
@@ -3892,7 +3964,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["multicast-forward"] = nil
 		} else {
-
 			t, err := expandSystemSettingsMulticastForward(d, v, "multicast_forward", sv)
 			if err != nil {
 				return &obj, err
@@ -3906,7 +3977,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["multicast-ttl-notchange"] = nil
 		} else {
-
 			t, err := expandSystemSettingsMulticastTtlNotchange(d, v, "multicast_ttl_notchange", sv)
 			if err != nil {
 				return &obj, err
@@ -3920,7 +3990,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["multicast-skip-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsMulticastSkipPolicy(d, v, "multicast_skip_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -3934,7 +4003,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["allow-subnet-overlap"] = nil
 		} else {
-
 			t, err := expandSystemSettingsAllowSubnetOverlap(d, v, "allow_subnet_overlap", sv)
 			if err != nil {
 				return &obj, err
@@ -3948,7 +4016,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["deny-tcp-with-icmp"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDenyTcpWithIcmp(d, v, "deny_tcp_with_icmp", sv)
 			if err != nil {
 				return &obj, err
@@ -3962,7 +4029,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ecmp-max-paths"] = nil
 		} else {
-
 			t, err := expandSystemSettingsEcmpMaxPaths(d, v, "ecmp_max_paths", sv)
 			if err != nil {
 				return &obj, err
@@ -3976,7 +4042,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["discovered-device-timeout"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDiscoveredDeviceTimeout(d, v, "discovered_device_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -3990,7 +4055,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["email-portal-check-dns"] = nil
 		} else {
-
 			t, err := expandSystemSettingsEmailPortalCheckDns(d, v, "email_portal_check_dns", sv)
 			if err != nil {
 				return &obj, err
@@ -4004,7 +4068,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["default-voip-alg-mode"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDefaultVoipAlgMode(d, v, "default_voip_alg_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -4018,7 +4081,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-icap"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiIcap(d, v, "gui_icap", sv)
 			if err != nil {
 				return &obj, err
@@ -4032,7 +4094,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-nat46-64"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiNat4664(d, v, "gui_nat46_64", sv)
 			if err != nil {
 				return &obj, err
@@ -4046,7 +4107,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-implicit-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiImplicitPolicy(d, v, "gui_implicit_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4060,7 +4120,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dns-database"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDnsDatabase(d, v, "gui_dns_database", sv)
 			if err != nil {
 				return &obj, err
@@ -4074,7 +4133,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-load-balance"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiLoadBalance(d, v, "gui_load_balance", sv)
 			if err != nil {
 				return &obj, err
@@ -4088,7 +4146,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-multicast-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiMulticastPolicy(d, v, "gui_multicast_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4102,7 +4159,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dos-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDosPolicy(d, v, "gui_dos_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4116,7 +4172,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-object-colors"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiObjectColors(d, v, "gui_object_colors", sv)
 			if err != nil {
 				return &obj, err
@@ -4126,11 +4181,23 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_route_tag_address_creation"); ok {
+		if setArgNil {
+			obj["gui-route-tag-address-creation"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiRouteTagAddressCreation(d, v, "gui_route_tag_address_creation", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-route-tag-address-creation"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_replacement_message_groups"); ok {
 		if setArgNil {
 			obj["gui-replacement-message-groups"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiReplacementMessageGroups(d, v, "gui_replacement_message_groups", sv)
 			if err != nil {
 				return &obj, err
@@ -4144,7 +4211,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-voip-profile"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiVoipProfile(d, v, "gui_voip_profile", sv)
 			if err != nil {
 				return &obj, err
@@ -4158,7 +4224,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-ap-profile"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiApProfile(d, v, "gui_ap_profile", sv)
 			if err != nil {
 				return &obj, err
@@ -4172,7 +4237,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-security-profile-group"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiSecurityProfileGroup(d, v, "gui_security_profile_group", sv)
 			if err != nil {
 				return &obj, err
@@ -4186,7 +4250,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dynamic-profile-display"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDynamicProfileDisplay(d, v, "gui_dynamic_profile_display", sv)
 			if err != nil {
 				return &obj, err
@@ -4200,7 +4263,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-local-in-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiLocalInPolicy(d, v, "gui_local_in_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4214,7 +4276,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-local-reports"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiLocalReports(d, v, "gui_local_reports", sv)
 			if err != nil {
 				return &obj, err
@@ -4228,7 +4289,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-wanopt-cache"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiWanoptCache(d, v, "gui_wanopt_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -4242,7 +4302,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-explicit-proxy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiExplicitProxy(d, v, "gui_explicit_proxy", sv)
 			if err != nil {
 				return &obj, err
@@ -4256,7 +4315,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dynamic-routing"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDynamicRouting(d, v, "gui_dynamic_routing", sv)
 			if err != nil {
 				return &obj, err
@@ -4270,7 +4328,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dlp"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDlp(d, v, "gui_dlp", sv)
 			if err != nil {
 				return &obj, err
@@ -4284,7 +4341,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-sslvpn-personal-bookmarks"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiSslvpnPersonalBookmarks(d, v, "gui_sslvpn_personal_bookmarks", sv)
 			if err != nil {
 				return &obj, err
@@ -4298,7 +4354,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-sslvpn-realms"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiSslvpnRealms(d, v, "gui_sslvpn_realms", sv)
 			if err != nil {
 				return &obj, err
@@ -4312,7 +4367,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-policy-based-ipsec"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiPolicyBasedIpsec(d, v, "gui_policy_based_ipsec", sv)
 			if err != nil {
 				return &obj, err
@@ -4326,7 +4380,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-threat-weight"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiThreatWeight(d, v, "gui_threat_weight", sv)
 			if err != nil {
 				return &obj, err
@@ -4340,7 +4393,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-multiple-utm-profiles"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiMultipleUtmProfiles(d, v, "gui_multiple_utm_profiles", sv)
 			if err != nil {
 				return &obj, err
@@ -4354,7 +4406,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-spamfilter"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiSpamfilter(d, v, "gui_spamfilter", sv)
 			if err != nil {
 				return &obj, err
@@ -4368,7 +4419,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-file-filter"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiFileFilter(d, v, "gui_file_filter", sv)
 			if err != nil {
 				return &obj, err
@@ -4382,7 +4432,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-application-control"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiApplicationControl(d, v, "gui_application_control", sv)
 			if err != nil {
 				return &obj, err
@@ -4396,7 +4445,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-ips"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiIps(d, v, "gui_ips", sv)
 			if err != nil {
 				return &obj, err
@@ -4410,7 +4458,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-endpoint-control"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiEndpointControl(d, v, "gui_endpoint_control", sv)
 			if err != nil {
 				return &obj, err
@@ -4424,7 +4471,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-endpoint-control-advanced"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiEndpointControlAdvanced(d, v, "gui_endpoint_control_advanced", sv)
 			if err != nil {
 				return &obj, err
@@ -4438,7 +4484,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dhcp-advanced"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDhcpAdvanced(d, v, "gui_dhcp_advanced", sv)
 			if err != nil {
 				return &obj, err
@@ -4452,7 +4497,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-vpn"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiVpn(d, v, "gui_vpn", sv)
 			if err != nil {
 				return &obj, err
@@ -4466,7 +4510,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-wireless-controller"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiWirelessController(d, v, "gui_wireless_controller", sv)
 			if err != nil {
 				return &obj, err
@@ -4480,7 +4523,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-advanced-wireless-features"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiAdvancedWirelessFeatures(d, v, "gui_advanced_wireless_features", sv)
 			if err != nil {
 				return &obj, err
@@ -4494,7 +4536,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-switch-controller"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiSwitchController(d, v, "gui_switch_controller", sv)
 			if err != nil {
 				return &obj, err
@@ -4508,7 +4549,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-fortiap-split-tunneling"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiFortiapSplitTunneling(d, v, "gui_fortiap_split_tunneling", sv)
 			if err != nil {
 				return &obj, err
@@ -4522,7 +4562,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-webfilter-advanced"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiWebfilterAdvanced(d, v, "gui_webfilter_advanced", sv)
 			if err != nil {
 				return &obj, err
@@ -4536,7 +4575,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-traffic-shaping"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiTrafficShaping(d, v, "gui_traffic_shaping", sv)
 			if err != nil {
 				return &obj, err
@@ -4550,7 +4588,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-wan-load-balancing"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiWanLoadBalancing(d, v, "gui_wan_load_balancing", sv)
 			if err != nil {
 				return &obj, err
@@ -4564,7 +4601,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-antivirus"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiAntivirus(d, v, "gui_antivirus", sv)
 			if err != nil {
 				return &obj, err
@@ -4578,7 +4614,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-webfilter"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiWebfilter(d, v, "gui_webfilter", sv)
 			if err != nil {
 				return &obj, err
@@ -4592,7 +4627,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-videofilter"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiVideofilter(d, v, "gui_videofilter", sv)
 			if err != nil {
 				return &obj, err
@@ -4606,7 +4640,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-dnsfilter"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDnsfilter(d, v, "gui_dnsfilter", sv)
 			if err != nil {
 				return &obj, err
@@ -4620,7 +4653,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-waf-profile"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiWafProfile(d, v, "gui_waf_profile", sv)
 			if err != nil {
 				return &obj, err
@@ -4630,11 +4662,23 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_dlp_profile"); ok {
+		if setArgNil {
+			obj["gui-dlp-profile"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiDlpProfile(d, v, "gui_dlp_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dlp-profile"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_fortiextender_controller"); ok {
 		if setArgNil {
 			obj["gui-fortiextender-controller"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiFortiextenderController(d, v, "gui_fortiextender_controller", sv)
 			if err != nil {
 				return &obj, err
@@ -4644,11 +4688,23 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_proxy_inspection"); ok {
+		if setArgNil {
+			obj["gui-proxy-inspection"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiProxyInspection(d, v, "gui_proxy_inspection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-proxy-inspection"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_advanced_policy"); ok {
 		if setArgNil {
 			obj["gui-advanced-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiAdvancedPolicy(d, v, "gui_advanced_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4662,7 +4718,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-allow-unnamed-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiAllowUnnamedPolicy(d, v, "gui_allow_unnamed_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4676,7 +4731,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-email-collection"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiEmailCollection(d, v, "gui_email_collection", sv)
 			if err != nil {
 				return &obj, err
@@ -4690,7 +4744,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-domain-ip-reputation"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiDomainIpReputation(d, v, "gui_domain_ip_reputation", sv)
 			if err != nil {
 				return &obj, err
@@ -4704,7 +4757,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-multiple-interface-policy"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiMultipleInterfacePolicy(d, v, "gui_multiple_interface_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -4718,7 +4770,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-policy-disclaimer"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiPolicyDisclaimer(d, v, "gui_policy_disclaimer", sv)
 			if err != nil {
 				return &obj, err
@@ -4732,7 +4783,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-ztna"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiZtna(d, v, "gui_ztna", sv)
 			if err != nil {
 				return &obj, err
@@ -4746,7 +4796,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-ot"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiOt(d, v, "gui_ot", sv)
 			if err != nil {
 				return &obj, err
@@ -4756,11 +4805,23 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_dynamic_device_os_id"); ok {
+		if setArgNil {
+			obj["gui-dynamic-device-os-id"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiDynamicDeviceOsId(d, v, "gui_dynamic_device_os_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dynamic-device-os-id"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("location_id"); ok {
 		if setArgNil {
 			obj["location-id"] = nil
 		} else {
-
 			t, err := expandSystemSettingsLocationId(d, v, "location_id", sv)
 			if err != nil {
 				return &obj, err
@@ -4774,7 +4835,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-per-policy-disclaimer"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiPerPolicyDisclaimer(d, v, "gui_per_policy_disclaimer", sv)
 			if err != nil {
 				return &obj, err
@@ -4788,7 +4848,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-policy-learning"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiPolicyLearning(d, v, "gui_policy_learning", sv)
 			if err != nil {
 				return &obj, err
@@ -4802,7 +4861,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["compliance-check"] = nil
 		} else {
-
 			t, err := expandSystemSettingsComplianceCheck(d, v, "compliance_check", sv)
 			if err != nil {
 				return &obj, err
@@ -4816,7 +4874,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ike-session-resume"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIkeSessionResume(d, v, "ike_session_resume", sv)
 			if err != nil {
 				return &obj, err
@@ -4830,7 +4887,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ike-quick-crash-detect"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIkeQuickCrashDetect(d, v, "ike_quick_crash_detect", sv)
 			if err != nil {
 				return &obj, err
@@ -4844,7 +4900,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ike-dn-format"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIkeDnFormat(d, v, "ike_dn_format", sv)
 			if err != nil {
 				return &obj, err
@@ -4858,7 +4913,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ike-policy-route"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIkePolicyRoute(d, v, "ike_policy_route", sv)
 			if err != nil {
 				return &obj, err
@@ -4872,7 +4926,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ike-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIkePort(d, v, "ike_port", sv)
 			if err != nil {
 				return &obj, err
@@ -4886,7 +4939,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ike-natt-port"] = nil
 		} else {
-
 			t, err := expandSystemSettingsIkeNattPort(d, v, "ike_natt_port", sv)
 			if err != nil {
 				return &obj, err
@@ -4900,7 +4952,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["block-land-attack"] = nil
 		} else {
-
 			t, err := expandSystemSettingsBlockLandAttack(d, v, "block_land_attack", sv)
 			if err != nil {
 				return &obj, err
@@ -4914,7 +4965,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["default-app-port-as-service"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDefaultAppPortAsService(d, v, "default_app_port_as_service", sv)
 			if err != nil {
 				return &obj, err
@@ -4928,7 +4978,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["application-bandwidth-tracking"] = nil
 		} else {
-
 			t, err := expandSystemSettingsApplicationBandwidthTracking(d, v, "application_bandwidth_tracking", sv)
 			if err != nil {
 				return &obj, err
@@ -4942,7 +4991,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["fqdn-session-check"] = nil
 		} else {
-
 			t, err := expandSystemSettingsFqdnSessionCheck(d, v, "fqdn_session_check", sv)
 			if err != nil {
 				return &obj, err
@@ -4956,7 +5004,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ext-resource-session-check"] = nil
 		} else {
-
 			t, err := expandSystemSettingsExtResourceSessionCheck(d, v, "ext_resource_session_check", sv)
 			if err != nil {
 				return &obj, err
@@ -4970,7 +5017,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dyn-addr-session-check"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDynAddrSessionCheck(d, v, "dyn_addr_session_check", sv)
 			if err != nil {
 				return &obj, err
@@ -4984,7 +5030,6 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["default-policy-expiry-days"] = nil
 		} else {
-
 			t, err := expandSystemSettingsDefaultPolicyExpiryDays(d, v, "default_policy_expiry_days", sv)
 			if err != nil {
 				return &obj, err
@@ -4998,12 +5043,24 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["gui-enforce-change-summary"] = nil
 		} else {
-
 			t, err := expandSystemSettingsGuiEnforceChangeSummary(d, v, "gui_enforce_change_summary", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["gui-enforce-change-summary"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_database_cache"); ok {
+		if setArgNil {
+			obj["internet-service-database-cache"] = nil
+		} else {
+			t, err := expandSystemSettingsInternetServiceDatabaseCache(d, v, "internet_service_database_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["internet-service-database-cache"] = t
 			}
 		}
 	}

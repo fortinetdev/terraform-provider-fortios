@@ -294,7 +294,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserCertificateName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -304,7 +303,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandUserCertificateId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -314,7 +312,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandUserCertificateStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -324,7 +321,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandUserCertificateType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -334,7 +330,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("common_name"); ok {
-
 		t, err := expandUserCertificateCommonName(d, v, "common_name", sv)
 		if err != nil {
 			return &obj, err
@@ -344,7 +339,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("issuer"); ok {
-
 		t, err := expandUserCertificateIssuer(d, v, "issuer", sv)
 		if err != nil {
 			return &obj, err

@@ -235,7 +235,6 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemTosBasedPriorityId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("tos"); ok {
-
 		t, err := expandSystemTosBasedPriorityTos(d, v, "tos", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
-
 		t, err := expandSystemTosBasedPriorityPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err

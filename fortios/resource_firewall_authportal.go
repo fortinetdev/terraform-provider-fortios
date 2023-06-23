@@ -67,7 +67,17 @@ func resourceFirewallAuthPortal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"proxy_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -196,7 +206,6 @@ func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAuthPortalGroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -225,10 +234,20 @@ func flattenFirewallAuthPortalIdentityBasedRoute(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenFirewallAuthPortalProxyAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups", sv)); err != nil {
 			if !fortiAPIPatch(o["groups"]) {
 				return fmt.Errorf("Error reading groups: %v", err)
@@ -262,6 +281,12 @@ func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("proxy_auth", flattenFirewallAuthPortalProxyAuth(o["proxy-auth"], d, "proxy_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-auth"]) {
+			return fmt.Errorf("Error reading proxy_auth: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -287,7 +312,6 @@ func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAuthPortalGroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -315,6 +339,10 @@ func expandFirewallAuthPortalIdentityBasedRoute(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandFirewallAuthPortalProxyAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -322,7 +350,6 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["groups"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandFirewallAuthPortalGroups(d, v, "groups", sv)
 			if err != nil {
 				return &obj, err
@@ -336,7 +363,6 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["portal-addr"] = nil
 		} else {
-
 			t, err := expandFirewallAuthPortalPortalAddr(d, v, "portal_addr", sv)
 			if err != nil {
 				return &obj, err
@@ -350,7 +376,6 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["portal-addr6"] = nil
 		} else {
-
 			t, err := expandFirewallAuthPortalPortalAddr6(d, v, "portal_addr6", sv)
 			if err != nil {
 				return &obj, err
@@ -364,12 +389,24 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["identity-based-route"] = nil
 		} else {
-
 			t, err := expandFirewallAuthPortalIdentityBasedRoute(d, v, "identity_based_route", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["identity-based-route"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_auth"); ok {
+		if setArgNil {
+			obj["proxy-auth"] = nil
+		} else {
+			t, err := expandFirewallAuthPortalProxyAuth(d, v, "proxy_auth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-auth"] = t
 			}
 		}
 	}

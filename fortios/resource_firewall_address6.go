@@ -51,6 +51,11 @@ func resourceFirewallAddress6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"route_tag": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"macaddr": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -252,6 +257,11 @@ func resourceFirewallAddress6() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -389,6 +399,10 @@ func flattenFirewallAddress6Type(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenFirewallAddress6RouteTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddress6Macaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -415,7 +429,6 @@ func flattenFirewallAddress6Macaddr(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
 		if _, ok := i["macaddr"]; ok {
-
 			tmp["macaddr"] = flattenFirewallAddress6MacaddrMacaddr(i["macaddr"], d, pre_append, sv)
 		}
 
@@ -506,7 +519,6 @@ func flattenFirewallAddress6List(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenFirewallAddress6ListIp(i["ip"], d, pre_append, sv)
 		}
 
@@ -549,19 +561,16 @@ func flattenFirewallAddress6Tagging(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddress6TaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenFirewallAddress6TaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenFirewallAddress6TaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -608,7 +617,6 @@ func flattenFirewallAddress6TaggingTags(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddress6TaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -659,19 +667,16 @@ func flattenFirewallAddress6SubnetSegment(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddress6SubnetSegmentName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenFirewallAddress6SubnetSegmentType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenFirewallAddress6SubnetSegmentValue(i["value"], d, pre_append, sv)
 		}
 
@@ -722,6 +727,12 @@ func flattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallAddress6Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -741,7 +752,13 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("route_tag", flattenFirewallAddress6RouteTag(o["route-tag"], d, "route_tag", sv)); err != nil {
+		if !fortiAPIPatch(o["route-tag"]) {
+			return fmt.Errorf("Error reading route_tag: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("macaddr", flattenFirewallAddress6Macaddr(o["macaddr"], d, "macaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["macaddr"]) {
 				return fmt.Errorf("Error reading macaddr: %v", err)
@@ -829,7 +846,7 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("list", flattenFirewallAddress6List(o["list"], d, "list", sv)); err != nil {
 			if !fortiAPIPatch(o["list"]) {
 				return fmt.Errorf("Error reading list: %v", err)
@@ -845,7 +862,7 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenFirewallAddress6Tagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -873,7 +890,7 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("subnet_segment", flattenFirewallAddress6SubnetSegment(o["subnet-segment"], d, "subnet_segment", sv)); err != nil {
 			if !fortiAPIPatch(o["subnet-segment"]) {
 				return fmt.Errorf("Error reading subnet_segment: %v", err)
@@ -946,6 +963,10 @@ func expandFirewallAddress6Type(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandFirewallAddress6RouteTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAddress6Macaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -962,7 +983,6 @@ func expandFirewallAddress6Macaddr(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["macaddr"], _ = expandFirewallAddress6MacaddrMacaddr(d, i["macaddr"], pre_append, sv)
 		}
 
@@ -1042,7 +1062,6 @@ func expandFirewallAddress6List(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandFirewallAddress6ListIp(d, i["ip"], pre_append, sv)
 		}
 
@@ -1074,19 +1093,16 @@ func expandFirewallAddress6Tagging(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddress6TaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandFirewallAddress6TaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandFirewallAddress6TaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -1124,7 +1140,6 @@ func expandFirewallAddress6TaggingTags(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddress6TaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -1164,19 +1179,16 @@ func expandFirewallAddress6SubnetSegment(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddress6SubnetSegmentName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandFirewallAddress6SubnetSegmentType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandFirewallAddress6SubnetSegmentValue(d, i["value"], pre_append, sv)
 		}
 
@@ -1228,7 +1240,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallAddress6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1238,7 +1249,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallAddress6Uuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -1248,7 +1258,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallAddress6Type(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -1257,8 +1266,16 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("macaddr"); ok || d.HasChange("macaddr") {
+	if v, ok := d.GetOkExists("route_tag"); ok {
+		t, err := expandFirewallAddress6RouteTag(d, v, "route_tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-tag"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("macaddr"); ok || d.HasChange("macaddr") {
 		t, err := expandFirewallAddress6Macaddr(d, v, "macaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -1268,7 +1285,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("start_mac"); ok {
-
 		t, err := expandFirewallAddress6StartMac(d, v, "start_mac", sv)
 		if err != nil {
 			return &obj, err
@@ -1278,7 +1294,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("end_mac"); ok {
-
 		t, err := expandFirewallAddress6EndMac(d, v, "end_mac", sv)
 		if err != nil {
 			return &obj, err
@@ -1288,7 +1303,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("sdn"); ok {
-
 		t, err := expandFirewallAddress6Sdn(d, v, "sdn", sv)
 		if err != nil {
 			return &obj, err
@@ -1298,7 +1312,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandFirewallAddress6Ip6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1308,7 +1321,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("start_ip"); ok {
-
 		t, err := expandFirewallAddress6StartIp(d, v, "start_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1318,7 +1330,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("end_ip"); ok {
-
 		t, err := expandFirewallAddress6EndIp(d, v, "end_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1328,7 +1339,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("fqdn"); ok {
-
 		t, err := expandFirewallAddress6Fqdn(d, v, "fqdn", sv)
 		if err != nil {
 			return &obj, err
@@ -1338,7 +1348,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("country"); ok {
-
 		t, err := expandFirewallAddress6Country(d, v, "country", sv)
 		if err != nil {
 			return &obj, err
@@ -1348,7 +1357,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("cache_ttl"); ok {
-
 		t, err := expandFirewallAddress6CacheTtl(d, v, "cache_ttl", sv)
 		if err != nil {
 			return &obj, err
@@ -1358,7 +1366,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-
 		t, err := expandFirewallAddress6Visibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err
@@ -1368,7 +1375,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallAddress6Color(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -1378,7 +1384,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("obj_id"); ok {
-
 		t, err := expandFirewallAddress6ObjId(d, v, "obj_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1388,7 +1393,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("list"); ok || d.HasChange("list") {
-
 		t, err := expandFirewallAddress6List(d, v, "list", sv)
 		if err != nil {
 			return &obj, err
@@ -1398,7 +1402,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
-
 		t, err := expandFirewallAddress6Tagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
@@ -1408,7 +1411,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallAddress6Comment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1418,7 +1420,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("template"); ok {
-
 		t, err := expandFirewallAddress6Template(d, v, "template", sv)
 		if err != nil {
 			return &obj, err
@@ -1428,7 +1429,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("subnet_segment"); ok || d.HasChange("subnet_segment") {
-
 		t, err := expandFirewallAddress6SubnetSegment(d, v, "subnet_segment", sv)
 		if err != nil {
 			return &obj, err
@@ -1438,7 +1438,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("host_type"); ok {
-
 		t, err := expandFirewallAddress6HostType(d, v, "host_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1448,7 +1447,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("host"); ok {
-
 		t, err := expandFirewallAddress6Host(d, v, "host", sv)
 		if err != nil {
 			return &obj, err
@@ -1458,7 +1456,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("tenant"); ok {
-
 		t, err := expandFirewallAddress6Tenant(d, v, "tenant", sv)
 		if err != nil {
 			return &obj, err
@@ -1468,7 +1465,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("epg_name"); ok {
-
 		t, err := expandFirewallAddress6EpgName(d, v, "epg_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1478,7 +1474,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("sdn_tag"); ok {
-
 		t, err := expandFirewallAddress6SdnTag(d, v, "sdn_tag", sv)
 		if err != nil {
 			return &obj, err
@@ -1488,7 +1483,6 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallAddress6FabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

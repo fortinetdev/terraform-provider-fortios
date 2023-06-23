@@ -293,7 +293,6 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallWildcardFqdnCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -303,7 +302,6 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallWildcardFqdnCustomUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -313,7 +311,6 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("wildcard_fqdn"); ok {
-
 		t, err := expandFirewallWildcardFqdnCustomWildcardFqdn(d, v, "wildcard_fqdn", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +320,6 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallWildcardFqdnCustomColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +329,6 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallWildcardFqdnCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +338,6 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-
 		t, err := expandFirewallWildcardFqdnCustomVisibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err

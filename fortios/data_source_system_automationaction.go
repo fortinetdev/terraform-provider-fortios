@@ -48,6 +48,10 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"forticare_email": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"email_to": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -355,6 +359,10 @@ func dataSourceFlattenSystemAutomationActionSystemAction(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemAutomationActionTlsCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionForticareEmail(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -734,6 +742,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("tls_certificate", dataSourceFlattenSystemAutomationActionTlsCertificate(o["tls-certificate"], d, "tls_certificate")); err != nil {
 		if !fortiAPIPatch(o["tls-certificate"]) {
 			return fmt.Errorf("Error reading tls_certificate: %v", err)
+		}
+	}
+
+	if err = d.Set("forticare_email", dataSourceFlattenSystemAutomationActionForticareEmail(o["forticare-email"], d, "forticare_email")); err != nil {
+		if !fortiAPIPatch(o["forticare-email"]) {
+			return fmt.Errorf("Error reading forticare_email: %v", err)
 		}
 	}
 

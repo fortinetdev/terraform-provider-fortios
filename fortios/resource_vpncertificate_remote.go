@@ -253,7 +253,6 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnCertificateRemoteName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -263,7 +262,6 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("remote"); ok {
-
 		t, err := expandVpnCertificateRemoteRemote(d, v, "remote", sv)
 		if err != nil {
 			return &obj, err
@@ -273,7 +271,6 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-
 		t, err := expandVpnCertificateRemoteRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
@@ -283,7 +280,6 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandVpnCertificateRemoteSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err

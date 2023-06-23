@@ -112,6 +112,11 @@ func resourceFirewallAccessProxySshClientCert() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -291,25 +296,21 @@ func flattenFirewallAccessProxySshClientCertCertExtension(v interface{}, d *sche
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAccessProxySshClientCertCertExtensionName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "critical"
 		if _, ok := i["critical"]; ok {
-
 			tmp["critical"] = flattenFirewallAccessProxySshClientCertCertExtensionCritical(i["critical"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenFirewallAccessProxySshClientCertCertExtensionType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data"
 		if _, ok := i["data"]; ok {
-
 			tmp["data"] = flattenFirewallAccessProxySshClientCertCertExtensionData(i["data"], d, pre_append, sv)
 		}
 
@@ -344,6 +345,12 @@ func flattenFirewallAccessProxySshClientCertAuthCa(v interface{}, d *schema.Reso
 
 func refreshObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallAccessProxySshClientCertName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -387,7 +394,7 @@ func refreshObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, o map
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("cert_extension", flattenFirewallAccessProxySshClientCertCertExtension(o["cert-extension"], d, "cert_extension", sv)); err != nil {
 			if !fortiAPIPatch(o["cert-extension"]) {
 				return fmt.Errorf("Error reading cert_extension: %v", err)
@@ -462,25 +469,21 @@ func expandFirewallAccessProxySshClientCertCertExtension(d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAccessProxySshClientCertCertExtensionName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "critical"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["critical"], _ = expandFirewallAccessProxySshClientCertCertExtensionCritical(d, i["critical"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandFirewallAccessProxySshClientCertCertExtensionType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["data"], _ = expandFirewallAccessProxySshClientCertCertExtensionData(d, i["data"], pre_append, sv)
 		}
 
@@ -516,7 +519,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -526,7 +528,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("source_address"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertSourceAddress(d, v, "source_address", sv)
 		if err != nil {
 			return &obj, err
@@ -536,7 +537,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("permit_x11_forwarding"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertPermitX11Forwarding(d, v, "permit_x11_forwarding", sv)
 		if err != nil {
 			return &obj, err
@@ -546,7 +546,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("permit_agent_forwarding"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertPermitAgentForwarding(d, v, "permit_agent_forwarding", sv)
 		if err != nil {
 			return &obj, err
@@ -556,7 +555,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("permit_port_forwarding"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertPermitPortForwarding(d, v, "permit_port_forwarding", sv)
 		if err != nil {
 			return &obj, err
@@ -566,7 +564,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("permit_pty"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertPermitPty(d, v, "permit_pty", sv)
 		if err != nil {
 			return &obj, err
@@ -576,7 +573,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("permit_user_rc"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertPermitUserRc(d, v, "permit_user_rc", sv)
 		if err != nil {
 			return &obj, err
@@ -586,7 +582,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("cert_extension"); ok || d.HasChange("cert_extension") {
-
 		t, err := expandFirewallAccessProxySshClientCertCertExtension(d, v, "cert_extension", sv)
 		if err != nil {
 			return &obj, err
@@ -596,7 +591,6 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("auth_ca"); ok {
-
 		t, err := expandFirewallAccessProxySshClientCertAuthCa(d, v, "auth_ca", sv)
 		if err != nil {
 			return &obj, err

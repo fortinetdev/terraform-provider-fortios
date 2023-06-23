@@ -313,7 +313,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +322,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +331,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("storm_control_mode"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyStormControlMode(d, v, "storm_control_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +340,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOkExists("rate"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyRate(d, v, "rate", sv)
 		if err != nil {
 			return &obj, err
@@ -353,7 +349,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("unknown_unicast"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyUnknownUnicast(d, v, "unknown_unicast", sv)
 		if err != nil {
 			return &obj, err
@@ -363,7 +358,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("unknown_multicast"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyUnknownMulticast(d, v, "unknown_multicast", sv)
 		if err != nil {
 			return &obj, err
@@ -373,7 +367,6 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("broadcast"); ok {
-
 		t, err := expandSwitchControllerStormControlPolicyBroadcast(d, v, "broadcast", sv)
 		if err != nil {
 			return &obj, err

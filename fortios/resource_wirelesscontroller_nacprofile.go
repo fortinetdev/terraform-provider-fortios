@@ -236,7 +236,6 @@ func getObjectWirelessControllerNacProfile(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerNacProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -246,7 +245,6 @@ func getObjectWirelessControllerNacProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerNacProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -256,7 +254,6 @@ func getObjectWirelessControllerNacProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("onboarding_vlan"); ok {
-
 		t, err := expandWirelessControllerNacProfileOnboardingVlan(d, v, "onboarding_vlan", sv)
 		if err != nil {
 			return &obj, err

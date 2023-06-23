@@ -283,7 +283,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponsePort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err
@@ -297,7 +296,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["http-probe-value"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponseHttpProbeValue(d, v, "http_probe_value", sv)
 			if err != nil {
 				return &obj, err
@@ -311,7 +309,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ttl-mode"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponseTtlMode(d, v, "ttl_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -325,7 +322,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponseMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -339,7 +335,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["security-mode"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponseSecurityMode(d, v, "security_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -353,7 +348,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["password"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponsePassword(d, v, "password", sv)
 			if err != nil {
 				return &obj, err
@@ -367,7 +361,6 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["timeout"] = nil
 		} else {
-
 			t, err := expandSystemProbeResponseTimeout(d, v, "timeout", sv)
 			if err != nil {
 				return &obj, err

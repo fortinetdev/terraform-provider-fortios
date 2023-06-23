@@ -251,7 +251,6 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpSysinfoStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -265,7 +264,6 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["engine-id"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpSysinfoEngineId(d, v, "engine_id", sv)
 			if err != nil {
 				return &obj, err
@@ -279,7 +277,6 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["description"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpSysinfoDescription(d, v, "description", sv)
 			if err != nil {
 				return &obj, err
@@ -293,7 +290,6 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["contact-info"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpSysinfoContactInfo(d, v, "contact_info", sv)
 			if err != nil {
 				return &obj, err
@@ -307,7 +303,6 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["location"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpSysinfoLocation(d, v, "location", sv)
 			if err != nil {
 				return &obj, err

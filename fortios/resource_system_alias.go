@@ -216,7 +216,6 @@ func getObjectSystemAlias(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemAliasName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectSystemAlias(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("command"); ok {
-
 		t, err := expandSystemAliasCommand(d, v, "command", sv)
 		if err != nil {
 			return &obj, err

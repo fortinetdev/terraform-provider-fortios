@@ -22,6 +22,7 @@ The following attributes are exported:
 * `name` - SDN connector name.
 * `status` - Enable/disable connection to the remote SDN connector.
 * `type` - Type of SDN connector.
+* `proxy` - SDN proxy.
 * `ha_status` - Enable/disable use for FortiGate HA service.
 * `verify_certificate` - Enable/disable server certificate verification.
 * `server` - Server address of the remote SDN connector.
@@ -36,6 +37,7 @@ The following attributes are exported:
 * `secret_key` - AWS secret access key.
 * `region` - AWS region name.
 * `vpc_id` - AWS VPC ID.
+* `alt_resource_ip` - Enable/disable AWS alternative resource IP.
 * `external_account_list` - Configure AWS external account list. The structure of `external_account_list` block is documented below.
 * `tenant_id` - Tenant ID (directory ID).
 * `subscription_id` - Azure subscription ID.
@@ -48,6 +50,8 @@ The following attributes are exported:
 * `nic` - Configure Azure network interface. The structure of `nic` block is documented below.
 * `route_table` - Configure Azure route table. The structure of `route_table` block is documented below.
 * `user_id` - User ID.
+* `compartment_list` - Configure OCI compartment list. The structure of `compartment_list` block is documented below.
+* `oci_region_list` - Configure OCI region list. The structure of `oci_region_list` block is documented below.
 * `compartment_id` - Compartment ID.
 * `oci_region` - OCI server region.
 * `oci_region_type` - OCI region type.
@@ -65,6 +69,8 @@ The following attributes are exported:
 * `secret_token` - Secret token of Kubernetes service account.
 * `domain` - Domain name.
 * `group_name` - Group name of computers.
+* `server_cert` - Trust servers that contain this certificate only.
+* `server_ca_cert` - Trust only those servers whose certificate is directly/indirectly signed by this certificate.
 * `api_key` - IBM cloud API key or service ID API key.
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
 * `ibm_region_gen1` - IBM cloud compute generation 1 region name.
@@ -108,6 +114,14 @@ The `route` block contains:
 
 * `name` - Route name.
 * `next_hop` - Next hop address.
+
+The `compartment_list` block contains:
+
+* `compartment_id` - OCI compartment ID.
+
+The `oci_region_list` block contains:
+
+* `region` - OCI region.
 
 The `external_ip` block contains:
 

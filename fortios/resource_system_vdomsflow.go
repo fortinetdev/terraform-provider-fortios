@@ -268,7 +268,6 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["vdom-sflow"] = nil
 		} else {
-
 			t, err := expandSystemVdomSflowVdomSflow(d, v, "vdom_sflow", sv)
 			if err != nil {
 				return &obj, err
@@ -282,7 +281,6 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["collector-ip"] = nil
 		} else {
-
 			t, err := expandSystemVdomSflowCollectorIp(d, v, "collector_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -296,7 +294,6 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["collector-port"] = nil
 		} else {
-
 			t, err := expandSystemVdomSflowCollectorPort(d, v, "collector_port", sv)
 			if err != nil {
 				return &obj, err
@@ -310,7 +307,6 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemVdomSflowSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -324,7 +320,6 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemVdomSflowInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -338,7 +333,6 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemVdomSflowInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

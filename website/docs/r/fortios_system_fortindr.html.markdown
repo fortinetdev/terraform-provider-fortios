@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_fortindr
-Configure FortiNDR. Applies to FortiOS Version `>= 7.2.0`.
+Configure FortiNDR. Applies to FortiOS Version `>= 7.0.8`.
 
 ## Argument Reference
 

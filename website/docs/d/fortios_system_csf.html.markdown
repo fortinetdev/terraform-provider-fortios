@@ -41,6 +41,9 @@ The following attributes are exported:
 * `trusted_list` - Pre-authorized and blocked security fabric nodes. The structure of `trusted_list` block is documented below.
 * `fabric_connector` - Fabric connector configuration. The structure of `fabric_connector` block is documented below.
 * `forticloud_account_enforcement` - Fabric FortiCloud account unification.
+* `file_mgmt` - Enable/disable Security Fabric daemon file management.
+* `file_quota` - Maximum amount of memory that can be used by the daemon files (in bytes).
+* `file_quota_warning` - Warn when the set percentage of quota has been used.
 * `fabric_device` - Fabric device configuration. The structure of `fabric_device` block is documented below.
 
 The `trusted_list` block contains:
@@ -52,12 +55,18 @@ The `trusted_list` block contains:
 * `action` - Security fabric authorization action.
 * `ha_members` - HA members.
 * `downstream_authorization` - Trust authorizations by this node's administrator.
+* `index` - Index of the downstream in tree.
 
 The `fabric_connector` block contains:
 
 * `serial` - Serial.
 * `accprofile` - Override access profile.
 * `configuration_write_access` - Enable/disable downstream device write access to configuration.
+* `vdom` - Virtual domains that the connector has access to. If none are set, the connector will only have access to the VDOM that it joins the Security Fabric through. The structure of `vdom` block is documented below.
+
+The `vdom` block contains:
+
+* `name` - Virtual domain name.
 
 The `fabric_device` block contains:
 

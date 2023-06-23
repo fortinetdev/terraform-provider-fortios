@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_fortiai
-Configure FortiAI. Applies to FortiOS Version `7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6`.
+Configure FortiAI. Applies to FortiOS Version `7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7`.
 
 ## Argument Reference
 

@@ -234,7 +234,6 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemCustomLanguageName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("filename"); ok {
-
 		t, err := expandSystemCustomLanguageFilename(d, v, "filename", sv)
 		if err != nil {
 			return &obj, err
@@ -254,7 +252,6 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandSystemCustomLanguageComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err

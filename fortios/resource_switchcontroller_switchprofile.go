@@ -287,7 +287,6 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSwitchProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -297,7 +296,6 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("login_passwd_override"); ok {
-
 		t, err := expandSwitchControllerSwitchProfileLoginPasswdOverride(d, v, "login_passwd_override", sv)
 		if err != nil {
 			return &obj, err
@@ -307,7 +305,6 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("login_passwd"); ok {
-
 		t, err := expandSwitchControllerSwitchProfileLoginPasswd(d, v, "login_passwd", sv)
 		if err != nil {
 			return &obj, err
@@ -317,7 +314,6 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("login"); ok {
-
 		t, err := expandSwitchControllerSwitchProfileLogin(d, v, "login", sv)
 		if err != nil {
 			return &obj, err
@@ -327,7 +323,6 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("revision_backup_on_logout"); ok {
-
 		t, err := expandSwitchControllerSwitchProfileRevisionBackupOnLogout(d, v, "revision_backup_on_logout", sv)
 		if err != nil {
 			return &obj, err
@@ -337,7 +332,6 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("revision_backup_on_upgrade"); ok {
-
 		t, err := expandSwitchControllerSwitchProfileRevisionBackupOnUpgrade(d, v, "revision_backup_on_upgrade", sv)
 		if err != nil {
 			return &obj, err

@@ -212,7 +212,6 @@ func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["fgt-policy"] = nil
 		} else {
-
 			t, err := expandSwitchControllerAutoConfigDefaultFgtPolicy(d, v, "fgt_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -226,7 +225,6 @@ func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["isl-policy"] = nil
 		} else {
-
 			t, err := expandSwitchControllerAutoConfigDefaultIslPolicy(d, v, "isl_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -240,7 +238,6 @@ func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["icl-policy"] = nil
 		} else {
-
 			t, err := expandSwitchControllerAutoConfigDefaultIclPolicy(d, v, "icl_policy", sv)
 			if err != nil {
 				return &obj, err

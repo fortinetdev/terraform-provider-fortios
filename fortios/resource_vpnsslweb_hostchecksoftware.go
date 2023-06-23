@@ -118,6 +118,11 @@ func resourceVpnSslWebHostCheckSoftware() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -289,37 +294,31 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemList(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenVpnSslWebHostCheckSoftwareCheckItemListId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenVpnSslWebHostCheckSoftwareCheckItemListAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenVpnSslWebHostCheckSoftwareCheckItemListType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := i["target"]; ok {
-
 			tmp["target"] = flattenVpnSslWebHostCheckSoftwareCheckItemListTarget(i["target"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := i["version"]; ok {
-
 			tmp["version"] = flattenVpnSslWebHostCheckSoftwareCheckItemListVersion(i["version"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5s"
 		if _, ok := i["md5s"]; ok {
-
 			tmp["md5s"] = flattenVpnSslWebHostCheckSoftwareCheckItemListMd5S(i["md5s"], d, pre_append, sv)
 		}
 
@@ -378,7 +377,6 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemListMd5S(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenVpnSslWebHostCheckSoftwareCheckItemListMd5SId(i["id"], d, pre_append, sv)
 		}
 
@@ -397,6 +395,12 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemListMd5SId(v interface{}, d *sche
 
 func refreshObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenVpnSslWebHostCheckSoftwareName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -428,7 +432,7 @@ func refreshObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("check_item_list", flattenVpnSslWebHostCheckSoftwareCheckItemList(o["check-item-list"], d, "check_item_list", sv)); err != nil {
 			if !fortiAPIPatch(o["check-item-list"]) {
 				return fmt.Errorf("Error reading check_item_list: %v", err)
@@ -489,37 +493,31 @@ func expandVpnSslWebHostCheckSoftwareCheckItemList(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["target"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListTarget(d, i["target"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["version"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListVersion(d, i["version"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5s"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["md5s"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListMd5S(d, i["md5s"], pre_append, sv)
 		} else {
 			tmp["md5s"] = make([]string, 0)
@@ -569,7 +567,6 @@ func expandVpnSslWebHostCheckSoftwareCheckItemListMd5S(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListMd5SId(d, i["id"], pre_append, sv)
 		}
 
@@ -589,7 +586,6 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnSslWebHostCheckSoftwareName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -599,7 +595,6 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("os_type"); ok {
-
 		t, err := expandVpnSslWebHostCheckSoftwareOsType(d, v, "os_type", sv)
 		if err != nil {
 			return &obj, err
@@ -609,7 +604,6 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandVpnSslWebHostCheckSoftwareType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -619,7 +613,6 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("version"); ok {
-
 		t, err := expandVpnSslWebHostCheckSoftwareVersion(d, v, "version", sv)
 		if err != nil {
 			return &obj, err
@@ -629,7 +622,6 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("guid"); ok {
-
 		t, err := expandVpnSslWebHostCheckSoftwareGuid(d, v, "guid", sv)
 		if err != nil {
 			return &obj, err
@@ -639,7 +631,6 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("check_item_list"); ok || d.HasChange("check_item_list") {
-
 		t, err := expandVpnSslWebHostCheckSoftwareCheckItemList(d, v, "check_item_list", sv)
 		if err != nil {
 			return &obj, err

@@ -65,6 +65,7 @@ The following arguments are supported:
 * `password_renewal` - Enable/disable online password renewal. Valid values: `enable`, `disable`.
 * `member_attr` - Name of attribute from which to get group membership.
 * `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token. Valid values: `same`, `strip`.
+* `account_key_upn_san` - Define SAN in certificate for user principle name matching. Valid values: `othername`, `rfc822name`, `dnsname`.
 * `account_key_filter` - Account key filter, using the UPN as the search filter.
 * `search_type` - Search type. Valid values: `recursive`.
 * `client_cert_auth` - Enable/disable using client certificate for TLS authentication. Valid values: `enable`, `disable`.

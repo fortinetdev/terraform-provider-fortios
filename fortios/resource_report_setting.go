@@ -249,7 +249,6 @@ func getObjectReportSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["pdf-report"] = nil
 		} else {
-
 			t, err := expandReportSettingPdfReport(d, v, "pdf_report", sv)
 			if err != nil {
 				return &obj, err
@@ -263,7 +262,6 @@ func getObjectReportSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["fortiview"] = nil
 		} else {
-
 			t, err := expandReportSettingFortiview(d, v, "fortiview", sv)
 			if err != nil {
 				return &obj, err
@@ -277,7 +275,6 @@ func getObjectReportSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["report-source"] = nil
 		} else {
-
 			t, err := expandReportSettingReportSource(d, v, "report_source", sv)
 			if err != nil {
 				return &obj, err
@@ -291,7 +288,6 @@ func getObjectReportSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["web-browsing-threshold"] = nil
 		} else {
-
 			t, err := expandReportSettingWebBrowsingThreshold(d, v, "web_browsing_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -305,7 +301,6 @@ func getObjectReportSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["top-n"] = nil
 		} else {
-
 			t, err := expandReportSettingTopN(d, v, "top_n", sv)
 			if err != nil {
 				return &obj, err

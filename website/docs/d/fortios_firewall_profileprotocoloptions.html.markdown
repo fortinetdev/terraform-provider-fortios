@@ -58,6 +58,7 @@ The `http` block contains:
 * `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1.
 * `tunnel_non_http` - Configure how to process non-HTTP traffic when a profile configured for HTTP traffic accepts a non-HTTP session. Can occur if an application sends non-HTTP traffic using an HTTP destination port.
 * `h2c` - Enable/disable h2c HTTP connection upgrade.
+* `unknown_content_encoding` - Configure the action the FortiGate unit will take on unknown content-encoding.
 * `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
 * `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).

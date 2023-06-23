@@ -260,7 +260,6 @@ func getObjectRouterospfNetwork(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandRouterospfNetworkId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -270,7 +269,6 @@ func getObjectRouterospfNetwork(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("prefix"); ok {
-
 		t, err := expandRouterospfNetworkPrefix(d, v, "prefix", sv)
 		if err != nil {
 			return &obj, err
@@ -280,7 +278,6 @@ func getObjectRouterospfNetwork(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("area"); ok {
-
 		t, err := expandRouterospfNetworkArea(d, v, "area", sv)
 		if err != nil {
 			return &obj, err
@@ -290,7 +287,6 @@ func getObjectRouterospfNetwork(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandRouterospfNetworkComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err

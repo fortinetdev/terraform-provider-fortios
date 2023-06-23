@@ -254,7 +254,6 @@ func getObjectCertificateRemote(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandCertificateRemoteName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -264,7 +263,6 @@ func getObjectCertificateRemote(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("remote"); ok {
-
 		t, err := expandCertificateRemoteRemote(d, v, "remote", sv)
 		if err != nil {
 			return &obj, err
@@ -274,7 +272,6 @@ func getObjectCertificateRemote(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-
 		t, err := expandCertificateRemoteRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +281,6 @@ func getObjectCertificateRemote(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandCertificateRemoteSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err

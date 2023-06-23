@@ -195,7 +195,6 @@ func getObjectApplicationRuleSettings(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandApplicationRuleSettingsId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err

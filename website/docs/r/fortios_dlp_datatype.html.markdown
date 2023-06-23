@@ -16,6 +16,7 @@ The following arguments are supported:
 * `name` - Name of table containing the data type.
 * `pattern` - Regular expression pattern string without look around.
 * `verify` - Regular expression pattern string used to verify the data type.
+* `match_around` - Dictionary to check whether it has a match around (Only support match-any and basic types, no repeat supported).
 * `look_back` - Number of characters required to save for verification (1 - 255, default = 1).
 * `look_ahead` - Number of characters to obtain in advance for verification (1 - 255, default = 1).
 * `transform` - Template to transform user input to a pattern using capture group from 'pattern'.

@@ -387,7 +387,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -401,7 +400,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["apply-to"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminApplyTo(d, v, "apply_to", sv)
 			if err != nil {
 				return &obj, err
@@ -415,7 +413,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["minimum-length"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminMinimumLength(d, v, "minimum_length", sv)
 			if err != nil {
 				return &obj, err
@@ -429,7 +426,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["min-lower-case-letter"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminMinLowerCaseLetter(d, v, "min_lower_case_letter", sv)
 			if err != nil {
 				return &obj, err
@@ -443,7 +439,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["min-upper-case-letter"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminMinUpperCaseLetter(d, v, "min_upper_case_letter", sv)
 			if err != nil {
 				return &obj, err
@@ -457,7 +452,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["min-non-alphanumeric"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminMinNonAlphanumeric(d, v, "min_non_alphanumeric", sv)
 			if err != nil {
 				return &obj, err
@@ -471,7 +465,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["min-number"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminMinNumber(d, v, "min_number", sv)
 			if err != nil {
 				return &obj, err
@@ -485,7 +478,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["min-change-characters"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminMinChangeCharacters(d, v, "min_change_characters", sv)
 			if err != nil {
 				return &obj, err
@@ -499,7 +491,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["change-4-characters"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminChange4Characters(d, v, "change_4_characters", sv)
 			if err != nil {
 				return &obj, err
@@ -513,7 +504,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["expire-status"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminExpireStatus(d, v, "expire_status", sv)
 			if err != nil {
 				return &obj, err
@@ -527,7 +517,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["expire-day"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminExpireDay(d, v, "expire_day", sv)
 			if err != nil {
 				return &obj, err
@@ -541,7 +530,6 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["reuse-password"] = nil
 		} else {
-
 			t, err := expandSystemPasswordPolicyGuestAdminReusePassword(d, v, "reuse_password", sv)
 			if err != nil {
 				return &obj, err

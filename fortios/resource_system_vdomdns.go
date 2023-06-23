@@ -126,6 +126,11 @@ func resourceSystemVdomDns() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -274,7 +279,6 @@ func flattenSystemVdomDnsServerHostname(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := i["hostname"]; ok {
-
 			tmp["hostname"] = flattenSystemVdomDnsServerHostnameHostname(i["hostname"], d, pre_append, sv)
 		}
 
@@ -325,6 +329,12 @@ func flattenSystemVdomDnsAltSecondary(v interface{}, d *schema.ResourceData, pre
 
 func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("vdom_dns", flattenSystemVdomDnsVdomDns(o["vdom-dns"], d, "vdom_dns", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom-dns"]) {
@@ -362,7 +372,7 @@ func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_hostname", flattenSystemVdomDnsServerHostname(o["server-hostname"], d, "server_hostname", sv)); err != nil {
 			if !fortiAPIPatch(o["server-hostname"]) {
 				return fmt.Errorf("Error reading server_hostname: %v", err)
@@ -475,7 +485,6 @@ func expandSystemVdomDnsServerHostname(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["hostname"], _ = expandSystemVdomDnsServerHostnameHostname(d, i["hostname"], pre_append, sv)
 		}
 
@@ -530,7 +539,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["vdom-dns"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsVdomDns(d, v, "vdom_dns", sv)
 			if err != nil {
 				return &obj, err
@@ -544,7 +552,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["primary"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsPrimary(d, v, "primary", sv)
 			if err != nil {
 				return &obj, err
@@ -558,7 +565,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["secondary"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsSecondary(d, v, "secondary", sv)
 			if err != nil {
 				return &obj, err
@@ -572,7 +578,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["protocol"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsProtocol(d, v, "protocol", sv)
 			if err != nil {
 				return &obj, err
@@ -586,7 +591,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["dns-over-tls"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsDnsOverTls(d, v, "dns_over_tls", sv)
 			if err != nil {
 				return &obj, err
@@ -600,7 +604,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ssl-certificate"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsSslCertificate(d, v, "ssl_certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -614,7 +617,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["server-hostname"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemVdomDnsServerHostname(d, v, "server_hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -628,7 +630,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ip6-primary"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsIp6Primary(d, v, "ip6_primary", sv)
 			if err != nil {
 				return &obj, err
@@ -642,7 +643,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["ip6-secondary"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsIp6Secondary(d, v, "ip6_secondary", sv)
 			if err != nil {
 				return &obj, err
@@ -656,7 +656,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -670,7 +669,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -684,7 +682,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -698,7 +695,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["server-select-method"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsServerSelectMethod(d, v, "server_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -712,7 +708,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["alt-primary"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsAltPrimary(d, v, "alt_primary", sv)
 			if err != nil {
 				return &obj, err
@@ -726,7 +721,6 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["alt-secondary"] = nil
 		} else {
-
 			t, err := expandSystemVdomDnsAltSecondary(d, v, "alt_secondary", sv)
 			if err != nil {
 				return &obj, err

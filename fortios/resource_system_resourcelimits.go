@@ -494,7 +494,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["session"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsSession(d, v, "session", sv)
 			if err != nil {
 				return &obj, err
@@ -508,7 +507,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["ipsec-phase1"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsIpsecPhase1(d, v, "ipsec_phase1", sv)
 			if err != nil {
 				return &obj, err
@@ -522,7 +520,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["ipsec-phase2"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsIpsecPhase2(d, v, "ipsec_phase2", sv)
 			if err != nil {
 				return &obj, err
@@ -536,7 +533,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["ipsec-phase1-interface"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsIpsecPhase1Interface(d, v, "ipsec_phase1_interface", sv)
 			if err != nil {
 				return &obj, err
@@ -550,7 +546,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["ipsec-phase2-interface"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsIpsecPhase2Interface(d, v, "ipsec_phase2_interface", sv)
 			if err != nil {
 				return &obj, err
@@ -564,7 +559,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["dialup-tunnel"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsDialupTunnel(d, v, "dialup_tunnel", sv)
 			if err != nil {
 				return &obj, err
@@ -578,7 +572,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["firewall-policy"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsFirewallPolicy(d, v, "firewall_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -592,7 +585,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["firewall-address"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsFirewallAddress(d, v, "firewall_address", sv)
 			if err != nil {
 				return &obj, err
@@ -606,7 +598,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["firewall-addrgrp"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsFirewallAddrgrp(d, v, "firewall_addrgrp", sv)
 			if err != nil {
 				return &obj, err
@@ -620,7 +611,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["custom-service"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsCustomService(d, v, "custom_service", sv)
 			if err != nil {
 				return &obj, err
@@ -634,7 +624,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["service-group"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsServiceGroup(d, v, "service_group", sv)
 			if err != nil {
 				return &obj, err
@@ -648,7 +637,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["onetime-schedule"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsOnetimeSchedule(d, v, "onetime_schedule", sv)
 			if err != nil {
 				return &obj, err
@@ -662,7 +650,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["recurring-schedule"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsRecurringSchedule(d, v, "recurring_schedule", sv)
 			if err != nil {
 				return &obj, err
@@ -676,7 +663,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["user"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsUser(d, v, "user", sv)
 			if err != nil {
 				return &obj, err
@@ -690,7 +676,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["user-group"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsUserGroup(d, v, "user_group", sv)
 			if err != nil {
 				return &obj, err
@@ -704,7 +689,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["sslvpn"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsSslvpn(d, v, "sslvpn", sv)
 			if err != nil {
 				return &obj, err
@@ -718,7 +702,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["proxy"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsProxy(d, v, "proxy", sv)
 			if err != nil {
 				return &obj, err
@@ -732,7 +715,6 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["log-disk-quota"] = nil
 		} else {
-
 			t, err := expandSystemResourceLimitsLogDiskQuota(d, v, "log_disk_quota", sv)
 			if err != nil {
 				return &obj, err

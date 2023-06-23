@@ -252,7 +252,6 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallDnstranslationId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -262,7 +261,6 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("src"); ok {
-
 		t, err := expandFirewallDnstranslationSrc(d, v, "src", sv)
 		if err != nil {
 			return &obj, err
@@ -272,7 +270,6 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("dst"); ok {
-
 		t, err := expandFirewallDnstranslationDst(d, v, "dst", sv)
 		if err != nil {
 			return &obj, err
@@ -282,7 +279,6 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("netmask"); ok {
-
 		t, err := expandFirewallDnstranslationNetmask(d, v, "netmask", sv)
 		if err != nil {
 			return &obj, err

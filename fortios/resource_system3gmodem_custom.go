@@ -333,7 +333,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystem3GModemCustomId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +342,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
-
 		t, err := expandSystem3GModemCustomVendor(d, v, "vendor", sv)
 		if err != nil {
 			return &obj, err
@@ -353,7 +351,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("model"); ok {
-
 		t, err := expandSystem3GModemCustomModel(d, v, "model", sv)
 		if err != nil {
 			return &obj, err
@@ -363,7 +360,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("vendor_id"); ok {
-
 		t, err := expandSystem3GModemCustomVendorId(d, v, "vendor_id", sv)
 		if err != nil {
 			return &obj, err
@@ -373,7 +369,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("product_id"); ok {
-
 		t, err := expandSystem3GModemCustomProductId(d, v, "product_id", sv)
 		if err != nil {
 			return &obj, err
@@ -383,7 +378,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("class_id"); ok {
-
 		t, err := expandSystem3GModemCustomClassId(d, v, "class_id", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +387,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("init_string"); ok {
-
 		t, err := expandSystem3GModemCustomInitString(d, v, "init_string", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +396,6 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("modeswitch_string"); ok {
-
 		t, err := expandSystem3GModemCustomModeswitchString(d, v, "modeswitch_string", sv)
 		if err != nil {
 			return &obj, err

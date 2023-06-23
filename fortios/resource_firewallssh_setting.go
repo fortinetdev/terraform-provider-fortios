@@ -331,7 +331,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["caname"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingCaname(d, v, "caname", sv)
 			if err != nil {
 				return &obj, err
@@ -345,7 +344,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["untrusted-caname"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingUntrustedCaname(d, v, "untrusted_caname", sv)
 			if err != nil {
 				return &obj, err
@@ -359,7 +357,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["hostkey-rsa2048"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostkeyRsa2048(d, v, "hostkey_rsa2048", sv)
 			if err != nil {
 				return &obj, err
@@ -373,7 +370,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["hostkey-dsa1024"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostkeyDsa1024(d, v, "hostkey_dsa1024", sv)
 			if err != nil {
 				return &obj, err
@@ -387,7 +383,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["hostkey-ecdsa256"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostkeyEcdsa256(d, v, "hostkey_ecdsa256", sv)
 			if err != nil {
 				return &obj, err
@@ -401,7 +396,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["hostkey-ecdsa384"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostkeyEcdsa384(d, v, "hostkey_ecdsa384", sv)
 			if err != nil {
 				return &obj, err
@@ -415,7 +409,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["hostkey-ecdsa521"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostkeyEcdsa521(d, v, "hostkey_ecdsa521", sv)
 			if err != nil {
 				return &obj, err
@@ -429,7 +422,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["hostkey-ed25519"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostkeyEd25519(d, v, "hostkey_ed25519", sv)
 			if err != nil {
 				return &obj, err
@@ -443,7 +435,6 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["host-trusted-checking"] = nil
 		} else {
-
 			t, err := expandFirewallSshSettingHostTrustedChecking(d, v, "host_trusted_checking", sv)
 			if err != nil {
 				return &obj, err

@@ -387,7 +387,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandWebfilterOverrideId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -397,7 +396,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandWebfilterOverrideStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -407,7 +405,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("scope"); ok {
-
 		t, err := expandWebfilterOverrideScope(d, v, "scope", sv)
 		if err != nil {
 			return &obj, err
@@ -417,7 +414,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandWebfilterOverrideIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -427,7 +423,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("user"); ok {
-
 		t, err := expandWebfilterOverrideUser(d, v, "user", sv)
 		if err != nil {
 			return &obj, err
@@ -437,7 +432,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("user_group"); ok {
-
 		t, err := expandWebfilterOverrideUserGroup(d, v, "user_group", sv)
 		if err != nil {
 			return &obj, err
@@ -447,7 +441,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("old_profile"); ok {
-
 		t, err := expandWebfilterOverrideOldProfile(d, v, "old_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -457,7 +450,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("new_profile"); ok {
-
 		t, err := expandWebfilterOverrideNewProfile(d, v, "new_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -467,7 +459,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandWebfilterOverrideIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -477,7 +468,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("expires"); ok {
-
 		t, err := expandWebfilterOverrideExpires(d, v, "expires", sv)
 		if err != nil {
 			return &obj, err
@@ -487,7 +477,6 @@ func getObjectWebfilterOverride(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("initiator"); ok {
-
 		t, err := expandWebfilterOverrideInitiator(d, v, "initiator", sv)
 		if err != nil {
 			return &obj, err

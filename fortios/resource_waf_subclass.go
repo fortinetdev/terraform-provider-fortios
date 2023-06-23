@@ -216,7 +216,6 @@ func getObjectWafSubClass(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWafSubClassName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectWafSubClass(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandWafSubClassId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err

@@ -395,6 +395,11 @@ func resourceIpsSensor() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -570,151 +575,126 @@ func flattenIpsSensorEntries(v interface{}, d *schema.ResourceData, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenIpsSensorEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
 		if _, ok := i["rule"]; ok {
-
 			tmp["rule"] = flattenIpsSensorEntriesRule(i["rule"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "location"
 		if _, ok := i["location"]; ok {
-
 			tmp["location"] = flattenIpsSensorEntriesLocation(i["location"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := i["severity"]; ok {
-
 			tmp["severity"] = flattenIpsSensorEntriesSeverity(i["severity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenIpsSensorEntriesProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os"
 		if _, ok := i["os"]; ok {
-
 			tmp["os"] = flattenIpsSensorEntriesOs(i["os"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
 		if _, ok := i["application"]; ok {
-
 			tmp["application"] = flattenIpsSensorEntriesApplication(i["application"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_action"
 		if _, ok := i["default-action"]; ok {
-
 			tmp["default_action"] = flattenIpsSensorEntriesDefaultAction(i["default-action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_status"
 		if _, ok := i["default-status"]; ok {
-
 			tmp["default_status"] = flattenIpsSensorEntriesDefaultStatus(i["default-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve"
 		if _, ok := i["cve"]; ok {
-
 			tmp["cve"] = flattenIpsSensorEntriesCve(i["cve"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vuln_type"
 		if _, ok := i["vuln-type"]; ok {
-
 			tmp["vuln_type"] = flattenIpsSensorEntriesVulnType(i["vuln-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_modified"
 		if _, ok := i["last-modified"]; ok {
-
 			tmp["last_modified"] = flattenIpsSensorEntriesLastModified(i["last-modified"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenIpsSensorEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenIpsSensorEntriesLog(i["log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
 		if _, ok := i["log-packet"]; ok {
-
 			tmp["log_packet"] = flattenIpsSensorEntriesLogPacket(i["log-packet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_attack_context"
 		if _, ok := i["log-attack-context"]; ok {
-
 			tmp["log_attack_context"] = flattenIpsSensorEntriesLogAttackContext(i["log-attack-context"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenIpsSensorEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_count"
 		if _, ok := i["rate-count"]; ok {
-
 			tmp["rate_count"] = flattenIpsSensorEntriesRateCount(i["rate-count"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_duration"
 		if _, ok := i["rate-duration"]; ok {
-
 			tmp["rate_duration"] = flattenIpsSensorEntriesRateDuration(i["rate-duration"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_mode"
 		if _, ok := i["rate-mode"]; ok {
-
 			tmp["rate_mode"] = flattenIpsSensorEntriesRateMode(i["rate-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_track"
 		if _, ok := i["rate-track"]; ok {
-
 			tmp["rate_track"] = flattenIpsSensorEntriesRateTrack(i["rate-track"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt_ip"
 		if _, ok := i["exempt-ip"]; ok {
-
 			tmp["exempt_ip"] = flattenIpsSensorEntriesExemptIp(i["exempt-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := i["quarantine"]; ok {
-
 			tmp["quarantine"] = flattenIpsSensorEntriesQuarantine(i["quarantine"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := i["quarantine-expiry"]; ok {
-
 			tmp["quarantine_expiry"] = flattenIpsSensorEntriesQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := i["quarantine-log"]; ok {
-
 			tmp["quarantine_log"] = flattenIpsSensorEntriesQuarantineLog(i["quarantine-log"], d, pre_append, sv)
 		}
 
@@ -757,7 +737,6 @@ func flattenIpsSensorEntriesRule(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenIpsSensorEntriesRuleId(i["id"], d, pre_append, sv)
 		}
 
@@ -779,10 +758,12 @@ func flattenIpsSensorEntriesLocation(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenIpsSensorEntriesSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	var temp_v = v.(string)
-	temp_v = strings.TrimRight(temp_v, " ")
-	var rst_v interface{} = temp_v
-	return rst_v
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
+	return v
 }
 
 func flattenIpsSensorEntriesProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -831,7 +812,6 @@ func flattenIpsSensorEntriesCve(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve_entry"
 		if _, ok := i["cve-entry"]; ok {
-
 			tmp["cve_entry"] = flattenIpsSensorEntriesCveCveEntry(i["cve-entry"], d, pre_append, sv)
 		}
 
@@ -874,7 +854,6 @@ func flattenIpsSensorEntriesVulnType(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenIpsSensorEntriesVulnTypeId(i["id"], d, pre_append, sv)
 		}
 
@@ -957,19 +936,16 @@ func flattenIpsSensorEntriesExemptIp(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenIpsSensorEntriesExemptIpId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
 		if _, ok := i["src-ip"]; ok {
-
 			tmp["src_ip"] = flattenIpsSensorEntriesExemptIpSrcIp(i["src-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
 		if _, ok := i["dst-ip"]; ok {
-
 			tmp["dst_ip"] = flattenIpsSensorEntriesExemptIpDstIp(i["dst-ip"], d, pre_append, sv)
 		}
 
@@ -1046,79 +1022,66 @@ func flattenIpsSensorFilter(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenIpsSensorFilterName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "location"
 		if _, ok := i["location"]; ok {
-
 			tmp["location"] = flattenIpsSensorFilterLocation(i["location"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := i["severity"]; ok {
-
 			tmp["severity"] = flattenIpsSensorFilterSeverity(i["severity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenIpsSensorFilterProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os"
 		if _, ok := i["os"]; ok {
-
 			tmp["os"] = flattenIpsSensorFilterOs(i["os"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
 		if _, ok := i["application"]; ok {
-
 			tmp["application"] = flattenIpsSensorFilterApplication(i["application"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenIpsSensorFilterStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenIpsSensorFilterLog(i["log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
 		if _, ok := i["log-packet"]; ok {
-
 			tmp["log_packet"] = flattenIpsSensorFilterLogPacket(i["log-packet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenIpsSensorFilterAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := i["quarantine"]; ok {
-
 			tmp["quarantine"] = flattenIpsSensorFilterQuarantine(i["quarantine"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := i["quarantine-expiry"]; ok {
-
 			tmp["quarantine_expiry"] = flattenIpsSensorFilterQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := i["quarantine-log"]; ok {
-
 			tmp["quarantine_log"] = flattenIpsSensorFilterQuarantineLog(i["quarantine-log"], d, pre_append, sv)
 		}
 
@@ -1140,10 +1103,12 @@ func flattenIpsSensorFilterLocation(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenIpsSensorFilterSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	var temp_v = v.(string)
-	temp_v = strings.TrimRight(temp_v, " ")
-	var rst_v interface{} = temp_v
-	return rst_v
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
+	return v
 }
 
 func flattenIpsSensorFilterProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1212,55 +1177,46 @@ func flattenIpsSensorOverride(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := i["rule-id"]; ok {
-
 			tmp["rule_id"] = flattenIpsSensorOverrideRuleId(i["rule-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenIpsSensorOverrideStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenIpsSensorOverrideLog(i["log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
 		if _, ok := i["log-packet"]; ok {
-
 			tmp["log_packet"] = flattenIpsSensorOverrideLogPacket(i["log-packet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenIpsSensorOverrideAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := i["quarantine"]; ok {
-
 			tmp["quarantine"] = flattenIpsSensorOverrideQuarantine(i["quarantine"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := i["quarantine-expiry"]; ok {
-
 			tmp["quarantine_expiry"] = flattenIpsSensorOverrideQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := i["quarantine-log"]; ok {
-
 			tmp["quarantine_log"] = flattenIpsSensorOverrideQuarantineLog(i["quarantine-log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt_ip"
 		if _, ok := i["exempt-ip"]; ok {
-
 			tmp["exempt_ip"] = flattenIpsSensorOverrideExemptIp(i["exempt-ip"], d, pre_append, sv)
 		}
 
@@ -1331,19 +1287,16 @@ func flattenIpsSensorOverrideExemptIp(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenIpsSensorOverrideExemptIpId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
 		if _, ok := i["src-ip"]; ok {
-
 			tmp["src_ip"] = flattenIpsSensorOverrideExemptIpSrcIp(i["src-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
 		if _, ok := i["dst-ip"]; ok {
-
 			tmp["dst_ip"] = flattenIpsSensorOverrideExemptIpDstIp(i["dst-ip"], d, pre_append, sv)
 		}
 
@@ -1384,6 +1337,12 @@ func flattenIpsSensorOverrideExemptIpDstIp(v interface{}, d *schema.ResourceData
 
 func refreshObjectIpsSensor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenIpsSensorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1421,7 +1380,7 @@ func refreshObjectIpsSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenIpsSensorEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -1437,7 +1396,7 @@ func refreshObjectIpsSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("filter", flattenIpsSensorFilter(o["filter"], d, "filter", sv)); err != nil {
 			if !fortiAPIPatch(o["filter"]) {
 				return fmt.Errorf("Error reading filter: %v", err)
@@ -1453,7 +1412,7 @@ func refreshObjectIpsSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("override", flattenIpsSensorOverride(o["override"], d, "override", sv)); err != nil {
 			if !fortiAPIPatch(o["override"]) {
 				return fmt.Errorf("Error reading override: %v", err)
@@ -1518,13 +1477,11 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandIpsSensorEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["rule"], _ = expandIpsSensorEntriesRule(d, i["rule"], pre_append, sv)
 		} else {
 			tmp["rule"] = make([]string, 0)
@@ -1532,49 +1489,41 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "location"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["location"], _ = expandIpsSensorEntriesLocation(d, i["location"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["severity"], _ = expandIpsSensorEntriesSeverity(d, i["severity"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandIpsSensorEntriesProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["os"], _ = expandIpsSensorEntriesOs(d, i["os"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["application"], _ = expandIpsSensorEntriesApplication(d, i["application"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["default-action"], _ = expandIpsSensorEntriesDefaultAction(d, i["default_action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["default-status"], _ = expandIpsSensorEntriesDefaultStatus(d, i["default_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["cve"], _ = expandIpsSensorEntriesCve(d, i["cve"], pre_append, sv)
 		} else {
 			tmp["cve"] = make([]string, 0)
@@ -1582,7 +1531,6 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vuln_type"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["vuln-type"], _ = expandIpsSensorEntriesVulnType(d, i["vuln_type"], pre_append, sv)
 		} else {
 			tmp["vuln-type"] = make([]string, 0)
@@ -1590,67 +1538,56 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_modified"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["last-modified"], _ = expandIpsSensorEntriesLastModified(d, i["last_modified"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandIpsSensorEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandIpsSensorEntriesLog(d, i["log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log-packet"], _ = expandIpsSensorEntriesLogPacket(d, i["log_packet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_attack_context"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log-attack-context"], _ = expandIpsSensorEntriesLogAttackContext(d, i["log_attack_context"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandIpsSensorEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_count"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rate-count"], _ = expandIpsSensorEntriesRateCount(d, i["rate_count"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_duration"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rate-duration"], _ = expandIpsSensorEntriesRateDuration(d, i["rate_duration"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rate-mode"], _ = expandIpsSensorEntriesRateMode(d, i["rate_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_track"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rate-track"], _ = expandIpsSensorEntriesRateTrack(d, i["rate_track"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt_ip"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["exempt-ip"], _ = expandIpsSensorEntriesExemptIp(d, i["exempt_ip"], pre_append, sv)
 		} else {
 			tmp["exempt-ip"] = make([]string, 0)
@@ -1658,19 +1595,16 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine"], _ = expandIpsSensorEntriesQuarantine(d, i["quarantine"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-expiry"], _ = expandIpsSensorEntriesQuarantineExpiry(d, i["quarantine_expiry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-log"], _ = expandIpsSensorEntriesQuarantineLog(d, i["quarantine_log"], pre_append, sv)
 		}
 
@@ -1702,7 +1636,6 @@ func expandIpsSensorEntriesRule(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandIpsSensorEntriesRuleId(d, i["id"], pre_append, sv)
 		}
 
@@ -1762,7 +1695,6 @@ func expandIpsSensorEntriesCve(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve_entry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["cve-entry"], _ = expandIpsSensorEntriesCveCveEntry(d, i["cve_entry"], pre_append, sv)
 		}
 
@@ -1794,7 +1726,6 @@ func expandIpsSensorEntriesVulnType(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandIpsSensorEntriesVulnTypeId(d, i["id"], pre_append, sv)
 		}
 
@@ -1866,19 +1797,16 @@ func expandIpsSensorEntriesExemptIp(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandIpsSensorEntriesExemptIpId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["src-ip"], _ = expandIpsSensorEntriesExemptIpSrcIp(d, i["src_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst-ip"], _ = expandIpsSensorEntriesExemptIpDstIp(d, i["dst_ip"], pre_append, sv)
 		}
 
@@ -1930,79 +1858,66 @@ func expandIpsSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandIpsSensorFilterName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "location"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["location"], _ = expandIpsSensorFilterLocation(d, i["location"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["severity"], _ = expandIpsSensorFilterSeverity(d, i["severity"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandIpsSensorFilterProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["os"], _ = expandIpsSensorFilterOs(d, i["os"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["application"], _ = expandIpsSensorFilterApplication(d, i["application"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandIpsSensorFilterStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandIpsSensorFilterLog(d, i["log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log-packet"], _ = expandIpsSensorFilterLogPacket(d, i["log_packet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandIpsSensorFilterAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine"], _ = expandIpsSensorFilterQuarantine(d, i["quarantine"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-expiry"], _ = expandIpsSensorFilterQuarantineExpiry(d, i["quarantine_expiry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-log"], _ = expandIpsSensorFilterQuarantineLog(d, i["quarantine_log"], pre_append, sv)
 		}
 
@@ -2082,55 +1997,46 @@ func expandIpsSensorOverride(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["rule-id"], _ = expandIpsSensorOverrideRuleId(d, i["rule_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandIpsSensorOverrideStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandIpsSensorOverrideLog(d, i["log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log-packet"], _ = expandIpsSensorOverrideLogPacket(d, i["log_packet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandIpsSensorOverrideAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine"], _ = expandIpsSensorOverrideQuarantine(d, i["quarantine"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-expiry"], _ = expandIpsSensorOverrideQuarantineExpiry(d, i["quarantine_expiry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-log"], _ = expandIpsSensorOverrideQuarantineLog(d, i["quarantine_log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt_ip"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["exempt-ip"], _ = expandIpsSensorOverrideExemptIp(d, i["exempt_ip"], pre_append, sv)
 		} else {
 			tmp["exempt-ip"] = make([]string, 0)
@@ -2192,19 +2098,16 @@ func expandIpsSensorOverrideExemptIp(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandIpsSensorOverrideExemptIpId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["src-ip"], _ = expandIpsSensorOverrideExemptIpSrcIp(d, i["src_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst-ip"], _ = expandIpsSensorOverrideExemptIpDstIp(d, i["dst_ip"], pre_append, sv)
 		}
 
@@ -2232,7 +2135,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandIpsSensorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -2242,7 +2144,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandIpsSensorComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -2252,7 +2153,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandIpsSensorReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -2262,7 +2162,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("block_malicious_url"); ok {
-
 		t, err := expandIpsSensorBlockMaliciousUrl(d, v, "block_malicious_url", sv)
 		if err != nil {
 			return &obj, err
@@ -2272,7 +2171,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
-
 		t, err := expandIpsSensorScanBotnetConnections(d, v, "scan_botnet_connections", sv)
 		if err != nil {
 			return &obj, err
@@ -2282,7 +2180,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("extended_log"); ok {
-
 		t, err := expandIpsSensorExtendedLog(d, v, "extended_log", sv)
 		if err != nil {
 			return &obj, err
@@ -2292,7 +2189,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandIpsSensorEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
@@ -2302,7 +2198,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("filter"); ok || d.HasChange("filter") {
-
 		t, err := expandIpsSensorFilter(d, v, "filter", sv)
 		if err != nil {
 			return &obj, err
@@ -2312,7 +2207,6 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("override"); ok || d.HasChange("override") {
-
 		t, err := expandIpsSensorOverride(d, v, "override", sv)
 		if err != nil {
 			return &obj, err

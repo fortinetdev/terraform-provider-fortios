@@ -171,6 +171,11 @@ func resourceSystemDnsDatabase() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -382,55 +387,46 @@ func flattenSystemDnsDatabaseDnsEntry(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemDnsDatabaseDnsEntryId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSystemDnsDatabaseDnsEntryStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSystemDnsDatabaseDnsEntryType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl"
 		if _, ok := i["ttl"]; ok {
-
 			tmp["ttl"] = flattenSystemDnsDatabaseDnsEntryTtl(i["ttl"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preference"
 		if _, ok := i["preference"]; ok {
-
 			tmp["preference"] = flattenSystemDnsDatabaseDnsEntryPreference(i["preference"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSystemDnsDatabaseDnsEntryIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
 		if _, ok := i["ipv6"]; ok {
-
 			tmp["ipv6"] = flattenSystemDnsDatabaseDnsEntryIpv6(i["ipv6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := i["hostname"]; ok {
-
 			tmp["hostname"] = flattenSystemDnsDatabaseDnsEntryHostname(i["hostname"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "canonical_name"
 		if _, ok := i["canonical-name"]; ok {
-
 			tmp["canonical_name"] = flattenSystemDnsDatabaseDnsEntryCanonicalName(i["canonical-name"], d, pre_append, sv)
 		}
 
@@ -481,6 +477,12 @@ func flattenSystemDnsDatabaseDnsEntryCanonicalName(v interface{}, d *schema.Reso
 
 func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemDnsDatabaseName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -572,7 +574,7 @@ func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dns_entry", flattenSystemDnsDatabaseDnsEntry(o["dns-entry"], d, "dns_entry", sv)); err != nil {
 			if !fortiAPIPatch(o["dns-entry"]) {
 				return fmt.Errorf("Error reading dns_entry: %v", err)
@@ -673,55 +675,46 @@ func expandSystemDnsDatabaseDnsEntry(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemDnsDatabaseDnsEntryId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSystemDnsDatabaseDnsEntryStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSystemDnsDatabaseDnsEntryType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ttl"], _ = expandSystemDnsDatabaseDnsEntryTtl(d, i["ttl"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preference"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["preference"], _ = expandSystemDnsDatabaseDnsEntryPreference(d, i["preference"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSystemDnsDatabaseDnsEntryIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv6"], _ = expandSystemDnsDatabaseDnsEntryIpv6(d, i["ipv6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["hostname"], _ = expandSystemDnsDatabaseDnsEntryHostname(d, i["hostname"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "canonical_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["canonical-name"], _ = expandSystemDnsDatabaseDnsEntryCanonicalName(d, i["canonical_name"], pre_append, sv)
 		}
 
@@ -773,7 +766,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemDnsDatabaseName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -783,7 +775,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemDnsDatabaseStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -793,7 +784,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("domain"); ok {
-
 		t, err := expandSystemDnsDatabaseDomain(d, v, "domain", sv)
 		if err != nil {
 			return &obj, err
@@ -803,7 +793,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("allow_transfer"); ok {
-
 		t, err := expandSystemDnsDatabaseAllowTransfer(d, v, "allow_transfer", sv)
 		if err != nil {
 			return &obj, err
@@ -813,7 +802,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSystemDnsDatabaseType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -823,7 +811,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("view"); ok {
-
 		t, err := expandSystemDnsDatabaseView(d, v, "view", sv)
 		if err != nil {
 			return &obj, err
@@ -833,7 +820,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip_primary"); ok {
-
 		t, err := expandSystemDnsDatabaseIpPrimary(d, v, "ip_primary", sv)
 		if err != nil {
 			return &obj, err
@@ -843,7 +829,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip_master"); ok {
-
 		t, err := expandSystemDnsDatabaseIpMaster(d, v, "ip_master", sv)
 		if err != nil {
 			return &obj, err
@@ -853,7 +838,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("primary_name"); ok {
-
 		t, err := expandSystemDnsDatabasePrimaryName(d, v, "primary_name", sv)
 		if err != nil {
 			return &obj, err
@@ -863,7 +847,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("contact"); ok {
-
 		t, err := expandSystemDnsDatabaseContact(d, v, "contact", sv)
 		if err != nil {
 			return &obj, err
@@ -873,7 +856,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("ttl"); ok {
-
 		t, err := expandSystemDnsDatabaseTtl(d, v, "ttl", sv)
 		if err != nil {
 			return &obj, err
@@ -883,7 +865,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("authoritative"); ok {
-
 		t, err := expandSystemDnsDatabaseAuthoritative(d, v, "authoritative", sv)
 		if err != nil {
 			return &obj, err
@@ -893,7 +874,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("forwarder"); ok {
-
 		t, err := expandSystemDnsDatabaseForwarder(d, v, "forwarder", sv)
 		if err != nil {
 			return &obj, err
@@ -903,7 +883,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandSystemDnsDatabaseSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -913,7 +892,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("rr_max"); ok {
-
 		t, err := expandSystemDnsDatabaseRrMax(d, v, "rr_max", sv)
 		if err != nil {
 			return &obj, err
@@ -923,7 +901,6 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_entry"); ok || d.HasChange("dns_entry") {
-
 		t, err := expandSystemDnsDatabaseDnsEntry(d, v, "dns_entry", sv)
 		if err != nil {
 			return &obj, err

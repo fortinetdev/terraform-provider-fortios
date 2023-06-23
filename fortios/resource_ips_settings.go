@@ -231,7 +231,6 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["packet-log-history"] = nil
 		} else {
-
 			t, err := expandIpsSettingsPacketLogHistory(d, v, "packet_log_history", sv)
 			if err != nil {
 				return &obj, err
@@ -245,7 +244,6 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["packet-log-post-attack"] = nil
 		} else {
-
 			t, err := expandIpsSettingsPacketLogPostAttack(d, v, "packet_log_post_attack", sv)
 			if err != nil {
 				return &obj, err
@@ -259,7 +257,6 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["packet-log-memory"] = nil
 		} else {
-
 			t, err := expandIpsSettingsPacketLogMemory(d, v, "packet_log_memory", sv)
 			if err != nil {
 				return &obj, err
@@ -273,7 +270,6 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["ips-packet-quota"] = nil
 		} else {
-
 			t, err := expandIpsSettingsIpsPacketQuota(d, v, "ips_packet_quota", sv)
 			if err != nil {
 				return &obj, err

@@ -190,7 +190,6 @@ func getObjectSystemIps(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["signature-hold-time"] = nil
 		} else {
-
 			t, err := expandSystemIpsSignatureHoldTime(d, v, "signature_hold_time", sv)
 			if err != nil {
 				return &obj, err
@@ -204,7 +203,6 @@ func getObjectSystemIps(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["override-signature-hold-by-id"] = nil
 		} else {
-
 			t, err := expandSystemIpsOverrideSignatureHoldById(d, v, "override_signature_hold_by_id", sv)
 			if err != nil {
 				return &obj, err

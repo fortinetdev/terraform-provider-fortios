@@ -68,6 +68,8 @@ The following attributes are exported:
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
 * `exclude_range` - Exclude one or more ranges of IP addresses from being assigned to clients. The structure of `exclude_range` block is documented below.
+* `shared_subnet` - Enable/disable shared subnet.
+* `relay_agent` - Relay agent IP.
 * `reserved_address` - Options for the DHCP server to assign IP settings to specific MAC addresses. The structure of `reserved_address` block is documented below.
 
 The `ip_range` block contains:
@@ -77,10 +79,17 @@ The `ip_range` block contains:
 * `end_ip` - End of IP range.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this range.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this range.
+* `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
+* `lease_time` - Lease time in seconds, 0 means default lease time.
 
 The `vci_string` block contains:
 
 * `vci_string` - VCI strings.
+
+The `uci_string` block contains:
+
+* `uci_string` - UCI strings.
 
 The `tftp_server` block contains:
 
@@ -95,10 +104,16 @@ The `options` block contains:
 * `ip` - DHCP option IPs.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this option.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this option.
+* `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
 
 The `vci_string` block contains:
 
 * `vci_string` - VCI strings.
+
+The `uci_string` block contains:
+
+* `uci_string` - UCI strings.
 
 The `vci_string` block contains:
 
@@ -111,10 +126,17 @@ The `exclude_range` block contains:
 * `end_ip` - End of IP range.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this range.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this range.
+* `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
+* `lease_time` - Lease time in seconds, 0 means default lease time.
 
 The `vci_string` block contains:
 
 * `vci_string` - VCI strings.
+
+The `uci_string` block contains:
+
+* `uci_string` - UCI strings.
 
 The `reserved_address` block contains:
 

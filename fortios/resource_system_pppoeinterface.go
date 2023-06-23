@@ -480,7 +480,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemPppoeInterfaceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -490,7 +489,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("dial_on_demand"); ok {
-
 		t, err := expandSystemPppoeInterfaceDialOnDemand(d, v, "dial_on_demand", sv)
 		if err != nil {
 			return &obj, err
@@ -500,7 +498,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ipv6"); ok {
-
 		t, err := expandSystemPppoeInterfaceIpv6(d, v, "ipv6", sv)
 		if err != nil {
 			return &obj, err
@@ -510,7 +507,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-
 		t, err := expandSystemPppoeInterfaceDevice(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
@@ -520,7 +516,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandSystemPppoeInterfaceUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -530,7 +525,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandSystemPppoeInterfacePassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -540,7 +534,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("auth_type"); ok {
-
 		t, err := expandSystemPppoeInterfaceAuthType(d, v, "auth_type", sv)
 		if err != nil {
 			return &obj, err
@@ -550,7 +543,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ipunnumbered"); ok {
-
 		t, err := expandSystemPppoeInterfaceIpunnumbered(d, v, "ipunnumbered", sv)
 		if err != nil {
 			return &obj, err
@@ -560,7 +552,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("pppoe_unnumbered_negotiate"); ok {
-
 		t, err := expandSystemPppoeInterfacePppoeUnnumberedNegotiate(d, v, "pppoe_unnumbered_negotiate", sv)
 		if err != nil {
 			return &obj, err
@@ -570,7 +561,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("idle_timeout"); ok {
-
 		t, err := expandSystemPppoeInterfaceIdleTimeout(d, v, "idle_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -580,7 +570,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("disc_retry_timeout"); ok {
-
 		t, err := expandSystemPppoeInterfaceDiscRetryTimeout(d, v, "disc_retry_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -590,7 +579,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("padt_retry_timeout"); ok {
-
 		t, err := expandSystemPppoeInterfacePadtRetryTimeout(d, v, "padt_retry_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -600,7 +588,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("service_name"); ok {
-
 		t, err := expandSystemPppoeInterfaceServiceName(d, v, "service_name", sv)
 		if err != nil {
 			return &obj, err
@@ -610,7 +597,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ac_name"); ok {
-
 		t, err := expandSystemPppoeInterfaceAcName(d, v, "ac_name", sv)
 		if err != nil {
 			return &obj, err
@@ -620,7 +606,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {
-
 		t, err := expandSystemPppoeInterfaceLcpEchoInterval(d, v, "lcp_echo_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -630,7 +615,6 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("lcp_max_echo_fails"); ok {
-
 		t, err := expandSystemPppoeInterfaceLcpMaxEchoFails(d, v, "lcp_max_echo_fails", sv)
 		if err != nil {
 			return &obj, err

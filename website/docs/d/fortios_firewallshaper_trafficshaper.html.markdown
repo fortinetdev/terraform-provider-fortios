@@ -31,6 +31,11 @@ The following attributes are exported:
 * `exceed_bandwidth` - Exceed bandwidth used for DSCP multi-stage marking. Units depend on the bandwidth-unit setting.
 * `exceed_dscp` - DSCP mark for traffic in [guaranteed-bandwidth, exceed-bandwidth].
 * `maximum_dscp` - DSCP mark for traffic in [exceed-bandwidth, maximum-bandwidth].
+* `cos_marking` - Enable/disable VLAN CoS marking.
+* `cos_marking_method` - Select VLAN CoS marking method.
+* `cos` - VLAN CoS mark.
+* `exceed_cos` - VLAN CoS mark for traffic in [guaranteed-bandwidth, exceed-bandwidth].
+* `maximum_cos` - VLAN CoS mark for traffic in [exceed-bandwidth, maximum-bandwidth].
 * `overhead` - Per-packet size overhead used in rate computations.
 * `exceed_class_id` - Class ID for traffic in [guaranteed-bandwidth, maximum-bandwidth].
 

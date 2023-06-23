@@ -251,7 +251,6 @@ func getObjectSystemStp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["switch-priority"] = nil
 		} else {
-
 			t, err := expandSystemStpSwitchPriority(d, v, "switch_priority", sv)
 			if err != nil {
 				return &obj, err
@@ -265,7 +264,6 @@ func getObjectSystemStp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["hello-time"] = nil
 		} else {
-
 			t, err := expandSystemStpHelloTime(d, v, "hello_time", sv)
 			if err != nil {
 				return &obj, err
@@ -279,7 +277,6 @@ func getObjectSystemStp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["forward-delay"] = nil
 		} else {
-
 			t, err := expandSystemStpForwardDelay(d, v, "forward_delay", sv)
 			if err != nil {
 				return &obj, err
@@ -293,7 +290,6 @@ func getObjectSystemStp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["max-age"] = nil
 		} else {
-
 			t, err := expandSystemStpMaxAge(d, v, "max_age", sv)
 			if err != nil {
 				return &obj, err
@@ -307,7 +303,6 @@ func getObjectSystemStp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["max-hops"] = nil
 		} else {
-
 			t, err := expandSystemStpMaxHops(d, v, "max_hops", sv)
 			if err != nil {
 				return &obj, err

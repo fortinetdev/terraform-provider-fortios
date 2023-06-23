@@ -55,7 +55,9 @@ The following arguments are supported:
 * `srcaddr4` - Source IPv4 address name and address group names. The structure of `srcaddr4` block is documented below.
 * `dstaddr4` - Destination IPv4 address name and address group names. The structure of `dstaddr4` block is documented below.
 * `srcaddr6` - Source IPv6 address name and address group names. The structure of `srcaddr6` block is documented below.
+* `srcaddr6_negate` - When enabled srcaddr6 specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr6` - Destination IPv6 address name and address group names. The structure of `dstaddr6` block is documented below.
+* `dstaddr6_negate` - When enabled dstaddr6 specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `srcaddr_negate` - When enabled srcaddr/srcaddr6 specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr_negate` - When enabled dstaddr/dstaddr6 specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. Valid values: `enable`, `disable`.
@@ -110,6 +112,7 @@ The following arguments are supported:
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `voip_profile` - Name of an existing VoIP profile.
+* `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
@@ -117,12 +120,14 @@ The following arguments are supported:
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `application` - Application ID list. The structure of `application` block is documented below.
 * `app_category` - Application category ID list. The structure of `app_category` block is documented below.
+* `url_category_unitary` - URL categories or groups.
 * `url_category` - URL category ID list. The structure of `url_category` block is documented below.
 * `app_group` - Application group names. The structure of `app_group` block is documented below.
 * `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `srcintf` block supports:

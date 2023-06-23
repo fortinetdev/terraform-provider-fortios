@@ -61,6 +61,8 @@ The following arguments are supported:
 * `domain_name` - Domain DNS name.
 * `replication_port` - Port to be used for communication with the domain controller for replication service. Port number 0 indicates automatic discovery.
 * `ldap_server` - (Required) LDAP server name.
+* `change_detection` - Enable/disable detection of a configuration change in the Active Directory server. Valid values: `enable`, `disable`.
+* `change_detection_period` - Minutes to detect a configuration change in the Active Directory server (5 - 10080 minutes (7 days), default = 60).
 * `dns_srv_lookup` - Enable/disable DNS service lookup. Valid values: `enable`, `disable`.
 * `ad_mode` - Set Active Directory mode. Valid values: `none`, `ds`, `lds`.
 * `adlds_dn` - AD LDS distinguished name.
@@ -68,6 +70,7 @@ The following arguments are supported:
 * `adlds_ip6` - AD LDS IPv6 address.
 * `adlds_port` - Port number of AD LDS service (default = 389).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `extra_server` block supports:

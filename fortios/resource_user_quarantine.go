@@ -112,6 +112,11 @@ func resourceUserQuarantine() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -248,19 +253,16 @@ func flattenUserQuarantineTargets(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry"
 		if _, ok := i["entry"]; ok {
-
 			tmp["entry"] = flattenUserQuarantineTargetsEntry(i["entry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenUserQuarantineTargetsDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macs"
 		if _, ok := i["macs"]; ok {
-
 			tmp["macs"] = flattenUserQuarantineTargetsMacs(i["macs"], d, pre_append, sv)
 		}
 
@@ -307,31 +309,26 @@ func flattenUserQuarantineTargetsMacs(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-
 			tmp["mac"] = flattenUserQuarantineTargetsMacsMac(i["mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := i["entry-id"]; ok {
-
 			tmp["entry_id"] = flattenUserQuarantineTargetsMacsEntryId(i["entry-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenUserQuarantineTargetsMacsDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop"
 		if _, ok := i["drop"]; ok {
-
 			tmp["drop"] = flattenUserQuarantineTargetsMacsDrop(i["drop"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parent"
 		if _, ok := i["parent"]; ok {
-
 			tmp["parent"] = flattenUserQuarantineTargetsMacsParent(i["parent"], d, pre_append, sv)
 		}
 
@@ -366,6 +363,12 @@ func flattenUserQuarantineTargetsMacsParent(v interface{}, d *schema.ResourceDat
 
 func refreshObjectUserQuarantine(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("quarantine", flattenUserQuarantineQuarantine(o["quarantine"], d, "quarantine", sv)); err != nil {
 		if !fortiAPIPatch(o["quarantine"]) {
@@ -385,7 +388,7 @@ func refreshObjectUserQuarantine(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("targets", flattenUserQuarantineTargets(o["targets"], d, "targets", sv)); err != nil {
 			if !fortiAPIPatch(o["targets"]) {
 				return fmt.Errorf("Error reading targets: %v", err)
@@ -438,19 +441,16 @@ func expandUserQuarantineTargets(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["entry"], _ = expandUserQuarantineTargetsEntry(d, i["entry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandUserQuarantineTargetsDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macs"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["macs"], _ = expandUserQuarantineTargetsMacs(d, i["macs"], pre_append, sv)
 		} else {
 			tmp["macs"] = make([]string, 0)
@@ -488,31 +488,26 @@ func expandUserQuarantineTargetsMacs(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac"], _ = expandUserQuarantineTargetsMacsMac(d, i["mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["entry-id"], _ = expandUserQuarantineTargetsMacsEntryId(d, i["entry_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandUserQuarantineTargetsMacsDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["drop"], _ = expandUserQuarantineTargetsMacsDrop(d, i["drop"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parent"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["parent"], _ = expandUserQuarantineTargetsMacsParent(d, i["parent"], pre_append, sv)
 		}
 
@@ -551,7 +546,6 @@ func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["quarantine"] = nil
 		} else {
-
 			t, err := expandUserQuarantineQuarantine(d, v, "quarantine", sv)
 			if err != nil {
 				return &obj, err
@@ -565,7 +559,6 @@ func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["traffic-policy"] = nil
 		} else {
-
 			t, err := expandUserQuarantineTrafficPolicy(d, v, "traffic_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -579,7 +572,6 @@ func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["firewall-groups"] = nil
 		} else {
-
 			t, err := expandUserQuarantineFirewallGroups(d, v, "firewall_groups", sv)
 			if err != nil {
 				return &obj, err
@@ -593,7 +585,6 @@ func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["targets"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandUserQuarantineTargets(d, v, "targets", sv)
 			if err != nil {
 				return &obj, err

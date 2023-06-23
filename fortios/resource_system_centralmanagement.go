@@ -45,6 +45,12 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fortigate_cloud_sso_default_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"schedule_config_restore": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -182,6 +188,11 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -288,6 +299,10 @@ func flattenSystemCentralManagementType(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemCentralManagementFortigateCloudSsoDefaultProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCentralManagementScheduleConfigRestore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -366,37 +381,31 @@ func flattenSystemCentralManagementServerList(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemCentralManagementServerListId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_type"
 		if _, ok := i["server-type"]; ok {
-
 			tmp["server_type"] = flattenSystemCentralManagementServerListServerType(i["server-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := i["addr-type"]; ok {
-
 			tmp["addr_type"] = flattenSystemCentralManagementServerListAddrType(i["addr-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_address"
 		if _, ok := i["server-address"]; ok {
-
 			tmp["server_address"] = flattenSystemCentralManagementServerListServerAddress(i["server-address"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_address6"
 		if _, ok := i["server-address6"]; ok {
-
 			tmp["server_address6"] = flattenSystemCentralManagementServerListServerAddress6(i["server-address6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fqdn"
 		if _, ok := i["fqdn"]; ok {
-
 			tmp["fqdn"] = flattenSystemCentralManagementServerListFqdn(i["fqdn"], d, pre_append, sv)
 		}
 
@@ -455,6 +464,12 @@ func flattenSystemCentralManagementInterface(v interface{}, d *schema.ResourceDa
 
 func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("mode", flattenSystemCentralManagementMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
@@ -465,6 +480,12 @@ func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]i
 	if err = d.Set("type", flattenSystemCentralManagementType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("fortigate_cloud_sso_default_profile", flattenSystemCentralManagementFortigateCloudSsoDefaultProfile(o["fortigate-cloud-sso-default-profile"], d, "fortigate_cloud_sso_default_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["fortigate-cloud-sso-default-profile"]) {
+			return fmt.Errorf("Error reading fortigate_cloud_sso_default_profile: %v", err)
 		}
 	}
 
@@ -546,7 +567,7 @@ func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_list", flattenSystemCentralManagementServerList(o["server-list"], d, "server_list", sv)); err != nil {
 			if !fortiAPIPatch(o["server-list"]) {
 				return fmt.Errorf("Error reading server_list: %v", err)
@@ -606,6 +627,10 @@ func expandSystemCentralManagementMode(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemCentralManagementType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCentralManagementFortigateCloudSsoDefaultProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -677,37 +702,31 @@ func expandSystemCentralManagementServerList(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemCentralManagementServerListId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server-type"], _ = expandSystemCentralManagementServerListServerType(d, i["server_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["addr-type"], _ = expandSystemCentralManagementServerListAddrType(d, i["addr_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_address"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server-address"], _ = expandSystemCentralManagementServerListServerAddress(d, i["server_address"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_address6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server-address6"], _ = expandSystemCentralManagementServerListServerAddress6(d, i["server_address6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fqdn"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["fqdn"], _ = expandSystemCentralManagementServerListFqdn(d, i["fqdn"], pre_append, sv)
 		}
 
@@ -770,7 +789,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -784,7 +802,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["type"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementType(d, v, "type", sv)
 			if err != nil {
 				return &obj, err
@@ -794,11 +811,23 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		}
 	}
 
+	if v, ok := d.GetOk("fortigate_cloud_sso_default_profile"); ok {
+		if setArgNil {
+			obj["fortigate-cloud-sso-default-profile"] = nil
+		} else {
+			t, err := expandSystemCentralManagementFortigateCloudSsoDefaultProfile(d, v, "fortigate_cloud_sso_default_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortigate-cloud-sso-default-profile"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("schedule_config_restore"); ok {
 		if setArgNil {
 			obj["schedule-config-restore"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementScheduleConfigRestore(d, v, "schedule_config_restore", sv)
 			if err != nil {
 				return &obj, err
@@ -812,7 +841,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["schedule-script-restore"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementScheduleScriptRestore(d, v, "schedule_script_restore", sv)
 			if err != nil {
 				return &obj, err
@@ -826,7 +854,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["allow-push-configuration"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementAllowPushConfiguration(d, v, "allow_push_configuration", sv)
 			if err != nil {
 				return &obj, err
@@ -840,7 +867,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["allow-push-firmware"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementAllowPushFirmware(d, v, "allow_push_firmware", sv)
 			if err != nil {
 				return &obj, err
@@ -854,7 +880,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["allow-remote-firmware-upgrade"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementAllowRemoteFirmwareUpgrade(d, v, "allow_remote_firmware_upgrade", sv)
 			if err != nil {
 				return &obj, err
@@ -868,7 +893,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["allow-monitor"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementAllowMonitor(d, v, "allow_monitor", sv)
 			if err != nil {
 				return &obj, err
@@ -882,7 +906,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["serial-number"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementSerialNumber(d, v, "serial_number", sv)
 			if err != nil {
 				return &obj, err
@@ -896,7 +919,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["fmg"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementFmg(d, v, "fmg", sv)
 			if err != nil {
 				return &obj, err
@@ -910,7 +932,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["fmg-source-ip"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementFmgSourceIp(d, v, "fmg_source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -924,7 +945,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["fmg-source-ip6"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementFmgSourceIp6(d, v, "fmg_source_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -938,7 +958,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["local-cert"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementLocalCert(d, v, "local_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -952,7 +971,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["ca-cert"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementCaCert(d, v, "ca_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -966,7 +984,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["vdom"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementVdom(d, v, "vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -980,7 +997,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["server-list"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemCentralManagementServerList(d, v, "server_list", sv)
 			if err != nil {
 				return &obj, err
@@ -994,7 +1010,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["fmg-update-port"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementFmgUpdatePort(d, v, "fmg_update_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1008,7 +1023,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["include-default-servers"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementIncludeDefaultServers(d, v, "include_default_servers", sv)
 			if err != nil {
 				return &obj, err
@@ -1022,7 +1036,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -1036,7 +1049,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -1050,7 +1062,6 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemCentralManagementInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

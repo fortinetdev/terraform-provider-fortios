@@ -352,7 +352,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemStorageName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -362,7 +361,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemStorageStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -372,7 +370,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("media_status"); ok {
-
 		t, err := expandSystemStorageMediaStatus(d, v, "media_status", sv)
 		if err != nil {
 			return &obj, err
@@ -382,7 +379,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("order"); ok {
-
 		t, err := expandSystemStorageOrder(d, v, "order", sv)
 		if err != nil {
 			return &obj, err
@@ -392,7 +388,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("partition"); ok {
-
 		t, err := expandSystemStoragePartition(d, v, "partition", sv)
 		if err != nil {
 			return &obj, err
@@ -402,7 +397,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-
 		t, err := expandSystemStorageDevice(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
@@ -412,7 +406,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("size"); ok {
-
 		t, err := expandSystemStorageSize(d, v, "size", sv)
 		if err != nil {
 			return &obj, err
@@ -422,7 +415,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("usage"); ok {
-
 		t, err := expandSystemStorageUsage(d, v, "usage", sv)
 		if err != nil {
 			return &obj, err
@@ -432,7 +424,6 @@ func getObjectSystemStorage(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("wanopt_mode"); ok {
-
 		t, err := expandSystemStorageWanoptMode(d, v, "wanopt_mode", sv)
 		if err != nil {
 			return &obj, err

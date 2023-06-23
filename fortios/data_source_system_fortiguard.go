@@ -68,6 +68,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"update_dldb": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"update_extdb": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -92,11 +96,19 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"auto_firmware_upgrade_delay": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"auto_firmware_upgrade_start_hour": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"auto_firmware_upgrade_end_hour": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"fds_license_expiring_days": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -117,6 +129,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Computed: true,
 			},
 			"antispam_cache_ttl": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"antispam_cache_mpermille": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -145,6 +161,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Computed: true,
 			},
 			"outbreak_prevention_cache_ttl": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"outbreak_prevention_cache_mpermille": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -339,6 +359,10 @@ func dataSourceFlattenSystemFortiguardUpdateUwdb(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemFortiguardUpdateDldb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortiguardUpdateExtdb(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -363,11 +387,19 @@ func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeDay(v interface{}, d *s
 	return v
 }
 
+func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeDelay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeStartHour(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeEndHour(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -388,6 +420,10 @@ func dataSourceFlattenSystemFortiguardAntispamCache(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemFortiguardAntispamCacheTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardAntispamCacheMpermille(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -416,6 +452,10 @@ func dataSourceFlattenSystemFortiguardOutbreakPreventionCache(v interface{}, d *
 }
 
 func dataSourceFlattenSystemFortiguardOutbreakPreventionCacheTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardOutbreakPreventionCacheMpermille(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -594,6 +634,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("update_dldb", dataSourceFlattenSystemFortiguardUpdateDldb(o["update-dldb"], d, "update_dldb")); err != nil {
+		if !fortiAPIPatch(o["update-dldb"]) {
+			return fmt.Errorf("Error reading update_dldb: %v", err)
+		}
+	}
+
 	if err = d.Set("update_extdb", dataSourceFlattenSystemFortiguardUpdateExtdb(o["update-extdb"], d, "update_extdb")); err != nil {
 		if !fortiAPIPatch(o["update-extdb"]) {
 			return fmt.Errorf("Error reading update_extdb: %v", err)
@@ -630,6 +676,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("auto_firmware_upgrade_delay", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeDelay(o["auto-firmware-upgrade-delay"], d, "auto_firmware_upgrade_delay")); err != nil {
+		if !fortiAPIPatch(o["auto-firmware-upgrade-delay"]) {
+			return fmt.Errorf("Error reading auto_firmware_upgrade_delay: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_firmware_upgrade_start_hour", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeStartHour(o["auto-firmware-upgrade-start-hour"], d, "auto_firmware_upgrade_start_hour")); err != nil {
 		if !fortiAPIPatch(o["auto-firmware-upgrade-start-hour"]) {
 			return fmt.Errorf("Error reading auto_firmware_upgrade_start_hour: %v", err)
@@ -639,6 +691,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("auto_firmware_upgrade_end_hour", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeEndHour(o["auto-firmware-upgrade-end-hour"], d, "auto_firmware_upgrade_end_hour")); err != nil {
 		if !fortiAPIPatch(o["auto-firmware-upgrade-end-hour"]) {
 			return fmt.Errorf("Error reading auto_firmware_upgrade_end_hour: %v", err)
+		}
+	}
+
+	if err = d.Set("fds_license_expiring_days", dataSourceFlattenSystemFortiguardFdsLicenseExpiringDays(o["FDS-license-expiring-days"], d, "fds_license_expiring_days")); err != nil {
+		if !fortiAPIPatch(o["FDS-license-expiring-days"]) {
+			return fmt.Errorf("Error reading fds_license_expiring_days: %v", err)
 		}
 	}
 
@@ -669,6 +727,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("antispam_cache_ttl", dataSourceFlattenSystemFortiguardAntispamCacheTtl(o["antispam-cache-ttl"], d, "antispam_cache_ttl")); err != nil {
 		if !fortiAPIPatch(o["antispam-cache-ttl"]) {
 			return fmt.Errorf("Error reading antispam_cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("antispam_cache_mpermille", dataSourceFlattenSystemFortiguardAntispamCacheMpermille(o["antispam-cache-mpermille"], d, "antispam_cache_mpermille")); err != nil {
+		if !fortiAPIPatch(o["antispam-cache-mpermille"]) {
+			return fmt.Errorf("Error reading antispam_cache_mpermille: %v", err)
 		}
 	}
 
@@ -711,6 +775,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("outbreak_prevention_cache_ttl", dataSourceFlattenSystemFortiguardOutbreakPreventionCacheTtl(o["outbreak-prevention-cache-ttl"], d, "outbreak_prevention_cache_ttl")); err != nil {
 		if !fortiAPIPatch(o["outbreak-prevention-cache-ttl"]) {
 			return fmt.Errorf("Error reading outbreak_prevention_cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("outbreak_prevention_cache_mpermille", dataSourceFlattenSystemFortiguardOutbreakPreventionCacheMpermille(o["outbreak-prevention-cache-mpermille"], d, "outbreak_prevention_cache_mpermille")); err != nil {
+		if !fortiAPIPatch(o["outbreak-prevention-cache-mpermille"]) {
+			return fmt.Errorf("Error reading outbreak_prevention_cache_mpermille: %v", err)
 		}
 	}
 

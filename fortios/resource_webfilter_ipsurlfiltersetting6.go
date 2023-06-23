@@ -230,7 +230,6 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["device"] = nil
 		} else {
-
 			t, err := expandWebfilterIpsUrlfilterSetting6Device(d, v, "device", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["distance"] = nil
 		} else {
-
 			t, err := expandWebfilterIpsUrlfilterSetting6Distance(d, v, "distance", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["gateway6"] = nil
 		} else {
-
 			t, err := expandWebfilterIpsUrlfilterSetting6Gateway6(d, v, "gateway6", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bo
 		if setArgNil {
 			obj["geo-filter"] = nil
 		} else {
-
 			t, err := expandWebfilterIpsUrlfilterSetting6GeoFilter(d, v, "geo_filter", sv)
 			if err != nil {
 				return &obj, err

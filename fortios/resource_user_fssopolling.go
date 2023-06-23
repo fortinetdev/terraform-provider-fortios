@@ -120,6 +120,11 @@ func resourceUserFssoPolling() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -311,7 +316,6 @@ func flattenUserFssoPollingAdgrp(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserFssoPollingAdgrpName(i["name"], d, pre_append, sv)
 		}
 
@@ -338,6 +342,12 @@ func flattenUserFssoPollingSmbNtlmv1Auth(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectUserFssoPolling(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenUserFssoPollingId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -393,7 +403,7 @@ func refreshObjectUserFssoPolling(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("adgrp", flattenUserFssoPollingAdgrp(o["adgrp"], d, "adgrp", sv)); err != nil {
 			if !fortiAPIPatch(o["adgrp"]) {
 				return fmt.Errorf("Error reading adgrp: %v", err)
@@ -486,7 +496,6 @@ func expandUserFssoPollingAdgrp(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserFssoPollingAdgrpName(d, i["name"], pre_append, sv)
 		}
 
@@ -514,7 +523,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandUserFssoPollingId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -524,7 +532,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandUserFssoPollingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -534,7 +541,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandUserFssoPollingServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -544,7 +550,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("default_domain"); ok {
-
 		t, err := expandUserFssoPollingDefaultDomain(d, v, "default_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -554,7 +559,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandUserFssoPollingPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -564,7 +568,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("user"); ok {
-
 		t, err := expandUserFssoPollingUser(d, v, "user", sv)
 		if err != nil {
 			return &obj, err
@@ -574,7 +577,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandUserFssoPollingPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -584,7 +586,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandUserFssoPollingLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
@@ -594,7 +595,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("logon_history"); ok {
-
 		t, err := expandUserFssoPollingLogonHistory(d, v, "logon_history", sv)
 		if err != nil {
 			return &obj, err
@@ -604,7 +604,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("polling_frequency"); ok {
-
 		t, err := expandUserFssoPollingPollingFrequency(d, v, "polling_frequency", sv)
 		if err != nil {
 			return &obj, err
@@ -614,7 +613,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("adgrp"); ok || d.HasChange("adgrp") {
-
 		t, err := expandUserFssoPollingAdgrp(d, v, "adgrp", sv)
 		if err != nil {
 			return &obj, err
@@ -624,7 +622,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("smbv1"); ok {
-
 		t, err := expandUserFssoPollingSmbv1(d, v, "smbv1", sv)
 		if err != nil {
 			return &obj, err
@@ -634,7 +631,6 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("smb_ntlmv1_auth"); ok {
-
 		t, err := expandUserFssoPollingSmbNtlmv1Auth(d, v, "smb_ntlmv1_auth", sv)
 		if err != nil {
 			return &obj, err

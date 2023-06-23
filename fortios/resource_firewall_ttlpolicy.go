@@ -97,6 +97,11 @@ func resourceFirewallTtlPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -264,7 +269,6 @@ func flattenFirewallTtlPolicySrcaddr(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallTtlPolicySrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -307,7 +311,6 @@ func flattenFirewallTtlPolicyService(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallTtlPolicyServiceName(i["name"], d, pre_append, sv)
 		}
 
@@ -334,6 +337,12 @@ func flattenFirewallTtlPolicyTtl(v interface{}, d *schema.ResourceData, pre stri
 
 func refreshObjectFirewallTtlPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenFirewallTtlPolicyId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -359,7 +368,7 @@ func refreshObjectFirewallTtlPolicy(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenFirewallTtlPolicySrcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -375,7 +384,7 @@ func refreshObjectFirewallTtlPolicy(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("service", flattenFirewallTtlPolicyService(o["service"], d, "service", sv)); err != nil {
 			if !fortiAPIPatch(o["service"]) {
 				return fmt.Errorf("Error reading service: %v", err)
@@ -444,7 +453,6 @@ func expandFirewallTtlPolicySrcaddr(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallTtlPolicySrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -476,7 +484,6 @@ func expandFirewallTtlPolicyService(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallTtlPolicyServiceName(d, i["name"], pre_append, sv)
 		}
 
@@ -504,7 +511,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallTtlPolicyId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -514,7 +520,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallTtlPolicyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -524,7 +529,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandFirewallTtlPolicyAction(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -534,7 +538,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok {
-
 		t, err := expandFirewallTtlPolicySrcintf(d, v, "srcintf", sv)
 		if err != nil {
 			return &obj, err
@@ -544,7 +547,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandFirewallTtlPolicySrcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -554,7 +556,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
-
 		t, err := expandFirewallTtlPolicyService(d, v, "service", sv)
 		if err != nil {
 			return &obj, err
@@ -564,7 +565,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
-
 		t, err := expandFirewallTtlPolicySchedule(d, v, "schedule", sv)
 		if err != nil {
 			return &obj, err
@@ -574,7 +574,6 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ttl"); ok {
-
 		t, err := expandFirewallTtlPolicyTtl(d, v, "ttl", sv)
 		if err != nil {
 			return &obj, err

@@ -136,6 +136,11 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -268,13 +273,11 @@ func flattenSwitchControllerTrafficSnifferTargetMac(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-
 			tmp["mac"] = flattenSwitchControllerTrafficSnifferTargetMacMac(i["mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetMacDescription(i["description"], d, pre_append, sv)
 		}
 
@@ -321,13 +324,11 @@ func flattenSwitchControllerTrafficSnifferTargetIp(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSwitchControllerTrafficSnifferTargetIpIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetIpDescription(i["description"], d, pre_append, sv)
 		}
 
@@ -374,25 +375,21 @@ func flattenSwitchControllerTrafficSnifferTargetPort(v interface{}, d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := i["switch-id"]; ok {
-
 			tmp["switch_id"] = flattenSwitchControllerTrafficSnifferTargetPortSwitchId(i["switch-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetPortDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "in_ports"
 		if _, ok := i["in-ports"]; ok {
-
 			tmp["in_ports"] = flattenSwitchControllerTrafficSnifferTargetPortInPorts(i["in-ports"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "out_ports"
 		if _, ok := i["out-ports"]; ok {
-
 			tmp["out_ports"] = flattenSwitchControllerTrafficSnifferTargetPortOutPorts(i["out-ports"], d, pre_append, sv)
 		}
 
@@ -439,7 +436,6 @@ func flattenSwitchControllerTrafficSnifferTargetPortInPorts(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerTrafficSnifferTargetPortInPortsName(i["name"], d, pre_append, sv)
 		}
 
@@ -482,7 +478,6 @@ func flattenSwitchControllerTrafficSnifferTargetPortOutPorts(v interface{}, d *s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerTrafficSnifferTargetPortOutPortsName(i["name"], d, pre_append, sv)
 		}
 
@@ -501,6 +496,12 @@ func flattenSwitchControllerTrafficSnifferTargetPortOutPortsName(v interface{}, 
 
 func refreshObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("mode", flattenSwitchControllerTrafficSnifferMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
@@ -514,7 +515,7 @@ func refreshObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("target_mac", flattenSwitchControllerTrafficSnifferTargetMac(o["target-mac"], d, "target_mac", sv)); err != nil {
 			if !fortiAPIPatch(o["target-mac"]) {
 				return fmt.Errorf("Error reading target_mac: %v", err)
@@ -530,7 +531,7 @@ func refreshObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("target_ip", flattenSwitchControllerTrafficSnifferTargetIp(o["target-ip"], d, "target_ip", sv)); err != nil {
 			if !fortiAPIPatch(o["target-ip"]) {
 				return fmt.Errorf("Error reading target_ip: %v", err)
@@ -546,7 +547,7 @@ func refreshObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("target_port", flattenSwitchControllerTrafficSnifferTargetPort(o["target-port"], d, "target_port", sv)); err != nil {
 			if !fortiAPIPatch(o["target-port"]) {
 				return fmt.Errorf("Error reading target_port: %v", err)
@@ -595,13 +596,11 @@ func expandSwitchControllerTrafficSnifferTargetMac(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac"], _ = expandSwitchControllerTrafficSnifferTargetMacMac(d, i["mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerTrafficSnifferTargetMacDescription(d, i["description"], pre_append, sv)
 		}
 
@@ -637,13 +636,11 @@ func expandSwitchControllerTrafficSnifferTargetIp(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSwitchControllerTrafficSnifferTargetIpIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerTrafficSnifferTargetIpDescription(d, i["description"], pre_append, sv)
 		}
 
@@ -679,19 +676,16 @@ func expandSwitchControllerTrafficSnifferTargetPort(d *schema.ResourceData, v in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["switch-id"], _ = expandSwitchControllerTrafficSnifferTargetPortSwitchId(d, i["switch_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerTrafficSnifferTargetPortDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "in_ports"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["in-ports"], _ = expandSwitchControllerTrafficSnifferTargetPortInPorts(d, i["in_ports"], pre_append, sv)
 		} else {
 			tmp["in-ports"] = make([]string, 0)
@@ -699,7 +693,6 @@ func expandSwitchControllerTrafficSnifferTargetPort(d *schema.ResourceData, v in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "out_ports"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["out-ports"], _ = expandSwitchControllerTrafficSnifferTargetPortOutPorts(d, i["out_ports"], pre_append, sv)
 		} else {
 			tmp["out-ports"] = make([]string, 0)
@@ -737,7 +730,6 @@ func expandSwitchControllerTrafficSnifferTargetPortInPorts(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerTrafficSnifferTargetPortInPortsName(d, i["name"], pre_append, sv)
 		}
 
@@ -769,7 +761,6 @@ func expandSwitchControllerTrafficSnifferTargetPortOutPorts(d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerTrafficSnifferTargetPortOutPortsName(d, i["name"], pre_append, sv)
 		}
 
@@ -792,7 +783,6 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSwitchControllerTrafficSnifferMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -806,7 +796,6 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["erspan-ip"] = nil
 		} else {
-
 			t, err := expandSwitchControllerTrafficSnifferErspanIp(d, v, "erspan_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -820,7 +809,6 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["target-mac"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerTrafficSnifferTargetMac(d, v, "target_mac", sv)
 			if err != nil {
 				return &obj, err
@@ -834,7 +822,6 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["target-ip"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerTrafficSnifferTargetIp(d, v, "target_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -848,7 +835,6 @@ func getObjectSwitchControllerTrafficSniffer(d *schema.ResourceData, setArgNil b
 		if setArgNil {
 			obj["target-port"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerTrafficSnifferTargetPort(d, v, "target_port", sv)
 			if err != nil {
 				return &obj, err

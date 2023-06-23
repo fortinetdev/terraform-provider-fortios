@@ -164,6 +164,11 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -335,7 +340,6 @@ func flattenFirewallDosPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallDosPolicy6SrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -378,7 +382,6 @@ func flattenFirewallDosPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallDosPolicy6DstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -421,7 +424,6 @@ func flattenFirewallDosPolicy6Service(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallDosPolicy6ServiceName(i["name"], d, pre_append, sv)
 		}
 
@@ -464,55 +466,46 @@ func flattenFirewallDosPolicy6Anomaly(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallDosPolicy6AnomalyName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenFirewallDosPolicy6AnomalyStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenFirewallDosPolicy6AnomalyLog(i["log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenFirewallDosPolicy6AnomalyAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := i["quarantine"]; ok {
-
 			tmp["quarantine"] = flattenFirewallDosPolicy6AnomalyQuarantine(i["quarantine"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := i["quarantine-expiry"]; ok {
-
 			tmp["quarantine_expiry"] = flattenFirewallDosPolicy6AnomalyQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := i["quarantine-log"]; ok {
-
 			tmp["quarantine_log"] = flattenFirewallDosPolicy6AnomalyQuarantineLog(i["quarantine-log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := i["threshold"]; ok {
-
 			tmp["threshold"] = flattenFirewallDosPolicy6AnomalyThreshold(i["threshold"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
 		if _, ok := i["threshold(default)"]; ok {
-
 			tmp["thresholddefault"] = flattenFirewallDosPolicy6AnomalyThresholdDefault(i["threshold(default)"], d, pre_append, sv)
 		}
 
@@ -563,6 +556,12 @@ func flattenFirewallDosPolicy6AnomalyThresholdDefault(v interface{}, d *schema.R
 
 func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("policyid", flattenFirewallDosPolicy6Policyid(o["policyid"], d, "policyid", sv)); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -594,7 +593,7 @@ func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcaddr", flattenFirewallDosPolicy6Srcaddr(o["srcaddr"], d, "srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["srcaddr"]) {
 				return fmt.Errorf("Error reading srcaddr: %v", err)
@@ -610,7 +609,7 @@ func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstaddr", flattenFirewallDosPolicy6Dstaddr(o["dstaddr"], d, "dstaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["dstaddr"]) {
 				return fmt.Errorf("Error reading dstaddr: %v", err)
@@ -626,7 +625,7 @@ func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("service", flattenFirewallDosPolicy6Service(o["service"], d, "service", sv)); err != nil {
 			if !fortiAPIPatch(o["service"]) {
 				return fmt.Errorf("Error reading service: %v", err)
@@ -642,7 +641,7 @@ func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("anomaly", flattenFirewallDosPolicy6Anomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 			if !fortiAPIPatch(o["anomaly"]) {
 				return fmt.Errorf("Error reading anomaly: %v", err)
@@ -703,7 +702,6 @@ func expandFirewallDosPolicy6Srcaddr(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallDosPolicy6SrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -735,7 +733,6 @@ func expandFirewallDosPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallDosPolicy6DstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -767,7 +764,6 @@ func expandFirewallDosPolicy6Service(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallDosPolicy6ServiceName(d, i["name"], pre_append, sv)
 		}
 
@@ -799,55 +795,46 @@ func expandFirewallDosPolicy6Anomaly(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallDosPolicy6AnomalyName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandFirewallDosPolicy6AnomalyStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandFirewallDosPolicy6AnomalyLog(d, i["log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandFirewallDosPolicy6AnomalyAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine"], _ = expandFirewallDosPolicy6AnomalyQuarantine(d, i["quarantine"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-expiry"], _ = expandFirewallDosPolicy6AnomalyQuarantineExpiry(d, i["quarantine_expiry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["quarantine-log"], _ = expandFirewallDosPolicy6AnomalyQuarantineLog(d, i["quarantine_log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["threshold"], _ = expandFirewallDosPolicy6AnomalyThreshold(d, i["threshold"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["threshold(default)"], _ = expandFirewallDosPolicy6AnomalyThresholdDefault(d, i["thresholddefault"], pre_append, sv)
 		}
 
@@ -899,7 +886,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("policyid"); ok {
-
 		t, err := expandFirewallDosPolicy6Policyid(d, v, "policyid", sv)
 		if err != nil {
 			return &obj, err
@@ -909,7 +895,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallDosPolicy6Status(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -919,7 +904,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallDosPolicy6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -929,7 +913,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallDosPolicy6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -939,7 +922,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandFirewallDosPolicy6Interface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -949,7 +931,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
-
 		t, err := expandFirewallDosPolicy6Srcaddr(d, v, "srcaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -959,7 +940,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok || d.HasChange("dstaddr") {
-
 		t, err := expandFirewallDosPolicy6Dstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -969,7 +949,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
-
 		t, err := expandFirewallDosPolicy6Service(d, v, "service", sv)
 		if err != nil {
 			return &obj, err
@@ -979,7 +958,6 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("anomaly"); ok || d.HasChange("anomaly") {
-
 		t, err := expandFirewallDosPolicy6Anomaly(d, v, "anomaly", sv)
 		if err != nil {
 			return &obj, err

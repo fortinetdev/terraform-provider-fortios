@@ -24,6 +24,7 @@ The following attributes are exported:
 * `action_type` - Action type.
 * `system_action` - System action type.
 * `tls_certificate` - Custom TLS certificate for API request.
+* `forticare_email` - Enable/disable use of your FortiCare email address as the email-to address.
 * `email_to` - Email addresses. The structure of `email_to` block is documented below.
 * `email_from` - Email sender name.
 * `email_subject` - Email subject.

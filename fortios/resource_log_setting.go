@@ -60,6 +60,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"extended_log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"log_invalid_packet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -166,6 +171,11 @@ func resourceLogSetting() *schema.Resource {
 				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -288,6 +298,10 @@ func flattenLogSettingFwpolicy6ImplicitLog(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogSettingExtendedLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingLogInvalidPacket(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -382,7 +396,6 @@ func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if _, ok := i["field-id"]; ok {
-
 			tmp["field_id"] = flattenLogSettingCustomLogFieldsFieldId(i["field-id"], d, pre_append, sv)
 		}
 
@@ -405,6 +418,12 @@ func flattenLogSettingAnonymizationHash(v interface{}, d *schema.ResourceData, p
 
 func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("resolve_ip", flattenLogSettingResolveIp(o["resolve-ip"], d, "resolve_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["resolve-ip"]) {
@@ -433,6 +452,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("fwpolicy6_implicit_log", flattenLogSettingFwpolicy6ImplicitLog(o["fwpolicy6-implicit-log"], d, "fwpolicy6_implicit_log", sv)); err != nil {
 		if !fortiAPIPatch(o["fwpolicy6-implicit-log"]) {
 			return fmt.Errorf("Error reading fwpolicy6_implicit_log: %v", err)
+		}
+	}
+
+	if err = d.Set("extended_log", flattenLogSettingExtendedLog(o["extended-log"], d, "extended_log", sv)); err != nil {
+		if !fortiAPIPatch(o["extended-log"]) {
+			return fmt.Errorf("Error reading extended_log: %v", err)
 		}
 	}
 
@@ -538,7 +563,7 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-log-fields"]) {
 				return fmt.Errorf("Error reading custom_log_fields: %v", err)
@@ -586,6 +611,10 @@ func expandLogSettingFwpolicyImplicitLog(d *schema.ResourceData, v interface{}, 
 }
 
 func expandLogSettingFwpolicy6ImplicitLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingExtendedLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -673,7 +702,6 @@ func expandLogSettingCustomLogFields(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["field-id"], _ = expandLogSettingCustomLogFieldsFieldId(d, i["field_id"], pre_append, sv)
 		}
 
@@ -700,7 +728,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["resolve-ip"] = nil
 		} else {
-
 			t, err := expandLogSettingResolveIp(d, v, "resolve_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -714,7 +741,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["resolve-port"] = nil
 		} else {
-
 			t, err := expandLogSettingResolvePort(d, v, "resolve_port", sv)
 			if err != nil {
 				return &obj, err
@@ -728,7 +754,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["log-user-in-upper"] = nil
 		} else {
-
 			t, err := expandLogSettingLogUserInUpper(d, v, "log_user_in_upper", sv)
 			if err != nil {
 				return &obj, err
@@ -742,7 +767,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["fwpolicy-implicit-log"] = nil
 		} else {
-
 			t, err := expandLogSettingFwpolicyImplicitLog(d, v, "fwpolicy_implicit_log", sv)
 			if err != nil {
 				return &obj, err
@@ -756,7 +780,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["fwpolicy6-implicit-log"] = nil
 		} else {
-
 			t, err := expandLogSettingFwpolicy6ImplicitLog(d, v, "fwpolicy6_implicit_log", sv)
 			if err != nil {
 				return &obj, err
@@ -766,11 +789,23 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("extended_log"); ok {
+		if setArgNil {
+			obj["extended-log"] = nil
+		} else {
+			t, err := expandLogSettingExtendedLog(d, v, "extended_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extended-log"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("log_invalid_packet"); ok {
 		if setArgNil {
 			obj["log-invalid-packet"] = nil
 		} else {
-
 			t, err := expandLogSettingLogInvalidPacket(d, v, "log_invalid_packet", sv)
 			if err != nil {
 				return &obj, err
@@ -784,7 +819,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["local-in-allow"] = nil
 		} else {
-
 			t, err := expandLogSettingLocalInAllow(d, v, "local_in_allow", sv)
 			if err != nil {
 				return &obj, err
@@ -798,7 +832,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["local-in-deny-unicast"] = nil
 		} else {
-
 			t, err := expandLogSettingLocalInDenyUnicast(d, v, "local_in_deny_unicast", sv)
 			if err != nil {
 				return &obj, err
@@ -812,7 +845,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["local-in-deny-broadcast"] = nil
 		} else {
-
 			t, err := expandLogSettingLocalInDenyBroadcast(d, v, "local_in_deny_broadcast", sv)
 			if err != nil {
 				return &obj, err
@@ -826,7 +858,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["local-out"] = nil
 		} else {
-
 			t, err := expandLogSettingLocalOut(d, v, "local_out", sv)
 			if err != nil {
 				return &obj, err
@@ -840,7 +871,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["local-out-ioc-detection"] = nil
 		} else {
-
 			t, err := expandLogSettingLocalOutIocDetection(d, v, "local_out_ioc_detection", sv)
 			if err != nil {
 				return &obj, err
@@ -854,7 +884,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["daemon-log"] = nil
 		} else {
-
 			t, err := expandLogSettingDaemonLog(d, v, "daemon_log", sv)
 			if err != nil {
 				return &obj, err
@@ -868,7 +897,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["neighbor-event"] = nil
 		} else {
-
 			t, err := expandLogSettingNeighborEvent(d, v, "neighbor_event", sv)
 			if err != nil {
 				return &obj, err
@@ -882,7 +910,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["brief-traffic-format"] = nil
 		} else {
-
 			t, err := expandLogSettingBriefTrafficFormat(d, v, "brief_traffic_format", sv)
 			if err != nil {
 				return &obj, err
@@ -896,7 +923,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["user-anonymize"] = nil
 		} else {
-
 			t, err := expandLogSettingUserAnonymize(d, v, "user_anonymize", sv)
 			if err != nil {
 				return &obj, err
@@ -910,7 +936,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["expolicy-implicit-log"] = nil
 		} else {
-
 			t, err := expandLogSettingExpolicyImplicitLog(d, v, "expolicy_implicit_log", sv)
 			if err != nil {
 				return &obj, err
@@ -924,7 +949,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["log-policy-comment"] = nil
 		} else {
-
 			t, err := expandLogSettingLogPolicyComment(d, v, "log_policy_comment", sv)
 			if err != nil {
 				return &obj, err
@@ -938,7 +962,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["log-policy-name"] = nil
 		} else {
-
 			t, err := expandLogSettingLogPolicyName(d, v, "log_policy_name", sv)
 			if err != nil {
 				return &obj, err
@@ -952,7 +975,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["faz-override"] = nil
 		} else {
-
 			t, err := expandLogSettingFazOverride(d, v, "faz_override", sv)
 			if err != nil {
 				return &obj, err
@@ -966,7 +988,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["syslog-override"] = nil
 		} else {
-
 			t, err := expandLogSettingSyslogOverride(d, v, "syslog_override", sv)
 			if err != nil {
 				return &obj, err
@@ -980,7 +1001,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["rest-api-set"] = nil
 		} else {
-
 			t, err := expandLogSettingRestApiSet(d, v, "rest_api_set", sv)
 			if err != nil {
 				return &obj, err
@@ -994,7 +1014,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["rest-api-get"] = nil
 		} else {
-
 			t, err := expandLogSettingRestApiGet(d, v, "rest_api_get", sv)
 			if err != nil {
 				return &obj, err
@@ -1008,7 +1027,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["custom-log-fields"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogSettingCustomLogFields(d, v, "custom_log_fields", sv)
 			if err != nil {
 				return &obj, err
@@ -1022,7 +1040,6 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["anonymization-hash"] = nil
 		} else {
-
 			t, err := expandLogSettingAnonymizationHash(d, v, "anonymization_hash", sv)
 			if err != nil {
 				return &obj, err

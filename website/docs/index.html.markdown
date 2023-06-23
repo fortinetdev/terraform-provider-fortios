@@ -18,6 +18,14 @@ Two products are supported now: FortiGate and FortiManager, please use the navig
 
 ```hcl
 # Configure the FortiOS Provider for FortiGate
+terraform {
+  required_providers {
+    fortios = {
+      source  = "fortinetdev/fortios"
+    }
+  }
+}
+
 provider "fortios" {
   hostname     = "192.168.52.177"
   token        = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
@@ -54,11 +62,23 @@ The FortiOS provider offers a means of providing credentials for authentication.
 
 #### Static credentials
 
-Static credentials can be provided by adding a `token` key in-line in the FortiOS provider block.
+Static credentials can be provided by adding credential keys in-line in the FortiOS provider block. Default using `token` if both credential are provided.
+
+There are two kinds of credentials supported.
+- `token` based authentication (Recommanded). User needs to generate an API token from FortiOS. 
+- `username/password` authentication. User provide the username and password of the administrator. 
 
 Usage:
 
 ```hcl
+terraform {
+  required_providers {
+    fortios = {
+      source  = "fortinetdev/fortios"
+    }
+  }
+}
+
 provider "fortios" {
   hostname     = "192.168.52.177"
   token        = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
@@ -73,7 +93,7 @@ See the left navigation: `Guides` -> `Generate an API token for FortiOS`.
 
 #### Environment variables
 
-You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME`, `FORTIOS_ACCESS_TOKEN`, `FORTIOS_INSECURE` and `FORTIOS_CA_CABUNDLE` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
+You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME`, `FORTIOS_ACCESS_TOKEN`, `FORTIOS_ACCESS_USERNAME`, `FORTIOS_ACCESS_PASSWORD`, `FORTIOS_INSECURE` and `FORTIOS_CA_CABUNDLE` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
 
 Usage:
 
@@ -107,6 +127,14 @@ If the FortiGate unit is running in VDOM mode, the `vdom` configuration needs to
 Usage:
 
 ```hcl
+terraform {
+  required_providers {
+    fortios = {
+      source  = "fortinetdev/fortios"
+    }
+  }
+}
+
 provider "fortios" {
   hostname     = "192.168.52.177"
   token        = "q3Hs49jxts195gkd9Hjsxnjtmr6k39"
@@ -136,7 +164,11 @@ The following arguments are supported:
 
 * `hostname` - (Optional) The hostname or IP address of FortiOS unit. It must be provided, but it can also be sourced from the `FORTIOS_ACCESS_HOSTNAME` environment variable.
 
-* `token` - (Optional) The token of FortiOS unit. It must be provided, but it can also be sourced from the `FORTIOS_ACCESS_TOKEN` environment variable.
+* `token` - (Optional) The token of FortiOS unit. If omitted, the `FORTIOS_ACCESS_TOKEN` environment variable will be used. If neither is set, username/password will be used.
+
+* `username` - (Optional) The username of FortiOS unit. If omitted, the `FORTIOS_ACCESS_USERNAME` environment variable will be used.
+
+* `password` - (Optional) The password of FortiOS unit.If omitted, the `FORTIOS_ACCESS_PASSWORD` environment variable will be used.
 
 * `insecure` - (Optional) Control whether the Provider to perform insecure SSL requests. If omitted, the `FORTIOS_INSECURE` environment variable is used. If neither is set, default value is `false`.
 
@@ -146,7 +178,7 @@ The following arguments are supported:
 
 * `vdom` - (Optional) If the FortiGate unit is running in VDOM mode, you can use this argument to specify the name of the vdom to be set .
 
-* `http_proxy` - (Optional) HTTP proxy address. You can also specify it by the environment variable `HTTPS_PROXY` or `HTTP_PROXY`. 
+* `http_proxy` - (Optional) HTTP proxy address. Set this argument to `ENV` if you want to use environment settings. By setting this argument to `ENV`, the provider will get the environment variable `HTTPS_PROXY` or `HTTP_PROXY`. Default is empty, which means no HTTP proxy.
 
 
 
@@ -288,4 +320,4 @@ Check out the FortiOS provider release notes and additional information from: [t
 
 ## Versioning
 
-The provider can cover FortiOS 6.0, 6.2, 6.4, 7.0, 7.2 versions, the configuration of all parameters should be based on the relevant FortiOS version manual. The provider can cover FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.
+The provider can cover FortiOS 6.0, 6.2, 6.4, 7.0, 7.2, 7.4 versions, the configuration of all parameters should be based on the relevant FortiOS version manual. The provider can cover FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.

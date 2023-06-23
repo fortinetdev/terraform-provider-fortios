@@ -234,7 +234,6 @@ func getObjectRouterAuthPath(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandRouterAuthPathName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -244,7 +243,6 @@ func getObjectRouterAuthPath(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-
 		t, err := expandRouterAuthPathDevice(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
@@ -254,7 +252,6 @@ func getObjectRouterAuthPath(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
-
 		t, err := expandRouterAuthPathGateway(d, v, "gateway", sv)
 		if err != nil {
 			return &obj, err

@@ -129,6 +129,10 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"unknown_content_encoding": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"oversize_limit": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -834,6 +838,11 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schem
 		result["h2c"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpH2C(i["h2c"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "unknown_content_encoding"
+	if _, ok := i["unknown-content-encoding"]; ok {
+		result["unknown_content_encoding"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpUnknownContentEncoding(i["unknown-content-encoding"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
 		result["oversize_limit"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpOversizeLimit(i["oversize-limit"], d, pre_append)
@@ -977,6 +986,10 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttpTunnelNonHttp(v interfac
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsHttpH2C(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProfileProtocolOptionsHttpUnknownContentEncoding(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

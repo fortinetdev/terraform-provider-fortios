@@ -154,6 +154,17 @@ func resourceUserDomainController() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
 			},
+			"change_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"change_detection_period": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 10080),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dns_srv_lookup": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -187,6 +198,11 @@ func resourceUserDomainController() *schema.Resource {
 				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -390,31 +406,26 @@ func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenUserDomainControllerExtraServerId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
 		if _, ok := i["ip-address"]; ok {
-
 			tmp["ip_address"] = flattenUserDomainControllerExtraServerIpAddress(i["ip-address"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenUserDomainControllerExtraServerPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_address"
 		if _, ok := i["source-ip-address"]; ok {
-
 			tmp["source_ip_address"] = flattenUserDomainControllerExtraServerSourceIpAddress(i["source-ip-address"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
 		if _, ok := i["source-port"]; ok {
-
 			tmp["source_port"] = flattenUserDomainControllerExtraServerSourcePort(i["source-port"], d, pre_append, sv)
 		}
 
@@ -459,6 +470,14 @@ func flattenUserDomainControllerLdapServer(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenUserDomainControllerChangeDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserDomainControllerChangeDetectionPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserDomainControllerDnsSrvLookup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -485,6 +504,12 @@ func flattenUserDomainControllerAdldsPort(v interface{}, d *schema.ResourceData,
 
 func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenUserDomainControllerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -558,7 +583,7 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server", sv)); err != nil {
 			if !fortiAPIPatch(o["extra-server"]) {
 				return fmt.Errorf("Error reading extra_server: %v", err)
@@ -590,16 +615,19 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		v := flattenUserDomainControllerLdapServer(o["ldap-server"], d, "ldap_server", sv)
 		vx := ""
 		bstring := false
-		if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
+		new_version_map := map[string][]string{
+			">=": []string{"6.4.10"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
 					i := r.(map[string]interface{})
 					if _, ok := i["name"]; ok {
 						if xv, ok := i["name"].(string); ok {
-							vx += "\"" + xv + "\""
+							vx += xv
 							if k < len(l)-1 {
-								vx += " "
+								vx += ", "
 							}
 						}
 					}
@@ -619,6 +647,18 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 					return fmt.Errorf("Error reading ldap_server: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("change_detection", flattenUserDomainControllerChangeDetection(o["change-detection"], d, "change_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["change-detection"]) {
+			return fmt.Errorf("Error reading change_detection: %v", err)
+		}
+	}
+
+	if err = d.Set("change_detection_period", flattenUserDomainControllerChangeDetectionPeriod(o["change-detection-period"], d, "change_detection_period", sv)); err != nil {
+		if !fortiAPIPatch(o["change-detection-period"]) {
+			return fmt.Errorf("Error reading change_detection_period: %v", err)
 		}
 	}
 
@@ -731,31 +771,26 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandUserDomainControllerExtraServerId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip-address"], _ = expandUserDomainControllerExtraServerIpAddress(d, i["ip_address"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandUserDomainControllerExtraServerPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_address"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["source-ip-address"], _ = expandUserDomainControllerExtraServerSourceIpAddress(d, i["source_ip_address"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["source-port"], _ = expandUserDomainControllerExtraServerSourcePort(d, i["source_port"], pre_append, sv)
 		}
 
@@ -799,6 +834,14 @@ func expandUserDomainControllerLdapServer(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandUserDomainControllerChangeDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserDomainControllerChangeDetectionPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserDomainControllerDnsSrvLookup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -827,7 +870,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserDomainControllerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -837,7 +879,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
-
 		t, err := expandUserDomainControllerHostname(d, v, "hostname", sv)
 		if err != nil {
 			return &obj, err
@@ -847,7 +888,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandUserDomainControllerUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -857,7 +897,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandUserDomainControllerPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -867,7 +906,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ip_address"); ok {
-
 		t, err := expandUserDomainControllerIpAddress(d, v, "ip_address", sv)
 		if err != nil {
 			return &obj, err
@@ -877,7 +915,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandUserDomainControllerIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -887,7 +924,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandUserDomainControllerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -897,7 +933,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("source_ip_address"); ok {
-
 		t, err := expandUserDomainControllerSourceIpAddress(d, v, "source_ip_address", sv)
 		if err != nil {
 			return &obj, err
@@ -907,7 +942,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
-
 		t, err := expandUserDomainControllerSourceIp6(d, v, "source_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -917,7 +951,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("source_port"); ok {
-
 		t, err := expandUserDomainControllerSourcePort(d, v, "source_port", sv)
 		if err != nil {
 			return &obj, err
@@ -927,7 +960,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
-
 		t, err := expandUserDomainControllerInterfaceSelectMethod(d, v, "interface_select_method", sv)
 		if err != nil {
 			return &obj, err
@@ -937,7 +969,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandUserDomainControllerInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -947,7 +978,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("extra_server"); ok || d.HasChange("extra_server") {
-
 		t, err := expandUserDomainControllerExtraServer(d, v, "extra_server", sv)
 		if err != nil {
 			return &obj, err
@@ -957,7 +987,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
-
 		t, err := expandUserDomainControllerDomainName(d, v, "domain_name", sv)
 		if err != nil {
 			return &obj, err
@@ -967,7 +996,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("replication_port"); ok {
-
 		t, err := expandUserDomainControllerReplicationPort(d, v, "replication_port", sv)
 		if err != nil {
 			return &obj, err
@@ -977,15 +1005,16 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandUserDomainControllerLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
+			new_version_map := map[string][]string{
+				">=": []string{"6.4.10"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
+				vxx := strings.Split(vx, ", ")
 
 				tmps := make([]map[string]interface{}, 0, len(vxx))
 
@@ -1002,8 +1031,25 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("dns_srv_lookup"); ok {
+	if v, ok := d.GetOk("change_detection"); ok {
+		t, err := expandUserDomainControllerChangeDetection(d, v, "change_detection", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["change-detection"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("change_detection_period"); ok {
+		t, err := expandUserDomainControllerChangeDetectionPeriod(d, v, "change_detection_period", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["change-detection-period"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dns_srv_lookup"); ok {
 		t, err := expandUserDomainControllerDnsSrvLookup(d, v, "dns_srv_lookup", sv)
 		if err != nil {
 			return &obj, err
@@ -1013,7 +1059,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ad_mode"); ok {
-
 		t, err := expandUserDomainControllerAdMode(d, v, "ad_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1023,7 +1068,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("adlds_dn"); ok {
-
 		t, err := expandUserDomainControllerAdldsDn(d, v, "adlds_dn", sv)
 		if err != nil {
 			return &obj, err
@@ -1033,7 +1077,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("adlds_ip_address"); ok {
-
 		t, err := expandUserDomainControllerAdldsIpAddress(d, v, "adlds_ip_address", sv)
 		if err != nil {
 			return &obj, err
@@ -1043,7 +1086,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("adlds_ip6"); ok {
-
 		t, err := expandUserDomainControllerAdldsIp6(d, v, "adlds_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1053,7 +1095,6 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("adlds_port"); ok {
-
 		t, err := expandUserDomainControllerAdldsPort(d, v, "adlds_port", sv)
 		if err != nil {
 			return &obj, err

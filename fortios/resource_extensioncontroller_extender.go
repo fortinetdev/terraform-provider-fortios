@@ -154,6 +154,11 @@ func resourceExtensionControllerExtender() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -358,13 +363,11 @@ func flattenExtensionControllerExtenderWanExtension(v interface{}, d *schema.Res
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "modem1_extension"
 	if _, ok := i["modem1-extension"]; ok {
-
 		result["modem1_extension"] = flattenExtensionControllerExtenderWanExtensionModem1Extension(i["modem1-extension"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "modem2_extension"
 	if _, ok := i["modem2-extension"]; ok {
-
 		result["modem2_extension"] = flattenExtensionControllerExtenderWanExtensionModem2Extension(i["modem2-extension"], d, pre_append, sv)
 	}
 
@@ -386,6 +389,12 @@ func flattenExtensionControllerExtenderFirmwareProvisionLatest(v interface{}, d 
 
 func refreshObjectExtensionControllerExtender(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenExtensionControllerExtenderName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -489,7 +498,7 @@ func refreshObjectExtensionControllerExtender(d *schema.ResourceData, o map[stri
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("wan_extension", flattenExtensionControllerExtenderWanExtension(o["wan-extension"], d, "wan_extension", sv)); err != nil {
 			if !fortiAPIPatch(o["wan-extension"]) {
 				return fmt.Errorf("Error reading wan_extension: %v", err)
@@ -600,12 +609,10 @@ func expandExtensionControllerExtenderWanExtension(d *schema.ResourceData, v int
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "modem1_extension"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["modem1-extension"], _ = expandExtensionControllerExtenderWanExtensionModem1Extension(d, i["modem1_extension"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "modem2_extension"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["modem2-extension"], _ = expandExtensionControllerExtenderWanExtensionModem2Extension(d, i["modem2_extension"], pre_append, sv)
 	}
 
@@ -628,7 +635,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandExtensionControllerExtenderName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -638,7 +644,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandExtensionControllerExtenderId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -648,7 +653,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {
-
 		t, err := expandExtensionControllerExtenderAuthorized(d, v, "authorized", sv)
 		if err != nil {
 			return &obj, err
@@ -658,7 +662,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("ext_name"); ok {
-
 		t, err := expandExtensionControllerExtenderExtName(d, v, "ext_name", sv)
 		if err != nil {
 			return &obj, err
@@ -668,7 +671,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandExtensionControllerExtenderDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -678,7 +680,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("vdom"); ok {
-
 		t, err := expandExtensionControllerExtenderVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -688,7 +689,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("device_id"); ok {
-
 		t, err := expandExtensionControllerExtenderDeviceId(d, v, "device_id", sv)
 		if err != nil {
 			return &obj, err
@@ -698,7 +698,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("extension_type"); ok {
-
 		t, err := expandExtensionControllerExtenderExtensionType(d, v, "extension_type", sv)
 		if err != nil {
 			return &obj, err
@@ -708,7 +707,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("profile"); ok {
-
 		t, err := expandExtensionControllerExtenderProfile(d, v, "profile", sv)
 		if err != nil {
 			return &obj, err
@@ -718,7 +716,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("override_allowaccess"); ok {
-
 		t, err := expandExtensionControllerExtenderOverrideAllowaccess(d, v, "override_allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -728,7 +725,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("allowaccess"); ok {
-
 		t, err := expandExtensionControllerExtenderAllowaccess(d, v, "allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -738,7 +734,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("override_login_password_change"); ok {
-
 		t, err := expandExtensionControllerExtenderOverrideLoginPasswordChange(d, v, "override_login_password_change", sv)
 		if err != nil {
 			return &obj, err
@@ -748,7 +743,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("login_password_change"); ok {
-
 		t, err := expandExtensionControllerExtenderLoginPasswordChange(d, v, "login_password_change", sv)
 		if err != nil {
 			return &obj, err
@@ -758,7 +752,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("login_password"); ok {
-
 		t, err := expandExtensionControllerExtenderLoginPassword(d, v, "login_password", sv)
 		if err != nil {
 			return &obj, err
@@ -768,7 +761,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("override_enforce_bandwidth"); ok {
-
 		t, err := expandExtensionControllerExtenderOverrideEnforceBandwidth(d, v, "override_enforce_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -778,7 +770,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("enforce_bandwidth"); ok {
-
 		t, err := expandExtensionControllerExtenderEnforceBandwidth(d, v, "enforce_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -788,7 +779,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("bandwidth_limit"); ok {
-
 		t, err := expandExtensionControllerExtenderBandwidthLimit(d, v, "bandwidth_limit", sv)
 		if err != nil {
 			return &obj, err
@@ -798,7 +788,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("wan_extension"); ok {
-
 		t, err := expandExtensionControllerExtenderWanExtension(d, v, "wan_extension", sv)
 		if err != nil {
 			return &obj, err
@@ -808,7 +797,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("firmware_provision_latest"); ok {
-
 		t, err := expandExtensionControllerExtenderFirmwareProvisionLatest(d, v, "firmware_provision_latest", sv)
 		if err != nil {
 			return &obj, err

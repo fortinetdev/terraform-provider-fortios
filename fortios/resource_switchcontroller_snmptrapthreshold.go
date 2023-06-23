@@ -209,7 +209,6 @@ func getObjectSwitchControllerSnmpTrapThreshold(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["trap-high-cpu-threshold"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpTrapThresholdTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -223,7 +222,6 @@ func getObjectSwitchControllerSnmpTrapThreshold(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["trap-low-memory-threshold"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpTrapThresholdTrapLowMemoryThreshold(d, v, "trap_low_memory_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -237,7 +235,6 @@ func getObjectSwitchControllerSnmpTrapThreshold(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["trap-log-full-threshold"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSnmpTrapThresholdTrapLogFullThreshold(d, v, "trap_log_full_threshold", sv)
 			if err != nil {
 				return &obj, err

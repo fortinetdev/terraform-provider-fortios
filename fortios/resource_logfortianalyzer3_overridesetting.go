@@ -205,6 +205,11 @@ func resourceLogFortianalyzer3OverrideSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -353,7 +358,6 @@ func flattenLogFortianalyzer3OverrideSettingSerial(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenLogFortianalyzer3OverrideSettingSerialName(i["name"], d, pre_append, sv)
 		}
 
@@ -460,6 +464,12 @@ func flattenLogFortianalyzer3OverrideSettingInterface(v interface{}, d *schema.R
 
 func refreshObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("override", flattenLogFortianalyzer3OverrideSettingOverride(o["override"], d, "override", sv)); err != nil {
 		if !fortiAPIPatch(o["override"]) {
@@ -497,7 +507,7 @@ func refreshObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, o map
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("serial", flattenLogFortianalyzer3OverrideSettingSerial(o["serial"], d, "serial", sv)); err != nil {
 			if !fortiAPIPatch(o["serial"]) {
 				return fmt.Errorf("Error reading serial: %v", err)
@@ -694,7 +704,6 @@ func expandLogFortianalyzer3OverrideSettingSerial(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandLogFortianalyzer3OverrideSettingSerialName(d, i["name"], pre_append, sv)
 		}
 
@@ -805,7 +814,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["override"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingOverride(d, v, "override", sv)
 			if err != nil {
 				return &obj, err
@@ -819,7 +827,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["use-management-vdom"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingUseManagementVdom(d, v, "use_management_vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -833,7 +840,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -847,7 +853,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["ips-archive"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingIpsArchive(d, v, "ips_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -861,7 +866,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -875,7 +879,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["certificate-verification"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingCertificateVerification(d, v, "certificate_verification", sv)
 			if err != nil {
 				return &obj, err
@@ -889,7 +892,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["serial"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingSerial(d, v, "serial", sv)
 			if err != nil {
 				return &obj, err
@@ -903,7 +905,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["preshared-key"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingPresharedKey(d, v, "preshared_key", sv)
 			if err != nil {
 				return &obj, err
@@ -917,7 +918,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["access-config"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingAccessConfig(d, v, "access_config", sv)
 			if err != nil {
 				return &obj, err
@@ -931,7 +931,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["hmac-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -945,7 +944,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -959,7 +957,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -973,7 +970,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["conn-timeout"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingConnTimeout(d, v, "conn_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -987,7 +983,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["monitor-keepalive-period"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
 			if err != nil {
 				return &obj, err
@@ -1001,7 +996,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["monitor-failure-retry-period"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
 			if err != nil {
 				return &obj, err
@@ -1015,7 +1009,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["mgmt-name"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingMgmtName(d, v, "mgmt_name", sv)
 			if err != nil {
 				return &obj, err
@@ -1029,7 +1022,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["faz-type"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingFazType(d, v, "faz_type", sv)
 			if err != nil {
 				return &obj, err
@@ -1043,7 +1035,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["certificate"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingCertificate(d, v, "certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -1057,7 +1048,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1071,7 +1061,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["__change_ip"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSetting__Change_Ip(d, v, "__change_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1085,7 +1074,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["upload-option"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingUploadOption(d, v, "upload_option", sv)
 			if err != nil {
 				return &obj, err
@@ -1099,7 +1087,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["upload-interval"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingUploadInterval(d, v, "upload_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1113,7 +1100,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["upload-day"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingUploadDay(d, v, "upload_day", sv)
 			if err != nil {
 				return &obj, err
@@ -1127,7 +1113,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["upload-time"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingUploadTime(d, v, "upload_time", sv)
 			if err != nil {
 				return &obj, err
@@ -1141,7 +1126,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["reliable"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingReliable(d, v, "reliable", sv)
 			if err != nil {
 				return &obj, err
@@ -1155,7 +1139,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -1169,7 +1152,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -1183,7 +1165,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -1197,7 +1178,6 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzer3OverrideSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

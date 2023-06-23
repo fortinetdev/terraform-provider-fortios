@@ -43,11 +43,13 @@ The following attributes are exported:
 * `priority` - Priority of learned routes.
 * `dhcp_relay_interface_select_method` - Specify how to select outgoing interface to reach server.
 * `dhcp_relay_interface` - Specify outgoing interface to reach server.
+* `dhcp_broadcast_flag` - Enable/disable setting of the broadcast flag in messages sent by the DHCP client (default = enable).
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay.
 * `dhcp_relay_ip` - DHCP relay IP address.
 * `dhcp_relay_link_selection` - DHCP relay link selection.
 * `dhcp_relay_request_all_server` - Enable/disable sending DHCP request to all servers.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec).
+* `dhcp_smart_relay` - Enable/disable DHCP smart relay.
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option.
 * `dhcp_classless_route_addition` - Enable/disable addition of classless static routes retrieved from DHCP server.
 * `management_ip` - High Availability in-band management IP address of this interface.
@@ -249,6 +251,7 @@ The following attributes are exported:
 * `eap_password` - EAP password.
 * `eap_ca_cert` - EAP CA certificate name.
 * `eap_user_cert` - EAP user certificate name.
+* `default_purdue_level` - default purdue level of device detected on this interface.
 * `forward_error_correction` - Configure forward error correction (FEC).
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
 
@@ -302,6 +305,7 @@ The `secondaryip` block contains:
 
 * `id` - ID.
 * `ip` - Secondary IP address of the interface.
+* `secip_relay_ip` - DHCP relay IP address.
 * `allowaccess` - Management access settings for the secondary IP address.
 * `gwdetect` - Enable/disable detect gateway alive for first.
 * `ping_serv_status` - PING server status.
@@ -360,6 +364,7 @@ The `ipv6` block contains:
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
 * `dhcp6_relay_service` - Enable/disable DHCPv6 relay.
 * `dhcp6_relay_type` - DHCPv6 relay type.
+* `dhcp6_relay_source_interface` - Enable/disable use of address on this interface as the source address of the relay message.
 * `dhcp6_relay_ip` - DHCPv6 relay IP address.
 * `dhcp6_client_options` - DHCPv6 client options.
 * `dhcp6_prefix_delegation` - Enable/disable DHCPv6 prefix delegation.

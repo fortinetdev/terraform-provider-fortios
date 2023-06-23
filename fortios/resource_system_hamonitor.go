@@ -211,7 +211,6 @@ func getObjectSystemHaMonitor(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["monitor-vlan"] = nil
 		} else {
-
 			t, err := expandSystemHaMonitorMonitorVlan(d, v, "monitor_vlan", sv)
 			if err != nil {
 				return &obj, err
@@ -225,7 +224,6 @@ func getObjectSystemHaMonitor(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["vlan-hb-interval"] = nil
 		} else {
-
 			t, err := expandSystemHaMonitorVlanHbInterval(d, v, "vlan_hb_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -239,7 +237,6 @@ func getObjectSystemHaMonitor(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["vlan-hb-lost-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaMonitorVlanHbLostThreshold(d, v, "vlan_hb_lost_threshold", sv)
 			if err != nil {
 				return &obj, err

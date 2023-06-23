@@ -314,7 +314,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebfilterSearchEngineName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -324,7 +323,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
-
 		t, err := expandWebfilterSearchEngineHostname(d, v, "hostname", sv)
 		if err != nil {
 			return &obj, err
@@ -334,7 +332,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("url"); ok {
-
 		t, err := expandWebfilterSearchEngineUrl(d, v, "url", sv)
 		if err != nil {
 			return &obj, err
@@ -344,7 +341,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("query"); ok {
-
 		t, err := expandWebfilterSearchEngineQuery(d, v, "query", sv)
 		if err != nil {
 			return &obj, err
@@ -354,7 +350,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("safesearch"); ok {
-
 		t, err := expandWebfilterSearchEngineSafesearch(d, v, "safesearch", sv)
 		if err != nil {
 			return &obj, err
@@ -364,7 +359,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("charset"); ok {
-
 		t, err := expandWebfilterSearchEngineCharset(d, v, "charset", sv)
 		if err != nil {
 			return &obj, err
@@ -374,7 +368,6 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("safesearch_str"); ok {
-
 		t, err := expandWebfilterSearchEngineSafesearchStr(d, v, "safesearch_str", sv)
 		if err != nil {
 			return &obj, err

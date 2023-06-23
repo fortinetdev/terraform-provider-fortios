@@ -54,6 +54,12 @@ func resourceDlpDataType() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"match_around": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"look_back": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
@@ -219,6 +225,10 @@ func flattenDlpDataTypeVerify(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenDlpDataTypeMatchAround(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenDlpDataTypeLookBack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -257,6 +267,12 @@ func refreshObjectDlpDataType(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("verify", flattenDlpDataTypeVerify(o["verify"], d, "verify", sv)); err != nil {
 		if !fortiAPIPatch(o["verify"]) {
 			return fmt.Errorf("Error reading verify: %v", err)
+		}
+	}
+
+	if err = d.Set("match_around", flattenDlpDataTypeMatchAround(o["match-around"], d, "match_around", sv)); err != nil {
+		if !fortiAPIPatch(o["match-around"]) {
+			return fmt.Errorf("Error reading match_around: %v", err)
 		}
 	}
 
@@ -311,6 +327,10 @@ func expandDlpDataTypeVerify(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
+func expandDlpDataTypeMatchAround(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandDlpDataTypeLookBack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -335,7 +355,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDlpDataTypeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -345,7 +364,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("pattern"); ok {
-
 		t, err := expandDlpDataTypePattern(d, v, "pattern", sv)
 		if err != nil {
 			return &obj, err
@@ -355,7 +373,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("verify"); ok {
-
 		t, err := expandDlpDataTypeVerify(d, v, "verify", sv)
 		if err != nil {
 			return &obj, err
@@ -364,8 +381,16 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("look_back"); ok {
+	if v, ok := d.GetOk("match_around"); ok {
+		t, err := expandDlpDataTypeMatchAround(d, v, "match_around", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-around"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("look_back"); ok {
 		t, err := expandDlpDataTypeLookBack(d, v, "look_back", sv)
 		if err != nil {
 			return &obj, err
@@ -375,7 +400,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("look_ahead"); ok {
-
 		t, err := expandDlpDataTypeLookAhead(d, v, "look_ahead", sv)
 		if err != nil {
 			return &obj, err
@@ -385,7 +409,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("transform"); ok {
-
 		t, err := expandDlpDataTypeTransform(d, v, "transform", sv)
 		if err != nil {
 			return &obj, err
@@ -395,7 +418,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("verify_transformed_pattern"); ok {
-
 		t, err := expandDlpDataTypeVerifyTransformedPattern(d, v, "verify_transformed_pattern", sv)
 		if err != nil {
 			return &obj, err
@@ -405,7 +427,6 @@ func getObjectDlpDataType(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandDlpDataTypeComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err

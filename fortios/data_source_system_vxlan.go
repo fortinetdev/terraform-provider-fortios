@@ -76,6 +76,14 @@ func dataSourceSystemVxlan() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"evpn_id": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"learn_from_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -219,6 +227,14 @@ func dataSourceFlattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func dataSourceFlattenSystemVxlanEvpnId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVxlanLearnFromTraffic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -267,6 +283,18 @@ func dataSourceRefreshObjectSystemVxlan(d *schema.ResourceData, o map[string]int
 	if err = d.Set("multicast_ttl", dataSourceFlattenSystemVxlanMulticastTtl(o["multicast-ttl"], d, "multicast_ttl")); err != nil {
 		if !fortiAPIPatch(o["multicast-ttl"]) {
 			return fmt.Errorf("Error reading multicast_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("evpn_id", dataSourceFlattenSystemVxlanEvpnId(o["evpn-id"], d, "evpn_id")); err != nil {
+		if !fortiAPIPatch(o["evpn-id"]) {
+			return fmt.Errorf("Error reading evpn_id: %v", err)
+		}
+	}
+
+	if err = d.Set("learn_from_traffic", dataSourceFlattenSystemVxlanLearnFromTraffic(o["learn-from-traffic"], d, "learn_from_traffic")); err != nil {
+		if !fortiAPIPatch(o["learn-from-traffic"]) {
+			return fmt.Errorf("Error reading learn_from_traffic: %v", err)
 		}
 	}
 

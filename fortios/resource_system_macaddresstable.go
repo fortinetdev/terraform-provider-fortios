@@ -233,7 +233,6 @@ func getObjectSystemMacAddressTable(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandSystemMacAddressTableMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
@@ -243,7 +242,6 @@ func getObjectSystemMacAddressTable(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemMacAddressTableInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -253,7 +251,6 @@ func getObjectSystemMacAddressTable(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("reply_substitute"); ok {
-
 		t, err := expandSystemMacAddressTableReplySubstitute(d, v, "reply_substitute", sv)
 		if err != nil {
 			return &obj, err

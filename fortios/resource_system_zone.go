@@ -106,6 +106,11 @@ func resourceSystemZone() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -261,19 +266,16 @@ func flattenSystemZoneTagging(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemZoneTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenSystemZoneTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenSystemZoneTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -320,7 +322,6 @@ func flattenSystemZoneTaggingTags(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemZoneTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -371,7 +372,6 @@ func flattenSystemZoneInterface(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenSystemZoneInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -390,6 +390,12 @@ func flattenSystemZoneInterfaceInterfaceName(v interface{}, d *schema.ResourceDa
 
 func refreshObjectSystemZone(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemZoneName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -397,7 +403,7 @@ func refreshObjectSystemZone(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenSystemZoneTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -425,7 +431,7 @@ func refreshObjectSystemZone(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("interface", flattenSystemZoneInterface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
 				return fmt.Errorf("Error reading interface: %v", err)
@@ -470,19 +476,16 @@ func expandSystemZoneTagging(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemZoneTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandSystemZoneTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandSystemZoneTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -520,7 +523,6 @@ func expandSystemZoneTaggingTags(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemZoneTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -560,7 +562,6 @@ func expandSystemZoneInterface(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandSystemZoneInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -580,7 +581,6 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemZoneName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -590,7 +590,6 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
-
 		t, err := expandSystemZoneTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
@@ -600,7 +599,6 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSystemZoneDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -610,7 +608,6 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("intrazone"); ok {
-
 		t, err := expandSystemZoneIntrazone(d, v, "intrazone", sv)
 		if err != nil {
 			return &obj, err
@@ -620,7 +617,6 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
-
 		t, err := expandSystemZoneInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err

@@ -192,7 +192,6 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["dns-retry-interval"] = nil
 		} else {
-
 			t, err := expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d, v, "dns_retry_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -206,7 +205,6 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["extended-ttl"] = nil
 		} else {
-
 			t, err := expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d, v, "extended_ttl", sv)
 			if err != nil {
 				return &obj, err

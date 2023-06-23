@@ -229,7 +229,6 @@ func getObjectSystemFipsCc(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFipsCcStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -243,7 +242,6 @@ func getObjectSystemFipsCc(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["entropy-token"] = nil
 		} else {
-
 			t, err := expandSystemFipsCcEntropyToken(d, v, "entropy_token", sv)
 			if err != nil {
 				return &obj, err
@@ -257,7 +255,6 @@ func getObjectSystemFipsCc(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["self-test-period"] = nil
 		} else {
-
 			t, err := expandSystemFipsCcSelfTestPeriod(d, v, "self_test_period", sv)
 			if err != nil {
 				return &obj, err
@@ -271,7 +268,6 @@ func getObjectSystemFipsCc(d *schema.ResourceData, setArgNil bool, sv string) (*
 		if setArgNil {
 			obj["key-generation-self-test"] = nil
 		} else {
-
 			t, err := expandSystemFipsCcKeyGenerationSelfTest(d, v, "key_generation_self_test", sv)
 			if err != nil {
 				return &obj, err

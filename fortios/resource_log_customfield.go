@@ -235,7 +235,6 @@ func getObjectLogCustomField(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandLogCustomFieldId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectLogCustomField(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandLogCustomFieldName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectLogCustomField(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("value"); ok {
-
 		t, err := expandLogCustomFieldValue(d, v, "value", sv)
 		if err != nil {
 			return &obj, err

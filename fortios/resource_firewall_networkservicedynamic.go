@@ -254,7 +254,6 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallNetworkServiceDynamicName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -264,7 +263,6 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("sdn"); ok {
-
 		t, err := expandFirewallNetworkServiceDynamicSdn(d, v, "sdn", sv)
 		if err != nil {
 			return &obj, err
@@ -274,7 +272,6 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallNetworkServiceDynamicComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +281,6 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
-
 		t, err := expandFirewallNetworkServiceDynamicFilter(d, v, "filter", sv)
 		if err != nil {
 			return &obj, err

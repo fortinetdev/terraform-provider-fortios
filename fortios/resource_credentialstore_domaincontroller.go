@@ -329,7 +329,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("server_name"); ok {
-
 		t, err := expandCredentialStoreDomainControllerServerName(d, v, "server_name", sv)
 		if err != nil {
 			return &obj, err
@@ -339,7 +338,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
-
 		t, err := expandCredentialStoreDomainControllerHostname(d, v, "hostname", sv)
 		if err != nil {
 			return &obj, err
@@ -349,7 +347,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
-
 		t, err := expandCredentialStoreDomainControllerDomainName(d, v, "domain_name", sv)
 		if err != nil {
 			return &obj, err
@@ -359,7 +356,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandCredentialStoreDomainControllerUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -369,7 +365,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandCredentialStoreDomainControllerPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -379,7 +374,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandCredentialStoreDomainControllerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -389,7 +383,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandCredentialStoreDomainControllerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -399,7 +392,6 @@ func getObjectCredentialStoreDomainController(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandCredentialStoreDomainControllerIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err

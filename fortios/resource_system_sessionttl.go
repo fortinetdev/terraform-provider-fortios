@@ -82,6 +82,11 @@ func resourceSystemSessionTtl() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -210,31 +215,26 @@ func flattenSystemSessionTtlPort(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemSessionTtlPortId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenSystemSessionTtlPortProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := i["start-port"]; ok {
-
 			tmp["start_port"] = flattenSystemSessionTtlPortStartPort(i["start-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := i["end-port"]; ok {
-
 			tmp["end_port"] = flattenSystemSessionTtlPortEndPort(i["end-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeout"
 		if _, ok := i["timeout"]; ok {
-
 			tmp["timeout"] = flattenSystemSessionTtlPortTimeout(i["timeout"], d, pre_append, sv)
 		}
 
@@ -269,6 +269,12 @@ func flattenSystemSessionTtlPortTimeout(v interface{}, d *schema.ResourceData, p
 
 func refreshObjectSystemSessionTtl(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("default", flattenSystemSessionTtlDefault(o["default"], d, "default", sv)); err != nil {
 		if !fortiAPIPatch(o["default"]) {
@@ -276,7 +282,7 @@ func refreshObjectSystemSessionTtl(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("port", flattenSystemSessionTtlPort(o["port"], d, "port", sv)); err != nil {
 			if !fortiAPIPatch(o["port"]) {
 				return fmt.Errorf("Error reading port: %v", err)
@@ -321,31 +327,26 @@ func expandSystemSessionTtlPort(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemSessionTtlPortId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandSystemSessionTtlPortProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["start-port"], _ = expandSystemSessionTtlPortStartPort(d, i["start_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["end-port"], _ = expandSystemSessionTtlPortEndPort(d, i["end_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeout"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["timeout"], _ = expandSystemSessionTtlPortTimeout(d, i["timeout"], pre_append, sv)
 		}
 
@@ -384,7 +385,6 @@ func getObjectSystemSessionTtl(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["default"] = nil
 		} else {
-
 			t, err := expandSystemSessionTtlDefault(d, v, "default", sv)
 			if err != nil {
 				return &obj, err
@@ -398,7 +398,6 @@ func getObjectSystemSessionTtl(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["port"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemSessionTtlPort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err

@@ -76,6 +76,25 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 					},
 				},
 			},
+			"exclude": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"exclude_member": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"tagging": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -116,6 +135,11 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -291,7 +315,6 @@ func flattenFirewallAddrgrp6Member(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddrgrp6MemberName(i["name"], d, pre_append, sv)
 		}
 
@@ -305,6 +328,52 @@ func flattenFirewallAddrgrp6Member(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenFirewallAddrgrp6MemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddrgrp6Exclude(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddrgrp6ExcludeMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddrgrp6ExcludeMemberName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallAddrgrp6ExcludeMemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -334,19 +403,16 @@ func flattenFirewallAddrgrp6Tagging(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddrgrp6TaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenFirewallAddrgrp6TaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenFirewallAddrgrp6TaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -393,7 +459,6 @@ func flattenFirewallAddrgrp6TaggingTags(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallAddrgrp6TaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -416,6 +481,12 @@ func flattenFirewallAddrgrp6FabricObject(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallAddrgrp6Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -447,7 +518,7 @@ func refreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenFirewallAddrgrp6Member(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -463,7 +534,29 @@ func refreshObjectFirewallAddrgrp6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("exclude", flattenFirewallAddrgrp6Exclude(o["exclude"], d, "exclude", sv)); err != nil {
+		if !fortiAPIPatch(o["exclude"]) {
+			return fmt.Errorf("Error reading exclude: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("exclude_member", flattenFirewallAddrgrp6ExcludeMember(o["exclude-member"], d, "exclude_member", sv)); err != nil {
+			if !fortiAPIPatch(o["exclude-member"]) {
+				return fmt.Errorf("Error reading exclude_member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("exclude_member"); ok {
+			if err = d.Set("exclude_member", flattenFirewallAddrgrp6ExcludeMember(o["exclude-member"], d, "exclude_member", sv)); err != nil {
+				if !fortiAPIPatch(o["exclude-member"]) {
+					return fmt.Errorf("Error reading exclude_member: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenFirewallAddrgrp6Tagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -530,7 +623,6 @@ func expandFirewallAddrgrp6Member(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddrgrp6MemberName(d, i["name"], pre_append, sv)
 		}
 
@@ -543,6 +635,41 @@ func expandFirewallAddrgrp6Member(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandFirewallAddrgrp6MemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddrgrp6Exclude(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddrgrp6ExcludeMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandFirewallAddrgrp6ExcludeMemberName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallAddrgrp6ExcludeMemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -562,19 +689,16 @@ func expandFirewallAddrgrp6Tagging(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddrgrp6TaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandFirewallAddrgrp6TaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandFirewallAddrgrp6TaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -612,7 +736,6 @@ func expandFirewallAddrgrp6TaggingTags(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallAddrgrp6TaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -636,7 +759,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallAddrgrp6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -646,7 +768,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallAddrgrp6Uuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -656,7 +777,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-
 		t, err := expandFirewallAddrgrp6Visibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err
@@ -666,7 +786,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallAddrgrp6Color(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -676,7 +795,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallAddrgrp6Comment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -686,7 +804,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandFirewallAddrgrp6Member(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -695,8 +812,25 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
+	if v, ok := d.GetOk("exclude"); ok {
+		t, err := expandFirewallAddrgrp6Exclude(d, v, "exclude", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["exclude"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("exclude_member"); ok || d.HasChange("exclude_member") {
+		t, err := expandFirewallAddrgrp6ExcludeMember(d, v, "exclude_member", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["exclude-member"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
 		t, err := expandFirewallAddrgrp6Tagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
@@ -706,7 +840,6 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallAddrgrp6FabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

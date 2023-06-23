@@ -118,6 +118,11 @@ func resourceUserDevice() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -293,19 +298,16 @@ func flattenUserDeviceTagging(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserDeviceTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenUserDeviceTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenUserDeviceTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -352,7 +354,6 @@ func flattenUserDeviceTaggingTags(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserDeviceTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -379,6 +380,12 @@ func flattenUserDeviceCategory(v interface{}, d *schema.ResourceData, pre string
 
 func refreshObjectUserDevice(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("alias", flattenUserDeviceAlias(o["alias"], d, "alias", sv)); err != nil {
 		if !fortiAPIPatch(o["alias"]) {
@@ -416,7 +423,7 @@ func refreshObjectUserDevice(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenUserDeviceTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -493,19 +500,16 @@ func expandUserDeviceTagging(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserDeviceTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandUserDeviceTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandUserDeviceTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -543,7 +547,6 @@ func expandUserDeviceTaggingTags(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserDeviceTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -571,7 +574,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("alias"); ok {
-
 		t, err := expandUserDeviceAlias(d, v, "alias", sv)
 		if err != nil {
 			return &obj, err
@@ -581,7 +583,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandUserDeviceMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
@@ -591,7 +592,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("user"); ok {
-
 		t, err := expandUserDeviceUser(d, v, "user", sv)
 		if err != nil {
 			return &obj, err
@@ -601,7 +601,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("master_device"); ok {
-
 		t, err := expandUserDeviceMasterDevice(d, v, "master_device", sv)
 		if err != nil {
 			return &obj, err
@@ -611,7 +610,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandUserDeviceComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -621,7 +619,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("avatar"); ok {
-
 		t, err := expandUserDeviceAvatar(d, v, "avatar", sv)
 		if err != nil {
 			return &obj, err
@@ -631,7 +628,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
-
 		t, err := expandUserDeviceTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
@@ -641,7 +637,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandUserDeviceType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -651,7 +646,6 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("category"); ok {
-
 		t, err := expandUserDeviceCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err

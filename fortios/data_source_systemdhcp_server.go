@@ -161,6 +161,26 @@ func dataSourceSystemDhcpServer() *schema.Resource {
 								},
 							},
 						},
+						"uci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"uci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"uci_string": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"lease_time": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -223,6 +243,22 @@ func dataSourceSystemDhcpServer() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"vci_string": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"uci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"uci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"uci_string": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -342,8 +378,36 @@ func dataSourceSystemDhcpServer() *schema.Resource {
 								},
 							},
 						},
+						"uci_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"uci_string": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"uci_string": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"lease_time": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
+			},
+			"shared_subnet": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"relay_agent": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"reserved_address": &schema.Schema{
 				Type:     schema.TypeList,
@@ -584,6 +648,21 @@ func dataSourceFlattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceD
 			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerIpRangeVciString(i["vci-string"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
+		if _, ok := i["uci-match"]; ok {
+			tmp["uci_match"] = dataSourceFlattenSystemDhcpServerIpRangeUciMatch(i["uci-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+		if _, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = dataSourceFlattenSystemDhcpServerIpRangeUciString(i["uci-string"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
+		if _, ok := i["lease-time"]; ok {
+			tmp["lease_time"] = dataSourceFlattenSystemDhcpServerIpRangeLeaseTime(i["lease-time"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -641,6 +720,50 @@ func dataSourceFlattenSystemDhcpServerIpRangeVciString(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemDhcpServerIpRangeVciStringVciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeUciMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeUciString(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+		if _, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = dataSourceFlattenSystemDhcpServerIpRangeUciStringUciString(i["uci-string"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeUciStringUciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerIpRangeLeaseTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -746,6 +869,16 @@ func dataSourceFlattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceD
 			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerOptionsVciString(i["vci-string"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
+		if _, ok := i["uci-match"]; ok {
+			tmp["uci_match"] = dataSourceFlattenSystemDhcpServerOptionsUciMatch(i["uci-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+		if _, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = dataSourceFlattenSystemDhcpServerOptionsUciString(i["uci-string"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -811,6 +944,46 @@ func dataSourceFlattenSystemDhcpServerOptionsVciString(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemDhcpServerOptionsVciStringVciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerOptionsUciMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerOptionsUciString(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+		if _, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = dataSourceFlattenSystemDhcpServerOptionsUciStringUciString(i["uci-string"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDhcpServerOptionsUciStringUciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -958,6 +1131,21 @@ func dataSourceFlattenSystemDhcpServerExcludeRange(v interface{}, d *schema.Reso
 			tmp["vci_string"] = dataSourceFlattenSystemDhcpServerExcludeRangeVciString(i["vci-string"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
+		if _, ok := i["uci-match"]; ok {
+			tmp["uci_match"] = dataSourceFlattenSystemDhcpServerExcludeRangeUciMatch(i["uci-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+		if _, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = dataSourceFlattenSystemDhcpServerExcludeRangeUciString(i["uci-string"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
+		if _, ok := i["lease-time"]; ok {
+			tmp["lease_time"] = dataSourceFlattenSystemDhcpServerExcludeRangeLeaseTime(i["lease-time"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1015,6 +1203,58 @@ func dataSourceFlattenSystemDhcpServerExcludeRangeVciString(v interface{}, d *sc
 }
 
 func dataSourceFlattenSystemDhcpServerExcludeRangeVciStringVciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeUciMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeUciString(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+		if _, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = dataSourceFlattenSystemDhcpServerExcludeRangeUciStringUciString(i["uci-string"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeUciStringUciString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerExcludeRangeLeaseTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerSharedSubnet(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDhcpServerRelayAgent(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1423,6 +1663,18 @@ func dataSourceRefreshObjectSystemDhcpServer(d *schema.ResourceData, o map[strin
 	if err = d.Set("exclude_range", dataSourceFlattenSystemDhcpServerExcludeRange(o["exclude-range"], d, "exclude_range")); err != nil {
 		if !fortiAPIPatch(o["exclude-range"]) {
 			return fmt.Errorf("Error reading exclude_range: %v", err)
+		}
+	}
+
+	if err = d.Set("shared_subnet", dataSourceFlattenSystemDhcpServerSharedSubnet(o["shared-subnet"], d, "shared_subnet")); err != nil {
+		if !fortiAPIPatch(o["shared-subnet"]) {
+			return fmt.Errorf("Error reading shared_subnet: %v", err)
+		}
+	}
+
+	if err = d.Set("relay_agent", dataSourceFlattenSystemDhcpServerRelayAgent(o["relay-agent"], d, "relay_agent")); err != nil {
+		if !fortiAPIPatch(o["relay-agent"]) {
+			return fmt.Errorf("Error reading relay_agent: %v", err)
 		}
 	}
 

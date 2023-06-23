@@ -147,6 +147,7 @@ The following arguments are supported:
 * `geolocation` - Geolocation-based threat weight settings. The structure of `geolocation` block is documented below.
 * `application` - Application-control threat weight settings. The structure of `application` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `level` block supports:
@@ -159,6 +160,7 @@ The `level` block supports:
 The `malware` block supports:
 
 * `virus_infected` - Threat weight score for virus (infected) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `inline_block` - Threat weight score for malware detected by inline block. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fortindr` - Threat weight score for FortiNDR-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fortisandbox` - Threat weight score for FortiSandbox-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `fortiai` - Threat weight score for FortiAI-detected virus. Valid values: `disable`, `low`, `medium`, `high`, `critical`.

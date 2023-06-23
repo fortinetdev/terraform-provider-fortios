@@ -82,6 +82,12 @@ The following arguments are supported:
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service6` - Enable/disable use of Internet Services IPv6 for this policy. If enabled, destination IPv6 address and service are not used. Valid values: `enable`, `disable`.
+* `internet_service6_negate` - When enabled, Internet Services match against any internet service IPv6 EXCEPT the selected Internet Service IPv6. Valid values: `enable`, `disable`.
+* `internet_service6_name` - Internet Service IPv6 name. The structure of `internet_service6_name` block is documented below.
+* `internet_service6_group` - Internet Service IPv6 group name. The structure of `internet_service6_group` block is documented below.
+* `internet_service6_custom` - Custom Internet Service IPv6 name. The structure of `internet_service6_custom` block is documented below.
+* `internet_service6_custom_group` - Custom Internet Service IPv6 group name. The structure of `internet_service6_custom_group` block is documented below.
 * `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses. Valid values: `enable`, `disable`.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses. Valid values: `enable`, `disable`.
@@ -115,6 +121,7 @@ The following arguments are supported:
 * `file_filter_profile` - Name of an existing file-filter profile.
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
+* `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `voip_profile` - Name of an existing VoIP profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
@@ -134,6 +141,7 @@ The following arguments are supported:
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `access_proxy` block supports:
@@ -187,6 +195,22 @@ The `internet_service_custom` block supports:
 The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
+
+The `internet_service6_name` block supports:
+
+* `name` - Internet Service IPv6 name.
+
+The `internet_service6_group` block supports:
+
+* `name` - Internet Service IPv6 group name.
+
+The `internet_service6_custom` block supports:
+
+* `name` - Custom Internet Service IPv6 name.
+
+The `internet_service6_custom_group` block supports:
+
+* `name` - Custom Internet Service IPv6 group name.
 
 The `service` block supports:
 

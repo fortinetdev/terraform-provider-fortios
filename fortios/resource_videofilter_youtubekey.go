@@ -216,7 +216,6 @@ func getObjectVideofilterYoutubeKey(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandVideofilterYoutubeKeyId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectVideofilterYoutubeKey(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("key"); ok {
-
 		t, err := expandVideofilterYoutubeKeyKey(d, v, "key", sv)
 		if err != nil {
 			return &obj, err

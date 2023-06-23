@@ -275,7 +275,6 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallAccessProxyVirtualHostName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -285,7 +284,6 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ssl_certificate"); ok {
-
 		t, err := expandFirewallAccessProxyVirtualHostSslCertificate(d, v, "ssl_certificate", sv)
 		if err != nil {
 			return &obj, err
@@ -295,7 +293,6 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("host"); ok {
-
 		t, err := expandFirewallAccessProxyVirtualHostHost(d, v, "host", sv)
 		if err != nil {
 			return &obj, err
@@ -305,7 +302,6 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("host_type"); ok {
-
 		t, err := expandFirewallAccessProxyVirtualHostHostType(d, v, "host_type", sv)
 		if err != nil {
 			return &obj, err
@@ -315,7 +311,6 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandFirewallAccessProxyVirtualHostReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err

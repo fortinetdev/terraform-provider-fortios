@@ -215,7 +215,6 @@ func getObjectFirewallInternetServiceIpblReason(d *schema.ResourceData, sv strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallInternetServiceIpblReasonId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -225,7 +224,6 @@ func getObjectFirewallInternetServiceIpblReason(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallInternetServiceIpblReasonName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err

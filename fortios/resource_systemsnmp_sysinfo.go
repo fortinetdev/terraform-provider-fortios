@@ -327,7 +327,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -341,7 +340,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["engine-id-type"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoEngineIdType(d, v, "engine_id_type", sv)
 			if err != nil {
 				return &obj, err
@@ -355,7 +353,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["engine-id"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoEngineId(d, v, "engine_id", sv)
 			if err != nil {
 				return &obj, err
@@ -369,7 +366,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["description"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoDescription(d, v, "description", sv)
 			if err != nil {
 				return &obj, err
@@ -383,7 +379,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["contact-info"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoContactInfo(d, v, "contact_info", sv)
 			if err != nil {
 				return &obj, err
@@ -397,7 +392,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["location"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoLocation(d, v, "location", sv)
 			if err != nil {
 				return &obj, err
@@ -411,7 +405,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["trap-high-cpu-threshold"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -425,7 +418,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["trap-low-memory-threshold"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoTrapLowMemoryThreshold(d, v, "trap_low_memory_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -439,7 +431,6 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["trap-log-full-threshold"] = nil
 		} else {
-
 			t, err := expandSystemSnmpSysinfoTrapLogFullThreshold(d, v, "trap_log_full_threshold", sv)
 			if err != nil {
 				return &obj, err

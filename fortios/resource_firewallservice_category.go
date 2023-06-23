@@ -234,7 +234,6 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallServiceCategoryName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -244,7 +243,6 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallServiceCategoryComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -254,7 +252,6 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {
-
 		t, err := expandFirewallServiceCategoryFabricObject(d, v, "fabric_object", sv)
 		if err != nil {
 			return &obj, err

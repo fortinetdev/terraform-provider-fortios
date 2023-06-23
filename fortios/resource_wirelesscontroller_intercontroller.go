@@ -102,6 +102,11 @@ func resourceWirelessControllerInterController() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -250,25 +255,21 @@ func flattenWirelessControllerInterControllerInterControllerPeer(v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerInterControllerInterControllerPeerId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
 		if _, ok := i["peer-ip"]; ok {
-
 			tmp["peer_ip"] = flattenWirelessControllerInterControllerInterControllerPeerPeerIp(i["peer-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_port"
 		if _, ok := i["peer-port"]; ok {
-
 			tmp["peer_port"] = flattenWirelessControllerInterControllerInterControllerPeerPeerPort(i["peer-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_priority"
 		if _, ok := i["peer-priority"]; ok {
-
 			tmp["peer_priority"] = flattenWirelessControllerInterControllerInterControllerPeerPeerPriority(i["peer-priority"], d, pre_append, sv)
 		}
 
@@ -299,6 +300,12 @@ func flattenWirelessControllerInterControllerInterControllerPeerPeerPriority(v i
 
 func refreshObjectWirelessControllerInterController(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("inter_controller_mode", flattenWirelessControllerInterControllerInterControllerMode(o["inter-controller-mode"], d, "inter_controller_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["inter-controller-mode"]) {
@@ -330,7 +337,7 @@ func refreshObjectWirelessControllerInterController(d *schema.ResourceData, o ma
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("inter_controller_peer", flattenWirelessControllerInterControllerInterControllerPeer(o["inter-controller-peer"], d, "inter_controller_peer", sv)); err != nil {
 			if !fortiAPIPatch(o["inter-controller-peer"]) {
 				return fmt.Errorf("Error reading inter_controller_peer: %v", err)
@@ -395,25 +402,21 @@ func expandWirelessControllerInterControllerInterControllerPeer(d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerInterControllerInterControllerPeerId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["peer-ip"], _ = expandWirelessControllerInterControllerInterControllerPeerPeerIp(d, i["peer_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["peer-port"], _ = expandWirelessControllerInterControllerInterControllerPeerPeerPort(d, i["peer_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_priority"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["peer-priority"], _ = expandWirelessControllerInterControllerInterControllerPeerPeerPriority(d, i["peer_priority"], pre_append, sv)
 		}
 
@@ -448,7 +451,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["inter-controller-mode"] = nil
 		} else {
-
 			t, err := expandWirelessControllerInterControllerInterControllerMode(d, v, "inter_controller_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -462,7 +464,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["l3-roaming"] = nil
 		} else {
-
 			t, err := expandWirelessControllerInterControllerL3Roaming(d, v, "l3_roaming", sv)
 			if err != nil {
 				return &obj, err
@@ -476,7 +477,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["inter-controller-key"] = nil
 		} else {
-
 			t, err := expandWirelessControllerInterControllerInterControllerKey(d, v, "inter_controller_key", sv)
 			if err != nil {
 				return &obj, err
@@ -490,7 +490,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["inter-controller-pri"] = nil
 		} else {
-
 			t, err := expandWirelessControllerInterControllerInterControllerPri(d, v, "inter_controller_pri", sv)
 			if err != nil {
 				return &obj, err
@@ -504,7 +503,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["fast-failover-max"] = nil
 		} else {
-
 			t, err := expandWirelessControllerInterControllerFastFailoverMax(d, v, "fast_failover_max", sv)
 			if err != nil {
 				return &obj, err
@@ -518,7 +516,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["fast-failover-wait"] = nil
 		} else {
-
 			t, err := expandWirelessControllerInterControllerFastFailoverWait(d, v, "fast_failover_wait", sv)
 			if err != nil {
 				return &obj, err
@@ -532,7 +529,6 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 		if setArgNil {
 			obj["inter-controller-peer"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWirelessControllerInterControllerInterControllerPeer(d, v, "inter_controller_peer", sv)
 			if err != nil {
 				return &obj, err

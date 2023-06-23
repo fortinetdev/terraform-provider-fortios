@@ -346,7 +346,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -360,7 +359,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["forticloud"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxForticloud(d, v, "forticloud", sv)
 			if err != nil {
 				return &obj, err
@@ -374,7 +372,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["inline-scan"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxInlineScan(d, v, "inline_scan", sv)
 			if err != nil {
 				return &obj, err
@@ -388,7 +385,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -402,7 +398,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -416,7 +411,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -430,7 +424,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -444,7 +437,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -458,7 +450,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -472,7 +463,6 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["email"] = nil
 		} else {
-
 			t, err := expandSystemFortisandboxEmail(d, v, "email", sv)
 			if err != nil {
 				return &obj, err

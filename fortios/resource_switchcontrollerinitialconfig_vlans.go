@@ -292,7 +292,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["default-vlan"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansDefaultVlan(d, v, "default_vlan", sv)
 			if err != nil {
 				return &obj, err
@@ -306,7 +305,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["quarantine"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansQuarantine(d, v, "quarantine", sv)
 			if err != nil {
 				return &obj, err
@@ -320,7 +318,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["rspan"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansRspan(d, v, "rspan", sv)
 			if err != nil {
 				return &obj, err
@@ -334,7 +331,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["voice"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansVoice(d, v, "voice", sv)
 			if err != nil {
 				return &obj, err
@@ -348,7 +344,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["video"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansVideo(d, v, "video", sv)
 			if err != nil {
 				return &obj, err
@@ -362,7 +357,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["nac"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansNac(d, v, "nac", sv)
 			if err != nil {
 				return &obj, err
@@ -376,7 +370,6 @@ func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgN
 		if setArgNil {
 			obj["nac-segment"] = nil
 		} else {
-
 			t, err := expandSwitchControllerInitialConfigVlansNacSegment(d, v, "nac_segment", sv)
 			if err != nil {
 				return &obj, err

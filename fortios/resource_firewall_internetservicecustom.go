@@ -134,6 +134,11 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -297,37 +302,31 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallInternetServiceCustomEntryId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
 		if _, ok := i["addr-mode"]; ok {
-
 			tmp["addr_mode"] = flattenFirewallInternetServiceCustomEntryAddrMode(i["addr-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenFirewallInternetServiceCustomEntryProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
 		if _, ok := i["port-range"]; ok {
-
 			tmp["port_range"] = flattenFirewallInternetServiceCustomEntryPortRange(i["port-range"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-
 			tmp["dst"] = flattenFirewallInternetServiceCustomEntryDst(i["dst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
 		if _, ok := i["dst6"]; ok {
-
 			tmp["dst6"] = flattenFirewallInternetServiceCustomEntryDst6(i["dst6"], d, pre_append, sv)
 		}
 
@@ -378,19 +377,16 @@ func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallInternetServiceCustomEntryPortRangeId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := i["start-port"]; ok {
-
 			tmp["start_port"] = flattenFirewallInternetServiceCustomEntryPortRangeStartPort(i["start-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := i["end-port"]; ok {
-
 			tmp["end_port"] = flattenFirewallInternetServiceCustomEntryPortRangeEndPort(i["end-port"], d, pre_append, sv)
 		}
 
@@ -441,7 +437,6 @@ func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallInternetServiceCustomEntryDstName(i["name"], d, pre_append, sv)
 		}
 
@@ -484,7 +479,6 @@ func flattenFirewallInternetServiceCustomEntryDst6(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallInternetServiceCustomEntryDst6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -503,6 +497,12 @@ func flattenFirewallInternetServiceCustomEntryDst6Name(v interface{}, d *schema.
 
 func refreshObjectFirewallInternetServiceCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallInternetServiceCustomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -522,7 +522,7 @@ func refreshObjectFirewallInternetServiceCustom(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entry", flattenFirewallInternetServiceCustomEntry(o["entry"], d, "entry", sv)); err != nil {
 			if !fortiAPIPatch(o["entry"]) {
 				return fmt.Errorf("Error reading entry: %v", err)
@@ -575,25 +575,21 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallInternetServiceCustomEntryId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["addr-mode"], _ = expandFirewallInternetServiceCustomEntryAddrMode(d, i["addr_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandFirewallInternetServiceCustomEntryProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["port-range"], _ = expandFirewallInternetServiceCustomEntryPortRange(d, i["port_range"], pre_append, sv)
 		} else {
 			tmp["port-range"] = make([]string, 0)
@@ -601,7 +597,6 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["dst"], _ = expandFirewallInternetServiceCustomEntryDst(d, i["dst"], pre_append, sv)
 		} else {
 			tmp["dst"] = make([]string, 0)
@@ -609,7 +604,6 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["dst6"], _ = expandFirewallInternetServiceCustomEntryDst6(d, i["dst6"], pre_append, sv)
 		} else {
 			tmp["dst6"] = make([]string, 0)
@@ -651,19 +645,16 @@ func expandFirewallInternetServiceCustomEntryPortRange(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallInternetServiceCustomEntryPortRangeId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["start-port"], _ = expandFirewallInternetServiceCustomEntryPortRangeStartPort(d, i["start_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["end-port"], _ = expandFirewallInternetServiceCustomEntryPortRangeEndPort(d, i["end_port"], pre_append, sv)
 		}
 
@@ -703,7 +694,6 @@ func expandFirewallInternetServiceCustomEntryDst(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallInternetServiceCustomEntryDstName(d, i["name"], pre_append, sv)
 		}
 
@@ -735,7 +725,6 @@ func expandFirewallInternetServiceCustomEntryDst6(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallInternetServiceCustomEntryDst6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -755,7 +744,6 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallInternetServiceCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -765,7 +753,6 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("reputation"); ok {
-
 		t, err := expandFirewallInternetServiceCustomReputation(d, v, "reputation", sv)
 		if err != nil {
 			return &obj, err
@@ -775,7 +762,6 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallInternetServiceCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -785,7 +771,6 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("entry"); ok || d.HasChange("entry") {
-
 		t, err := expandFirewallInternetServiceCustomEntry(d, v, "entry", sv)
 		if err != nil {
 			return &obj, err

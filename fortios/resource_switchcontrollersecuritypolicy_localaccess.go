@@ -235,7 +235,6 @@ func getObjectSwitchControllerSecurityPolicyLocalAccess(d *schema.ResourceData, 
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicyLocalAccessName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSwitchControllerSecurityPolicyLocalAccess(d *schema.ResourceData, 
 	}
 
 	if v, ok := d.GetOk("mgmt_allowaccess"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicyLocalAccessMgmtAllowaccess(d, v, "mgmt_allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSwitchControllerSecurityPolicyLocalAccess(d *schema.ResourceData, 
 	}
 
 	if v, ok := d.GetOk("internal_allowaccess"); ok {
-
 		t, err := expandSwitchControllerSecurityPolicyLocalAccessInternalAllowaccess(d, v, "internal_allowaccess", sv)
 		if err != nil {
 			return &obj, err

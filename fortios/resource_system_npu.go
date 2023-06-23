@@ -151,6 +151,11 @@ func resourceSystemNpu() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -332,19 +337,16 @@ func flattenSystemNpuPriorityProtocol(v interface{}, d *schema.ResourceData, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "bgp"
 	if _, ok := i["bgp"]; ok {
-
 		result["bgp"] = flattenSystemNpuPriorityProtocolBgp(i["bgp"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "slbc"
 	if _, ok := i["slbc"]; ok {
-
 		result["slbc"] = flattenSystemNpuPriorityProtocolSlbc(i["slbc"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "bfd"
 	if _, ok := i["bfd"]; ok {
-
 		result["bfd"] = flattenSystemNpuPriorityProtocolBfd(i["bfd"], d, pre_append, sv)
 	}
 
@@ -366,6 +368,12 @@ func flattenSystemNpuPriorityProtocolBfd(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectSystemNpu(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("dedicated_management_cpu", flattenSystemNpuDedicatedManagementCpu(o["dedicated-management-cpu"], d, "dedicated_management_cpu", sv)); err != nil {
 		if !fortiAPIPatch(o["dedicated-management-cpu"]) {
@@ -475,7 +483,7 @@ func refreshObjectSystemNpu(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("priority_protocol", flattenSystemNpuPriorityProtocol(o["priority-protocol"], d, "priority_protocol", sv)); err != nil {
 			if !fortiAPIPatch(o["priority-protocol"]) {
 				return fmt.Errorf("Error reading priority_protocol: %v", err)
@@ -587,7 +595,6 @@ func expandSystemNpuPriorityProtocol(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["bgp"] = nil
 		} else {
-
 			result["bgp"], _ = expandSystemNpuPriorityProtocolBgp(d, i["bgp"], pre_append, sv)
 		}
 	}
@@ -596,7 +603,6 @@ func expandSystemNpuPriorityProtocol(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["slbc"] = nil
 		} else {
-
 			result["slbc"], _ = expandSystemNpuPriorityProtocolSlbc(d, i["slbc"], pre_append, sv)
 		}
 	}
@@ -605,7 +611,6 @@ func expandSystemNpuPriorityProtocol(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["bfd"] = nil
 		} else {
-
 			result["bfd"], _ = expandSystemNpuPriorityProtocolBfd(d, i["bfd"], pre_append, sv)
 		}
 	}
@@ -632,7 +637,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dedicated-management-cpu"] = nil
 		} else {
-
 			t, err := expandSystemNpuDedicatedManagementCpu(d, v, "dedicated_management_cpu", sv)
 			if err != nil {
 				return &obj, err
@@ -646,7 +650,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dedicated-management-affinity"] = nil
 		} else {
-
 			t, err := expandSystemNpuDedicatedManagementAffinity(d, v, "dedicated_management_affinity", sv)
 			if err != nil {
 				return &obj, err
@@ -660,7 +663,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fastpath"] = nil
 		} else {
-
 			t, err := expandSystemNpuFastpath(d, v, "fastpath", sv)
 			if err != nil {
 				return &obj, err
@@ -674,7 +676,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["capwap-offload"] = nil
 		} else {
-
 			t, err := expandSystemNpuCapwapOffload(d, v, "capwap_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -688,7 +689,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ipsec-enc-subengine-mask"] = nil
 		} else {
-
 			t, err := expandSystemNpuIpsecEncSubengineMask(d, v, "ipsec_enc_subengine_mask", sv)
 			if err != nil {
 				return &obj, err
@@ -702,7 +702,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ipsec-dec-subengine-mask"] = nil
 		} else {
-
 			t, err := expandSystemNpuIpsecDecSubengineMask(d, v, "ipsec_dec_subengine_mask", sv)
 			if err != nil {
 				return &obj, err
@@ -716,7 +715,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["np6-cps-optimization-mode"] = nil
 		} else {
-
 			t, err := expandSystemNpuNp6CpsOptimizationMode(d, v, "np6_cps_optimization_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -730,7 +728,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["sw-np-bandwidth"] = nil
 		} else {
-
 			t, err := expandSystemNpuSwNpBandwidth(d, v, "sw_np_bandwidth", sv)
 			if err != nil {
 				return &obj, err
@@ -744,7 +741,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["strip-esp-padding"] = nil
 		} else {
-
 			t, err := expandSystemNpuStripEspPadding(d, v, "strip_esp_padding", sv)
 			if err != nil {
 				return &obj, err
@@ -758,7 +754,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["strip-clear-text-padding"] = nil
 		} else {
-
 			t, err := expandSystemNpuStripClearTextPadding(d, v, "strip_clear_text_padding", sv)
 			if err != nil {
 				return &obj, err
@@ -772,7 +767,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ipsec-inbound-cache"] = nil
 		} else {
-
 			t, err := expandSystemNpuIpsecInboundCache(d, v, "ipsec_inbound_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -786,7 +780,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["sse-backpressure"] = nil
 		} else {
-
 			t, err := expandSystemNpuSseBackpressure(d, v, "sse_backpressure", sv)
 			if err != nil {
 				return &obj, err
@@ -800,7 +793,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["rdp-offload"] = nil
 		} else {
-
 			t, err := expandSystemNpuRdpOffload(d, v, "rdp_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -814,7 +806,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ipsec-over-vlink"] = nil
 		} else {
-
 			t, err := expandSystemNpuIpsecOverVlink(d, v, "ipsec_over_vlink", sv)
 			if err != nil {
 				return &obj, err
@@ -828,7 +819,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["uesp-offload"] = nil
 		} else {
-
 			t, err := expandSystemNpuUespOffload(d, v, "uesp_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -842,7 +832,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["mcast-session-accounting"] = nil
 		} else {
-
 			t, err := expandSystemNpuMcastSessionAccounting(d, v, "mcast_session_accounting", sv)
 			if err != nil {
 				return &obj, err
@@ -856,7 +845,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ipsec-mtu-override"] = nil
 		} else {
-
 			t, err := expandSystemNpuIpsecMtuOverride(d, v, "ipsec_mtu_override", sv)
 			if err != nil {
 				return &obj, err
@@ -870,7 +858,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["session-denied-offload"] = nil
 		} else {
-
 			t, err := expandSystemNpuSessionDeniedOffload(d, v, "session_denied_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -881,7 +868,6 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("priority_protocol"); ok {
-
 		t, err := expandSystemNpuPriorityProtocol(d, v, "priority_protocol", sv, setArgNil)
 		if err != nil {
 			return &obj, err

@@ -306,7 +306,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["hop-opt"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterHopOpt(d, v, "hop_opt", sv)
 			if err != nil {
 				return &obj, err
@@ -320,7 +319,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["dest-opt"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterDestOpt(d, v, "dest_opt", sv)
 			if err != nil {
 				return &obj, err
@@ -334,7 +332,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["hdopt-type"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterHdoptType(d, v, "hdopt_type", sv)
 			if err != nil {
 				return &obj, err
@@ -348,7 +345,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["routing"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterRouting(d, v, "routing", sv)
 			if err != nil {
 				return &obj, err
@@ -362,7 +358,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["routing-type"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterRoutingType(d, v, "routing_type", sv)
 			if err != nil {
 				return &obj, err
@@ -376,7 +371,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["fragment"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterFragment(d, v, "fragment", sv)
 			if err != nil {
 				return &obj, err
@@ -390,7 +384,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["auth"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterAuth(d, v, "auth", sv)
 			if err != nil {
 				return &obj, err
@@ -404,7 +397,6 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["no-next"] = nil
 		} else {
-
 			t, err := expandFirewallIpv6EhFilterNoNext(d, v, "no_next", sv)
 			if err != nil {
 				return &obj, err

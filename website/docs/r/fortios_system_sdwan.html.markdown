@@ -19,6 +19,7 @@ The following arguments are supported:
 * `duplication_max_num` - Maximum number of interface members a packet is duplicated in the SD-WAN zone (2 - 4, default = 2; if set to 3, the original packet plus 2 more copies are created).
 * `neighbor_hold_down` - Enable/disable hold switching from the secondary neighbor to the primary neighbor. Valid values: `enable`, `disable`.
 * `neighbor_hold_down_time` - Waiting period in seconds when switching from the secondary neighbor to the primary neighbor when hold-down is disabled. (0 - 10000000, default = 0).
+* `app_perf_log_period` - Time interval in seconds that applicationperformance logs are generated (0 - 3600, default = 0).
 * `neighbor_hold_boot_time` - Waiting period in seconds when switching from the primary neighbor to the secondary neighbor from the neighbor start. (0 - 10000000, default = 0).
 * `fail_detect` - Enable/disable SD-WAN Internet connection status checking (failure detection). Valid values: `enable`, `disable`.
 * `fail_alert_interfaces` - Physical interfaces that will be alerted. The structure of `fail_alert_interfaces` block is documented below.
@@ -29,6 +30,7 @@ The following arguments are supported:
 * `service` - Create SD-WAN rules (also called services) to control how sessions are distributed to interfaces in the SD-WAN. The structure of `service` block is documented below.
 * `duplication` - Create SD-WAN duplication rule. The structure of `duplication` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `fail_alert_interfaces` block supports:
@@ -46,6 +48,7 @@ The `members` block supports:
 * `interface` - Interface name.
 * `zone` - Zone name.
 * `gateway` - The default gateway for this interface. Usually the default gateway of the Internet service provider that this interface is connected to.
+* `preferred_source` - Preferred source of route for this member.
 * `source` - Source IP address used in the health-check packet to the server.
 * `gateway6` - IPv6 gateway.
 * `source6` - Source IPv6 address used in the health-check packet to the server.
@@ -102,8 +105,10 @@ The `health_check` block supports:
 * `threshold_alert_jitter` - Alert threshold for jitter (ms, default = 0).
 * `vrf` - Virtual Routing Forwarding ID.
 * `source` - Source IP address used in the health-check packet to the server.
+* `source6` - Source IPv6 addressused in the health-check packet to server.
 * `members` - Member sequence number list. The structure of `members` block is documented below.
 * `mos_codec` - Codec to use for MOS calculation (default = g711). Valid values: `g711`, `g722`, `g729`.
+* `class_id` - Traffic class ID.
 * `sla` - Service level agreement (SLA). The structure of `sla` block is documented below.
 
 The `members` block supports:
@@ -124,18 +129,24 @@ The `sla` block supports:
 The `neighbor` block supports:
 
 * `ip` - IP/IPv6 address of neighbor.
-* `member` - Member sequence number.
+* `member_block` - Member sequence number list. The structure of `member_block` block is documented below.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA when the neighbor is preferred.
+* `member` - Member sequence number.
 * `mode` - What metric to select the neighbor. Valid values: `sla`, `speedtest`.
 * `role` - Role of neighbor. Valid values: `standalone`, `primary`, `secondary`.
 * `health_check` - SD-WAN health-check name.
 * `sla_id` - SLA ID.
+
+The `member_block` block supports:
+
+* `seq_num` - Member sequence number.
 
 The `service` block supports:
 
 * `id` - SD-WAN rule ID (1 - 4000).
 * `name` - SD-WAN rule name.
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
+* `shortcut_stickiness` - Enable/disable shortcut-stickiness of ADVPN. Valid values: `enable`, `disable`.
 * `input_device` - Source interface name. The structure of `input_device` block is documented below.
 * `input_device_negate` - Enable/disable negation of input device match. Valid values: `enable`, `disable`.
 * `input_zone` - Source input-zone name. The structure of `input_zone` block is documented below.
@@ -189,6 +200,8 @@ The `service` block supports:
 * `tie_break` - Method of selecting member if more than one meets the SLA.
 * `use_shortcut_sla` - Enable/disable use of ADVPN shortcut for quality comparison. Valid values: `enable`, `disable`.
 * `passive_measurement` - Enable/disable passive measurement based on the service criteria. Valid values: `enable`, `disable`.
+* `agent_exclusive` - Set/unset the service as agent use exclusively. Valid values: `enable`, `disable`.
+* `shortcut` - Enable/disable shortcut for this service. Valid values: `enable`, `disable`.
 
 The `input_device` block supports:
 

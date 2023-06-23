@@ -266,7 +266,6 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandVpnPptpStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -280,7 +279,6 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["ip-mode"] = nil
 		} else {
-
 			t, err := expandVpnPptpIpMode(d, v, "ip_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -294,7 +292,6 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["eip"] = nil
 		} else {
-
 			t, err := expandVpnPptpEip(d, v, "eip", sv)
 			if err != nil {
 				return &obj, err
@@ -308,7 +305,6 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["sip"] = nil
 		} else {
-
 			t, err := expandVpnPptpSip(d, v, "sip", sv)
 			if err != nil {
 				return &obj, err
@@ -322,7 +318,6 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["local-ip"] = nil
 		} else {
-
 			t, err := expandVpnPptpLocalIp(d, v, "local_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -336,7 +331,6 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 		if setArgNil {
 			obj["usrgrp"] = nil
 		} else {
-
 			t, err := expandVpnPptpUsrgrp(d, v, "usrgrp", sv)
 			if err != nil {
 				return &obj, err

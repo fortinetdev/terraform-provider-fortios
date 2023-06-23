@@ -235,7 +235,6 @@ func getObjectSystemVdomLink(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemVdomLinkName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSystemVdomLink(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("vcluster"); ok {
-
 		t, err := expandSystemVdomLinkVcluster(d, v, "vcluster", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSystemVdomLink(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSystemVdomLinkType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err

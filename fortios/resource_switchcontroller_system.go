@@ -74,13 +74,13 @@ func resourceSwitchControllerSystem() *schema.Resource {
 			},
 			"nac_periodic_interval": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(5, 60),
+				ValidateFunc: validation.IntBetween(5, 180),
 				Optional:     true,
 				Computed:     true,
 			},
 			"dynamic_periodic_interval": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(5, 60),
+				ValidateFunc: validation.IntBetween(5, 180),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -88,6 +88,18 @@ func resourceSwitchControllerSystem() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"caputp_echo_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(8, 600),
+				Optional:     true,
+				Computed:     true,
+			},
+			"caputp_max_retransmit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 64),
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -227,6 +239,14 @@ func flattenSwitchControllerSystemTunnelMode(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSwitchControllerSystemCaputpEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSystemCaputpMaxRetransmit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSystem(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -290,6 +310,18 @@ func refreshObjectSwitchControllerSystem(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("caputp_echo_interval", flattenSwitchControllerSystemCaputpEchoInterval(o["caputp-echo-interval"], d, "caputp_echo_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["caputp-echo-interval"]) {
+			return fmt.Errorf("Error reading caputp_echo_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("caputp_max_retransmit", flattenSwitchControllerSystemCaputpMaxRetransmit(o["caputp-max-retransmit"], d, "caputp_max_retransmit", sv)); err != nil {
+		if !fortiAPIPatch(o["caputp-max-retransmit"]) {
+			return fmt.Errorf("Error reading caputp_max_retransmit: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -339,6 +371,14 @@ func expandSwitchControllerSystemTunnelMode(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSwitchControllerSystemCaputpEchoInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSystemCaputpMaxRetransmit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -346,7 +386,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["parallel-process-override"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemParallelProcessOverride(d, v, "parallel_process_override", sv)
 			if err != nil {
 				return &obj, err
@@ -360,7 +399,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["parallel-process"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemParallelProcess(d, v, "parallel_process", sv)
 			if err != nil {
 				return &obj, err
@@ -374,7 +412,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["data-sync-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemDataSyncInterval(d, v, "data_sync_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -388,7 +425,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["iot-weight-threshold"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemIotWeightThreshold(d, v, "iot_weight_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -402,7 +438,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["iot-scan-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemIotScanInterval(d, v, "iot_scan_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -416,7 +451,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["iot-holdoff"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemIotHoldoff(d, v, "iot_holdoff", sv)
 			if err != nil {
 				return &obj, err
@@ -430,7 +464,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["iot-mac-idle"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemIotMacIdle(d, v, "iot_mac_idle", sv)
 			if err != nil {
 				return &obj, err
@@ -444,7 +477,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["nac-periodic-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemNacPeriodicInterval(d, v, "nac_periodic_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -458,7 +490,6 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["dynamic-periodic-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemDynamicPeriodicInterval(d, v, "dynamic_periodic_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -472,12 +503,37 @@ func getObjectSwitchControllerSystem(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["tunnel-mode"] = nil
 		} else {
-
 			t, err := expandSwitchControllerSystemTunnelMode(d, v, "tunnel_mode", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["tunnel-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("caputp_echo_interval"); ok {
+		if setArgNil {
+			obj["caputp-echo-interval"] = nil
+		} else {
+			t, err := expandSwitchControllerSystemCaputpEchoInterval(d, v, "caputp_echo_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["caputp-echo-interval"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("caputp_max_retransmit"); ok {
+		if setArgNil {
+			obj["caputp-max-retransmit"] = nil
+		} else {
+			t, err := expandSwitchControllerSystemCaputpMaxRetransmit(d, v, "caputp_max_retransmit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["caputp-max-retransmit"] = t
 			}
 		}
 	}

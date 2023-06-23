@@ -147,6 +147,11 @@ func resourceSwitchControllerVlan() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -323,25 +328,21 @@ func flattenSwitchControllerVlanPortalMessageOverrides(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "auth_disclaimer_page"
 	if _, ok := i["auth-disclaimer-page"]; ok {
-
 		result["auth_disclaimer_page"] = flattenSwitchControllerVlanPortalMessageOverridesAuthDisclaimerPage(i["auth-disclaimer-page"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auth_reject_page"
 	if _, ok := i["auth-reject-page"]; ok {
-
 		result["auth_reject_page"] = flattenSwitchControllerVlanPortalMessageOverridesAuthRejectPage(i["auth-reject-page"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auth_login_page"
 	if _, ok := i["auth-login-page"]; ok {
-
 		result["auth_login_page"] = flattenSwitchControllerVlanPortalMessageOverridesAuthLoginPage(i["auth-login-page"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auth_login_failed_page"
 	if _, ok := i["auth-login-failed-page"]; ok {
-
 		result["auth_login_failed_page"] = flattenSwitchControllerVlanPortalMessageOverridesAuthLoginFailedPage(i["auth-login-failed-page"], d, pre_append, sv)
 	}
 
@@ -391,7 +392,6 @@ func flattenSwitchControllerVlanSelectedUsergroups(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerVlanSelectedUsergroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -410,6 +410,12 @@ func flattenSwitchControllerVlanSelectedUsergroupsName(v interface{}, d *schema.
 
 func refreshObjectSwitchControllerVlan(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerVlanName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -471,7 +477,7 @@ func refreshObjectSwitchControllerVlan(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("portal_message_overrides", flattenSwitchControllerVlanPortalMessageOverrides(o["portal-message-overrides"], d, "portal_message_overrides", sv)); err != nil {
 			if !fortiAPIPatch(o["portal-message-overrides"]) {
 				return fmt.Errorf("Error reading portal_message_overrides: %v", err)
@@ -487,7 +493,7 @@ func refreshObjectSwitchControllerVlan(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("selected_usergroups", flattenSwitchControllerVlanSelectedUsergroups(o["selected-usergroups"], d, "selected_usergroups", sv)); err != nil {
 			if !fortiAPIPatch(o["selected-usergroups"]) {
 				return fmt.Errorf("Error reading selected_usergroups: %v", err)
@@ -564,22 +570,18 @@ func expandSwitchControllerVlanPortalMessageOverrides(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "auth_disclaimer_page"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auth-disclaimer-page"], _ = expandSwitchControllerVlanPortalMessageOverridesAuthDisclaimerPage(d, i["auth_disclaimer_page"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auth_reject_page"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auth-reject-page"], _ = expandSwitchControllerVlanPortalMessageOverridesAuthRejectPage(d, i["auth_reject_page"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auth_login_page"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auth-login-page"], _ = expandSwitchControllerVlanPortalMessageOverridesAuthLoginPage(d, i["auth_login_page"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auth_login_failed_page"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auth-login-failed-page"], _ = expandSwitchControllerVlanPortalMessageOverridesAuthLoginFailedPage(d, i["auth_login_failed_page"], pre_append, sv)
 	}
 
@@ -618,7 +620,6 @@ func expandSwitchControllerVlanSelectedUsergroups(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerVlanSelectedUsergroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -638,7 +639,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerVlanName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -648,7 +648,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-
 		t, err := expandSwitchControllerVlanVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -658,7 +657,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("vlanid"); ok {
-
 		t, err := expandSwitchControllerVlanVlanid(d, v, "vlanid", sv)
 		if err != nil {
 			return &obj, err
@@ -668,7 +666,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandSwitchControllerVlanComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -678,7 +675,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandSwitchControllerVlanColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -688,7 +684,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("security"); ok {
-
 		t, err := expandSwitchControllerVlanSecurity(d, v, "security", sv)
 		if err != nil {
 			return &obj, err
@@ -698,7 +693,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("auth"); ok {
-
 		t, err := expandSwitchControllerVlanAuth(d, v, "auth", sv)
 		if err != nil {
 			return &obj, err
@@ -708,7 +702,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("radius_server"); ok {
-
 		t, err := expandSwitchControllerVlanRadiusServer(d, v, "radius_server", sv)
 		if err != nil {
 			return &obj, err
@@ -718,7 +711,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("usergroup"); ok {
-
 		t, err := expandSwitchControllerVlanUsergroup(d, v, "usergroup", sv)
 		if err != nil {
 			return &obj, err
@@ -728,7 +720,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("portal_message_override_group"); ok {
-
 		t, err := expandSwitchControllerVlanPortalMessageOverrideGroup(d, v, "portal_message_override_group", sv)
 		if err != nil {
 			return &obj, err
@@ -738,7 +729,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("portal_message_overrides"); ok {
-
 		t, err := expandSwitchControllerVlanPortalMessageOverrides(d, v, "portal_message_overrides", sv)
 		if err != nil {
 			return &obj, err
@@ -748,7 +738,6 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("selected_usergroups"); ok || d.HasChange("selected_usergroups") {
-
 		t, err := expandSwitchControllerVlanSelectedUsergroups(d, v, "selected_usergroups", sv)
 		if err != nil {
 			return &obj, err

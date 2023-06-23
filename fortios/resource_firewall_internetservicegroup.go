@@ -75,6 +75,11 @@ func resourceFirewallInternetServiceGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -238,13 +243,11 @@ func flattenFirewallInternetServiceGroupMember(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallInternetServiceGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallInternetServiceGroupMemberId(i["id"], d, pre_append, sv)
 		}
 
@@ -267,6 +270,12 @@ func flattenFirewallInternetServiceGroupMemberId(v interface{}, d *schema.Resour
 
 func refreshObjectFirewallInternetServiceGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallInternetServiceGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -286,7 +295,7 @@ func refreshObjectFirewallInternetServiceGroup(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenFirewallInternetServiceGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -339,13 +348,11 @@ func expandFirewallInternetServiceGroupMember(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallInternetServiceGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallInternetServiceGroupMemberId(d, i["id"], pre_append, sv)
 		}
 
@@ -369,7 +376,6 @@ func getObjectFirewallInternetServiceGroup(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallInternetServiceGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -379,7 +385,6 @@ func getObjectFirewallInternetServiceGroup(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallInternetServiceGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -389,7 +394,6 @@ func getObjectFirewallInternetServiceGroup(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("direction"); ok {
-
 		t, err := expandFirewallInternetServiceGroupDirection(d, v, "direction", sv)
 		if err != nil {
 			return &obj, err
@@ -399,7 +403,6 @@ func getObjectFirewallInternetServiceGroup(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandFirewallInternetServiceGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err

@@ -315,7 +315,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("uid"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientUid(d, v, "uid", sv)
 		if err != nil {
 			return &obj, err
@@ -325,7 +324,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -335,7 +333,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -345,7 +342,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
@@ -355,7 +351,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOkExists("status"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -365,7 +360,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOkExists("flag"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientFlag(d, v, "flag", sv)
 		if err != nil {
 			return &obj, err
@@ -375,7 +369,6 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("reg_fortigate"); ok {
-
 		t, err := expandEndpointControlRegisteredForticlientRegFortigate(d, v, "reg_fortigate", sv)
 		if err != nil {
 			return &obj, err

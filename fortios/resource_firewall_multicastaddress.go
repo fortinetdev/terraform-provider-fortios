@@ -122,6 +122,11 @@ func resourceFirewallMulticastAddress() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -316,19 +321,16 @@ func flattenFirewallMulticastAddressTagging(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallMulticastAddressTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenFirewallMulticastAddressTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenFirewallMulticastAddressTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -375,7 +377,6 @@ func flattenFirewallMulticastAddressTaggingTags(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallMulticastAddressTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -394,6 +395,12 @@ func flattenFirewallMulticastAddressTaggingTagsName(v interface{}, d *schema.Res
 
 func refreshObjectFirewallMulticastAddress(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallMulticastAddressName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -449,7 +456,7 @@ func refreshObjectFirewallMulticastAddress(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenFirewallMulticastAddressTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -526,19 +533,16 @@ func expandFirewallMulticastAddressTagging(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallMulticastAddressTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandFirewallMulticastAddressTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandFirewallMulticastAddressTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -576,7 +580,6 @@ func expandFirewallMulticastAddressTaggingTags(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallMulticastAddressTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -596,7 +599,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallMulticastAddressName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -606,7 +608,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallMulticastAddressType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -616,7 +617,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("subnet"); ok {
-
 		t, err := expandFirewallMulticastAddressSubnet(d, v, "subnet", sv)
 		if err != nil {
 			return &obj, err
@@ -626,7 +626,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("start_ip"); ok {
-
 		t, err := expandFirewallMulticastAddressStartIp(d, v, "start_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -636,7 +635,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("end_ip"); ok {
-
 		t, err := expandFirewallMulticastAddressEndIp(d, v, "end_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -646,7 +644,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallMulticastAddressComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -656,7 +653,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-
 		t, err := expandFirewallMulticastAddressVisibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err
@@ -666,7 +662,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("associated_interface"); ok {
-
 		t, err := expandFirewallMulticastAddressAssociatedInterface(d, v, "associated_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -676,7 +671,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallMulticastAddressColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -686,7 +680,6 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
-
 		t, err := expandFirewallMulticastAddressTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err

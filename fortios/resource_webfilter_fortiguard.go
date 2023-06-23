@@ -45,6 +45,12 @@ func resourceWebfilterFortiguard() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cache_mem_permille": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 150),
+				Optional:     true,
+				Computed:     true,
+			},
 			"cache_mem_percent": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 15),
@@ -95,6 +101,11 @@ func resourceWebfilterFortiguard() *schema.Resource {
 				ValidateFunc: validation.IntBetween(576, 10000),
 				Optional:     true,
 				Computed:     true,
+			},
+			"embed_image": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ovrd_auth_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -208,6 +219,10 @@ func flattenWebfilterFortiguardCachePrefixMatch(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenWebfilterFortiguardCacheMemPermille(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebfilterFortiguardCacheMemPercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -244,6 +259,10 @@ func flattenWebfilterFortiguardRequestPacketSizeLimit(v interface{}, d *schema.R
 	return v
 }
 
+func flattenWebfilterFortiguardEmbedImage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebfilterFortiguardOvrdAuthPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -260,6 +279,12 @@ func refreshObjectWebfilterFortiguard(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("cache_prefix_match", flattenWebfilterFortiguardCachePrefixMatch(o["cache-prefix-match"], d, "cache_prefix_match", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-prefix-match"]) {
 			return fmt.Errorf("Error reading cache_prefix_match: %v", err)
+		}
+	}
+
+	if err = d.Set("cache_mem_permille", flattenWebfilterFortiguardCacheMemPermille(o["cache-mem-permille"], d, "cache_mem_permille", sv)); err != nil {
+		if !fortiAPIPatch(o["cache-mem-permille"]) {
+			return fmt.Errorf("Error reading cache_mem_permille: %v", err)
 		}
 	}
 
@@ -317,6 +342,12 @@ func refreshObjectWebfilterFortiguard(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("embed_image", flattenWebfilterFortiguardEmbedImage(o["embed-image"], d, "embed_image", sv)); err != nil {
+		if !fortiAPIPatch(o["embed-image"]) {
+			return fmt.Errorf("Error reading embed_image: %v", err)
+		}
+	}
+
 	if err = d.Set("ovrd_auth_port", flattenWebfilterFortiguardOvrdAuthPort(o["ovrd-auth-port"], d, "ovrd_auth_port", sv)); err != nil {
 		if !fortiAPIPatch(o["ovrd-auth-port"]) {
 			return fmt.Errorf("Error reading ovrd_auth_port: %v", err)
@@ -337,6 +368,10 @@ func expandWebfilterFortiguardCacheMode(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWebfilterFortiguardCachePrefixMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterFortiguardCacheMemPermille(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -376,6 +411,10 @@ func expandWebfilterFortiguardRequestPacketSizeLimit(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandWebfilterFortiguardEmbedImage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebfilterFortiguardOvrdAuthPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -387,7 +426,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["cache-mode"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardCacheMode(d, v, "cache_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -401,7 +439,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["cache-prefix-match"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardCachePrefixMatch(d, v, "cache_prefix_match", sv)
 			if err != nil {
 				return &obj, err
@@ -411,11 +448,23 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		}
 	}
 
+	if v, ok := d.GetOk("cache_mem_permille"); ok {
+		if setArgNil {
+			obj["cache-mem-permille"] = nil
+		} else {
+			t, err := expandWebfilterFortiguardCacheMemPermille(d, v, "cache_mem_permille", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cache-mem-permille"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("cache_mem_percent"); ok {
 		if setArgNil {
 			obj["cache-mem-percent"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardCacheMemPercent(d, v, "cache_mem_percent", sv)
 			if err != nil {
 				return &obj, err
@@ -429,7 +478,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ovrd-auth-port-http"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardOvrdAuthPortHttp(d, v, "ovrd_auth_port_http", sv)
 			if err != nil {
 				return &obj, err
@@ -443,7 +491,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ovrd-auth-port-https"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardOvrdAuthPortHttps(d, v, "ovrd_auth_port_https", sv)
 			if err != nil {
 				return &obj, err
@@ -457,7 +504,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ovrd-auth-port-https-flow"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardOvrdAuthPortHttpsFlow(d, v, "ovrd_auth_port_https_flow", sv)
 			if err != nil {
 				return &obj, err
@@ -471,7 +517,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ovrd-auth-port-warning"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardOvrdAuthPortWarning(d, v, "ovrd_auth_port_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -485,7 +530,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ovrd-auth-https"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardOvrdAuthHttps(d, v, "ovrd_auth_https", sv)
 			if err != nil {
 				return &obj, err
@@ -499,7 +543,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["warn-auth-https"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardWarnAuthHttps(d, v, "warn_auth_https", sv)
 			if err != nil {
 				return &obj, err
@@ -513,7 +556,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["close-ports"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardClosePorts(d, v, "close_ports", sv)
 			if err != nil {
 				return &obj, err
@@ -527,7 +569,6 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["request-packet-size-limit"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardRequestPacketSizeLimit(d, v, "request_packet_size_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -537,11 +578,23 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 		}
 	}
 
+	if v, ok := d.GetOk("embed_image"); ok {
+		if setArgNil {
+			obj["embed-image"] = nil
+		} else {
+			t, err := expandWebfilterFortiguardEmbedImage(d, v, "embed_image", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["embed-image"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOkExists("ovrd_auth_port"); ok {
 		if setArgNil {
 			obj["ovrd-auth-port"] = nil
 		} else {
-
 			t, err := expandWebfilterFortiguardOvrdAuthPort(d, v, "ovrd_auth_port", sv)
 			if err != nil {
 				return &obj, err

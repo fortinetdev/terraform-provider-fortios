@@ -62,6 +62,12 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ha_reboot_controller": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"node_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -77,6 +83,12 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"maximum_minutes": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(5, 10080),
+							Optional:     true,
+							Computed:     true,
 						},
 						"time": &schema.Schema{
 							Type:     schema.TypeString,
@@ -108,6 +120,11 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -230,6 +247,10 @@ func flattenSystemFederatedUpgradeNextPathIndex(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemFederatedUpgradeHaRebootController(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -256,43 +277,41 @@ func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := i["serial"]; ok {
-
 			tmp["serial"] = flattenSystemFederatedUpgradeNodeListSerial(i["serial"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timing"
 		if _, ok := i["timing"]; ok {
-
 			tmp["timing"] = flattenSystemFederatedUpgradeNodeListTiming(i["timing"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_minutes"
+		if _, ok := i["maximum-minutes"]; ok {
+			tmp["maximum_minutes"] = flattenSystemFederatedUpgradeNodeListMaximumMinutes(i["maximum-minutes"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if _, ok := i["time"]; ok {
-
 			tmp["time"] = flattenSystemFederatedUpgradeNodeListTime(i["time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "setup_time"
 		if _, ok := i["setup-time"]; ok {
-
 			tmp["setup_time"] = flattenSystemFederatedUpgradeNodeListSetupTime(i["setup-time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upgrade_path"
 		if _, ok := i["upgrade-path"]; ok {
-
 			tmp["upgrade_path"] = flattenSystemFederatedUpgradeNodeListUpgradePath(i["upgrade-path"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if _, ok := i["device-type"]; ok {
-
 			tmp["device_type"] = flattenSystemFederatedUpgradeNodeListDeviceType(i["device-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
 		if _, ok := i["coordinating-fortigate"]; ok {
-
 			tmp["coordinating_fortigate"] = flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(i["coordinating-fortigate"], d, pre_append, sv)
 		}
 
@@ -310,6 +329,10 @@ func flattenSystemFederatedUpgradeNodeListSerial(v interface{}, d *schema.Resour
 }
 
 func flattenSystemFederatedUpgradeNodeListTiming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeNodeListMaximumMinutes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -335,6 +358,12 @@ func flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(v interface{}, d
 
 func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemFederatedUpgradeStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -366,7 +395,13 @@ func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("ha_reboot_controller", flattenSystemFederatedUpgradeHaRebootController(o["ha-reboot-controller"], d, "ha_reboot_controller", sv)); err != nil {
+		if !fortiAPIPatch(o["ha-reboot-controller"]) {
+			return fmt.Errorf("Error reading ha_reboot_controller: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("node_list", flattenSystemFederatedUpgradeNodeList(o["node-list"], d, "node_list", sv)); err != nil {
 			if !fortiAPIPatch(o["node-list"]) {
 				return fmt.Errorf("Error reading node_list: %v", err)
@@ -411,6 +446,10 @@ func expandSystemFederatedUpgradeNextPathIndex(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemFederatedUpgradeHaRebootController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -427,43 +466,41 @@ func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["serial"], _ = expandSystemFederatedUpgradeNodeListSerial(d, i["serial"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timing"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["timing"], _ = expandSystemFederatedUpgradeNodeListTiming(d, i["timing"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_minutes"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["maximum-minutes"], _ = expandSystemFederatedUpgradeNodeListMaximumMinutes(d, i["maximum_minutes"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["time"], _ = expandSystemFederatedUpgradeNodeListTime(d, i["time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "setup_time"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["setup-time"], _ = expandSystemFederatedUpgradeNodeListSetupTime(d, i["setup_time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upgrade_path"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["upgrade-path"], _ = expandSystemFederatedUpgradeNodeListUpgradePath(d, i["upgrade_path"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["device-type"], _ = expandSystemFederatedUpgradeNodeListDeviceType(d, i["device_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["coordinating-fortigate"], _ = expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d, i["coordinating_fortigate"], pre_append, sv)
 		}
 
@@ -480,6 +517,10 @@ func expandSystemFederatedUpgradeNodeListSerial(d *schema.ResourceData, v interf
 }
 
 func expandSystemFederatedUpgradeNodeListTiming(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeNodeListMaximumMinutes(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -510,7 +551,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFederatedUpgradeStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -524,7 +564,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["failure-reason"] = nil
 		} else {
-
 			t, err := expandSystemFederatedUpgradeFailureReason(d, v, "failure_reason", sv)
 			if err != nil {
 				return &obj, err
@@ -538,7 +577,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["failure-device"] = nil
 		} else {
-
 			t, err := expandSystemFederatedUpgradeFailureDevice(d, v, "failure_device", sv)
 			if err != nil {
 				return &obj, err
@@ -552,7 +590,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["upgrade-id"] = nil
 		} else {
-
 			t, err := expandSystemFederatedUpgradeUpgradeId(d, v, "upgrade_id", sv)
 			if err != nil {
 				return &obj, err
@@ -566,7 +603,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["next-path-index"] = nil
 		} else {
-
 			t, err := expandSystemFederatedUpgradeNextPathIndex(d, v, "next_path_index", sv)
 			if err != nil {
 				return &obj, err
@@ -576,11 +612,23 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
+	if v, ok := d.GetOk("ha_reboot_controller"); ok {
+		if setArgNil {
+			obj["ha-reboot-controller"] = nil
+		} else {
+			t, err := expandSystemFederatedUpgradeHaRebootController(d, v, "ha_reboot_controller", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-reboot-controller"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("node_list"); ok || d.HasChange("node_list") {
 		if setArgNil {
 			obj["node-list"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemFederatedUpgradeNodeList(d, v, "node_list", sv)
 			if err != nil {
 				return &obj, err

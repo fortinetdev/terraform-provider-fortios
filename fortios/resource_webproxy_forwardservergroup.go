@@ -82,6 +82,11 @@ func resourceWebProxyForwardServerGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -249,13 +254,11 @@ func flattenWebProxyForwardServerGroupServerList(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyForwardServerGroupServerListName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := i["weight"]; ok {
-
 			tmp["weight"] = flattenWebProxyForwardServerGroupServerListWeight(i["weight"], d, pre_append, sv)
 		}
 
@@ -278,6 +281,12 @@ func flattenWebProxyForwardServerGroupServerListWeight(v interface{}, d *schema.
 
 func refreshObjectWebProxyForwardServerGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWebProxyForwardServerGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -303,7 +312,7 @@ func refreshObjectWebProxyForwardServerGroup(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_list", flattenWebProxyForwardServerGroupServerList(o["server-list"], d, "server_list", sv)); err != nil {
 			if !fortiAPIPatch(o["server-list"]) {
 				return fmt.Errorf("Error reading server_list: %v", err)
@@ -360,13 +369,11 @@ func expandWebProxyForwardServerGroupServerList(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyForwardServerGroupServerListName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["weight"], _ = expandWebProxyForwardServerGroupServerListWeight(d, i["weight"], pre_append, sv)
 		}
 
@@ -390,7 +397,6 @@ func getObjectWebProxyForwardServerGroup(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebProxyForwardServerGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -400,7 +406,6 @@ func getObjectWebProxyForwardServerGroup(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("affinity"); ok {
-
 		t, err := expandWebProxyForwardServerGroupAffinity(d, v, "affinity", sv)
 		if err != nil {
 			return &obj, err
@@ -410,7 +415,6 @@ func getObjectWebProxyForwardServerGroup(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ldb_method"); ok {
-
 		t, err := expandWebProxyForwardServerGroupLdbMethod(d, v, "ldb_method", sv)
 		if err != nil {
 			return &obj, err
@@ -420,7 +424,6 @@ func getObjectWebProxyForwardServerGroup(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("group_down_option"); ok {
-
 		t, err := expandWebProxyForwardServerGroupGroupDownOption(d, v, "group_down_option", sv)
 		if err != nil {
 			return &obj, err
@@ -430,7 +433,6 @@ func getObjectWebProxyForwardServerGroup(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("server_list"); ok || d.HasChange("server_list") {
-
 		t, err := expandWebProxyForwardServerGroupServerList(d, v, "server_list", sv)
 		if err != nil {
 			return &obj, err

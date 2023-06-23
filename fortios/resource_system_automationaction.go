@@ -63,6 +63,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"forticare_email": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"email_to": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -395,6 +400,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -540,6 +550,10 @@ func flattenSystemAutomationActionTlsCertificate(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenSystemAutomationActionForticareEmail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionEmailTo(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -566,7 +580,6 @@ func flattenSystemAutomationActionEmailTo(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemAutomationActionEmailToName(i["name"], d, pre_append, sv)
 		}
 
@@ -765,19 +778,16 @@ func flattenSystemAutomationActionHttpHeaders(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemAutomationActionHttpHeadersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
-
 			tmp["key"] = flattenSystemAutomationActionHttpHeadersKey(i["key"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenSystemAutomationActionHttpHeadersValue(i["value"], d, pre_append, sv)
 		}
 
@@ -828,7 +838,6 @@ func flattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := i["header"]; ok {
-
 			tmp["header"] = flattenSystemAutomationActionHeadersHeader(i["header"], d, pre_append, sv)
 		}
 
@@ -899,7 +908,6 @@ func flattenSystemAutomationActionSdnConnector(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemAutomationActionSdnConnectorName(i["name"], d, pre_append, sv)
 		}
 
@@ -918,6 +926,12 @@ func flattenSystemAutomationActionSdnConnectorName(v interface{}, d *schema.Reso
 
 func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemAutomationActionName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -949,7 +963,13 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("forticare_email", flattenSystemAutomationActionForticareEmail(o["forticare-email"], d, "forticare_email", sv)); err != nil {
+		if !fortiAPIPatch(o["forticare-email"]) {
+			return fmt.Errorf("Error reading forticare_email: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("email_to", flattenSystemAutomationActionEmailTo(o["email-to"], d, "email_to", sv)); err != nil {
 			if !fortiAPIPatch(o["email-to"]) {
 				return fmt.Errorf("Error reading email_to: %v", err)
@@ -1181,7 +1201,7 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("http_headers", flattenSystemAutomationActionHttpHeaders(o["http-headers"], d, "http_headers", sv)); err != nil {
 			if !fortiAPIPatch(o["http-headers"]) {
 				return fmt.Errorf("Error reading http_headers: %v", err)
@@ -1197,7 +1217,7 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers", sv)); err != nil {
 			if !fortiAPIPatch(o["headers"]) {
 				return fmt.Errorf("Error reading headers: %v", err)
@@ -1255,7 +1275,7 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("sdn_connector", flattenSystemAutomationActionSdnConnector(o["sdn-connector"], d, "sdn_connector", sv)); err != nil {
 			if !fortiAPIPatch(o["sdn-connector"]) {
 				return fmt.Errorf("Error reading sdn_connector: %v", err)
@@ -1300,6 +1320,10 @@ func expandSystemAutomationActionTlsCertificate(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandSystemAutomationActionForticareEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionEmailTo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -1316,7 +1340,6 @@ func expandSystemAutomationActionEmailTo(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemAutomationActionEmailToName(d, i["name"], pre_append, sv)
 		}
 
@@ -1504,19 +1527,16 @@ func expandSystemAutomationActionHttpHeaders(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemAutomationActionHttpHeadersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["key"], _ = expandSystemAutomationActionHttpHeadersKey(d, i["key"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandSystemAutomationActionHttpHeadersValue(d, i["value"], pre_append, sv)
 		}
 
@@ -1556,7 +1576,6 @@ func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["header"], _ = expandSystemAutomationActionHeadersHeader(d, i["header"], pre_append, sv)
 		}
 
@@ -1616,7 +1635,6 @@ func expandSystemAutomationActionSdnConnector(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemAutomationActionSdnConnectorName(d, i["name"], pre_append, sv)
 		}
 
@@ -1636,7 +1654,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemAutomationActionName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1646,7 +1663,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSystemAutomationActionDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -1656,7 +1672,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("action_type"); ok {
-
 		t, err := expandSystemAutomationActionActionType(d, v, "action_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1666,7 +1681,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("system_action"); ok {
-
 		t, err := expandSystemAutomationActionSystemAction(d, v, "system_action", sv)
 		if err != nil {
 			return &obj, err
@@ -1676,7 +1690,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("tls_certificate"); ok {
-
 		t, err := expandSystemAutomationActionTlsCertificate(d, v, "tls_certificate", sv)
 		if err != nil {
 			return &obj, err
@@ -1685,8 +1698,16 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("email_to"); ok || d.HasChange("email_to") {
+	if v, ok := d.GetOk("forticare_email"); ok {
+		t, err := expandSystemAutomationActionForticareEmail(d, v, "forticare_email", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["forticare-email"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("email_to"); ok || d.HasChange("email_to") {
 		t, err := expandSystemAutomationActionEmailTo(d, v, "email_to", sv)
 		if err != nil {
 			return &obj, err
@@ -1696,7 +1717,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("email_from"); ok {
-
 		t, err := expandSystemAutomationActionEmailFrom(d, v, "email_from", sv)
 		if err != nil {
 			return &obj, err
@@ -1706,7 +1726,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("email_subject"); ok {
-
 		t, err := expandSystemAutomationActionEmailSubject(d, v, "email_subject", sv)
 		if err != nil {
 			return &obj, err
@@ -1716,7 +1735,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("email_body"); ok {
-
 		t, err := expandSystemAutomationActionEmailBody(d, v, "email_body", sv)
 		if err != nil {
 			return &obj, err
@@ -1726,7 +1744,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("minimum_interval"); ok {
-
 		t, err := expandSystemAutomationActionMinimumInterval(d, v, "minimum_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -1736,7 +1753,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("delay"); ok {
-
 		t, err := expandSystemAutomationActionDelay(d, v, "delay", sv)
 		if err != nil {
 			return &obj, err
@@ -1746,7 +1762,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("required"); ok {
-
 		t, err := expandSystemAutomationActionRequired(d, v, "required", sv)
 		if err != nil {
 			return &obj, err
@@ -1756,7 +1771,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("aws_api_id"); ok {
-
 		t, err := expandSystemAutomationActionAwsApiId(d, v, "aws_api_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1766,7 +1780,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("aws_region"); ok {
-
 		t, err := expandSystemAutomationActionAwsRegion(d, v, "aws_region", sv)
 		if err != nil {
 			return &obj, err
@@ -1776,7 +1789,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("aws_domain"); ok {
-
 		t, err := expandSystemAutomationActionAwsDomain(d, v, "aws_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1786,7 +1798,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("aws_api_stage"); ok {
-
 		t, err := expandSystemAutomationActionAwsApiStage(d, v, "aws_api_stage", sv)
 		if err != nil {
 			return &obj, err
@@ -1796,7 +1807,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("aws_api_path"); ok {
-
 		t, err := expandSystemAutomationActionAwsApiPath(d, v, "aws_api_path", sv)
 		if err != nil {
 			return &obj, err
@@ -1806,7 +1816,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("aws_api_key"); ok {
-
 		t, err := expandSystemAutomationActionAwsApiKey(d, v, "aws_api_key", sv)
 		if err != nil {
 			return &obj, err
@@ -1816,7 +1825,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("azure_app"); ok {
-
 		t, err := expandSystemAutomationActionAzureApp(d, v, "azure_app", sv)
 		if err != nil {
 			return &obj, err
@@ -1826,7 +1834,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("azure_function"); ok {
-
 		t, err := expandSystemAutomationActionAzureFunction(d, v, "azure_function", sv)
 		if err != nil {
 			return &obj, err
@@ -1836,7 +1843,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("azure_domain"); ok {
-
 		t, err := expandSystemAutomationActionAzureDomain(d, v, "azure_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1846,7 +1852,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("azure_function_authorization"); ok {
-
 		t, err := expandSystemAutomationActionAzureFunctionAuthorization(d, v, "azure_function_authorization", sv)
 		if err != nil {
 			return &obj, err
@@ -1856,7 +1861,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("azure_api_key"); ok {
-
 		t, err := expandSystemAutomationActionAzureApiKey(d, v, "azure_api_key", sv)
 		if err != nil {
 			return &obj, err
@@ -1866,7 +1870,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("gcp_function_region"); ok {
-
 		t, err := expandSystemAutomationActionGcpFunctionRegion(d, v, "gcp_function_region", sv)
 		if err != nil {
 			return &obj, err
@@ -1876,7 +1879,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("gcp_project"); ok {
-
 		t, err := expandSystemAutomationActionGcpProject(d, v, "gcp_project", sv)
 		if err != nil {
 			return &obj, err
@@ -1886,7 +1888,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("gcp_function_domain"); ok {
-
 		t, err := expandSystemAutomationActionGcpFunctionDomain(d, v, "gcp_function_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1896,7 +1897,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("gcp_function"); ok {
-
 		t, err := expandSystemAutomationActionGcpFunction(d, v, "gcp_function", sv)
 		if err != nil {
 			return &obj, err
@@ -1906,7 +1906,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_account_id"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudAccountId(d, v, "alicloud_account_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1916,7 +1915,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_region"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudRegion(d, v, "alicloud_region", sv)
 		if err != nil {
 			return &obj, err
@@ -1926,7 +1924,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_function_domain"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudFunctionDomain(d, v, "alicloud_function_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1936,7 +1933,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_version"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudVersion(d, v, "alicloud_version", sv)
 		if err != nil {
 			return &obj, err
@@ -1946,7 +1942,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_service"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudService(d, v, "alicloud_service", sv)
 		if err != nil {
 			return &obj, err
@@ -1956,7 +1951,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_function"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudFunction(d, v, "alicloud_function", sv)
 		if err != nil {
 			return &obj, err
@@ -1966,7 +1960,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_function_authorization"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudFunctionAuthorization(d, v, "alicloud_function_authorization", sv)
 		if err != nil {
 			return &obj, err
@@ -1976,7 +1969,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_access_key_id"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudAccessKeyId(d, v, "alicloud_access_key_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1986,7 +1978,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("alicloud_access_key_secret"); ok {
-
 		t, err := expandSystemAutomationActionAlicloudAccessKeySecret(d, v, "alicloud_access_key_secret", sv)
 		if err != nil {
 			return &obj, err
@@ -1996,7 +1987,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("message_type"); ok {
-
 		t, err := expandSystemAutomationActionMessageType(d, v, "message_type", sv)
 		if err != nil {
 			return &obj, err
@@ -2006,7 +1996,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("message"); ok {
-
 		t, err := expandSystemAutomationActionMessage(d, v, "message", sv)
 		if err != nil {
 			return &obj, err
@@ -2016,7 +2005,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("replacement_message"); ok {
-
 		t, err := expandSystemAutomationActionReplacementMessage(d, v, "replacement_message", sv)
 		if err != nil {
 			return &obj, err
@@ -2026,7 +2014,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandSystemAutomationActionReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -2036,7 +2023,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandSystemAutomationActionProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -2046,7 +2032,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("method"); ok {
-
 		t, err := expandSystemAutomationActionMethod(d, v, "method", sv)
 		if err != nil {
 			return &obj, err
@@ -2056,7 +2041,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("uri"); ok {
-
 		t, err := expandSystemAutomationActionUri(d, v, "uri", sv)
 		if err != nil {
 			return &obj, err
@@ -2066,7 +2050,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("http_body"); ok {
-
 		t, err := expandSystemAutomationActionHttpBody(d, v, "http_body", sv)
 		if err != nil {
 			return &obj, err
@@ -2076,7 +2059,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandSystemAutomationActionPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -2086,7 +2068,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("http_headers"); ok || d.HasChange("http_headers") {
-
 		t, err := expandSystemAutomationActionHttpHeaders(d, v, "http_headers", sv)
 		if err != nil {
 			return &obj, err
@@ -2096,7 +2077,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("headers"); ok || d.HasChange("headers") {
-
 		t, err := expandSystemAutomationActionHeaders(d, v, "headers", sv)
 		if err != nil {
 			return &obj, err
@@ -2106,7 +2086,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("verify_host_cert"); ok {
-
 		t, err := expandSystemAutomationActionVerifyHostCert(d, v, "verify_host_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -2116,7 +2095,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("script"); ok {
-
 		t, err := expandSystemAutomationActionScript(d, v, "script", sv)
 		if err != nil {
 			return &obj, err
@@ -2126,7 +2104,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("output_size"); ok {
-
 		t, err := expandSystemAutomationActionOutputSize(d, v, "output_size", sv)
 		if err != nil {
 			return &obj, err
@@ -2136,7 +2113,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("timeout"); ok {
-
 		t, err := expandSystemAutomationActionTimeout(d, v, "timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -2146,7 +2122,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("execute_security_fabric"); ok {
-
 		t, err := expandSystemAutomationActionExecuteSecurityFabric(d, v, "execute_security_fabric", sv)
 		if err != nil {
 			return &obj, err
@@ -2156,7 +2131,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("accprofile"); ok {
-
 		t, err := expandSystemAutomationActionAccprofile(d, v, "accprofile", sv)
 		if err != nil {
 			return &obj, err
@@ -2166,7 +2140,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("security_tag"); ok {
-
 		t, err := expandSystemAutomationActionSecurityTag(d, v, "security_tag", sv)
 		if err != nil {
 			return &obj, err
@@ -2176,7 +2149,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("sdn_connector"); ok || d.HasChange("sdn_connector") {
-
 		t, err := expandSystemAutomationActionSdnConnector(d, v, "sdn_connector", sv)
 		if err != nil {
 			return &obj, err

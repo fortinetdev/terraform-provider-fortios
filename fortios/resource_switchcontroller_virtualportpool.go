@@ -217,7 +217,6 @@ func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, sv string)
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerVirtualPortPoolName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -227,7 +226,6 @@ func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, sv string)
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerVirtualPortPoolDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err

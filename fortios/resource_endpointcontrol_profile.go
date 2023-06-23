@@ -632,6 +632,11 @@ func resourceEndpointControlProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -772,205 +777,171 @@ func flattenEndpointControlProfileForticlientWinmacSettings(v interface{}, d *sc
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "forticlient_registration_compliance_action"
 	if _, ok := i["forticlient-registration-compliance-action"]; ok {
-
 		result["forticlient_registration_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistrationComplianceAction(i["forticlient-registration-compliance-action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_ems_compliance"
 	if _, ok := i["forticlient-ems-compliance"]; ok {
-
 		result["forticlient_ems_compliance"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsCompliance(i["forticlient-ems-compliance"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_ems_compliance_action"
 	if _, ok := i["forticlient-ems-compliance-action"]; ok {
-
 		result["forticlient_ems_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsComplianceAction(i["forticlient-ems-compliance-action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_ems_entries"
 	if _, ok := i["forticlient-ems-entries"]; ok {
-
 		result["forticlient_ems_entries"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(i["forticlient-ems-entries"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_security_posture"
 	if _, ok := i["forticlient-security-posture"]; ok {
-
 		result["forticlient_security_posture"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPosture(i["forticlient-security-posture"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_security_posture_compliance_action"
 	if _, ok := i["forticlient-security-posture-compliance-action"]; ok {
-
 		result["forticlient_security_posture_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPostureComplianceAction(i["forticlient-security-posture-compliance-action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_av"
 	if _, ok := i["forticlient-av"]; ok {
-
 		result["forticlient_av"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientAv(i["forticlient-av"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "av_realtime_protection"
 	if _, ok := i["av-realtime-protection"]; ok {
-
 		result["av_realtime_protection"] = flattenEndpointControlProfileForticlientWinmacSettingsAvRealtimeProtection(i["av-realtime-protection"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "av_signature_up_to_date"
 	if _, ok := i["av-signature-up-to-date"]; ok {
-
 		result["av_signature_up_to_date"] = flattenEndpointControlProfileForticlientWinmacSettingsAvSignatureUpToDate(i["av-signature-up-to-date"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sandbox_analysis"
 	if _, ok := i["sandbox-analysis"]; ok {
-
 		result["sandbox_analysis"] = flattenEndpointControlProfileForticlientWinmacSettingsSandboxAnalysis(i["sandbox-analysis"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sandbox_address"
 	if _, ok := i["sandbox-address"]; ok {
-
 		result["sandbox_address"] = flattenEndpointControlProfileForticlientWinmacSettingsSandboxAddress(i["sandbox-address"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "os_av_software_installed"
 	if _, ok := i["os-av-software-installed"]; ok {
-
 		result["os_av_software_installed"] = flattenEndpointControlProfileForticlientWinmacSettingsOsAvSoftwareInstalled(i["os-av-software-installed"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_application_firewall"
 	if _, ok := i["forticlient-application-firewall"]; ok {
-
 		result["forticlient_application_firewall"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewall(i["forticlient-application-firewall"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_application_firewall_list"
 	if _, ok := i["forticlient-application-firewall-list"]; ok {
-
 		result["forticlient_application_firewall_list"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewallList(i["forticlient-application-firewall-list"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := i["forticlient-wf"]; ok {
-
 		result["forticlient_wf"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientWf(i["forticlient-wf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := i["forticlient-wf-profile"]; ok {
-
 		result["forticlient_wf_profile"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientWfProfile(i["forticlient-wf-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_system_compliance"
 	if _, ok := i["forticlient-system-compliance"]; ok {
-
 		result["forticlient_system_compliance"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSystemCompliance(i["forticlient-system-compliance"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_system_compliance_action"
 	if _, ok := i["forticlient-system-compliance-action"]; ok {
-
 		result["forticlient_system_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSystemComplianceAction(i["forticlient-system-compliance-action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_minimum_software_version"
 	if _, ok := i["forticlient-minimum-software-version"]; ok {
-
 		result["forticlient_minimum_software_version"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientMinimumSoftwareVersion(i["forticlient-minimum-software-version"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_win_ver"
 	if _, ok := i["forticlient-win-ver"]; ok {
-
 		result["forticlient_win_ver"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientWinVer(i["forticlient-win-ver"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_mac_ver"
 	if _, ok := i["forticlient-mac-ver"]; ok {
-
 		result["forticlient_mac_ver"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientMacVer(i["forticlient-mac-ver"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_linux_ver"
 	if _, ok := i["forticlient-linux-ver"]; ok {
-
 		result["forticlient_linux_ver"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLinuxVer(i["forticlient-linux-ver"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_operating_system"
 	if _, ok := i["forticlient-operating-system"]; ok {
-
 		result["forticlient_operating_system"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystem(i["forticlient-operating-system"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_running_app"
 	if _, ok := i["forticlient-running-app"]; ok {
-
 		result["forticlient_running_app"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(i["forticlient-running-app"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_registry_entry"
 	if _, ok := i["forticlient-registry-entry"]; ok {
-
 		result["forticlient_registry_entry"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntry(i["forticlient-registry-entry"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_own_file"
 	if _, ok := i["forticlient-own-file"]; ok {
-
 		result["forticlient_own_file"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(i["forticlient-own-file"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_log_upload"
 	if _, ok := i["forticlient-log-upload"]; ok {
-
 		result["forticlient_log_upload"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLogUpload(i["forticlient-log-upload"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_log_upload_level"
 	if _, ok := i["forticlient-log-upload-level"]; ok {
-
 		result["forticlient_log_upload_level"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadLevel(i["forticlient-log-upload-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_log_upload_server"
 	if _, ok := i["forticlient-log-upload-server"]; ok {
-
 		result["forticlient_log_upload_server"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadServer(i["forticlient-log-upload-server"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vuln_scan"
 	if _, ok := i["forticlient-vuln-scan"]; ok {
-
 		result["forticlient_vuln_scan"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScan(i["forticlient-vuln-scan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vuln_scan_compliance_action"
 	if _, ok := i["forticlient-vuln-scan-compliance-action"]; ok {
-
 		result["forticlient_vuln_scan_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanComplianceAction(i["forticlient-vuln-scan-compliance-action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce"
 	if _, ok := i["forticlient-vuln-scan-enforce"]; ok {
-
 		result["forticlient_vuln_scan_enforce"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforce(i["forticlient-vuln-scan-enforce"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce_grace"
 	if _, ok := i["forticlient-vuln-scan-enforce-grace"]; ok {
-
 		result["forticlient_vuln_scan_enforce_grace"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforceGrace(i["forticlient-vuln-scan-enforce-grace"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vuln_scan_exempt"
 	if _, ok := i["forticlient-vuln-scan-exempt"]; ok {
-
 		result["forticlient_vuln_scan_exempt"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanExempt(i["forticlient-vuln-scan-exempt"], d, pre_append, sv)
 	}
 
@@ -1016,7 +987,6 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntriesName(i["name"], d, pre_append, sv)
 		}
 
@@ -1131,19 +1101,16 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingS
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_type"
 		if _, ok := i["os-type"]; ok {
-
 			tmp["os_type"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsType(i["os-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_name"
 		if _, ok := i["os-name"]; ok {
-
 			tmp["os_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsName(i["os-name"], d, pre_append, sv)
 		}
 
@@ -1194,67 +1161,56 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_name"
 		if _, ok := i["app-name"]; ok {
-
 			tmp["app_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppName(i["app-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application_check_rule"
 		if _, ok := i["application-check-rule"]; ok {
-
 			tmp["application_check_rule"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppApplicationCheckRule(i["application-check-rule"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name"
 		if _, ok := i["process-name"]; ok {
-
 			tmp["process_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName(i["process-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature"
 		if _, ok := i["app-sha256-signature"]; ok {
-
 			tmp["app_sha256_signature"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature(i["app-sha256-signature"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name2"
 		if _, ok := i["process-name2"]; ok {
-
 			tmp["process_name2"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName2(i["process-name2"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature2"
 		if _, ok := i["app-sha256-signature2"]; ok {
-
 			tmp["app_sha256_signature2"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature2(i["app-sha256-signature2"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name3"
 		if _, ok := i["process-name3"]; ok {
-
 			tmp["process_name3"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName3(i["process-name3"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature3"
 		if _, ok := i["app-sha256-signature3"]; ok {
-
 			tmp["app_sha256_signature3"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature3(i["app-sha256-signature3"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name4"
 		if _, ok := i["process-name4"]; ok {
-
 			tmp["process_name4"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName4(i["process-name4"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature4"
 		if _, ok := i["app-sha256-signature4"]; ok {
-
 			tmp["app_sha256_signature4"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature4(i["app-sha256-signature4"], d, pre_append, sv)
 		}
 
@@ -1337,13 +1293,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEn
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "registry_entry"
 		if _, ok := i["registry-entry"]; ok {
-
 			tmp["registry_entry"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryRegistryEntry(i["registry-entry"], d, pre_append, sv)
 		}
 
@@ -1390,13 +1344,11 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
 		if _, ok := i["file"]; ok {
-
 			tmp["file"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileFile(i["file"], d, pre_append, sv)
 		}
 
@@ -1460,43 +1412,36 @@ func flattenEndpointControlProfileForticlientAndroidSettings(v interface{}, d *s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := i["forticlient-wf"]; ok {
-
 		result["forticlient_wf"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientWf(i["forticlient-wf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := i["forticlient-wf-profile"]; ok {
-
 		result["forticlient_wf_profile"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientWfProfile(i["forticlient-wf-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := i["disable-wf-when-protected"]; ok {
-
 		result["disable_wf_when_protected"] = flattenEndpointControlProfileForticlientAndroidSettingsDisableWfWhenProtected(i["disable-wf-when-protected"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vpn_provisioning"
 	if _, ok := i["forticlient-vpn-provisioning"]; ok {
-
 		result["forticlient_vpn_provisioning"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnProvisioning(i["forticlient-vpn-provisioning"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_advanced_vpn"
 	if _, ok := i["forticlient-advanced-vpn"]; ok {
-
 		result["forticlient_advanced_vpn"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpn(i["forticlient-advanced-vpn"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_advanced_vpn_buffer"
 	if _, ok := i["forticlient-advanced-vpn-buffer"]; ok {
-
 		result["forticlient_advanced_vpn_buffer"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpnBuffer(i["forticlient-advanced-vpn-buffer"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_vpn_settings"
 	if _, ok := i["forticlient-vpn-settings"]; ok {
-
 		result["forticlient_vpn_settings"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettings(i["forticlient-vpn-settings"], d, pre_append, sv)
 	}
 
@@ -1554,43 +1499,36 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if _, ok := i["remote-gw"]; ok {
-
 			tmp["remote_gw"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsRemoteGw(i["remote-gw"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
 		if _, ok := i["sslvpn-access-port"]; ok {
-
 			tmp["sslvpn_access_port"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnAccessPort(i["sslvpn-access-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
 		if _, ok := i["sslvpn-require-certificate"]; ok {
-
 			tmp["sslvpn_require_certificate"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnRequireCertificate(i["sslvpn-require-certificate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
 		if _, ok := i["auth-method"]; ok {
-
 			tmp["auth_method"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsAuthMethod(i["auth-method"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := i["preshared-key"]; ok {
-
 			tmp["preshared_key"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(i["preshared-key"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -1646,49 +1584,41 @@ func flattenEndpointControlProfileForticlientIosSettings(v interface{}, d *schem
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := i["forticlient-wf"]; ok {
-
 		result["forticlient_wf"] = flattenEndpointControlProfileForticlientIosSettingsForticlientWf(i["forticlient-wf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := i["forticlient-wf-profile"]; ok {
-
 		result["forticlient_wf_profile"] = flattenEndpointControlProfileForticlientIosSettingsForticlientWfProfile(i["forticlient-wf-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := i["disable-wf-when-protected"]; ok {
-
 		result["disable_wf_when_protected"] = flattenEndpointControlProfileForticlientIosSettingsDisableWfWhenProtected(i["disable-wf-when-protected"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "client_vpn_provisioning"
 	if _, ok := i["client-vpn-provisioning"]; ok {
-
 		result["client_vpn_provisioning"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnProvisioning(i["client-vpn-provisioning"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "client_vpn_settings"
 	if _, ok := i["client-vpn-settings"]; ok {
-
 		result["client_vpn_settings"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(i["client-vpn-settings"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "distribute_configuration_profile"
 	if _, ok := i["distribute-configuration-profile"]; ok {
-
 		result["distribute_configuration_profile"] = flattenEndpointControlProfileForticlientIosSettingsDistributeConfigurationProfile(i["distribute-configuration-profile"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "configuration_name"
 	if _, ok := i["configuration-name"]; ok {
-
 		result["configuration_name"] = flattenEndpointControlProfileForticlientIosSettingsConfigurationName(i["configuration-name"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "configuration_content"
 	if _, ok := i["configuration-content"]; ok {
-
 		result["configuration_content"] = flattenEndpointControlProfileForticlientIosSettingsConfigurationContent(i["configuration-content"], d, pre_append, sv)
 	}
 
@@ -1738,55 +1668,46 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_name"
 		if _, ok := i["vpn-configuration-name"]; ok {
-
 			tmp["vpn_configuration_name"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationName(i["vpn-configuration-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_content"
 		if _, ok := i["vpn-configuration-content"]; ok {
-
 			tmp["vpn_configuration_content"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationContent(i["vpn-configuration-content"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if _, ok := i["remote-gw"]; ok {
-
 			tmp["remote_gw"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsRemoteGw(i["remote-gw"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
 		if _, ok := i["sslvpn-access-port"]; ok {
-
 			tmp["sslvpn_access_port"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnAccessPort(i["sslvpn-access-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
 		if _, ok := i["sslvpn-require-certificate"]; ok {
-
 			tmp["sslvpn_require_certificate"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnRequireCertificate(i["sslvpn-require-certificate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
 		if _, ok := i["auth-method"]; ok {
-
 			tmp["auth_method"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsAuthMethod(i["auth-method"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := i["preshared-key"]; ok {
-
 			tmp["preshared_key"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(i["preshared-key"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -1881,7 +1802,6 @@ func flattenEndpointControlProfileSrcAddr(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileSrcAddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -1924,7 +1844,6 @@ func flattenEndpointControlProfileDeviceGroups(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileDeviceGroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -1967,7 +1886,6 @@ func flattenEndpointControlProfileUsers(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileUsersName(i["name"], d, pre_append, sv)
 		}
 
@@ -2010,7 +1928,6 @@ func flattenEndpointControlProfileUserGroups(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileUserGroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -2053,7 +1970,6 @@ func flattenEndpointControlProfileOnNetAddr(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenEndpointControlProfileOnNetAddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -2076,6 +1992,12 @@ func flattenEndpointControlProfileReplacemsgOverrideGroup(v interface{}, d *sche
 
 func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("profile_name", flattenEndpointControlProfileProfileName(o["profile-name"], d, "profile_name", sv)); err != nil {
 		if !fortiAPIPatch(o["profile-name"]) {
@@ -2083,7 +2005,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("forticlient_winmac_settings", flattenEndpointControlProfileForticlientWinmacSettings(o["forticlient-winmac-settings"], d, "forticlient_winmac_settings", sv)); err != nil {
 			if !fortiAPIPatch(o["forticlient-winmac-settings"]) {
 				return fmt.Errorf("Error reading forticlient_winmac_settings: %v", err)
@@ -2099,7 +2021,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("forticlient_android_settings", flattenEndpointControlProfileForticlientAndroidSettings(o["forticlient-android-settings"], d, "forticlient_android_settings", sv)); err != nil {
 			if !fortiAPIPatch(o["forticlient-android-settings"]) {
 				return fmt.Errorf("Error reading forticlient_android_settings: %v", err)
@@ -2115,7 +2037,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("forticlient_ios_settings", flattenEndpointControlProfileForticlientIosSettings(o["forticlient-ios-settings"], d, "forticlient_ios_settings", sv)); err != nil {
 			if !fortiAPIPatch(o["forticlient-ios-settings"]) {
 				return fmt.Errorf("Error reading forticlient_ios_settings: %v", err)
@@ -2137,7 +2059,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("src_addr", flattenEndpointControlProfileSrcAddr(o["src-addr"], d, "src_addr", sv)); err != nil {
 			if !fortiAPIPatch(o["src-addr"]) {
 				return fmt.Errorf("Error reading src_addr: %v", err)
@@ -2153,7 +2075,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("device_groups", flattenEndpointControlProfileDeviceGroups(o["device-groups"], d, "device_groups", sv)); err != nil {
 			if !fortiAPIPatch(o["device-groups"]) {
 				return fmt.Errorf("Error reading device_groups: %v", err)
@@ -2169,7 +2091,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("users", flattenEndpointControlProfileUsers(o["users"], d, "users", sv)); err != nil {
 			if !fortiAPIPatch(o["users"]) {
 				return fmt.Errorf("Error reading users: %v", err)
@@ -2185,7 +2107,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("user_groups", flattenEndpointControlProfileUserGroups(o["user-groups"], d, "user_groups", sv)); err != nil {
 			if !fortiAPIPatch(o["user-groups"]) {
 				return fmt.Errorf("Error reading user_groups: %v", err)
@@ -2201,7 +2123,7 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("on_net_addr", flattenEndpointControlProfileOnNetAddr(o["on-net-addr"], d, "on_net_addr", sv)); err != nil {
 			if !fortiAPIPatch(o["on-net-addr"]) {
 				return fmt.Errorf("Error reading on_net_addr: %v", err)
@@ -2248,182 +2170,148 @@ func expandEndpointControlProfileForticlientWinmacSettings(d *schema.ResourceDat
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "forticlient_registration_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-registration-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistrationComplianceAction(d, i["forticlient_registration_compliance_action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_ems_compliance"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-ems-compliance"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsCompliance(d, i["forticlient_ems_compliance"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_ems_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-ems-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsComplianceAction(d, i["forticlient_ems_compliance_action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_ems_entries"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-ems-entries"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(d, i["forticlient_ems_entries"], pre_append, sv)
 	} else {
 		result["forticlient-ems-entries"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "forticlient_security_posture"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-security-posture"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPosture(d, i["forticlient_security_posture"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_security_posture_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-security-posture-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPostureComplianceAction(d, i["forticlient_security_posture_compliance_action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_av"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-av"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientAv(d, i["forticlient_av"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "av_realtime_protection"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["av-realtime-protection"], _ = expandEndpointControlProfileForticlientWinmacSettingsAvRealtimeProtection(d, i["av_realtime_protection"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "av_signature_up_to_date"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["av-signature-up-to-date"], _ = expandEndpointControlProfileForticlientWinmacSettingsAvSignatureUpToDate(d, i["av_signature_up_to_date"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sandbox_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sandbox-analysis"], _ = expandEndpointControlProfileForticlientWinmacSettingsSandboxAnalysis(d, i["sandbox_analysis"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sandbox_address"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sandbox-address"], _ = expandEndpointControlProfileForticlientWinmacSettingsSandboxAddress(d, i["sandbox_address"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "os_av_software_installed"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["os-av-software-installed"], _ = expandEndpointControlProfileForticlientWinmacSettingsOsAvSoftwareInstalled(d, i["os_av_software_installed"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_application_firewall"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-application-firewall"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewall(d, i["forticlient_application_firewall"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_application_firewall_list"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-application-firewall-list"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewallList(d, i["forticlient_application_firewall_list"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-wf"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientWf(d, i["forticlient_wf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-wf-profile"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientWfProfile(d, i["forticlient_wf_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_system_compliance"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-system-compliance"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSystemCompliance(d, i["forticlient_system_compliance"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_system_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-system-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSystemComplianceAction(d, i["forticlient_system_compliance_action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_minimum_software_version"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-minimum-software-version"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientMinimumSoftwareVersion(d, i["forticlient_minimum_software_version"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_win_ver"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-win-ver"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientWinVer(d, i["forticlient_win_ver"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_mac_ver"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-mac-ver"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientMacVer(d, i["forticlient_mac_ver"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_linux_ver"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-linux-ver"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLinuxVer(d, i["forticlient_linux_ver"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_operating_system"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-operating-system"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystem(d, i["forticlient_operating_system"], pre_append, sv)
 	} else {
 		result["forticlient-operating-system"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "forticlient_running_app"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-running-app"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(d, i["forticlient_running_app"], pre_append, sv)
 	} else {
 		result["forticlient-running-app"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "forticlient_registry_entry"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-registry-entry"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntry(d, i["forticlient_registry_entry"], pre_append, sv)
 	} else {
 		result["forticlient-registry-entry"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "forticlient_own_file"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-own-file"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(d, i["forticlient_own_file"], pre_append, sv)
 	} else {
 		result["forticlient-own-file"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "forticlient_log_upload"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-log-upload"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLogUpload(d, i["forticlient_log_upload"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_log_upload_level"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-log-upload-level"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadLevel(d, i["forticlient_log_upload_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_log_upload_server"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-log-upload-server"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadServer(d, i["forticlient_log_upload_server"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vuln_scan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vuln-scan"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScan(d, i["forticlient_vuln_scan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vuln_scan_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vuln-scan-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanComplianceAction(d, i["forticlient_vuln_scan_compliance_action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vuln-scan-enforce"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforce(d, i["forticlient_vuln_scan_enforce"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce_grace"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vuln-scan-enforce-grace"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforceGrace(d, i["forticlient_vuln_scan_enforce_grace"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vuln_scan_exempt"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vuln-scan-exempt"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanExempt(d, i["forticlient_vuln_scan_exempt"], pre_append, sv)
 	}
 
@@ -2458,7 +2346,6 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntriesName(d, i["name"], pre_append, sv)
 		}
 
@@ -2562,19 +2449,16 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSy
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["os-type"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsType(d, i["os_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["os-name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsName(d, i["os_name"], pre_append, sv)
 		}
 
@@ -2614,67 +2498,56 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["app-name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppName(d, i["app_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application_check_rule"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["application-check-rule"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppApplicationCheckRule(d, i["application_check_rule"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["process-name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName(d, i["process_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["app-sha256-signature"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature(d, i["app_sha256_signature"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name2"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["process-name2"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName2(d, i["process_name2"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature2"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["app-sha256-signature2"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature2(d, i["app_sha256_signature2"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name3"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["process-name3"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName3(d, i["process_name3"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature3"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["app-sha256-signature3"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature3(d, i["app_sha256_signature3"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name4"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["process-name4"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName4(d, i["process_name4"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature4"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["app-sha256-signature4"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature4(d, i["app_sha256_signature4"], pre_append, sv)
 		}
 
@@ -2746,13 +2619,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEnt
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "registry_entry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["registry-entry"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryRegistryEntry(d, i["registry_entry"], pre_append, sv)
 		}
 
@@ -2788,13 +2659,11 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(d *
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["file"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileFile(d, i["file"], pre_append, sv)
 		}
 
@@ -2858,37 +2727,30 @@ func expandEndpointControlProfileForticlientAndroidSettings(d *schema.ResourceDa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-wf"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientWf(d, i["forticlient_wf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-wf-profile"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientWfProfile(d, i["forticlient_wf_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disable-wf-when-protected"], _ = expandEndpointControlProfileForticlientAndroidSettingsDisableWfWhenProtected(d, i["disable_wf_when_protected"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vpn_provisioning"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vpn-provisioning"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnProvisioning(d, i["forticlient_vpn_provisioning"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_advanced_vpn"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-advanced-vpn"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpn(d, i["forticlient_advanced_vpn"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_advanced_vpn_buffer"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-advanced-vpn-buffer"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpnBuffer(d, i["forticlient_advanced_vpn_buffer"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_vpn_settings"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-vpn-settings"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettings(d, i["forticlient_vpn_settings"], pre_append, sv)
 	} else {
 		result["forticlient-vpn-settings"] = make([]string, 0)
@@ -2937,43 +2799,36 @@ func expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSetting
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["remote-gw"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsRemoteGw(d, i["remote_gw"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sslvpn-access-port"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnAccessPort(d, i["sslvpn_access_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sslvpn-require-certificate"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnRequireCertificate(d, i["sslvpn_require_certificate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-method"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsAuthMethod(d, i["auth_method"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["preshared-key"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(d, i["preshared_key"], pre_append, sv)
 		}
 
@@ -3025,44 +2880,36 @@ func expandEndpointControlProfileForticlientIosSettings(d *schema.ResourceData, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-wf"], _ = expandEndpointControlProfileForticlientIosSettingsForticlientWf(d, i["forticlient_wf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["forticlient-wf-profile"], _ = expandEndpointControlProfileForticlientIosSettingsForticlientWfProfile(d, i["forticlient_wf_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disable-wf-when-protected"], _ = expandEndpointControlProfileForticlientIosSettingsDisableWfWhenProtected(d, i["disable_wf_when_protected"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "client_vpn_provisioning"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["client-vpn-provisioning"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnProvisioning(d, i["client_vpn_provisioning"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "client_vpn_settings"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["client-vpn-settings"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettings(d, i["client_vpn_settings"], pre_append, sv)
 	} else {
 		result["client-vpn-settings"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "distribute_configuration_profile"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["distribute-configuration-profile"], _ = expandEndpointControlProfileForticlientIosSettingsDistributeConfigurationProfile(d, i["distribute_configuration_profile"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "configuration_name"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["configuration-name"], _ = expandEndpointControlProfileForticlientIosSettingsConfigurationName(d, i["configuration_name"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "configuration_content"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["configuration-content"], _ = expandEndpointControlProfileForticlientIosSettingsConfigurationContent(d, i["configuration_content"], pre_append, sv)
 	}
 
@@ -3101,55 +2948,46 @@ func expandEndpointControlProfileForticlientIosSettingsClientVpnSettings(d *sche
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vpn-configuration-name"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationName(d, i["vpn_configuration_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_content"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vpn-configuration-content"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationContent(d, i["vpn_configuration_content"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["remote-gw"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsRemoteGw(d, i["remote_gw"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sslvpn-access-port"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnAccessPort(d, i["sslvpn_access_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sslvpn-require-certificate"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnRequireCertificate(d, i["sslvpn_require_certificate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-method"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsAuthMethod(d, i["auth_method"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["preshared-key"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(d, i["preshared_key"], pre_append, sv)
 		}
 
@@ -3229,7 +3067,6 @@ func expandEndpointControlProfileSrcAddr(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileSrcAddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -3261,7 +3098,6 @@ func expandEndpointControlProfileDeviceGroups(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileDeviceGroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -3293,7 +3129,6 @@ func expandEndpointControlProfileUsers(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileUsersName(d, i["name"], pre_append, sv)
 		}
 
@@ -3325,7 +3160,6 @@ func expandEndpointControlProfileUserGroups(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileUserGroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -3357,7 +3191,6 @@ func expandEndpointControlProfileOnNetAddr(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandEndpointControlProfileOnNetAddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -3381,7 +3214,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("profile_name"); ok {
-
 		t, err := expandEndpointControlProfileProfileName(d, v, "profile_name", sv)
 		if err != nil {
 			return &obj, err
@@ -3391,7 +3223,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("forticlient_winmac_settings"); ok {
-
 		t, err := expandEndpointControlProfileForticlientWinmacSettings(d, v, "forticlient_winmac_settings", sv)
 		if err != nil {
 			return &obj, err
@@ -3401,7 +3232,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("forticlient_android_settings"); ok {
-
 		t, err := expandEndpointControlProfileForticlientAndroidSettings(d, v, "forticlient_android_settings", sv)
 		if err != nil {
 			return &obj, err
@@ -3411,7 +3241,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("forticlient_ios_settings"); ok {
-
 		t, err := expandEndpointControlProfileForticlientIosSettings(d, v, "forticlient_ios_settings", sv)
 		if err != nil {
 			return &obj, err
@@ -3421,7 +3250,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandEndpointControlProfileDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -3431,7 +3259,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("src_addr"); ok || d.HasChange("src_addr") {
-
 		t, err := expandEndpointControlProfileSrcAddr(d, v, "src_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -3441,7 +3268,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("device_groups"); ok || d.HasChange("device_groups") {
-
 		t, err := expandEndpointControlProfileDeviceGroups(d, v, "device_groups", sv)
 		if err != nil {
 			return &obj, err
@@ -3451,7 +3277,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("users"); ok || d.HasChange("users") {
-
 		t, err := expandEndpointControlProfileUsers(d, v, "users", sv)
 		if err != nil {
 			return &obj, err
@@ -3461,7 +3286,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("user_groups"); ok || d.HasChange("user_groups") {
-
 		t, err := expandEndpointControlProfileUserGroups(d, v, "user_groups", sv)
 		if err != nil {
 			return &obj, err
@@ -3471,7 +3295,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("on_net_addr"); ok || d.HasChange("on_net_addr") {
-
 		t, err := expandEndpointControlProfileOnNetAddr(d, v, "on_net_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -3481,7 +3304,6 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("replacemsg_override_group"); ok {
-
 		t, err := expandEndpointControlProfileReplacemsgOverrideGroup(d, v, "replacemsg_override_group", sv)
 		if err != nil {
 			return &obj, err

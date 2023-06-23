@@ -250,7 +250,6 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["server-port"] = nil
 		} else {
-
 			t, err := expandSystemFtmPushServerPort(d, v, "server_port", sv)
 			if err != nil {
 				return &obj, err
@@ -264,7 +263,6 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["server-cert"] = nil
 		} else {
-
 			t, err := expandSystemFtmPushServerCert(d, v, "server_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -278,7 +276,6 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["server-ip"] = nil
 		} else {
-
 			t, err := expandSystemFtmPushServerIp(d, v, "server_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -292,7 +289,6 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandSystemFtmPushServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -306,7 +302,6 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFtmPushStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err

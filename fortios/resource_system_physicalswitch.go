@@ -235,7 +235,6 @@ func getObjectSystemPhysicalSwitch(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemPhysicalSwitchName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSystemPhysicalSwitch(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("age_enable"); ok {
-
 		t, err := expandSystemPhysicalSwitchAgeEnable(d, v, "age_enable", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSystemPhysicalSwitch(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("age_val"); ok {
-
 		t, err := expandSystemPhysicalSwitchAgeVal(d, v, "age_val", sv)
 		if err != nil {
 			return &obj, err

@@ -196,7 +196,6 @@ func getObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData, sv stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSwitchInterfaceTagName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err

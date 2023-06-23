@@ -14,6 +14,7 @@ Configure FortiSwitch devices that are managed by this FortiGate.
 The following arguments are supported:
 
 * `switch_id` - (Required) Managed-switch id.
+* `sn` - Managed-switch serial number.
 * `name` - Managed-switch name.
 * `description` - Description.
 * `switch_profile` - FortiSwitch profile.
@@ -66,9 +67,11 @@ The following arguments are supported:
 * `mirror` - Configuration method to edit FortiSwitch packet mirror. The structure of `mirror` block is documented below.
 * `static_mac` - Configuration method to edit FortiSwitch Static and Sticky MAC. The structure of `static_mac` block is documented below.
 * `custom_command` - Configuration method to edit FortiSwitch commands to be pushed to this FortiSwitch device upon rebooting the FortiGate switch controller or the FortiSwitch. The structure of `custom_command` block is documented below.
+* `dhcp_snooping_static_client` - Configure FortiSwitch DHCP snooping static clients. The structure of `dhcp_snooping_static_client` block is documented below.
 * `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings. The structure of `igmp_snooping` block is documented below.
 * `n802_1x_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1x_settings` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `ports` block supports:
@@ -92,6 +95,7 @@ The `ports` block supports:
 * `port_number` - Port number.
 * `port_prefix_type` - Port prefix type.
 * `fortilink_port` - FortiLink uplink port.
+* `link_status` - Port link status. Valid values: `up`, `down`.
 * `poe_capable` - PoE capable.
 * `stacking_port` - Stacking port.
 * `p2p_port` - General peer to peer tunnel port.
@@ -100,11 +104,16 @@ The `ports` block supports:
 * `media_type` - Media type.
 * `poe_standard` - PoE standard supported.
 * `poe_max_power` - PoE maximum power.
+* `poe_mode_bt_cabable` - PoE mode IEEE 802.3BT capable.
+* `poe_port_mode` - Configure PoE port mode. Valid values: `ieee802-3af`, `ieee802-3at`, `ieee802-3bt`.
+* `poe_port_priority` - Configure PoE port priority. Valid values: `critical-priority`, `high-priority`, `low-priority`, `medium-priority`.
+* `poe_port_power` - Configure PoE port power. Valid values: `normal`, `perpetual`, `perpetual-fast`.
 * `flags` - Port properties flags.
 * `virtual_port` - Virtualized switch port.
 * `isl_local_trunk_name` - ISL local trunk name.
 * `isl_peer_port_name` - ISL peer port name.
 * `isl_peer_device_name` - ISL peer device name.
+* `isl_peer_device_sn` - ISL peer device serial number.
 * `fgt_peer_port_name` - FGT peer port name.
 * `fgt_peer_device_name` - FGT peer device name.
 * `vlan` - Assign switch ports to a VLAN.
@@ -115,8 +124,11 @@ The `ports` block supports:
 * `access_mode` - Access mode of the port.
 * `matched_dpp_policy` - Matched child policy in the dynamic port policy.
 * `matched_dpp_intf_tags` - Matched interface tags in the dynamic port policy.
+* `acl_group` - ACL groups on this port. The structure of `acl_group` block is documented below.
+* `fortiswitch_acls` - ACLs on this port. The structure of `fortiswitch_acls` block is documented below.
 * `dhcp_snooping` - Trusted or untrusted DHCP-snooping interface. Valid values: `untrusted`, `trusted`.
 * `dhcp_snoop_option82_trust` - Enable/disable allowance of DHCP with option-82 on untrusted interface. Valid values: `enable`, `disable`.
+* `dhcp_snoop_option82_override` - Configure DHCP snooping option 82 override. The structure of `dhcp_snoop_option82_override` block is documented below.
 * `arp_inspection_trust` - Trusted or untrusted dynamic ARP inspection. Valid values: `untrusted`, `trusted`.
 * `igmp_snooping_flood_reports` - Enable/disable flooding of IGMP reports to this interface when igmp-snooping enabled. Valid values: `enable`, `disable`.
 * `mcast_snooping_flood_traffic` - Enable/disable flooding of IGMP snooping traffic to this interface. Valid values: `enable`, `disable`.
@@ -174,6 +186,20 @@ The `allowed_vlans` block supports:
 The `untagged_vlans` block supports:
 
 * `vlan_name` - VLAN name.
+
+The `acl_group` block supports:
+
+* `name` - ACL group name.
+
+The `fortiswitch_acls` block supports:
+
+* `id` - ACL ID.
+
+The `dhcp_snoop_option82_override` block supports:
+
+* `vlan_name` - DHCP snooping option 82 VLAN.
+* `circuit_id` - Circuit ID string.
+* `remote_id` - Remote ID string.
 
 The `interface_tags` block supports:
 
@@ -322,6 +348,14 @@ The `custom_command` block supports:
 
 * `command_entry` - List of FortiSwitch commands.
 * `command_name` - Names of commands to be pushed to this FortiSwitch device, as configured under config switch-controller custom-command.
+
+The `dhcp_snooping_static_client` block supports:
+
+* `name` - Client name.
+* `vlan` - VLAN name.
+* `ip` - Client static IP address.
+* `mac` - Client MAC address.
+* `port` - Interface name.
 
 The `igmp_snooping` block supports:
 

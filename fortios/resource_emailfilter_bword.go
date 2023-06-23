@@ -107,6 +107,11 @@ func resourceEmailfilterBword() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -270,49 +275,41 @@ func flattenEmailfilterBwordEntries(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenEmailfilterBwordEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenEmailfilterBwordEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-
 			tmp["pattern"] = flattenEmailfilterBwordEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := i["pattern-type"]; ok {
-
 			tmp["pattern_type"] = flattenEmailfilterBwordEntriesPatternType(i["pattern-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenEmailfilterBwordEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
 		if _, ok := i["where"]; ok {
-
 			tmp["where"] = flattenEmailfilterBwordEntriesWhere(i["where"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
 		if _, ok := i["language"]; ok {
-
 			tmp["language"] = flattenEmailfilterBwordEntriesLanguage(i["language"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
 		if _, ok := i["score"]; ok {
-
 			tmp["score"] = flattenEmailfilterBwordEntriesScore(i["score"], d, pre_append, sv)
 		}
 
@@ -359,6 +356,12 @@ func flattenEmailfilterBwordEntriesScore(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectEmailfilterBword(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenEmailfilterBwordId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -378,7 +381,7 @@ func refreshObjectEmailfilterBword(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenEmailfilterBwordEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -431,49 +434,41 @@ func expandEmailfilterBwordEntries(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandEmailfilterBwordEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandEmailfilterBwordEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pattern"], _ = expandEmailfilterBwordEntriesPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pattern-type"], _ = expandEmailfilterBwordEntriesPatternType(d, i["pattern_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandEmailfilterBwordEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["where"], _ = expandEmailfilterBwordEntriesWhere(d, i["where"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["language"], _ = expandEmailfilterBwordEntriesLanguage(d, i["language"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["score"], _ = expandEmailfilterBwordEntriesScore(d, i["score"], pre_append, sv)
 		}
 
@@ -521,7 +516,6 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandEmailfilterBwordId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -531,7 +525,6 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandEmailfilterBwordName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -541,7 +534,6 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandEmailfilterBwordComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -551,7 +543,6 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandEmailfilterBwordEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

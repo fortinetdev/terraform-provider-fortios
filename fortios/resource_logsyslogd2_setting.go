@@ -147,6 +147,11 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -319,19 +324,16 @@ func flattenLogSyslogd2SettingCustomFieldName(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogSyslogd2SettingCustomFieldNameId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenLogSyslogd2SettingCustomFieldNameName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := i["custom"]; ok {
-
 			tmp["custom"] = flattenLogSyslogd2SettingCustomFieldNameCustom(i["custom"], d, pre_append, sv)
 		}
 
@@ -370,6 +372,12 @@ func flattenLogSyslogd2SettingSyslogType(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenLogSyslogd2SettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -443,7 +451,7 @@ func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("custom_field_name", flattenLogSyslogd2SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-field-name"]) {
 				return fmt.Errorf("Error reading custom_field_name: %v", err)
@@ -550,19 +558,16 @@ func expandLogSyslogd2SettingCustomFieldName(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogSyslogd2SettingCustomFieldNameId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandLogSyslogd2SettingCustomFieldNameName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["custom"], _ = expandLogSyslogd2SettingCustomFieldNameCustom(d, i["custom"], pre_append, sv)
 		}
 
@@ -605,7 +610,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -619,7 +623,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -633,7 +636,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -647,7 +649,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingPort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err
@@ -661,7 +662,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["facility"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingFacility(d, v, "facility", sv)
 			if err != nil {
 				return &obj, err
@@ -675,7 +675,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -689,7 +688,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err
@@ -703,7 +701,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -717,7 +714,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -731,7 +727,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -745,7 +740,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -759,7 +753,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["certificate"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingCertificate(d, v, "certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -773,7 +766,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["custom-field-name"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogSyslogd2SettingCustomFieldName(d, v, "custom_field_name", sv)
 			if err != nil {
 				return &obj, err
@@ -787,7 +779,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -801,7 +792,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -815,7 +805,6 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["syslog-type"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2SettingSyslogType(d, v, "syslog_type", sv)
 			if err != nil {
 				return &obj, err

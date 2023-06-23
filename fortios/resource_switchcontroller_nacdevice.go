@@ -373,7 +373,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSwitchControllerNacDeviceId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -383,7 +382,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerNacDeviceDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +391,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSwitchControllerNacDeviceStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +400,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandSwitchControllerNacDeviceMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
@@ -413,7 +409,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("last_known_switch"); ok {
-
 		t, err := expandSwitchControllerNacDeviceLastKnownSwitch(d, v, "last_known_switch", sv)
 		if err != nil {
 			return &obj, err
@@ -423,7 +418,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("last_known_port"); ok {
-
 		t, err := expandSwitchControllerNacDeviceLastKnownPort(d, v, "last_known_port", sv)
 		if err != nil {
 			return &obj, err
@@ -433,7 +427,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("matched_nac_policy"); ok {
-
 		t, err := expandSwitchControllerNacDeviceMatchedNacPolicy(d, v, "matched_nac_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -443,7 +436,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("port_policy"); ok {
-
 		t, err := expandSwitchControllerNacDevicePortPolicy(d, v, "port_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -453,7 +445,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("mac_policy"); ok {
-
 		t, err := expandSwitchControllerNacDeviceMacPolicy(d, v, "mac_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -463,7 +454,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOkExists("last_seen"); ok {
-
 		t, err := expandSwitchControllerNacDeviceLastSeen(d, v, "last_seen", sv)
 		if err != nil {
 			return &obj, err

@@ -230,7 +230,6 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["msg-type"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgAdminMsgType(d, v, "msg_type", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["buffer"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgAdminBuffer(d, v, "buffer", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["header"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgAdminHeader(d, v, "header", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgAdminFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err

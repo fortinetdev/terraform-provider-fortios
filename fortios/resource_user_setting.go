@@ -171,6 +171,11 @@ func resourceUserSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -363,19 +368,16 @@ func flattenUserSettingAuthPorts(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenUserSettingAuthPortsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenUserSettingAuthPortsType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenUserSettingAuthPortsPort(i["port"], d, pre_append, sv)
 		}
 
@@ -414,6 +416,12 @@ func flattenUserSettingAuthSslSigalgs(v interface{}, d *schema.ResourceData, pre
 
 func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("auth_type", flattenUserSettingAuthType(o["auth-type"], d, "auth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-type"]) {
@@ -517,7 +525,7 @@ func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("auth_ports", flattenUserSettingAuthPorts(o["auth-ports"], d, "auth_ports", sv)); err != nil {
 			if !fortiAPIPatch(o["auth-ports"]) {
 				return fmt.Errorf("Error reading auth_ports: %v", err)
@@ -644,19 +652,16 @@ func expandUserSettingAuthPorts(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandUserSettingAuthPortsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandUserSettingAuthPortsType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandUserSettingAuthPortsPort(d, i["port"], pre_append, sv)
 		}
 
@@ -699,7 +704,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-type"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthType(d, v, "auth_type", sv)
 			if err != nil {
 				return &obj, err
@@ -713,7 +717,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-cert"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthCert(d, v, "auth_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -727,7 +730,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-ca-cert"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthCaCert(d, v, "auth_ca_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -741,7 +743,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-secure-http"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthSecureHttp(d, v, "auth_secure_http", sv)
 			if err != nil {
 				return &obj, err
@@ -755,7 +756,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-http-basic"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthHttpBasic(d, v, "auth_http_basic", sv)
 			if err != nil {
 				return &obj, err
@@ -769,7 +769,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-ssl-allow-renegotiation"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthSslAllowRenegotiation(d, v, "auth_ssl_allow_renegotiation", sv)
 			if err != nil {
 				return &obj, err
@@ -783,7 +782,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-src-mac"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthSrcMac(d, v, "auth_src_mac", sv)
 			if err != nil {
 				return &obj, err
@@ -797,7 +795,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-on-demand"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthOnDemand(d, v, "auth_on_demand", sv)
 			if err != nil {
 				return &obj, err
@@ -811,7 +808,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-timeout"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthTimeout(d, v, "auth_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -825,7 +821,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-timeout-type"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthTimeoutType(d, v, "auth_timeout_type", sv)
 			if err != nil {
 				return &obj, err
@@ -839,7 +834,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-portal-timeout"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthPortalTimeout(d, v, "auth_portal_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -853,7 +847,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["radius-ses-timeout-act"] = nil
 		} else {
-
 			t, err := expandUserSettingRadiusSesTimeoutAct(d, v, "radius_ses_timeout_act", sv)
 			if err != nil {
 				return &obj, err
@@ -867,7 +860,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-blackout-time"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthBlackoutTime(d, v, "auth_blackout_time", sv)
 			if err != nil {
 				return &obj, err
@@ -881,7 +873,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-invalid-max"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthInvalidMax(d, v, "auth_invalid_max", sv)
 			if err != nil {
 				return &obj, err
@@ -895,7 +886,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-lockout-threshold"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthLockoutThreshold(d, v, "auth_lockout_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -909,7 +899,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-lockout-duration"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthLockoutDuration(d, v, "auth_lockout_duration", sv)
 			if err != nil {
 				return &obj, err
@@ -923,7 +912,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["per-policy-disclaimer"] = nil
 		} else {
-
 			t, err := expandUserSettingPerPolicyDisclaimer(d, v, "per_policy_disclaimer", sv)
 			if err != nil {
 				return &obj, err
@@ -937,7 +925,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-ports"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandUserSettingAuthPorts(d, v, "auth_ports", sv)
 			if err != nil {
 				return &obj, err
@@ -951,7 +938,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthSslMinProtoVersion(d, v, "auth_ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -965,7 +951,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-ssl-max-proto-version"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthSslMaxProtoVersion(d, v, "auth_ssl_max_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -979,7 +964,6 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["auth-ssl-sigalgs"] = nil
 		} else {
-
 			t, err := expandUserSettingAuthSslSigalgs(d, v, "auth_ssl_sigalgs", sv)
 			if err != nil {
 				return &obj, err

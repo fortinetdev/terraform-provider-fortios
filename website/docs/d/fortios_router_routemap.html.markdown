@@ -29,7 +29,9 @@ The `rule` block contains:
 * `action` - Action.
 * `match_as_path` - Match BGP AS path list.
 * `match_community` - Match BGP community list.
+* `match_extcommunity` - Match BGP extended community list.
 * `match_community_exact` - Enable/disable exact matching of communities.
+* `match_extcommunity_exact` - Enable/disable exact matching of extended communities.
 * `match_origin` - Match BGP origin code.
 * `match_interface` - Match interface configuration.
 * `match_ip_address` - Match IP address permitted by access-list or prefix-list.
@@ -56,6 +58,7 @@ The `rule` block contains:
 * `set_extcommunity_rt` - Route Target extended community. The structure of `set_extcommunity_rt` block is documented below.
 * `set_extcommunity_soo` - Site-of-Origin extended community. The structure of `set_extcommunity_soo` block is documented below.
 * `set_ip_nexthop` - IP address of next hop.
+* `set_ip_prefsrc` - IP address of preferred source.
 * `set_ip6_nexthop` - IPv6 global address of next hop.
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
 * `set_local_preference` - BGP local preference path attribute.

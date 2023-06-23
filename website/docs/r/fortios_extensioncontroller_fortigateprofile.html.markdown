@@ -17,6 +17,7 @@ The following arguments are supported:
 * `fosid` - ID.
 * `extension` - Extension option. Valid values: `lan-extension`.
 * `lan_extension` - FortiGate connector LAN extension configuration. The structure of `lan_extension` block is documented below.
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `lan_extension` block supports:

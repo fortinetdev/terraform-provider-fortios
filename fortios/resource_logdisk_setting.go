@@ -725,7 +725,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -739,7 +738,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ips-archive"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingIpsArchive(d, v, "ips_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -753,7 +751,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-log-file-size"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingMaxLogFileSize(d, v, "max_log_file_size", sv)
 			if err != nil {
 				return &obj, err
@@ -767,7 +764,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-policy-packet-capture-size"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingMaxPolicyPacketCaptureSize(d, v, "max_policy_packet_capture_size", sv)
 			if err != nil {
 				return &obj, err
@@ -781,7 +777,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["roll-schedule"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingRollSchedule(d, v, "roll_schedule", sv)
 			if err != nil {
 				return &obj, err
@@ -795,7 +790,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["roll-day"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingRollDay(d, v, "roll_day", sv)
 			if err != nil {
 				return &obj, err
@@ -809,7 +803,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["roll-time"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingRollTime(d, v, "roll_time", sv)
 			if err != nil {
 				return &obj, err
@@ -823,7 +816,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["diskfull"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingDiskfull(d, v, "diskfull", sv)
 			if err != nil {
 				return &obj, err
@@ -837,7 +829,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["log-quota"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingLogQuota(d, v, "log_quota", sv)
 			if err != nil {
 				return &obj, err
@@ -851,7 +842,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["dlp-archive-quota"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingDlpArchiveQuota(d, v, "dlp_archive_quota", sv)
 			if err != nil {
 				return &obj, err
@@ -865,7 +855,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["report-quota"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingReportQuota(d, v, "report_quota", sv)
 			if err != nil {
 				return &obj, err
@@ -879,7 +868,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["maximum-log-age"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingMaximumLogAge(d, v, "maximum_log_age", sv)
 			if err != nil {
 				return &obj, err
@@ -893,7 +881,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["upload"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUpload(d, v, "upload", sv)
 			if err != nil {
 				return &obj, err
@@ -907,7 +894,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["upload-destination"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadDestination(d, v, "upload_destination", sv)
 			if err != nil {
 				return &obj, err
@@ -921,7 +907,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploadip"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadip(d, v, "uploadip", sv)
 			if err != nil {
 				return &obj, err
@@ -935,7 +920,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploadport"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadport(d, v, "uploadport", sv)
 			if err != nil {
 				return &obj, err
@@ -949,7 +933,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -963,7 +946,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploaduser"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploaduser(d, v, "uploaduser", sv)
 			if err != nil {
 				return &obj, err
@@ -977,7 +959,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploadpass"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadpass(d, v, "uploadpass", sv)
 			if err != nil {
 				return &obj, err
@@ -991,7 +972,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploaddir"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploaddir(d, v, "uploaddir", sv)
 			if err != nil {
 				return &obj, err
@@ -1005,7 +985,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploadtype"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadtype(d, v, "uploadtype", sv)
 			if err != nil {
 				return &obj, err
@@ -1019,7 +998,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploadsched"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadsched(d, v, "uploadsched", sv)
 			if err != nil {
 				return &obj, err
@@ -1033,7 +1011,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["uploadtime"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadtime(d, v, "uploadtime", sv)
 			if err != nil {
 				return &obj, err
@@ -1047,7 +1024,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["upload-delete-files"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadDeleteFiles(d, v, "upload_delete_files", sv)
 			if err != nil {
 				return &obj, err
@@ -1061,7 +1037,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["upload-ssl-conn"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingUploadSslConn(d, v, "upload_ssl_conn", sv)
 			if err != nil {
 				return &obj, err
@@ -1075,7 +1050,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["full-first-warning-threshold"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -1089,7 +1063,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["full-second-warning-threshold"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -1103,7 +1076,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["full-final-warning-threshold"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -1117,7 +1089,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -1131,7 +1102,6 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogDiskSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

@@ -37,7 +37,7 @@ func resourceSwitchControllerStormControl() *schema.Resource {
 			},
 			"rate": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 10000000),
+				ValidateFunc: validation.IntBetween(0, 10000000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -225,11 +225,10 @@ func expandSwitchControllerStormControlBroadcast(d *schema.ResourceData, v inter
 func getObjectSwitchControllerStormControl(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("rate"); ok {
+	if v, ok := d.GetOkExists("rate"); ok {
 		if setArgNil {
 			obj["rate"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStormControlRate(d, v, "rate", sv)
 			if err != nil {
 				return &obj, err
@@ -243,7 +242,6 @@ func getObjectSwitchControllerStormControl(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["unknown-unicast"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStormControlUnknownUnicast(d, v, "unknown_unicast", sv)
 			if err != nil {
 				return &obj, err
@@ -257,7 +255,6 @@ func getObjectSwitchControllerStormControl(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["unknown-multicast"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStormControlUnknownMulticast(d, v, "unknown_multicast", sv)
 			if err != nil {
 				return &obj, err
@@ -271,7 +268,6 @@ func getObjectSwitchControllerStormControl(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["broadcast"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStormControlBroadcast(d, v, "broadcast", sv)
 			if err != nil {
 				return &obj, err

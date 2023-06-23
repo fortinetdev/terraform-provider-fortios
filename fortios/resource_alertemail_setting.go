@@ -851,7 +851,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["username"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingUsername(d, v, "username", sv)
 			if err != nil {
 				return &obj, err
@@ -865,7 +864,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["mailto1"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingMailto1(d, v, "mailto1", sv)
 			if err != nil {
 				return &obj, err
@@ -879,7 +877,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["mailto2"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingMailto2(d, v, "mailto2", sv)
 			if err != nil {
 				return &obj, err
@@ -893,7 +890,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["mailto3"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingMailto3(d, v, "mailto3", sv)
 			if err != nil {
 				return &obj, err
@@ -907,7 +903,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["filter-mode"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFilterMode(d, v, "filter_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -921,7 +916,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["email-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingEmailInterval(d, v, "email_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -935,7 +929,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["IPS-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingIpsLogs(d, v, "ips_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -949,7 +942,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["firewall-authentication-failure-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFirewallAuthenticationFailureLogs(d, v, "firewall_authentication_failure_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -963,7 +955,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["HA-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingHaLogs(d, v, "ha_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -977,7 +968,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["IPsec-errors-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingIpsecErrorsLogs(d, v, "ipsec_errors_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -991,7 +981,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["FDS-update-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFdsUpdateLogs(d, v, "fds_update_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1005,7 +994,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["PPP-errors-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingPppErrorsLogs(d, v, "ppp_errors_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1019,7 +1007,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["sslvpn-authentication-errors-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingSslvpnAuthenticationErrorsLogs(d, v, "sslvpn_authentication_errors_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1033,7 +1020,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["antivirus-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingAntivirusLogs(d, v, "antivirus_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1047,7 +1033,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["webfilter-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingWebfilterLogs(d, v, "webfilter_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1061,7 +1046,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["configuration-changes-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingConfigurationChangesLogs(d, v, "configuration_changes_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1075,7 +1059,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["violation-traffic-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingViolationTrafficLogs(d, v, "violation_traffic_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1089,7 +1072,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["admin-login-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingAdminLoginLogs(d, v, "admin_login_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1103,7 +1085,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["FDS-license-expiring-warning"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFdsLicenseExpiringWarning(d, v, "fds_license_expiring_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -1117,7 +1098,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["log-disk-usage-warning"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingLogDiskUsageWarning(d, v, "log_disk_usage_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -1131,7 +1111,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["fortiguard-log-quota-warning"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFortiguardLogQuotaWarning(d, v, "fortiguard_log_quota_warning", sv)
 			if err != nil {
 				return &obj, err
@@ -1145,7 +1124,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["amc-interface-bypass-mode"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingAmcInterfaceBypassMode(d, v, "amc_interface_bypass_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -1159,7 +1137,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["FIPS-CC-errors"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFipsCcErrors(d, v, "fips_cc_errors", sv)
 			if err != nil {
 				return &obj, err
@@ -1173,7 +1150,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["FSSO-disconnect-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFssoDisconnectLogs(d, v, "fsso_disconnect_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1187,7 +1163,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["ssh-logs"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingSshLogs(d, v, "ssh_logs", sv)
 			if err != nil {
 				return &obj, err
@@ -1201,7 +1176,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["FDS-license-expiring-days"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingFdsLicenseExpiringDays(d, v, "fds_license_expiring_days", sv)
 			if err != nil {
 				return &obj, err
@@ -1215,7 +1189,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["local-disk-usage"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingLocalDiskUsage(d, v, "local_disk_usage", sv)
 			if err != nil {
 				return &obj, err
@@ -1229,7 +1202,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["emergency-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingEmergencyInterval(d, v, "emergency_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1243,7 +1215,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["alert-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingAlertInterval(d, v, "alert_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1257,7 +1228,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["critical-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingCriticalInterval(d, v, "critical_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1271,7 +1241,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["error-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingErrorInterval(d, v, "error_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1285,7 +1254,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["warning-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingWarningInterval(d, v, "warning_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1299,7 +1267,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["notification-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingNotificationInterval(d, v, "notification_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1313,7 +1280,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["information-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingInformationInterval(d, v, "information_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1327,7 +1293,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["debug-interval"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingDebugInterval(d, v, "debug_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1341,7 +1306,6 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandAlertemailSettingSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err

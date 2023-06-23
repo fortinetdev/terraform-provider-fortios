@@ -224,10 +224,20 @@ func resourceVpnSslWebUserGroupBookmark() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"vnc_keyboard_layout": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -387,133 +397,111 @@ func flattenVpnSslWebUserGroupBookmarkBookmarks(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenVpnSslWebUserGroupBookmarkBookmarksName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
 		if _, ok := i["apptype"]; ok {
-
 			tmp["apptype"] = flattenVpnSslWebUserGroupBookmarkBookmarksApptype(i["apptype"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := i["url"]; ok {
-
 			tmp["url"] = flattenVpnSslWebUserGroupBookmarkBookmarksUrl(i["url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := i["host"]; ok {
-
 			tmp["host"] = flattenVpnSslWebUserGroupBookmarkBookmarksHost(i["host"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
 		if _, ok := i["folder"]; ok {
-
 			tmp["folder"] = flattenVpnSslWebUserGroupBookmarkBookmarksFolder(i["folder"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := i["domain"]; ok {
-
 			tmp["domain"] = flattenVpnSslWebUserGroupBookmarkBookmarksDomain(i["domain"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_params"
 		if _, ok := i["additional-params"]; ok {
-
 			tmp["additional_params"] = flattenVpnSslWebUserGroupBookmarkBookmarksAdditionalParams(i["additional-params"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "listening_port"
 		if _, ok := i["listening-port"]; ok {
-
 			tmp["listening_port"] = flattenVpnSslWebUserGroupBookmarkBookmarksListeningPort(i["listening-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_port"
 		if _, ok := i["remote-port"]; ok {
-
 			tmp["remote_port"] = flattenVpnSslWebUserGroupBookmarkBookmarksRemotePort(i["remote-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "show_status_window"
 		if _, ok := i["show-status-window"]; ok {
-
 			tmp["show_status_window"] = flattenVpnSslWebUserGroupBookmarkBookmarksShowStatusWindow(i["show-status-window"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenVpnSslWebUserGroupBookmarkBookmarksDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
 		if _, ok := i["keyboard-layout"]; ok {
-
 			tmp["keyboard_layout"] = flattenVpnSslWebUserGroupBookmarkBookmarksKeyboardLayout(i["keyboard-layout"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_layout"
 		if _, ok := i["server-layout"]; ok {
-
 			tmp["server_layout"] = flattenVpnSslWebUserGroupBookmarkBookmarksServerLayout(i["server-layout"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
 		if _, ok := i["security"]; ok {
-
 			tmp["security"] = flattenVpnSslWebUserGroupBookmarkBookmarksSecurity(i["security"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_preconnection_id"
 		if _, ok := i["send-preconnection-id"]; ok {
-
 			tmp["send_preconnection_id"] = flattenVpnSslWebUserGroupBookmarkBookmarksSendPreconnectionId(i["send-preconnection-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
 		if _, ok := i["preconnection-id"]; ok {
-
 			tmp["preconnection_id"] = flattenVpnSslWebUserGroupBookmarkBookmarksPreconnectionId(i["preconnection-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
 		if _, ok := i["preconnection-blob"]; ok {
-
 			tmp["preconnection_blob"] = flattenVpnSslWebUserGroupBookmarkBookmarksPreconnectionBlob(i["preconnection-blob"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
 		if _, ok := i["load-balancing-info"]; ok {
-
 			tmp["load_balancing_info"] = flattenVpnSslWebUserGroupBookmarkBookmarksLoadBalancingInfo(i["load-balancing-info"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
 		if _, ok := i["restricted-admin"]; ok {
-
 			tmp["restricted_admin"] = flattenVpnSslWebUserGroupBookmarkBookmarksRestrictedAdmin(i["restricted-admin"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenVpnSslWebUserGroupBookmarkBookmarksPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
 		if _, ok := i["logon-user"]; ok {
-
 			tmp["logon_user"] = flattenVpnSslWebUserGroupBookmarkBookmarksLogonUser(i["logon-user"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
 		if _, ok := i["logon-password"]; ok {
-
 			tmp["logon_password"] = flattenVpnSslWebUserGroupBookmarkBookmarksLogonPassword(i["logon-password"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -523,37 +511,31 @@ func flattenVpnSslWebUserGroupBookmarkBookmarks(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
 		if _, ok := i["color-depth"]; ok {
-
 			tmp["color_depth"] = flattenVpnSslWebUserGroupBookmarkBookmarksColorDepth(i["color-depth"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
 		if _, ok := i["sso"]; ok {
-
 			tmp["sso"] = flattenVpnSslWebUserGroupBookmarkBookmarksSso(i["sso"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
 		if _, ok := i["form-data"]; ok {
-
 			tmp["form_data"] = flattenVpnSslWebUserGroupBookmarkBookmarksFormData(i["form-data"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential"
 		if _, ok := i["sso-credential"]; ok {
-
 			tmp["sso_credential"] = flattenVpnSslWebUserGroupBookmarkBookmarksSsoCredential(i["sso-credential"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_username"
 		if _, ok := i["sso-username"]; ok {
-
 			tmp["sso_username"] = flattenVpnSslWebUserGroupBookmarkBookmarksSsoUsername(i["sso-username"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_password"
 		if _, ok := i["sso-password"]; ok {
-
 			tmp["sso_password"] = flattenVpnSslWebUserGroupBookmarkBookmarksSsoPassword(i["sso-password"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -563,20 +545,22 @@ func flattenVpnSslWebUserGroupBookmarkBookmarks(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential_sent_once"
 		if _, ok := i["sso-credential-sent-once"]; ok {
-
 			tmp["sso_credential_sent_once"] = flattenVpnSslWebUserGroupBookmarkBookmarksSsoCredentialSentOnce(i["sso-credential-sent-once"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := i["width"]; ok {
-
 			tmp["width"] = flattenVpnSslWebUserGroupBookmarkBookmarksWidth(i["width"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := i["height"]; ok {
-
 			tmp["height"] = flattenVpnSslWebUserGroupBookmarkBookmarksHeight(i["height"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vnc_keyboard_layout"
+		if _, ok := i["vnc-keyboard-layout"]; ok {
+			tmp["vnc_keyboard_layout"] = flattenVpnSslWebUserGroupBookmarkBookmarksVncKeyboardLayout(i["vnc-keyboard-layout"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -710,13 +694,11 @@ func flattenVpnSslWebUserGroupBookmarkBookmarksFormData(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenVpnSslWebUserGroupBookmarkBookmarksFormDataName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenVpnSslWebUserGroupBookmarkBookmarksFormDataValue(i["value"], d, pre_append, sv)
 		}
 
@@ -761,8 +743,18 @@ func flattenVpnSslWebUserGroupBookmarkBookmarksHeight(v interface{}, d *schema.R
 	return v
 }
 
+func flattenVpnSslWebUserGroupBookmarkBookmarksVncKeyboardLayout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenVpnSslWebUserGroupBookmarkName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -770,7 +762,7 @@ func refreshObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("bookmarks", flattenVpnSslWebUserGroupBookmarkBookmarks(o["bookmarks"], d, "bookmarks", sv)); err != nil {
 			if !fortiAPIPatch(o["bookmarks"]) {
 				return fmt.Errorf("Error reading bookmarks: %v", err)
@@ -815,151 +807,126 @@ func expandVpnSslWebUserGroupBookmarkBookmarks(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandVpnSslWebUserGroupBookmarkBookmarksName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["apptype"], _ = expandVpnSslWebUserGroupBookmarkBookmarksApptype(d, i["apptype"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["url"], _ = expandVpnSslWebUserGroupBookmarkBookmarksUrl(d, i["url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["host"], _ = expandVpnSslWebUserGroupBookmarkBookmarksHost(d, i["host"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["folder"], _ = expandVpnSslWebUserGroupBookmarkBookmarksFolder(d, i["folder"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["domain"], _ = expandVpnSslWebUserGroupBookmarkBookmarksDomain(d, i["domain"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_params"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["additional-params"], _ = expandVpnSslWebUserGroupBookmarkBookmarksAdditionalParams(d, i["additional_params"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "listening_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["listening-port"], _ = expandVpnSslWebUserGroupBookmarkBookmarksListeningPort(d, i["listening_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["remote-port"], _ = expandVpnSslWebUserGroupBookmarkBookmarksRemotePort(d, i["remote_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "show_status_window"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["show-status-window"], _ = expandVpnSslWebUserGroupBookmarkBookmarksShowStatusWindow(d, i["show_status_window"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandVpnSslWebUserGroupBookmarkBookmarksDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["keyboard-layout"], _ = expandVpnSslWebUserGroupBookmarkBookmarksKeyboardLayout(d, i["keyboard_layout"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_layout"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server-layout"], _ = expandVpnSslWebUserGroupBookmarkBookmarksServerLayout(d, i["server_layout"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["security"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSecurity(d, i["security"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_preconnection_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["send-preconnection-id"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSendPreconnectionId(d, i["send_preconnection_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["preconnection-id"], _ = expandVpnSslWebUserGroupBookmarkBookmarksPreconnectionId(d, i["preconnection_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["preconnection-blob"], _ = expandVpnSslWebUserGroupBookmarkBookmarksPreconnectionBlob(d, i["preconnection_blob"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["load-balancing-info"], _ = expandVpnSslWebUserGroupBookmarkBookmarksLoadBalancingInfo(d, i["load_balancing_info"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["restricted-admin"], _ = expandVpnSslWebUserGroupBookmarkBookmarksRestrictedAdmin(d, i["restricted_admin"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandVpnSslWebUserGroupBookmarkBookmarksPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["logon-user"], _ = expandVpnSslWebUserGroupBookmarkBookmarksLogonUser(d, i["logon_user"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["logon-password"], _ = expandVpnSslWebUserGroupBookmarkBookmarksLogonPassword(d, i["logon_password"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["color-depth"], _ = expandVpnSslWebUserGroupBookmarkBookmarksColorDepth(d, i["color_depth"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sso"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSso(d, i["sso"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["form-data"], _ = expandVpnSslWebUserGroupBookmarkBookmarksFormData(d, i["form_data"], pre_append, sv)
 		} else {
 			tmp["form-data"] = make([]string, 0)
@@ -967,38 +934,37 @@ func expandVpnSslWebUserGroupBookmarkBookmarks(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sso-credential"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSsoCredential(d, i["sso_credential"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_username"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sso-username"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSsoUsername(d, i["sso_username"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_password"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sso-password"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSsoPassword(d, i["sso_password"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential_sent_once"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sso-credential-sent-once"], _ = expandVpnSslWebUserGroupBookmarkBookmarksSsoCredentialSentOnce(d, i["sso_credential_sent_once"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["width"], _ = expandVpnSslWebUserGroupBookmarkBookmarksWidth(d, i["width"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["height"], _ = expandVpnSslWebUserGroupBookmarkBookmarksHeight(d, i["height"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vnc_keyboard_layout"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vnc-keyboard-layout"], _ = expandVpnSslWebUserGroupBookmarkBookmarksVncKeyboardLayout(d, i["vnc_keyboard_layout"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1121,13 +1087,11 @@ func expandVpnSslWebUserGroupBookmarkBookmarksFormData(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandVpnSslWebUserGroupBookmarkBookmarksFormDataName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandVpnSslWebUserGroupBookmarkBookmarksFormDataValue(d, i["value"], pre_append, sv)
 		}
 
@@ -1171,11 +1135,14 @@ func expandVpnSslWebUserGroupBookmarkBookmarksHeight(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandVpnSslWebUserGroupBookmarkBookmarksVncKeyboardLayout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnSslWebUserGroupBookmarkName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1185,7 +1152,6 @@ func getObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("bookmarks"); ok || d.HasChange("bookmarks") {
-
 		t, err := expandVpnSslWebUserGroupBookmarkBookmarks(d, v, "bookmarks", sv)
 		if err != nil {
 			return &obj, err

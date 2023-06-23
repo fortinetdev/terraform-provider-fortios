@@ -34,6 +34,7 @@ The following attributes are exported:
 * `route_wait` - Time to wait before sending new routes to the cluster (0 - 3600 sec).
 * `route_hold` - Time to wait between routing table updates to the cluster (0 - 3600 sec).
 * `multicast_ttl` - HA multicast TTL on master (5 - 3600 sec).
+* `evpn_ttl` - HA EVPN FDB TTL on primary box (5 - 3600 sec).
 * `load_balance_all` - Enable to load balance TCP sessions. Disable to load balance proxy sessions only.
 * `sync_config` - Enable/disable configuration synchronization.
 * `encryption` - Enable/disable heartbeat message encryption.

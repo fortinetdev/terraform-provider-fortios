@@ -235,7 +235,6 @@ func getObjectSystemReplacemsgImage(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemReplacemsgImageName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSystemReplacemsgImage(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("image_type"); ok {
-
 		t, err := expandSystemReplacemsgImageImageType(d, v, "image_type", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSystemReplacemsgImage(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("image_base64"); ok {
-
 		t, err := expandSystemReplacemsgImageImageBase64(d, v, "image_base64", sv)
 		if err != nil {
 			return &obj, err

@@ -22,10 +22,15 @@ The following arguments are supported:
 * `empty_cert_action` - Action of an empty client certificate.
 * `log_blocked_traffic` - Enable/disable logging of blocked traffic. Valid values: `enable`, `disable`.
 * `add_vhost_domain_to_dnsdb` - Enable/disable adding vhost/domain to dnsdb for ztna dox tunnel. Valid values: `enable`, `disable`.
+* `http_supported_max_version` - Maximum supported HTTP versions. default = HTTP2 Valid values: `http1`, `http2`.
+* `svr_pool_multiplex` - Enable/disable server pool multiplexing. Share connected server in HTTP, HTTPS, and web-portal api-gateway. Valid values: `enable`, `disable`.
+* `svr_pool_ttl` - Time-to-live in the server pool for idle connections to servers.
+* `svr_pool_server_max_request` - Maximum number of requests that servers in server pool handle before disconnecting (default = unlimited).
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `api_gateway` - Set IPv4 API Gateway. The structure of `api_gateway` block is documented below.
 * `api_gateway6` - Set IPv6 API Gateway. The structure of `api_gateway6` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `api_gateway` block supports:
@@ -53,6 +58,7 @@ The `api_gateway` block supports:
 * `ssl_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority. The structure of `ssl_cipher_suites` block is documented below.
 * `ssl_min_version` - Lowest SSL/TLS version acceptable from a server. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a server. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
+* `ssl_renegotiation` - Enable/disable secure renegotiation to comply with RFC 5746. Valid values: `enable`, `disable`.
 * `ssl_vpn_web_portal` - SSL-VPN web portal.
 
 The `realservers` block supports:
@@ -66,11 +72,14 @@ The `realservers` block supports:
 * `mappedport` - Port for communicating with the real server.
 * `status` - Set the status of the real server to active so that it can accept traffic, or on standby or disabled so no traffic is sent. Valid values: `active`, `standby`, `disable`.
 * `type` - TCP forwarding server type. Valid values: `tcp-forwarding`, `ssh`.
+* `external_auth` - Enable/disable use of external browser as user-agent for SAML user authentication. Valid values: `enable`, `disable`.
+* `tunnel_encryption` - Tunnel encryption. Valid values: `enable`, `disable`.
 * `weight` - Weight of the real server. If weighted load balancing is enabled, the server with the highest weight gets more connections.
 * `http_host` - HTTP server domain name in HTTP header.
 * `health_check` - Enable to check the responsiveness of the real server before forwarding traffic. Valid values: `disable`, `enable`.
 * `health_check_proto` - Protocol of the health check monitor to use when polling to determine server's connectivity status. Valid values: `ping`, `http`, `tcp-connect`.
 * `holddown_interval` - Enable/disable holddown timer. Server will be considered active and reachable once the holddown period has expired (30 seconds). Valid values: `enable`, `disable`.
+* `translate_host` - Enable/disable translation of hostname/IP from virtual server to real server. Valid values: `enable`, `disable`.
 * `ssh_client_cert` - Set access-proxy SSH client certificate profile.
 * `ssh_host_key_validation` - Enable/disable SSH real server host key validation. Valid values: `disable`, `enable`.
 * `ssh_host_key` - One or more server host key. The structure of `ssh_host_key` block is documented below.
@@ -114,6 +123,7 @@ The `api_gateway6` block supports:
 * `ssl_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority. The structure of `ssl_cipher_suites` block is documented below.
 * `ssl_min_version` - Lowest SSL/TLS version acceptable from a server. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a server. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
+* `ssl_renegotiation` - Enable/disable secure renegotiation to comply with RFC 5746. Valid values: `enable`, `disable`.
 * `ssl_vpn_web_portal` - SSL-VPN web portal.
 
 The `realservers` block supports:
@@ -127,11 +137,14 @@ The `realservers` block supports:
 * `mappedport` - Port for communicating with the real server.
 * `status` - Set the status of the real server to active so that it can accept traffic, or on standby or disabled so no traffic is sent. Valid values: `active`, `standby`, `disable`.
 * `type` - TCP forwarding server type. Valid values: `tcp-forwarding`, `ssh`.
+* `external_auth` - Enable/disable use of external browser as user-agent for SAML user authentication. Valid values: `enable`, `disable`.
+* `tunnel_encryption` - Tunnel encryption. Valid values: `enable`, `disable`.
 * `weight` - Weight of the real server. If weighted load balancing is enabled, the server with the highest weight gets more connections.
 * `http_host` - HTTP server domain name in HTTP header.
 * `health_check` - Enable to check the responsiveness of the real server before forwarding traffic. Valid values: `disable`, `enable`.
 * `health_check_proto` - Protocol of the health check monitor to use when polling to determine server's connectivity status. Valid values: `ping`, `http`, `tcp-connect`.
 * `holddown_interval` - Enable/disable holddown timer. Server will be considered active and reachable once the holddown period has expired (30 seconds). Valid values: `enable`, `disable`.
+* `translate_host` - Enable/disable translation of hostname/IP from virtual server to real server. Valid values: `enable`, `disable`.
 * `ssh_client_cert` - Set access-proxy SSH client certificate profile.
 * `ssh_host_key_validation` - Enable/disable SSH real server host key validation. Valid values: `disable`, `enable`.
 * `ssh_host_key` - One or more server host key. The structure of `ssh_host_key` block is documented below.

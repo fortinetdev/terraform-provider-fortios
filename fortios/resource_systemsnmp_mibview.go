@@ -237,7 +237,6 @@ func getObjectSystemSnmpMibView(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSnmpMibViewName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -247,7 +246,6 @@ func getObjectSystemSnmpMibView(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("include"); ok {
-
 		t, err := expandSystemSnmpMibViewInclude(d, v, "include", sv)
 		if err != nil {
 			return &obj, err
@@ -257,7 +255,6 @@ func getObjectSystemSnmpMibView(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("exclude"); ok {
-
 		t, err := expandSystemSnmpMibViewExclude(d, v, "exclude", sv)
 		if err != nil {
 			return &obj, err

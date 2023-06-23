@@ -34,6 +34,7 @@ The following attributes are exported:
 * `protocol` - Integer value for the protocol type (0 - 255).
 * `orig_port` - Original TCP port (0 to 65535).
 * `nat_port` - Translated port or port range (0 to 65535).
+* `dst_port` - Destination port or port range (1 to 65535, 0 means any port).
 * `nat` - Enable/disable source NAT.
 * `nat46` - Enable/disable NAT46.
 * `nat64` - Enable/disable NAT64.

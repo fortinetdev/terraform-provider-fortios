@@ -194,6 +194,11 @@ func resourceSystemClusterSync() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -357,7 +362,6 @@ func flattenSystemClusterSyncSyncvd(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemClusterSyncSyncvdName(i["name"], d, pre_append, sv)
 		}
 
@@ -400,7 +404,6 @@ func flattenSystemClusterSyncDownIntfsBeforeSessSync(v interface{}, d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemClusterSyncDownIntfsBeforeSessSyncName(i["name"], d, pre_append, sv)
 		}
 
@@ -460,43 +463,36 @@ func flattenSystemClusterSyncSessionSyncFilter(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "srcintf"
 	if _, ok := i["srcintf"]; ok {
-
 		result["srcintf"] = flattenSystemClusterSyncSessionSyncFilterSrcintf(i["srcintf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dstintf"
 	if _, ok := i["dstintf"]; ok {
-
 		result["dstintf"] = flattenSystemClusterSyncSessionSyncFilterDstintf(i["dstintf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "srcaddr"
 	if _, ok := i["srcaddr"]; ok {
-
 		result["srcaddr"] = flattenSystemClusterSyncSessionSyncFilterSrcaddr(i["srcaddr"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dstaddr"
 	if _, ok := i["dstaddr"]; ok {
-
 		result["dstaddr"] = flattenSystemClusterSyncSessionSyncFilterDstaddr(i["dstaddr"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "srcaddr6"
 	if _, ok := i["srcaddr6"]; ok {
-
 		result["srcaddr6"] = flattenSystemClusterSyncSessionSyncFilterSrcaddr6(i["srcaddr6"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dstaddr6"
 	if _, ok := i["dstaddr6"]; ok {
-
 		result["dstaddr6"] = flattenSystemClusterSyncSessionSyncFilterDstaddr6(i["dstaddr6"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "custom_service"
 	if _, ok := i["custom-service"]; ok {
-
 		result["custom_service"] = flattenSystemClusterSyncSessionSyncFilterCustomService(i["custom-service"], d, pre_append, sv)
 	}
 
@@ -568,19 +564,16 @@ func flattenSystemClusterSyncSessionSyncFilterCustomService(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
 		if _, ok := i["src-port-range"]; ok {
-
 			tmp["src_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceSrcPortRange(i["src-port-range"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
 		if _, ok := i["dst-port-range"]; ok {
-
 			tmp["dst_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(i["dst-port-range"], d, pre_append, sv)
 		}
 
@@ -607,6 +600,12 @@ func flattenSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(v interf
 
 func refreshObjectSystemClusterSync(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("sync_id", flattenSystemClusterSyncSyncId(o["sync-id"], d, "sync_id", sv)); err != nil {
 		if !fortiAPIPatch(o["sync-id"]) {
@@ -626,7 +625,7 @@ func refreshObjectSystemClusterSync(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("syncvd", flattenSystemClusterSyncSyncvd(o["syncvd"], d, "syncvd", sv)); err != nil {
 			if !fortiAPIPatch(o["syncvd"]) {
 				return fmt.Errorf("Error reading syncvd: %v", err)
@@ -642,7 +641,7 @@ func refreshObjectSystemClusterSync(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("down_intfs_before_sess_sync", flattenSystemClusterSyncDownIntfsBeforeSessSync(o["down-intfs-before-sess-sync"], d, "down_intfs_before_sess_sync", sv)); err != nil {
 			if !fortiAPIPatch(o["down-intfs-before-sess-sync"]) {
 				return fmt.Errorf("Error reading down_intfs_before_sess_sync: %v", err)
@@ -706,7 +705,7 @@ func refreshObjectSystemClusterSync(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("session_sync_filter", flattenSystemClusterSyncSessionSyncFilter(o["session-sync-filter"], d, "session_sync_filter", sv)); err != nil {
 			if !fortiAPIPatch(o["session-sync-filter"]) {
 				return fmt.Errorf("Error reading session_sync_filter: %v", err)
@@ -759,7 +758,6 @@ func expandSystemClusterSyncSyncvd(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemClusterSyncSyncvdName(d, i["name"], pre_append, sv)
 		}
 
@@ -791,7 +789,6 @@ func expandSystemClusterSyncDownIntfsBeforeSessSync(d *schema.ResourceData, v in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemClusterSyncDownIntfsBeforeSessSyncName(d, i["name"], pre_append, sv)
 		}
 
@@ -851,37 +848,30 @@ func expandSystemClusterSyncSessionSyncFilter(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "srcintf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["srcintf"], _ = expandSystemClusterSyncSessionSyncFilterSrcintf(d, i["srcintf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dstintf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dstintf"], _ = expandSystemClusterSyncSessionSyncFilterDstintf(d, i["dstintf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "srcaddr"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["srcaddr"], _ = expandSystemClusterSyncSessionSyncFilterSrcaddr(d, i["srcaddr"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dstaddr"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dstaddr"], _ = expandSystemClusterSyncSessionSyncFilterDstaddr(d, i["dstaddr"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "srcaddr6"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["srcaddr6"], _ = expandSystemClusterSyncSessionSyncFilterSrcaddr6(d, i["srcaddr6"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dstaddr6"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dstaddr6"], _ = expandSystemClusterSyncSessionSyncFilterDstaddr6(d, i["dstaddr6"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "custom_service"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["custom-service"], _ = expandSystemClusterSyncSessionSyncFilterCustomService(d, i["custom_service"], pre_append, sv)
 	} else {
 		result["custom-service"] = make([]string, 0)
@@ -930,19 +920,16 @@ func expandSystemClusterSyncSessionSyncFilterCustomService(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemClusterSyncSessionSyncFilterCustomServiceId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["src-port-range"], _ = expandSystemClusterSyncSessionSyncFilterCustomServiceSrcPortRange(d, i["src_port_range"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst-port-range"], _ = expandSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(d, i["dst_port_range"], pre_append, sv)
 		}
 
@@ -970,7 +957,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("sync_id"); ok {
-
 		t, err := expandSystemClusterSyncSyncId(d, v, "sync_id", sv)
 		if err != nil {
 			return &obj, err
@@ -980,7 +966,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("peervd"); ok {
-
 		t, err := expandSystemClusterSyncPeervd(d, v, "peervd", sv)
 		if err != nil {
 			return &obj, err
@@ -990,7 +975,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("peerip"); ok {
-
 		t, err := expandSystemClusterSyncPeerip(d, v, "peerip", sv)
 		if err != nil {
 			return &obj, err
@@ -1000,7 +984,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("syncvd"); ok || d.HasChange("syncvd") {
-
 		t, err := expandSystemClusterSyncSyncvd(d, v, "syncvd", sv)
 		if err != nil {
 			return &obj, err
@@ -1010,7 +993,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("down_intfs_before_sess_sync"); ok || d.HasChange("down_intfs_before_sess_sync") {
-
 		t, err := expandSystemClusterSyncDownIntfsBeforeSessSync(d, v, "down_intfs_before_sess_sync", sv)
 		if err != nil {
 			return &obj, err
@@ -1020,7 +1002,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("hb_interval"); ok {
-
 		t, err := expandSystemClusterSyncHbInterval(d, v, "hb_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -1030,7 +1011,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("hb_lost_threshold"); ok {
-
 		t, err := expandSystemClusterSyncHbLostThreshold(d, v, "hb_lost_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -1040,7 +1020,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ipsec_tunnel_sync"); ok {
-
 		t, err := expandSystemClusterSyncIpsecTunnelSync(d, v, "ipsec_tunnel_sync", sv)
 		if err != nil {
 			return &obj, err
@@ -1050,7 +1029,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ike_monitor"); ok {
-
 		t, err := expandSystemClusterSyncIkeMonitor(d, v, "ike_monitor", sv)
 		if err != nil {
 			return &obj, err
@@ -1060,7 +1038,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ike_monitor_interval"); ok {
-
 		t, err := expandSystemClusterSyncIkeMonitorInterval(d, v, "ike_monitor_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -1070,7 +1047,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ike_heartbeat_interval"); ok {
-
 		t, err := expandSystemClusterSyncIkeHeartbeatInterval(d, v, "ike_heartbeat_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -1080,7 +1056,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("secondary_add_ipsec_routes"); ok {
-
 		t, err := expandSystemClusterSyncSecondaryAddIpsecRoutes(d, v, "secondary_add_ipsec_routes", sv)
 		if err != nil {
 			return &obj, err
@@ -1090,7 +1065,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("slave_add_ike_routes"); ok {
-
 		t, err := expandSystemClusterSyncSlaveAddIkeRoutes(d, v, "slave_add_ike_routes", sv)
 		if err != nil {
 			return &obj, err
@@ -1100,7 +1074,6 @@ func getObjectSystemClusterSync(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("session_sync_filter"); ok {
-
 		t, err := expandSystemClusterSyncSessionSyncFilter(d, v, "session_sync_filter", sv)
 		if err != nil {
 			return &obj, err

@@ -150,6 +150,11 @@ func resourceLogFortiguardFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -322,25 +327,21 @@ func flattenLogFortiguardFilterFreeStyle(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogFortiguardFilterFreeStyleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogFortiguardFilterFreeStyleCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenLogFortiguardFilterFreeStyleFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-
 			tmp["filter_type"] = flattenLogFortiguardFilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
@@ -387,6 +388,12 @@ func flattenLogFortiguardFilterFilterType(v interface{}, d *schema.ResourceData,
 
 func refreshObjectLogFortiguardFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("severity", flattenLogFortiguardFilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -460,7 +467,7 @@ func refreshObjectLogFortiguardFilter(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogFortiguardFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
 				return fmt.Errorf("Error reading free_style: %v", err)
@@ -573,25 +580,21 @@ func expandLogFortiguardFilterFreeStyle(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogFortiguardFilterFreeStyleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogFortiguardFilterFreeStyleCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandLogFortiguardFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-type"], _ = expandLogFortiguardFilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
@@ -642,7 +645,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err
@@ -656,7 +658,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["forward-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterForwardTraffic(d, v, "forward_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -670,7 +671,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["local-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterLocalTraffic(d, v, "local_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -684,7 +684,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["multicast-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterMulticastTraffic(d, v, "multicast_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -698,7 +697,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["sniffer-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -712,7 +710,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ztna-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterZtnaTraffic(d, v, "ztna_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -726,7 +723,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["anomaly"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterAnomaly(d, v, "anomaly", sv)
 			if err != nil {
 				return &obj, err
@@ -740,7 +736,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["netscan-discovery"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -754,7 +749,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["netscan-vulnerability"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
 			if err != nil {
 				return &obj, err
@@ -768,7 +762,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["voip"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterVoip(d, v, "voip", sv)
 			if err != nil {
 				return &obj, err
@@ -782,7 +775,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dlp-archive"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterDlpArchive(d, v, "dlp_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -796,7 +788,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["gtp"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterGtp(d, v, "gtp", sv)
 			if err != nil {
 				return &obj, err
@@ -810,7 +801,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogFortiguardFilterFreeStyle(d, v, "free_style", sv)
 			if err != nil {
 				return &obj, err
@@ -824,7 +814,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dns"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterDns(d, v, "dns", sv)
 			if err != nil {
 				return &obj, err
@@ -838,7 +827,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ssh"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterSsh(d, v, "ssh", sv)
 			if err != nil {
 				return &obj, err
@@ -852,7 +840,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["filter"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterFilter(d, v, "filter", sv)
 			if err != nil {
 				return &obj, err
@@ -866,7 +853,6 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["filter-type"] = nil
 		} else {
-
 			t, err := expandLogFortiguardFilterFilterType(d, v, "filter_type", sv)
 			if err != nil {
 				return &obj, err

@@ -172,7 +172,6 @@ func getObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, setArgNil 
 		if setArgNil {
 			obj["mac-sync-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerMacSyncSettingsMacSyncInterval(d, v, "mac_sync_interval", sv)
 			if err != nil {
 				return &obj, err

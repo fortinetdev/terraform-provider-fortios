@@ -192,6 +192,11 @@ func resourceDlpProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -359,91 +364,76 @@ func flattenDlpProfileRule(v interface{}, d *schema.ResourceData, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDlpProfileRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDlpProfileRuleName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := i["severity"]; ok {
-
 			tmp["severity"] = flattenDlpProfileRuleSeverity(i["severity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenDlpProfileRuleType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
 		if _, ok := i["proto"]; ok {
-
 			tmp["proto"] = flattenDlpProfileRuleProto(i["proto"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
 		if _, ok := i["filter-by"]; ok {
-
 			tmp["filter_by"] = flattenDlpProfileRuleFilterBy(i["filter-by"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
 		if _, ok := i["file-size"]; ok {
-
 			tmp["file_size"] = flattenDlpProfileRuleFileSize(i["file-size"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
 		if _, ok := i["sensitivity"]; ok {
-
 			tmp["sensitivity"] = flattenDlpProfileRuleSensitivity(i["sensitivity"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_percentage"
 		if _, ok := i["match-percentage"]; ok {
-
 			tmp["match_percentage"] = flattenDlpProfileRuleMatchPercentage(i["match-percentage"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := i["file-type"]; ok {
-
 			tmp["file_type"] = flattenDlpProfileRuleFileType(i["file-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensor"
 		if _, ok := i["sensor"]; ok {
-
 			tmp["sensor"] = flattenDlpProfileRuleSensor(i["sensor"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "label"
 		if _, ok := i["label"]; ok {
-
 			tmp["label"] = flattenDlpProfileRuleLabel(i["label"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
 		if _, ok := i["archive"]; ok {
-
 			tmp["archive"] = flattenDlpProfileRuleArchive(i["archive"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenDlpProfileRuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiry"
 		if _, ok := i["expiry"]; ok {
-
 			tmp["expiry"] = flattenDlpProfileRuleExpiry(i["expiry"], d, pre_append, sv)
 		}
 
@@ -510,7 +500,6 @@ func flattenDlpProfileRuleSensitivity(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDlpProfileRuleSensitivityName(i["name"], d, pre_append, sv)
 		}
 
@@ -561,7 +550,6 @@ func flattenDlpProfileRuleSensor(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenDlpProfileRuleSensorName(i["name"], d, pre_append, sv)
 		}
 
@@ -616,6 +604,12 @@ func flattenDlpProfileSummaryProto(v interface{}, d *schema.ResourceData, pre st
 
 func refreshObjectDlpProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenDlpProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -641,7 +635,7 @@ func refreshObjectDlpProfile(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rule", flattenDlpProfileRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
@@ -728,49 +722,41 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDlpProfileRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDlpProfileRuleName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["severity"], _ = expandDlpProfileRuleSeverity(d, i["severity"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandDlpProfileRuleType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["proto"], _ = expandDlpProfileRuleProto(d, i["proto"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-by"], _ = expandDlpProfileRuleFilterBy(d, i["filter_by"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["file-size"], _ = expandDlpProfileRuleFileSize(d, i["file_size"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["sensitivity"], _ = expandDlpProfileRuleSensitivity(d, i["sensitivity"], pre_append, sv)
 		} else {
 			tmp["sensitivity"] = make([]string, 0)
@@ -778,19 +764,16 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_percentage"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["match-percentage"], _ = expandDlpProfileRuleMatchPercentage(d, i["match_percentage"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["file-type"], _ = expandDlpProfileRuleFileType(d, i["file_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensor"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["sensor"], _ = expandDlpProfileRuleSensor(d, i["sensor"], pre_append, sv)
 		} else {
 			tmp["sensor"] = make([]string, 0)
@@ -798,25 +781,21 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "label"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["label"], _ = expandDlpProfileRuleLabel(d, i["label"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["archive"], _ = expandDlpProfileRuleArchive(d, i["archive"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandDlpProfileRuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiry"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["expiry"], _ = expandDlpProfileRuleExpiry(d, i["expiry"], pre_append, sv)
 		}
 
@@ -872,7 +851,6 @@ func expandDlpProfileRuleSensitivity(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDlpProfileRuleSensitivityName(d, i["name"], pre_append, sv)
 		}
 
@@ -912,7 +890,6 @@ func expandDlpProfileRuleSensor(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandDlpProfileRuleSensorName(d, i["name"], pre_append, sv)
 		}
 
@@ -968,7 +945,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDlpProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -978,7 +954,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandDlpProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -988,7 +963,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
-
 		t, err := expandDlpProfileFeatureSet(d, v, "feature_set", sv)
 		if err != nil {
 			return &obj, err
@@ -998,7 +972,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandDlpProfileReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -1008,7 +981,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
-
 		t, err := expandDlpProfileRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err
@@ -1018,7 +990,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("dlp_log"); ok {
-
 		t, err := expandDlpProfileDlpLog(d, v, "dlp_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1028,7 +999,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("extended_log"); ok {
-
 		t, err := expandDlpProfileExtendedLog(d, v, "extended_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1038,7 +1008,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("nac_quar_log"); ok {
-
 		t, err := expandDlpProfileNacQuarLog(d, v, "nac_quar_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1048,7 +1017,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("full_archive_proto"); ok {
-
 		t, err := expandDlpProfileFullArchiveProto(d, v, "full_archive_proto", sv)
 		if err != nil {
 			return &obj, err
@@ -1058,7 +1026,6 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("summary_proto"); ok {
-
 		t, err := expandDlpProfileSummaryProto(d, v, "summary_proto", sv)
 		if err != nil {
 			return &obj, err

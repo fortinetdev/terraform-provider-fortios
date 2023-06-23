@@ -80,10 +80,32 @@ func resourceSystemSpeedTestServer() *schema.Resource {
 							Optional:     true,
 							Sensitive:    true,
 						},
+						"longitude": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
+						"latitude": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
+						"distance": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -247,36 +269,46 @@ func flattenSystemSpeedTestServerHost(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemSpeedTestServerHostId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSystemSpeedTestServerHostIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenSystemSpeedTestServerHostPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
 		if _, ok := i["user"]; ok {
-
 			tmp["user"] = flattenSystemSpeedTestServerHostUser(i["user"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
-
 			tmp["password"] = flattenSystemSpeedTestServerHostPassword(i["password"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
 			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "longitude"
+		if _, ok := i["longitude"]; ok {
+			tmp["longitude"] = flattenSystemSpeedTestServerHostLongitude(i["longitude"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "latitude"
+		if _, ok := i["latitude"]; ok {
+			tmp["latitude"] = flattenSystemSpeedTestServerHostLatitude(i["latitude"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
+		if _, ok := i["distance"]; ok {
+			tmp["distance"] = flattenSystemSpeedTestServerHostDistance(i["distance"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -308,8 +340,26 @@ func flattenSystemSpeedTestServerHostPassword(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemSpeedTestServerHostLongitude(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSpeedTestServerHostLatitude(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSpeedTestServerHostDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemSpeedTestServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemSpeedTestServerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -323,7 +373,7 @@ func refreshObjectSystemSpeedTestServer(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("host", flattenSystemSpeedTestServerHost(o["host"], d, "host", sv)); err != nil {
 			if !fortiAPIPatch(o["host"]) {
 				return fmt.Errorf("Error reading host: %v", err)
@@ -372,32 +422,42 @@ func expandSystemSpeedTestServerHost(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemSpeedTestServerHostId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSystemSpeedTestServerHostIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandSystemSpeedTestServerHostPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["user"], _ = expandSystemSpeedTestServerHostUser(d, i["user"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["password"], _ = expandSystemSpeedTestServerHostPassword(d, i["password"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "longitude"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["longitude"], _ = expandSystemSpeedTestServerHostLongitude(d, i["longitude"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "latitude"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["latitude"], _ = expandSystemSpeedTestServerHostLatitude(d, i["latitude"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["distance"], _ = expandSystemSpeedTestServerHostDistance(d, i["distance"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -428,11 +488,22 @@ func expandSystemSpeedTestServerHostPassword(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemSpeedTestServerHostLongitude(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSpeedTestServerHostLatitude(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSpeedTestServerHostDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemSpeedTestServer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSpeedTestServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -442,7 +513,6 @@ func getObjectSystemSpeedTestServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOkExists("timestamp"); ok {
-
 		t, err := expandSystemSpeedTestServerTimestamp(d, v, "timestamp", sv)
 		if err != nil {
 			return &obj, err
@@ -452,7 +522,6 @@ func getObjectSystemSpeedTestServer(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("host"); ok || d.HasChange("host") {
-
 		t, err := expandSystemSpeedTestServerHost(d, v, "host", sv)
 		if err != nil {
 			return &obj, err

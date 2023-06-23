@@ -3,9 +3,9 @@ package fortios
 import (
 	"fmt"
 
-	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	forticlient "github.com/terraform-providers/terraform-provider-fortios/sdk/sdkcore"
 )
 
 func dataSourceJSONGenericAPI() *schema.Resource {

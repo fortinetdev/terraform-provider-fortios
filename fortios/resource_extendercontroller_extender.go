@@ -595,6 +595,11 @@ func resourceExtenderControllerExtender() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -795,13 +800,11 @@ func flattenExtenderControllerExtenderWanExtension(v interface{}, d *schema.Reso
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "modem1_extension"
 	if _, ok := i["modem1-extension"]; ok {
-
 		result["modem1_extension"] = flattenExtenderControllerExtenderWanExtensionModem1Extension(i["modem1-extension"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "modem2_extension"
 	if _, ok := i["modem2-extension"]; ok {
-
 		result["modem2_extension"] = flattenExtenderControllerExtenderWanExtensionModem2Extension(i["modem2-extension"], d, pre_append, sv)
 	}
 
@@ -832,19 +835,16 @@ func flattenExtenderControllerExtenderControllerReport(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenExtenderControllerExtenderControllerReportStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "interval"
 	if _, ok := i["interval"]; ok {
-
 		result["interval"] = flattenExtenderControllerExtenderControllerReportInterval(i["interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signal_threshold"
 	if _, ok := i["signal-threshold"]; ok {
-
 		result["signal_threshold"] = flattenExtenderControllerExtenderControllerReportSignalThreshold(i["signal-threshold"], d, pre_append, sv)
 	}
 
@@ -875,73 +875,61 @@ func flattenExtenderControllerExtenderModem1(v interface{}, d *schema.ResourceDa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := i["ifname"]; ok {
-
 		result["ifname"] = flattenExtenderControllerExtenderModem1Ifname(i["ifname"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := i["redundant-mode"]; ok {
-
 		result["redundant_mode"] = flattenExtenderControllerExtenderModem1RedundantMode(i["redundant-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := i["redundant-intf"]; ok {
-
 		result["redundant_intf"] = flattenExtenderControllerExtenderModem1RedundantIntf(i["redundant-intf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := i["conn-status"]; ok {
-
 		result["conn_status"] = flattenExtenderControllerExtenderModem1ConnStatus(i["conn-status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := i["default-sim"]; ok {
-
 		result["default_sim"] = flattenExtenderControllerExtenderModem1DefaultSim(i["default-sim"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "gps"
 	if _, ok := i["gps"]; ok {
-
 		result["gps"] = flattenExtenderControllerExtenderModem1Gps(i["gps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := i["sim1-pin"]; ok {
-
 		result["sim1_pin"] = flattenExtenderControllerExtenderModem1Sim1Pin(i["sim1-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := i["sim2-pin"]; ok {
-
 		result["sim2_pin"] = flattenExtenderControllerExtenderModem1Sim2Pin(i["sim2-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-
 		result["sim1_pin_code"] = flattenExtenderControllerExtenderModem1Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-
 		result["sim2_pin_code"] = flattenExtenderControllerExtenderModem1Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := i["preferred-carrier"]; ok {
-
 		result["preferred_carrier"] = flattenExtenderControllerExtenderModem1PreferredCarrier(i["preferred-carrier"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := i["auto-switch"]; ok {
-
 		result["auto_switch"] = flattenExtenderControllerExtenderModem1AutoSwitch(i["auto-switch"], d, pre_append, sv)
 	}
 
@@ -1004,49 +992,41 @@ func flattenExtenderControllerExtenderModem1AutoSwitch(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := i["disconnect"]; ok {
-
 		result["disconnect"] = flattenExtenderControllerExtenderModem1AutoSwitchDisconnect(i["disconnect"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := i["disconnect-threshold"]; ok {
-
 		result["disconnect_threshold"] = flattenExtenderControllerExtenderModem1AutoSwitchDisconnectThreshold(i["disconnect-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := i["disconnect-period"]; ok {
-
 		result["disconnect_period"] = flattenExtenderControllerExtenderModem1AutoSwitchDisconnectPeriod(i["disconnect-period"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signal"
 	if _, ok := i["signal"]; ok {
-
 		result["signal"] = flattenExtenderControllerExtenderModem1AutoSwitchSignal(i["signal"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := i["dataplan"]; ok {
-
 		result["dataplan"] = flattenExtenderControllerExtenderModem1AutoSwitchDataplan(i["dataplan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := i["switch-back"]; ok {
-
 		result["switch_back"] = flattenExtenderControllerExtenderModem1AutoSwitchSwitchBack(i["switch-back"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := i["switch-back-time"]; ok {
-
 		result["switch_back_time"] = flattenExtenderControllerExtenderModem1AutoSwitchSwitchBackTime(i["switch-back-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := i["switch-back-timer"]; ok {
-
 		result["switch_back_timer"] = flattenExtenderControllerExtenderModem1AutoSwitchSwitchBackTimer(i["switch-back-timer"], d, pre_append, sv)
 	}
 
@@ -1097,73 +1077,61 @@ func flattenExtenderControllerExtenderModem2(v interface{}, d *schema.ResourceDa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := i["ifname"]; ok {
-
 		result["ifname"] = flattenExtenderControllerExtenderModem2Ifname(i["ifname"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := i["redundant-mode"]; ok {
-
 		result["redundant_mode"] = flattenExtenderControllerExtenderModem2RedundantMode(i["redundant-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := i["redundant-intf"]; ok {
-
 		result["redundant_intf"] = flattenExtenderControllerExtenderModem2RedundantIntf(i["redundant-intf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := i["conn-status"]; ok {
-
 		result["conn_status"] = flattenExtenderControllerExtenderModem2ConnStatus(i["conn-status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := i["default-sim"]; ok {
-
 		result["default_sim"] = flattenExtenderControllerExtenderModem2DefaultSim(i["default-sim"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "gps"
 	if _, ok := i["gps"]; ok {
-
 		result["gps"] = flattenExtenderControllerExtenderModem2Gps(i["gps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := i["sim1-pin"]; ok {
-
 		result["sim1_pin"] = flattenExtenderControllerExtenderModem2Sim1Pin(i["sim1-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := i["sim2-pin"]; ok {
-
 		result["sim2_pin"] = flattenExtenderControllerExtenderModem2Sim2Pin(i["sim2-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-
 		result["sim1_pin_code"] = flattenExtenderControllerExtenderModem2Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-
 		result["sim2_pin_code"] = flattenExtenderControllerExtenderModem2Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := i["preferred-carrier"]; ok {
-
 		result["preferred_carrier"] = flattenExtenderControllerExtenderModem2PreferredCarrier(i["preferred-carrier"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := i["auto-switch"]; ok {
-
 		result["auto_switch"] = flattenExtenderControllerExtenderModem2AutoSwitch(i["auto-switch"], d, pre_append, sv)
 	}
 
@@ -1226,49 +1194,41 @@ func flattenExtenderControllerExtenderModem2AutoSwitch(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := i["disconnect"]; ok {
-
 		result["disconnect"] = flattenExtenderControllerExtenderModem2AutoSwitchDisconnect(i["disconnect"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := i["disconnect-threshold"]; ok {
-
 		result["disconnect_threshold"] = flattenExtenderControllerExtenderModem2AutoSwitchDisconnectThreshold(i["disconnect-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := i["disconnect-period"]; ok {
-
 		result["disconnect_period"] = flattenExtenderControllerExtenderModem2AutoSwitchDisconnectPeriod(i["disconnect-period"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signal"
 	if _, ok := i["signal"]; ok {
-
 		result["signal"] = flattenExtenderControllerExtenderModem2AutoSwitchSignal(i["signal"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := i["dataplan"]; ok {
-
 		result["dataplan"] = flattenExtenderControllerExtenderModem2AutoSwitchDataplan(i["dataplan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := i["switch-back"]; ok {
-
 		result["switch_back"] = flattenExtenderControllerExtenderModem2AutoSwitchSwitchBack(i["switch-back"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := i["switch-back-time"]; ok {
-
 		result["switch_back_time"] = flattenExtenderControllerExtenderModem2AutoSwitchSwitchBackTime(i["switch-back-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := i["switch-back-timer"]; ok {
-
 		result["switch_back_timer"] = flattenExtenderControllerExtenderModem2AutoSwitchSwitchBackTimer(i["switch-back-timer"], d, pre_append, sv)
 	}
 
@@ -1442,6 +1402,12 @@ func flattenExtenderControllerExtenderCdmaHaSpi(v interface{}, d *schema.Resourc
 
 func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenExtenderControllerExtenderName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1539,7 +1505,7 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("wan_extension", flattenExtenderControllerExtenderWanExtension(o["wan-extension"], d, "wan_extension", sv)); err != nil {
 			if !fortiAPIPatch(o["wan-extension"]) {
 				return fmt.Errorf("Error reading wan_extension: %v", err)
@@ -1561,7 +1527,7 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("controller_report", flattenExtenderControllerExtenderControllerReport(o["controller-report"], d, "controller_report", sv)); err != nil {
 			if !fortiAPIPatch(o["controller-report"]) {
 				return fmt.Errorf("Error reading controller_report: %v", err)
@@ -1577,7 +1543,7 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("modem1", flattenExtenderControllerExtenderModem1(o["modem1"], d, "modem1", sv)); err != nil {
 			if !fortiAPIPatch(o["modem1"]) {
 				return fmt.Errorf("Error reading modem1: %v", err)
@@ -1593,7 +1559,7 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("modem2", flattenExtenderControllerExtenderModem2(o["modem2"], d, "modem2", sv)); err != nil {
 			if !fortiAPIPatch(o["modem2"]) {
 				return fmt.Errorf("Error reading modem2: %v", err)
@@ -1862,12 +1828,10 @@ func expandExtenderControllerExtenderWanExtension(d *schema.ResourceData, v inte
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "modem1_extension"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["modem1-extension"], _ = expandExtenderControllerExtenderWanExtensionModem1Extension(d, i["modem1_extension"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "modem2_extension"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["modem2-extension"], _ = expandExtenderControllerExtenderWanExtensionModem2Extension(d, i["modem2_extension"], pre_append, sv)
 	}
 
@@ -1898,17 +1862,14 @@ func expandExtenderControllerExtenderControllerReport(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandExtenderControllerExtenderControllerReportStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "interval"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["interval"], _ = expandExtenderControllerExtenderControllerReportInterval(d, i["interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signal_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signal-threshold"], _ = expandExtenderControllerExtenderControllerReportSignalThreshold(d, i["signal_threshold"], pre_append, sv)
 	}
 
@@ -1939,62 +1900,50 @@ func expandExtenderControllerExtenderModem1(d *schema.ResourceData, v interface{
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ifname"], _ = expandExtenderControllerExtenderModem1Ifname(d, i["ifname"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-mode"], _ = expandExtenderControllerExtenderModem1RedundantMode(d, i["redundant_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-intf"], _ = expandExtenderControllerExtenderModem1RedundantIntf(d, i["redundant_intf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["conn-status"], _ = expandExtenderControllerExtenderModem1ConnStatus(d, i["conn_status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["default-sim"], _ = expandExtenderControllerExtenderModem1DefaultSim(d, i["default_sim"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "gps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["gps"], _ = expandExtenderControllerExtenderModem1Gps(d, i["gps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin"], _ = expandExtenderControllerExtenderModem1Sim1Pin(d, i["sim1_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin"], _ = expandExtenderControllerExtenderModem1Sim2Pin(d, i["sim2_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin-code"], _ = expandExtenderControllerExtenderModem1Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin-code"], _ = expandExtenderControllerExtenderModem1Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["preferred-carrier"], _ = expandExtenderControllerExtenderModem1PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-switch"], _ = expandExtenderControllerExtenderModem1AutoSwitch(d, i["auto_switch"], pre_append, sv)
 	} else {
 		result["auto-switch"] = make([]string, 0)
@@ -2059,42 +2008,34 @@ func expandExtenderControllerExtenderModem1AutoSwitch(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect"], _ = expandExtenderControllerExtenderModem1AutoSwitchDisconnect(d, i["disconnect"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-threshold"], _ = expandExtenderControllerExtenderModem1AutoSwitchDisconnectThreshold(d, i["disconnect_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-period"], _ = expandExtenderControllerExtenderModem1AutoSwitchDisconnectPeriod(d, i["disconnect_period"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signal"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signal"], _ = expandExtenderControllerExtenderModem1AutoSwitchSignal(d, i["signal"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dataplan"], _ = expandExtenderControllerExtenderModem1AutoSwitchDataplan(d, i["dataplan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back"], _ = expandExtenderControllerExtenderModem1AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-time"], _ = expandExtenderControllerExtenderModem1AutoSwitchSwitchBackTime(d, i["switch_back_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-timer"], _ = expandExtenderControllerExtenderModem1AutoSwitchSwitchBackTimer(d, i["switch_back_timer"], pre_append, sv)
 	}
 
@@ -2145,62 +2086,50 @@ func expandExtenderControllerExtenderModem2(d *schema.ResourceData, v interface{
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ifname"], _ = expandExtenderControllerExtenderModem2Ifname(d, i["ifname"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-mode"], _ = expandExtenderControllerExtenderModem2RedundantMode(d, i["redundant_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-intf"], _ = expandExtenderControllerExtenderModem2RedundantIntf(d, i["redundant_intf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["conn-status"], _ = expandExtenderControllerExtenderModem2ConnStatus(d, i["conn_status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["default-sim"], _ = expandExtenderControllerExtenderModem2DefaultSim(d, i["default_sim"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "gps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["gps"], _ = expandExtenderControllerExtenderModem2Gps(d, i["gps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin"], _ = expandExtenderControllerExtenderModem2Sim1Pin(d, i["sim1_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin"], _ = expandExtenderControllerExtenderModem2Sim2Pin(d, i["sim2_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin-code"], _ = expandExtenderControllerExtenderModem2Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin-code"], _ = expandExtenderControllerExtenderModem2Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["preferred-carrier"], _ = expandExtenderControllerExtenderModem2PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-switch"], _ = expandExtenderControllerExtenderModem2AutoSwitch(d, i["auto_switch"], pre_append, sv)
 	} else {
 		result["auto-switch"] = make([]string, 0)
@@ -2265,42 +2194,34 @@ func expandExtenderControllerExtenderModem2AutoSwitch(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect"], _ = expandExtenderControllerExtenderModem2AutoSwitchDisconnect(d, i["disconnect"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-threshold"], _ = expandExtenderControllerExtenderModem2AutoSwitchDisconnectThreshold(d, i["disconnect_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-period"], _ = expandExtenderControllerExtenderModem2AutoSwitchDisconnectPeriod(d, i["disconnect_period"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signal"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signal"], _ = expandExtenderControllerExtenderModem2AutoSwitchSignal(d, i["signal"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dataplan"], _ = expandExtenderControllerExtenderModem2AutoSwitchDataplan(d, i["dataplan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back"], _ = expandExtenderControllerExtenderModem2AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-time"], _ = expandExtenderControllerExtenderModem2AutoSwitchSwitchBackTime(d, i["switch_back_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-timer"], _ = expandExtenderControllerExtenderModem2AutoSwitchSwitchBackTimer(d, i["switch_back_timer"], pre_append, sv)
 	}
 
@@ -2475,7 +2396,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandExtenderControllerExtenderName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -2485,7 +2405,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandExtenderControllerExtenderId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -2495,7 +2414,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {
-
 		t, err := expandExtenderControllerExtenderAuthorized(d, v, "authorized", sv)
 		if err != nil {
 			return &obj, err
@@ -2505,7 +2423,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("admin"); ok {
-
 		t, err := expandExtenderControllerExtenderAdmin(d, v, "admin", sv)
 		if err != nil {
 			return &obj, err
@@ -2515,7 +2432,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ifname"); ok {
-
 		t, err := expandExtenderControllerExtenderIfname(d, v, "ifname", sv)
 		if err != nil {
 			return &obj, err
@@ -2525,7 +2441,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOkExists("vdom"); ok {
-
 		t, err := expandExtenderControllerExtenderVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -2535,7 +2450,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOkExists("device_id"); ok {
-
 		t, err := expandExtenderControllerExtenderDeviceId(d, v, "device_id", sv)
 		if err != nil {
 			return &obj, err
@@ -2545,7 +2459,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("extension_type"); ok {
-
 		t, err := expandExtenderControllerExtenderExtensionType(d, v, "extension_type", sv)
 		if err != nil {
 			return &obj, err
@@ -2555,7 +2468,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("override_allowaccess"); ok {
-
 		t, err := expandExtenderControllerExtenderOverrideAllowaccess(d, v, "override_allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -2565,7 +2477,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("allowaccess"); ok {
-
 		t, err := expandExtenderControllerExtenderAllowaccess(d, v, "allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -2575,7 +2486,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("override_login_password_change"); ok {
-
 		t, err := expandExtenderControllerExtenderOverrideLoginPasswordChange(d, v, "override_login_password_change", sv)
 		if err != nil {
 			return &obj, err
@@ -2585,7 +2495,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("login_password_change"); ok {
-
 		t, err := expandExtenderControllerExtenderLoginPasswordChange(d, v, "login_password_change", sv)
 		if err != nil {
 			return &obj, err
@@ -2595,7 +2504,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("login_password"); ok {
-
 		t, err := expandExtenderControllerExtenderLoginPassword(d, v, "login_password", sv)
 		if err != nil {
 			return &obj, err
@@ -2605,7 +2513,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("override_enforce_bandwidth"); ok {
-
 		t, err := expandExtenderControllerExtenderOverrideEnforceBandwidth(d, v, "override_enforce_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -2615,7 +2522,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("enforce_bandwidth"); ok {
-
 		t, err := expandExtenderControllerExtenderEnforceBandwidth(d, v, "enforce_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -2625,7 +2531,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("bandwidth_limit"); ok {
-
 		t, err := expandExtenderControllerExtenderBandwidthLimit(d, v, "bandwidth_limit", sv)
 		if err != nil {
 			return &obj, err
@@ -2635,7 +2540,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("wan_extension"); ok {
-
 		t, err := expandExtenderControllerExtenderWanExtension(d, v, "wan_extension", sv)
 		if err != nil {
 			return &obj, err
@@ -2645,7 +2549,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("profile"); ok {
-
 		t, err := expandExtenderControllerExtenderProfile(d, v, "profile", sv)
 		if err != nil {
 			return &obj, err
@@ -2655,7 +2558,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("controller_report"); ok {
-
 		t, err := expandExtenderControllerExtenderControllerReport(d, v, "controller_report", sv)
 		if err != nil {
 			return &obj, err
@@ -2665,7 +2567,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("modem1"); ok {
-
 		t, err := expandExtenderControllerExtenderModem1(d, v, "modem1", sv)
 		if err != nil {
 			return &obj, err
@@ -2675,7 +2576,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("modem2"); ok {
-
 		t, err := expandExtenderControllerExtenderModem2(d, v, "modem2", sv)
 		if err != nil {
 			return &obj, err
@@ -2685,7 +2585,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("role"); ok {
-
 		t, err := expandExtenderControllerExtenderRole(d, v, "role", sv)
 		if err != nil {
 			return &obj, err
@@ -2695,7 +2594,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
-
 		t, err := expandExtenderControllerExtenderMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
@@ -2705,7 +2603,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("dial_mode"); ok {
-
 		t, err := expandExtenderControllerExtenderDialMode(d, v, "dial_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -2715,7 +2612,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("redial"); ok {
-
 		t, err := expandExtenderControllerExtenderRedial(d, v, "redial", sv)
 		if err != nil {
 			return &obj, err
@@ -2725,7 +2621,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("redundant_intf"); ok {
-
 		t, err := expandExtenderControllerExtenderRedundantIntf(d, v, "redundant_intf", sv)
 		if err != nil {
 			return &obj, err
@@ -2735,7 +2630,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOkExists("dial_status"); ok {
-
 		t, err := expandExtenderControllerExtenderDialStatus(d, v, "dial_status", sv)
 		if err != nil {
 			return &obj, err
@@ -2745,7 +2639,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOkExists("conn_status"); ok {
-
 		t, err := expandExtenderControllerExtenderConnStatus(d, v, "conn_status", sv)
 		if err != nil {
 			return &obj, err
@@ -2755,7 +2648,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ext_name"); ok {
-
 		t, err := expandExtenderControllerExtenderExtName(d, v, "ext_name", sv)
 		if err != nil {
 			return &obj, err
@@ -2765,7 +2657,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandExtenderControllerExtenderDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -2775,7 +2666,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOkExists("quota_limit_mb"); ok {
-
 		t, err := expandExtenderControllerExtenderQuotaLimitMb(d, v, "quota_limit_mb", sv)
 		if err != nil {
 			return &obj, err
@@ -2785,7 +2675,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("billing_start_day"); ok {
-
 		t, err := expandExtenderControllerExtenderBillingStartDay(d, v, "billing_start_day", sv)
 		if err != nil {
 			return &obj, err
@@ -2795,7 +2684,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("at_dial_script"); ok {
-
 		t, err := expandExtenderControllerExtenderAtDialScript(d, v, "at_dial_script", sv)
 		if err != nil {
 			return &obj, err
@@ -2805,7 +2693,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("modem_passwd"); ok {
-
 		t, err := expandExtenderControllerExtenderModemPasswd(d, v, "modem_passwd", sv)
 		if err != nil {
 			return &obj, err
@@ -2815,7 +2702,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("initiated_update"); ok {
-
 		t, err := expandExtenderControllerExtenderInitiatedUpdate(d, v, "initiated_update", sv)
 		if err != nil {
 			return &obj, err
@@ -2825,7 +2711,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("modem_type"); ok {
-
 		t, err := expandExtenderControllerExtenderModemType(d, v, "modem_type", sv)
 		if err != nil {
 			return &obj, err
@@ -2835,7 +2720,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ppp_username"); ok {
-
 		t, err := expandExtenderControllerExtenderPppUsername(d, v, "ppp_username", sv)
 		if err != nil {
 			return &obj, err
@@ -2845,7 +2729,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ppp_password"); ok {
-
 		t, err := expandExtenderControllerExtenderPppPassword(d, v, "ppp_password", sv)
 		if err != nil {
 			return &obj, err
@@ -2855,7 +2738,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ppp_auth_protocol"); ok {
-
 		t, err := expandExtenderControllerExtenderPppAuthProtocol(d, v, "ppp_auth_protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -2865,7 +2747,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ppp_echo_request"); ok {
-
 		t, err := expandExtenderControllerExtenderPppEchoRequest(d, v, "ppp_echo_request", sv)
 		if err != nil {
 			return &obj, err
@@ -2875,7 +2756,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("wimax_carrier"); ok {
-
 		t, err := expandExtenderControllerExtenderWimaxCarrier(d, v, "wimax_carrier", sv)
 		if err != nil {
 			return &obj, err
@@ -2885,7 +2765,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("wimax_realm"); ok {
-
 		t, err := expandExtenderControllerExtenderWimaxRealm(d, v, "wimax_realm", sv)
 		if err != nil {
 			return &obj, err
@@ -2895,7 +2774,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("wimax_auth_protocol"); ok {
-
 		t, err := expandExtenderControllerExtenderWimaxAuthProtocol(d, v, "wimax_auth_protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -2905,7 +2783,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("sim_pin"); ok {
-
 		t, err := expandExtenderControllerExtenderSimPin(d, v, "sim_pin", sv)
 		if err != nil {
 			return &obj, err
@@ -2915,7 +2792,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("access_point_name"); ok {
-
 		t, err := expandExtenderControllerExtenderAccessPointName(d, v, "access_point_name", sv)
 		if err != nil {
 			return &obj, err
@@ -2925,7 +2801,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("multi_mode"); ok {
-
 		t, err := expandExtenderControllerExtenderMultiMode(d, v, "multi_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -2935,7 +2810,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("roaming"); ok {
-
 		t, err := expandExtenderControllerExtenderRoaming(d, v, "roaming", sv)
 		if err != nil {
 			return &obj, err
@@ -2945,7 +2819,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("cdma_nai"); ok {
-
 		t, err := expandExtenderControllerExtenderCdmaNai(d, v, "cdma_nai", sv)
 		if err != nil {
 			return &obj, err
@@ -2955,7 +2828,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("aaa_shared_secret"); ok {
-
 		t, err := expandExtenderControllerExtenderAaaSharedSecret(d, v, "aaa_shared_secret", sv)
 		if err != nil {
 			return &obj, err
@@ -2965,7 +2837,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ha_shared_secret"); ok {
-
 		t, err := expandExtenderControllerExtenderHaSharedSecret(d, v, "ha_shared_secret", sv)
 		if err != nil {
 			return &obj, err
@@ -2975,7 +2846,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("primary_ha"); ok {
-
 		t, err := expandExtenderControllerExtenderPrimaryHa(d, v, "primary_ha", sv)
 		if err != nil {
 			return &obj, err
@@ -2985,7 +2855,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("secondary_ha"); ok {
-
 		t, err := expandExtenderControllerExtenderSecondaryHa(d, v, "secondary_ha", sv)
 		if err != nil {
 			return &obj, err
@@ -2995,7 +2864,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("cdma_aaa_spi"); ok {
-
 		t, err := expandExtenderControllerExtenderCdmaAaaSpi(d, v, "cdma_aaa_spi", sv)
 		if err != nil {
 			return &obj, err
@@ -3005,7 +2873,6 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("cdma_ha_spi"); ok {
-
 		t, err := expandExtenderControllerExtenderCdmaHaSpi(d, v, "cdma_ha_spi", sv)
 		if err != nil {
 			return &obj, err

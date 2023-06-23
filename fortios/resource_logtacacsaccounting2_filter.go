@@ -209,7 +209,6 @@ func getObjectLogTacacsAccounting2Filter(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["login-audit"] = nil
 		} else {
-
 			t, err := expandLogTacacsAccounting2FilterLoginAudit(d, v, "login_audit", sv)
 			if err != nil {
 				return &obj, err
@@ -223,7 +222,6 @@ func getObjectLogTacacsAccounting2Filter(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["config-change-audit"] = nil
 		} else {
-
 			t, err := expandLogTacacsAccounting2FilterConfigChangeAudit(d, v, "config_change_audit", sv)
 			if err != nil {
 				return &obj, err
@@ -237,7 +235,6 @@ func getObjectLogTacacsAccounting2Filter(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["cli-cmd-audit"] = nil
 		} else {
-
 			t, err := expandLogTacacsAccounting2FilterCliCmdAudit(d, v, "cli_cmd_audit", sv)
 			if err != nil {
 				return &obj, err

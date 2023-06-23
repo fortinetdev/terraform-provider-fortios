@@ -235,7 +235,6 @@ func getObjectSystemDscpBasedPriority(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemDscpBasedPriorityId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSystemDscpBasedPriority(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("ds"); ok {
-
 		t, err := expandSystemDscpBasedPriorityDs(d, v, "ds", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSystemDscpBasedPriority(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
-
 		t, err := expandSystemDscpBasedPriorityPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err

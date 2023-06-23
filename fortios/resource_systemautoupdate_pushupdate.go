@@ -225,7 +225,6 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdatePushUpdateStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -239,7 +238,6 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["override"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdatePushUpdateOverride(d, v, "override", sv)
 			if err != nil {
 				return &obj, err
@@ -253,7 +251,6 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["address"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdatePushUpdateAddress(d, v, "address", sv)
 			if err != nil {
 				return &obj, err
@@ -267,7 +264,6 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, setArgNil bool,
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdatePushUpdatePort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err

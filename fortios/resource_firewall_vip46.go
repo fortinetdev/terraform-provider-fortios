@@ -220,6 +220,11 @@ func resourceFirewallVip46() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -383,7 +388,6 @@ func flattenFirewallVip46SrcintfFilter(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenFirewallVip46SrcintfFilterInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -434,7 +438,6 @@ func flattenFirewallVip46SrcFilter(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := i["range"]; ok {
-
 			tmp["range"] = flattenFirewallVip46SrcFilterRange(i["range"], d, pre_append, sv)
 		}
 
@@ -517,68 +520,62 @@ func flattenFirewallVip46Realservers(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallVip46RealserversId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenFirewallVip46RealserversIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenFirewallVip46RealserversPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenFirewallVip46RealserversStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := i["weight"]; ok {
-
 			tmp["weight"] = flattenFirewallVip46RealserversWeight(i["weight"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
 		if _, ok := i["holddown-interval"]; ok {
-
 			tmp["holddown_interval"] = flattenFirewallVip46RealserversHolddownInterval(i["holddown-interval"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "healthcheck"
 		if _, ok := i["healthcheck"]; ok {
-
 			tmp["healthcheck"] = flattenFirewallVip46RealserversHealthcheck(i["healthcheck"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
 		if _, ok := i["max-connections"]; ok {
-
 			tmp["max_connections"] = flattenFirewallVip46RealserversMaxConnections(i["max-connections"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := i["monitor"]; ok {
-
 			v := flattenFirewallVip46RealserversMonitor(i["monitor"], d, pre_append, sv)
 			vx := ""
 			bstring := false
-			if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
+			new_version_map := map[string][]string{
+				"=": []string{"6.4.10", "6.4.11", "6.4.12", "7.0.0"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
 						i := r.(map[string]interface{})
 						if _, ok := i["name"]; ok {
 							if xv, ok := i["name"].(string); ok {
-								vx += "\"" + xv + "\""
+								vx += xv
 								if k < len(l)-1 {
-									vx += " "
+									vx += ", "
 								}
 							}
 						}
@@ -595,7 +592,6 @@ func flattenFirewallVip46Realservers(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
 		if _, ok := i["client-ip"]; ok {
-
 			tmp["client_ip"] = flattenFirewallVip46RealserversClientIp(i["client-ip"], d, pre_append, sv)
 		}
 
@@ -674,7 +670,6 @@ func flattenFirewallVip46Monitor(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallVip46MonitorName(i["name"], d, pre_append, sv)
 		}
 
@@ -693,6 +688,12 @@ func flattenFirewallVip46MonitorName(v interface{}, d *schema.ResourceData, pre 
 
 func refreshObjectFirewallVip46(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallVip46Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -712,7 +713,7 @@ func refreshObjectFirewallVip46(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcintf_filter", flattenFirewallVip46SrcintfFilter(o["srcintf-filter"], d, "srcintf_filter", sv)); err != nil {
 			if !fortiAPIPatch(o["srcintf-filter"]) {
 				return fmt.Errorf("Error reading srcintf_filter: %v", err)
@@ -740,7 +741,7 @@ func refreshObjectFirewallVip46(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("src_filter", flattenFirewallVip46SrcFilter(o["src-filter"], d, "src_filter", sv)); err != nil {
 			if !fortiAPIPatch(o["src-filter"]) {
 				return fmt.Errorf("Error reading src_filter: %v", err)
@@ -816,7 +817,7 @@ func refreshObjectFirewallVip46(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("realservers", flattenFirewallVip46Realservers(o["realservers"], d, "realservers", sv)); err != nil {
 			if !fortiAPIPatch(o["realservers"]) {
 				return fmt.Errorf("Error reading realservers: %v", err)
@@ -832,7 +833,7 @@ func refreshObjectFirewallVip46(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("monitor", flattenFirewallVip46Monitor(o["monitor"], d, "monitor", sv)); err != nil {
 			if !fortiAPIPatch(o["monitor"]) {
 				return fmt.Errorf("Error reading monitor: %v", err)
@@ -885,7 +886,6 @@ func expandFirewallVip46SrcintfFilter(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandFirewallVip46SrcintfFilterInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -925,7 +925,6 @@ func expandFirewallVip46SrcFilter(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["range"], _ = expandFirewallVip46SrcFilterRange(d, i["range"], pre_append, sv)
 		}
 
@@ -997,59 +996,53 @@ func expandFirewallVip46Realservers(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallVip46RealserversId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandFirewallVip46RealserversIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandFirewallVip46RealserversPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandFirewallVip46RealserversStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["weight"], _ = expandFirewallVip46RealserversWeight(d, i["weight"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["holddown-interval"], _ = expandFirewallVip46RealserversHolddownInterval(d, i["holddown_interval"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "healthcheck"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["healthcheck"], _ = expandFirewallVip46RealserversHealthcheck(d, i["healthcheck"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["max-connections"], _ = expandFirewallVip46RealserversMaxConnections(d, i["max_connections"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			bstring := false
 			t, _ := expandFirewallVip46RealserversMonitor(d, i["monitor"], pre_append, sv)
 			if t != nil {
-				if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
+				new_version_map := map[string][]string{
+					"=": []string{"6.4.10", "6.4.11", "6.4.12", "7.0.0"},
+				}
+				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 					bstring = true
 				}
 			}
@@ -1071,12 +1064,10 @@ func expandFirewallVip46Realservers(d *schema.ResourceData, v interface{}, pre s
 			} else {
 				tmp["monitor"] = t
 			}
-
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["client-ip"], _ = expandFirewallVip46RealserversClientIp(d, i["client_ip"], pre_append, sv)
 		}
 
@@ -1144,7 +1135,6 @@ func expandFirewallVip46Monitor(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallVip46MonitorName(d, i["name"], pre_append, sv)
 		}
 
@@ -1164,7 +1154,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallVip46Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1174,7 +1163,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallVip46Id(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -1184,7 +1172,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallVip46Uuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -1194,7 +1181,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("srcintf_filter"); ok || d.HasChange("srcintf_filter") {
-
 		t, err := expandFirewallVip46SrcintfFilter(d, v, "srcintf_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1204,7 +1190,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallVip46Comment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1214,7 +1199,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallVip46Type(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -1224,7 +1208,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("src_filter"); ok || d.HasChange("src_filter") {
-
 		t, err := expandFirewallVip46SrcFilter(d, v, "src_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1234,7 +1217,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("extip"); ok {
-
 		t, err := expandFirewallVip46Extip(d, v, "extip", sv)
 		if err != nil {
 			return &obj, err
@@ -1244,7 +1226,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("mappedip"); ok {
-
 		t, err := expandFirewallVip46Mappedip(d, v, "mappedip", sv)
 		if err != nil {
 			return &obj, err
@@ -1254,7 +1235,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("arp_reply"); ok {
-
 		t, err := expandFirewallVip46ArpReply(d, v, "arp_reply", sv)
 		if err != nil {
 			return &obj, err
@@ -1264,7 +1244,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("portforward"); ok {
-
 		t, err := expandFirewallVip46Portforward(d, v, "portforward", sv)
 		if err != nil {
 			return &obj, err
@@ -1274,7 +1253,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandFirewallVip46Protocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1284,7 +1262,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("extport"); ok {
-
 		t, err := expandFirewallVip46Extport(d, v, "extport", sv)
 		if err != nil {
 			return &obj, err
@@ -1294,7 +1271,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("mappedport"); ok {
-
 		t, err := expandFirewallVip46Mappedport(d, v, "mappedport", sv)
 		if err != nil {
 			return &obj, err
@@ -1304,7 +1280,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallVip46Color(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -1314,7 +1289,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ldb_method"); ok {
-
 		t, err := expandFirewallVip46LdbMethod(d, v, "ldb_method", sv)
 		if err != nil {
 			return &obj, err
@@ -1324,7 +1298,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-
 		t, err := expandFirewallVip46ServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1334,7 +1307,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("realservers"); ok || d.HasChange("realservers") {
-
 		t, err := expandFirewallVip46Realservers(d, v, "realservers", sv)
 		if err != nil {
 			return &obj, err
@@ -1344,7 +1316,6 @@ func getObjectFirewallVip46(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("monitor"); ok || d.HasChange("monitor") {
-
 		t, err := expandFirewallVip46Monitor(d, v, "monitor", sv)
 		if err != nil {
 			return &obj, err

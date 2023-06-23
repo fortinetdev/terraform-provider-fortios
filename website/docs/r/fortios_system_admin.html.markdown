@@ -41,7 +41,7 @@ The following arguments are supported:
 * `wildcard` - Enable/disable wildcard RADIUS authentication. Valid values: `enable`, `disable`.
 * `remote_auth` - Enable/disable authentication using a remote RADIUS, LDAP, or TACACS+ server. Valid values: `enable`, `disable`.
 * `remote_group` - User group name used for remote auth.
-* `password` - Admin user password.
+* `password` - Admin user password. :warning: **Due security reason and API's design, you need to use [Generic resource](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/fortios_json_generic_api) with the monitor API [/api/v2/monitor/system/change-password/select](https://fndn.fortinet.net/index.php?/fortiapi/1-fortios/2271/1/system) to update the password for existing admin user. `Create` and `Delete` operation will works using this resource.**
 * `peer_auth` - Set to enable peer certificate authentication (for HTTPS admin access). Valid values: `enable`, `disable`.
 * `peer_group` - Name of peer group defined under config user group which has PKI members. Used for peer certificate authentication (for HTTPS admin access).
 * `trusthost1` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit. Default allows access from any IPv4 address.
@@ -98,6 +98,7 @@ The following arguments are supported:
 * `gui_vdom_menu_favorites` - Favorite GUI menu IDs for VDOMs. The structure of `gui_vdom_menu_favorites` block is documented below.
 * `gui_new_feature_acknowledge` - Acknowledgement of new features. The structure of `gui_new_feature_acknowledge` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `vdom` block supports:

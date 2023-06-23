@@ -443,7 +443,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallSslServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -453,7 +452,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandFirewallSslServerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -463,7 +461,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandFirewallSslServerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -473,7 +470,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_mode"); ok {
-
 		t, err := expandFirewallSslServerSslMode(d, v, "ssl_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -483,7 +479,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("add_header_x_forwarded_proto"); ok {
-
 		t, err := expandFirewallSslServerAddHeaderXForwardedProto(d, v, "add_header_x_forwarded_proto", sv)
 		if err != nil {
 			return &obj, err
@@ -493,7 +488,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("mapped_port"); ok {
-
 		t, err := expandFirewallSslServerMappedPort(d, v, "mapped_port", sv)
 		if err != nil {
 			return &obj, err
@@ -503,7 +497,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_cert"); ok {
-
 		t, err := expandFirewallSslServerSslCert(d, v, "ssl_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -513,7 +506,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
-
 		t, err := expandFirewallSslServerSslDhBits(d, v, "ssl_dh_bits", sv)
 		if err != nil {
 			return &obj, err
@@ -523,7 +515,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_algorithm"); ok {
-
 		t, err := expandFirewallSslServerSslAlgorithm(d, v, "ssl_algorithm", sv)
 		if err != nil {
 			return &obj, err
@@ -533,7 +524,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_client_renegotiation"); ok {
-
 		t, err := expandFirewallSslServerSslClientRenegotiation(d, v, "ssl_client_renegotiation", sv)
 		if err != nil {
 			return &obj, err
@@ -543,7 +533,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_min_version"); ok {
-
 		t, err := expandFirewallSslServerSslMinVersion(d, v, "ssl_min_version", sv)
 		if err != nil {
 			return &obj, err
@@ -553,7 +542,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_max_version"); ok {
-
 		t, err := expandFirewallSslServerSslMaxVersion(d, v, "ssl_max_version", sv)
 		if err != nil {
 			return &obj, err
@@ -563,7 +551,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ssl_send_empty_frags"); ok {
-
 		t, err := expandFirewallSslServerSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
 		if err != nil {
 			return &obj, err
@@ -573,7 +560,6 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("url_rewrite"); ok {
-
 		t, err := expandFirewallSslServerUrlRewrite(d, v, "url_rewrite", sv)
 		if err != nil {
 			return &obj, err

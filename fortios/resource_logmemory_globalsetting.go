@@ -231,7 +231,6 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["max-size"] = nil
 		} else {
-
 			t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size", sv)
 			if err != nil {
 				return &obj, err
@@ -245,7 +244,6 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["full-first-warning-threshold"] = nil
 		} else {
-
 			t, err := expandLogMemoryGlobalSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -259,7 +257,6 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["full-second-warning-threshold"] = nil
 		} else {
-
 			t, err := expandLogMemoryGlobalSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -273,7 +270,6 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["full-final-warning-threshold"] = nil
 		} else {
-
 			t, err := expandLogMemoryGlobalSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
 			if err != nil {
 				return &obj, err

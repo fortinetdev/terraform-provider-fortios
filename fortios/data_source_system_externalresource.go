@@ -73,6 +73,10 @@ func dataSourceSystemExternalResource() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_identity_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"refresh_rate": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -180,6 +184,10 @@ func dataSourceFlattenSystemExternalResourceUserAgent(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenSystemExternalResourceServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemExternalResourceRefreshRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -256,6 +264,12 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 	if err = d.Set("user_agent", dataSourceFlattenSystemExternalResourceUserAgent(o["user-agent"], d, "user_agent")); err != nil {
 		if !fortiAPIPatch(o["user-agent"]) {
 			return fmt.Errorf("Error reading user_agent: %v", err)
+		}
+	}
+
+	if err = d.Set("server_identity_check", dataSourceFlattenSystemExternalResourceServerIdentityCheck(o["server-identity-check"], d, "server_identity_check")); err != nil {
+		if !fortiAPIPatch(o["server-identity-check"]) {
+			return fmt.Errorf("Error reading server_identity_check: %v", err)
 		}
 	}
 

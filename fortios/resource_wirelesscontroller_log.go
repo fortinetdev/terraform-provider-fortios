@@ -380,7 +380,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -394,7 +393,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["addrgrp-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogAddrgrpLog(d, v, "addrgrp_log", sv)
 			if err != nil {
 				return &obj, err
@@ -408,7 +406,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["ble-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogBleLog(d, v, "ble_log", sv)
 			if err != nil {
 				return &obj, err
@@ -422,7 +419,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["clb-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogClbLog(d, v, "clb_log", sv)
 			if err != nil {
 				return &obj, err
@@ -436,7 +432,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["dhcp-starv-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogDhcpStarvLog(d, v, "dhcp_starv_log", sv)
 			if err != nil {
 				return &obj, err
@@ -450,7 +445,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["led-sched-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogLedSchedLog(d, v, "led_sched_log", sv)
 			if err != nil {
 				return &obj, err
@@ -464,7 +458,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["radio-event-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogRadioEventLog(d, v, "radio_event_log", sv)
 			if err != nil {
 				return &obj, err
@@ -478,7 +471,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["rogue-event-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogRogueEventLog(d, v, "rogue_event_log", sv)
 			if err != nil {
 				return &obj, err
@@ -492,7 +484,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["sta-event-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogStaEventLog(d, v, "sta_event_log", sv)
 			if err != nil {
 				return &obj, err
@@ -506,7 +497,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["sta-locate-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogStaLocateLog(d, v, "sta_locate_log", sv)
 			if err != nil {
 				return &obj, err
@@ -520,7 +510,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["wids-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogWidsLog(d, v, "wids_log", sv)
 			if err != nil {
 				return &obj, err
@@ -534,7 +523,6 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 		if setArgNil {
 			obj["wtp-event-log"] = nil
 		} else {
-
 			t, err := expandWirelessControllerLogWtpEventLog(d, v, "wtp_event_log", sv)
 			if err != nil {
 				return &obj, err

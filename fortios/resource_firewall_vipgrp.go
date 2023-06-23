@@ -81,6 +81,11 @@ func resourceFirewallVipgrp() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -252,7 +257,6 @@ func flattenFirewallVipgrpMember(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallVipgrpMemberName(i["name"], d, pre_append, sv)
 		}
 
@@ -271,6 +275,12 @@ func flattenFirewallVipgrpMemberName(v interface{}, d *schema.ResourceData, pre 
 
 func refreshObjectFirewallVipgrp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallVipgrpName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -302,7 +312,7 @@ func refreshObjectFirewallVipgrp(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenFirewallVipgrpMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -363,7 +373,6 @@ func expandFirewallVipgrpMember(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallVipgrpMemberName(d, i["name"], pre_append, sv)
 		}
 
@@ -383,7 +392,6 @@ func getObjectFirewallVipgrp(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallVipgrpName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +401,6 @@ func getObjectFirewallVipgrp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallVipgrpUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +410,6 @@ func getObjectFirewallVipgrp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandFirewallVipgrpInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -413,7 +419,6 @@ func getObjectFirewallVipgrp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-
 		t, err := expandFirewallVipgrpColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
@@ -423,7 +428,6 @@ func getObjectFirewallVipgrp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallVipgrpComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -433,7 +437,6 @@ func getObjectFirewallVipgrp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandFirewallVipgrpMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err

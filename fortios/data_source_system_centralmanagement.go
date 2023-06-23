@@ -36,6 +36,10 @@ func dataSourceSystemCentralManagement() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fortigate_cloud_sso_default_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"schedule_config_restore": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -183,6 +187,10 @@ func dataSourceFlattenSystemCentralManagementMode(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemCentralManagementType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCentralManagementFortigateCloudSsoDefaultProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -351,6 +359,12 @@ func dataSourceRefreshObjectSystemCentralManagement(d *schema.ResourceData, o ma
 	if err = d.Set("type", dataSourceFlattenSystemCentralManagementType(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("fortigate_cloud_sso_default_profile", dataSourceFlattenSystemCentralManagementFortigateCloudSsoDefaultProfile(o["fortigate-cloud-sso-default-profile"], d, "fortigate_cloud_sso_default_profile")); err != nil {
+		if !fortiAPIPatch(o["fortigate-cloud-sso-default-profile"]) {
+			return fmt.Errorf("Error reading fortigate_cloud_sso_default_profile: %v", err)
 		}
 	}
 

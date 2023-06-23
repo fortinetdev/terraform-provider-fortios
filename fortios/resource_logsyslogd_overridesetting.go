@@ -152,6 +152,11 @@ func resourceLogSyslogdOverrideSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -328,19 +333,16 @@ func flattenLogSyslogdOverrideSettingCustomFieldName(v interface{}, d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogSyslogdOverrideSettingCustomFieldNameId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenLogSyslogdOverrideSettingCustomFieldNameName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := i["custom"]; ok {
-
 			tmp["custom"] = flattenLogSyslogdOverrideSettingCustomFieldNameCustom(i["custom"], d, pre_append, sv)
 		}
 
@@ -379,6 +381,12 @@ func flattenLogSyslogdOverrideSettingSyslogType(v interface{}, d *schema.Resourc
 
 func refreshObjectLogSyslogdOverrideSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("override", flattenLogSyslogdOverrideSettingOverride(o["override"], d, "override", sv)); err != nil {
 		if !fortiAPIPatch(o["override"]) {
@@ -458,7 +466,7 @@ func refreshObjectLogSyslogdOverrideSetting(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("custom_field_name", flattenLogSyslogdOverrideSettingCustomFieldName(o["custom-field-name"], d, "custom_field_name", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-field-name"]) {
 				return fmt.Errorf("Error reading custom_field_name: %v", err)
@@ -569,19 +577,16 @@ func expandLogSyslogdOverrideSettingCustomFieldName(d *schema.ResourceData, v in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogSyslogdOverrideSettingCustomFieldNameId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandLogSyslogdOverrideSettingCustomFieldNameName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["custom"], _ = expandLogSyslogdOverrideSettingCustomFieldNameCustom(d, i["custom"], pre_append, sv)
 		}
 
@@ -624,7 +629,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["override"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingOverride(d, v, "override", sv)
 			if err != nil {
 				return &obj, err
@@ -638,7 +642,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -652,7 +655,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -666,7 +668,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -680,7 +681,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingPort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err
@@ -694,7 +694,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["facility"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingFacility(d, v, "facility", sv)
 			if err != nil {
 				return &obj, err
@@ -708,7 +707,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -722,7 +720,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err
@@ -736,7 +733,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -750,7 +746,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -764,7 +759,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -778,7 +772,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -792,7 +785,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["certificate"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingCertificate(d, v, "certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -806,7 +798,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["custom-field-name"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingCustomFieldName(d, v, "custom_field_name", sv)
 			if err != nil {
 				return &obj, err
@@ -820,7 +811,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -834,7 +824,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -848,7 +837,6 @@ func getObjectLogSyslogdOverrideSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["syslog-type"] = nil
 		} else {
-
 			t, err := expandLogSyslogdOverrideSettingSyslogType(d, v, "syslog_type", sv)
 			if err != nil {
 				return &obj, err

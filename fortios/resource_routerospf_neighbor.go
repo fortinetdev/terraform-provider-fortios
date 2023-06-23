@@ -275,7 +275,6 @@ func getObjectRouterospfNeighbor(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandRouterospfNeighborId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -285,7 +284,6 @@ func getObjectRouterospfNeighbor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandRouterospfNeighborIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -295,7 +293,6 @@ func getObjectRouterospfNeighbor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("poll_interval"); ok {
-
 		t, err := expandRouterospfNeighborPollInterval(d, v, "poll_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -305,7 +302,6 @@ func getObjectRouterospfNeighbor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("cost"); ok {
-
 		t, err := expandRouterospfNeighborCost(d, v, "cost", sv)
 		if err != nil {
 			return &obj, err
@@ -315,7 +311,6 @@ func getObjectRouterospfNeighbor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-
 		t, err := expandRouterospfNeighborPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err

@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - FortiGate entry name.
 * `fosid` - FortiGate serial number.
-* `authorized` - Enable/disable FortiGate administration. Valid values: `disable`, `enable`.
+* `authorized` - Enable/disable FortiGate administration.
 * `hostname` - FortiGate hostname.
 * `description` - Description.
 * `vdom` - VDOM.

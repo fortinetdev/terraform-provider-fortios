@@ -95,6 +95,11 @@ func resourceSystemPtp() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -243,19 +248,16 @@ func flattenSystemPtpServerInterface(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemPtpServerInterfaceId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_interface_name"
 		if _, ok := i["server-interface-name"]; ok {
-
 			tmp["server_interface_name"] = flattenSystemPtpServerInterfaceServerInterfaceName(i["server-interface-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "delay_mechanism"
 		if _, ok := i["delay-mechanism"]; ok {
-
 			tmp["delay_mechanism"] = flattenSystemPtpServerInterfaceDelayMechanism(i["delay-mechanism"], d, pre_append, sv)
 		}
 
@@ -282,6 +284,12 @@ func flattenSystemPtpServerInterfaceDelayMechanism(v interface{}, d *schema.Reso
 
 func refreshObjectSystemPtp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemPtpStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -319,7 +327,7 @@ func refreshObjectSystemPtp(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_interface", flattenSystemPtpServerInterface(o["server-interface"], d, "server_interface", sv)); err != nil {
 			if !fortiAPIPatch(o["server-interface"]) {
 				return fmt.Errorf("Error reading server_interface: %v", err)
@@ -384,19 +392,16 @@ func expandSystemPtpServerInterface(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemPtpServerInterfaceId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server-interface-name"], _ = expandSystemPtpServerInterfaceServerInterfaceName(d, i["server_interface_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "delay_mechanism"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["delay-mechanism"], _ = expandSystemPtpServerInterfaceDelayMechanism(d, i["delay_mechanism"], pre_append, sv)
 		}
 
@@ -427,7 +432,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemPtpStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -441,7 +445,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemPtpMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -455,7 +458,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["delay-mechanism"] = nil
 		} else {
-
 			t, err := expandSystemPtpDelayMechanism(d, v, "delay_mechanism", sv)
 			if err != nil {
 				return &obj, err
@@ -469,7 +471,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["request-interval"] = nil
 		} else {
-
 			t, err := expandSystemPtpRequestInterval(d, v, "request_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -483,7 +484,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemPtpInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -497,7 +497,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["server-mode"] = nil
 		} else {
-
 			t, err := expandSystemPtpServerMode(d, v, "server_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -511,7 +510,6 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["server-interface"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemPtpServerInterface(d, v, "server_interface", sv)
 			if err != nil {
 				return &obj, err

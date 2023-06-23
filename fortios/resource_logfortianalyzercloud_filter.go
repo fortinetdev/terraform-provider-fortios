@@ -130,6 +130,11 @@ func resourceLogFortianalyzerCloudFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -294,25 +299,21 @@ func flattenLogFortianalyzerCloudFilterFreeStyle(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogFortianalyzerCloudFilterFreeStyleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogFortianalyzerCloudFilterFreeStyleCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenLogFortianalyzerCloudFilterFreeStyleFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-
 			tmp["filter_type"] = flattenLogFortianalyzerCloudFilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
@@ -351,6 +352,12 @@ func flattenLogFortianalyzerCloudFilterFilterType(v interface{}, d *schema.Resou
 
 func refreshObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("severity", flattenLogFortianalyzerCloudFilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -412,7 +419,7 @@ func refreshObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, o map[stri
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogFortianalyzerCloudFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
 				return fmt.Errorf("Error reading free_style: %v", err)
@@ -505,25 +512,21 @@ func expandLogFortianalyzerCloudFilterFreeStyle(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogFortianalyzerCloudFilterFreeStyleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogFortianalyzerCloudFilterFreeStyleCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandLogFortianalyzerCloudFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-type"], _ = expandLogFortianalyzerCloudFilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
@@ -566,7 +569,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err
@@ -580,7 +582,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["forward-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterForwardTraffic(d, v, "forward_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -594,7 +595,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["local-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterLocalTraffic(d, v, "local_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -608,7 +608,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["multicast-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterMulticastTraffic(d, v, "multicast_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -622,7 +621,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["sniffer-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -636,7 +634,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["ztna-traffic"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterZtnaTraffic(d, v, "ztna_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -650,7 +647,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["anomaly"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterAnomaly(d, v, "anomaly", sv)
 			if err != nil {
 				return &obj, err
@@ -664,7 +660,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["voip"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterVoip(d, v, "voip", sv)
 			if err != nil {
 				return &obj, err
@@ -678,7 +673,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["dlp-archive"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterDlpArchive(d, v, "dlp_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -692,7 +686,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["gtp"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterGtp(d, v, "gtp", sv)
 			if err != nil {
 				return &obj, err
@@ -706,7 +699,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterFreeStyle(d, v, "free_style", sv)
 			if err != nil {
 				return &obj, err
@@ -720,7 +712,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["filter"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterFilter(d, v, "filter", sv)
 			if err != nil {
 				return &obj, err
@@ -734,7 +725,6 @@ func getObjectLogFortianalyzerCloudFilter(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["filter-type"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudFilterFilterType(d, v, "filter_type", sv)
 			if err != nil {
 				return &obj, err

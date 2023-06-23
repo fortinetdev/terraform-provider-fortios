@@ -57,6 +57,7 @@ The following arguments are supported:
 * `comments` - Optional comments.
 * `rule` - Rule. The structure of `rule` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `rule` block supports:
@@ -65,7 +66,9 @@ The `rule` block supports:
 * `action` - Action. Valid values: `permit`, `deny`.
 * `match_as_path` - Match BGP AS path list.
 * `match_community` - Match BGP community list.
+* `match_extcommunity` - Match BGP extended community list.
 * `match_community_exact` - Enable/disable exact matching of communities. Valid values: `enable`, `disable`.
+* `match_extcommunity_exact` - Enable/disable exact matching of extended communities. Valid values: `enable`, `disable`.
 * `match_origin` - Match BGP origin code. Valid values: `none`, `egp`, `igp`, `incomplete`.
 * `match_interface` - Match interface configuration.
 * `match_ip_address` - Match IP address permitted by access-list or prefix-list.
@@ -92,6 +95,7 @@ The `rule` block supports:
 * `set_extcommunity_rt` - Route Target extended community. The structure of `set_extcommunity_rt` block is documented below.
 * `set_extcommunity_soo` - Site-of-Origin extended community. The structure of `set_extcommunity_soo` block is documented below.
 * `set_ip_nexthop` - IP address of next hop.
+* `set_ip_prefsrc` - IP address of preferred source.
 * `set_ip6_nexthop` - IPv6 global address of next hop.
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
 * `set_local_preference` - BGP local preference path attribute.

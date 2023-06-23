@@ -80,6 +80,11 @@ func resourceSctpFilterProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -239,25 +244,21 @@ func flattenSctpFilterProfilePpidFilters(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSctpFilterProfilePpidFiltersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ppid"
 		if _, ok := i["ppid"]; ok {
-
 			tmp["ppid"] = flattenSctpFilterProfilePpidFiltersPpid(i["ppid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenSctpFilterProfilePpidFiltersAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenSctpFilterProfilePpidFiltersComment(i["comment"], d, pre_append, sv)
 		}
 
@@ -288,6 +289,12 @@ func flattenSctpFilterProfilePpidFiltersComment(v interface{}, d *schema.Resourc
 
 func refreshObjectSctpFilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSctpFilterProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -301,7 +308,7 @@ func refreshObjectSctpFilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ppid_filters", flattenSctpFilterProfilePpidFilters(o["ppid-filters"], d, "ppid_filters", sv)); err != nil {
 			if !fortiAPIPatch(o["ppid-filters"]) {
 				return fmt.Errorf("Error reading ppid_filters: %v", err)
@@ -350,25 +357,21 @@ func expandSctpFilterProfilePpidFilters(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSctpFilterProfilePpidFiltersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ppid"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ppid"], _ = expandSctpFilterProfilePpidFiltersPpid(d, i["ppid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandSctpFilterProfilePpidFiltersAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandSctpFilterProfilePpidFiltersComment(d, i["comment"], pre_append, sv)
 		}
 
@@ -400,7 +403,6 @@ func getObjectSctpFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSctpFilterProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -410,7 +412,6 @@ func getObjectSctpFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandSctpFilterProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -420,7 +421,6 @@ func getObjectSctpFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ppid_filters"); ok || d.HasChange("ppid_filters") {
-
 		t, err := expandSctpFilterProfilePpidFilters(d, v, "ppid_filters", sv)
 		if err != nil {
 			return &obj, err

@@ -162,6 +162,11 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -325,91 +330,76 @@ func flattenSwitchControllerDynamicPortPolicyPolicy(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerDynamicPortPolicyPolicyName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSwitchControllerDynamicPortPolicyPolicyDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSwitchControllerDynamicPortPolicyPolicyStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenSwitchControllerDynamicPortPolicyPolicyCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if _, ok := i["interface-tags"]; ok {
-
 			tmp["interface_tags"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(i["interface-tags"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-
 			tmp["mac"] = flattenSwitchControllerDynamicPortPolicyPolicyMac(i["mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hw_vendor"
 		if _, ok := i["hw-vendor"]; ok {
-
 			tmp["hw_vendor"] = flattenSwitchControllerDynamicPortPolicyPolicyHwVendor(i["hw-vendor"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSwitchControllerDynamicPortPolicyPolicyType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "family"
 		if _, ok := i["family"]; ok {
-
 			tmp["family"] = flattenSwitchControllerDynamicPortPolicyPolicyFamily(i["family"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := i["host"]; ok {
-
 			tmp["host"] = flattenSwitchControllerDynamicPortPolicyPolicyHost(i["host"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_profile"
 		if _, ok := i["lldp-profile"]; ok {
-
 			tmp["lldp_profile"] = flattenSwitchControllerDynamicPortPolicyPolicyLldpProfile(i["lldp-profile"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := i["qos-policy"]; ok {
-
 			tmp["qos_policy"] = flattenSwitchControllerDynamicPortPolicyPolicyQosPolicy(i["qos-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "n802_1x"
 		if _, ok := i["802-1x"]; ok {
-
 			tmp["n802_1x"] = flattenSwitchControllerDynamicPortPolicyPolicy8021X(i["802-1x"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_policy"
 		if _, ok := i["vlan-policy"]; ok {
-
 			tmp["vlan_policy"] = flattenSwitchControllerDynamicPortPolicyPolicyVlanPolicy(i["vlan-policy"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bounce_port_link"
 		if _, ok := i["bounce-port-link"]; ok {
-
 			tmp["bounce_port_link"] = flattenSwitchControllerDynamicPortPolicyPolicyBouncePortLink(i["bounce-port-link"], d, pre_append, sv)
 		}
 
@@ -464,7 +454,6 @@ func flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
 		if _, ok := i["tag-name"]; ok {
-
 			tmp["tag_name"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTagsTagName(i["tag-name"], d, pre_append, sv)
 		}
 
@@ -523,6 +512,12 @@ func flattenSwitchControllerDynamicPortPolicyPolicyBouncePortLink(v interface{},
 
 func refreshObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerDynamicPortPolicyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -542,7 +537,7 @@ func refreshObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, o ma
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("policy", flattenSwitchControllerDynamicPortPolicyPolicy(o["policy"], d, "policy", sv)); err != nil {
 			if !fortiAPIPatch(o["policy"]) {
 				return fmt.Errorf("Error reading policy: %v", err)
@@ -595,31 +590,26 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerDynamicPortPolicyPolicyName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSwitchControllerDynamicPortPolicyPolicyDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSwitchControllerDynamicPortPolicyPolicyStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandSwitchControllerDynamicPortPolicyPolicyCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["interface-tags"], _ = expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d, i["interface_tags"], pre_append, sv)
 		} else {
 			tmp["interface-tags"] = make([]string, 0)
@@ -627,61 +617,51 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mac"], _ = expandSwitchControllerDynamicPortPolicyPolicyMac(d, i["mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hw_vendor"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["hw-vendor"], _ = expandSwitchControllerDynamicPortPolicyPolicyHwVendor(d, i["hw_vendor"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSwitchControllerDynamicPortPolicyPolicyType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "family"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["family"], _ = expandSwitchControllerDynamicPortPolicyPolicyFamily(d, i["family"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["host"], _ = expandSwitchControllerDynamicPortPolicyPolicyHost(d, i["host"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_profile"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["lldp-profile"], _ = expandSwitchControllerDynamicPortPolicyPolicyLldpProfile(d, i["lldp_profile"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["qos-policy"], _ = expandSwitchControllerDynamicPortPolicyPolicyQosPolicy(d, i["qos_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "n802_1x"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["802-1x"], _ = expandSwitchControllerDynamicPortPolicyPolicy8021X(d, i["n802_1x"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-policy"], _ = expandSwitchControllerDynamicPortPolicyPolicyVlanPolicy(d, i["vlan_policy"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bounce_port_link"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["bounce-port-link"], _ = expandSwitchControllerDynamicPortPolicyPolicyBouncePortLink(d, i["bounce_port_link"], pre_append, sv)
 		}
 
@@ -725,7 +705,6 @@ func expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["tag-name"], _ = expandSwitchControllerDynamicPortPolicyPolicyInterfaceTagsTagName(d, i["tag_name"], pre_append, sv)
 		}
 
@@ -785,7 +764,6 @@ func getObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, sv strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerDynamicPortPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -795,7 +773,6 @@ func getObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerDynamicPortPolicyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -805,7 +782,6 @@ func getObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
-
 		t, err := expandSwitchControllerDynamicPortPolicyFortilink(d, v, "fortilink", sv)
 		if err != nil {
 			return &obj, err
@@ -815,7 +791,6 @@ func getObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("policy"); ok || d.HasChange("policy") {
-
 		t, err := expandSwitchControllerDynamicPortPolicyPolicy(d, v, "policy", sv)
 		if err != nil {
 			return &obj, err

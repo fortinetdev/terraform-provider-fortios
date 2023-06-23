@@ -286,7 +286,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["machine-learning-detection"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsMachineLearningDetection(d, v, "machine_learning_detection", sv)
 			if err != nil {
 				return &obj, err
@@ -300,7 +299,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["use-extreme-db"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsUseExtremeDb(d, v, "use_extreme_db", sv)
 			if err != nil {
 				return &obj, err
@@ -314,7 +312,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["default-db"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsDefaultDb(d, v, "default_db", sv)
 			if err != nil {
 				return &obj, err
@@ -328,7 +325,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["grayware"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsGrayware(d, v, "grayware", sv)
 			if err != nil {
 				return &obj, err
@@ -342,7 +338,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["override-timeout"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsOverrideTimeout(d, v, "override_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -356,7 +351,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["cache-infected-result"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsCacheInfectedResult(d, v, "cache_infected_result", sv)
 			if err != nil {
 				return &obj, err
@@ -370,7 +364,6 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["cache-clean-result"] = nil
 		} else {
-
 			t, err := expandAntivirusSettingsCacheCleanResult(d, v, "cache_clean_result", sv)
 			if err != nil {
 				return &obj, err

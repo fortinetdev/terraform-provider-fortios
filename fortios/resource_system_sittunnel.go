@@ -311,7 +311,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSitTunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -321,7 +320,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandSystemSitTunnelSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
@@ -331,7 +329,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("destination"); ok {
-
 		t, err := expandSystemSitTunnelDestination(d, v, "destination", sv)
 		if err != nil {
 			return &obj, err
@@ -341,7 +338,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandSystemSitTunnelIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -351,7 +347,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemSitTunnelInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -361,7 +356,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {
-
 		t, err := expandSystemSitTunnelUseSdwan(d, v, "use_sdwan", sv)
 		if err != nil {
 			return &obj, err
@@ -371,7 +365,6 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
-
 		t, err := expandSystemSitTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
 		if err != nil {
 			return &obj, err

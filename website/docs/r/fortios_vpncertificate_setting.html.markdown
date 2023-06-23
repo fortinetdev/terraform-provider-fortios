@@ -38,6 +38,11 @@ The following arguments are supported:
 
 * `ocsp_status` - Enable/disable receiving certificates using the OCSP. Valid values: `enable`, `disable`.
 * `ocsp_option` - Specify whether the OCSP URL is from certificate or configured OCSP server. Valid values: `certificate`, `server`.
+* `proxy` - Proxy server FQDN or IP for OCSP/CA queries during certificate verification.
+* `proxy_port` - Proxy server port (1 - 65535, default = 8080).
+* `proxy_username` - Proxy server user name.
+* `proxy_password` - Proxy server password.
+* `source_ip` - Source IP address for dynamic AIA and OCSP queries.
 * `ssl_ocsp_source_ip` - Source IP address to use to communicate with the OCSP server.
 * `ocsp_default_server` - Default OCSP server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
@@ -65,6 +70,7 @@ The following arguments are supported:
 * `certname_ecdsa521` - 521 bit ECDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ed25519` - 253 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ed448` - 456 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `crl_verification` block supports:

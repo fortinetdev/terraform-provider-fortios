@@ -55,9 +55,12 @@ The following arguments are supported:
 * `tertiary_server` - {<name_str|ip_str>} tertiary RADIUS CN domain name or IP.
 * `tertiary_secret` - Secret key to access the tertiary server.
 * `timeout` - Time in seconds between re-sending authentication requests.
+* `status_ttl` - Time for which server reachability is cached so that when a server is unreachable, it will not be retried for at least this period of time (0 = cache disabled, default = 300).
 * `all_usergroup` - Enable/disable automatically including this RADIUS server in all user groups. Valid values: `disable`, `enable`.
 * `use_management_vdom` - Enable/disable using management VDOM to send requests. Valid values: `enable`, `disable`.
 * `nas_ip` - IP address used to communicate with the RADIUS server and used as NAS-IP-Address and Called-Station-ID attributes.
+* `nas_id_type` - NAS identifier type configuration (default = legacy). Valid values: `legacy`, `custom`, `hostname`.
+* `nas_id` - Custom NAS identifier.
 * `acct_interim_interval` - Time in seconds between each accounting interim update message.
 * `radius_coa` - Enable to allow a mechanism to change the attributes of an authentication, authorization, and accounting session after it is authenticated. Valid values: `enable`, `disable`.
 * `radius_port` - RADIUS service port number.
@@ -77,6 +80,11 @@ The following arguments are supported:
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `switch_controller_service_type` - RADIUS service type. Valid values: `login`, `framed`, `callback-login`, `callback-framed`, `outbound`, `administrative`, `nas-prompt`, `authenticate-only`, `callback-nas-prompt`, `call-check`, `callback-administrative`.
+* `transport_protocol` - Transport protocol to be used (default = udp). Valid values: `udp`, `tcp`, `tls`.
+* `tls_min_proto_version` - Minimum supported protocol version for TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ca_cert` - CA of server to trust under TLS.
+* `client_cert` - Client certificate to use under TLS.
+* `server_identity_check` - Enable/disable RADIUS server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `rsso` - Enable/disable RADIUS based single sign on feature. Valid values: `enable`, `disable`.
 * `rsso_radius_server_port` - UDP port to listen on for RADIUS Start and Stop records.
 * `rsso_radius_response` - Enable/disable sending RADIUS response packets after receiving Start and Stop records. Valid values: `enable`, `disable`.
@@ -95,6 +103,7 @@ The following arguments are supported:
 * `delimiter` - Configure delimiter to be used for separating profile group names in the SSO attribute (default = plus character "+"). Valid values: `plus`, `comma`.
 * `accounting_server` - Additional accounting servers. The structure of `accounting_server` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `class` block supports:

@@ -141,6 +141,11 @@ func resourceCifsProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -285,19 +290,16 @@ func flattenCifsProfileFileFilter(v interface{}, d *schema.ResourceData, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenCifsProfileFileFilterStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenCifsProfileFileFilterLog(i["log"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "entries"
 	if _, ok := i["entries"]; ok {
-
 		result["entries"] = flattenCifsProfileFileFilterEntries(i["entries"], d, pre_append, sv)
 	}
 
@@ -339,31 +341,26 @@ func flattenCifsProfileFileFilterEntries(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenCifsProfileFileFilterEntriesFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenCifsProfileFileFilterEntriesComment(i["comment"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenCifsProfileFileFilterEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := i["direction"]; ok {
-
 			tmp["direction"] = flattenCifsProfileFileFilterEntriesDirection(i["direction"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := i["file-type"]; ok {
-
 			tmp["file_type"] = flattenCifsProfileFileFilterEntriesFileType(i["file-type"], d, pre_append, sv)
 		}
 
@@ -418,7 +415,6 @@ func flattenCifsProfileFileFilterEntriesFileType(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenCifsProfileFileFilterEntriesFileTypeName(i["name"], d, pre_append, sv)
 		}
 
@@ -465,13 +461,11 @@ func flattenCifsProfileServerKeytab(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if _, ok := i["principal"]; ok {
-
 			tmp["principal"] = flattenCifsProfileServerKeytabPrincipal(i["principal"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if _, ok := i["keytab"]; ok {
-
 			tmp["keytab"] = flattenCifsProfileServerKeytabKeytab(i["keytab"], d, pre_append, sv)
 		}
 
@@ -494,6 +488,12 @@ func flattenCifsProfileServerKeytabKeytab(v interface{}, d *schema.ResourceData,
 
 func refreshObjectCifsProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenCifsProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -507,7 +507,7 @@ func refreshObjectCifsProfile(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("file_filter", flattenCifsProfileFileFilter(o["file-filter"], d, "file_filter", sv)); err != nil {
 			if !fortiAPIPatch(o["file-filter"]) {
 				return fmt.Errorf("Error reading file_filter: %v", err)
@@ -529,7 +529,7 @@ func refreshObjectCifsProfile(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_keytab", flattenCifsProfileServerKeytab(o["server-keytab"], d, "server_keytab", sv)); err != nil {
 			if !fortiAPIPatch(o["server-keytab"]) {
 				return fmt.Errorf("Error reading server_keytab: %v", err)
@@ -574,17 +574,14 @@ func expandCifsProfileFileFilter(d *schema.ResourceData, v interface{}, pre stri
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandCifsProfileFileFilterStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandCifsProfileFileFilterLog(d, i["log"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "entries"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["entries"], _ = expandCifsProfileFileFilterEntries(d, i["entries"], pre_append, sv)
 	} else {
 		result["entries"] = make([]string, 0)
@@ -617,31 +614,26 @@ func expandCifsProfileFileFilterEntries(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandCifsProfileFileFilterEntriesFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandCifsProfileFileFilterEntriesComment(d, i["comment"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandCifsProfileFileFilterEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["direction"], _ = expandCifsProfileFileFilterEntriesDirection(d, i["direction"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["file-type"], _ = expandCifsProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
 		} else {
 			tmp["file-type"] = make([]string, 0)
@@ -687,7 +679,6 @@ func expandCifsProfileFileFilterEntriesFileType(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandCifsProfileFileFilterEntriesFileTypeName(d, i["name"], pre_append, sv)
 		}
 
@@ -723,13 +714,11 @@ func expandCifsProfileServerKeytab(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["principal"], _ = expandCifsProfileServerKeytabPrincipal(d, i["principal"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["keytab"], _ = expandCifsProfileServerKeytabKeytab(d, i["keytab"], pre_append, sv)
 		}
 
@@ -753,7 +742,6 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandCifsProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -763,7 +751,6 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("server_credential_type"); ok {
-
 		t, err := expandCifsProfileServerCredentialType(d, v, "server_credential_type", sv)
 		if err != nil {
 			return &obj, err
@@ -773,7 +760,6 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("file_filter"); ok {
-
 		t, err := expandCifsProfileFileFilter(d, v, "file_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -783,7 +769,6 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("domain_controller"); ok {
-
 		t, err := expandCifsProfileDomainController(d, v, "domain_controller", sv)
 		if err != nil {
 			return &obj, err
@@ -793,7 +778,6 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("server_keytab"); ok || d.HasChange("server_keytab") {
-
 		t, err := expandCifsProfileServerKeytab(d, v, "server_keytab", sv)
 		if err != nil {
 			return &obj, err

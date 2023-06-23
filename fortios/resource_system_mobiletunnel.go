@@ -132,6 +132,11 @@ func resourceSystemMobileTunnel() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -339,19 +344,16 @@ func flattenSystemMobileTunnelNetwork(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemMobileTunnelNetworkId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenSystemMobileTunnelNetworkInterface(i["interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-
 			tmp["prefix"] = flattenSystemMobileTunnelNetworkPrefix(i["prefix"], d, pre_append, sv)
 		}
 
@@ -385,6 +387,12 @@ func flattenSystemMobileTunnelNetworkPrefix(v interface{}, d *schema.ResourceDat
 
 func refreshObjectSystemMobileTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemMobileTunnelName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -464,7 +472,7 @@ func refreshObjectSystemMobileTunnel(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("network", flattenSystemMobileTunnelNetwork(o["network"], d, "network", sv)); err != nil {
 			if !fortiAPIPatch(o["network"]) {
 				return fmt.Errorf("Error reading network: %v", err)
@@ -561,19 +569,16 @@ func expandSystemMobileTunnelNetwork(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemMobileTunnelNetworkId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface"], _ = expandSystemMobileTunnelNetworkInterface(d, i["interface"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["prefix"], _ = expandSystemMobileTunnelNetworkPrefix(d, i["prefix"], pre_append, sv)
 		}
 
@@ -601,7 +606,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemMobileTunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -611,7 +615,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemMobileTunnelStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -621,7 +624,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("roaming_interface"); ok {
-
 		t, err := expandSystemMobileTunnelRoamingInterface(d, v, "roaming_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -631,7 +633,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("home_agent"); ok {
-
 		t, err := expandSystemMobileTunnelHomeAgent(d, v, "home_agent", sv)
 		if err != nil {
 			return &obj, err
@@ -641,7 +642,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("home_address"); ok {
-
 		t, err := expandSystemMobileTunnelHomeAddress(d, v, "home_address", sv)
 		if err != nil {
 			return &obj, err
@@ -651,7 +651,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("renew_interval"); ok {
-
 		t, err := expandSystemMobileTunnelRenewInterval(d, v, "renew_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -661,7 +660,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("lifetime"); ok {
-
 		t, err := expandSystemMobileTunnelLifetime(d, v, "lifetime", sv)
 		if err != nil {
 			return &obj, err
@@ -671,7 +669,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("reg_interval"); ok {
-
 		t, err := expandSystemMobileTunnelRegInterval(d, v, "reg_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -681,7 +678,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("reg_retry"); ok {
-
 		t, err := expandSystemMobileTunnelRegRetry(d, v, "reg_retry", sv)
 		if err != nil {
 			return &obj, err
@@ -691,7 +687,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("n_mhae_spi"); ok {
-
 		t, err := expandSystemMobileTunnelNMhaeSpi(d, v, "n_mhae_spi", sv)
 		if err != nil {
 			return &obj, err
@@ -701,7 +696,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("n_mhae_key_type"); ok {
-
 		t, err := expandSystemMobileTunnelNMhaeKeyType(d, v, "n_mhae_key_type", sv)
 		if err != nil {
 			return &obj, err
@@ -711,7 +705,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("n_mhae_key"); ok {
-
 		t, err := expandSystemMobileTunnelNMhaeKey(d, v, "n_mhae_key", sv)
 		if err != nil {
 			return &obj, err
@@ -721,7 +714,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("hash_algorithm"); ok {
-
 		t, err := expandSystemMobileTunnelHashAlgorithm(d, v, "hash_algorithm", sv)
 		if err != nil {
 			return &obj, err
@@ -731,7 +723,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("tunnel_mode"); ok {
-
 		t, err := expandSystemMobileTunnelTunnelMode(d, v, "tunnel_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -741,7 +732,6 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("network"); ok || d.HasChange("network") {
-
 		t, err := expandSystemMobileTunnelNetwork(d, v, "network", sv)
 		if err != nil {
 			return &obj, err

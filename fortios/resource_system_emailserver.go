@@ -418,7 +418,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["type"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerType(d, v, "type", sv)
 			if err != nil {
 				return &obj, err
@@ -432,7 +431,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["reply-to"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerReplyTo(d, v, "reply_to", sv)
 			if err != nil {
 				return &obj, err
@@ -446,7 +444,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -460,7 +457,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerPort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err
@@ -474,7 +470,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -488,7 +483,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["source-ip6"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerSourceIp6(d, v, "source_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -502,7 +496,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["authenticate"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerAuthenticate(d, v, "authenticate", sv)
 			if err != nil {
 				return &obj, err
@@ -516,7 +509,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["validate-server"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerValidateServer(d, v, "validate_server", sv)
 			if err != nil {
 				return &obj, err
@@ -530,7 +522,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["username"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerUsername(d, v, "username", sv)
 			if err != nil {
 				return &obj, err
@@ -544,7 +535,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["password"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerPassword(d, v, "password", sv)
 			if err != nil {
 				return &obj, err
@@ -558,7 +548,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["security"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerSecurity(d, v, "security", sv)
 			if err != nil {
 				return &obj, err
@@ -572,7 +561,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -586,7 +574,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -600,7 +587,6 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemEmailServerInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

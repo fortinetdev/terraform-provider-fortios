@@ -309,7 +309,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("server_name"); ok {
-
 		t, err := expandCifsDomainControllerServerName(d, v, "server_name", sv)
 		if err != nil {
 			return &obj, err
@@ -319,7 +318,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
-
 		t, err := expandCifsDomainControllerDomainName(d, v, "domain_name", sv)
 		if err != nil {
 			return &obj, err
@@ -329,7 +327,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandCifsDomainControllerUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -339,7 +336,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandCifsDomainControllerPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -349,7 +345,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandCifsDomainControllerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -359,7 +354,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandCifsDomainControllerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -369,7 +363,6 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-
 		t, err := expandCifsDomainControllerIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err

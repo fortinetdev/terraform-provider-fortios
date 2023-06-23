@@ -217,7 +217,6 @@ func getObjectSystemGeoipCountry(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandSystemGeoipCountryId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -227,7 +226,6 @@ func getObjectSystemGeoipCountry(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemGeoipCountryName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err

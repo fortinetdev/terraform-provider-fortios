@@ -360,7 +360,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -374,7 +373,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -388,7 +386,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ssl-certificate"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelSslCertificate(d, v, "ssl_certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -402,7 +399,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["bmr-hostname"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelBmrHostname(d, v, "bmr_hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -416,7 +412,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["auto-asic-offload"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -430,7 +425,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["ipv4-address"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelIpv4Address(d, v, "ipv4_address", sv)
 			if err != nil {
 				return &obj, err
@@ -444,7 +438,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["br"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelBr(d, v, "br", sv)
 			if err != nil {
 				return &obj, err
@@ -458,7 +451,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["update-url"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelUpdateUrl(d, v, "update_url", sv)
 			if err != nil {
 				return &obj, err
@@ -472,7 +464,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -486,7 +477,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["http-username"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelHttpUsername(d, v, "http_username", sv)
 			if err != nil {
 				return &obj, err
@@ -500,7 +490,6 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["http-password"] = nil
 		} else {
-
 			t, err := expandSystemVneTunnelHttpPassword(d, v, "http_password", sv)
 			if err != nil {
 				return &obj, err

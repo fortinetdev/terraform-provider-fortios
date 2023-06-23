@@ -291,7 +291,6 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallInternetServiceNameName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -301,7 +300,6 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallInternetServiceNameType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -311,7 +309,6 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("internet_service_id"); ok {
-
 		t, err := expandFirewallInternetServiceNameInternetServiceId(d, v, "internet_service_id", sv)
 		if err != nil {
 			return &obj, err
@@ -321,7 +318,6 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("country_id"); ok {
-
 		t, err := expandFirewallInternetServiceNameCountryId(d, v, "country_id", sv)
 		if err != nil {
 			return &obj, err
@@ -331,7 +327,6 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("region_id"); ok {
-
 		t, err := expandFirewallInternetServiceNameRegionId(d, v, "region_id", sv)
 		if err != nil {
 			return &obj, err
@@ -341,7 +336,6 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("city_id"); ok {
-
 		t, err := expandFirewallInternetServiceNameCityId(d, v, "city_id", sv)
 		if err != nil {
 			return &obj, err

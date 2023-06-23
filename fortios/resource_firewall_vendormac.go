@@ -265,7 +265,6 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-    
 		t, err := expandFirewallVendorMacId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -276,7 +275,6 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 
 
 	if v, ok := d.GetOk("name"); ok {
-    
 		t, err := expandFirewallVendorMacName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -287,7 +285,6 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 
 
 	if v, ok := d.GetOkExists("mac_number"); ok {
-    
 		t, err := expandFirewallVendorMacMacNumber(d, v, "mac_number", sv)
 		if err != nil {
 			return &obj, err
@@ -298,7 +295,6 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 
 
 	if v, ok := d.GetOkExists("obsolete"); ok {
-    
 		t, err := expandFirewallVendorMacObsolete(d, v, "obsolete", sv)
 		if err != nil {
 			return &obj, err

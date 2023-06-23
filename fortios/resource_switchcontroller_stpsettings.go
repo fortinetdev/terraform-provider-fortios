@@ -311,7 +311,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["name"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsName(d, v, "name", sv)
 			if err != nil {
 				return &obj, err
@@ -325,7 +324,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -339,7 +337,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["revision"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsRevision(d, v, "revision", sv)
 			if err != nil {
 				return &obj, err
@@ -353,7 +350,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["hello-time"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsHelloTime(d, v, "hello_time", sv)
 			if err != nil {
 				return &obj, err
@@ -367,7 +363,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["forward-time"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsForwardTime(d, v, "forward_time", sv)
 			if err != nil {
 				return &obj, err
@@ -381,7 +376,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["max-age"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsMaxAge(d, v, "max_age", sv)
 			if err != nil {
 				return &obj, err
@@ -395,7 +389,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["max-hops"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsMaxHops(d, v, "max_hops", sv)
 			if err != nil {
 				return &obj, err
@@ -409,7 +402,6 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["pending-timer"] = nil
 		} else {
-
 			t, err := expandSwitchControllerStpSettingsPendingTimer(d, v, "pending_timer", sv)
 			if err != nil {
 				return &obj, err

@@ -29,7 +29,10 @@ The following attributes are exported:
 * `srcaddr6` - Source IPv6 address name and address group names. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - Destination IPv6 address name and address group names. The structure of `dstaddr6` block is documented below.
 * `ztna_status` - Enable/disable zero trust access.
+* `ztna_device_ownership` - Enable/disable zero trust device ownership.
 * `ztna_ems_tag` - Source ztna-ems-tag names. The structure of `ztna_ems_tag` block is documented below.
+* `ztna_ems_tag_secondary` - Source ztna-ems-tag-secondary names. The structure of `ztna_ems_tag_secondary` block is documented below.
+* `ztna_tags_match_logic` - ZTNA tag matching logic.
 * `ztna_geo_tag` - Source ztna-geo-tag names. The structure of `ztna_geo_tag` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
@@ -73,6 +76,7 @@ The following attributes are exported:
 * `schedule_timeout` - Enable to force current sessions to end when the schedule object times out. Disable allows them to end from inactivity.
 * `policy_expiry` - Enable/disable policy expiry.
 * `policy_expiry_date` - Policy expiry date (YYYY-MM-DD HH:MM:SS).
+* `policy_expiry_date_utc` - Policy expiry date and time, in epoch format.
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
@@ -87,6 +91,7 @@ The following attributes are exported:
 * `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode.
 * `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy.
 * `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
+* `ztna_policy_redirect` - Redirect ZTNA traffic to matching Access-Proxy proxy-policy.
 * `webproxy_profile` - Webproxy profile name.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only.
 * `profile_group` - Name of profile group.
@@ -101,6 +106,7 @@ The following attributes are exported:
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `voip_profile` - Name of an existing VoIP profile.
+* `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
@@ -130,6 +136,9 @@ The following attributes are exported:
 * `url_category` - URL category ID list. The structure of `url_category` block is documented below.
 * `app_group` - Application group names. The structure of `app_group` block is documented below.
 * `nat` - Enable/disable source NAT.
+* `pcp_outbound` - Enable/disable PCP outbound SNAT.
+* `pcp_inbound` - Enable/disable PCP inbound DNAT.
+* `pcp_poolname` - PCP pool names. The structure of `pcp_poolname` block is documented below.
 * `permit_any_host` - Accept UDP packets from any host.
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port.
@@ -227,6 +236,10 @@ The `dstaddr6` block contains:
 * `name` - Address name.
 
 The `ztna_ems_tag` block contains:
+
+* `name` - Address name.
+
+The `ztna_ems_tag_secondary` block contains:
 
 * `name` - Address name.
 
@@ -341,6 +354,10 @@ The `url_category` block contains:
 The `app_group` block contains:
 
 * `name` - Application group names.
+
+The `pcp_poolname` block contains:
+
+* `name` - PCP pool name.
 
 The `poolname` block contains:
 

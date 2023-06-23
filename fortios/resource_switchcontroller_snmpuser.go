@@ -321,7 +321,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerSnmpUserName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -331,7 +330,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("queries"); ok {
-
 		t, err := expandSwitchControllerSnmpUserQueries(d, v, "queries", sv)
 		if err != nil {
 			return &obj, err
@@ -341,7 +339,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOkExists("query_port"); ok {
-
 		t, err := expandSwitchControllerSnmpUserQueryPort(d, v, "query_port", sv)
 		if err != nil {
 			return &obj, err
@@ -351,7 +348,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("security_level"); ok {
-
 		t, err := expandSwitchControllerSnmpUserSecurityLevel(d, v, "security_level", sv)
 		if err != nil {
 			return &obj, err
@@ -361,7 +357,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("auth_proto"); ok {
-
 		t, err := expandSwitchControllerSnmpUserAuthProto(d, v, "auth_proto", sv)
 		if err != nil {
 			return &obj, err
@@ -371,7 +366,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("auth_pwd"); ok {
-
 		t, err := expandSwitchControllerSnmpUserAuthPwd(d, v, "auth_pwd", sv)
 		if err != nil {
 			return &obj, err
@@ -381,7 +375,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("priv_proto"); ok {
-
 		t, err := expandSwitchControllerSnmpUserPrivProto(d, v, "priv_proto", sv)
 		if err != nil {
 			return &obj, err
@@ -391,7 +384,6 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("priv_pwd"); ok {
-
 		t, err := expandSwitchControllerSnmpUserPrivPwd(d, v, "priv_pwd", sv)
 		if err != nil {
 			return &obj, err

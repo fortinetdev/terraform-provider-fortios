@@ -434,7 +434,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerBleProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -444,7 +443,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerBleProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -454,7 +452,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("advertising"); ok {
-
 		t, err := expandWirelessControllerBleProfileAdvertising(d, v, "advertising", sv)
 		if err != nil {
 			return &obj, err
@@ -464,7 +461,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("ibeacon_uuid"); ok {
-
 		t, err := expandWirelessControllerBleProfileIbeaconUuid(d, v, "ibeacon_uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -474,7 +470,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("major_id"); ok {
-
 		t, err := expandWirelessControllerBleProfileMajorId(d, v, "major_id", sv)
 		if err != nil {
 			return &obj, err
@@ -484,7 +479,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOkExists("minor_id"); ok {
-
 		t, err := expandWirelessControllerBleProfileMinorId(d, v, "minor_id", sv)
 		if err != nil {
 			return &obj, err
@@ -494,7 +488,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("eddystone_namespace"); ok {
-
 		t, err := expandWirelessControllerBleProfileEddystoneNamespace(d, v, "eddystone_namespace", sv)
 		if err != nil {
 			return &obj, err
@@ -504,7 +497,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("eddystone_instance"); ok {
-
 		t, err := expandWirelessControllerBleProfileEddystoneInstance(d, v, "eddystone_instance", sv)
 		if err != nil {
 			return &obj, err
@@ -514,7 +506,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("eddystone_url"); ok {
-
 		t, err := expandWirelessControllerBleProfileEddystoneUrl(d, v, "eddystone_url", sv)
 		if err != nil {
 			return &obj, err
@@ -524,7 +515,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("eddystone_url_encode_hex"); ok {
-
 		t, err := expandWirelessControllerBleProfileEddystoneUrlEncodeHex(d, v, "eddystone_url_encode_hex", sv)
 		if err != nil {
 			return &obj, err
@@ -534,7 +524,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("txpower"); ok {
-
 		t, err := expandWirelessControllerBleProfileTxpower(d, v, "txpower", sv)
 		if err != nil {
 			return &obj, err
@@ -544,7 +533,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("beacon_interval"); ok {
-
 		t, err := expandWirelessControllerBleProfileBeaconInterval(d, v, "beacon_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -554,7 +542,6 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("ble_scanning"); ok {
-
 		t, err := expandWirelessControllerBleProfileBleScanning(d, v, "ble_scanning", sv)
 		if err != nil {
 			return &obj, err

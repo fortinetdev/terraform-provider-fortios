@@ -76,6 +76,26 @@ func dataSourceFirewallShaperTrafficShaper() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"cos_marking": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cos_marking_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"exceed_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"maximum_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"overhead": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -179,6 +199,26 @@ func dataSourceFlattenFirewallShaperTrafficShaperMaximumDscp(v interface{}, d *s
 	return v
 }
 
+func dataSourceFlattenFirewallShaperTrafficShaperCosMarking(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperCosMarkingMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperExceedCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperMaximumCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallShaperTrafficShaperOverhead(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -259,6 +299,36 @@ func dataSourceRefreshObjectFirewallShaperTrafficShaper(d *schema.ResourceData, 
 	if err = d.Set("maximum_dscp", dataSourceFlattenFirewallShaperTrafficShaperMaximumDscp(o["maximum-dscp"], d, "maximum_dscp")); err != nil {
 		if !fortiAPIPatch(o["maximum-dscp"]) {
 			return fmt.Errorf("Error reading maximum_dscp: %v", err)
+		}
+	}
+
+	if err = d.Set("cos_marking", dataSourceFlattenFirewallShaperTrafficShaperCosMarking(o["cos-marking"], d, "cos_marking")); err != nil {
+		if !fortiAPIPatch(o["cos-marking"]) {
+			return fmt.Errorf("Error reading cos_marking: %v", err)
+		}
+	}
+
+	if err = d.Set("cos_marking_method", dataSourceFlattenFirewallShaperTrafficShaperCosMarkingMethod(o["cos-marking-method"], d, "cos_marking_method")); err != nil {
+		if !fortiAPIPatch(o["cos-marking-method"]) {
+			return fmt.Errorf("Error reading cos_marking_method: %v", err)
+		}
+	}
+
+	if err = d.Set("cos", dataSourceFlattenFirewallShaperTrafficShaperCos(o["cos"], d, "cos")); err != nil {
+		if !fortiAPIPatch(o["cos"]) {
+			return fmt.Errorf("Error reading cos: %v", err)
+		}
+	}
+
+	if err = d.Set("exceed_cos", dataSourceFlattenFirewallShaperTrafficShaperExceedCos(o["exceed-cos"], d, "exceed_cos")); err != nil {
+		if !fortiAPIPatch(o["exceed-cos"]) {
+			return fmt.Errorf("Error reading exceed_cos: %v", err)
+		}
+	}
+
+	if err = d.Set("maximum_cos", dataSourceFlattenFirewallShaperTrafficShaperMaximumCos(o["maximum-cos"], d, "maximum_cos")); err != nil {
+		if !fortiAPIPatch(o["maximum-cos"]) {
+			return fmt.Errorf("Error reading maximum_cos: %v", err)
 		}
 	}
 

@@ -445,7 +445,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallInternetServiceId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -455,7 +454,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallInternetServiceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -465,7 +463,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("reputation"); ok {
-
 		t, err := expandFirewallInternetServiceReputation(d, v, "reputation", sv)
 		if err != nil {
 			return &obj, err
@@ -475,7 +472,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("icon_id"); ok {
-
 		t, err := expandFirewallInternetServiceIconId(d, v, "icon_id", sv)
 		if err != nil {
 			return &obj, err
@@ -485,7 +481,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("sld_id"); ok {
-
 		t, err := expandFirewallInternetServiceSldId(d, v, "sld_id", sv)
 		if err != nil {
 			return &obj, err
@@ -495,7 +490,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("direction"); ok {
-
 		t, err := expandFirewallInternetServiceDirection(d, v, "direction", sv)
 		if err != nil {
 			return &obj, err
@@ -505,7 +499,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("database"); ok {
-
 		t, err := expandFirewallInternetServiceDatabase(d, v, "database", sv)
 		if err != nil {
 			return &obj, err
@@ -515,7 +508,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("ip_range_number"); ok {
-
 		t, err := expandFirewallInternetServiceIpRangeNumber(d, v, "ip_range_number", sv)
 		if err != nil {
 			return &obj, err
@@ -525,7 +517,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("extra_ip_range_number"); ok {
-
 		t, err := expandFirewallInternetServiceExtraIpRangeNumber(d, v, "extra_ip_range_number", sv)
 		if err != nil {
 			return &obj, err
@@ -535,7 +526,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("ip_number"); ok {
-
 		t, err := expandFirewallInternetServiceIpNumber(d, v, "ip_number", sv)
 		if err != nil {
 			return &obj, err
@@ -545,7 +535,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("ip6_range_number"); ok {
-
 		t, err := expandFirewallInternetServiceIp6RangeNumber(d, v, "ip6_range_number", sv)
 		if err != nil {
 			return &obj, err
@@ -555,7 +544,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("extra_ip6_range_number"); ok {
-
 		t, err := expandFirewallInternetServiceExtraIp6RangeNumber(d, v, "extra_ip6_range_number", sv)
 		if err != nil {
 			return &obj, err
@@ -565,7 +553,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("singularity"); ok {
-
 		t, err := expandFirewallInternetServiceSingularity(d, v, "singularity", sv)
 		if err != nil {
 			return &obj, err
@@ -575,7 +562,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("obsolete"); ok {
-
 		t, err := expandFirewallInternetServiceObsolete(d, v, "obsolete", sv)
 		if err != nil {
 			return &obj, err

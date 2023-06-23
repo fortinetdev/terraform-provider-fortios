@@ -82,8 +82,11 @@ The following arguments are supported:
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served. Valid values: `disable`, `enable`.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
 * `exclude_range` - Exclude one or more ranges of IP addresses from being assigned to clients. The structure of `exclude_range` block is documented below.
+* `shared_subnet` - Enable/disable shared subnet. Valid values: `disable`, `enable`.
+* `relay_agent` - Relay agent IP.
 * `reserved_address` - Options for the DHCP server to assign IP settings to specific MAC addresses. The structure of `reserved_address` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `ip_range` block supports:
@@ -93,10 +96,17 @@ The `ip_range` block supports:
 * `end_ip` - End of IP range.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this range. Valid values: `disable`, `enable`.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this range. Valid values: `disable`, `enable`.
+* `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
+* `lease_time` - Lease time in seconds, 0 means default lease time.
 
 The `vci_string` block supports:
 
 * `vci_string` - VCI strings.
+
+The `uci_string` block supports:
+
+* `uci_string` - UCI strings.
 
 The `tftp_server` block supports:
 
@@ -111,10 +121,16 @@ The `options` block supports:
 * `ip` - DHCP option IPs.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this option. Valid values: `disable`, `enable`.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this option. Valid values: `disable`, `enable`.
+* `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
 
 The `vci_string` block supports:
 
 * `vci_string` - VCI strings.
+
+The `uci_string` block supports:
+
+* `uci_string` - UCI strings.
 
 The `vci_string` block supports:
 
@@ -127,10 +143,17 @@ The `exclude_range` block supports:
 * `end_ip` - End of IP range.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served with this range. Valid values: `disable`, `enable`.
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this range. Valid values: `disable`, `enable`.
+* `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
+* `lease_time` - Lease time in seconds, 0 means default lease time.
 
 The `vci_string` block supports:
 
 * `vci_string` - VCI strings.
+
+The `uci_string` block supports:
+
+* `uci_string` - UCI strings.
 
 The `reserved_address` block supports:
 

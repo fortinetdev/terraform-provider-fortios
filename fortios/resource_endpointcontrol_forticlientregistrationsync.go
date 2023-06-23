@@ -215,7 +215,6 @@ func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData,
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("peer_name"); ok {
-
 		t, err := expandEndpointControlForticlientRegistrationSyncPeerName(d, v, "peer_name", sv)
 		if err != nil {
 			return &obj, err
@@ -225,7 +224,6 @@ func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData,
 	}
 
 	if v, ok := d.GetOk("peer_ip"); ok {
-
 		t, err := expandEndpointControlForticlientRegistrationSyncPeerIp(d, v, "peer_ip", sv)
 		if err != nil {
 			return &obj, err

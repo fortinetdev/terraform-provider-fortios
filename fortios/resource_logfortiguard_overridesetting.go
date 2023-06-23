@@ -324,7 +324,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["override"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingOverride(d, v, "override", sv)
 			if err != nil {
 				return &obj, err
@@ -338,7 +337,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -352,7 +350,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-option"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingUploadOption(d, v, "upload_option", sv)
 			if err != nil {
 				return &obj, err
@@ -366,7 +363,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-interval"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingUploadInterval(d, v, "upload_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -380,7 +376,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-day"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingUploadDay(d, v, "upload_day", sv)
 			if err != nil {
 				return &obj, err
@@ -394,7 +389,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-time"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingUploadTime(d, v, "upload_time", sv)
 			if err != nil {
 				return &obj, err
@@ -408,7 +402,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -422,7 +415,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -436,7 +428,6 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["access-config"] = nil
 		} else {
-
 			t, err := expandLogFortiguardOverrideSettingAccessConfig(d, v, "access_config", sv)
 			if err != nil {
 				return &obj, err

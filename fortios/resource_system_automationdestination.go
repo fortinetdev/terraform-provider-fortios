@@ -72,6 +72,11 @@ func resourceSystemAutomationDestination() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -231,7 +236,6 @@ func flattenSystemAutomationDestinationDestination(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemAutomationDestinationDestinationName(i["name"], d, pre_append, sv)
 		}
 
@@ -254,6 +258,12 @@ func flattenSystemAutomationDestinationHaGroupId(v interface{}, d *schema.Resour
 
 func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemAutomationDestinationName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -267,7 +277,7 @@ func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[stri
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("destination", flattenSystemAutomationDestinationDestination(o["destination"], d, "destination", sv)); err != nil {
 			if !fortiAPIPatch(o["destination"]) {
 				return fmt.Errorf("Error reading destination: %v", err)
@@ -322,7 +332,6 @@ func expandSystemAutomationDestinationDestination(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemAutomationDestinationDestinationName(d, i["name"], pre_append, sv)
 		}
 
@@ -346,7 +355,6 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemAutomationDestinationName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -356,7 +364,6 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSystemAutomationDestinationType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -366,7 +373,6 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("destination"); ok || d.HasChange("destination") {
-
 		t, err := expandSystemAutomationDestinationDestination(d, v, "destination", sv)
 		if err != nil {
 			return &obj, err
@@ -376,7 +382,6 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("ha_group_id"); ok {
-
 		t, err := expandSystemAutomationDestinationHaGroupId(d, v, "ha_group_id", sv)
 		if err != nil {
 			return &obj, err

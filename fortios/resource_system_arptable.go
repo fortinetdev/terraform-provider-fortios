@@ -250,7 +250,6 @@ func getObjectSystemArpTable(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemArpTableId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -260,7 +259,6 @@ func getObjectSystemArpTable(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemArpTableInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -270,7 +268,6 @@ func getObjectSystemArpTable(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandSystemArpTableIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -280,7 +277,6 @@ func getObjectSystemArpTable(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandSystemArpTableMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err

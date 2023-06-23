@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_endpointcontrol_settings
-Configure endpoint control settings. Applies to FortiOS Version `<= 6.2.6`.
+Configure endpoint control settings. Applies to FortiOS Version `6.2.0,6.2.4,6.2.6,7.4.0`.
 
 ## Example Usage
 
@@ -32,6 +32,7 @@ resource "fortios_endpointcontrol_settings" "trname" {
 
 The following arguments are supported:
 
+* `override` - Override global EMS table for this VDOM. Valid values: `enable`, `disable`.
 * `forticlient_reg_key_enforce` - Enable/disable requiring or enforcing FortiClient registration keys. Valid values: `enable`, `disable`.
 * `forticlient_reg_key` - FortiClient registration key.
 * `forticlient_reg_timeout` - FortiClient registration license timeout (days, min = 1, max = 180, 0 means unlimited).

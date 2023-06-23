@@ -157,6 +157,11 @@ func resourceSystemNtp() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -293,31 +298,26 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemNtpNtpserverId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := i["server"]; ok {
-
 			tmp["server"] = flattenSystemNtpNtpserverServer(i["server"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ntpv3"
 		if _, ok := i["ntpv3"]; ok {
-
 			tmp["ntpv3"] = flattenSystemNtpNtpserverNtpv3(i["ntpv3"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if _, ok := i["authentication"]; ok {
-
 			tmp["authentication"] = flattenSystemNtpNtpserverAuthentication(i["authentication"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
-
 			tmp["key"] = flattenSystemNtpNtpserverKey(i["key"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -327,19 +327,16 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"
 		if _, ok := i["key-id"]; ok {
-
 			tmp["key_id"] = flattenSystemNtpNtpserverKeyId(i["key-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if _, ok := i["interface-select-method"]; ok {
-
 			tmp["interface_select_method"] = flattenSystemNtpNtpserverInterfaceSelectMethod(i["interface-select-method"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenSystemNtpNtpserverInterface(i["interface"], d, pre_append, sv)
 		}
 
@@ -438,7 +435,6 @@ func flattenSystemNtpInterface(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenSystemNtpInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -457,6 +453,12 @@ func flattenSystemNtpInterfaceInterfaceName(v interface{}, d *schema.ResourceDat
 
 func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("ntpsync", flattenSystemNtpNtpsync(o["ntpsync"], d, "ntpsync", sv)); err != nil {
 		if !fortiAPIPatch(o["ntpsync"]) {
@@ -476,7 +478,7 @@ func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ntpserver", flattenSystemNtpNtpserver(o["ntpserver"], d, "ntpserver", sv)); err != nil {
 			if !fortiAPIPatch(o["ntpserver"]) {
 				return fmt.Errorf("Error reading ntpserver: %v", err)
@@ -528,7 +530,7 @@ func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
 				return fmt.Errorf("Error reading interface: %v", err)
@@ -581,49 +583,41 @@ func expandSystemNtpNtpserver(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemNtpNtpserverId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server"], _ = expandSystemNtpNtpserverServer(d, i["server"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ntpv3"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ntpv3"], _ = expandSystemNtpNtpserverNtpv3(d, i["ntpv3"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["authentication"], _ = expandSystemNtpNtpserverAuthentication(d, i["authentication"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["key"], _ = expandSystemNtpNtpserverKey(d, i["key"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["key-id"], _ = expandSystemNtpNtpserverKeyId(d, i["key_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-select-method"], _ = expandSystemNtpNtpserverInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface"], _ = expandSystemNtpNtpserverInterface(d, i["interface"], pre_append, sv)
 		}
 
@@ -711,7 +705,6 @@ func expandSystemNtpInterface(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandSystemNtpInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -734,7 +727,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ntpsync"] = nil
 		} else {
-
 			t, err := expandSystemNtpNtpsync(d, v, "ntpsync", sv)
 			if err != nil {
 				return &obj, err
@@ -748,7 +740,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["type"] = nil
 		} else {
-
 			t, err := expandSystemNtpType(d, v, "type", sv)
 			if err != nil {
 				return &obj, err
@@ -762,7 +753,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["syncinterval"] = nil
 		} else {
-
 			t, err := expandSystemNtpSyncinterval(d, v, "syncinterval", sv)
 			if err != nil {
 				return &obj, err
@@ -776,7 +766,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ntpserver"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemNtpNtpserver(d, v, "ntpserver", sv)
 			if err != nil {
 				return &obj, err
@@ -790,7 +779,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemNtpSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -804,7 +792,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["source-ip6"] = nil
 		} else {
-
 			t, err := expandSystemNtpSourceIp6(d, v, "source_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -818,7 +805,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["server-mode"] = nil
 		} else {
-
 			t, err := expandSystemNtpServerMode(d, v, "server_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -832,7 +818,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["authentication"] = nil
 		} else {
-
 			t, err := expandSystemNtpAuthentication(d, v, "authentication", sv)
 			if err != nil {
 				return &obj, err
@@ -846,7 +831,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["key-type"] = nil
 		} else {
-
 			t, err := expandSystemNtpKeyType(d, v, "key_type", sv)
 			if err != nil {
 				return &obj, err
@@ -860,7 +844,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["key"] = nil
 		} else {
-
 			t, err := expandSystemNtpKey(d, v, "key", sv)
 			if err != nil {
 				return &obj, err
@@ -874,7 +857,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["key-id"] = nil
 		} else {
-
 			t, err := expandSystemNtpKeyId(d, v, "key_id", sv)
 			if err != nil {
 				return &obj, err
@@ -888,7 +870,6 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemNtpInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

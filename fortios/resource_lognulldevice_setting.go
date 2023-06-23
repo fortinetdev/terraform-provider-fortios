@@ -170,7 +170,6 @@ func getObjectLogNullDeviceSetting(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err

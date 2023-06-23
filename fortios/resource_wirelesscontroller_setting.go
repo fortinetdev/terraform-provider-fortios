@@ -144,6 +144,11 @@ func resourceWirelessControllerSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -296,19 +301,16 @@ func flattenWirelessControllerSettingOffendingSsid(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerSettingOffendingSsidId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssid_pattern"
 		if _, ok := i["ssid-pattern"]; ok {
-
 			tmp["ssid_pattern"] = flattenWirelessControllerSettingOffendingSsidSsidPattern(i["ssid-pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenWirelessControllerSettingOffendingSsidAction(i["action"], d, pre_append, sv)
 		}
 
@@ -379,7 +381,6 @@ func flattenWirelessControllerSettingDarrpOptimizeSchedules(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerSettingDarrpOptimizeSchedulesName(i["name"], d, pre_append, sv)
 		}
 
@@ -398,6 +399,12 @@ func flattenWirelessControllerSettingDarrpOptimizeSchedulesName(v interface{}, d
 
 func refreshObjectWirelessControllerSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("account_id", flattenWirelessControllerSettingAccountId(o["account-id"], d, "account_id", sv)); err != nil {
 		if !fortiAPIPatch(o["account-id"]) {
@@ -441,7 +448,7 @@ func refreshObjectWirelessControllerSetting(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("offending_ssid", flattenWirelessControllerSettingOffendingSsid(o["offending-ssid"], d, "offending_ssid", sv)); err != nil {
 			if !fortiAPIPatch(o["offending-ssid"]) {
 				return fmt.Errorf("Error reading offending_ssid: %v", err)
@@ -487,7 +494,7 @@ func refreshObjectWirelessControllerSetting(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("darrp_optimize_schedules", flattenWirelessControllerSettingDarrpOptimizeSchedules(o["darrp-optimize-schedules"], d, "darrp_optimize_schedules", sv)); err != nil {
 			if !fortiAPIPatch(o["darrp-optimize-schedules"]) {
 				return fmt.Errorf("Error reading darrp_optimize_schedules: %v", err)
@@ -556,19 +563,16 @@ func expandWirelessControllerSettingOffendingSsid(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerSettingOffendingSsidId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssid_pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ssid-pattern"], _ = expandWirelessControllerSettingOffendingSsidSsidPattern(d, i["ssid_pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandWirelessControllerSettingOffendingSsidAction(d, i["action"], pre_append, sv)
 		}
 
@@ -628,7 +632,6 @@ func expandWirelessControllerSettingDarrpOptimizeSchedules(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerSettingDarrpOptimizeSchedulesName(d, i["name"], pre_append, sv)
 		}
 
@@ -651,7 +654,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["account-id"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingAccountId(d, v, "account_id", sv)
 			if err != nil {
 				return &obj, err
@@ -665,7 +667,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["country"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingCountry(d, v, "country", sv)
 			if err != nil {
 				return &obj, err
@@ -679,7 +680,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["duplicate-ssid"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingDuplicateSsid(d, v, "duplicate_ssid", sv)
 			if err != nil {
 				return &obj, err
@@ -693,7 +693,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["fapc-compatibility"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingFapcCompatibility(d, v, "fapc_compatibility", sv)
 			if err != nil {
 				return &obj, err
@@ -707,7 +706,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["wfa-compatibility"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingWfaCompatibility(d, v, "wfa_compatibility", sv)
 			if err != nil {
 				return &obj, err
@@ -721,7 +719,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["phishing-ssid-detect"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingPhishingSsidDetect(d, v, "phishing_ssid_detect", sv)
 			if err != nil {
 				return &obj, err
@@ -735,7 +732,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["fake-ssid-action"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingFakeSsidAction(d, v, "fake_ssid_action", sv)
 			if err != nil {
 				return &obj, err
@@ -749,7 +745,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["offending-ssid"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWirelessControllerSettingOffendingSsid(d, v, "offending_ssid", sv)
 			if err != nil {
 				return &obj, err
@@ -763,7 +758,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["device-weight"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingDeviceWeight(d, v, "device_weight", sv)
 			if err != nil {
 				return &obj, err
@@ -777,7 +771,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["device-holdoff"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingDeviceHoldoff(d, v, "device_holdoff", sv)
 			if err != nil {
 				return &obj, err
@@ -791,7 +784,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["device-idle"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingDeviceIdle(d, v, "device_idle", sv)
 			if err != nil {
 				return &obj, err
@@ -805,7 +797,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["firmware-provision-on-authorization"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingFirmwareProvisionOnAuthorization(d, v, "firmware_provision_on_authorization", sv)
 			if err != nil {
 				return &obj, err
@@ -819,7 +810,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["darrp-optimize"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSettingDarrpOptimize(d, v, "darrp_optimize", sv)
 			if err != nil {
 				return &obj, err
@@ -833,7 +823,6 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["darrp-optimize-schedules"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWirelessControllerSettingDarrpOptimizeSchedules(d, v, "darrp_optimize_schedules", sv)
 			if err != nil {
 				return &obj, err

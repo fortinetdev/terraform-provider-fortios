@@ -268,7 +268,6 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("transid"); ok {
-
 		t, err := expandFirewallIpTranslationTransid(d, v, "transid", sv)
 		if err != nil {
 			return &obj, err
@@ -278,7 +277,6 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallIpTranslationType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -288,7 +286,6 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
-
 		t, err := expandFirewallIpTranslationStartip(d, v, "startip", sv)
 		if err != nil {
 			return &obj, err
@@ -298,7 +295,6 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("endip"); ok {
-
 		t, err := expandFirewallIpTranslationEndip(d, v, "endip", sv)
 		if err != nil {
 			return &obj, err
@@ -308,7 +304,6 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("map_startip"); ok {
-
 		t, err := expandFirewallIpTranslationMapStartip(d, v, "map_startip", sv)
 		if err != nil {
 			return &obj, err

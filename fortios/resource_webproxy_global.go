@@ -160,7 +160,17 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"log_forward_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -353,7 +363,6 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -396,7 +405,6 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr6(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -421,8 +429,18 @@ func flattenWebProxyGlobalSrcAffinityExemptAddr6(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenWebProxyGlobalLogForwardServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("ssl_cert", flattenWebProxyGlobalSslCert(o["ssl-cert"], d, "ssl_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-cert"]) {
@@ -520,7 +538,7 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("learn_client_ip_srcaddr", flattenWebProxyGlobalLearnClientIpSrcaddr(o["learn-client-ip-srcaddr"], d, "learn_client_ip_srcaddr", sv)); err != nil {
 			if !fortiAPIPatch(o["learn-client-ip-srcaddr"]) {
 				return fmt.Errorf("Error reading learn_client_ip_srcaddr: %v", err)
@@ -536,7 +554,7 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("learn_client_ip_srcaddr6", flattenWebProxyGlobalLearnClientIpSrcaddr6(o["learn-client-ip-srcaddr6"], d, "learn_client_ip_srcaddr6", sv)); err != nil {
 			if !fortiAPIPatch(o["learn-client-ip-srcaddr6"]) {
 				return fmt.Errorf("Error reading learn_client_ip_srcaddr6: %v", err)
@@ -561,6 +579,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("src_affinity_exempt_addr6", flattenWebProxyGlobalSrcAffinityExemptAddr6(o["src-affinity-exempt-addr6"], d, "src_affinity_exempt_addr6", sv)); err != nil {
 		if !fortiAPIPatch(o["src-affinity-exempt-addr6"]) {
 			return fmt.Errorf("Error reading src_affinity_exempt_addr6: %v", err)
+		}
+	}
+
+	if err = d.Set("log_forward_server", flattenWebProxyGlobalLogForwardServer(o["log-forward-server"], d, "log_forward_server", sv)); err != nil {
+		if !fortiAPIPatch(o["log-forward-server"]) {
+			return fmt.Errorf("Error reading log_forward_server: %v", err)
 		}
 	}
 
@@ -653,7 +677,6 @@ func expandWebProxyGlobalLearnClientIpSrcaddr(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyGlobalLearnClientIpSrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -685,7 +708,6 @@ func expandWebProxyGlobalLearnClientIpSrcaddr6(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyGlobalLearnClientIpSrcaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -709,6 +731,10 @@ func expandWebProxyGlobalSrcAffinityExemptAddr6(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandWebProxyGlobalLogForwardServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -716,7 +742,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ssl-cert"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalSslCert(d, v, "ssl_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -730,7 +755,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ssl-ca-cert"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalSslCaCert(d, v, "ssl_ca_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -744,7 +768,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["fast-policy-match"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalFastPolicyMatch(d, v, "fast_policy_match", sv)
 			if err != nil {
 				return &obj, err
@@ -758,7 +781,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ldap-user-cache"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalLdapUserCache(d, v, "ldap_user_cache", sv)
 			if err != nil {
 				return &obj, err
@@ -772,7 +794,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["proxy-fqdn"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalProxyFqdn(d, v, "proxy_fqdn", sv)
 			if err != nil {
 				return &obj, err
@@ -786,7 +807,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-request-length"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalMaxRequestLength(d, v, "max_request_length", sv)
 			if err != nil {
 				return &obj, err
@@ -800,7 +820,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-message-length"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalMaxMessageLength(d, v, "max_message_length", sv)
 			if err != nil {
 				return &obj, err
@@ -814,7 +833,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["strict-web-check"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalStrictWebCheck(d, v, "strict_web_check", sv)
 			if err != nil {
 				return &obj, err
@@ -828,7 +846,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["forward-proxy-auth"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalForwardProxyAuth(d, v, "forward_proxy_auth", sv)
 			if err != nil {
 				return &obj, err
@@ -842,7 +859,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["tunnel-non-http"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalTunnelNonHttp(d, v, "tunnel_non_http", sv)
 			if err != nil {
 				return &obj, err
@@ -856,7 +872,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["unknown-http-version"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalUnknownHttpVersion(d, v, "unknown_http_version", sv)
 			if err != nil {
 				return &obj, err
@@ -870,7 +885,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["forward-server-affinity-timeout"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalForwardServerAffinityTimeout(d, v, "forward_server_affinity_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -884,7 +898,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["max-waf-body-cache-length"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalMaxWafBodyCacheLength(d, v, "max_waf_body_cache_length", sv)
 			if err != nil {
 				return &obj, err
@@ -898,7 +911,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["webproxy-profile"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalWebproxyProfile(d, v, "webproxy_profile", sv)
 			if err != nil {
 				return &obj, err
@@ -912,7 +924,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["learn-client-ip"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalLearnClientIp(d, v, "learn_client_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -926,7 +937,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["learn-client-ip-from-header"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalLearnClientIpFromHeader(d, v, "learn_client_ip_from_header", sv)
 			if err != nil {
 				return &obj, err
@@ -940,7 +950,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["learn-client-ip-srcaddr"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWebProxyGlobalLearnClientIpSrcaddr(d, v, "learn_client_ip_srcaddr", sv)
 			if err != nil {
 				return &obj, err
@@ -954,7 +963,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["learn-client-ip-srcaddr6"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWebProxyGlobalLearnClientIpSrcaddr6(d, v, "learn_client_ip_srcaddr6", sv)
 			if err != nil {
 				return &obj, err
@@ -968,7 +976,6 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["src-affinity-exempt-addr"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalSrcAffinityExemptAddr(d, v, "src_affinity_exempt_addr", sv)
 			if err != nil {
 				return &obj, err
@@ -982,12 +989,24 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["src-affinity-exempt-addr6"] = nil
 		} else {
-
 			t, err := expandWebProxyGlobalSrcAffinityExemptAddr6(d, v, "src_affinity_exempt_addr6", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["src-affinity-exempt-addr6"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("log_forward_server"); ok {
+		if setArgNil {
+			obj["log-forward-server"] = nil
+		} else {
+			t, err := expandWebProxyGlobalLogForwardServer(d, v, "log_forward_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-forward-server"] = t
 			}
 		}
 	}

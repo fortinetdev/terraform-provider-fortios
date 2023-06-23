@@ -524,6 +524,11 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -696,31 +701,26 @@ func flattenExtensionControllerExtenderProfileCellular(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := i["dataplan"]; ok {
-
 		result["dataplan"] = flattenExtensionControllerExtenderProfileCellularDataplan(i["dataplan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "controller_report"
 	if _, ok := i["controller-report"]; ok {
-
 		result["controller_report"] = flattenExtensionControllerExtenderProfileCellularControllerReport(i["controller-report"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sms_notification"
 	if _, ok := i["sms-notification"]; ok {
-
 		result["sms_notification"] = flattenExtensionControllerExtenderProfileCellularSmsNotification(i["sms-notification"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "modem1"
 	if _, ok := i["modem1"]; ok {
-
 		result["modem1"] = flattenExtensionControllerExtenderProfileCellularModem1(i["modem1"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "modem2"
 	if _, ok := i["modem2"]; ok {
-
 		result["modem2"] = flattenExtensionControllerExtenderProfileCellularModem2(i["modem2"], d, pre_append, sv)
 	}
 
@@ -754,7 +754,6 @@ func flattenExtensionControllerExtenderProfileCellularDataplan(v interface{}, d 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenExtensionControllerExtenderProfileCellularDataplanName(i["name"], d, pre_append, sv)
 		}
 
@@ -782,19 +781,16 @@ func flattenExtensionControllerExtenderProfileCellularControllerReport(v interfa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenExtensionControllerExtenderProfileCellularControllerReportStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "interval"
 	if _, ok := i["interval"]; ok {
-
 		result["interval"] = flattenExtensionControllerExtenderProfileCellularControllerReportInterval(i["interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signal_threshold"
 	if _, ok := i["signal-threshold"]; ok {
-
 		result["signal_threshold"] = flattenExtensionControllerExtenderProfileCellularControllerReportSignalThreshold(i["signal-threshold"], d, pre_append, sv)
 	}
 
@@ -825,19 +821,16 @@ func flattenExtensionControllerExtenderProfileCellularSmsNotification(v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "alert"
 	if _, ok := i["alert"]; ok {
-
 		result["alert"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlert(i["alert"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "receiver"
 	if _, ok := i["receiver"]; ok {
-
 		result["receiver"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiver(i["receiver"], d, pre_append, sv)
 	}
 
@@ -860,43 +853,36 @@ func flattenExtensionControllerExtenderProfileCellularSmsNotificationAlert(v int
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "system_reboot"
 	if _, ok := i["system-reboot"]; ok {
-
 		result["system_reboot"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertSystemReboot(i["system-reboot"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "data_exhausted"
 	if _, ok := i["data-exhausted"]; ok {
-
 		result["data_exhausted"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertDataExhausted(i["data-exhausted"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "session_disconnect"
 	if _, ok := i["session-disconnect"]; ok {
-
 		result["session_disconnect"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertSessionDisconnect(i["session-disconnect"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "low_signal_strength"
 	if _, ok := i["low-signal-strength"]; ok {
-
 		result["low_signal_strength"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertLowSignalStrength(i["low-signal-strength"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "os_image_fallback"
 	if _, ok := i["os-image-fallback"]; ok {
-
 		result["os_image_fallback"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertOsImageFallback(i["os-image-fallback"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "mode_switch"
 	if _, ok := i["mode-switch"]; ok {
-
 		result["mode_switch"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertModeSwitch(i["mode-switch"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fgt_backup_mode_switch"
 	if _, ok := i["fgt-backup-mode-switch"]; ok {
-
 		result["fgt_backup_mode_switch"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationAlertFgtBackupModeSwitch(i["fgt-backup-mode-switch"], d, pre_append, sv)
 	}
 
@@ -958,25 +944,21 @@ func flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiver(v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "phone_number"
 		if _, ok := i["phone-number"]; ok {
-
 			tmp["phone_number"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverPhoneNumber(i["phone-number"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
 		if _, ok := i["alert"]; ok {
-
 			tmp["alert"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverAlert(i["alert"], d, pre_append, sv)
 		}
 
@@ -1016,67 +998,56 @@ func flattenExtensionControllerExtenderProfileCellularModem1(v interface{}, d *s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := i["redundant-mode"]; ok {
-
 		result["redundant_mode"] = flattenExtensionControllerExtenderProfileCellularModem1RedundantMode(i["redundant-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := i["redundant-intf"]; ok {
-
 		result["redundant_intf"] = flattenExtensionControllerExtenderProfileCellularModem1RedundantIntf(i["redundant-intf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := i["conn-status"]; ok {
-
 		result["conn_status"] = flattenExtensionControllerExtenderProfileCellularModem1ConnStatus(i["conn-status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := i["default-sim"]; ok {
-
 		result["default_sim"] = flattenExtensionControllerExtenderProfileCellularModem1DefaultSim(i["default-sim"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "gps"
 	if _, ok := i["gps"]; ok {
-
 		result["gps"] = flattenExtensionControllerExtenderProfileCellularModem1Gps(i["gps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := i["sim1-pin"]; ok {
-
 		result["sim1_pin"] = flattenExtensionControllerExtenderProfileCellularModem1Sim1Pin(i["sim1-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := i["sim2-pin"]; ok {
-
 		result["sim2_pin"] = flattenExtensionControllerExtenderProfileCellularModem1Sim2Pin(i["sim2-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-
 		result["sim1_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem1Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-
 		result["sim2_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem1Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := i["preferred-carrier"]; ok {
-
 		result["preferred_carrier"] = flattenExtensionControllerExtenderProfileCellularModem1PreferredCarrier(i["preferred-carrier"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := i["auto-switch"]; ok {
-
 		result["auto_switch"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitch(i["auto-switch"], d, pre_append, sv)
 	}
 
@@ -1135,49 +1106,41 @@ func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitch(v interfa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := i["disconnect"]; ok {
-
 		result["disconnect"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnect(i["disconnect"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := i["disconnect-threshold"]; ok {
-
 		result["disconnect_threshold"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnectThreshold(i["disconnect-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := i["disconnect-period"]; ok {
-
 		result["disconnect_period"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnectPeriod(i["disconnect-period"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signal"
 	if _, ok := i["signal"]; ok {
-
 		result["signal"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSignal(i["signal"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := i["dataplan"]; ok {
-
 		result["dataplan"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDataplan(i["dataplan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := i["switch-back"]; ok {
-
 		result["switch_back"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBack(i["switch-back"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := i["switch-back-time"]; ok {
-
 		result["switch_back_time"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBackTime(i["switch-back-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := i["switch-back-timer"]; ok {
-
 		result["switch_back_timer"] = flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBackTimer(i["switch-back-timer"], d, pre_append, sv)
 	}
 
@@ -1228,67 +1191,56 @@ func flattenExtensionControllerExtenderProfileCellularModem2(v interface{}, d *s
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := i["redundant-mode"]; ok {
-
 		result["redundant_mode"] = flattenExtensionControllerExtenderProfileCellularModem2RedundantMode(i["redundant-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := i["redundant-intf"]; ok {
-
 		result["redundant_intf"] = flattenExtensionControllerExtenderProfileCellularModem2RedundantIntf(i["redundant-intf"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := i["conn-status"]; ok {
-
 		result["conn_status"] = flattenExtensionControllerExtenderProfileCellularModem2ConnStatus(i["conn-status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := i["default-sim"]; ok {
-
 		result["default_sim"] = flattenExtensionControllerExtenderProfileCellularModem2DefaultSim(i["default-sim"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "gps"
 	if _, ok := i["gps"]; ok {
-
 		result["gps"] = flattenExtensionControllerExtenderProfileCellularModem2Gps(i["gps"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := i["sim1-pin"]; ok {
-
 		result["sim1_pin"] = flattenExtensionControllerExtenderProfileCellularModem2Sim1Pin(i["sim1-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := i["sim2-pin"]; ok {
-
 		result["sim2_pin"] = flattenExtensionControllerExtenderProfileCellularModem2Sim2Pin(i["sim2-pin"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-
 		result["sim1_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem2Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-
 		result["sim2_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem2Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := i["preferred-carrier"]; ok {
-
 		result["preferred_carrier"] = flattenExtensionControllerExtenderProfileCellularModem2PreferredCarrier(i["preferred-carrier"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := i["auto-switch"]; ok {
-
 		result["auto_switch"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitch(i["auto-switch"], d, pre_append, sv)
 	}
 
@@ -1347,49 +1299,41 @@ func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitch(v interfa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := i["disconnect"]; ok {
-
 		result["disconnect"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnect(i["disconnect"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := i["disconnect-threshold"]; ok {
-
 		result["disconnect_threshold"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnectThreshold(i["disconnect-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := i["disconnect-period"]; ok {
-
 		result["disconnect_period"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnectPeriod(i["disconnect-period"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signal"
 	if _, ok := i["signal"]; ok {
-
 		result["signal"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSignal(i["signal"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := i["dataplan"]; ok {
-
 		result["dataplan"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDataplan(i["dataplan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := i["switch-back"]; ok {
-
 		result["switch_back"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBack(i["switch-back"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := i["switch-back-time"]; ok {
-
 		result["switch_back_time"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBackTime(i["switch-back-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := i["switch-back-timer"]; ok {
-
 		result["switch_back_timer"] = flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBackTimer(i["switch-back-timer"], d, pre_append, sv)
 	}
 
@@ -1440,31 +1384,26 @@ func flattenExtensionControllerExtenderProfileLanExtension(v interface{}, d *sch
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "link_loadbalance"
 	if _, ok := i["link-loadbalance"]; ok {
-
 		result["link_loadbalance"] = flattenExtensionControllerExtenderProfileLanExtensionLinkLoadbalance(i["link-loadbalance"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ipsec_tunnel"
 	if _, ok := i["ipsec-tunnel"]; ok {
-
 		result["ipsec_tunnel"] = flattenExtensionControllerExtenderProfileLanExtensionIpsecTunnel(i["ipsec-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "backhaul_interface"
 	if _, ok := i["backhaul-interface"]; ok {
-
 		result["backhaul_interface"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulInterface(i["backhaul-interface"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "backhaul_ip"
 	if _, ok := i["backhaul-ip"]; ok {
-
 		result["backhaul_ip"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulIp(i["backhaul-ip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "backhaul"
 	if _, ok := i["backhaul"]; ok {
-
 		result["backhaul"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaul(i["backhaul"], d, pre_append, sv)
 	}
 
@@ -1514,25 +1453,21 @@ func flattenExtensionControllerExtenderProfileLanExtensionBackhaul(v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := i["role"]; ok {
-
 			tmp["role"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulRole(i["role"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := i["weight"]; ok {
-
 			tmp["weight"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulWeight(i["weight"], d, pre_append, sv)
 		}
 
@@ -1563,6 +1498,12 @@ func flattenExtensionControllerExtenderProfileLanExtensionBackhaulWeight(v inter
 
 func refreshObjectExtensionControllerExtenderProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenExtensionControllerExtenderProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1618,7 +1559,7 @@ func refreshObjectExtensionControllerExtenderProfile(d *schema.ResourceData, o m
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("cellular", flattenExtensionControllerExtenderProfileCellular(o["cellular"], d, "cellular", sv)); err != nil {
 			if !fortiAPIPatch(o["cellular"]) {
 				return fmt.Errorf("Error reading cellular: %v", err)
@@ -1634,7 +1575,7 @@ func refreshObjectExtensionControllerExtenderProfile(d *schema.ResourceData, o m
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("lan_extension", flattenExtensionControllerExtenderProfileLanExtension(o["lan-extension"], d, "lan_extension", sv)); err != nil {
 			if !fortiAPIPatch(o["lan-extension"]) {
 				return fmt.Errorf("Error reading lan_extension: %v", err)
@@ -1707,35 +1648,30 @@ func expandExtensionControllerExtenderProfileCellular(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dataplan"], _ = expandExtensionControllerExtenderProfileCellularDataplan(d, i["dataplan"], pre_append, sv)
 	} else {
 		result["dataplan"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "controller_report"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["controller-report"], _ = expandExtensionControllerExtenderProfileCellularControllerReport(d, i["controller_report"], pre_append, sv)
 	} else {
 		result["controller-report"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "sms_notification"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sms-notification"], _ = expandExtensionControllerExtenderProfileCellularSmsNotification(d, i["sms_notification"], pre_append, sv)
 	} else {
 		result["sms-notification"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "modem1"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["modem1"], _ = expandExtensionControllerExtenderProfileCellularModem1(d, i["modem1"], pre_append, sv)
 	} else {
 		result["modem1"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "modem2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["modem2"], _ = expandExtensionControllerExtenderProfileCellularModem2(d, i["modem2"], pre_append, sv)
 	} else {
 		result["modem2"] = make([]string, 0)
@@ -1760,7 +1696,6 @@ func expandExtensionControllerExtenderProfileCellularDataplan(d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandExtensionControllerExtenderProfileCellularDataplanName(d, i["name"], pre_append, sv)
 		}
 
@@ -1788,17 +1723,14 @@ func expandExtensionControllerExtenderProfileCellularControllerReport(d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandExtensionControllerExtenderProfileCellularControllerReportStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "interval"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["interval"], _ = expandExtensionControllerExtenderProfileCellularControllerReportInterval(d, i["interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signal_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signal-threshold"], _ = expandExtensionControllerExtenderProfileCellularControllerReportSignalThreshold(d, i["signal_threshold"], pre_append, sv)
 	}
 
@@ -1829,19 +1761,16 @@ func expandExtensionControllerExtenderProfileCellularSmsNotification(d *schema.R
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "alert"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["alert"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlert(d, i["alert"], pre_append, sv)
 	} else {
 		result["alert"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "receiver"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["receiver"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiver(d, i["receiver"], pre_append, sv)
 	} else {
 		result["receiver"] = make([]string, 0)
@@ -1866,37 +1795,30 @@ func expandExtensionControllerExtenderProfileCellularSmsNotificationAlert(d *sch
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "system_reboot"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["system-reboot"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertSystemReboot(d, i["system_reboot"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "data_exhausted"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["data-exhausted"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertDataExhausted(d, i["data_exhausted"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "session_disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["session-disconnect"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertSessionDisconnect(d, i["session_disconnect"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "low_signal_strength"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["low-signal-strength"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertLowSignalStrength(d, i["low_signal_strength"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "os_image_fallback"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["os-image-fallback"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertOsImageFallback(d, i["os_image_fallback"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "mode_switch"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["mode-switch"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertModeSwitch(d, i["mode_switch"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "fgt_backup_mode_switch"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["fgt-backup-mode-switch"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationAlertFgtBackupModeSwitch(d, i["fgt_backup_mode_switch"], pre_append, sv)
 	}
 
@@ -1947,25 +1869,21 @@ func expandExtensionControllerExtenderProfileCellularSmsNotificationReceiver(d *
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "phone_number"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["phone-number"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverPhoneNumber(d, i["phone_number"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["alert"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverAlert(d, i["alert"], pre_append, sv)
 		}
 
@@ -2005,57 +1923,46 @@ func expandExtensionControllerExtenderProfileCellularModem1(d *schema.ResourceDa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-mode"], _ = expandExtensionControllerExtenderProfileCellularModem1RedundantMode(d, i["redundant_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-intf"], _ = expandExtensionControllerExtenderProfileCellularModem1RedundantIntf(d, i["redundant_intf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["conn-status"], _ = expandExtensionControllerExtenderProfileCellularModem1ConnStatus(d, i["conn_status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["default-sim"], _ = expandExtensionControllerExtenderProfileCellularModem1DefaultSim(d, i["default_sim"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "gps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["gps"], _ = expandExtensionControllerExtenderProfileCellularModem1Gps(d, i["gps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin"], _ = expandExtensionControllerExtenderProfileCellularModem1Sim1Pin(d, i["sim1_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin"], _ = expandExtensionControllerExtenderProfileCellularModem1Sim2Pin(d, i["sim2_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem1Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem1Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["preferred-carrier"], _ = expandExtensionControllerExtenderProfileCellularModem1PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-switch"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitch(d, i["auto_switch"], pre_append, sv)
 	} else {
 		result["auto-switch"] = make([]string, 0)
@@ -2116,42 +2023,34 @@ func expandExtensionControllerExtenderProfileCellularModem1AutoSwitch(d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnect(d, i["disconnect"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-threshold"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnectThreshold(d, i["disconnect_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-period"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnectPeriod(d, i["disconnect_period"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signal"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signal"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchSignal(d, i["signal"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchDataplan(d, i["dataplan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-time"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBackTime(d, i["switch_back_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-timer"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBackTimer(d, i["switch_back_timer"], pre_append, sv)
 	}
 
@@ -2202,57 +2101,46 @@ func expandExtensionControllerExtenderProfileCellularModem2(d *schema.ResourceDa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-mode"], _ = expandExtensionControllerExtenderProfileCellularModem2RedundantMode(d, i["redundant_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["redundant-intf"], _ = expandExtensionControllerExtenderProfileCellularModem2RedundantIntf(d, i["redundant_intf"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["conn-status"], _ = expandExtensionControllerExtenderProfileCellularModem2ConnStatus(d, i["conn_status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["default-sim"], _ = expandExtensionControllerExtenderProfileCellularModem2DefaultSim(d, i["default_sim"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "gps"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["gps"], _ = expandExtensionControllerExtenderProfileCellularModem2Gps(d, i["gps"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin"], _ = expandExtensionControllerExtenderProfileCellularModem2Sim1Pin(d, i["sim1_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin"], _ = expandExtensionControllerExtenderProfileCellularModem2Sim2Pin(d, i["sim2_pin"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim1-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem2Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sim2-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem2Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["preferred-carrier"], _ = expandExtensionControllerExtenderProfileCellularModem2PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["auto-switch"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitch(d, i["auto_switch"], pre_append, sv)
 	} else {
 		result["auto-switch"] = make([]string, 0)
@@ -2313,42 +2201,34 @@ func expandExtensionControllerExtenderProfileCellularModem2AutoSwitch(d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnect(d, i["disconnect"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-threshold"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnectThreshold(d, i["disconnect_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["disconnect-period"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnectPeriod(d, i["disconnect_period"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signal"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signal"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchSignal(d, i["signal"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchDataplan(d, i["dataplan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-time"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBackTime(d, i["switch_back_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switch-back-timer"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBackTimer(d, i["switch_back_timer"], pre_append, sv)
 	}
 
@@ -2399,27 +2279,22 @@ func expandExtensionControllerExtenderProfileLanExtension(d *schema.ResourceData
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "link_loadbalance"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["link-loadbalance"], _ = expandExtensionControllerExtenderProfileLanExtensionLinkLoadbalance(d, i["link_loadbalance"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ipsec_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ipsec-tunnel"], _ = expandExtensionControllerExtenderProfileLanExtensionIpsecTunnel(d, i["ipsec_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "backhaul_interface"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["backhaul-interface"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulInterface(d, i["backhaul_interface"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "backhaul_ip"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["backhaul-ip"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulIp(d, i["backhaul_ip"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "backhaul"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["backhaul"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaul(d, i["backhaul"], pre_append, sv)
 	} else {
 		result["backhaul"] = make([]string, 0)
@@ -2460,25 +2335,21 @@ func expandExtensionControllerExtenderProfileLanExtensionBackhaul(d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["role"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulRole(d, i["role"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["weight"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulWeight(d, i["weight"], pre_append, sv)
 		}
 
@@ -2510,7 +2381,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -2520,7 +2390,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -2530,7 +2399,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("model"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileModel(d, v, "model", sv)
 		if err != nil {
 			return &obj, err
@@ -2540,7 +2408,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("extension"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileExtension(d, v, "extension", sv)
 		if err != nil {
 			return &obj, err
@@ -2550,7 +2417,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("allowaccess"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileAllowaccess(d, v, "allowaccess", sv)
 		if err != nil {
 			return &obj, err
@@ -2560,7 +2426,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("login_password_change"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileLoginPasswordChange(d, v, "login_password_change", sv)
 		if err != nil {
 			return &obj, err
@@ -2570,7 +2435,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("login_password"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileLoginPassword(d, v, "login_password", sv)
 		if err != nil {
 			return &obj, err
@@ -2580,7 +2444,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("enforce_bandwidth"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileEnforceBandwidth(d, v, "enforce_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -2590,7 +2453,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("bandwidth_limit"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileBandwidthLimit(d, v, "bandwidth_limit", sv)
 		if err != nil {
 			return &obj, err
@@ -2600,7 +2462,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("cellular"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileCellular(d, v, "cellular", sv)
 		if err != nil {
 			return &obj, err
@@ -2610,7 +2471,6 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 	}
 
 	if v, ok := d.GetOk("lan_extension"); ok {
-
 		t, err := expandExtensionControllerExtenderProfileLanExtension(d, v, "lan_extension", sv)
 		if err != nil {
 			return &obj, err

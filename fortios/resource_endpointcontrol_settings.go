@@ -35,6 +35,11 @@ func resourceEndpointControlSettings() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"forticlient_reg_key_enforce": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -217,6 +222,10 @@ func resourceEndpointControlSettingsRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
+func flattenEndpointControlSettingsOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlSettingsForticlientRegKeyEnforce(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -279,6 +288,12 @@ func flattenEndpointControlSettingsForticlientEmsRestApiCallTimeout(v interface{
 
 func refreshObjectEndpointControlSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("override", flattenEndpointControlSettingsOverride(o["override"], d, "override", sv)); err != nil {
+		if !fortiAPIPatch(o["override"]) {
+			return fmt.Errorf("Error reading override: %v", err)
+		}
+	}
 
 	if err = d.Set("forticlient_reg_key_enforce", flattenEndpointControlSettingsForticlientRegKeyEnforce(o["forticlient-reg-key-enforce"], d, "forticlient_reg_key_enforce", sv)); err != nil {
 		if !fortiAPIPatch(o["forticlient-reg-key-enforce"]) {
@@ -373,6 +388,10 @@ func flattenEndpointControlSettingsFortiTestDebug(d *schema.ResourceData, fosdeb
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandEndpointControlSettingsOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlSettingsForticlientRegKeyEnforce(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -436,11 +455,23 @@ func expandEndpointControlSettingsForticlientEmsRestApiCallTimeout(d *schema.Res
 func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
+	if v, ok := d.GetOk("override"); ok {
+		if setArgNil {
+			obj["override"] = nil
+		} else {
+			t, err := expandEndpointControlSettingsOverride(d, v, "override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["override"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("forticlient_reg_key_enforce"); ok {
 		if setArgNil {
 			obj["forticlient-reg-key-enforce"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientRegKeyEnforce(d, v, "forticlient_reg_key_enforce", sv)
 			if err != nil {
 				return &obj, err
@@ -454,7 +485,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-reg-key"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientRegKey(d, v, "forticlient_reg_key", sv)
 			if err != nil {
 				return &obj, err
@@ -468,7 +498,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-reg-timeout"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientRegTimeout(d, v, "forticlient_reg_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -482,7 +511,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["download-custom-link"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsDownloadCustomLink(d, v, "download_custom_link", sv)
 			if err != nil {
 				return &obj, err
@@ -496,7 +524,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["download-location"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsDownloadLocation(d, v, "download_location", sv)
 			if err != nil {
 				return &obj, err
@@ -510,7 +537,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-offline-grace"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientOfflineGrace(d, v, "forticlient_offline_grace", sv)
 			if err != nil {
 				return &obj, err
@@ -524,7 +550,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-offline-grace-interval"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientOfflineGraceInterval(d, v, "forticlient_offline_grace_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -538,7 +563,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-keepalive-interval"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientKeepaliveInterval(d, v, "forticlient_keepalive_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -552,7 +576,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-sys-update-interval"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientSysUpdateInterval(d, v, "forticlient_sys_update_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -566,7 +589,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-avdb-update-interval"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientAvdbUpdateInterval(d, v, "forticlient_avdb_update_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -580,7 +602,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-warning-interval"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientWarningInterval(d, v, "forticlient_warning_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -594,7 +615,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-user-avatar"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientUserAvatar(d, v, "forticlient_user_avatar", sv)
 			if err != nil {
 				return &obj, err
@@ -608,7 +628,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-disconnect-unsupported-client"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientDisconnectUnsupportedClient(d, v, "forticlient_disconnect_unsupported_client", sv)
 			if err != nil {
 				return &obj, err
@@ -622,7 +641,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-dereg-unsupported-client"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientDeregUnsupportedClient(d, v, "forticlient_dereg_unsupported_client", sv)
 			if err != nil {
 				return &obj, err
@@ -636,7 +654,6 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["forticlient-ems-rest-api-call-timeout"] = nil
 		} else {
-
 			t, err := expandEndpointControlSettingsForticlientEmsRestApiCallTimeout(d, v, "forticlient_ems_rest_api_call_timeout", sv)
 			if err != nil {
 				return &obj, err

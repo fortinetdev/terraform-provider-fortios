@@ -44,6 +44,10 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"route_tag": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"sub_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -157,6 +161,22 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Computed: true,
 			},
 			"tag_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"hw_vendor": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"hw_model": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"os": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"sw_version": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -307,6 +327,10 @@ func dataSourceFlattenFirewallAddressSubnet(v interface{}, d *schema.ResourceDat
 }
 
 func dataSourceFlattenFirewallAddressType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressRouteTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -478,6 +502,22 @@ func dataSourceFlattenFirewallAddressTagDetectionLevel(v interface{}, d *schema.
 }
 
 func dataSourceFlattenFirewallAddressTagType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressHwVendor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressHwModel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressOs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressSwVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -670,6 +710,12 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("route_tag", dataSourceFlattenFirewallAddressRouteTag(o["route-tag"], d, "route_tag")); err != nil {
+		if !fortiAPIPatch(o["route-tag"]) {
+			return fmt.Errorf("Error reading route_tag: %v", err)
+		}
+	}
+
 	if err = d.Set("sub_type", dataSourceFlattenFirewallAddressSubType(o["sub-type"], d, "sub_type")); err != nil {
 		if !fortiAPIPatch(o["sub-type"]) {
 			return fmt.Errorf("Error reading sub_type: %v", err)
@@ -817,6 +863,30 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 	if err = d.Set("tag_type", dataSourceFlattenFirewallAddressTagType(o["tag-type"], d, "tag_type")); err != nil {
 		if !fortiAPIPatch(o["tag-type"]) {
 			return fmt.Errorf("Error reading tag_type: %v", err)
+		}
+	}
+
+	if err = d.Set("hw_vendor", dataSourceFlattenFirewallAddressHwVendor(o["hw-vendor"], d, "hw_vendor")); err != nil {
+		if !fortiAPIPatch(o["hw-vendor"]) {
+			return fmt.Errorf("Error reading hw_vendor: %v", err)
+		}
+	}
+
+	if err = d.Set("hw_model", dataSourceFlattenFirewallAddressHwModel(o["hw-model"], d, "hw_model")); err != nil {
+		if !fortiAPIPatch(o["hw-model"]) {
+			return fmt.Errorf("Error reading hw_model: %v", err)
+		}
+	}
+
+	if err = d.Set("os", dataSourceFlattenFirewallAddressOs(o["os"], d, "os")); err != nil {
+		if !fortiAPIPatch(o["os"]) {
+			return fmt.Errorf("Error reading os: %v", err)
+		}
+	}
+
+	if err = d.Set("sw_version", dataSourceFlattenFirewallAddressSwVersion(o["sw-version"], d, "sw_version")); err != nil {
+		if !fortiAPIPatch(o["sw-version"]) {
+			return fmt.Errorf("Error reading sw_version: %v", err)
 		}
 	}
 

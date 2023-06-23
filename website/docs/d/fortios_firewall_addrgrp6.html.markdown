@@ -25,12 +25,18 @@ The following attributes are exported:
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets the value to 1).
 * `comment` - Comment.
 * `member` - Address objects contained within the group. The structure of `member` block is documented below.
+* `exclude` - Enable/disable address6 exclusion.
+* `exclude_member` - Address6 exclusion member. The structure of `exclude_member` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `fabric_object` - Security Fabric global object setting.
 
 The `member` block contains:
 
 * `name` - Address6/addrgrp6 name.
+
+The `exclude_member` block contains:
+
+* `name` - Address6 name.
 
 The `tagging` block contains:
 

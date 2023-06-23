@@ -344,7 +344,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallSshHostKeyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -354,7 +353,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallSshHostKeyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -364,7 +362,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallSshHostKeyType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -374,7 +371,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("nid"); ok {
-
 		t, err := expandFirewallSshHostKeyNid(d, v, "nid", sv)
 		if err != nil {
 			return &obj, err
@@ -384,7 +380,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("usage"); ok {
-
 		t, err := expandFirewallSshHostKeyUsage(d, v, "usage", sv)
 		if err != nil {
 			return &obj, err
@@ -394,7 +389,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandFirewallSshHostKeyIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -404,7 +398,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandFirewallSshHostKeyPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -414,7 +407,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
-
 		t, err := expandFirewallSshHostKeyHostname(d, v, "hostname", sv)
 		if err != nil {
 			return &obj, err
@@ -424,7 +416,6 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("public_key"); ok {
-
 		t, err := expandFirewallSshHostKeyPublicKey(d, v, "public_key", sv)
 		if err != nil {
 			return &obj, err

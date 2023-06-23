@@ -90,6 +90,10 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"evpn_ttl": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"load_balance_all": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -581,6 +585,10 @@ func dataSourceFlattenSystemHaRouteHold(v interface{}, d *schema.ResourceData, p
 }
 
 func dataSourceFlattenSystemHaMulticastTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaEvpnTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1286,6 +1294,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("multicast_ttl", dataSourceFlattenSystemHaMulticastTtl(o["multicast-ttl"], d, "multicast_ttl")); err != nil {
 		if !fortiAPIPatch(o["multicast-ttl"]) {
 			return fmt.Errorf("Error reading multicast_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("evpn_ttl", dataSourceFlattenSystemHaEvpnTtl(o["evpn-ttl"], d, "evpn_ttl")); err != nil {
+		if !fortiAPIPatch(o["evpn-ttl"]) {
+			return fmt.Errorf("Error reading evpn_ttl: %v", err)
 		}
 	}
 

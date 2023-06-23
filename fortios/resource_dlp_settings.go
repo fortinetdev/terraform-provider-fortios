@@ -250,7 +250,6 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["storage-device"] = nil
 		} else {
-
 			t, err := expandDlpSettingsStorageDevice(d, v, "storage_device", sv)
 			if err != nil {
 				return &obj, err
@@ -264,7 +263,6 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["size"] = nil
 		} else {
-
 			t, err := expandDlpSettingsSize(d, v, "size", sv)
 			if err != nil {
 				return &obj, err
@@ -278,7 +276,6 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["db-mode"] = nil
 		} else {
-
 			t, err := expandDlpSettingsDbMode(d, v, "db_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -292,7 +289,6 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["cache-mem-percent"] = nil
 		} else {
-
 			t, err := expandDlpSettingsCacheMemPercent(d, v, "cache_mem_percent", sv)
 			if err != nil {
 				return &obj, err
@@ -306,7 +302,6 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		if setArgNil {
 			obj["chunk-size"] = nil
 		} else {
-
 			t, err := expandDlpSettingsChunkSize(d, v, "chunk_size", sv)
 			if err != nil {
 				return &obj, err

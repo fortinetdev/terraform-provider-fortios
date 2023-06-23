@@ -30,6 +30,7 @@ The following attributes are exported:
 * `comments` - Comment.
 * `resource` - URI of external resource.
 * `user_agent` - Override HTTP User-Agent header used when retrieving this external resource.
+* `server_identity_check` - Certificate verification option.
 * `refresh_rate` - Time interval to refresh external resource (1 - 43200 min, default = 5 min).
 * `source_ip` - Source IPv4 address used to communicate with server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.

@@ -235,7 +235,6 @@ func getObjectSystemVdomRadiusServer(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemVdomRadiusServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -245,7 +244,6 @@ func getObjectSystemVdomRadiusServer(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemVdomRadiusServerStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -255,7 +253,6 @@ func getObjectSystemVdomRadiusServer(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("radius_server_vdom"); ok {
-
 		t, err := expandSystemVdomRadiusServerRadiusServerVdom(d, v, "radius_server_vdom", sv)
 		if err != nil {
 			return &obj, err

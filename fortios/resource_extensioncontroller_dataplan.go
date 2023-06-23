@@ -549,7 +549,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandExtensionControllerDataplanName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -559,7 +558,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("modem_id"); ok {
-
 		t, err := expandExtensionControllerDataplanModemId(d, v, "modem_id", sv)
 		if err != nil {
 			return &obj, err
@@ -569,7 +567,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandExtensionControllerDataplanType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -579,7 +576,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("slot"); ok {
-
 		t, err := expandExtensionControllerDataplanSlot(d, v, "slot", sv)
 		if err != nil {
 			return &obj, err
@@ -589,7 +585,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("iccid"); ok {
-
 		t, err := expandExtensionControllerDataplanIccid(d, v, "iccid", sv)
 		if err != nil {
 			return &obj, err
@@ -599,7 +594,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("carrier"); ok {
-
 		t, err := expandExtensionControllerDataplanCarrier(d, v, "carrier", sv)
 		if err != nil {
 			return &obj, err
@@ -609,7 +603,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("apn"); ok {
-
 		t, err := expandExtensionControllerDataplanApn(d, v, "apn", sv)
 		if err != nil {
 			return &obj, err
@@ -619,7 +612,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("auth_type"); ok {
-
 		t, err := expandExtensionControllerDataplanAuthType(d, v, "auth_type", sv)
 		if err != nil {
 			return &obj, err
@@ -629,7 +621,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandExtensionControllerDataplanUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -639,7 +630,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandExtensionControllerDataplanPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -649,7 +639,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("pdn"); ok {
-
 		t, err := expandExtensionControllerDataplanPdn(d, v, "pdn", sv)
 		if err != nil {
 			return &obj, err
@@ -659,7 +648,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("signal_threshold"); ok {
-
 		t, err := expandExtensionControllerDataplanSignalThreshold(d, v, "signal_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -669,7 +657,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("signal_period"); ok {
-
 		t, err := expandExtensionControllerDataplanSignalPeriod(d, v, "signal_period", sv)
 		if err != nil {
 			return &obj, err
@@ -679,7 +666,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("capacity"); ok {
-
 		t, err := expandExtensionControllerDataplanCapacity(d, v, "capacity", sv)
 		if err != nil {
 			return &obj, err
@@ -689,7 +675,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("monthly_fee"); ok {
-
 		t, err := expandExtensionControllerDataplanMonthlyFee(d, v, "monthly_fee", sv)
 		if err != nil {
 			return &obj, err
@@ -699,7 +684,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("billing_date"); ok {
-
 		t, err := expandExtensionControllerDataplanBillingDate(d, v, "billing_date", sv)
 		if err != nil {
 			return &obj, err
@@ -709,7 +693,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("overage"); ok {
-
 		t, err := expandExtensionControllerDataplanOverage(d, v, "overage", sv)
 		if err != nil {
 			return &obj, err
@@ -719,7 +702,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("preferred_subnet"); ok {
-
 		t, err := expandExtensionControllerDataplanPreferredSubnet(d, v, "preferred_subnet", sv)
 		if err != nil {
 			return &obj, err
@@ -729,7 +711,6 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("private_network"); ok {
-
 		t, err := expandExtensionControllerDataplanPrivateNetwork(d, v, "private_network", sv)
 		if err != nil {
 			return &obj, err

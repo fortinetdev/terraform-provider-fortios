@@ -215,7 +215,6 @@ func getObjectFirewallInternetServiceReputation(d *schema.ResourceData, sv strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandFirewallInternetServiceReputationId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -225,7 +224,6 @@ func getObjectFirewallInternetServiceReputation(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandFirewallInternetServiceReputationDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err

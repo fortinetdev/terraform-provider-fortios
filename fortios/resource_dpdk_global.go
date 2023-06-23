@@ -96,6 +96,11 @@ func resourceDpdkGlobal() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -224,7 +229,6 @@ func flattenDpdkGlobalInterface(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenDpdkGlobalInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -271,6 +275,12 @@ func flattenDpdkGlobalMbufpoolPercentage(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenDpdkGlobalStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -278,7 +288,7 @@ func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("interface", flattenDpdkGlobalInterface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
 				return fmt.Errorf("Error reading interface: %v", err)
@@ -365,7 +375,6 @@ func expandDpdkGlobalInterface(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandDpdkGlobalInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -416,7 +425,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -430,7 +438,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["interface"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandDpdkGlobalInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -444,7 +451,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["multiqueue"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalMultiqueue(d, v, "multiqueue", sv)
 			if err != nil {
 				return &obj, err
@@ -458,7 +464,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["sleep-on-idle"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalSleepOnIdle(d, v, "sleep_on_idle", sv)
 			if err != nil {
 				return &obj, err
@@ -472,7 +477,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["elasticbuffer"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalElasticbuffer(d, v, "elasticbuffer", sv)
 			if err != nil {
 				return &obj, err
@@ -486,7 +490,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["per-session-accounting"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalPerSessionAccounting(d, v, "per_session_accounting", sv)
 			if err != nil {
 				return &obj, err
@@ -500,7 +503,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["ipsec-offload"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalIpsecOffload(d, v, "ipsec_offload", sv)
 			if err != nil {
 				return &obj, err
@@ -514,7 +516,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["hugepage-percentage"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalHugepagePercentage(d, v, "hugepage_percentage", sv)
 			if err != nil {
 				return &obj, err
@@ -528,7 +529,6 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["mbufpool-percentage"] = nil
 		} else {
-
 			t, err := expandDpdkGlobalMbufpoolPercentage(d, v, "mbufpool_percentage", sv)
 			if err != nil {
 				return &obj, err

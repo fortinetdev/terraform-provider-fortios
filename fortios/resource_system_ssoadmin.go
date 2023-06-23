@@ -72,6 +72,11 @@ func resourceSystemSsoAdmin() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -231,7 +236,6 @@ func flattenSystemSsoAdminVdom(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSsoAdminVdomName(i["name"], d, pre_append, sv)
 		}
 
@@ -254,6 +258,12 @@ func flattenSystemSsoAdminGuiIgnoreReleaseOverviewVersion(v interface{}, d *sche
 
 func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemSsoAdminName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -267,7 +277,7 @@ func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vdom", flattenSystemSsoAdminVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
@@ -322,7 +332,6 @@ func expandSystemSsoAdminVdom(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSsoAdminVdomName(d, i["name"], pre_append, sv)
 		}
 
@@ -346,7 +355,6 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSsoAdminName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -356,7 +364,6 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("accprofile"); ok {
-
 		t, err := expandSystemSsoAdminAccprofile(d, v, "accprofile", sv)
 		if err != nil {
 			return &obj, err
@@ -366,7 +373,6 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
-
 		t, err := expandSystemSsoAdminVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -376,7 +382,6 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("gui_ignore_release_overview_version"); ok {
-
 		t, err := expandSystemSsoAdminGuiIgnoreReleaseOverviewVersion(d, v, "gui_ignore_release_overview_version", sv)
 		if err != nil {
 			return &obj, err

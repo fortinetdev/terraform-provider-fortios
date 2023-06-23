@@ -120,6 +120,11 @@ func resourceLogEventfilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"webproxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -286,6 +291,10 @@ func flattenLogEventfilterRestApi(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenLogEventfilterWebproxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -391,6 +400,12 @@ func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("webproxy", flattenLogEventfilterWebproxy(o["webproxy"], d, "webproxy", sv)); err != nil {
+		if !fortiAPIPatch(o["webproxy"]) {
+			return fmt.Errorf("Error reading webproxy: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -468,6 +483,10 @@ func expandLogEventfilterRestApi(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandLogEventfilterWebproxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -475,7 +494,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["event"] = nil
 		} else {
-
 			t, err := expandLogEventfilterEvent(d, v, "event", sv)
 			if err != nil {
 				return &obj, err
@@ -489,7 +507,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["system"] = nil
 		} else {
-
 			t, err := expandLogEventfilterSystem(d, v, "system", sv)
 			if err != nil {
 				return &obj, err
@@ -503,7 +520,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["vpn"] = nil
 		} else {
-
 			t, err := expandLogEventfilterVpn(d, v, "vpn", sv)
 			if err != nil {
 				return &obj, err
@@ -517,7 +533,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["user"] = nil
 		} else {
-
 			t, err := expandLogEventfilterUser(d, v, "user", sv)
 			if err != nil {
 				return &obj, err
@@ -531,7 +546,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["router"] = nil
 		} else {
-
 			t, err := expandLogEventfilterRouter(d, v, "router", sv)
 			if err != nil {
 				return &obj, err
@@ -545,7 +559,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["wireless-activity"] = nil
 		} else {
-
 			t, err := expandLogEventfilterWirelessActivity(d, v, "wireless_activity", sv)
 			if err != nil {
 				return &obj, err
@@ -559,7 +572,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["wan-opt"] = nil
 		} else {
-
 			t, err := expandLogEventfilterWanOpt(d, v, "wan_opt", sv)
 			if err != nil {
 				return &obj, err
@@ -573,7 +585,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["endpoint"] = nil
 		} else {
-
 			t, err := expandLogEventfilterEndpoint(d, v, "endpoint", sv)
 			if err != nil {
 				return &obj, err
@@ -587,7 +598,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["ha"] = nil
 		} else {
-
 			t, err := expandLogEventfilterHa(d, v, "ha", sv)
 			if err != nil {
 				return &obj, err
@@ -601,7 +611,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["compliance-check"] = nil
 		} else {
-
 			t, err := expandLogEventfilterComplianceCheck(d, v, "compliance_check", sv)
 			if err != nil {
 				return &obj, err
@@ -615,7 +624,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["security-rating"] = nil
 		} else {
-
 			t, err := expandLogEventfilterSecurityRating(d, v, "security_rating", sv)
 			if err != nil {
 				return &obj, err
@@ -629,7 +637,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["fortiextender"] = nil
 		} else {
-
 			t, err := expandLogEventfilterFortiextender(d, v, "fortiextender", sv)
 			if err != nil {
 				return &obj, err
@@ -643,7 +650,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["connector"] = nil
 		} else {
-
 			t, err := expandLogEventfilterConnector(d, v, "connector", sv)
 			if err != nil {
 				return &obj, err
@@ -657,7 +663,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["sdwan"] = nil
 		} else {
-
 			t, err := expandLogEventfilterSdwan(d, v, "sdwan", sv)
 			if err != nil {
 				return &obj, err
@@ -671,7 +676,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["cifs"] = nil
 		} else {
-
 			t, err := expandLogEventfilterCifs(d, v, "cifs", sv)
 			if err != nil {
 				return &obj, err
@@ -685,7 +689,6 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["switch-controller"] = nil
 		} else {
-
 			t, err := expandLogEventfilterSwitchController(d, v, "switch_controller", sv)
 			if err != nil {
 				return &obj, err
@@ -699,12 +702,24 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 		if setArgNil {
 			obj["rest-api"] = nil
 		} else {
-
 			t, err := expandLogEventfilterRestApi(d, v, "rest_api", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
 				obj["rest-api"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("webproxy"); ok {
+		if setArgNil {
+			obj["webproxy"] = nil
+		} else {
+			t, err := expandLogEventfilterWebproxy(d, v, "webproxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["webproxy"] = t
 			}
 		}
 	}

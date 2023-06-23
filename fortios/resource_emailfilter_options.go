@@ -172,7 +172,6 @@ func getObjectEmailfilterOptions(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["dns-timeout"] = nil
 		} else {
-
 			t, err := expandEmailfilterOptionsDnsTimeout(d, v, "dns_timeout", sv)
 			if err != nil {
 				return &obj, err

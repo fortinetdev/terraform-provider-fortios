@@ -335,7 +335,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerUtmProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -345,7 +344,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerUtmProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -355,7 +353,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("utm_log"); ok {
-
 		t, err := expandWirelessControllerUtmProfileUtmLog(d, v, "utm_log", sv)
 		if err != nil {
 			return &obj, err
@@ -365,7 +362,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
-
 		t, err := expandWirelessControllerUtmProfileIpsSensor(d, v, "ips_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -375,7 +371,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
-
 		t, err := expandWirelessControllerUtmProfileApplicationList(d, v, "application_list", sv)
 		if err != nil {
 			return &obj, err
@@ -385,7 +380,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("antivirus_profile"); ok {
-
 		t, err := expandWirelessControllerUtmProfileAntivirusProfile(d, v, "antivirus_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -395,7 +389,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
-
 		t, err := expandWirelessControllerUtmProfileWebfilterProfile(d, v, "webfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -405,7 +398,6 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
-
 		t, err := expandWirelessControllerUtmProfileScanBotnetConnections(d, v, "scan_botnet_connections", sv)
 		if err != nil {
 			return &obj, err

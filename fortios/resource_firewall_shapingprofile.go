@@ -130,6 +130,11 @@ func resourceFirewallShapingProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -297,67 +302,56 @@ func flattenFirewallShapingProfileShapingEntries(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallShapingProfileShapingEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
 		if _, ok := i["class-id"]; ok {
-
 			tmp["class_id"] = flattenFirewallShapingProfileShapingEntriesClassId(i["class-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-
 			tmp["priority"] = flattenFirewallShapingProfileShapingEntriesPriority(i["priority"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "guaranteed_bandwidth_percentage"
 		if _, ok := i["guaranteed-bandwidth-percentage"]; ok {
-
 			tmp["guaranteed_bandwidth_percentage"] = flattenFirewallShapingProfileShapingEntriesGuaranteedBandwidthPercentage(i["guaranteed-bandwidth-percentage"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_bandwidth_percentage"
 		if _, ok := i["maximum-bandwidth-percentage"]; ok {
-
 			tmp["maximum_bandwidth_percentage"] = flattenFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(i["maximum-bandwidth-percentage"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "limit"
 		if _, ok := i["limit"]; ok {
-
 			tmp["limit"] = flattenFirewallShapingProfileShapingEntriesLimit(i["limit"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "burst_in_msec"
 		if _, ok := i["burst-in-msec"]; ok {
-
 			tmp["burst_in_msec"] = flattenFirewallShapingProfileShapingEntriesBurstInMsec(i["burst-in-msec"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cburst_in_msec"
 		if _, ok := i["cburst-in-msec"]; ok {
-
 			tmp["cburst_in_msec"] = flattenFirewallShapingProfileShapingEntriesCburstInMsec(i["cburst-in-msec"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "red_probability"
 		if _, ok := i["red-probability"]; ok {
-
 			tmp["red_probability"] = flattenFirewallShapingProfileShapingEntriesRedProbability(i["red-probability"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min"
 		if _, ok := i["min"]; ok {
-
 			tmp["min"] = flattenFirewallShapingProfileShapingEntriesMin(i["min"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max"
 		if _, ok := i["max"]; ok {
-
 			tmp["max"] = flattenFirewallShapingProfileShapingEntriesMax(i["max"], d, pre_append, sv)
 		}
 
@@ -416,6 +410,12 @@ func flattenFirewallShapingProfileShapingEntriesMax(v interface{}, d *schema.Res
 
 func refreshObjectFirewallShapingProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("profile_name", flattenFirewallShapingProfileProfileName(o["profile-name"], d, "profile_name", sv)); err != nil {
 		if !fortiAPIPatch(o["profile-name"]) {
@@ -441,7 +441,7 @@ func refreshObjectFirewallShapingProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("shaping_entries", flattenFirewallShapingProfileShapingEntries(o["shaping-entries"], d, "shaping_entries", sv)); err != nil {
 			if !fortiAPIPatch(o["shaping-entries"]) {
 				return fmt.Errorf("Error reading shaping_entries: %v", err)
@@ -498,67 +498,56 @@ func expandFirewallShapingProfileShapingEntries(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallShapingProfileShapingEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["class-id"], _ = expandFirewallShapingProfileShapingEntriesClassId(d, i["class_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priority"], _ = expandFirewallShapingProfileShapingEntriesPriority(d, i["priority"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "guaranteed_bandwidth_percentage"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["guaranteed-bandwidth-percentage"], _ = expandFirewallShapingProfileShapingEntriesGuaranteedBandwidthPercentage(d, i["guaranteed_bandwidth_percentage"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_bandwidth_percentage"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["maximum-bandwidth-percentage"], _ = expandFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(d, i["maximum_bandwidth_percentage"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "limit"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["limit"], _ = expandFirewallShapingProfileShapingEntriesLimit(d, i["limit"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "burst_in_msec"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["burst-in-msec"], _ = expandFirewallShapingProfileShapingEntriesBurstInMsec(d, i["burst_in_msec"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cburst_in_msec"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["cburst-in-msec"], _ = expandFirewallShapingProfileShapingEntriesCburstInMsec(d, i["cburst_in_msec"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "red_probability"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["red-probability"], _ = expandFirewallShapingProfileShapingEntriesRedProbability(d, i["red_probability"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["min"], _ = expandFirewallShapingProfileShapingEntriesMin(d, i["min"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["max"], _ = expandFirewallShapingProfileShapingEntriesMax(d, i["max"], pre_append, sv)
 		}
 
@@ -618,7 +607,6 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("profile_name"); ok {
-
 		t, err := expandFirewallShapingProfileProfileName(d, v, "profile_name", sv)
 		if err != nil {
 			return &obj, err
@@ -628,7 +616,6 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallShapingProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -638,7 +625,6 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallShapingProfileType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -648,7 +634,6 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("default_class_id"); ok {
-
 		t, err := expandFirewallShapingProfileDefaultClassId(d, v, "default_class_id", sv)
 		if err != nil {
 			return &obj, err
@@ -658,7 +643,6 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("shaping_entries"); ok || d.HasChange("shaping_entries") {
-
 		t, err := expandFirewallShapingProfileShapingEntries(d, v, "shaping_entries", sv)
 		if err != nil {
 			return &obj, err

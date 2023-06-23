@@ -241,6 +241,7 @@ The following arguments are supported:
 * `auto_discovery_forwarder` - Enable/disable forwarding auto-discovery short-cut messages. Valid values: `enable`, `disable`.
 * `auto_discovery_psk` - Enable/disable use of pre-shared secrets for authentication of auto-discovery tunnels. Valid values: `enable`, `disable`.
 * `auto_discovery_shortcuts` - Control deletion of child short-cut tunnels when the parent tunnel goes down. Valid values: `independent`, `dependent`.
+* `auto_discovery_crossover` - Allow/block set-up of short-cut tunnels between different network IDs. Valid values: `allow`, `block`.
 * `auto_discovery_offer_interval` - Interval between shortcut offer messages in seconds (1 - 300, default = 5).
 * `encapsulation` - Enable/disable GRE/VXLAN encapsulation.
 * `encapsulation_address` - Source for GRE/VXLAN tunnel address. Valid values: `ike`, `ipv4`, `ipv6`.
@@ -263,6 +264,7 @@ The following arguments are supported:
 * `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic. Valid values: `enable`, `disable`.
 * `fec_send_timeout` - Timeout in milliseconds before sending Forward Error Correction packets (1 - 1000).
 * `fec_base` - Number of base Forward Error Correction packets (1 - 100).
+* `fec_codec_string` - Forward Error Correction encoding/decoding algorithm. Valid values: `rs`, `xor`.
 * `fec_codec` - ipsec fec encoding/decoding algorithm (0: reed-solomon, 1: xor).
 * `fec_redundant` - Number of redundant Forward Error Correction packets (1 - 100).
 * `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic. Valid values: `enable`, `disable`.
@@ -271,9 +273,14 @@ The following arguments are supported:
 * `fec_mapping_profile` - Forward Error Correction (FEC) mapping profile.
 * `network_overlay` - Enable/disable network overlays. Valid values: `disable`, `enable`.
 * `network_id` - VPN gateway network ID.
+* `dev_id_notification` - Enable/disable device ID notification. Valid values: `disable`, `enable`.
+* `dev_id` - Device ID carried by the device ID notification.
 * `loopback_asymroute` - Enable/disable asymmetric routing for IKE traffic on loopback interface. Valid values: `enable`, `disable`.
 * `link_cost` - VPN tunnel underlay link cost.
+* `kms` - Key Management Services server.
+* `exchange_fgt_device_id` - Enable/disable device identifier exchange with peer FortiGate units for use of VPN monitor data by FortiManager. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `certificate` block supports:

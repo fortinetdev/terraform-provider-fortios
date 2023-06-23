@@ -263,6 +263,11 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -538,7 +543,6 @@ func flattenWirelessControllerHotspot20HsProfileOsuProvider(v interface{}, d *sc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerHotspot20HsProfileOsuProviderName(i["name"], d, pre_append, sv)
 		}
 
@@ -581,6 +585,12 @@ func flattenWirelessControllerHotspot20HsProfileIpAddrType(v interface{}, d *sch
 
 func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20HsProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -768,7 +778,7 @@ func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("osu_provider", flattenWirelessControllerHotspot20HsProfileOsuProvider(o["osu-provider"], d, "osu_provider", sv)); err != nil {
 			if !fortiAPIPatch(o["osu-provider"]) {
 				return fmt.Errorf("Error reading osu_provider: %v", err)
@@ -969,7 +979,6 @@ func expandWirelessControllerHotspot20HsProfileOsuProvider(d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerHotspot20HsProfileOsuProviderName(d, i["name"], pre_append, sv)
 		}
 
@@ -1013,7 +1022,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1023,7 +1031,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("release"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileRelease(d, v, "release", sv)
 		if err != nil {
 			return &obj, err
@@ -1033,7 +1040,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("access_network_type"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAccessNetworkType(d, v, "access_network_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1043,7 +1049,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("access_network_internet"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAccessNetworkInternet(d, v, "access_network_internet", sv)
 		if err != nil {
 			return &obj, err
@@ -1053,7 +1058,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("access_network_asra"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAccessNetworkAsra(d, v, "access_network_asra", sv)
 		if err != nil {
 			return &obj, err
@@ -1063,7 +1067,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("access_network_esr"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAccessNetworkEsr(d, v, "access_network_esr", sv)
 		if err != nil {
 			return &obj, err
@@ -1073,7 +1076,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("access_network_uesa"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAccessNetworkUesa(d, v, "access_network_uesa", sv)
 		if err != nil {
 			return &obj, err
@@ -1083,7 +1085,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("venue_group"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileVenueGroup(d, v, "venue_group", sv)
 		if err != nil {
 			return &obj, err
@@ -1093,7 +1094,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("venue_type"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileVenueType(d, v, "venue_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1103,7 +1103,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("hessid"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileHessid(d, v, "hessid", sv)
 		if err != nil {
 			return &obj, err
@@ -1113,7 +1112,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("proxy_arp"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileProxyArp(d, v, "proxy_arp", sv)
 		if err != nil {
 			return &obj, err
@@ -1123,7 +1121,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("l2tif"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileL2Tif(d, v, "l2tif", sv)
 		if err != nil {
 			return &obj, err
@@ -1133,7 +1130,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("pame_bi"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfilePameBi(d, v, "pame_bi", sv)
 		if err != nil {
 			return &obj, err
@@ -1143,7 +1139,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOkExists("anqp_domain_id"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAnqpDomainId(d, v, "anqp_domain_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1153,7 +1148,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileDomainName(d, v, "domain_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1163,7 +1157,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("osu_ssid"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileOsuSsid(d, v, "osu_ssid", sv)
 		if err != nil {
 			return &obj, err
@@ -1173,7 +1166,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("gas_comeback_delay"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileGasComebackDelay(d, v, "gas_comeback_delay", sv)
 		if err != nil {
 			return &obj, err
@@ -1183,7 +1175,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("gas_fragmentation_limit"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileGasFragmentationLimit(d, v, "gas_fragmentation_limit", sv)
 		if err != nil {
 			return &obj, err
@@ -1193,7 +1184,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("dgaf"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileDgaf(d, v, "dgaf", sv)
 		if err != nil {
 			return &obj, err
@@ -1203,7 +1193,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("deauth_request_timeout"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileDeauthRequestTimeout(d, v, "deauth_request_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -1213,7 +1202,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("wnm_sleep_mode"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileWnmSleepMode(d, v, "wnm_sleep_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1223,7 +1211,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("bss_transition"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileBssTransition(d, v, "bss_transition", sv)
 		if err != nil {
 			return &obj, err
@@ -1233,7 +1220,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("venue_name"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileVenueName(d, v, "venue_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1243,7 +1229,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("venue_url"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileVenueUrl(d, v, "venue_url", sv)
 		if err != nil {
 			return &obj, err
@@ -1253,7 +1238,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("roaming_consortium"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileRoamingConsortium(d, v, "roaming_consortium", sv)
 		if err != nil {
 			return &obj, err
@@ -1263,7 +1247,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("nai_realm"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileNaiRealm(d, v, "nai_realm", sv)
 		if err != nil {
 			return &obj, err
@@ -1273,7 +1256,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("oper_friendly_name"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileOperFriendlyName(d, v, "oper_friendly_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1283,7 +1265,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("oper_icon"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileOperIcon(d, v, "oper_icon", sv)
 		if err != nil {
 			return &obj, err
@@ -1293,7 +1274,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("advice_of_charge"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileAdviceOfCharge(d, v, "advice_of_charge", sv)
 		if err != nil {
 			return &obj, err
@@ -1303,7 +1283,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("osu_provider_nai"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileOsuProviderNai(d, v, "osu_provider_nai", sv)
 		if err != nil {
 			return &obj, err
@@ -1313,7 +1292,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("terms_and_conditions"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileTermsAndConditions(d, v, "terms_and_conditions", sv)
 		if err != nil {
 			return &obj, err
@@ -1323,7 +1301,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("osu_provider"); ok || d.HasChange("osu_provider") {
-
 		t, err := expandWirelessControllerHotspot20HsProfileOsuProvider(d, v, "osu_provider", sv)
 		if err != nil {
 			return &obj, err
@@ -1333,7 +1310,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("wan_metrics"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileWanMetrics(d, v, "wan_metrics", sv)
 		if err != nil {
 			return &obj, err
@@ -1343,7 +1319,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("network_auth"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileNetworkAuth(d, v, "network_auth", sv)
 		if err != nil {
 			return &obj, err
@@ -1353,7 +1328,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("n3gpp_plmn"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfile3GppPlmn(d, v, "n3gpp_plmn", sv)
 		if err != nil {
 			return &obj, err
@@ -1363,7 +1337,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("conn_cap"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileConnCap(d, v, "conn_cap", sv)
 		if err != nil {
 			return &obj, err
@@ -1373,7 +1346,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("qos_map"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileQosMap(d, v, "qos_map", sv)
 		if err != nil {
 			return &obj, err
@@ -1383,7 +1355,6 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 	}
 
 	if v, ok := d.GetOk("ip_addr_type"); ok {
-
 		t, err := expandWirelessControllerHotspot20HsProfileIpAddrType(d, v, "ip_addr_type", sv)
 		if err != nil {
 			return &obj, err

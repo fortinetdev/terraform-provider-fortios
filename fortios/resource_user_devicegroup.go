@@ -99,6 +99,11 @@ func resourceUserDeviceGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -254,7 +259,6 @@ func flattenUserDeviceGroupMember(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserDeviceGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
@@ -297,19 +301,16 @@ func flattenUserDeviceGroupTagging(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserDeviceGroupTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenUserDeviceGroupTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-
 			tmp["tags"] = flattenUserDeviceGroupTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
@@ -356,7 +357,6 @@ func flattenUserDeviceGroupTaggingTags(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserDeviceGroupTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
@@ -379,6 +379,12 @@ func flattenUserDeviceGroupComment(v interface{}, d *schema.ResourceData, pre st
 
 func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenUserDeviceGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -386,7 +392,7 @@ func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenUserDeviceGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -402,7 +408,7 @@ func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("tagging", flattenUserDeviceGroupTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
@@ -453,7 +459,6 @@ func expandUserDeviceGroupMember(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserDeviceGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
@@ -485,19 +490,16 @@ func expandUserDeviceGroupTagging(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserDeviceGroupTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandUserDeviceGroupTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["tags"], _ = expandUserDeviceGroupTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
@@ -535,7 +537,6 @@ func expandUserDeviceGroupTaggingTags(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserDeviceGroupTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
@@ -559,7 +560,6 @@ func getObjectUserDeviceGroup(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserDeviceGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -569,7 +569,6 @@ func getObjectUserDeviceGroup(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandUserDeviceGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -579,7 +578,6 @@ func getObjectUserDeviceGroup(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
-
 		t, err := expandUserDeviceGroupTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
@@ -589,7 +587,6 @@ func getObjectUserDeviceGroup(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandUserDeviceGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err

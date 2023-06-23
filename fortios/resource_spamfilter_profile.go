@@ -280,6 +280,11 @@ func resourceSpamfilterProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -452,25 +457,21 @@ func flattenSpamfilterProfileImap(v interface{}, d *schema.ResourceData, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfileImapLog(i["log"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
-
 		result["action"] = flattenSpamfilterProfileImapAction(i["action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := i["tag-type"]; ok {
-
 		result["tag_type"] = flattenSpamfilterProfileImapTagType(i["tag-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := i["tag-msg"]; ok {
-
 		result["tag_msg"] = flattenSpamfilterProfileImapTagMsg(i["tag-msg"], d, pre_append, sv)
 	}
 
@@ -505,25 +506,21 @@ func flattenSpamfilterProfilePop3(v interface{}, d *schema.ResourceData, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfilePop3Log(i["log"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
-
 		result["action"] = flattenSpamfilterProfilePop3Action(i["action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := i["tag-type"]; ok {
-
 		result["tag_type"] = flattenSpamfilterProfilePop3TagType(i["tag-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := i["tag-msg"]; ok {
-
 		result["tag_msg"] = flattenSpamfilterProfilePop3TagMsg(i["tag-msg"], d, pre_append, sv)
 	}
 
@@ -558,37 +555,31 @@ func flattenSpamfilterProfileSmtp(v interface{}, d *schema.ResourceData, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfileSmtpLog(i["log"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
-
 		result["action"] = flattenSpamfilterProfileSmtpAction(i["action"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := i["tag-type"]; ok {
-
 		result["tag_type"] = flattenSpamfilterProfileSmtpTagType(i["tag-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := i["tag-msg"]; ok {
-
 		result["tag_msg"] = flattenSpamfilterProfileSmtpTagMsg(i["tag-msg"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "hdrip"
 	if _, ok := i["hdrip"]; ok {
-
 		result["hdrip"] = flattenSpamfilterProfileSmtpHdrip(i["hdrip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
-
 		result["local_override"] = flattenSpamfilterProfileSmtpLocalOverride(i["local-override"], d, pre_append, sv)
 	}
 
@@ -631,13 +622,11 @@ func flattenSpamfilterProfileMapi(v interface{}, d *schema.ResourceData, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfileMapiLog(i["log"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
-
 		result["action"] = flattenSpamfilterProfileMapiAction(i["action"], d, pre_append, sv)
 	}
 
@@ -664,7 +653,6 @@ func flattenSpamfilterProfileMsnHotmail(v interface{}, d *schema.ResourceData, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfileMsnHotmailLog(i["log"], d, pre_append, sv)
 	}
 
@@ -687,7 +675,6 @@ func flattenSpamfilterProfileYahooMail(v interface{}, d *schema.ResourceData, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfileYahooMailLog(i["log"], d, pre_append, sv)
 	}
 
@@ -710,7 +697,6 @@ func flattenSpamfilterProfileGmail(v interface{}, d *schema.ResourceData, pre st
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSpamfilterProfileGmailLog(i["log"], d, pre_append, sv)
 	}
 
@@ -748,6 +734,12 @@ func flattenSpamfilterProfileSpamIptrustTable(v interface{}, d *schema.ResourceD
 
 func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSpamfilterProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -803,7 +795,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("imap", flattenSpamfilterProfileImap(o["imap"], d, "imap", sv)); err != nil {
 			if !fortiAPIPatch(o["imap"]) {
 				return fmt.Errorf("Error reading imap: %v", err)
@@ -819,7 +811,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("pop3", flattenSpamfilterProfilePop3(o["pop3"], d, "pop3", sv)); err != nil {
 			if !fortiAPIPatch(o["pop3"]) {
 				return fmt.Errorf("Error reading pop3: %v", err)
@@ -835,7 +827,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("smtp", flattenSpamfilterProfileSmtp(o["smtp"], d, "smtp", sv)); err != nil {
 			if !fortiAPIPatch(o["smtp"]) {
 				return fmt.Errorf("Error reading smtp: %v", err)
@@ -851,7 +843,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("mapi", flattenSpamfilterProfileMapi(o["mapi"], d, "mapi", sv)); err != nil {
 			if !fortiAPIPatch(o["mapi"]) {
 				return fmt.Errorf("Error reading mapi: %v", err)
@@ -867,7 +859,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("msn_hotmail", flattenSpamfilterProfileMsnHotmail(o["msn-hotmail"], d, "msn_hotmail", sv)); err != nil {
 			if !fortiAPIPatch(o["msn-hotmail"]) {
 				return fmt.Errorf("Error reading msn_hotmail: %v", err)
@@ -883,7 +875,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("yahoo_mail", flattenSpamfilterProfileYahooMail(o["yahoo-mail"], d, "yahoo_mail", sv)); err != nil {
 			if !fortiAPIPatch(o["yahoo-mail"]) {
 				return fmt.Errorf("Error reading yahoo_mail: %v", err)
@@ -899,7 +891,7 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("gmail", flattenSpamfilterProfileGmail(o["gmail"], d, "gmail", sv)); err != nil {
 			if !fortiAPIPatch(o["gmail"]) {
 				return fmt.Errorf("Error reading gmail: %v", err)
@@ -1008,22 +1000,18 @@ func expandSpamfilterProfileImap(d *schema.ResourceData, v interface{}, pre stri
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfileImapLog(d, i["log"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["action"], _ = expandSpamfilterProfileImapAction(d, i["action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag-type"], _ = expandSpamfilterProfileImapTagType(d, i["tag_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag-msg"], _ = expandSpamfilterProfileImapTagMsg(d, i["tag_msg"], pre_append, sv)
 	}
 
@@ -1058,22 +1046,18 @@ func expandSpamfilterProfilePop3(d *schema.ResourceData, v interface{}, pre stri
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfilePop3Log(d, i["log"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["action"], _ = expandSpamfilterProfilePop3Action(d, i["action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag-type"], _ = expandSpamfilterProfilePop3TagType(d, i["tag_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag-msg"], _ = expandSpamfilterProfilePop3TagMsg(d, i["tag_msg"], pre_append, sv)
 	}
 
@@ -1108,32 +1092,26 @@ func expandSpamfilterProfileSmtp(d *schema.ResourceData, v interface{}, pre stri
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfileSmtpLog(d, i["log"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["action"], _ = expandSpamfilterProfileSmtpAction(d, i["action"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag-type"], _ = expandSpamfilterProfileSmtpTagType(d, i["tag_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag-msg"], _ = expandSpamfilterProfileSmtpTagMsg(d, i["tag_msg"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "hdrip"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["hdrip"], _ = expandSpamfilterProfileSmtpHdrip(d, i["hdrip"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["local-override"], _ = expandSpamfilterProfileSmtpLocalOverride(d, i["local_override"], pre_append, sv)
 	}
 
@@ -1176,12 +1154,10 @@ func expandSpamfilterProfileMapi(d *schema.ResourceData, v interface{}, pre stri
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfileMapiLog(d, i["log"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["action"], _ = expandSpamfilterProfileMapiAction(d, i["action"], pre_append, sv)
 	}
 
@@ -1208,7 +1184,6 @@ func expandSpamfilterProfileMsnHotmail(d *schema.ResourceData, v interface{}, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfileMsnHotmailLog(d, i["log"], pre_append, sv)
 	}
 
@@ -1231,7 +1206,6 @@ func expandSpamfilterProfileYahooMail(d *schema.ResourceData, v interface{}, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfileYahooMailLog(d, i["log"], pre_append, sv)
 	}
 
@@ -1254,7 +1228,6 @@ func expandSpamfilterProfileGmail(d *schema.ResourceData, v interface{}, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSpamfilterProfileGmailLog(d, i["log"], pre_append, sv)
 	}
 
@@ -1293,7 +1266,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSpamfilterProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1303,7 +1275,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandSpamfilterProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1313,7 +1284,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("flow_based"); ok {
-
 		t, err := expandSpamfilterProfileFlowBased(d, v, "flow_based", sv)
 		if err != nil {
 			return &obj, err
@@ -1323,7 +1293,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandSpamfilterProfileReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -1333,7 +1302,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("spam_log"); ok {
-
 		t, err := expandSpamfilterProfileSpamLog(d, v, "spam_log", sv)
 		if err != nil {
 			return &obj, err
@@ -1343,7 +1311,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("spam_log_fortiguard_response"); ok {
-
 		t, err := expandSpamfilterProfileSpamLogFortiguardResponse(d, v, "spam_log_fortiguard_response", sv)
 		if err != nil {
 			return &obj, err
@@ -1353,7 +1320,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("spam_filtering"); ok {
-
 		t, err := expandSpamfilterProfileSpamFiltering(d, v, "spam_filtering", sv)
 		if err != nil {
 			return &obj, err
@@ -1363,7 +1329,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("external"); ok {
-
 		t, err := expandSpamfilterProfileExternal(d, v, "external", sv)
 		if err != nil {
 			return &obj, err
@@ -1373,7 +1338,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("options"); ok {
-
 		t, err := expandSpamfilterProfileOptions(d, v, "options", sv)
 		if err != nil {
 			return &obj, err
@@ -1383,7 +1347,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("imap"); ok {
-
 		t, err := expandSpamfilterProfileImap(d, v, "imap", sv)
 		if err != nil {
 			return &obj, err
@@ -1393,7 +1356,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("pop3"); ok {
-
 		t, err := expandSpamfilterProfilePop3(d, v, "pop3", sv)
 		if err != nil {
 			return &obj, err
@@ -1403,7 +1365,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("smtp"); ok {
-
 		t, err := expandSpamfilterProfileSmtp(d, v, "smtp", sv)
 		if err != nil {
 			return &obj, err
@@ -1413,7 +1374,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("mapi"); ok {
-
 		t, err := expandSpamfilterProfileMapi(d, v, "mapi", sv)
 		if err != nil {
 			return &obj, err
@@ -1423,7 +1383,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("msn_hotmail"); ok {
-
 		t, err := expandSpamfilterProfileMsnHotmail(d, v, "msn_hotmail", sv)
 		if err != nil {
 			return &obj, err
@@ -1433,7 +1392,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("yahoo_mail"); ok {
-
 		t, err := expandSpamfilterProfileYahooMail(d, v, "yahoo_mail", sv)
 		if err != nil {
 			return &obj, err
@@ -1443,7 +1401,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("gmail"); ok {
-
 		t, err := expandSpamfilterProfileGmail(d, v, "gmail", sv)
 		if err != nil {
 			return &obj, err
@@ -1453,7 +1410,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("spam_bword_threshold"); ok {
-
 		t, err := expandSpamfilterProfileSpamBwordThreshold(d, v, "spam_bword_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -1463,7 +1419,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("spam_bword_table"); ok {
-
 		t, err := expandSpamfilterProfileSpamBwordTable(d, v, "spam_bword_table", sv)
 		if err != nil {
 			return &obj, err
@@ -1473,7 +1428,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("spam_bwl_table"); ok {
-
 		t, err := expandSpamfilterProfileSpamBwlTable(d, v, "spam_bwl_table", sv)
 		if err != nil {
 			return &obj, err
@@ -1483,7 +1437,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("spam_mheader_table"); ok {
-
 		t, err := expandSpamfilterProfileSpamMheaderTable(d, v, "spam_mheader_table", sv)
 		if err != nil {
 			return &obj, err
@@ -1493,7 +1446,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("spam_rbl_table"); ok {
-
 		t, err := expandSpamfilterProfileSpamRblTable(d, v, "spam_rbl_table", sv)
 		if err != nil {
 			return &obj, err
@@ -1503,7 +1455,6 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("spam_iptrust_table"); ok {
-
 		t, err := expandSpamfilterProfileSpamIptrustTable(d, v, "spam_iptrust_table", sv)
 		if err != nil {
 			return &obj, err

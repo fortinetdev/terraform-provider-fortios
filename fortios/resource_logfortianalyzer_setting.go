@@ -195,6 +195,11 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -335,7 +340,6 @@ func flattenLogFortianalyzerSettingSerial(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenLogFortianalyzerSettingSerialName(i["name"], d, pre_append, sv)
 		}
 
@@ -442,6 +446,12 @@ func flattenLogFortianalyzerSettingInterface(v interface{}, d *schema.ResourceDa
 
 func refreshObjectLogFortianalyzerSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenLogFortianalyzerSettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -467,7 +477,7 @@ func refreshObjectLogFortianalyzerSetting(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("serial", flattenLogFortianalyzerSettingSerial(o["serial"], d, "serial", sv)); err != nil {
 			if !fortiAPIPatch(o["serial"]) {
 				return fmt.Errorf("Error reading serial: %v", err)
@@ -656,7 +666,6 @@ func expandLogFortianalyzerSettingSerial(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandLogFortianalyzerSettingSerialName(d, i["name"], pre_append, sv)
 		}
 
@@ -767,7 +776,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -781,7 +789,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["ips-archive"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingIpsArchive(d, v, "ips_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -795,7 +802,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err
@@ -809,7 +815,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["certificate-verification"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingCertificateVerification(d, v, "certificate_verification", sv)
 			if err != nil {
 				return &obj, err
@@ -823,7 +828,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["serial"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogFortianalyzerSettingSerial(d, v, "serial", sv)
 			if err != nil {
 				return &obj, err
@@ -837,7 +841,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["preshared-key"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingPresharedKey(d, v, "preshared_key", sv)
 			if err != nil {
 				return &obj, err
@@ -851,7 +854,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["access-config"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingAccessConfig(d, v, "access_config", sv)
 			if err != nil {
 				return &obj, err
@@ -865,7 +867,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["hmac-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -879,7 +880,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -893,7 +893,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -907,7 +906,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["conn-timeout"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingConnTimeout(d, v, "conn_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -921,7 +919,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["monitor-keepalive-period"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
 			if err != nil {
 				return &obj, err
@@ -935,7 +932,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["monitor-failure-retry-period"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
 			if err != nil {
 				return &obj, err
@@ -949,7 +945,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["mgmt-name"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingMgmtName(d, v, "mgmt_name", sv)
 			if err != nil {
 				return &obj, err
@@ -963,7 +958,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["faz-type"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingFazType(d, v, "faz_type", sv)
 			if err != nil {
 				return &obj, err
@@ -977,7 +971,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["certificate"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingCertificate(d, v, "certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -991,7 +984,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1005,7 +997,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["__change_ip"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSetting__Change_Ip(d, v, "__change_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1019,7 +1010,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["upload-option"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingUploadOption(d, v, "upload_option", sv)
 			if err != nil {
 				return &obj, err
@@ -1033,7 +1023,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["upload-interval"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingUploadInterval(d, v, "upload_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1047,7 +1036,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["upload-day"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingUploadDay(d, v, "upload_day", sv)
 			if err != nil {
 				return &obj, err
@@ -1061,7 +1049,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["upload-time"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingUploadTime(d, v, "upload_time", sv)
 			if err != nil {
 				return &obj, err
@@ -1075,7 +1062,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["reliable"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingReliable(d, v, "reliable", sv)
 			if err != nil {
 				return &obj, err
@@ -1089,7 +1075,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -1103,7 +1088,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -1117,7 +1101,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -1131,7 +1114,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

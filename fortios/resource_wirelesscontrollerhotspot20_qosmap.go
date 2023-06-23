@@ -105,6 +105,11 @@ func resourceWirelessControllerHotspot20QosMap() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -260,19 +265,16 @@ func flattenWirelessControllerHotspot20QosMapDscpExcept(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
-
 			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpExceptIndex(i["index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
 		if _, ok := i["dscp"]; ok {
-
 			tmp["dscp"] = flattenWirelessControllerHotspot20QosMapDscpExceptDscp(i["dscp"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if _, ok := i["up"]; ok {
-
 			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpExceptUp(i["up"], d, pre_append, sv)
 		}
 
@@ -323,25 +325,21 @@ func flattenWirelessControllerHotspot20QosMapDscpRange(v interface{}, d *schema.
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
-
 			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpRangeIndex(i["index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if _, ok := i["up"]; ok {
-
 			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpRangeUp(i["up"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "low"
 		if _, ok := i["low"]; ok {
-
 			tmp["low"] = flattenWirelessControllerHotspot20QosMapDscpRangeLow(i["low"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "high"
 		if _, ok := i["high"]; ok {
-
 			tmp["high"] = flattenWirelessControllerHotspot20QosMapDscpRangeHigh(i["high"], d, pre_append, sv)
 		}
 
@@ -372,6 +370,12 @@ func flattenWirelessControllerHotspot20QosMapDscpRangeHigh(v interface{}, d *sch
 
 func refreshObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20QosMapName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -379,7 +383,7 @@ func refreshObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, o ma
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dscp_except", flattenWirelessControllerHotspot20QosMapDscpExcept(o["dscp-except"], d, "dscp_except", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-except"]) {
 				return fmt.Errorf("Error reading dscp_except: %v", err)
@@ -395,7 +399,7 @@ func refreshObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, o ma
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dscp_range", flattenWirelessControllerHotspot20QosMapDscpRange(o["dscp-range"], d, "dscp_range", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-range"]) {
 				return fmt.Errorf("Error reading dscp_range: %v", err)
@@ -440,19 +444,16 @@ func expandWirelessControllerHotspot20QosMapDscpExcept(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["index"], _ = expandWirelessControllerHotspot20QosMapDscpExceptIndex(d, i["index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dscp"], _ = expandWirelessControllerHotspot20QosMapDscpExceptDscp(d, i["dscp"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["up"], _ = expandWirelessControllerHotspot20QosMapDscpExceptUp(d, i["up"], pre_append, sv)
 		}
 
@@ -492,25 +493,21 @@ func expandWirelessControllerHotspot20QosMapDscpRange(d *schema.ResourceData, v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["index"], _ = expandWirelessControllerHotspot20QosMapDscpRangeIndex(d, i["index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["up"], _ = expandWirelessControllerHotspot20QosMapDscpRangeUp(d, i["up"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "low"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["low"], _ = expandWirelessControllerHotspot20QosMapDscpRangeLow(d, i["low"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "high"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["high"], _ = expandWirelessControllerHotspot20QosMapDscpRangeHigh(d, i["high"], pre_append, sv)
 		}
 
@@ -542,7 +539,6 @@ func getObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, sv strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20QosMapName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -552,7 +548,6 @@ func getObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("dscp_except"); ok || d.HasChange("dscp_except") {
-
 		t, err := expandWirelessControllerHotspot20QosMapDscpExcept(d, v, "dscp_except", sv)
 		if err != nil {
 			return &obj, err
@@ -562,7 +557,6 @@ func getObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, sv strin
 	}
 
 	if v, ok := d.GetOk("dscp_range"); ok || d.HasChange("dscp_range") {
-
 		t, err := expandWirelessControllerHotspot20QosMapDscpRange(d, v, "dscp_range", sv)
 		if err != nil {
 			return &obj, err

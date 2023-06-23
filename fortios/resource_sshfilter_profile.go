@@ -179,6 +179,11 @@ func resourceSshFilterProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -346,43 +351,36 @@ func flattenSshFilterProfileShellCommands(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSshFilterProfileShellCommandsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSshFilterProfileShellCommandsType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-
 			tmp["pattern"] = flattenSshFilterProfileShellCommandsPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenSshFilterProfileShellCommandsAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := i["log"]; ok {
-
 			tmp["log"] = flattenSshFilterProfileShellCommandsLog(i["log"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
 		if _, ok := i["alert"]; ok {
-
 			tmp["alert"] = flattenSshFilterProfileShellCommandsAlert(i["alert"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := i["severity"]; ok {
-
 			tmp["severity"] = flattenSshFilterProfileShellCommandsSeverity(i["severity"], d, pre_append, sv)
 		}
 
@@ -434,25 +432,21 @@ func flattenSshFilterProfileFileFilter(v interface{}, d *schema.ResourceData, pr
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSshFilterProfileFileFilterStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
-
 		result["log"] = flattenSshFilterProfileFileFilterLog(i["log"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_archive_contents"
 	if _, ok := i["scan-archive-contents"]; ok {
-
 		result["scan_archive_contents"] = flattenSshFilterProfileFileFilterScanArchiveContents(i["scan-archive-contents"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "entries"
 	if _, ok := i["entries"]; ok {
-
 		result["entries"] = flattenSshFilterProfileFileFilterEntries(i["entries"], d, pre_append, sv)
 	}
 
@@ -498,37 +492,31 @@ func flattenSshFilterProfileFileFilterEntries(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenSshFilterProfileFileFilterEntriesFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenSshFilterProfileFileFilterEntriesComment(i["comment"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenSshFilterProfileFileFilterEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := i["direction"]; ok {
-
 			tmp["direction"] = flattenSshFilterProfileFileFilterEntriesDirection(i["direction"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if _, ok := i["password-protected"]; ok {
-
 			tmp["password_protected"] = flattenSshFilterProfileFileFilterEntriesPasswordProtected(i["password-protected"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := i["file-type"]; ok {
-
 			tmp["file_type"] = flattenSshFilterProfileFileFilterEntriesFileType(i["file-type"], d, pre_append, sv)
 		}
 
@@ -587,7 +575,6 @@ func flattenSshFilterProfileFileFilterEntriesFileType(v interface{}, d *schema.R
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSshFilterProfileFileFilterEntriesFileTypeName(i["name"], d, pre_append, sv)
 		}
 
@@ -606,6 +593,12 @@ func flattenSshFilterProfileFileFilterEntriesFileTypeName(v interface{}, d *sche
 
 func refreshObjectSshFilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSshFilterProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -631,7 +624,7 @@ func refreshObjectSshFilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("shell_commands", flattenSshFilterProfileShellCommands(o["shell-commands"], d, "shell_commands", sv)); err != nil {
 			if !fortiAPIPatch(o["shell-commands"]) {
 				return fmt.Errorf("Error reading shell_commands: %v", err)
@@ -647,7 +640,7 @@ func refreshObjectSshFilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("file_filter", flattenSshFilterProfileFileFilter(o["file-filter"], d, "file_filter", sv)); err != nil {
 			if !fortiAPIPatch(o["file-filter"]) {
 				return fmt.Errorf("Error reading file_filter: %v", err)
@@ -704,43 +697,36 @@ func expandSshFilterProfileShellCommands(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSshFilterProfileShellCommandsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSshFilterProfileShellCommandsType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pattern"], _ = expandSshFilterProfileShellCommandsPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandSshFilterProfileShellCommandsAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["log"], _ = expandSshFilterProfileShellCommandsLog(d, i["log"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["alert"], _ = expandSshFilterProfileShellCommandsAlert(d, i["alert"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["severity"], _ = expandSshFilterProfileShellCommandsSeverity(d, i["severity"], pre_append, sv)
 		}
 
@@ -792,22 +778,18 @@ func expandSshFilterProfileFileFilter(d *schema.ResourceData, v interface{}, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSshFilterProfileFileFilterStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["log"], _ = expandSshFilterProfileFileFilterLog(d, i["log"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_archive_contents"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-archive-contents"], _ = expandSshFilterProfileFileFilterScanArchiveContents(d, i["scan_archive_contents"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "entries"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["entries"], _ = expandSshFilterProfileFileFilterEntries(d, i["entries"], pre_append, sv)
 	} else {
 		result["entries"] = make([]string, 0)
@@ -844,37 +826,31 @@ func expandSshFilterProfileFileFilterEntries(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandSshFilterProfileFileFilterEntriesFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandSshFilterProfileFileFilterEntriesComment(d, i["comment"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandSshFilterProfileFileFilterEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["direction"], _ = expandSshFilterProfileFileFilterEntriesDirection(d, i["direction"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["password-protected"], _ = expandSshFilterProfileFileFilterEntriesPasswordProtected(d, i["password_protected"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["file-type"], _ = expandSshFilterProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
 		} else {
 			tmp["file-type"] = make([]string, 0)
@@ -924,7 +900,6 @@ func expandSshFilterProfileFileFilterEntriesFileType(d *schema.ResourceData, v i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSshFilterProfileFileFilterEntriesFileTypeName(d, i["name"], pre_append, sv)
 		}
 
@@ -944,7 +919,6 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSshFilterProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -954,7 +928,6 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("block"); ok {
-
 		t, err := expandSshFilterProfileBlock(d, v, "block", sv)
 		if err != nil {
 			return &obj, err
@@ -964,7 +937,6 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("log"); ok {
-
 		t, err := expandSshFilterProfileLog(d, v, "log", sv)
 		if err != nil {
 			return &obj, err
@@ -974,7 +946,6 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("default_command_log"); ok {
-
 		t, err := expandSshFilterProfileDefaultCommandLog(d, v, "default_command_log", sv)
 		if err != nil {
 			return &obj, err
@@ -984,7 +955,6 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("shell_commands"); ok || d.HasChange("shell_commands") {
-
 		t, err := expandSshFilterProfileShellCommands(d, v, "shell_commands", sv)
 		if err != nil {
 			return &obj, err
@@ -994,7 +964,6 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("file_filter"); ok {
-
 		t, err := expandSshFilterProfileFileFilter(d, v, "file_filter", sv)
 		if err != nil {
 			return &obj, err

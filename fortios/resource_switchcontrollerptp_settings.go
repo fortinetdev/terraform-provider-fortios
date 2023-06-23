@@ -171,7 +171,6 @@ func getObjectSwitchControllerPtpSettings(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSwitchControllerPtpSettingsMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err

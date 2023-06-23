@@ -116,6 +116,11 @@ func resourceWirelessControllerApcfgProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -295,31 +300,26 @@ func flattenWirelessControllerApcfgProfileCommandList(v interface{}, d *schema.R
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerApcfgProfileCommandListId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenWirelessControllerApcfgProfileCommandListType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerApcfgProfileCommandListName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenWirelessControllerApcfgProfileCommandListValue(i["value"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passwd_value"
 		if _, ok := i["passwd-value"]; ok {
-
 			tmp["passwd_value"] = flattenWirelessControllerApcfgProfileCommandListPasswdValue(i["passwd-value"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -358,6 +358,12 @@ func flattenWirelessControllerApcfgProfileCommandListPasswdValue(v interface{}, 
 
 func refreshObjectWirelessControllerApcfgProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerApcfgProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -401,7 +407,7 @@ func refreshObjectWirelessControllerApcfgProfile(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("command_list", flattenWirelessControllerApcfgProfileCommandList(o["command-list"], d, "command_list", sv)); err != nil {
 			if !fortiAPIPatch(o["command-list"]) {
 				return fmt.Errorf("Error reading command_list: %v", err)
@@ -470,31 +476,26 @@ func expandWirelessControllerApcfgProfileCommandList(d *schema.ResourceData, v i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerApcfgProfileCommandListId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandWirelessControllerApcfgProfileCommandListType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerApcfgProfileCommandListName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandWirelessControllerApcfgProfileCommandListValue(d, i["value"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passwd_value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["passwd-value"], _ = expandWirelessControllerApcfgProfileCommandListPasswdValue(d, i["passwd_value"], pre_append, sv)
 		}
 
@@ -530,7 +531,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -540,7 +540,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ap_family"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileApFamily(d, v, "ap_family", sv)
 		if err != nil {
 			return &obj, err
@@ -550,7 +549,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -560,7 +558,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ac_type"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileAcType(d, v, "ac_type", sv)
 		if err != nil {
 			return &obj, err
@@ -570,7 +567,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ac_timer"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileAcTimer(d, v, "ac_timer", sv)
 		if err != nil {
 			return &obj, err
@@ -580,7 +576,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ac_ip"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileAcIp(d, v, "ac_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -590,7 +585,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ac_port"); ok {
-
 		t, err := expandWirelessControllerApcfgProfileAcPort(d, v, "ac_port", sv)
 		if err != nil {
 			return &obj, err
@@ -600,7 +594,6 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("command_list"); ok || d.HasChange("command_list") {
-
 		t, err := expandWirelessControllerApcfgProfileCommandList(d, v, "command_list", sv)
 		if err != nil {
 			return &obj, err

@@ -51,6 +51,7 @@ The following arguments are supported:
 * `packet_log_queue_depth` - Packet/pcap log queue depth per IPS engine.
 * `ngfw_max_scan_range` - NGFW policy-mode app detection threshold.
 * `tls_active_probe` - TLS active probe configuration. The structure of `tls_active_probe` block is documented below.
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `tls_active_probe` block supports:

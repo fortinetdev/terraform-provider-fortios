@@ -255,7 +255,6 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallSshLocalKeyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -265,7 +264,6 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandFirewallSshLocalKeyPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -275,7 +273,6 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("private_key"); ok {
-
 		t, err := expandFirewallSshLocalKeyPrivateKey(d, v, "private_key", sv)
 		if err != nil {
 			return &obj, err
@@ -285,7 +282,6 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("public_key"); ok {
-
 		t, err := expandFirewallSshLocalKeyPublicKey(d, v, "public_key", sv)
 		if err != nil {
 			return &obj, err
@@ -295,7 +291,6 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandFirewallSshLocalKeySource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err

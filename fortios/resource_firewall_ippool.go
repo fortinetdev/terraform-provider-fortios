@@ -136,6 +136,11 @@ func resourceFirewallIppool() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"subnet_broadcast_in_ippool": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -337,6 +342,10 @@ func flattenFirewallIppoolAddNat64Route(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallIppoolSubnetBroadcastInIppool(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -454,6 +463,12 @@ func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("subnet_broadcast_in_ippool", flattenFirewallIppoolSubnetBroadcastInIppool(o["subnet-broadcast-in-ippool"], d, "subnet_broadcast_in_ippool", sv)); err != nil {
+		if !fortiAPIPatch(o["subnet-broadcast-in-ippool"]) {
+			return fmt.Errorf("Error reading subnet_broadcast_in_ippool: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -539,11 +554,14 @@ func expandFirewallIppoolAddNat64Route(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallIppoolSubnetBroadcastInIppool(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallIppoolName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -553,7 +571,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallIppoolType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -563,7 +580,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
-
 		t, err := expandFirewallIppoolStartip(d, v, "startip", sv)
 		if err != nil {
 			return &obj, err
@@ -573,7 +589,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("endip"); ok {
-
 		t, err := expandFirewallIppoolEndip(d, v, "endip", sv)
 		if err != nil {
 			return &obj, err
@@ -583,7 +598,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("startport"); ok {
-
 		t, err := expandFirewallIppoolStartport(d, v, "startport", sv)
 		if err != nil {
 			return &obj, err
@@ -593,7 +607,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("endport"); ok {
-
 		t, err := expandFirewallIppoolEndport(d, v, "endport", sv)
 		if err != nil {
 			return &obj, err
@@ -603,7 +616,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("source_startip"); ok {
-
 		t, err := expandFirewallIppoolSourceStartip(d, v, "source_startip", sv)
 		if err != nil {
 			return &obj, err
@@ -613,7 +625,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("source_endip"); ok {
-
 		t, err := expandFirewallIppoolSourceEndip(d, v, "source_endip", sv)
 		if err != nil {
 			return &obj, err
@@ -623,7 +634,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("block_size"); ok {
-
 		t, err := expandFirewallIppoolBlockSize(d, v, "block_size", sv)
 		if err != nil {
 			return &obj, err
@@ -633,7 +643,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("port_per_user"); ok {
-
 		t, err := expandFirewallIppoolPortPerUser(d, v, "port_per_user", sv)
 		if err != nil {
 			return &obj, err
@@ -643,7 +652,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("num_blocks_per_user"); ok {
-
 		t, err := expandFirewallIppoolNumBlocksPerUser(d, v, "num_blocks_per_user", sv)
 		if err != nil {
 			return &obj, err
@@ -653,7 +661,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("pba_timeout"); ok {
-
 		t, err := expandFirewallIppoolPbaTimeout(d, v, "pba_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -663,7 +670,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("permit_any_host"); ok {
-
 		t, err := expandFirewallIppoolPermitAnyHost(d, v, "permit_any_host", sv)
 		if err != nil {
 			return &obj, err
@@ -673,7 +679,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("arp_reply"); ok {
-
 		t, err := expandFirewallIppoolArpReply(d, v, "arp_reply", sv)
 		if err != nil {
 			return &obj, err
@@ -683,7 +688,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("arp_intf"); ok {
-
 		t, err := expandFirewallIppoolArpIntf(d, v, "arp_intf", sv)
 		if err != nil {
 			return &obj, err
@@ -693,7 +697,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("associated_interface"); ok {
-
 		t, err := expandFirewallIppoolAssociatedInterface(d, v, "associated_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -703,7 +706,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallIppoolComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -713,7 +715,6 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("nat64"); ok {
-
 		t, err := expandFirewallIppoolNat64(d, v, "nat64", sv)
 		if err != nil {
 			return &obj, err
@@ -723,12 +724,20 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("add_nat64_route"); ok {
-
 		t, err := expandFirewallIppoolAddNat64Route(d, v, "add_nat64_route", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["add-nat64-route"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("subnet_broadcast_in_ippool"); ok {
+		t, err := expandFirewallIppoolSubnetBroadcastInIppool(d, v, "subnet_broadcast_in_ippool", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["subnet-broadcast-in-ippool"] = t
 		}
 	}
 

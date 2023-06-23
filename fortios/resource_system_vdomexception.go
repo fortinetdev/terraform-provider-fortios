@@ -75,6 +75,11 @@ func resourceSystemVdomException() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -242,7 +247,6 @@ func flattenSystemVdomExceptionVdom(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemVdomExceptionVdomName(i["name"], d, pre_append, sv)
 		}
 
@@ -261,6 +265,12 @@ func flattenSystemVdomExceptionVdomName(v interface{}, d *schema.ResourceData, p
 
 func refreshObjectSystemVdomException(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSystemVdomExceptionId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -286,7 +296,7 @@ func refreshObjectSystemVdomException(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vdom", flattenSystemVdomExceptionVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
@@ -343,7 +353,6 @@ func expandSystemVdomExceptionVdom(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemVdomExceptionVdomName(d, i["name"], pre_append, sv)
 		}
 
@@ -363,7 +372,6 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemVdomExceptionId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -373,7 +381,6 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("object"); ok {
-
 		t, err := expandSystemVdomExceptionObject(d, v, "object", sv)
 		if err != nil {
 			return &obj, err
@@ -383,7 +390,6 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOkExists("oid"); ok {
-
 		t, err := expandSystemVdomExceptionOid(d, v, "oid", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +399,6 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("scope"); ok {
-
 		t, err := expandSystemVdomExceptionScope(d, v, "scope", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +408,6 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
-
 		t, err := expandSystemVdomExceptionVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err

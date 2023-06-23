@@ -613,7 +613,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("service_id"); ok {
-
 		t, err := expandSystemWccpServiceId(d, v, "service_id", sv)
 		if err != nil {
 			return &obj, err
@@ -623,7 +622,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("router_id"); ok {
-
 		t, err := expandSystemWccpRouterId(d, v, "router_id", sv)
 		if err != nil {
 			return &obj, err
@@ -633,7 +631,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("cache_id"); ok {
-
 		t, err := expandSystemWccpCacheId(d, v, "cache_id", sv)
 		if err != nil {
 			return &obj, err
@@ -643,7 +640,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("group_address"); ok {
-
 		t, err := expandSystemWccpGroupAddress(d, v, "group_address", sv)
 		if err != nil {
 			return &obj, err
@@ -653,7 +649,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("server_list"); ok {
-
 		t, err := expandSystemWccpServerList(d, v, "server_list", sv)
 		if err != nil {
 			return &obj, err
@@ -663,7 +658,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("router_list"); ok {
-
 		t, err := expandSystemWccpRouterList(d, v, "router_list", sv)
 		if err != nil {
 			return &obj, err
@@ -673,7 +667,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ports_defined"); ok {
-
 		t, err := expandSystemWccpPortsDefined(d, v, "ports_defined", sv)
 		if err != nil {
 			return &obj, err
@@ -683,7 +676,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-
 		t, err := expandSystemWccpServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
@@ -693,7 +685,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ports"); ok {
-
 		t, err := expandSystemWccpPorts(d, v, "ports", sv)
 		if err != nil {
 			return &obj, err
@@ -703,7 +694,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
-
 		t, err := expandSystemWccpAuthentication(d, v, "authentication", sv)
 		if err != nil {
 			return &obj, err
@@ -713,7 +703,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandSystemWccpPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -723,7 +712,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("forward_method"); ok {
-
 		t, err := expandSystemWccpForwardMethod(d, v, "forward_method", sv)
 		if err != nil {
 			return &obj, err
@@ -733,7 +721,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("cache_engine_method"); ok {
-
 		t, err := expandSystemWccpCacheEngineMethod(d, v, "cache_engine_method", sv)
 		if err != nil {
 			return &obj, err
@@ -743,7 +730,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("service_type"); ok {
-
 		t, err := expandSystemWccpServiceType(d, v, "service_type", sv)
 		if err != nil {
 			return &obj, err
@@ -753,7 +739,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("primary_hash"); ok {
-
 		t, err := expandSystemWccpPrimaryHash(d, v, "primary_hash", sv)
 		if err != nil {
 			return &obj, err
@@ -763,7 +748,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-
 		t, err := expandSystemWccpPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
@@ -773,7 +757,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandSystemWccpProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -783,7 +766,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("assignment_weight"); ok {
-
 		t, err := expandSystemWccpAssignmentWeight(d, v, "assignment_weight", sv)
 		if err != nil {
 			return &obj, err
@@ -793,7 +775,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("assignment_bucket_format"); ok {
-
 		t, err := expandSystemWccpAssignmentBucketFormat(d, v, "assignment_bucket_format", sv)
 		if err != nil {
 			return &obj, err
@@ -803,7 +784,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("return_method"); ok {
-
 		t, err := expandSystemWccpReturnMethod(d, v, "return_method", sv)
 		if err != nil {
 			return &obj, err
@@ -813,7 +793,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("assignment_method"); ok {
-
 		t, err := expandSystemWccpAssignmentMethod(d, v, "assignment_method", sv)
 		if err != nil {
 			return &obj, err
@@ -823,7 +802,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("assignment_srcaddr_mask"); ok {
-
 		t, err := expandSystemWccpAssignmentSrcaddrMask(d, v, "assignment_srcaddr_mask", sv)
 		if err != nil {
 			return &obj, err
@@ -833,7 +811,6 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("assignment_dstaddr_mask"); ok {
-
 		t, err := expandSystemWccpAssignmentDstaddrMask(d, v, "assignment_dstaddr_mask", sv)
 		if err != nil {
 			return &obj, err

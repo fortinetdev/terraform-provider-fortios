@@ -171,7 +171,6 @@ func getObjectLogFortianalyzerCloudOverrideSetting(d *schema.ResourceData, setAr
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudOverrideSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err

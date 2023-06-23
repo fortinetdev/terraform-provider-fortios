@@ -136,6 +136,11 @@ func resourceIpsRule() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -343,19 +348,16 @@ func flattenIpsRuleMetadata(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenIpsRuleMetadataId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := i["metaid"]; ok {
-
 			tmp["metaid"] = flattenIpsRuleMetadataMetaid(i["metaid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := i["valueid"]; ok {
-
 			tmp["valueid"] = flattenIpsRuleMetadataValueid(i["valueid"], d, pre_append, sv)
 		}
 
@@ -382,6 +384,12 @@ func flattenIpsRuleMetadataValueid(v interface{}, d *schema.ResourceData, pre st
 
 func refreshObjectIpsRule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenIpsRuleName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -467,7 +475,7 @@ func refreshObjectIpsRule(d *schema.ResourceData, o map[string]interface{}, sv s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("metadata", flattenIpsRuleMetadata(o["metadata"], d, "metadata", sv)); err != nil {
 			if !fortiAPIPatch(o["metadata"]) {
 				return fmt.Errorf("Error reading metadata: %v", err)
@@ -564,19 +572,16 @@ func expandIpsRuleMetadata(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandIpsRuleMetadataId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["metaid"], _ = expandIpsRuleMetadataMetaid(d, i["metaid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["valueid"], _ = expandIpsRuleMetadataValueid(d, i["valueid"], pre_append, sv)
 		}
 
@@ -604,7 +609,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandIpsRuleName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -614,7 +618,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandIpsRuleStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -624,7 +627,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("log"); ok {
-
 		t, err := expandIpsRuleLog(d, v, "log", sv)
 		if err != nil {
 			return &obj, err
@@ -634,7 +636,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("log_packet"); ok {
-
 		t, err := expandIpsRuleLogPacket(d, v, "log_packet", sv)
 		if err != nil {
 			return &obj, err
@@ -644,7 +645,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandIpsRuleAction(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -654,7 +654,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("group"); ok {
-
 		t, err := expandIpsRuleGroup(d, v, "group", sv)
 		if err != nil {
 			return &obj, err
@@ -664,7 +663,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
-
 		t, err := expandIpsRuleSeverity(d, v, "severity", sv)
 		if err != nil {
 			return &obj, err
@@ -674,7 +672,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("location"); ok {
-
 		t, err := expandIpsRuleLocation(d, v, "location", sv)
 		if err != nil {
 			return &obj, err
@@ -684,7 +681,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("os"); ok {
-
 		t, err := expandIpsRuleOs(d, v, "os", sv)
 		if err != nil {
 			return &obj, err
@@ -694,7 +690,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("application"); ok {
-
 		t, err := expandIpsRuleApplication(d, v, "application", sv)
 		if err != nil {
 			return &obj, err
@@ -704,7 +699,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("service"); ok {
-
 		t, err := expandIpsRuleService(d, v, "service", sv)
 		if err != nil {
 			return &obj, err
@@ -714,7 +708,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("rule_id"); ok {
-
 		t, err := expandIpsRuleRuleId(d, v, "rule_id", sv)
 		if err != nil {
 			return &obj, err
@@ -724,7 +717,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("rev"); ok {
-
 		t, err := expandIpsRuleRev(d, v, "rev", sv)
 		if err != nil {
 			return &obj, err
@@ -734,7 +726,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("date"); ok {
-
 		t, err := expandIpsRuleDate(d, v, "date", sv)
 		if err != nil {
 			return &obj, err
@@ -744,7 +735,6 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
-
 		t, err := expandIpsRuleMetadata(d, v, "metadata", sv)
 		if err != nil {
 			return &obj, err

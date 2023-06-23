@@ -210,7 +210,6 @@ func getObjectEmailfilterFortishield(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["spam-submit-srv"] = nil
 		} else {
-
 			t, err := expandEmailfilterFortishieldSpamSubmitSrv(d, v, "spam_submit_srv", sv)
 			if err != nil {
 				return &obj, err
@@ -224,7 +223,6 @@ func getObjectEmailfilterFortishield(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["spam-submit-force"] = nil
 		} else {
-
 			t, err := expandEmailfilterFortishieldSpamSubmitForce(d, v, "spam_submit_force", sv)
 			if err != nil {
 				return &obj, err
@@ -238,7 +236,6 @@ func getObjectEmailfilterFortishield(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["spam-submit-txt2htm"] = nil
 		} else {
-
 			t, err := expandEmailfilterFortishieldSpamSubmitTxt2Htm(d, v, "spam_submit_txt2htm", sv)
 			if err != nil {
 				return &obj, err

@@ -216,7 +216,6 @@ func getObjectWanoptPeer(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("peer_host_id"); ok {
-
 		t, err := expandWanoptPeerPeerHostId(d, v, "peer_host_id", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectWanoptPeer(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandWanoptPeerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err

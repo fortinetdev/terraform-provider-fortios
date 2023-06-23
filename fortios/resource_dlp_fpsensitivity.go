@@ -196,7 +196,6 @@ func getObjectDlpFpSensitivity(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDlpFpSensitivityName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err

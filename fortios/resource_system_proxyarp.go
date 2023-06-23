@@ -251,7 +251,6 @@ func getObjectSystemProxyArp(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemProxyArpId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -261,7 +260,6 @@ func getObjectSystemProxyArp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemProxyArpInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -271,7 +269,6 @@ func getObjectSystemProxyArp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandSystemProxyArpIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -281,7 +278,6 @@ func getObjectSystemProxyArp(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("end_ip"); ok {
-
 		t, err := expandSystemProxyArpEndIp(d, v, "end_ip", sv)
 		if err != nil {
 			return &obj, err

@@ -254,7 +254,6 @@ func getObjectWirelessControllerApStatus(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandWirelessControllerApStatusId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -264,7 +263,6 @@ func getObjectWirelessControllerApStatus(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("bssid"); ok {
-
 		t, err := expandWirelessControllerApStatusBssid(d, v, "bssid", sv)
 		if err != nil {
 			return &obj, err
@@ -274,7 +272,6 @@ func getObjectWirelessControllerApStatus(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ssid"); ok {
-
 		t, err := expandWirelessControllerApStatusSsid(d, v, "ssid", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +281,6 @@ func getObjectWirelessControllerApStatus(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandWirelessControllerApStatusStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err

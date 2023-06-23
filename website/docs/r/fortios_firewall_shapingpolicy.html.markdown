@@ -56,6 +56,7 @@ The following arguments are supported:
 * `comment` - Comments.
 * `status` - Enable/disable this traffic shaping policy. Valid values: `enable`, `disable`.
 * `ip_version` - Apply this traffic shaping policy to IPv4 or IPv6 traffic. Valid values: `4`, `6`.
+* `traffic_type` - Traffic type. Valid values: `forwarding`, `local-in`, `local-out`.
 * `srcaddr` - (Required) IPv4 source address and address group names. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) IPv4 destination address and address group names. The structure of `dstaddr` block is documented below.
 * `srcaddr6` - IPv6 source address and address group names. The structure of `srcaddr6` block is documented below.
@@ -93,7 +94,10 @@ The following arguments are supported:
 * `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value. Valid values: `enable`, `disable`.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
 * `diffservcode_rev` - Change packet's reverse (reply) DiffServ to this value.
+* `cos` - VLAN CoS bit pattern.
+* `cos_mask` - VLAN CoS evaluated bits.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `srcaddr` block supports:

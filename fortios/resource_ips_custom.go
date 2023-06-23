@@ -447,7 +447,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("tag"); ok {
-
 		t, err := expandIpsCustomTag(d, v, "tag", sv)
 		if err != nil {
 			return &obj, err
@@ -457,7 +456,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("signature"); ok {
-
 		t, err := expandIpsCustomSignature(d, v, "signature", sv)
 		if err != nil {
 			return &obj, err
@@ -467,7 +465,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sig_name"); ok {
-
 		t, err := expandIpsCustomSigName(d, v, "sig_name", sv)
 		if err != nil {
 			return &obj, err
@@ -477,7 +474,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("rule_id"); ok {
-
 		t, err := expandIpsCustomRuleId(d, v, "rule_id", sv)
 		if err != nil {
 			return &obj, err
@@ -487,7 +483,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
-
 		t, err := expandIpsCustomSeverity(d, v, "severity", sv)
 		if err != nil {
 			return &obj, err
@@ -497,7 +492,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("location"); ok {
-
 		t, err := expandIpsCustomLocation(d, v, "location", sv)
 		if err != nil {
 			return &obj, err
@@ -507,7 +501,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("os"); ok {
-
 		t, err := expandIpsCustomOs(d, v, "os", sv)
 		if err != nil {
 			return &obj, err
@@ -517,7 +510,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("application"); ok {
-
 		t, err := expandIpsCustomApplication(d, v, "application", sv)
 		if err != nil {
 			return &obj, err
@@ -527,7 +519,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandIpsCustomProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -537,7 +528,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandIpsCustomStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -547,7 +537,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("log"); ok {
-
 		t, err := expandIpsCustomLog(d, v, "log", sv)
 		if err != nil {
 			return &obj, err
@@ -557,7 +546,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("log_packet"); ok {
-
 		t, err := expandIpsCustomLogPacket(d, v, "log_packet", sv)
 		if err != nil {
 			return &obj, err
@@ -567,7 +555,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("action"); ok {
-
 		t, err := expandIpsCustomAction(d, v, "action", sv)
 		if err != nil {
 			return &obj, err
@@ -577,7 +564,6 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandIpsCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err

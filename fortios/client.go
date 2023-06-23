@@ -11,14 +11,16 @@ import (
 	"time"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortios/auth"
-	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
+	"github.com/terraform-providers/terraform-provider-fortios/sdk/auth"
+	forticlient "github.com/terraform-providers/terraform-provider-fortios/sdk/sdkcore"
 )
 
 // Config gets the authentication information from the given metadata
 type Config struct {
 	Hostname        string
 	Token           string
+	Username        string
+	Password        string
 	Insecure        *bool
 	CABundle        string
 	CABundleContent string
@@ -102,7 +104,7 @@ func bFortiManagerHostnameExist(c *Config) bool {
 func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	config := &tls.Config{}
 
-	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.Username, c.Password, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy)
 
 	if auth.Hostname == "" {
 		_, err := auth.GetEnvHostname()
@@ -115,6 +117,26 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		_, err := auth.GetEnvToken()
 		if err != nil {
 			return fmt.Errorf("Error reading Token")
+		}
+	}
+
+	if auth.Username == "" {
+		_, err := auth.GetEnvUsername()
+		if err != nil {
+			return fmt.Errorf("Error reading Username")
+		}
+	}
+
+	if auth.Password == "" {
+		_, err := auth.GetEnvPassword()
+		if err != nil {
+			return fmt.Errorf("Error reading Password")
+		}
+	}
+
+	if auth.Token == "" {
+		if auth.Username == "" || auth.Password == "" {
+			return fmt.Errorf("Please provider a valid API Token or Username and Password.")
 		}
 	}
 
@@ -146,7 +168,7 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 			return fmt.Errorf("Error reading ClientKey")
 		}
 	}
-	if auth.HTTPProxy == "" {
+	if auth.HTTPProxy == "ENV" {
 		_, err := auth.GetEnvHTTPProxy()
 		if err != nil {
 			return fmt.Errorf("Error reading HTTP proxy")
@@ -243,6 +265,16 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 
 	if err != nil {
 		return fmt.Errorf("connection error: %v", err)
+	}
+
+	err = fc.CheckUP()
+	if err != nil {
+		return err
+	}
+
+	err = fc.UpdateDeviceVersion()
+	if err != nil {
+		return fmt.Errorf("Can not update device version: %v", err)
 	}
 
 	fClient.Client = fc

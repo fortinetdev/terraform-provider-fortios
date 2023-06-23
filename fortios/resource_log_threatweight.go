@@ -106,6 +106,11 @@ func resourceLogThreatWeight() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"inline_block": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortindr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -314,6 +319,11 @@ func resourceLogThreatWeight() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -427,25 +437,21 @@ func flattenLogThreatWeightLevel(v interface{}, d *schema.ResourceData, pre stri
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "low"
 	if _, ok := i["low"]; ok {
-
 		result["low"] = flattenLogThreatWeightLevelLow(i["low"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "medium"
 	if _, ok := i["medium"]; ok {
-
 		result["medium"] = flattenLogThreatWeightLevelMedium(i["medium"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "high"
 	if _, ok := i["high"]; ok {
-
 		result["high"] = flattenLogThreatWeightLevelHigh(i["high"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "critical"
 	if _, ok := i["critical"]; ok {
-
 		result["critical"] = flattenLogThreatWeightLevelCritical(i["critical"], d, pre_append, sv)
 	}
 
@@ -496,115 +502,101 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "virus_infected"
 	if _, ok := i["virus-infected"]; ok {
-
 		result["virus_infected"] = flattenLogThreatWeightMalwareVirusInfected(i["virus-infected"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "inline_block"
+	if _, ok := i["inline-block"]; ok {
+		result["inline_block"] = flattenLogThreatWeightMalwareInlineBlock(i["inline-block"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
-
 		result["fortindr"] = flattenLogThreatWeightMalwareFortindr(i["fortindr"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fortisandbox"
 	if _, ok := i["fortisandbox"]; ok {
-
 		result["fortisandbox"] = flattenLogThreatWeightMalwareFortisandbox(i["fortisandbox"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fortiai"
 	if _, ok := i["fortiai"]; ok {
-
 		result["fortiai"] = flattenLogThreatWeightMalwareFortiai(i["fortiai"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "file_blocked"
 	if _, ok := i["file-blocked"]; ok {
-
 		result["file_blocked"] = flattenLogThreatWeightMalwareFileBlocked(i["file-blocked"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "command_blocked"
 	if _, ok := i["command-blocked"]; ok {
-
 		result["command_blocked"] = flattenLogThreatWeightMalwareCommandBlocked(i["command-blocked"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversized"
 	if _, ok := i["oversized"]; ok {
-
 		result["oversized"] = flattenLogThreatWeightMalwareOversized(i["oversized"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "virus_scan_error"
 	if _, ok := i["virus-scan-error"]; ok {
-
 		result["virus_scan_error"] = flattenLogThreatWeightMalwareVirusScanError(i["virus-scan-error"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switch_proto"
 	if _, ok := i["switch-proto"]; ok {
-
 		result["switch_proto"] = flattenLogThreatWeightMalwareSwitchProto(i["switch-proto"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "mimefragmented"
 	if _, ok := i["mimefragmented"]; ok {
-
 		result["mimefragmented"] = flattenLogThreatWeightMalwareMimefragmented(i["mimefragmented"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "virus_file_type_executable"
 	if _, ok := i["virus-file-type-executable"]; ok {
-
 		result["virus_file_type_executable"] = flattenLogThreatWeightMalwareVirusFileTypeExecutable(i["virus-file-type-executable"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "virus_outbreak_prevention"
 	if _, ok := i["virus-outbreak-prevention"]; ok {
-
 		result["virus_outbreak_prevention"] = flattenLogThreatWeightMalwareVirusOutbreakPrevention(i["virus-outbreak-prevention"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "botnet_connection"
 	if _, ok := i["botnet-connection"]; ok {
-
 		result["botnet_connection"] = flattenLogThreatWeightMalwareBotnetConnection(i["botnet-connection"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
-
 		result["content_disarm"] = flattenLogThreatWeightMalwareContentDisarm(i["content-disarm"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "malware_list"
 	if _, ok := i["malware-list"]; ok {
-
 		result["malware_list"] = flattenLogThreatWeightMalwareMalwareList(i["malware-list"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ems_threat_feed"
 	if _, ok := i["ems-threat-feed"]; ok {
-
 		result["ems_threat_feed"] = flattenLogThreatWeightMalwareEmsThreatFeed(i["ems-threat-feed"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fsa_malicious"
 	if _, ok := i["fsa-malicious"]; ok {
-
 		result["fsa_malicious"] = flattenLogThreatWeightMalwareFsaMalicious(i["fsa-malicious"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fsa_high_risk"
 	if _, ok := i["fsa-high-risk"]; ok {
-
 		result["fsa_high_risk"] = flattenLogThreatWeightMalwareFsaHighRisk(i["fsa-high-risk"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fsa_medium_risk"
 	if _, ok := i["fsa-medium-risk"]; ok {
-
 		result["fsa_medium_risk"] = flattenLogThreatWeightMalwareFsaMediumRisk(i["fsa-medium-risk"], d, pre_append, sv)
 	}
 
@@ -613,6 +605,10 @@ func flattenLogThreatWeightMalware(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogThreatWeightMalwareVirusInfected(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogThreatWeightMalwareInlineBlock(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -699,31 +695,26 @@ func flattenLogThreatWeightIps(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "info_severity"
 	if _, ok := i["info-severity"]; ok {
-
 		result["info_severity"] = flattenLogThreatWeightIpsInfoSeverity(i["info-severity"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "low_severity"
 	if _, ok := i["low-severity"]; ok {
-
 		result["low_severity"] = flattenLogThreatWeightIpsLowSeverity(i["low-severity"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "medium_severity"
 	if _, ok := i["medium-severity"]; ok {
-
 		result["medium_severity"] = flattenLogThreatWeightIpsMediumSeverity(i["medium-severity"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "high_severity"
 	if _, ok := i["high-severity"]; ok {
-
 		result["high_severity"] = flattenLogThreatWeightIpsHighSeverity(i["high-severity"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "critical_severity"
 	if _, ok := i["critical-severity"]; ok {
-
 		result["critical_severity"] = flattenLogThreatWeightIpsCriticalSeverity(i["critical-severity"], d, pre_append, sv)
 	}
 
@@ -777,19 +768,16 @@ func flattenLogThreatWeightWeb(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogThreatWeightWebId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogThreatWeightWebCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := i["level"]; ok {
-
 			tmp["level"] = flattenLogThreatWeightWebLevel(i["level"], d, pre_append, sv)
 		}
 
@@ -840,19 +828,16 @@ func flattenLogThreatWeightGeolocation(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogThreatWeightGeolocationId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "country"
 		if _, ok := i["country"]; ok {
-
 			tmp["country"] = flattenLogThreatWeightGeolocationCountry(i["country"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := i["level"]; ok {
-
 			tmp["level"] = flattenLogThreatWeightGeolocationLevel(i["level"], d, pre_append, sv)
 		}
 
@@ -903,19 +888,16 @@ func flattenLogThreatWeightApplication(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogThreatWeightApplicationId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogThreatWeightApplicationCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := i["level"]; ok {
-
 			tmp["level"] = flattenLogThreatWeightApplicationLevel(i["level"], d, pre_append, sv)
 		}
 
@@ -942,6 +924,12 @@ func flattenLogThreatWeightApplicationLevel(v interface{}, d *schema.ResourceDat
 
 func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenLogThreatWeightStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -949,7 +937,7 @@ func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("level", flattenLogThreatWeightLevel(o["level"], d, "level", sv)); err != nil {
 			if !fortiAPIPatch(o["level"]) {
 				return fmt.Errorf("Error reading level: %v", err)
@@ -989,7 +977,7 @@ func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("malware", flattenLogThreatWeightMalware(o["malware"], d, "malware", sv)); err != nil {
 			if !fortiAPIPatch(o["malware"]) {
 				return fmt.Errorf("Error reading malware: %v", err)
@@ -1005,7 +993,7 @@ func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ips", flattenLogThreatWeightIps(o["ips"], d, "ips", sv)); err != nil {
 			if !fortiAPIPatch(o["ips"]) {
 				return fmt.Errorf("Error reading ips: %v", err)
@@ -1021,7 +1009,7 @@ func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("web", flattenLogThreatWeightWeb(o["web"], d, "web", sv)); err != nil {
 			if !fortiAPIPatch(o["web"]) {
 				return fmt.Errorf("Error reading web: %v", err)
@@ -1037,7 +1025,7 @@ func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("geolocation", flattenLogThreatWeightGeolocation(o["geolocation"], d, "geolocation", sv)); err != nil {
 			if !fortiAPIPatch(o["geolocation"]) {
 				return fmt.Errorf("Error reading geolocation: %v", err)
@@ -1053,7 +1041,7 @@ func refreshObjectLogThreatWeight(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("application", flattenLogThreatWeightApplication(o["application"], d, "application", sv)); err != nil {
 			if !fortiAPIPatch(o["application"]) {
 				return fmt.Errorf("Error reading application: %v", err)
@@ -1097,7 +1085,6 @@ func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre strin
 		if setArgNil {
 			result["low"] = nil
 		} else {
-
 			result["low"], _ = expandLogThreatWeightLevelLow(d, i["low"], pre_append, sv)
 		}
 	}
@@ -1106,7 +1093,6 @@ func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre strin
 		if setArgNil {
 			result["medium"] = nil
 		} else {
-
 			result["medium"], _ = expandLogThreatWeightLevelMedium(d, i["medium"], pre_append, sv)
 		}
 	}
@@ -1115,7 +1101,6 @@ func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre strin
 		if setArgNil {
 			result["high"] = nil
 		} else {
-
 			result["high"], _ = expandLogThreatWeightLevelHigh(d, i["high"], pre_append, sv)
 		}
 	}
@@ -1124,7 +1109,6 @@ func expandLogThreatWeightLevel(d *schema.ResourceData, v interface{}, pre strin
 		if setArgNil {
 			result["critical"] = nil
 		} else {
-
 			result["critical"], _ = expandLogThreatWeightLevelCritical(d, i["critical"], pre_append, sv)
 		}
 	}
@@ -1179,8 +1163,15 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["virus-infected"] = nil
 		} else {
-
 			result["virus-infected"], _ = expandLogThreatWeightMalwareVirusInfected(d, i["virus_infected"], pre_append, sv)
+		}
+	}
+	pre_append = pre + ".0." + "inline_block"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["inline-block"] = nil
+		} else {
+			result["inline-block"], _ = expandLogThreatWeightMalwareInlineBlock(d, i["inline_block"], pre_append, sv)
 		}
 	}
 	pre_append = pre + ".0." + "fortindr"
@@ -1188,7 +1179,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["fortindr"] = nil
 		} else {
-
 			result["fortindr"], _ = expandLogThreatWeightMalwareFortindr(d, i["fortindr"], pre_append, sv)
 		}
 	}
@@ -1197,7 +1187,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["fortisandbox"] = nil
 		} else {
-
 			result["fortisandbox"], _ = expandLogThreatWeightMalwareFortisandbox(d, i["fortisandbox"], pre_append, sv)
 		}
 	}
@@ -1206,7 +1195,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["fortiai"] = nil
 		} else {
-
 			result["fortiai"], _ = expandLogThreatWeightMalwareFortiai(d, i["fortiai"], pre_append, sv)
 		}
 	}
@@ -1215,7 +1203,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["file-blocked"] = nil
 		} else {
-
 			result["file-blocked"], _ = expandLogThreatWeightMalwareFileBlocked(d, i["file_blocked"], pre_append, sv)
 		}
 	}
@@ -1224,7 +1211,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["command-blocked"] = nil
 		} else {
-
 			result["command-blocked"], _ = expandLogThreatWeightMalwareCommandBlocked(d, i["command_blocked"], pre_append, sv)
 		}
 	}
@@ -1233,7 +1219,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["oversized"] = nil
 		} else {
-
 			result["oversized"], _ = expandLogThreatWeightMalwareOversized(d, i["oversized"], pre_append, sv)
 		}
 	}
@@ -1242,7 +1227,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["virus-scan-error"] = nil
 		} else {
-
 			result["virus-scan-error"], _ = expandLogThreatWeightMalwareVirusScanError(d, i["virus_scan_error"], pre_append, sv)
 		}
 	}
@@ -1251,7 +1235,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["switch-proto"] = nil
 		} else {
-
 			result["switch-proto"], _ = expandLogThreatWeightMalwareSwitchProto(d, i["switch_proto"], pre_append, sv)
 		}
 	}
@@ -1260,7 +1243,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["mimefragmented"] = nil
 		} else {
-
 			result["mimefragmented"], _ = expandLogThreatWeightMalwareMimefragmented(d, i["mimefragmented"], pre_append, sv)
 		}
 	}
@@ -1269,7 +1251,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["virus-file-type-executable"] = nil
 		} else {
-
 			result["virus-file-type-executable"], _ = expandLogThreatWeightMalwareVirusFileTypeExecutable(d, i["virus_file_type_executable"], pre_append, sv)
 		}
 	}
@@ -1278,7 +1259,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["virus-outbreak-prevention"] = nil
 		} else {
-
 			result["virus-outbreak-prevention"], _ = expandLogThreatWeightMalwareVirusOutbreakPrevention(d, i["virus_outbreak_prevention"], pre_append, sv)
 		}
 	}
@@ -1287,7 +1267,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["botnet-connection"] = nil
 		} else {
-
 			result["botnet-connection"], _ = expandLogThreatWeightMalwareBotnetConnection(d, i["botnet_connection"], pre_append, sv)
 		}
 	}
@@ -1296,7 +1275,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["content-disarm"] = nil
 		} else {
-
 			result["content-disarm"], _ = expandLogThreatWeightMalwareContentDisarm(d, i["content_disarm"], pre_append, sv)
 		}
 	}
@@ -1305,7 +1283,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["malware-list"] = nil
 		} else {
-
 			result["malware-list"], _ = expandLogThreatWeightMalwareMalwareList(d, i["malware_list"], pre_append, sv)
 		}
 	}
@@ -1314,7 +1291,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["ems-threat-feed"] = nil
 		} else {
-
 			result["ems-threat-feed"], _ = expandLogThreatWeightMalwareEmsThreatFeed(d, i["ems_threat_feed"], pre_append, sv)
 		}
 	}
@@ -1323,7 +1299,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["fsa-malicious"] = nil
 		} else {
-
 			result["fsa-malicious"], _ = expandLogThreatWeightMalwareFsaMalicious(d, i["fsa_malicious"], pre_append, sv)
 		}
 	}
@@ -1332,7 +1307,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["fsa-high-risk"] = nil
 		} else {
-
 			result["fsa-high-risk"], _ = expandLogThreatWeightMalwareFsaHighRisk(d, i["fsa_high_risk"], pre_append, sv)
 		}
 	}
@@ -1341,7 +1315,6 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 		if setArgNil {
 			result["fsa-medium-risk"] = nil
 		} else {
-
 			result["fsa-medium-risk"], _ = expandLogThreatWeightMalwareFsaMediumRisk(d, i["fsa_medium_risk"], pre_append, sv)
 		}
 	}
@@ -1350,6 +1323,10 @@ func expandLogThreatWeightMalware(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandLogThreatWeightMalwareVirusInfected(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogThreatWeightMalwareInlineBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1440,7 +1417,6 @@ func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["info-severity"] = nil
 		} else {
-
 			result["info-severity"], _ = expandLogThreatWeightIpsInfoSeverity(d, i["info_severity"], pre_append, sv)
 		}
 	}
@@ -1449,7 +1425,6 @@ func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["low-severity"] = nil
 		} else {
-
 			result["low-severity"], _ = expandLogThreatWeightIpsLowSeverity(d, i["low_severity"], pre_append, sv)
 		}
 	}
@@ -1458,7 +1433,6 @@ func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["medium-severity"] = nil
 		} else {
-
 			result["medium-severity"], _ = expandLogThreatWeightIpsMediumSeverity(d, i["medium_severity"], pre_append, sv)
 		}
 	}
@@ -1467,7 +1441,6 @@ func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["high-severity"] = nil
 		} else {
-
 			result["high-severity"], _ = expandLogThreatWeightIpsHighSeverity(d, i["high_severity"], pre_append, sv)
 		}
 	}
@@ -1476,7 +1449,6 @@ func expandLogThreatWeightIps(d *schema.ResourceData, v interface{}, pre string,
 		if setArgNil {
 			result["critical-severity"] = nil
 		} else {
-
 			result["critical-severity"], _ = expandLogThreatWeightIpsCriticalSeverity(d, i["critical_severity"], pre_append, sv)
 		}
 	}
@@ -1520,19 +1492,16 @@ func expandLogThreatWeightWeb(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogThreatWeightWebId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogThreatWeightWebCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["level"], _ = expandLogThreatWeightWebLevel(d, i["level"], pre_append, sv)
 		}
 
@@ -1572,19 +1541,16 @@ func expandLogThreatWeightGeolocation(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogThreatWeightGeolocationId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "country"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["country"], _ = expandLogThreatWeightGeolocationCountry(d, i["country"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["level"], _ = expandLogThreatWeightGeolocationLevel(d, i["level"], pre_append, sv)
 		}
 
@@ -1624,19 +1590,16 @@ func expandLogThreatWeightApplication(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogThreatWeightApplicationId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogThreatWeightApplicationCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["level"], _ = expandLogThreatWeightApplicationLevel(d, i["level"], pre_append, sv)
 		}
 
@@ -1667,7 +1630,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogThreatWeightStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -1678,7 +1640,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 	}
 
 	if v, ok := d.GetOk("level"); ok {
-
 		t, err := expandLogThreatWeightLevel(d, v, "level", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -1691,7 +1652,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["blocked-connection"] = nil
 		} else {
-
 			t, err := expandLogThreatWeightBlockedConnection(d, v, "blocked_connection", sv)
 			if err != nil {
 				return &obj, err
@@ -1705,7 +1665,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["failed-connection"] = nil
 		} else {
-
 			t, err := expandLogThreatWeightFailedConnection(d, v, "failed_connection", sv)
 			if err != nil {
 				return &obj, err
@@ -1719,7 +1678,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["url-block-detected"] = nil
 		} else {
-
 			t, err := expandLogThreatWeightUrlBlockDetected(d, v, "url_block_detected", sv)
 			if err != nil {
 				return &obj, err
@@ -1733,7 +1691,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["botnet-connection-detected"] = nil
 		} else {
-
 			t, err := expandLogThreatWeightBotnetConnectionDetected(d, v, "botnet_connection_detected", sv)
 			if err != nil {
 				return &obj, err
@@ -1744,7 +1701,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 	}
 
 	if v, ok := d.GetOk("malware"); ok {
-
 		t, err := expandLogThreatWeightMalware(d, v, "malware", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -1754,7 +1710,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 	}
 
 	if v, ok := d.GetOk("ips"); ok {
-
 		t, err := expandLogThreatWeightIps(d, v, "ips", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -1767,7 +1722,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["web"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogThreatWeightWeb(d, v, "web", sv)
 			if err != nil {
 				return &obj, err
@@ -1781,7 +1735,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["geolocation"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogThreatWeightGeolocation(d, v, "geolocation", sv)
 			if err != nil {
 				return &obj, err
@@ -1795,7 +1748,6 @@ func getObjectLogThreatWeight(d *schema.ResourceData, setArgNil bool, sv string)
 		if setArgNil {
 			obj["application"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogThreatWeightApplication(d, v, "application", sv)
 			if err != nil {
 				return &obj, err

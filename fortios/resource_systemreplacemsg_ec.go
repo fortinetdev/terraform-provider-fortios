@@ -230,7 +230,6 @@ func getObjectSystemReplacemsgEc(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["msg-type"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgEcMsgType(d, v, "msg_type", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemReplacemsgEc(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["buffer"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgEcBuffer(d, v, "buffer", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemReplacemsgEc(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["header"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgEcHeader(d, v, "header", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemReplacemsgEc(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgEcFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err

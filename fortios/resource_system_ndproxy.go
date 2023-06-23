@@ -59,6 +59,11 @@ func resourceSystemNdProxy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -187,7 +192,6 @@ func flattenSystemNdProxyMember(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-
 			tmp["interface_name"] = flattenSystemNdProxyMemberInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
@@ -206,6 +210,12 @@ func flattenSystemNdProxyMemberInterfaceName(v interface{}, d *schema.ResourceDa
 
 func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemNdProxyStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -213,7 +223,7 @@ func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -258,7 +268,6 @@ func expandSystemNdProxyMember(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface-name"], _ = expandSystemNdProxyMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
@@ -281,7 +290,6 @@ func getObjectSystemNdProxy(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemNdProxyStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -295,7 +303,6 @@ func getObjectSystemNdProxy(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["member"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemNdProxyMember(d, v, "member", sv)
 			if err != nil {
 				return &obj, err

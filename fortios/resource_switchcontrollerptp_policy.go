@@ -216,7 +216,6 @@ func getObjectSwitchControllerPtpPolicy(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerPtpPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectSwitchControllerPtpPolicy(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSwitchControllerPtpPolicyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err

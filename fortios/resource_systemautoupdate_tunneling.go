@@ -245,7 +245,6 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateTunnelingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -259,7 +258,6 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["address"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateTunnelingAddress(d, v, "address", sv)
 			if err != nil {
 				return &obj, err
@@ -273,7 +271,6 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["port"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateTunnelingPort(d, v, "port", sv)
 			if err != nil {
 				return &obj, err
@@ -287,7 +284,6 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["username"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateTunnelingUsername(d, v, "username", sv)
 			if err != nil {
 				return &obj, err
@@ -301,7 +297,6 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 		if setArgNil {
 			obj["password"] = nil
 		} else {
-
 			t, err := expandSystemAutoupdateTunnelingPassword(d, v, "password", sv)
 			if err != nil {
 				return &obj, err

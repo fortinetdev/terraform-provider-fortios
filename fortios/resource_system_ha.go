@@ -118,6 +118,12 @@ func resourceSystemHa() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"evpn_ttl": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"load_balance_all": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -638,6 +644,11 @@ func resourceSystemHa() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -796,6 +807,10 @@ func flattenSystemHaMulticastTtl(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemHaEvpnTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemHaLoadBalanceAll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -906,31 +921,26 @@ func flattenSystemHaHaMgmtInterfaces(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemHaHaMgmtInterfacesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenSystemHaHaMgmtInterfacesInterface(i["interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-
 			tmp["dst"] = flattenSystemHaHaMgmtInterfacesDst(i["dst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := i["gateway"]; ok {
-
 			tmp["gateway"] = flattenSystemHaHaMgmtInterfacesGateway(i["gateway"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if _, ok := i["gateway6"]; ok {
-
 			tmp["gateway6"] = flattenSystemHaHaMgmtInterfacesGateway6(i["gateway6"], d, pre_append, sv)
 		}
 
@@ -1024,13 +1034,11 @@ func flattenSystemHaUnicastPeers(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemHaUnicastPeersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
 		if _, ok := i["peer-ip"]; ok {
-
 			tmp["peer_ip"] = flattenSystemHaUnicastPeersPeerIp(i["peer-ip"], d, pre_append, sv)
 		}
 
@@ -1169,61 +1177,51 @@ func flattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vcluster_id"
 		if _, ok := i["vcluster-id"]; ok {
-
 			tmp["vcluster_id"] = flattenSystemHaVclusterVclusterId(i["vcluster-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override"
 		if _, ok := i["override"]; ok {
-
 			tmp["override"] = flattenSystemHaVclusterOverride(i["override"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-
 			tmp["priority"] = flattenSystemHaVclusterPriority(i["priority"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
 		if _, ok := i["override-wait-time"]; ok {
-
 			tmp["override_wait_time"] = flattenSystemHaVclusterOverrideWaitTime(i["override-wait-time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := i["monitor"]; ok {
-
 			tmp["monitor"] = flattenSystemHaVclusterMonitor(i["monitor"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
 		if _, ok := i["pingserver-monitor-interface"]; ok {
-
 			tmp["pingserver_monitor_interface"] = flattenSystemHaVclusterPingserverMonitorInterface(i["pingserver-monitor-interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
 		if _, ok := i["pingserver-failover-threshold"]; ok {
-
 			tmp["pingserver_failover_threshold"] = flattenSystemHaVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
 		if _, ok := i["pingserver-secondary-force-reset"]; ok {
-
 			tmp["pingserver_secondary_force_reset"] = flattenSystemHaVclusterPingserverSecondaryForceReset(i["pingserver-secondary-force-reset"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := i["pingserver-slave-force-reset"]; ok {
-
 			tmp["pingserver_slave_force_reset"] = flattenSystemHaVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
 		if _, ok := i["vdom"]; ok {
-
 			tmp["vdom"] = flattenSystemHaVclusterVdom(i["vdom"], d, pre_append, sv)
 		}
 
@@ -1298,7 +1296,6 @@ func flattenSystemHaVclusterVdom(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemHaVclusterVdomName(i["name"], d, pre_append, sv)
 		}
 
@@ -1330,61 +1327,51 @@ func flattenSystemHaSecondaryVcluster(v interface{}, d *schema.ResourceData, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "vcluster_id"
 	if _, ok := i["vcluster-id"]; ok {
-
 		result["vcluster_id"] = flattenSystemHaSecondaryVclusterVclusterId(i["vcluster-id"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override"
 	if _, ok := i["override"]; ok {
-
 		result["override"] = flattenSystemHaSecondaryVclusterOverride(i["override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemHaSecondaryVclusterPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "override_wait_time"
 	if _, ok := i["override-wait-time"]; ok {
-
 		result["override_wait_time"] = flattenSystemHaSecondaryVclusterOverrideWaitTime(i["override-wait-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "monitor"
 	if _, ok := i["monitor"]; ok {
-
 		result["monitor"] = flattenSystemHaSecondaryVclusterMonitor(i["monitor"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "pingserver_monitor_interface"
 	if _, ok := i["pingserver-monitor-interface"]; ok {
-
 		result["pingserver_monitor_interface"] = flattenSystemHaSecondaryVclusterPingserverMonitorInterface(i["pingserver-monitor-interface"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "pingserver_failover_threshold"
 	if _, ok := i["pingserver-failover-threshold"]; ok {
-
 		result["pingserver_failover_threshold"] = flattenSystemHaSecondaryVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "pingserver_secondary_force_reset"
 	if _, ok := i["pingserver-secondary-force-reset"]; ok {
-
 		result["pingserver_secondary_force_reset"] = flattenSystemHaSecondaryVclusterPingserverSecondaryForceReset(i["pingserver-secondary-force-reset"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "pingserver_slave_force_reset"
 	if _, ok := i["pingserver-slave-force-reset"]; ok {
-
 		result["pingserver_slave_force_reset"] = flattenSystemHaSecondaryVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vdom"
 	if _, ok := i["vdom"]; ok {
-
 		result["vdom"] = flattenSystemHaSecondaryVclusterVdom(i["vdom"], d, pre_append, sv)
 	}
 
@@ -1474,6 +1461,12 @@ func flattenSystemHaInterClusterSessionSync(v interface{}, d *schema.ResourceDat
 
 func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("group_id", flattenSystemHaGroupId(o["group-id"], d, "group_id", sv)); err != nil {
 		if !fortiAPIPatch(o["group-id"]) {
@@ -1550,6 +1543,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("multicast_ttl", flattenSystemHaMulticastTtl(o["multicast-ttl"], d, "multicast_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["multicast-ttl"]) {
 			return fmt.Errorf("Error reading multicast_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("evpn_ttl", flattenSystemHaEvpnTtl(o["evpn-ttl"], d, "evpn_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["evpn-ttl"]) {
+			return fmt.Errorf("Error reading evpn_ttl: %v", err)
 		}
 	}
 
@@ -1679,7 +1678,7 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ha_mgmt_interfaces", flattenSystemHaHaMgmtInterfaces(o["ha-mgmt-interfaces"], d, "ha_mgmt_interfaces", sv)); err != nil {
 			if !fortiAPIPatch(o["ha-mgmt-interfaces"]) {
 				return fmt.Errorf("Error reading ha_mgmt_interfaces: %v", err)
@@ -1737,7 +1736,7 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("unicast_peers", flattenSystemHaUnicastPeers(o["unicast-peers"], d, "unicast_peers", sv)); err != nil {
 			if !fortiAPIPatch(o["unicast-peers"]) {
 				return fmt.Errorf("Error reading unicast_peers: %v", err)
@@ -1891,7 +1890,7 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vcluster", flattenSystemHaVcluster(o["vcluster"], d, "vcluster", sv)); err != nil {
 			if !fortiAPIPatch(o["vcluster"]) {
 				return fmt.Errorf("Error reading vcluster: %v", err)
@@ -1913,7 +1912,7 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("secondary_vcluster", flattenSystemHaSecondaryVcluster(o["secondary-vcluster"], d, "secondary_vcluster", sv)); err != nil {
 			if !fortiAPIPatch(o["secondary-vcluster"]) {
 				return fmt.Errorf("Error reading secondary_vcluster: %v", err)
@@ -2058,6 +2057,10 @@ func expandSystemHaMulticastTtl(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemHaEvpnTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemHaLoadBalanceAll(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2158,31 +2161,26 @@ func expandSystemHaHaMgmtInterfaces(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemHaHaMgmtInterfacesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface"], _ = expandSystemHaHaMgmtInterfacesInterface(d, i["interface"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst"], _ = expandSystemHaHaMgmtInterfacesDst(d, i["dst"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["gateway"], _ = expandSystemHaHaMgmtInterfacesGateway(d, i["gateway"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["gateway6"], _ = expandSystemHaHaMgmtInterfacesGateway6(d, i["gateway6"], pre_append, sv)
 		}
 
@@ -2258,13 +2256,11 @@ func expandSystemHaUnicastPeers(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemHaUnicastPeersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["peer-ip"], _ = expandSystemHaUnicastPeersPeerIp(d, i["peer_ip"], pre_append, sv)
 		}
 
@@ -2392,61 +2388,51 @@ func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vcluster_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vcluster-id"], _ = expandSystemHaVclusterVclusterId(d, i["vcluster_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["override"], _ = expandSystemHaVclusterOverride(d, i["override"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priority"], _ = expandSystemHaVclusterPriority(d, i["priority"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["override-wait-time"], _ = expandSystemHaVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["monitor"], _ = expandSystemHaVclusterMonitor(d, i["monitor"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pingserver-monitor-interface"], _ = expandSystemHaVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pingserver-failover-threshold"], _ = expandSystemHaVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pingserver-secondary-force-reset"], _ = expandSystemHaVclusterPingserverSecondaryForceReset(d, i["pingserver_secondary_force_reset"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pingserver-slave-force-reset"], _ = expandSystemHaVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["vdom"], _ = expandSystemHaVclusterVdom(d, i["vdom"], pre_append, sv)
 		} else {
 			tmp["vdom"] = make([]string, 0)
@@ -2512,7 +2498,6 @@ func expandSystemHaVclusterVdom(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemHaVclusterVdomName(d, i["name"], pre_append, sv)
 		}
 
@@ -2547,7 +2532,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["vcluster-id"] = nil
 		} else {
-
 			result["vcluster-id"], _ = expandSystemHaSecondaryVclusterVclusterId(d, i["vcluster_id"], pre_append, sv)
 		}
 	}
@@ -2556,7 +2540,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["override"] = nil
 		} else {
-
 			result["override"], _ = expandSystemHaSecondaryVclusterOverride(d, i["override"], pre_append, sv)
 		}
 	}
@@ -2565,7 +2548,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["priority"] = nil
 		} else {
-
 			result["priority"], _ = expandSystemHaSecondaryVclusterPriority(d, i["priority"], pre_append, sv)
 		}
 	}
@@ -2574,7 +2556,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["override-wait-time"] = nil
 		} else {
-
 			result["override-wait-time"], _ = expandSystemHaSecondaryVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append, sv)
 		}
 	}
@@ -2583,7 +2564,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["monitor"] = nil
 		} else {
-
 			result["monitor"], _ = expandSystemHaSecondaryVclusterMonitor(d, i["monitor"], pre_append, sv)
 		}
 	}
@@ -2592,7 +2572,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["pingserver-monitor-interface"] = nil
 		} else {
-
 			result["pingserver-monitor-interface"], _ = expandSystemHaSecondaryVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append, sv)
 		}
 	}
@@ -2601,7 +2580,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["pingserver-failover-threshold"] = nil
 		} else {
-
 			result["pingserver-failover-threshold"], _ = expandSystemHaSecondaryVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
 		}
 	}
@@ -2610,7 +2588,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["pingserver-secondary-force-reset"] = nil
 		} else {
-
 			result["pingserver-secondary-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSecondaryForceReset(d, i["pingserver_secondary_force_reset"], pre_append, sv)
 		}
 	}
@@ -2619,7 +2596,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["pingserver-slave-force-reset"] = nil
 		} else {
-
 			result["pingserver-slave-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append, sv)
 		}
 	}
@@ -2628,7 +2604,6 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["vdom"] = nil
 		} else {
-
 			result["vdom"], _ = expandSystemHaSecondaryVclusterVdom(d, i["vdom"], pre_append, sv)
 		}
 	}
@@ -2723,7 +2698,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["group-id"] = nil
 		} else {
-
 			t, err := expandSystemHaGroupId(d, v, "group_id", sv)
 			if err != nil {
 				return &obj, err
@@ -2737,7 +2711,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["group-name"] = nil
 		} else {
-
 			t, err := expandSystemHaGroupName(d, v, "group_name", sv)
 			if err != nil {
 				return &obj, err
@@ -2751,7 +2724,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemHaMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -2765,7 +2737,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["sync-packet-balance"] = nil
 		} else {
-
 			t, err := expandSystemHaSyncPacketBalance(d, v, "sync_packet_balance", sv)
 			if err != nil {
 				return &obj, err
@@ -2779,7 +2750,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["password"] = nil
 		} else {
-
 			t, err := expandSystemHaPassword(d, v, "password", sv)
 			if err != nil {
 				return &obj, err
@@ -2793,7 +2763,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["key"] = nil
 		} else {
-
 			t, err := expandSystemHaKey(d, v, "key", sv)
 			if err != nil {
 				return &obj, err
@@ -2807,7 +2776,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["hbdev"] = nil
 		} else {
-
 			t, err := expandSystemHaHbdev(d, v, "hbdev", sv)
 			if err != nil {
 				return &obj, err
@@ -2821,7 +2789,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["unicast-hb"] = nil
 		} else {
-
 			t, err := expandSystemHaUnicastHb(d, v, "unicast_hb", sv)
 			if err != nil {
 				return &obj, err
@@ -2835,7 +2802,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["unicast-hb-peerip"] = nil
 		} else {
-
 			t, err := expandSystemHaUnicastHbPeerip(d, v, "unicast_hb_peerip", sv)
 			if err != nil {
 				return &obj, err
@@ -2849,7 +2815,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["unicast-hb-netmask"] = nil
 		} else {
-
 			t, err := expandSystemHaUnicastHbNetmask(d, v, "unicast_hb_netmask", sv)
 			if err != nil {
 				return &obj, err
@@ -2863,7 +2828,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["session-sync-dev"] = nil
 		} else {
-
 			t, err := expandSystemHaSessionSyncDev(d, v, "session_sync_dev", sv)
 			if err != nil {
 				return &obj, err
@@ -2877,7 +2841,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["route-ttl"] = nil
 		} else {
-
 			t, err := expandSystemHaRouteTtl(d, v, "route_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -2891,7 +2854,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["route-wait"] = nil
 		} else {
-
 			t, err := expandSystemHaRouteWait(d, v, "route_wait", sv)
 			if err != nil {
 				return &obj, err
@@ -2905,7 +2867,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["route-hold"] = nil
 		} else {
-
 			t, err := expandSystemHaRouteHold(d, v, "route_hold", sv)
 			if err != nil {
 				return &obj, err
@@ -2919,7 +2880,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["multicast-ttl"] = nil
 		} else {
-
 			t, err := expandSystemHaMulticastTtl(d, v, "multicast_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -2929,11 +2889,23 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	}
 
+	if v, ok := d.GetOk("evpn_ttl"); ok {
+		if setArgNil {
+			obj["evpn-ttl"] = nil
+		} else {
+			t, err := expandSystemHaEvpnTtl(d, v, "evpn_ttl", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["evpn-ttl"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("load_balance_all"); ok {
 		if setArgNil {
 			obj["load-balance-all"] = nil
 		} else {
-
 			t, err := expandSystemHaLoadBalanceAll(d, v, "load_balance_all", sv)
 			if err != nil {
 				return &obj, err
@@ -2947,7 +2919,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["sync-config"] = nil
 		} else {
-
 			t, err := expandSystemHaSyncConfig(d, v, "sync_config", sv)
 			if err != nil {
 				return &obj, err
@@ -2961,7 +2932,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["encryption"] = nil
 		} else {
-
 			t, err := expandSystemHaEncryption(d, v, "encryption", sv)
 			if err != nil {
 				return &obj, err
@@ -2975,7 +2945,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["authentication"] = nil
 		} else {
-
 			t, err := expandSystemHaAuthentication(d, v, "authentication", sv)
 			if err != nil {
 				return &obj, err
@@ -2989,7 +2958,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["hb-interval"] = nil
 		} else {
-
 			t, err := expandSystemHaHbInterval(d, v, "hb_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -3003,7 +2971,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["hb-interval-in-milliseconds"] = nil
 		} else {
-
 			t, err := expandSystemHaHbIntervalInMilliseconds(d, v, "hb_interval_in_milliseconds", sv)
 			if err != nil {
 				return &obj, err
@@ -3017,7 +2984,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["hb-lost-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaHbLostThreshold(d, v, "hb_lost_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3031,7 +2997,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["hello-holddown"] = nil
 		} else {
-
 			t, err := expandSystemHaHelloHolddown(d, v, "hello_holddown", sv)
 			if err != nil {
 				return &obj, err
@@ -3045,7 +3010,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["gratuitous-arps"] = nil
 		} else {
-
 			t, err := expandSystemHaGratuitousArps(d, v, "gratuitous_arps", sv)
 			if err != nil {
 				return &obj, err
@@ -3059,7 +3023,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["arps"] = nil
 		} else {
-
 			t, err := expandSystemHaArps(d, v, "arps", sv)
 			if err != nil {
 				return &obj, err
@@ -3073,7 +3036,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["arps-interval"] = nil
 		} else {
-
 			t, err := expandSystemHaArpsInterval(d, v, "arps_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -3087,7 +3049,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["session-pickup"] = nil
 		} else {
-
 			t, err := expandSystemHaSessionPickup(d, v, "session_pickup", sv)
 			if err != nil {
 				return &obj, err
@@ -3101,7 +3062,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["session-pickup-connectionless"] = nil
 		} else {
-
 			t, err := expandSystemHaSessionPickupConnectionless(d, v, "session_pickup_connectionless", sv)
 			if err != nil {
 				return &obj, err
@@ -3115,7 +3075,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["session-pickup-expectation"] = nil
 		} else {
-
 			t, err := expandSystemHaSessionPickupExpectation(d, v, "session_pickup_expectation", sv)
 			if err != nil {
 				return &obj, err
@@ -3129,7 +3088,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["session-pickup-nat"] = nil
 		} else {
-
 			t, err := expandSystemHaSessionPickupNat(d, v, "session_pickup_nat", sv)
 			if err != nil {
 				return &obj, err
@@ -3143,7 +3101,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["session-pickup-delay"] = nil
 		} else {
-
 			t, err := expandSystemHaSessionPickupDelay(d, v, "session_pickup_delay", sv)
 			if err != nil {
 				return &obj, err
@@ -3157,7 +3114,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["link-failed-signal"] = nil
 		} else {
-
 			t, err := expandSystemHaLinkFailedSignal(d, v, "link_failed_signal", sv)
 			if err != nil {
 				return &obj, err
@@ -3171,7 +3127,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["uninterruptible-upgrade"] = nil
 		} else {
-
 			t, err := expandSystemHaUninterruptibleUpgrade(d, v, "uninterruptible_upgrade", sv)
 			if err != nil {
 				return &obj, err
@@ -3185,7 +3140,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["uninterruptible-primary-wait"] = nil
 		} else {
-
 			t, err := expandSystemHaUninterruptiblePrimaryWait(d, v, "uninterruptible_primary_wait", sv)
 			if err != nil {
 				return &obj, err
@@ -3199,7 +3153,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["standalone-mgmt-vdom"] = nil
 		} else {
-
 			t, err := expandSystemHaStandaloneMgmtVdom(d, v, "standalone_mgmt_vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -3213,7 +3166,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ha-mgmt-status"] = nil
 		} else {
-
 			t, err := expandSystemHaHaMgmtStatus(d, v, "ha_mgmt_status", sv)
 			if err != nil {
 				return &obj, err
@@ -3227,7 +3179,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ha-mgmt-interfaces"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemHaHaMgmtInterfaces(d, v, "ha_mgmt_interfaces", sv)
 			if err != nil {
 				return &obj, err
@@ -3241,7 +3192,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ha-eth-type"] = nil
 		} else {
-
 			t, err := expandSystemHaHaEthType(d, v, "ha_eth_type", sv)
 			if err != nil {
 				return &obj, err
@@ -3255,7 +3205,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["hc-eth-type"] = nil
 		} else {
-
 			t, err := expandSystemHaHcEthType(d, v, "hc_eth_type", sv)
 			if err != nil {
 				return &obj, err
@@ -3269,7 +3218,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["l2ep-eth-type"] = nil
 		} else {
-
 			t, err := expandSystemHaL2EpEthType(d, v, "l2ep_eth_type", sv)
 			if err != nil {
 				return &obj, err
@@ -3283,7 +3231,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ha-uptime-diff-margin"] = nil
 		} else {
-
 			t, err := expandSystemHaHaUptimeDiffMargin(d, v, "ha_uptime_diff_margin", sv)
 			if err != nil {
 				return &obj, err
@@ -3297,7 +3244,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["standalone-config-sync"] = nil
 		} else {
-
 			t, err := expandSystemHaStandaloneConfigSync(d, v, "standalone_config_sync", sv)
 			if err != nil {
 				return &obj, err
@@ -3311,7 +3257,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["unicast-status"] = nil
 		} else {
-
 			t, err := expandSystemHaUnicastStatus(d, v, "unicast_status", sv)
 			if err != nil {
 				return &obj, err
@@ -3325,7 +3270,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["unicast-gateway"] = nil
 		} else {
-
 			t, err := expandSystemHaUnicastGateway(d, v, "unicast_gateway", sv)
 			if err != nil {
 				return &obj, err
@@ -3339,7 +3283,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["unicast-peers"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemHaUnicastPeers(d, v, "unicast_peers", sv)
 			if err != nil {
 				return &obj, err
@@ -3353,7 +3296,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["logical-sn"] = nil
 		} else {
-
 			t, err := expandSystemHaLogicalSn(d, v, "logical_sn", sv)
 			if err != nil {
 				return &obj, err
@@ -3367,7 +3309,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vcluster2"] = nil
 		} else {
-
 			t, err := expandSystemHaVcluster2(d, v, "vcluster2", sv)
 			if err != nil {
 				return &obj, err
@@ -3381,7 +3322,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vcluster-id"] = nil
 		} else {
-
 			t, err := expandSystemHaVclusterId(d, v, "vcluster_id", sv)
 			if err != nil {
 				return &obj, err
@@ -3395,7 +3335,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["override"] = nil
 		} else {
-
 			t, err := expandSystemHaOverride(d, v, "override", sv)
 			if err != nil {
 				return &obj, err
@@ -3409,7 +3348,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandSystemHaPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -3423,7 +3361,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["override-wait-time"] = nil
 		} else {
-
 			t, err := expandSystemHaOverrideWaitTime(d, v, "override_wait_time", sv)
 			if err != nil {
 				return &obj, err
@@ -3437,7 +3374,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["schedule"] = nil
 		} else {
-
 			t, err := expandSystemHaSchedule(d, v, "schedule", sv)
 			if err != nil {
 				return &obj, err
@@ -3451,7 +3387,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["weight"] = nil
 		} else {
-
 			t, err := expandSystemHaWeight(d, v, "weight", sv)
 			if err != nil {
 				return &obj, err
@@ -3465,7 +3400,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["cpu-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaCpuThreshold(d, v, "cpu_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3479,7 +3413,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryThreshold(d, v, "memory_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3493,7 +3426,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["http-proxy-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaHttpProxyThreshold(d, v, "http_proxy_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3507,7 +3439,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ftp-proxy-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaFtpProxyThreshold(d, v, "ftp_proxy_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3521,7 +3452,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["imap-proxy-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaImapProxyThreshold(d, v, "imap_proxy_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3535,7 +3465,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["nntp-proxy-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaNntpProxyThreshold(d, v, "nntp_proxy_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3549,7 +3478,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["pop3-proxy-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaPop3ProxyThreshold(d, v, "pop3_proxy_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3563,7 +3491,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["smtp-proxy-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaSmtpProxyThreshold(d, v, "smtp_proxy_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3577,7 +3504,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["monitor"] = nil
 		} else {
-
 			t, err := expandSystemHaMonitor(d, v, "monitor", sv)
 			if err != nil {
 				return &obj, err
@@ -3591,7 +3517,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["pingserver-monitor-interface"] = nil
 		} else {
-
 			t, err := expandSystemHaPingserverMonitorInterface(d, v, "pingserver_monitor_interface", sv)
 			if err != nil {
 				return &obj, err
@@ -3605,7 +3530,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["pingserver-failover-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaPingserverFailoverThreshold(d, v, "pingserver_failover_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3619,7 +3543,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["pingserver-secondary-force-reset"] = nil
 		} else {
-
 			t, err := expandSystemHaPingserverSecondaryForceReset(d, v, "pingserver_secondary_force_reset", sv)
 			if err != nil {
 				return &obj, err
@@ -3633,7 +3556,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["pingserver-slave-force-reset"] = nil
 		} else {
-
 			t, err := expandSystemHaPingserverSlaveForceReset(d, v, "pingserver_slave_force_reset", sv)
 			if err != nil {
 				return &obj, err
@@ -3647,7 +3569,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["pingserver-flip-timeout"] = nil
 		} else {
-
 			t, err := expandSystemHaPingserverFlipTimeout(d, v, "pingserver_flip_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -3661,7 +3582,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vcluster-status"] = nil
 		} else {
-
 			t, err := expandSystemHaVclusterStatus(d, v, "vcluster_status", sv)
 			if err != nil {
 				return &obj, err
@@ -3675,7 +3595,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vcluster"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemHaVcluster(d, v, "vcluster", sv)
 			if err != nil {
 				return &obj, err
@@ -3689,7 +3608,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["vdom"] = nil
 		} else {
-
 			t, err := expandSystemHaVdom(d, v, "vdom", sv)
 			if err != nil {
 				return &obj, err
@@ -3700,7 +3618,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("secondary_vcluster"); ok {
-
 		t, err := expandSystemHaSecondaryVcluster(d, v, "secondary_vcluster", sv, setArgNil)
 		if err != nil {
 			return &obj, err
@@ -3713,7 +3630,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ha-direct"] = nil
 		} else {
-
 			t, err := expandSystemHaHaDirect(d, v, "ha_direct", sv)
 			if err != nil {
 				return &obj, err
@@ -3727,7 +3643,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ssd-failover"] = nil
 		} else {
-
 			t, err := expandSystemHaSsdFailover(d, v, "ssd_failover", sv)
 			if err != nil {
 				return &obj, err
@@ -3741,7 +3656,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-compatible-mode"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryCompatibleMode(d, v, "memory_compatible_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -3755,7 +3669,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-based-failover"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryBasedFailover(d, v, "memory_based_failover", sv)
 			if err != nil {
 				return &obj, err
@@ -3769,7 +3682,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-failover-threshold"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryFailoverThreshold(d, v, "memory_failover_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -3783,7 +3695,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-failover-monitor-period"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryFailoverMonitorPeriod(d, v, "memory_failover_monitor_period", sv)
 			if err != nil {
 				return &obj, err
@@ -3797,7 +3708,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-failover-sample-rate"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryFailoverSampleRate(d, v, "memory_failover_sample_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -3811,7 +3721,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["memory-failover-flip-timeout"] = nil
 		} else {
-
 			t, err := expandSystemHaMemoryFailoverFlipTimeout(d, v, "memory_failover_flip_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -3825,7 +3734,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["failover-hold-time"] = nil
 		} else {
-
 			t, err := expandSystemHaFailoverHoldTime(d, v, "failover_hold_time", sv)
 			if err != nil {
 				return &obj, err
@@ -3839,7 +3747,6 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["inter-cluster-session-sync"] = nil
 		} else {
-
 			t, err := expandSystemHaInterClusterSessionSync(d, v, "inter_cluster_session_sync", sv)
 			if err != nil {
 				return &obj, err

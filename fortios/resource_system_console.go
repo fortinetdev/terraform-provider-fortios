@@ -247,7 +247,6 @@ func getObjectSystemConsole(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandSystemConsoleMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err
@@ -261,7 +260,6 @@ func getObjectSystemConsole(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["baudrate"] = nil
 		} else {
-
 			t, err := expandSystemConsoleBaudrate(d, v, "baudrate", sv)
 			if err != nil {
 				return &obj, err
@@ -275,7 +273,6 @@ func getObjectSystemConsole(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["output"] = nil
 		} else {
-
 			t, err := expandSystemConsoleOutput(d, v, "output", sv)
 			if err != nil {
 				return &obj, err
@@ -289,7 +286,6 @@ func getObjectSystemConsole(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["login"] = nil
 		} else {
-
 			t, err := expandSystemConsoleLogin(d, v, "login", sv)
 			if err != nil {
 				return &obj, err
@@ -303,7 +299,6 @@ func getObjectSystemConsole(d *schema.ResourceData, setArgNil bool, sv string) (
 		if setArgNil {
 			obj["fortiexplorer"] = nil
 		} else {
-
 			t, err := expandSystemConsoleFortiexplorer(d, v, "fortiexplorer", sv)
 			if err != nil {
 				return &obj, err

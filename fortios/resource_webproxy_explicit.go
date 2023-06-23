@@ -40,6 +40,11 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"secure_web_proxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ftp_over_http": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -55,7 +60,31 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"http_connection_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"https_incoming_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"secure_web_proxy_cert": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -254,6 +283,11 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -356,6 +390,10 @@ func flattenWebProxyExplicitStatus(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenWebProxyExplicitSecureWebProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyExplicitFtpOverHttp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -368,7 +406,57 @@ func flattenWebProxyExplicitHttpIncomingPort(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenWebProxyExplicitHttpConnectionMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyExplicitHttpsIncomingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitSecureWebProxyCert(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyExplicitSecureWebProxyCertName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenWebProxyExplicitSecureWebProxyCertName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -478,49 +566,41 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policyid"
 		if _, ok := i["policyid"]; ok {
-
 			tmp["policyid"] = flattenWebProxyExplicitPacPolicyPolicyid(i["policyid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenWebProxyExplicitPacPolicyStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := i["srcaddr"]; ok {
-
 			tmp["srcaddr"] = flattenWebProxyExplicitPacPolicySrcaddr(i["srcaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
 		if _, ok := i["srcaddr6"]; ok {
-
 			tmp["srcaddr6"] = flattenWebProxyExplicitPacPolicySrcaddr6(i["srcaddr6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := i["dstaddr"]; ok {
-
 			tmp["dstaddr"] = flattenWebProxyExplicitPacPolicyDstaddr(i["dstaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_name"
 		if _, ok := i["pac-file-name"]; ok {
-
 			tmp["pac_file_name"] = flattenWebProxyExplicitPacPolicyPacFileName(i["pac-file-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_data"
 		if _, ok := i["pac-file-data"]; ok {
-
 			tmp["pac_file_data"] = flattenWebProxyExplicitPacPolicyPacFileData(i["pac-file-data"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := i["comments"]; ok {
-
 			tmp["comments"] = flattenWebProxyExplicitPacPolicyComments(i["comments"], d, pre_append, sv)
 		}
 
@@ -567,7 +647,6 @@ func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -610,7 +689,6 @@ func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -653,7 +731,6 @@ func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWebProxyExplicitPacPolicyDstaddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -692,10 +769,22 @@ func flattenWebProxyExplicitTraceAuthNoRsp(v interface{}, d *schema.ResourceData
 
 func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenWebProxyExplicitStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("secure_web_proxy", flattenWebProxyExplicitSecureWebProxy(o["secure-web-proxy"], d, "secure_web_proxy", sv)); err != nil {
+		if !fortiAPIPatch(o["secure-web-proxy"]) {
+			return fmt.Errorf("Error reading secure_web_proxy: %v", err)
 		}
 	}
 
@@ -717,9 +806,37 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("http_connection_mode", flattenWebProxyExplicitHttpConnectionMode(o["http-connection-mode"], d, "http_connection_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["http-connection-mode"]) {
+			return fmt.Errorf("Error reading http_connection_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("https_incoming_port", flattenWebProxyExplicitHttpsIncomingPort(o["https-incoming-port"], d, "https_incoming_port", sv)); err != nil {
 		if !fortiAPIPatch(o["https-incoming-port"]) {
 			return fmt.Errorf("Error reading https_incoming_port: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("secure_web_proxy_cert", flattenWebProxyExplicitSecureWebProxyCert(o["secure-web-proxy-cert"], d, "secure_web_proxy_cert", sv)); err != nil {
+			if !fortiAPIPatch(o["secure-web-proxy-cert"]) {
+				return fmt.Errorf("Error reading secure_web_proxy_cert: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("secure_web_proxy_cert"); ok {
+			if err = d.Set("secure_web_proxy_cert", flattenWebProxyExplicitSecureWebProxyCert(o["secure-web-proxy-cert"], d, "secure_web_proxy_cert", sv)); err != nil {
+				if !fortiAPIPatch(o["secure-web-proxy-cert"]) {
+					return fmt.Errorf("Error reading secure_web_proxy_cert: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("ssl_dh_bits", flattenWebProxyExplicitSslDhBits(o["ssl-dh-bits"], d, "ssl_dh_bits", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-dh-bits"]) {
+			return fmt.Errorf("Error reading ssl_dh_bits: %v", err)
 		}
 	}
 
@@ -843,7 +960,7 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("pac_policy", flattenWebProxyExplicitPacPolicy(o["pac-policy"], d, "pac_policy", sv)); err != nil {
 			if !fortiAPIPatch(o["pac-policy"]) {
 				return fmt.Errorf("Error reading pac_policy: %v", err)
@@ -884,6 +1001,10 @@ func expandWebProxyExplicitStatus(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandWebProxyExplicitSecureWebProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebProxyExplicitFtpOverHttp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -896,7 +1017,46 @@ func expandWebProxyExplicitHttpIncomingPort(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandWebProxyExplicitHttpConnectionMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebProxyExplicitHttpsIncomingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitSecureWebProxyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandWebProxyExplicitSecureWebProxyCertName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandWebProxyExplicitSecureWebProxyCertName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitSslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -996,19 +1156,16 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policyid"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["policyid"], _ = expandWebProxyExplicitPacPolicyPolicyid(d, i["policyid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandWebProxyExplicitPacPolicyStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["srcaddr"], _ = expandWebProxyExplicitPacPolicySrcaddr(d, i["srcaddr"], pre_append, sv)
 		} else {
 			tmp["srcaddr"] = make([]string, 0)
@@ -1016,7 +1173,6 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["srcaddr6"], _ = expandWebProxyExplicitPacPolicySrcaddr6(d, i["srcaddr6"], pre_append, sv)
 		} else {
 			tmp["srcaddr6"] = make([]string, 0)
@@ -1024,7 +1180,6 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["dstaddr"], _ = expandWebProxyExplicitPacPolicyDstaddr(d, i["dstaddr"], pre_append, sv)
 		} else {
 			tmp["dstaddr"] = make([]string, 0)
@@ -1032,19 +1187,16 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pac-file-name"], _ = expandWebProxyExplicitPacPolicyPacFileName(d, i["pac_file_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_data"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["pac-file-data"], _ = expandWebProxyExplicitPacPolicyPacFileData(d, i["pac_file_data"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comments"], _ = expandWebProxyExplicitPacPolicyComments(d, i["comments"], pre_append, sv)
 		}
 
@@ -1080,7 +1232,6 @@ func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -1112,7 +1263,6 @@ func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -1144,7 +1294,6 @@ func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWebProxyExplicitPacPolicyDstaddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -1187,7 +1336,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -1197,11 +1345,23 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("secure_web_proxy"); ok {
+		if setArgNil {
+			obj["secure-web-proxy"] = nil
+		} else {
+			t, err := expandWebProxyExplicitSecureWebProxy(d, v, "secure_web_proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["secure-web-proxy"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ftp_over_http"); ok {
 		if setArgNil {
 			obj["ftp-over-http"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitFtpOverHttp(d, v, "ftp_over_http", sv)
 			if err != nil {
 				return &obj, err
@@ -1215,7 +1375,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["socks"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitSocks(d, v, "socks", sv)
 			if err != nil {
 				return &obj, err
@@ -1229,7 +1388,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["http-incoming-port"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitHttpIncomingPort(d, v, "http_incoming_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1239,11 +1397,23 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("http_connection_mode"); ok {
+		if setArgNil {
+			obj["http-connection-mode"] = nil
+		} else {
+			t, err := expandWebProxyExplicitHttpConnectionMode(d, v, "http_connection_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-connection-mode"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("https_incoming_port"); ok {
 		if setArgNil {
 			obj["https-incoming-port"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitHttpsIncomingPort(d, v, "https_incoming_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1253,11 +1423,36 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	}
 
+	if v, ok := d.GetOk("secure_web_proxy_cert"); ok || d.HasChange("secure_web_proxy_cert") {
+		if setArgNil {
+			obj["secure-web-proxy-cert"] = make([]struct{}, 0)
+		} else {
+			t, err := expandWebProxyExplicitSecureWebProxyCert(d, v, "secure_web_proxy_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["secure-web-proxy-cert"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_dh_bits"); ok {
+		if setArgNil {
+			obj["ssl-dh-bits"] = nil
+		} else {
+			t, err := expandWebProxyExplicitSslDhBits(d, v, "ssl_dh_bits", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-dh-bits"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ftp_incoming_port"); ok {
 		if setArgNil {
 			obj["ftp-incoming-port"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitFtpIncomingPort(d, v, "ftp_incoming_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1271,7 +1466,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["socks-incoming-port"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitSocksIncomingPort(d, v, "socks_incoming_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1285,7 +1479,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["incoming-ip"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1299,7 +1492,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outgoing-ip"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -1313,7 +1505,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ipv6-status"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitIpv6Status(d, v, "ipv6_status", sv)
 			if err != nil {
 				return &obj, err
@@ -1327,7 +1518,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["incoming-ip6"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitIncomingIp6(d, v, "incoming_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -1341,7 +1531,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["outgoing-ip6"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitOutgoingIp6(d, v, "outgoing_ip6", sv)
 			if err != nil {
 				return &obj, err
@@ -1355,7 +1544,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["strict-guest"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitStrictGuest(d, v, "strict_guest", sv)
 			if err != nil {
 				return &obj, err
@@ -1369,7 +1557,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pref-dns-result"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPrefDnsResult(d, v, "pref_dns_result", sv)
 			if err != nil {
 				return &obj, err
@@ -1383,7 +1570,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["unknown-http-version"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitUnknownHttpVersion(d, v, "unknown_http_version", sv)
 			if err != nil {
 				return &obj, err
@@ -1397,7 +1583,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["realm"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitRealm(d, v, "realm", sv)
 			if err != nil {
 				return &obj, err
@@ -1411,7 +1596,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["sec-default-action"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
 			if err != nil {
 				return &obj, err
@@ -1425,7 +1609,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["https-replacement-message"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitHttpsReplacementMessage(d, v, "https_replacement_message", sv)
 			if err != nil {
 				return &obj, err
@@ -1439,7 +1622,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["message-upon-server-error"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitMessageUponServerError(d, v, "message_upon_server_error", sv)
 			if err != nil {
 				return &obj, err
@@ -1453,7 +1635,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-file-server-status"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPacFileServerStatus(d, v, "pac_file_server_status", sv)
 			if err != nil {
 				return &obj, err
@@ -1467,7 +1648,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-file-url"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPacFileUrl(d, v, "pac_file_url", sv)
 			if err != nil {
 				return &obj, err
@@ -1481,7 +1661,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-file-server-port"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPacFileServerPort(d, v, "pac_file_server_port", sv)
 			if err != nil {
 				return &obj, err
@@ -1495,7 +1674,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-file-through-https"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPacFileThroughHttps(d, v, "pac_file_through_https", sv)
 			if err != nil {
 				return &obj, err
@@ -1509,7 +1687,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-file-name"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPacFileName(d, v, "pac_file_name", sv)
 			if err != nil {
 				return &obj, err
@@ -1523,7 +1700,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-file-data"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitPacFileData(d, v, "pac_file_data", sv)
 			if err != nil {
 				return &obj, err
@@ -1537,7 +1713,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["pac-policy"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWebProxyExplicitPacPolicy(d, v, "pac_policy", sv)
 			if err != nil {
 				return &obj, err
@@ -1551,7 +1726,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["ssl-algorithm"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -1565,7 +1739,6 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["trace-auth-no-rsp"] = nil
 		} else {
-
 			t, err := expandWebProxyExplicitTraceAuthNoRsp(d, v, "trace_auth_no_rsp", sv)
 			if err != nil {
 				return &obj, err

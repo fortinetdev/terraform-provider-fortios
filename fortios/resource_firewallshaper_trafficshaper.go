@@ -99,6 +99,31 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cos_marking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cos_marking_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"exceed_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"maximum_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"overhead": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100),
@@ -283,6 +308,26 @@ func flattenFirewallShaperTrafficShaperMaximumDscp(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenFirewallShaperTrafficShaperCosMarking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallShaperTrafficShaperCosMarkingMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallShaperTrafficShaperCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallShaperTrafficShaperExceedCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallShaperTrafficShaperMaximumCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallShaperTrafficShaperOverhead(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -366,6 +411,36 @@ func refreshObjectFirewallShaperTrafficShaper(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("cos_marking", flattenFirewallShaperTrafficShaperCosMarking(o["cos-marking"], d, "cos_marking", sv)); err != nil {
+		if !fortiAPIPatch(o["cos-marking"]) {
+			return fmt.Errorf("Error reading cos_marking: %v", err)
+		}
+	}
+
+	if err = d.Set("cos_marking_method", flattenFirewallShaperTrafficShaperCosMarkingMethod(o["cos-marking-method"], d, "cos_marking_method", sv)); err != nil {
+		if !fortiAPIPatch(o["cos-marking-method"]) {
+			return fmt.Errorf("Error reading cos_marking_method: %v", err)
+		}
+	}
+
+	if err = d.Set("cos", flattenFirewallShaperTrafficShaperCos(o["cos"], d, "cos", sv)); err != nil {
+		if !fortiAPIPatch(o["cos"]) {
+			return fmt.Errorf("Error reading cos: %v", err)
+		}
+	}
+
+	if err = d.Set("exceed_cos", flattenFirewallShaperTrafficShaperExceedCos(o["exceed-cos"], d, "exceed_cos", sv)); err != nil {
+		if !fortiAPIPatch(o["exceed-cos"]) {
+			return fmt.Errorf("Error reading exceed_cos: %v", err)
+		}
+	}
+
+	if err = d.Set("maximum_cos", flattenFirewallShaperTrafficShaperMaximumCos(o["maximum-cos"], d, "maximum_cos", sv)); err != nil {
+		if !fortiAPIPatch(o["maximum-cos"]) {
+			return fmt.Errorf("Error reading maximum_cos: %v", err)
+		}
+	}
+
 	if err = d.Set("overhead", flattenFirewallShaperTrafficShaperOverhead(o["overhead"], d, "overhead", sv)); err != nil {
 		if !fortiAPIPatch(o["overhead"]) {
 			return fmt.Errorf("Error reading overhead: %v", err)
@@ -435,6 +510,26 @@ func expandFirewallShaperTrafficShaperMaximumDscp(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandFirewallShaperTrafficShaperCosMarking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallShaperTrafficShaperCosMarkingMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallShaperTrafficShaperCos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallShaperTrafficShaperExceedCos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallShaperTrafficShaperMaximumCos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallShaperTrafficShaperOverhead(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -447,7 +542,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -457,7 +551,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("guaranteed_bandwidth"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperGuaranteedBandwidth(d, v, "guaranteed_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -467,7 +560,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("maximum_bandwidth"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperMaximumBandwidth(d, v, "maximum_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -477,7 +569,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("bandwidth_unit"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperBandwidthUnit(d, v, "bandwidth_unit", sv)
 		if err != nil {
 			return &obj, err
@@ -487,7 +578,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
@@ -497,7 +587,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("per_policy"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperPerPolicy(d, v, "per_policy", sv)
 		if err != nil {
 			return &obj, err
@@ -507,7 +596,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("diffserv"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperDiffserv(d, v, "diffserv", sv)
 		if err != nil {
 			return &obj, err
@@ -517,7 +605,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("diffservcode"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperDiffservcode(d, v, "diffservcode", sv)
 		if err != nil {
 			return &obj, err
@@ -527,7 +614,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("dscp_marking_method"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperDscpMarkingMethod(d, v, "dscp_marking_method", sv)
 		if err != nil {
 			return &obj, err
@@ -537,7 +623,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("exceed_bandwidth"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperExceedBandwidth(d, v, "exceed_bandwidth", sv)
 		if err != nil {
 			return &obj, err
@@ -547,7 +632,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("exceed_dscp"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperExceedDscp(d, v, "exceed_dscp", sv)
 		if err != nil {
 			return &obj, err
@@ -557,7 +641,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("maximum_dscp"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperMaximumDscp(d, v, "maximum_dscp", sv)
 		if err != nil {
 			return &obj, err
@@ -566,8 +649,52 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		}
 	}
 
-	if v, ok := d.GetOkExists("overhead"); ok {
+	if v, ok := d.GetOk("cos_marking"); ok {
+		t, err := expandFirewallShaperTrafficShaperCosMarking(d, v, "cos_marking", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cos-marking"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("cos_marking_method"); ok {
+		t, err := expandFirewallShaperTrafficShaperCosMarkingMethod(d, v, "cos_marking_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cos-marking-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cos"); ok {
+		t, err := expandFirewallShaperTrafficShaperCos(d, v, "cos", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cos"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("exceed_cos"); ok {
+		t, err := expandFirewallShaperTrafficShaperExceedCos(d, v, "exceed_cos", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["exceed-cos"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("maximum_cos"); ok {
+		t, err := expandFirewallShaperTrafficShaperMaximumCos(d, v, "maximum_cos", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["maximum-cos"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("overhead"); ok {
 		t, err := expandFirewallShaperTrafficShaperOverhead(d, v, "overhead", sv)
 		if err != nil {
 			return &obj, err
@@ -577,7 +704,6 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 	}
 
 	if v, ok := d.GetOkExists("exceed_class_id"); ok {
-
 		t, err := expandFirewallShaperTrafficShaperExceedClassId(d, v, "exceed_class_id", sv)
 		if err != nil {
 			return &obj, err

@@ -406,7 +406,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -416,7 +415,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("icmp_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityIcmpPort(d, v, "icmp_port", sv)
 		if err != nil {
 			return &obj, err
@@ -426,7 +424,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("ftp_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityFtpPort(d, v, "ftp_port", sv)
 		if err != nil {
 			return &obj, err
@@ -436,7 +433,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("ssh_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilitySshPort(d, v, "ssh_port", sv)
 		if err != nil {
 			return &obj, err
@@ -446,7 +442,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("http_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityHttpPort(d, v, "http_port", sv)
 		if err != nil {
 			return &obj, err
@@ -456,7 +451,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("tls_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityTlsPort(d, v, "tls_port", sv)
 		if err != nil {
 			return &obj, err
@@ -466,7 +460,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("pptp_vpn_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityPptpVpnPort(d, v, "pptp_vpn_port", sv)
 		if err != nil {
 			return &obj, err
@@ -476,7 +469,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("voip_tcp_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityVoipTcpPort(d, v, "voip_tcp_port", sv)
 		if err != nil {
 			return &obj, err
@@ -486,7 +478,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("voip_udp_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityVoipUdpPort(d, v, "voip_udp_port", sv)
 		if err != nil {
 			return &obj, err
@@ -496,7 +487,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("ikev2_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityIkev2Port(d, v, "ikev2_port", sv)
 		if err != nil {
 			return &obj, err
@@ -506,7 +496,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("ikev2_xx_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityIkev2XxPort(d, v, "ikev2_xx_port", sv)
 		if err != nil {
 			return &obj, err
@@ -516,7 +505,6 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 	}
 
 	if v, ok := d.GetOk("esp_port"); ok {
-
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityEspPort(d, v, "esp_port", sv)
 		if err != nil {
 			return &obj, err

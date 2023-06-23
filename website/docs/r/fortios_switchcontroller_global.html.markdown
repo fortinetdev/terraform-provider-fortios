@@ -35,6 +35,12 @@ The following arguments are supported:
 * `mac_retention_period` - Time in hours after which an inactive MAC is removed from client DB.
 * `default_virtual_switch_vlan` - Default VLAN for ports when added to the virtual-switch.
 * `dhcp_server_access_list` - Enable/disable DHCP snooping server access list. Valid values: `enable`, `disable`.
+* `dhcp_option82_format` - DHCP option-82 format string. Valid values: `ascii`, `legacy`.
+* `dhcp_option82_circuit_id` - List the parameters to be included to inform about client identification. Valid values: `intfname`, `vlan`, `hostname`, `mode`, `description`.
+* `dhcp_option82_remote_id` - List the parameters to be included to inform about client identification. Valid values: `mac`, `hostname`, `ip`.
+* `dhcp_snoop_client_req` - Client DHCP packet broadcast mode. Valid values: `drop-untrusted`, `forward-untrusted`.
+* `dhcp_snoop_client_db_exp` - Expiry time for DHCP snooping server database entries (300 - 259200 sec, default = 86400 sec).
+* `dhcp_snoop_db_per_port_learn_limit` - Per Interface dhcp-server entries learn limit (0 - 1024, default = 64).
 * `log_mac_limit_violations` - Enable/disable logs for Learning Limit Violations. Valid values: `enable`, `disable`.
 * `mac_violation_timer` - Set timeout for Learning Limit Violations (0 = disabled).
 * `sn_dns_resolution` - Enable/disable DNS resolution of the FortiSwitch unit's IP address by use of its serial number. Valid values: `enable`, `disable`.
@@ -46,6 +52,7 @@ The following arguments are supported:
 * `fips_enforce` - Enable/disable enforcement of FIPS on managed FortiSwitch devices. Valid values: `disable`, `enable`.
 * `firmware_provision_on_authorization` - Enable/disable automatic provisioning of latest firmware on authorization. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `disable_discovery` block supports:

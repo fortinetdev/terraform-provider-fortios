@@ -230,7 +230,6 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["msg-type"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgSpamMsgType(d, v, "msg_type", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["buffer"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgSpamBuffer(d, v, "buffer", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["header"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgSpamHeader(d, v, "header", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgSpamFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err

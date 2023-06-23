@@ -211,7 +211,6 @@ func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["aging-time"] = nil
 		} else {
-
 			t, err := expandSwitchControllerIgmpSnoopingAgingTime(d, v, "aging_time", sv)
 			if err != nil {
 				return &obj, err
@@ -225,7 +224,6 @@ func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["flood-unknown-multicast"] = nil
 		} else {
-
 			t, err := expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d, v, "flood_unknown_multicast", sv)
 			if err != nil {
 				return &obj, err
@@ -239,7 +237,6 @@ func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["query-interval"] = nil
 		} else {
-
 			t, err := expandSwitchControllerIgmpSnoopingQueryInterval(d, v, "query_interval", sv)
 			if err != nil {
 				return &obj, err

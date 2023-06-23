@@ -194,6 +194,11 @@ func resourceSystemDhcp6Server() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -425,25 +430,21 @@ func flattenSystemDhcp6ServerPrefixRange(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemDhcp6ServerPrefixRangeId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_prefix"
 		if _, ok := i["start-prefix"]; ok {
-
 			tmp["start_prefix"] = flattenSystemDhcp6ServerPrefixRangeStartPrefix(i["start-prefix"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_prefix"
 		if _, ok := i["end-prefix"]; ok {
-
 			tmp["end_prefix"] = flattenSystemDhcp6ServerPrefixRangeEndPrefix(i["end-prefix"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_length"
 		if _, ok := i["prefix-length"]; ok {
-
 			tmp["prefix_length"] = flattenSystemDhcp6ServerPrefixRangePrefixLength(i["prefix-length"], d, pre_append, sv)
 		}
 
@@ -498,19 +499,16 @@ func flattenSystemDhcp6ServerIpRange(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemDhcp6ServerIpRangeId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if _, ok := i["start-ip"]; ok {
-
 			tmp["start_ip"] = flattenSystemDhcp6ServerIpRangeStartIp(i["start-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if _, ok := i["end-ip"]; ok {
-
 			tmp["end_ip"] = flattenSystemDhcp6ServerIpRangeEndIp(i["end-ip"], d, pre_append, sv)
 		}
 
@@ -537,6 +535,12 @@ func flattenSystemDhcp6ServerIpRangeEndIp(v interface{}, d *schema.ResourceData,
 
 func refreshObjectSystemDhcp6Server(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSystemDhcp6ServerId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -658,7 +662,7 @@ func refreshObjectSystemDhcp6Server(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("prefix_range", flattenSystemDhcp6ServerPrefixRange(o["prefix-range"], d, "prefix_range", sv)); err != nil {
 			if !fortiAPIPatch(o["prefix-range"]) {
 				return fmt.Errorf("Error reading prefix_range: %v", err)
@@ -674,7 +678,7 @@ func refreshObjectSystemDhcp6Server(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ip_range", flattenSystemDhcp6ServerIpRange(o["ip-range"], d, "ip_range", sv)); err != nil {
 			if !fortiAPIPatch(o["ip-range"]) {
 				return fmt.Errorf("Error reading ip_range: %v", err)
@@ -795,25 +799,21 @@ func expandSystemDhcp6ServerPrefixRange(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemDhcp6ServerPrefixRangeId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["start-prefix"], _ = expandSystemDhcp6ServerPrefixRangeStartPrefix(d, i["start_prefix"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["end-prefix"], _ = expandSystemDhcp6ServerPrefixRangeEndPrefix(d, i["end_prefix"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_length"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["prefix-length"], _ = expandSystemDhcp6ServerPrefixRangePrefixLength(d, i["prefix_length"], pre_append, sv)
 		}
 
@@ -857,19 +857,16 @@ func expandSystemDhcp6ServerIpRange(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemDhcp6ServerIpRangeId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["start-ip"], _ = expandSystemDhcp6ServerIpRangeStartIp(d, i["start_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["end-ip"], _ = expandSystemDhcp6ServerIpRangeEndIp(d, i["end_ip"], pre_append, sv)
 		}
 
@@ -897,7 +894,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemDhcp6ServerId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -907,7 +903,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemDhcp6ServerStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -917,7 +912,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("rapid_commit"); ok {
-
 		t, err := expandSystemDhcp6ServerRapidCommit(d, v, "rapid_commit", sv)
 		if err != nil {
 			return &obj, err
@@ -927,7 +921,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("lease_time"); ok {
-
 		t, err := expandSystemDhcp6ServerLeaseTime(d, v, "lease_time", sv)
 		if err != nil {
 			return &obj, err
@@ -937,7 +930,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_service"); ok {
-
 		t, err := expandSystemDhcp6ServerDnsService(d, v, "dns_service", sv)
 		if err != nil {
 			return &obj, err
@@ -947,7 +939,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_search_list"); ok {
-
 		t, err := expandSystemDhcp6ServerDnsSearchList(d, v, "dns_search_list", sv)
 		if err != nil {
 			return &obj, err
@@ -957,7 +948,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_server1"); ok {
-
 		t, err := expandSystemDhcp6ServerDnsServer1(d, v, "dns_server1", sv)
 		if err != nil {
 			return &obj, err
@@ -967,7 +957,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_server2"); ok {
-
 		t, err := expandSystemDhcp6ServerDnsServer2(d, v, "dns_server2", sv)
 		if err != nil {
 			return &obj, err
@@ -977,7 +966,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_server3"); ok {
-
 		t, err := expandSystemDhcp6ServerDnsServer3(d, v, "dns_server3", sv)
 		if err != nil {
 			return &obj, err
@@ -987,7 +975,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dns_server4"); ok {
-
 		t, err := expandSystemDhcp6ServerDnsServer4(d, v, "dns_server4", sv)
 		if err != nil {
 			return &obj, err
@@ -997,7 +984,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("domain"); ok {
-
 		t, err := expandSystemDhcp6ServerDomain(d, v, "domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1007,7 +993,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("subnet"); ok {
-
 		t, err := expandSystemDhcp6ServerSubnet(d, v, "subnet", sv)
 		if err != nil {
 			return &obj, err
@@ -1017,7 +1002,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemDhcp6ServerInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -1027,7 +1011,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("option1"); ok {
-
 		t, err := expandSystemDhcp6ServerOption1(d, v, "option1", sv)
 		if err != nil {
 			return &obj, err
@@ -1037,7 +1020,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("option2"); ok {
-
 		t, err := expandSystemDhcp6ServerOption2(d, v, "option2", sv)
 		if err != nil {
 			return &obj, err
@@ -1047,7 +1029,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("option3"); ok {
-
 		t, err := expandSystemDhcp6ServerOption3(d, v, "option3", sv)
 		if err != nil {
 			return &obj, err
@@ -1057,7 +1038,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("upstream_interface"); ok {
-
 		t, err := expandSystemDhcp6ServerUpstreamInterface(d, v, "upstream_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -1067,7 +1047,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("delegated_prefix_iaid"); ok {
-
 		t, err := expandSystemDhcp6ServerDelegatedPrefixIaid(d, v, "delegated_prefix_iaid", sv)
 		if err != nil {
 			return &obj, err
@@ -1077,7 +1056,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip_mode"); ok {
-
 		t, err := expandSystemDhcp6ServerIpMode(d, v, "ip_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1087,7 +1065,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("prefix_mode"); ok {
-
 		t, err := expandSystemDhcp6ServerPrefixMode(d, v, "prefix_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1097,7 +1074,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("prefix_range"); ok || d.HasChange("prefix_range") {
-
 		t, err := expandSystemDhcp6ServerPrefixRange(d, v, "prefix_range", sv)
 		if err != nil {
 			return &obj, err
@@ -1107,7 +1083,6 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ip_range"); ok || d.HasChange("ip_range") {
-
 		t, err := expandSystemDhcp6ServerIpRange(d, v, "ip_range", sv)
 		if err != nil {
 			return &obj, err

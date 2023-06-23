@@ -27,6 +27,8 @@ The following attributes are exported:
 * `remote_ip6` - IPv6 IP address of the VXLAN interface on the device at the remote end of the VXLAN. The structure of `remote_ip6` block is documented below.
 * `dstport` - VXLAN destination port (1 - 65535, default = 4789).
 * `multicast_ttl` - VXLAN multicast TTL (1-255, default = 0).
+* `evpn_id` - EVPN instance.
+* `learn_from_traffic` - Enable/disable VXLAN MAC learning from traffic.
 
 The `remote_ip` block contains:
 

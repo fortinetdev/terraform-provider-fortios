@@ -775,7 +775,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandReportThemeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -785,7 +784,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("page_orient"); ok {
-
 		t, err := expandReportThemePageOrient(d, v, "page_orient", sv)
 		if err != nil {
 			return &obj, err
@@ -795,7 +793,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("column_count"); ok {
-
 		t, err := expandReportThemeColumnCount(d, v, "column_count", sv)
 		if err != nil {
 			return &obj, err
@@ -805,7 +802,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("default_html_style"); ok {
-
 		t, err := expandReportThemeDefaultHtmlStyle(d, v, "default_html_style", sv)
 		if err != nil {
 			return &obj, err
@@ -815,7 +811,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("default_pdf_style"); ok {
-
 		t, err := expandReportThemeDefaultPdfStyle(d, v, "default_pdf_style", sv)
 		if err != nil {
 			return &obj, err
@@ -825,7 +820,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("page_style"); ok {
-
 		t, err := expandReportThemePageStyle(d, v, "page_style", sv)
 		if err != nil {
 			return &obj, err
@@ -835,7 +829,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("page_header_style"); ok {
-
 		t, err := expandReportThemePageHeaderStyle(d, v, "page_header_style", sv)
 		if err != nil {
 			return &obj, err
@@ -845,7 +838,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("page_footer_style"); ok {
-
 		t, err := expandReportThemePageFooterStyle(d, v, "page_footer_style", sv)
 		if err != nil {
 			return &obj, err
@@ -855,7 +847,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("report_title_style"); ok {
-
 		t, err := expandReportThemeReportTitleStyle(d, v, "report_title_style", sv)
 		if err != nil {
 			return &obj, err
@@ -865,7 +856,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("report_subtitle_style"); ok {
-
 		t, err := expandReportThemeReportSubtitleStyle(d, v, "report_subtitle_style", sv)
 		if err != nil {
 			return &obj, err
@@ -875,7 +865,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("toc_title_style"); ok {
-
 		t, err := expandReportThemeTocTitleStyle(d, v, "toc_title_style", sv)
 		if err != nil {
 			return &obj, err
@@ -885,7 +874,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("toc_heading1_style"); ok {
-
 		t, err := expandReportThemeTocHeading1Style(d, v, "toc_heading1_style", sv)
 		if err != nil {
 			return &obj, err
@@ -895,7 +883,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("toc_heading2_style"); ok {
-
 		t, err := expandReportThemeTocHeading2Style(d, v, "toc_heading2_style", sv)
 		if err != nil {
 			return &obj, err
@@ -905,7 +892,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("toc_heading3_style"); ok {
-
 		t, err := expandReportThemeTocHeading3Style(d, v, "toc_heading3_style", sv)
 		if err != nil {
 			return &obj, err
@@ -915,7 +901,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("toc_heading4_style"); ok {
-
 		t, err := expandReportThemeTocHeading4Style(d, v, "toc_heading4_style", sv)
 		if err != nil {
 			return &obj, err
@@ -925,7 +910,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("heading1_style"); ok {
-
 		t, err := expandReportThemeHeading1Style(d, v, "heading1_style", sv)
 		if err != nil {
 			return &obj, err
@@ -935,7 +919,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("heading2_style"); ok {
-
 		t, err := expandReportThemeHeading2Style(d, v, "heading2_style", sv)
 		if err != nil {
 			return &obj, err
@@ -945,7 +928,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("heading3_style"); ok {
-
 		t, err := expandReportThemeHeading3Style(d, v, "heading3_style", sv)
 		if err != nil {
 			return &obj, err
@@ -955,7 +937,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("heading4_style"); ok {
-
 		t, err := expandReportThemeHeading4Style(d, v, "heading4_style", sv)
 		if err != nil {
 			return &obj, err
@@ -965,7 +946,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("normal_text_style"); ok {
-
 		t, err := expandReportThemeNormalTextStyle(d, v, "normal_text_style", sv)
 		if err != nil {
 			return &obj, err
@@ -975,7 +955,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("bullet_list_style"); ok {
-
 		t, err := expandReportThemeBulletListStyle(d, v, "bullet_list_style", sv)
 		if err != nil {
 			return &obj, err
@@ -985,7 +964,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("numbered_list_style"); ok {
-
 		t, err := expandReportThemeNumberedListStyle(d, v, "numbered_list_style", sv)
 		if err != nil {
 			return &obj, err
@@ -995,7 +973,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("image_style"); ok {
-
 		t, err := expandReportThemeImageStyle(d, v, "image_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1005,7 +982,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("hline_style"); ok {
-
 		t, err := expandReportThemeHlineStyle(d, v, "hline_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1015,7 +991,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("graph_chart_style"); ok {
-
 		t, err := expandReportThemeGraphChartStyle(d, v, "graph_chart_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1025,7 +1000,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("table_chart_style"); ok {
-
 		t, err := expandReportThemeTableChartStyle(d, v, "table_chart_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1035,7 +1009,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("table_chart_caption_style"); ok {
-
 		t, err := expandReportThemeTableChartCaptionStyle(d, v, "table_chart_caption_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1045,7 +1018,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("table_chart_head_style"); ok {
-
 		t, err := expandReportThemeTableChartHeadStyle(d, v, "table_chart_head_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1055,7 +1027,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("table_chart_odd_row_style"); ok {
-
 		t, err := expandReportThemeTableChartOddRowStyle(d, v, "table_chart_odd_row_style", sv)
 		if err != nil {
 			return &obj, err
@@ -1065,7 +1036,6 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("table_chart_even_row_style"); ok {
-
 		t, err := expandReportThemeTableChartEvenRowStyle(d, v, "table_chart_even_row_style", sv)
 		if err != nil {
 			return &obj, err

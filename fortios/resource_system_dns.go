@@ -168,6 +168,12 @@ func resourceSystemDns() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fqdn_max_refresh": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(3600, 86400),
+				Optional:     true,
+				Computed:     true,
+			},
 			"fqdn_min_refresh": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 3600),
@@ -175,6 +181,11 @@ func resourceSystemDns() *schema.Resource {
 				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -323,7 +334,6 @@ func flattenSystemDnsServerHostname(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := i["hostname"]; ok {
-
 			tmp["hostname"] = flattenSystemDnsServerHostnameHostname(i["hostname"], d, pre_append, sv)
 		}
 
@@ -366,7 +376,6 @@ func flattenSystemDnsDomain(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := i["domain"]; ok {
-
 			tmp["domain"] = flattenSystemDnsDomainDomain(i["domain"], d, pre_append, sv)
 		}
 
@@ -443,12 +452,22 @@ func flattenSystemDnsFqdnCacheTtl(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemDnsFqdnMaxRefresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDnsFqdnMinRefresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("primary", flattenSystemDnsPrimary(o["primary"], d, "primary", sv)); err != nil {
 		if !fortiAPIPatch(o["primary"]) {
@@ -480,7 +499,7 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_hostname", flattenSystemDnsServerHostname(o["server-hostname"], d, "server_hostname", sv)); err != nil {
 			if !fortiAPIPatch(o["server-hostname"]) {
 				return fmt.Errorf("Error reading server_hostname: %v", err)
@@ -496,7 +515,7 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("domain", flattenSystemDnsDomain(o["domain"], d, "domain", sv)); err != nil {
 			if !fortiAPIPatch(o["domain"]) {
 				return fmt.Errorf("Error reading domain: %v", err)
@@ -602,6 +621,12 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("fqdn_max_refresh", flattenSystemDnsFqdnMaxRefresh(o["fqdn-max-refresh"], d, "fqdn_max_refresh", sv)); err != nil {
+		if !fortiAPIPatch(o["fqdn-max-refresh"]) {
+			return fmt.Errorf("Error reading fqdn_max_refresh: %v", err)
+		}
+	}
+
 	if err = d.Set("fqdn_min_refresh", flattenSystemDnsFqdnMinRefresh(o["fqdn-min-refresh"], d, "fqdn_min_refresh", sv)); err != nil {
 		if !fortiAPIPatch(o["fqdn-min-refresh"]) {
 			return fmt.Errorf("Error reading fqdn_min_refresh: %v", err)
@@ -653,7 +678,6 @@ func expandSystemDnsServerHostname(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["hostname"], _ = expandSystemDnsServerHostnameHostname(d, i["hostname"], pre_append, sv)
 		}
 
@@ -685,7 +709,6 @@ func expandSystemDnsDomain(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["domain"], _ = expandSystemDnsDomainDomain(d, i["domain"], pre_append, sv)
 		}
 
@@ -761,6 +784,10 @@ func expandSystemDnsFqdnCacheTtl(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemDnsFqdnMaxRefresh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDnsFqdnMinRefresh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -772,7 +799,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["primary"] = nil
 		} else {
-
 			t, err := expandSystemDnsPrimary(d, v, "primary", sv)
 			if err != nil {
 				return &obj, err
@@ -786,7 +812,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["secondary"] = nil
 		} else {
-
 			t, err := expandSystemDnsSecondary(d, v, "secondary", sv)
 			if err != nil {
 				return &obj, err
@@ -800,7 +825,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["protocol"] = nil
 		} else {
-
 			t, err := expandSystemDnsProtocol(d, v, "protocol", sv)
 			if err != nil {
 				return &obj, err
@@ -814,7 +838,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dns-over-tls"] = nil
 		} else {
-
 			t, err := expandSystemDnsDnsOverTls(d, v, "dns_over_tls", sv)
 			if err != nil {
 				return &obj, err
@@ -828,7 +851,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ssl-certificate"] = nil
 		} else {
-
 			t, err := expandSystemDnsSslCertificate(d, v, "ssl_certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -842,7 +864,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["server-hostname"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemDnsServerHostname(d, v, "server_hostname", sv)
 			if err != nil {
 				return &obj, err
@@ -856,7 +877,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["domain"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemDnsDomain(d, v, "domain", sv)
 			if err != nil {
 				return &obj, err
@@ -870,7 +890,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ip6-primary"] = nil
 		} else {
-
 			t, err := expandSystemDnsIp6Primary(d, v, "ip6_primary", sv)
 			if err != nil {
 				return &obj, err
@@ -884,7 +903,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["ip6-secondary"] = nil
 		} else {
-
 			t, err := expandSystemDnsIp6Secondary(d, v, "ip6_secondary", sv)
 			if err != nil {
 				return &obj, err
@@ -898,7 +916,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["timeout"] = nil
 		} else {
-
 			t, err := expandSystemDnsTimeout(d, v, "timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -912,7 +929,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["retry"] = nil
 		} else {
-
 			t, err := expandSystemDnsRetry(d, v, "retry", sv)
 			if err != nil {
 				return &obj, err
@@ -926,7 +942,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dns-cache-limit"] = nil
 		} else {
-
 			t, err := expandSystemDnsDnsCacheLimit(d, v, "dns_cache_limit", sv)
 			if err != nil {
 				return &obj, err
@@ -940,7 +955,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["dns-cache-ttl"] = nil
 		} else {
-
 			t, err := expandSystemDnsDnsCacheTtl(d, v, "dns_cache_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -954,7 +968,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["cache-notfound-responses"] = nil
 		} else {
-
 			t, err := expandSystemDnsCacheNotfoundResponses(d, v, "cache_notfound_responses", sv)
 			if err != nil {
 				return &obj, err
@@ -968,7 +981,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandSystemDnsSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -982,7 +994,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandSystemDnsInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -996,7 +1007,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandSystemDnsInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err
@@ -1010,7 +1020,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["server-select-method"] = nil
 		} else {
-
 			t, err := expandSystemDnsServerSelectMethod(d, v, "server_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -1024,7 +1033,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["alt-primary"] = nil
 		} else {
-
 			t, err := expandSystemDnsAltPrimary(d, v, "alt_primary", sv)
 			if err != nil {
 				return &obj, err
@@ -1038,7 +1046,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["alt-secondary"] = nil
 		} else {
-
 			t, err := expandSystemDnsAltSecondary(d, v, "alt_secondary", sv)
 			if err != nil {
 				return &obj, err
@@ -1052,7 +1059,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["log"] = nil
 		} else {
-
 			t, err := expandSystemDnsLog(d, v, "log", sv)
 			if err != nil {
 				return &obj, err
@@ -1066,7 +1072,6 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["fqdn-cache-ttl"] = nil
 		} else {
-
 			t, err := expandSystemDnsFqdnCacheTtl(d, v, "fqdn_cache_ttl", sv)
 			if err != nil {
 				return &obj, err
@@ -1076,11 +1081,23 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
+	if v, ok := d.GetOk("fqdn_max_refresh"); ok {
+		if setArgNil {
+			obj["fqdn-max-refresh"] = nil
+		} else {
+			t, err := expandSystemDnsFqdnMaxRefresh(d, v, "fqdn_max_refresh", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fqdn-max-refresh"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("fqdn_min_refresh"); ok {
 		if setArgNil {
 			obj["fqdn-min-refresh"] = nil
 		} else {
-
 			t, err := expandSystemDnsFqdnMinRefresh(d, v, "fqdn_min_refresh", sv)
 			if err != nil {
 				return &obj, err

@@ -293,7 +293,6 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebProxyUrlMatchName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -303,7 +302,6 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandWebProxyUrlMatchStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -313,7 +311,6 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("url_pattern"); ok {
-
 		t, err := expandWebProxyUrlMatchUrlPattern(d, v, "url_pattern", sv)
 		if err != nil {
 			return &obj, err
@@ -323,7 +320,6 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("forward_server"); ok {
-
 		t, err := expandWebProxyUrlMatchForwardServer(d, v, "forward_server", sv)
 		if err != nil {
 			return &obj, err
@@ -333,7 +329,6 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("cache_exemption"); ok {
-
 		t, err := expandWebProxyUrlMatchCacheExemption(d, v, "cache_exemption", sv)
 		if err != nil {
 			return &obj, err
@@ -343,7 +338,6 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWebProxyUrlMatchComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err

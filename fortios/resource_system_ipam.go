@@ -45,6 +45,26 @@ func resourceSystemIpam() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"automatic_conflict_resolution": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"manage_lan_addresses": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"manage_lan_extension_addresses": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"manage_ssid_addresses": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"pools": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -148,6 +168,11 @@ func resourceSystemIpam() *schema.Resource {
 				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -258,6 +283,22 @@ func flattenSystemIpamServerType(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemIpamAutomaticConflictResolution(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamManageLanAddresses(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamManageLanExtensionAddresses(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamManageSsidAddresses(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemIpamPools(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -284,19 +325,16 @@ func flattenSystemIpamPools(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemIpamPoolsName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSystemIpamPoolsDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := i["subnet"]; ok {
-
 			tmp["subnet"] = flattenSystemIpamPoolsSubnet(i["subnet"], d, pre_append, sv)
 		}
 
@@ -354,43 +392,36 @@ func flattenSystemIpamRules(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemIpamRulesName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-
 			tmp["description"] = flattenSystemIpamRulesDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := i["device"]; ok {
-
 			tmp["device"] = flattenSystemIpamRulesDevice(i["device"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenSystemIpamRulesInterface(i["interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := i["role"]; ok {
-
 			tmp["role"] = flattenSystemIpamRulesRole(i["role"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pool"
 		if _, ok := i["pool"]; ok {
-
 			tmp["pool"] = flattenSystemIpamRulesPool(i["pool"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp"
 		if _, ok := i["dhcp"]; ok {
-
 			tmp["dhcp"] = flattenSystemIpamRulesDhcp(i["dhcp"], d, pre_append, sv)
 		}
 
@@ -437,7 +468,6 @@ func flattenSystemIpamRulesDevice(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemIpamRulesDeviceName(i["name"], d, pre_append, sv)
 		}
 
@@ -480,7 +510,6 @@ func flattenSystemIpamRulesInterface(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemIpamRulesInterfaceName(i["name"], d, pre_append, sv)
 		}
 
@@ -527,7 +556,6 @@ func flattenSystemIpamRulesPool(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemIpamRulesPoolName(i["name"], d, pre_append, sv)
 		}
 
@@ -561,6 +589,12 @@ func flattenSystemIpamPoolSubnet(v interface{}, d *schema.ResourceData, pre stri
 
 func refreshObjectSystemIpam(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemIpamStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -574,7 +608,31 @@ func refreshObjectSystemIpam(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if err = d.Set("automatic_conflict_resolution", flattenSystemIpamAutomaticConflictResolution(o["automatic-conflict-resolution"], d, "automatic_conflict_resolution", sv)); err != nil {
+		if !fortiAPIPatch(o["automatic-conflict-resolution"]) {
+			return fmt.Errorf("Error reading automatic_conflict_resolution: %v", err)
+		}
+	}
+
+	if err = d.Set("manage_lan_addresses", flattenSystemIpamManageLanAddresses(o["manage-lan-addresses"], d, "manage_lan_addresses", sv)); err != nil {
+		if !fortiAPIPatch(o["manage-lan-addresses"]) {
+			return fmt.Errorf("Error reading manage_lan_addresses: %v", err)
+		}
+	}
+
+	if err = d.Set("manage_lan_extension_addresses", flattenSystemIpamManageLanExtensionAddresses(o["manage-lan-extension-addresses"], d, "manage_lan_extension_addresses", sv)); err != nil {
+		if !fortiAPIPatch(o["manage-lan-extension-addresses"]) {
+			return fmt.Errorf("Error reading manage_lan_extension_addresses: %v", err)
+		}
+	}
+
+	if err = d.Set("manage_ssid_addresses", flattenSystemIpamManageSsidAddresses(o["manage-ssid-addresses"], d, "manage_ssid_addresses", sv)); err != nil {
+		if !fortiAPIPatch(o["manage-ssid-addresses"]) {
+			return fmt.Errorf("Error reading manage_ssid_addresses: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("pools", flattenSystemIpamPools(o["pools"], d, "pools", sv)); err != nil {
 			if !fortiAPIPatch(o["pools"]) {
 				return fmt.Errorf("Error reading pools: %v", err)
@@ -590,7 +648,7 @@ func refreshObjectSystemIpam(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rules", flattenSystemIpamRules(o["rules"], d, "rules", sv)); err != nil {
 			if !fortiAPIPatch(o["rules"]) {
 				return fmt.Errorf("Error reading rules: %v", err)
@@ -629,6 +687,22 @@ func expandSystemIpamServerType(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemIpamAutomaticConflictResolution(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamManageLanAddresses(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamManageLanExtensionAddresses(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamManageSsidAddresses(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemIpamPools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -645,19 +719,16 @@ func expandSystemIpamPools(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemIpamPoolsName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSystemIpamPoolsDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["subnet"], _ = expandSystemIpamPoolsSubnet(d, i["subnet"], pre_append, sv)
 		}
 
@@ -697,19 +768,16 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemIpamRulesName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["description"], _ = expandSystemIpamRulesDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["device"], _ = expandSystemIpamRulesDevice(d, i["device"], pre_append, sv)
 		} else {
 			tmp["device"] = make([]string, 0)
@@ -717,7 +785,6 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["interface"], _ = expandSystemIpamRulesInterface(d, i["interface"], pre_append, sv)
 		} else {
 			tmp["interface"] = make([]string, 0)
@@ -725,13 +792,11 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["role"], _ = expandSystemIpamRulesRole(d, i["role"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pool"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["pool"], _ = expandSystemIpamRulesPool(d, i["pool"], pre_append, sv)
 		} else {
 			tmp["pool"] = make([]string, 0)
@@ -739,7 +804,6 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dhcp"], _ = expandSystemIpamRulesDhcp(d, i["dhcp"], pre_append, sv)
 		}
 
@@ -775,7 +839,6 @@ func expandSystemIpamRulesDevice(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemIpamRulesDeviceName(d, i["name"], pre_append, sv)
 		}
 
@@ -807,7 +870,6 @@ func expandSystemIpamRulesInterface(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemIpamRulesInterfaceName(d, i["name"], pre_append, sv)
 		}
 
@@ -843,7 +905,6 @@ func expandSystemIpamRulesPool(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemIpamRulesPoolName(d, i["name"], pre_append, sv)
 		}
 
@@ -874,7 +935,6 @@ func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemIpamStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -888,7 +948,6 @@ func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["server-type"] = nil
 		} else {
-
 			t, err := expandSystemIpamServerType(d, v, "server_type", sv)
 			if err != nil {
 				return &obj, err
@@ -898,11 +957,62 @@ func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("automatic_conflict_resolution"); ok {
+		if setArgNil {
+			obj["automatic-conflict-resolution"] = nil
+		} else {
+			t, err := expandSystemIpamAutomaticConflictResolution(d, v, "automatic_conflict_resolution", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["automatic-conflict-resolution"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("manage_lan_addresses"); ok {
+		if setArgNil {
+			obj["manage-lan-addresses"] = nil
+		} else {
+			t, err := expandSystemIpamManageLanAddresses(d, v, "manage_lan_addresses", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["manage-lan-addresses"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("manage_lan_extension_addresses"); ok {
+		if setArgNil {
+			obj["manage-lan-extension-addresses"] = nil
+		} else {
+			t, err := expandSystemIpamManageLanExtensionAddresses(d, v, "manage_lan_extension_addresses", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["manage-lan-extension-addresses"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("manage_ssid_addresses"); ok {
+		if setArgNil {
+			obj["manage-ssid-addresses"] = nil
+		} else {
+			t, err := expandSystemIpamManageSsidAddresses(d, v, "manage_ssid_addresses", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["manage-ssid-addresses"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("pools"); ok || d.HasChange("pools") {
 		if setArgNil {
 			obj["pools"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemIpamPools(d, v, "pools", sv)
 			if err != nil {
 				return &obj, err
@@ -916,7 +1026,6 @@ func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["rules"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemIpamRules(d, v, "rules", sv)
 			if err != nil {
 				return &obj, err
@@ -930,7 +1039,6 @@ func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["pool-subnet"] = nil
 		} else {
-
 			t, err := expandSystemIpamPoolSubnet(d, v, "pool_subnet", sv)
 			if err != nil {
 				return &obj, err

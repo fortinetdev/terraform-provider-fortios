@@ -81,6 +81,11 @@ func resourceExtensionControllerFortigateProfile() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -229,19 +234,16 @@ func flattenExtensionControllerFortigateProfileLanExtension(v interface{}, d *sc
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ipsec_tunnel"
 	if _, ok := i["ipsec-tunnel"]; ok {
-
 		result["ipsec_tunnel"] = flattenExtensionControllerFortigateProfileLanExtensionIpsecTunnel(i["ipsec-tunnel"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "backhaul_interface"
 	if _, ok := i["backhaul-interface"]; ok {
-
 		result["backhaul_interface"] = flattenExtensionControllerFortigateProfileLanExtensionBackhaulInterface(i["backhaul-interface"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "backhaul_ip"
 	if _, ok := i["backhaul-ip"]; ok {
-
 		result["backhaul_ip"] = flattenExtensionControllerFortigateProfileLanExtensionBackhaulIp(i["backhaul-ip"], d, pre_append, sv)
 	}
 
@@ -263,6 +265,12 @@ func flattenExtensionControllerFortigateProfileLanExtensionBackhaulIp(v interfac
 
 func refreshObjectExtensionControllerFortigateProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenExtensionControllerFortigateProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -282,7 +290,7 @@ func refreshObjectExtensionControllerFortigateProfile(d *schema.ResourceData, o 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("lan_extension", flattenExtensionControllerFortigateProfileLanExtension(o["lan-extension"], d, "lan_extension", sv)); err != nil {
 			if !fortiAPIPatch(o["lan-extension"]) {
 				return fmt.Errorf("Error reading lan_extension: %v", err)
@@ -331,17 +339,14 @@ func expandExtensionControllerFortigateProfileLanExtension(d *schema.ResourceDat
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ipsec_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ipsec-tunnel"], _ = expandExtensionControllerFortigateProfileLanExtensionIpsecTunnel(d, i["ipsec_tunnel"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "backhaul_interface"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["backhaul-interface"], _ = expandExtensionControllerFortigateProfileLanExtensionBackhaulInterface(d, i["backhaul_interface"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "backhaul_ip"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["backhaul-ip"], _ = expandExtensionControllerFortigateProfileLanExtensionBackhaulIp(d, i["backhaul_ip"], pre_append, sv)
 	}
 
@@ -364,7 +369,6 @@ func getObjectExtensionControllerFortigateProfile(d *schema.ResourceData, sv str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandExtensionControllerFortigateProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -374,7 +378,6 @@ func getObjectExtensionControllerFortigateProfile(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandExtensionControllerFortigateProfileId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -384,7 +387,6 @@ func getObjectExtensionControllerFortigateProfile(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("extension"); ok {
-
 		t, err := expandExtensionControllerFortigateProfileExtension(d, v, "extension", sv)
 		if err != nil {
 			return &obj, err
@@ -394,7 +396,6 @@ func getObjectExtensionControllerFortigateProfile(d *schema.ResourceData, sv str
 	}
 
 	if v, ok := d.GetOk("lan_extension"); ok {
-
 		t, err := expandExtensionControllerFortigateProfileLanExtension(d, v, "lan_extension", sv)
 		if err != nil {
 			return &obj, err

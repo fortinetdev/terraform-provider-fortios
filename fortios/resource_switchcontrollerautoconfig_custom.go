@@ -66,6 +66,11 @@ func resourceSwitchControllerAutoConfigCustom() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -221,13 +226,11 @@ func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *sche
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := i["switch-id"]; ok {
-
 			tmp["switch_id"] = flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(i["switch-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy"
 		if _, ok := i["policy"]; ok {
-
 			tmp["policy"] = flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(i["policy"], d, pre_append, sv)
 		}
 
@@ -250,6 +253,12 @@ func flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(v interface{}, d
 
 func refreshObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerAutoConfigCustomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -257,7 +266,7 @@ func refreshObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, o map
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("switch_binding", flattenSwitchControllerAutoConfigCustomSwitchBinding(o["switch-binding"], d, "switch_binding", sv)); err != nil {
 			if !fortiAPIPatch(o["switch-binding"]) {
 				return fmt.Errorf("Error reading switch_binding: %v", err)
@@ -302,13 +311,11 @@ func expandSwitchControllerAutoConfigCustomSwitchBinding(d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["switch-id"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingSwitchId(d, i["switch_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["policy"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingPolicy(d, i["policy"], pre_append, sv)
 		}
 
@@ -332,7 +339,6 @@ func getObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, sv string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerAutoConfigCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -342,7 +348,6 @@ func getObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, sv string
 	}
 
 	if v, ok := d.GetOk("switch_binding"); ok || d.HasChange("switch_binding") {
-
 		t, err := expandSwitchControllerAutoConfigCustomSwitchBinding(d, v, "switch_binding", sv)
 		if err != nil {
 			return &obj, err

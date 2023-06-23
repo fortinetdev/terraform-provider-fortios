@@ -224,7 +224,6 @@ func getObjectSystemFssoPolling(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemFssoPollingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -238,7 +237,6 @@ func getObjectSystemFssoPolling(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["listening-port"] = nil
 		} else {
-
 			t, err := expandSystemFssoPollingListeningPort(d, v, "listening_port", sv)
 			if err != nil {
 				return &obj, err
@@ -252,7 +250,6 @@ func getObjectSystemFssoPolling(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["authentication"] = nil
 		} else {
-
 			t, err := expandSystemFssoPollingAuthentication(d, v, "authentication", sv)
 			if err != nil {
 				return &obj, err
@@ -266,7 +263,6 @@ func getObjectSystemFssoPolling(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["auth-password"] = nil
 		} else {
-
 			t, err := expandSystemFssoPollingAuthPassword(d, v, "auth_password", sv)
 			if err != nil {
 				return &obj, err

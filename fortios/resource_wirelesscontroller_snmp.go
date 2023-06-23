@@ -187,6 +187,11 @@ func resourceWirelessControllerSnmp() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -327,49 +332,41 @@ func flattenWirelessControllerSnmpCommunity(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerSnmpCommunityId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerSnmpCommunityName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenWirelessControllerSnmpCommunityStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_status"
 		if _, ok := i["query-v1-status"]; ok {
-
 			tmp["query_v1_status"] = flattenWirelessControllerSnmpCommunityQueryV1Status(i["query-v1-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_status"
 		if _, ok := i["query-v2c-status"]; ok {
-
 			tmp["query_v2c_status"] = flattenWirelessControllerSnmpCommunityQueryV2CStatus(i["query-v2c-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_status"
 		if _, ok := i["trap-v1-status"]; ok {
-
 			tmp["trap_v1_status"] = flattenWirelessControllerSnmpCommunityTrapV1Status(i["trap-v1-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_status"
 		if _, ok := i["trap-v2c-status"]; ok {
-
 			tmp["trap_v2c_status"] = flattenWirelessControllerSnmpCommunityTrapV2CStatus(i["trap-v2c-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
 		if _, ok := i["hosts"]; ok {
-
 			tmp["hosts"] = flattenWirelessControllerSnmpCommunityHosts(i["hosts"], d, pre_append, sv)
 		}
 
@@ -436,13 +433,11 @@ func flattenWirelessControllerSnmpCommunityHosts(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerSnmpCommunityHostsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenWirelessControllerSnmpCommunityHostsIp(i["ip"], d, pre_append, sv)
 		}
 
@@ -489,43 +484,36 @@ func flattenWirelessControllerSnmpUser(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerSnmpUserName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenWirelessControllerSnmpUserStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
 		if _, ok := i["queries"]; ok {
-
 			tmp["queries"] = flattenWirelessControllerSnmpUserQueries(i["queries"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_status"
 		if _, ok := i["trap-status"]; ok {
-
 			tmp["trap_status"] = flattenWirelessControllerSnmpUserTrapStatus(i["trap-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_level"
 		if _, ok := i["security-level"]; ok {
-
 			tmp["security_level"] = flattenWirelessControllerSnmpUserSecurityLevel(i["security-level"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_proto"
 		if _, ok := i["auth-proto"]; ok {
-
 			tmp["auth_proto"] = flattenWirelessControllerSnmpUserAuthProto(i["auth-proto"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
 		if _, ok := i["auth-pwd"]; ok {
-
 			tmp["auth_pwd"] = flattenWirelessControllerSnmpUserAuthPwd(i["auth-pwd"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -535,13 +523,11 @@ func flattenWirelessControllerSnmpUser(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
 		if _, ok := i["priv-proto"]; ok {
-
 			tmp["priv_proto"] = flattenWirelessControllerSnmpUserPrivProto(i["priv-proto"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
 		if _, ok := i["priv-pwd"]; ok {
-
 			tmp["priv_pwd"] = flattenWirelessControllerSnmpUserPrivPwd(i["priv-pwd"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -551,7 +537,6 @@ func flattenWirelessControllerSnmpUser(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "notify_hosts"
 		if _, ok := i["notify-hosts"]; ok {
-
 			tmp["notify_hosts"] = flattenWirelessControllerSnmpUserNotifyHosts(i["notify-hosts"], d, pre_append, sv)
 		}
 
@@ -606,6 +591,12 @@ func flattenWirelessControllerSnmpUserNotifyHosts(v interface{}, d *schema.Resou
 
 func refreshObjectWirelessControllerSnmp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("engine_id", flattenWirelessControllerSnmpEngineId(o["engine-id"], d, "engine_id", sv)); err != nil {
 		if !fortiAPIPatch(o["engine-id"]) {
@@ -631,7 +622,7 @@ func refreshObjectWirelessControllerSnmp(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("community", flattenWirelessControllerSnmpCommunity(o["community"], d, "community", sv)); err != nil {
 			if !fortiAPIPatch(o["community"]) {
 				return fmt.Errorf("Error reading community: %v", err)
@@ -647,7 +638,7 @@ func refreshObjectWirelessControllerSnmp(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("user", flattenWirelessControllerSnmpUser(o["user"], d, "user", sv)); err != nil {
 			if !fortiAPIPatch(o["user"]) {
 				return fmt.Errorf("Error reading user: %v", err)
@@ -704,49 +695,41 @@ func expandWirelessControllerSnmpCommunity(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerSnmpCommunityId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerSnmpCommunityName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandWirelessControllerSnmpCommunityStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-v1-status"], _ = expandWirelessControllerSnmpCommunityQueryV1Status(d, i["query_v1_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["query-v2c-status"], _ = expandWirelessControllerSnmpCommunityQueryV2CStatus(d, i["query_v2c_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v1-status"], _ = expandWirelessControllerSnmpCommunityTrapV1Status(d, i["trap_v1_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-v2c-status"], _ = expandWirelessControllerSnmpCommunityTrapV2CStatus(d, i["trap_v2c_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["hosts"], _ = expandWirelessControllerSnmpCommunityHosts(d, i["hosts"], pre_append, sv)
 		} else {
 			tmp["hosts"] = make([]string, 0)
@@ -804,13 +787,11 @@ func expandWirelessControllerSnmpCommunityHosts(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerSnmpCommunityHostsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandWirelessControllerSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
 		}
 
@@ -846,61 +827,51 @@ func expandWirelessControllerSnmpUser(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerSnmpUserName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandWirelessControllerSnmpUserStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["queries"], _ = expandWirelessControllerSnmpUserQueries(d, i["queries"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["trap-status"], _ = expandWirelessControllerSnmpUserTrapStatus(d, i["trap_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_level"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["security-level"], _ = expandWirelessControllerSnmpUserSecurityLevel(d, i["security_level"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_proto"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-proto"], _ = expandWirelessControllerSnmpUserAuthProto(d, i["auth_proto"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-pwd"], _ = expandWirelessControllerSnmpUserAuthPwd(d, i["auth_pwd"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priv-proto"], _ = expandWirelessControllerSnmpUserPrivProto(d, i["priv_proto"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priv-pwd"], _ = expandWirelessControllerSnmpUserPrivPwd(d, i["priv_pwd"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "notify_hosts"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["notify-hosts"], _ = expandWirelessControllerSnmpUserNotifyHosts(d, i["notify_hosts"], pre_append, sv)
 		}
 
@@ -959,7 +930,6 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["engine-id"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSnmpEngineId(d, v, "engine_id", sv)
 			if err != nil {
 				return &obj, err
@@ -973,7 +943,6 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["contact-info"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSnmpContactInfo(d, v, "contact_info", sv)
 			if err != nil {
 				return &obj, err
@@ -987,7 +956,6 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["trap-high-cpu-threshold"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSnmpTrapHighCpuThreshold(d, v, "trap_high_cpu_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -1001,7 +969,6 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["trap-high-mem-threshold"] = nil
 		} else {
-
 			t, err := expandWirelessControllerSnmpTrapHighMemThreshold(d, v, "trap_high_mem_threshold", sv)
 			if err != nil {
 				return &obj, err
@@ -1015,7 +982,6 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["community"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWirelessControllerSnmpCommunity(d, v, "community", sv)
 			if err != nil {
 				return &obj, err
@@ -1029,7 +995,6 @@ func getObjectWirelessControllerSnmp(d *schema.ResourceData, setArgNil bool, sv 
 		if setArgNil {
 			obj["user"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandWirelessControllerSnmpUser(d, v, "user", sv)
 			if err != nil {
 				return &obj, err

@@ -115,6 +115,11 @@ func resourceWirelessControllerHotspot20AnqpNaiRealm() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -270,25 +275,21 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiList(v interface{}, d *sch
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encoding"
 		if _, ok := i["encoding"]; ok {
-
 			tmp["encoding"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEncoding(i["encoding"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
 		if _, ok := i["nai-realm"]; ok {
-
 			tmp["nai_realm"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListNaiRealm(i["nai-realm"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "eap_method"
 		if _, ok := i["eap-method"]; ok {
-
 			tmp["eap_method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(i["eap-method"], d, pre_append, sv)
 		}
 
@@ -339,19 +340,16 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
-
 			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodIndex(i["index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
 		if _, ok := i["method"]; ok {
-
 			tmp["method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(i["method"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_param"
 		if _, ok := i["auth-param"]; ok {
-
 			tmp["auth_param"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(i["auth-param"], d, pre_append, sv)
 		}
 
@@ -398,19 +396,16 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(v i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
-
 			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamIndex(i["index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "val"
 		if _, ok := i["val"]; ok {
-
 			tmp["val"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamVal(i["val"], d, pre_append, sv)
 		}
 
@@ -437,6 +432,12 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamVal(
 
 func refreshObjectWirelessControllerHotspot20AnqpNaiRealm(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpNaiRealmName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -444,7 +445,7 @@ func refreshObjectWirelessControllerHotspot20AnqpNaiRealm(d *schema.ResourceData
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("nai_list", flattenWirelessControllerHotspot20AnqpNaiRealmNaiList(o["nai-list"], d, "nai_list", sv)); err != nil {
 			if !fortiAPIPatch(o["nai-list"]) {
 				return fmt.Errorf("Error reading nai_list: %v", err)
@@ -489,25 +490,21 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiList(d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encoding"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["encoding"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEncoding(d, i["encoding"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["nai-realm"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListNaiRealm(d, i["nai_realm"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "eap_method"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["eap-method"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(d, i["eap_method"], pre_append, sv)
 		} else {
 			tmp["eap-method"] = make([]string, 0)
@@ -549,19 +546,16 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["index"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodIndex(d, i["index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["method"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(d, i["method"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_param"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["auth-param"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(d, i["auth_param"], pre_append, sv)
 		} else {
 			tmp["auth-param"] = make([]string, 0)
@@ -599,19 +593,16 @@ func expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(d *s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["index"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamIndex(d, i["index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "val"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["val"], _ = expandWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamVal(d, i["val"], pre_append, sv)
 		}
 
@@ -639,7 +630,6 @@ func getObjectWirelessControllerHotspot20AnqpNaiRealm(d *schema.ResourceData, sv
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerHotspot20AnqpNaiRealmName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -649,7 +639,6 @@ func getObjectWirelessControllerHotspot20AnqpNaiRealm(d *schema.ResourceData, sv
 	}
 
 	if v, ok := d.GetOk("nai_list"); ok || d.HasChange("nai_list") {
-
 		t, err := expandWirelessControllerHotspot20AnqpNaiRealmNaiList(d, v, "nai_list", sv)
 		if err != nil {
 			return &obj, err

@@ -75,6 +75,11 @@ func resourceFirewallDecryptedTrafficMirror() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -242,7 +247,6 @@ func flattenFirewallDecryptedTrafficMirrorInterface(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallDecryptedTrafficMirrorInterfaceName(i["name"], d, pre_append, sv)
 		}
 
@@ -261,6 +265,12 @@ func flattenFirewallDecryptedTrafficMirrorInterfaceName(v interface{}, d *schema
 
 func refreshObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallDecryptedTrafficMirrorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -286,7 +296,7 @@ func refreshObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("interface", flattenFirewallDecryptedTrafficMirrorInterface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
 				return fmt.Errorf("Error reading interface: %v", err)
@@ -343,7 +353,6 @@ func expandFirewallDecryptedTrafficMirrorInterface(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallDecryptedTrafficMirrorInterfaceName(d, i["name"], pre_append, sv)
 		}
 
@@ -363,7 +372,6 @@ func getObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, sv string) 
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallDecryptedTrafficMirrorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -373,7 +381,6 @@ func getObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("dstmac"); ok {
-
 		t, err := expandFirewallDecryptedTrafficMirrorDstmac(d, v, "dstmac", sv)
 		if err != nil {
 			return &obj, err
@@ -383,7 +390,6 @@ func getObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("traffic_type"); ok {
-
 		t, err := expandFirewallDecryptedTrafficMirrorTrafficType(d, v, "traffic_type", sv)
 		if err != nil {
 			return &obj, err
@@ -393,7 +399,6 @@ func getObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("traffic_source"); ok {
-
 		t, err := expandFirewallDecryptedTrafficMirrorTrafficSource(d, v, "traffic_source", sv)
 		if err != nil {
 			return &obj, err
@@ -403,7 +408,6 @@ func getObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
-
 		t, err := expandFirewallDecryptedTrafficMirrorInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err

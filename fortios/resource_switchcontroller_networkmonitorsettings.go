@@ -171,7 +171,6 @@ func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, set
 		if setArgNil {
 			obj["network-monitoring"] = nil
 		} else {
-
 			t, err := expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d, v, "network_monitoring", sv)
 			if err != nil {
 				return &obj, err

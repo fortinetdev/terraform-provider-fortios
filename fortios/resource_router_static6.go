@@ -135,7 +135,7 @@ func resourceRouterStatic6() *schema.Resource {
 			},
 			"vrf": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 63),
+				ValidateFunc: validation.IntBetween(0, 251),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -145,6 +145,11 @@ func resourceRouterStatic6() *schema.Resource {
 				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -348,7 +353,6 @@ func flattenRouterStatic6SdwanZone(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenRouterStatic6SdwanZoneName(i["name"], d, pre_append, sv)
 		}
 
@@ -391,6 +395,12 @@ func flattenRouterStatic6Bfd(v interface{}, d *schema.ResourceData, pre string, 
 
 func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("seq_num", flattenRouterStatic6SeqNum(o["seq-num"], d, "seq_num", sv)); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -464,7 +474,7 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("sdwan_zone", flattenRouterStatic6SdwanZone(o["sdwan-zone"], d, "sdwan_zone", sv)); err != nil {
 			if !fortiAPIPatch(o["sdwan-zone"]) {
 				return fmt.Errorf("Error reading sdwan_zone: %v", err)
@@ -589,7 +599,6 @@ func expandRouterStatic6SdwanZone(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandRouterStatic6SdwanZoneName(d, i["name"], pre_append, sv)
 		}
 
@@ -633,7 +642,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("seq_num"); ok {
-
 		t, err := expandRouterStatic6SeqNum(d, v, "seq_num", sv)
 		if err != nil {
 			return &obj, err
@@ -643,7 +651,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandRouterStatic6Status(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -653,7 +660,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("dst"); ok {
-
 		t, err := expandRouterStatic6Dst(d, v, "dst", sv)
 		if err != nil {
 			return &obj, err
@@ -663,7 +669,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
-
 		t, err := expandRouterStatic6Gateway(d, v, "gateway", sv)
 		if err != nil {
 			return &obj, err
@@ -673,7 +678,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-
 		t, err := expandRouterStatic6Device(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
@@ -683,7 +687,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("devindex"); ok {
-
 		t, err := expandRouterStatic6Devindex(d, v, "devindex", sv)
 		if err != nil {
 			return &obj, err
@@ -693,7 +696,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
-
 		t, err := expandRouterStatic6Distance(d, v, "distance", sv)
 		if err != nil {
 			return &obj, err
@@ -703,7 +705,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("weight"); ok {
-
 		t, err := expandRouterStatic6Weight(d, v, "weight", sv)
 		if err != nil {
 			return &obj, err
@@ -713,7 +714,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-
 		t, err := expandRouterStatic6Priority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
@@ -723,7 +723,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandRouterStatic6Comment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -733,7 +732,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("blackhole"); ok {
-
 		t, err := expandRouterStatic6Blackhole(d, v, "blackhole", sv)
 		if err != nil {
 			return &obj, err
@@ -743,7 +741,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("dynamic_gateway"); ok {
-
 		t, err := expandRouterStatic6DynamicGateway(d, v, "dynamic_gateway", sv)
 		if err != nil {
 			return &obj, err
@@ -753,7 +750,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("sdwan_zone"); ok || d.HasChange("sdwan_zone") {
-
 		t, err := expandRouterStatic6SdwanZone(d, v, "sdwan_zone", sv)
 		if err != nil {
 			return &obj, err
@@ -763,7 +759,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok {
-
 		t, err := expandRouterStatic6Dstaddr(d, v, "dstaddr", sv)
 		if err != nil {
 			return &obj, err
@@ -773,7 +768,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("sdwan"); ok {
-
 		t, err := expandRouterStatic6Sdwan(d, v, "sdwan", sv)
 		if err != nil {
 			return &obj, err
@@ -783,7 +777,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("virtual_wan_link"); ok {
-
 		t, err := expandRouterStatic6VirtualWanLink(d, v, "virtual_wan_link", sv)
 		if err != nil {
 			return &obj, err
@@ -793,7 +786,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("link_monitor_exempt"); ok {
-
 		t, err := expandRouterStatic6LinkMonitorExempt(d, v, "link_monitor_exempt", sv)
 		if err != nil {
 			return &obj, err
@@ -803,7 +795,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("vrf"); ok {
-
 		t, err := expandRouterStatic6Vrf(d, v, "vrf", sv)
 		if err != nil {
 			return &obj, err
@@ -813,7 +804,6 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {
-
 		t, err := expandRouterStatic6Bfd(d, v, "bfd", sv)
 		if err != nil {
 			return &obj, err

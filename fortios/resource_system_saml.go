@@ -228,6 +228,11 @@ func resourceSystemSaml() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -420,73 +425,61 @@ func flattenSystemSamlServiceProviders(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSamlServiceProvidersName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-
 			tmp["prefix"] = flattenSystemSamlServiceProvidersPrefix(i["prefix"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
 		if _, ok := i["sp-binding-protocol"]; ok {
-
 			tmp["sp_binding_protocol"] = flattenSystemSamlServiceProvidersSpBindingProtocol(i["sp-binding-protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
 		if _, ok := i["sp-cert"]; ok {
-
 			tmp["sp_cert"] = flattenSystemSamlServiceProvidersSpCert(i["sp-cert"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_entity_id"
 		if _, ok := i["sp-entity-id"]; ok {
-
 			tmp["sp_entity_id"] = flattenSystemSamlServiceProvidersSpEntityId(i["sp-entity-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_sign_on_url"
 		if _, ok := i["sp-single-sign-on-url"]; ok {
-
 			tmp["sp_single_sign_on_url"] = flattenSystemSamlServiceProvidersSpSingleSignOnUrl(i["sp-single-sign-on-url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_logout_url"
 		if _, ok := i["sp-single-logout-url"]; ok {
-
 			tmp["sp_single_logout_url"] = flattenSystemSamlServiceProvidersSpSingleLogoutUrl(i["sp-single-logout-url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_portal_url"
 		if _, ok := i["sp-portal-url"]; ok {
-
 			tmp["sp_portal_url"] = flattenSystemSamlServiceProvidersSpPortalUrl(i["sp-portal-url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
 		if _, ok := i["idp-entity-id"]; ok {
-
 			tmp["idp_entity_id"] = flattenSystemSamlServiceProvidersIdpEntityId(i["idp-entity-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
 		if _, ok := i["idp-single-sign-on-url"]; ok {
-
 			tmp["idp_single_sign_on_url"] = flattenSystemSamlServiceProvidersIdpSingleSignOnUrl(i["idp-single-sign-on-url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
 		if _, ok := i["idp-single-logout-url"]; ok {
-
 			tmp["idp_single_logout_url"] = flattenSystemSamlServiceProvidersIdpSingleLogoutUrl(i["idp-single-logout-url"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
 		if _, ok := i["assertion-attributes"]; ok {
-
 			tmp["assertion_attributes"] = flattenSystemSamlServiceProvidersAssertionAttributes(i["assertion-attributes"], d, pre_append, sv)
 		}
 
@@ -569,13 +562,11 @@ func flattenSystemSamlServiceProvidersAssertionAttributes(v interface{}, d *sche
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSamlServiceProvidersAssertionAttributesName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenSystemSamlServiceProvidersAssertionAttributesType(i["type"], d, pre_append, sv)
 		}
 
@@ -598,6 +589,12 @@ func flattenSystemSamlServiceProvidersAssertionAttributesType(v interface{}, d *
 
 func refreshObjectSystemSaml(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenSystemSamlStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -701,7 +698,7 @@ func refreshObjectSystemSaml(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("service_providers", flattenSystemSamlServiceProviders(o["service-providers"], d, "service_providers", sv)); err != nil {
 			if !fortiAPIPatch(o["service-providers"]) {
 				return fmt.Errorf("Error reading service_providers: %v", err)
@@ -810,73 +807,61 @@ func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSamlServiceProvidersName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["prefix"], _ = expandSystemSamlServiceProvidersPrefix(d, i["prefix"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sp-binding-protocol"], _ = expandSystemSamlServiceProvidersSpBindingProtocol(d, i["sp_binding_protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sp-cert"], _ = expandSystemSamlServiceProvidersSpCert(d, i["sp_cert"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_entity_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sp-entity-id"], _ = expandSystemSamlServiceProvidersSpEntityId(d, i["sp_entity_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_sign_on_url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sp-single-sign-on-url"], _ = expandSystemSamlServiceProvidersSpSingleSignOnUrl(d, i["sp_single_sign_on_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_logout_url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sp-single-logout-url"], _ = expandSystemSamlServiceProvidersSpSingleLogoutUrl(d, i["sp_single_logout_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_portal_url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sp-portal-url"], _ = expandSystemSamlServiceProvidersSpPortalUrl(d, i["sp_portal_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["idp-entity-id"], _ = expandSystemSamlServiceProvidersIdpEntityId(d, i["idp_entity_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["idp-single-sign-on-url"], _ = expandSystemSamlServiceProvidersIdpSingleSignOnUrl(d, i["idp_single_sign_on_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["idp-single-logout-url"], _ = expandSystemSamlServiceProvidersIdpSingleLogoutUrl(d, i["idp_single_logout_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["assertion-attributes"], _ = expandSystemSamlServiceProvidersAssertionAttributes(d, i["assertion_attributes"], pre_append, sv)
 		} else {
 			tmp["assertion-attributes"] = make([]string, 0)
@@ -950,13 +935,11 @@ func expandSystemSamlServiceProvidersAssertionAttributes(d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSamlServiceProvidersAssertionAttributesName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandSystemSamlServiceProvidersAssertionAttributesType(d, i["type"], pre_append, sv)
 		}
 
@@ -983,7 +966,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandSystemSamlStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -997,7 +979,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["role"] = nil
 		} else {
-
 			t, err := expandSystemSamlRole(d, v, "role", sv)
 			if err != nil {
 				return &obj, err
@@ -1011,7 +992,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["default-login-page"] = nil
 		} else {
-
 			t, err := expandSystemSamlDefaultLoginPage(d, v, "default_login_page", sv)
 			if err != nil {
 				return &obj, err
@@ -1025,7 +1005,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["default-profile"] = nil
 		} else {
-
 			t, err := expandSystemSamlDefaultProfile(d, v, "default_profile", sv)
 			if err != nil {
 				return &obj, err
@@ -1039,7 +1018,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["cert"] = nil
 		} else {
-
 			t, err := expandSystemSamlCert(d, v, "cert", sv)
 			if err != nil {
 				return &obj, err
@@ -1053,7 +1031,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["binding-protocol"] = nil
 		} else {
-
 			t, err := expandSystemSamlBindingProtocol(d, v, "binding_protocol", sv)
 			if err != nil {
 				return &obj, err
@@ -1067,7 +1044,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["portal-url"] = nil
 		} else {
-
 			t, err := expandSystemSamlPortalUrl(d, v, "portal_url", sv)
 			if err != nil {
 				return &obj, err
@@ -1081,7 +1057,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["entity-id"] = nil
 		} else {
-
 			t, err := expandSystemSamlEntityId(d, v, "entity_id", sv)
 			if err != nil {
 				return &obj, err
@@ -1095,7 +1070,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["single-sign-on-url"] = nil
 		} else {
-
 			t, err := expandSystemSamlSingleSignOnUrl(d, v, "single_sign_on_url", sv)
 			if err != nil {
 				return &obj, err
@@ -1109,7 +1083,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["single-logout-url"] = nil
 		} else {
-
 			t, err := expandSystemSamlSingleLogoutUrl(d, v, "single_logout_url", sv)
 			if err != nil {
 				return &obj, err
@@ -1123,7 +1096,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["idp-entity-id"] = nil
 		} else {
-
 			t, err := expandSystemSamlIdpEntityId(d, v, "idp_entity_id", sv)
 			if err != nil {
 				return &obj, err
@@ -1137,7 +1109,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["idp-single-sign-on-url"] = nil
 		} else {
-
 			t, err := expandSystemSamlIdpSingleSignOnUrl(d, v, "idp_single_sign_on_url", sv)
 			if err != nil {
 				return &obj, err
@@ -1151,7 +1122,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["idp-single-logout-url"] = nil
 		} else {
-
 			t, err := expandSystemSamlIdpSingleLogoutUrl(d, v, "idp_single_logout_url", sv)
 			if err != nil {
 				return &obj, err
@@ -1165,7 +1135,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["idp-cert"] = nil
 		} else {
-
 			t, err := expandSystemSamlIdpCert(d, v, "idp_cert", sv)
 			if err != nil {
 				return &obj, err
@@ -1179,7 +1148,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["server-address"] = nil
 		} else {
-
 			t, err := expandSystemSamlServerAddress(d, v, "server_address", sv)
 			if err != nil {
 				return &obj, err
@@ -1193,7 +1161,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["tolerance"] = nil
 		} else {
-
 			t, err := expandSystemSamlTolerance(d, v, "tolerance", sv)
 			if err != nil {
 				return &obj, err
@@ -1207,7 +1174,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["life"] = nil
 		} else {
-
 			t, err := expandSystemSamlLife(d, v, "life", sv)
 			if err != nil {
 				return &obj, err
@@ -1221,7 +1187,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		if setArgNil {
 			obj["service-providers"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSystemSamlServiceProviders(d, v, "service_providers", sv)
 			if err != nil {
 				return &obj, err

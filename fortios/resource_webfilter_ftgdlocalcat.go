@@ -236,7 +236,6 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandWebfilterFtgdLocalCatStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -246,7 +245,6 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
-
 		t, err := expandWebfilterFtgdLocalCatId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -256,7 +254,6 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("desc"); ok {
-
 		t, err := expandWebfilterFtgdLocalCatDesc(d, v, "desc", sv)
 		if err != nil {
 			return &obj, err

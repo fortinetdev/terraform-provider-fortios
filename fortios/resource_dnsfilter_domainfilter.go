@@ -89,6 +89,11 @@ func resourceDnsfilterDomainFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -252,31 +257,26 @@ func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenDnsfilterDomainFilterEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := i["domain"]; ok {
-
 			tmp["domain"] = flattenDnsfilterDomainFilterEntriesDomain(i["domain"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenDnsfilterDomainFilterEntriesType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenDnsfilterDomainFilterEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenDnsfilterDomainFilterEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
@@ -311,6 +311,12 @@ func flattenDnsfilterDomainFilterEntriesStatus(v interface{}, d *schema.Resource
 
 func refreshObjectDnsfilterDomainFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenDnsfilterDomainFilterId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -330,7 +336,7 @@ func refreshObjectDnsfilterDomainFilter(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenDnsfilterDomainFilterEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -383,31 +389,26 @@ func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandDnsfilterDomainFilterEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["domain"], _ = expandDnsfilterDomainFilterEntriesDomain(d, i["domain"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandDnsfilterDomainFilterEntriesType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandDnsfilterDomainFilterEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandDnsfilterDomainFilterEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
@@ -443,7 +444,6 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[str
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandDnsfilterDomainFilterId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -453,7 +453,6 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDnsfilterDomainFilterName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -463,7 +462,6 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandDnsfilterDomainFilterComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -473,7 +471,6 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[str
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandDnsfilterDomainFilterEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

@@ -256,7 +256,6 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserPasswordPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -266,7 +265,6 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("expire_days"); ok {
-
 		t, err := expandUserPasswordPolicyExpireDays(d, v, "expire_days", sv)
 		if err != nil {
 			return &obj, err
@@ -276,7 +274,6 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("warn_days"); ok {
-
 		t, err := expandUserPasswordPolicyWarnDays(d, v, "warn_days", sv)
 		if err != nil {
 			return &obj, err
@@ -286,7 +283,6 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("expired_password_renewal"); ok {
-
 		t, err := expandUserPasswordPolicyExpiredPasswordRenewal(d, v, "expired_password_renewal", sv)
 		if err != nil {
 			return &obj, err

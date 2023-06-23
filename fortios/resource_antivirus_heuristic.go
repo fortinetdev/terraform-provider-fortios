@@ -171,7 +171,6 @@ func getObjectAntivirusHeuristic(d *schema.ResourceData, setArgNil bool, sv stri
 		if setArgNil {
 			obj["mode"] = nil
 		} else {
-
 			t, err := expandAntivirusHeuristicMode(d, v, "mode", sv)
 			if err != nil {
 				return &obj, err

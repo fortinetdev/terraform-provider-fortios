@@ -84,6 +84,11 @@ func resourceSpamfilterDnsbl() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -247,25 +252,21 @@ func flattenSpamfilterDnsblEntries(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenSpamfilterDnsblEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSpamfilterDnsblEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := i["server"]; ok {
-
 			tmp["server"] = flattenSpamfilterDnsblEntriesServer(i["server"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenSpamfilterDnsblEntriesAction(i["action"], d, pre_append, sv)
 		}
 
@@ -296,6 +297,12 @@ func flattenSpamfilterDnsblEntriesAction(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSpamfilterDnsblId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -315,7 +322,7 @@ func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
@@ -368,25 +375,21 @@ func expandSpamfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandSpamfilterDnsblEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSpamfilterDnsblEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server"], _ = expandSpamfilterDnsblEntriesServer(d, i["server"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandSpamfilterDnsblEntriesAction(d, i["action"], pre_append, sv)
 		}
 
@@ -418,7 +421,6 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSpamfilterDnsblId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -428,7 +430,6 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSpamfilterDnsblName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -438,7 +439,6 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandSpamfilterDnsblComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -448,7 +448,6 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
-
 		t, err := expandSpamfilterDnsblEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err

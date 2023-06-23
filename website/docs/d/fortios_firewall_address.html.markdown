@@ -35,6 +35,7 @@ The following attributes are exported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `subnet` - IP address and subnet mask of address.
 * `type` - Type of address.
+* `route_tag` - route-tag address.
 * `sub_type` - Sub-type of address.
 * `clearpass_spt` - SPT (System Posture Token) value.
 * `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
@@ -60,6 +61,10 @@ The following attributes are exported:
 * `obj_type` - Object type.
 * `tag_detection_level` - Tag detection level of dynamic address object.
 * `tag_type` - Tag type of dynamic address object.
+* `hw_vendor` - Dynamic address matching hardware vendor.
+* `hw_model` - Dynamic address matching hardware model.
+* `os` - Dynamic address matching operating system.
+* `sw_version` - Dynamic address matching software version.
 * `comment` - Comment.
 * `visibility` - Enable/disable address visibility in the GUI.
 * `associated_interface` - Network interface associated with address.

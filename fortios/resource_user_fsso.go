@@ -778,7 +778,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserFssoName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -788,7 +787,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandUserFssoType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -798,7 +796,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandUserFssoServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -808,7 +805,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandUserFssoPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -818,7 +814,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandUserFssoPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -828,7 +823,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server2"); ok {
-
 		t, err := expandUserFssoServer2(d, v, "server2", sv)
 		if err != nil {
 			return &obj, err
@@ -838,7 +832,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("port2"); ok {
-
 		t, err := expandUserFssoPort2(d, v, "port2", sv)
 		if err != nil {
 			return &obj, err
@@ -848,7 +841,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password2"); ok {
-
 		t, err := expandUserFssoPassword2(d, v, "password2", sv)
 		if err != nil {
 			return &obj, err
@@ -858,7 +850,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server3"); ok {
-
 		t, err := expandUserFssoServer3(d, v, "server3", sv)
 		if err != nil {
 			return &obj, err
@@ -868,7 +859,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("port3"); ok {
-
 		t, err := expandUserFssoPort3(d, v, "port3", sv)
 		if err != nil {
 			return &obj, err
@@ -878,7 +868,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password3"); ok {
-
 		t, err := expandUserFssoPassword3(d, v, "password3", sv)
 		if err != nil {
 			return &obj, err
@@ -888,7 +877,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server4"); ok {
-
 		t, err := expandUserFssoServer4(d, v, "server4", sv)
 		if err != nil {
 			return &obj, err
@@ -898,7 +886,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("port4"); ok {
-
 		t, err := expandUserFssoPort4(d, v, "port4", sv)
 		if err != nil {
 			return &obj, err
@@ -908,7 +895,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password4"); ok {
-
 		t, err := expandUserFssoPassword4(d, v, "password4", sv)
 		if err != nil {
 			return &obj, err
@@ -918,7 +904,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("server5"); ok {
-
 		t, err := expandUserFssoServer5(d, v, "server5", sv)
 		if err != nil {
 			return &obj, err
@@ -928,7 +913,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("port5"); ok {
-
 		t, err := expandUserFssoPort5(d, v, "port5", sv)
 		if err != nil {
 			return &obj, err
@@ -938,7 +922,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password5"); ok {
-
 		t, err := expandUserFssoPassword5(d, v, "password5", sv)
 		if err != nil {
 			return &obj, err
@@ -948,7 +931,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("logon_timeout"); ok {
-
 		t, err := expandUserFssoLogonTimeout(d, v, "logon_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -958,7 +940,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandUserFssoLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
@@ -968,7 +949,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_poll_interval"); ok {
-
 		t, err := expandUserFssoGroupPollInterval(d, v, "group_poll_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -978,7 +958,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_poll"); ok {
-
 		t, err := expandUserFssoLdapPoll(d, v, "ldap_poll", sv)
 		if err != nil {
 			return &obj, err
@@ -988,7 +967,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_poll_interval"); ok {
-
 		t, err := expandUserFssoLdapPollInterval(d, v, "ldap_poll_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -998,7 +976,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_poll_filter"); ok {
-
 		t, err := expandUserFssoLdapPollFilter(d, v, "ldap_poll_filter", sv)
 		if err != nil {
 			return &obj, err
@@ -1008,7 +985,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("user_info_server"); ok {
-
 		t, err := expandUserFssoUserInfoServer(d, v, "user_info_server", sv)
 		if err != nil {
 			return &obj, err
@@ -1018,7 +994,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ssl"); ok {
-
 		t, err := expandUserFssoSsl(d, v, "ssl", sv)
 		if err != nil {
 			return &obj, err
@@ -1028,7 +1003,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("sni"); ok {
-
 		t, err := expandUserFssoSni(d, v, "sni", sv)
 		if err != nil {
 			return &obj, err
@@ -1038,7 +1012,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ssl_server_host_ip_check"); ok {
-
 		t, err := expandUserFssoSslServerHostIpCheck(d, v, "ssl_server_host_ip_check", sv)
 		if err != nil {
 			return &obj, err
@@ -1048,7 +1021,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ssl_trusted_cert"); ok {
-
 		t, err := expandUserFssoSslTrustedCert(d, v, "ssl_trusted_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -1058,7 +1030,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandUserFssoSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1068,7 +1039,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
-
 		t, err := expandUserFssoSourceIp6(d, v, "source_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1078,7 +1048,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
-
 		t, err := expandUserFssoInterfaceSelectMethod(d, v, "interface_select_method", sv)
 		if err != nil {
 			return &obj, err
@@ -1088,7 +1057,6 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandUserFssoInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err

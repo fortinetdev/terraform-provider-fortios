@@ -80,6 +80,11 @@ func resourceRouterCommunityList() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -239,25 +244,21 @@ func flattenRouterCommunityListRule(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterCommunityListRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-
 			tmp["action"] = flattenRouterCommunityListRuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := i["regexp"]; ok {
-
 			tmp["regexp"] = flattenRouterCommunityListRuleRegexp(i["regexp"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match"
 		if _, ok := i["match"]; ok {
-
 			tmp["match"] = flattenRouterCommunityListRuleMatch(i["match"], d, pre_append, sv)
 		}
 
@@ -288,6 +289,12 @@ func flattenRouterCommunityListRuleMatch(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectRouterCommunityList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenRouterCommunityListName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -301,7 +308,7 @@ func refreshObjectRouterCommunityList(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rule", flattenRouterCommunityListRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
@@ -350,25 +357,21 @@ func expandRouterCommunityListRule(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterCommunityListRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["action"], _ = expandRouterCommunityListRuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["regexp"], _ = expandRouterCommunityListRuleRegexp(d, i["regexp"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["match"], _ = expandRouterCommunityListRuleMatch(d, i["match"], pre_append, sv)
 		}
 
@@ -400,7 +403,6 @@ func getObjectRouterCommunityList(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandRouterCommunityListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -410,7 +412,6 @@ func getObjectRouterCommunityList(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandRouterCommunityListType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -420,7 +421,6 @@ func getObjectRouterCommunityList(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
-
 		t, err := expandRouterCommunityListRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err

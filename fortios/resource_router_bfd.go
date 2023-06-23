@@ -111,6 +111,11 @@ func resourceRouterBfd() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -235,13 +240,11 @@ func flattenRouterBfdNeighbor(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenRouterBfdNeighborIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenRouterBfdNeighborInterface(i["interface"], d, pre_append, sv)
 		}
 
@@ -288,49 +291,41 @@ func flattenRouterBfdMultihopTemplate(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenRouterBfdMultihopTemplateId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
 		if _, ok := i["src"]; ok {
-
 			tmp["src"] = flattenRouterBfdMultihopTemplateSrc(i["src"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-
 			tmp["dst"] = flattenRouterBfdMultihopTemplateDst(i["dst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_desired_min_tx"
 		if _, ok := i["bfd-desired-min-tx"]; ok {
-
 			tmp["bfd_desired_min_tx"] = flattenRouterBfdMultihopTemplateBfdDesiredMinTx(i["bfd-desired-min-tx"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_required_min_rx"
 		if _, ok := i["bfd-required-min-rx"]; ok {
-
 			tmp["bfd_required_min_rx"] = flattenRouterBfdMultihopTemplateBfdRequiredMinRx(i["bfd-required-min-rx"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_detect_mult"
 		if _, ok := i["bfd-detect-mult"]; ok {
-
 			tmp["bfd_detect_mult"] = flattenRouterBfdMultihopTemplateBfdDetectMult(i["bfd-detect-mult"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
 		if _, ok := i["auth-mode"]; ok {
-
 			tmp["auth_mode"] = flattenRouterBfdMultihopTemplateAuthMode(i["auth-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
-
 			tmp["md5_key"] = flattenRouterBfdMultihopTemplateMd5Key(i["md5-key"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -395,8 +390,14 @@ func flattenRouterBfdMultihopTemplateMd5Key(v interface{}, d *schema.ResourceDat
 
 func refreshObjectRouterBfd(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("neighbor", flattenRouterBfdNeighbor(o["neighbor"], d, "neighbor", sv)); err != nil {
 			if !fortiAPIPatch(o["neighbor"]) {
 				return fmt.Errorf("Error reading neighbor: %v", err)
@@ -412,7 +413,7 @@ func refreshObjectRouterBfd(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("multihop_template", flattenRouterBfdMultihopTemplate(o["multihop-template"], d, "multihop_template", sv)); err != nil {
 			if !fortiAPIPatch(o["multihop-template"]) {
 				return fmt.Errorf("Error reading multihop_template: %v", err)
@@ -453,13 +454,11 @@ func expandRouterBfdNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandRouterBfdNeighborIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface"], _ = expandRouterBfdNeighborInterface(d, i["interface"], pre_append, sv)
 		}
 
@@ -495,49 +494,41 @@ func expandRouterBfdMultihopTemplate(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandRouterBfdMultihopTemplateId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["src"], _ = expandRouterBfdMultihopTemplateSrc(d, i["src"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst"], _ = expandRouterBfdMultihopTemplateDst(d, i["dst"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_desired_min_tx"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["bfd-desired-min-tx"], _ = expandRouterBfdMultihopTemplateBfdDesiredMinTx(d, i["bfd_desired_min_tx"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_required_min_rx"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["bfd-required-min-rx"], _ = expandRouterBfdMultihopTemplateBfdRequiredMinRx(d, i["bfd_required_min_rx"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_detect_mult"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["bfd-detect-mult"], _ = expandRouterBfdMultihopTemplateBfdDetectMult(d, i["bfd_detect_mult"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-mode"], _ = expandRouterBfdMultihopTemplateAuthMode(d, i["auth_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["md5-key"], _ = expandRouterBfdMultihopTemplateMd5Key(d, i["md5_key"], pre_append, sv)
 		}
 
@@ -588,7 +579,6 @@ func getObjectRouterBfd(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["neighbor"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandRouterBfdNeighbor(d, v, "neighbor", sv)
 			if err != nil {
 				return &obj, err
@@ -602,7 +592,6 @@ func getObjectRouterBfd(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["multihop-template"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandRouterBfdMultihopTemplate(d, v, "multihop_template", sv)
 			if err != nil {
 				return &obj, err

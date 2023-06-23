@@ -57,7 +57,15 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"match_extcommunity": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"match_community_exact": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"match_extcommunity_exact": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -194,6 +202,10 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							},
 						},
 						"set_ip_nexthop": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"set_ip_prefsrc": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -346,9 +358,19 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 			tmp["match_community"] = dataSourceFlattenRouterRouteMapRuleMatchCommunity(i["match-community"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity"
+		if _, ok := i["match-extcommunity"]; ok {
+			tmp["match_extcommunity"] = dataSourceFlattenRouterRouteMapRuleMatchExtcommunity(i["match-extcommunity"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community_exact"
 		if _, ok := i["match-community-exact"]; ok {
 			tmp["match_community_exact"] = dataSourceFlattenRouterRouteMapRuleMatchCommunityExact(i["match-community-exact"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity_exact"
+		if _, ok := i["match-extcommunity-exact"]; ok {
+			tmp["match_extcommunity_exact"] = dataSourceFlattenRouterRouteMapRuleMatchExtcommunityExact(i["match-extcommunity-exact"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_origin"
@@ -481,6 +503,11 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 			tmp["set_ip_nexthop"] = dataSourceFlattenRouterRouteMapRuleSetIpNexthop(i["set-ip-nexthop"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_prefsrc"
+		if _, ok := i["set-ip-prefsrc"]; ok {
+			tmp["set_ip_prefsrc"] = dataSourceFlattenRouterRouteMapRuleSetIpPrefsrc(i["set-ip-prefsrc"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
 		if _, ok := i["set-ip6-nexthop"]; ok {
 			tmp["set_ip6_nexthop"] = dataSourceFlattenRouterRouteMapRuleSetIp6Nexthop(i["set-ip6-nexthop"], d, pre_append)
@@ -570,7 +597,15 @@ func dataSourceFlattenRouterRouteMapRuleMatchCommunity(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenRouterRouteMapRuleMatchExtcommunity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterRouteMapRuleMatchCommunityExact(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleMatchExtcommunityExact(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -803,6 +838,10 @@ func dataSourceFlattenRouterRouteMapRuleSetExtcommunitySooCommunity(v interface{
 }
 
 func dataSourceFlattenRouterRouteMapRuleSetIpNexthop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleSetIpPrefsrc(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

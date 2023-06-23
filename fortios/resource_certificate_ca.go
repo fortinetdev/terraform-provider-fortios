@@ -425,7 +425,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandCertificateCaName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -435,7 +434,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ca"); ok {
-
 		t, err := expandCertificateCaCa(d, v, "ca", sv)
 		if err != nil {
 			return &obj, err
@@ -445,7 +443,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-
 		t, err := expandCertificateCaRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
@@ -455,7 +452,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandCertificateCaSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
@@ -465,7 +461,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ssl_inspection_trusted"); ok {
-
 		t, err := expandCertificateCaSslInspectionTrusted(d, v, "ssl_inspection_trusted", sv)
 		if err != nil {
 			return &obj, err
@@ -475,7 +470,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("trusted"); ok {
-
 		t, err := expandCertificateCaTrusted(d, v, "trusted", sv)
 		if err != nil {
 			return &obj, err
@@ -485,7 +479,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-
 		t, err := expandCertificateCaScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
@@ -495,7 +488,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days"); ok {
-
 		t, err := expandCertificateCaAutoUpdateDays(d, v, "auto_update_days", sv)
 		if err != nil {
 			return &obj, err
@@ -505,7 +497,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days_warning"); ok {
-
 		t, err := expandCertificateCaAutoUpdateDaysWarning(d, v, "auto_update_days_warning", sv)
 		if err != nil {
 			return &obj, err
@@ -515,7 +506,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandCertificateCaSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -525,7 +515,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ca_identifier"); ok {
-
 		t, err := expandCertificateCaCaIdentifier(d, v, "ca_identifier", sv)
 		if err != nil {
 			return &obj, err
@@ -535,7 +524,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("obsolete"); ok {
-
 		t, err := expandCertificateCaObsolete(d, v, "obsolete", sv)
 		if err != nil {
 			return &obj, err
@@ -545,7 +533,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-
 		t, err := expandCertificateCaLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err

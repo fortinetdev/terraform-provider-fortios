@@ -179,6 +179,11 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -315,25 +320,21 @@ func flattenSwitchControllerFlowTrackingCollectors(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSwitchControllerFlowTrackingCollectorsName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSwitchControllerFlowTrackingCollectorsIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenSwitchControllerFlowTrackingCollectorsPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport"
 		if _, ok := i["transport"]; ok {
-
 			tmp["transport"] = flattenSwitchControllerFlowTrackingCollectorsTransport(i["transport"], d, pre_append, sv)
 		}
 
@@ -440,13 +441,11 @@ func flattenSwitchControllerFlowTrackingAggregates(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSwitchControllerFlowTrackingAggregatesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSwitchControllerFlowTrackingAggregatesIp(i["ip"], d, pre_append, sv)
 		}
 
@@ -476,6 +475,12 @@ func flattenSwitchControllerFlowTrackingAggregatesIp(v interface{}, d *schema.Re
 
 func refreshObjectSwitchControllerFlowTracking(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("sample_mode", flattenSwitchControllerFlowTrackingSampleMode(o["sample-mode"], d, "sample_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["sample-mode"]) {
@@ -495,7 +500,7 @@ func refreshObjectSwitchControllerFlowTracking(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("collectors", flattenSwitchControllerFlowTrackingCollectors(o["collectors"], d, "collectors", sv)); err != nil {
 			if !fortiAPIPatch(o["collectors"]) {
 				return fmt.Errorf("Error reading collectors: %v", err)
@@ -589,7 +594,7 @@ func refreshObjectSwitchControllerFlowTracking(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("aggregates", flattenSwitchControllerFlowTrackingAggregates(o["aggregates"], d, "aggregates", sv)); err != nil {
 			if !fortiAPIPatch(o["aggregates"]) {
 				return fmt.Errorf("Error reading aggregates: %v", err)
@@ -642,25 +647,21 @@ func expandSwitchControllerFlowTrackingCollectors(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSwitchControllerFlowTrackingCollectorsName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSwitchControllerFlowTrackingCollectorsIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandSwitchControllerFlowTrackingCollectorsPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["transport"], _ = expandSwitchControllerFlowTrackingCollectorsTransport(d, i["transport"], pre_append, sv)
 		}
 
@@ -756,13 +757,11 @@ func expandSwitchControllerFlowTrackingAggregates(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSwitchControllerFlowTrackingAggregatesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSwitchControllerFlowTrackingAggregatesIp(d, i["ip"], pre_append, sv)
 		}
 
@@ -789,7 +788,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["sample-mode"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingSampleMode(d, v, "sample_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -803,7 +801,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["sample-rate"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingSampleRate(d, v, "sample_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -817,7 +814,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err
@@ -831,7 +827,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["collectors"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingCollectors(d, v, "collectors", sv)
 			if err != nil {
 				return &obj, err
@@ -845,7 +840,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["collector-ip"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingCollectorIp(d, v, "collector_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -859,7 +853,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["collector-port"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingCollectorPort(d, v, "collector_port", sv)
 			if err != nil {
 				return &obj, err
@@ -873,7 +866,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["transport"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTransport(d, v, "transport", sv)
 			if err != nil {
 				return &obj, err
@@ -887,7 +879,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["level"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingLevel(d, v, "level", sv)
 			if err != nil {
 				return &obj, err
@@ -901,7 +892,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["max-export-pkt-size"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingMaxExportPktSize(d, v, "max_export_pkt_size", sv)
 			if err != nil {
 				return &obj, err
@@ -915,7 +905,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["template-export-period"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTemplateExportPeriod(d, v, "template_export_period", sv)
 			if err != nil {
 				return &obj, err
@@ -929,7 +918,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-general"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutGeneral(d, v, "timeout_general", sv)
 			if err != nil {
 				return &obj, err
@@ -943,7 +931,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-icmp"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutIcmp(d, v, "timeout_icmp", sv)
 			if err != nil {
 				return &obj, err
@@ -957,7 +944,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-max"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutMax(d, v, "timeout_max", sv)
 			if err != nil {
 				return &obj, err
@@ -971,7 +957,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-tcp"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutTcp(d, v, "timeout_tcp", sv)
 			if err != nil {
 				return &obj, err
@@ -985,7 +970,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-tcp-fin"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutTcpFin(d, v, "timeout_tcp_fin", sv)
 			if err != nil {
 				return &obj, err
@@ -999,7 +983,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-tcp-rst"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutTcpRst(d, v, "timeout_tcp_rst", sv)
 			if err != nil {
 				return &obj, err
@@ -1013,7 +996,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["timeout-udp"] = nil
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingTimeoutUdp(d, v, "timeout_udp", sv)
 			if err != nil {
 				return &obj, err
@@ -1027,7 +1009,6 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["aggregates"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandSwitchControllerFlowTrackingAggregates(d, v, "aggregates", sv)
 			if err != nil {
 				return &obj, err

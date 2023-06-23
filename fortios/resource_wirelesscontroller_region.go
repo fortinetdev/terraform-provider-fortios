@@ -275,7 +275,6 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerRegionName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -285,7 +284,6 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("image_type"); ok {
-
 		t, err := expandWirelessControllerRegionImageType(d, v, "image_type", sv)
 		if err != nil {
 			return &obj, err
@@ -295,7 +293,6 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandWirelessControllerRegionComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -305,7 +302,6 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("grayscale"); ok {
-
 		t, err := expandWirelessControllerRegionGrayscale(d, v, "grayscale", sv)
 		if err != nil {
 			return &obj, err
@@ -315,7 +311,6 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOkExists("opacity"); ok {
-
 		t, err := expandWirelessControllerRegionOpacity(d, v, "opacity", sv)
 		if err != nil {
 			return &obj, err

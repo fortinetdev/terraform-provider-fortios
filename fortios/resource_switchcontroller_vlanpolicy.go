@@ -103,6 +103,11 @@ func resourceSwitchControllerVlanPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -270,7 +275,6 @@ func flattenSwitchControllerVlanPolicyAllowedVlans(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerVlanPolicyAllowedVlansVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
@@ -313,7 +317,6 @@ func flattenSwitchControllerVlanPolicyUntaggedVlans(v interface{}, d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := i["vlan-name"]; ok {
-
 			tmp["vlan_name"] = flattenSwitchControllerVlanPolicyUntaggedVlansVlanName(i["vlan-name"], d, pre_append, sv)
 		}
 
@@ -340,6 +343,12 @@ func flattenSwitchControllerVlanPolicyDiscardMode(v interface{}, d *schema.Resou
 
 func refreshObjectSwitchControllerVlanPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerVlanPolicyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -365,7 +374,7 @@ func refreshObjectSwitchControllerVlanPolicy(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("allowed_vlans", flattenSwitchControllerVlanPolicyAllowedVlans(o["allowed-vlans"], d, "allowed_vlans", sv)); err != nil {
 			if !fortiAPIPatch(o["allowed-vlans"]) {
 				return fmt.Errorf("Error reading allowed_vlans: %v", err)
@@ -381,7 +390,7 @@ func refreshObjectSwitchControllerVlanPolicy(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("untagged_vlans", flattenSwitchControllerVlanPolicyUntaggedVlans(o["untagged-vlans"], d, "untagged_vlans", sv)); err != nil {
 			if !fortiAPIPatch(o["untagged-vlans"]) {
 				return fmt.Errorf("Error reading untagged_vlans: %v", err)
@@ -450,7 +459,6 @@ func expandSwitchControllerVlanPolicyAllowedVlans(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerVlanPolicyAllowedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
@@ -482,7 +490,6 @@ func expandSwitchControllerVlanPolicyUntaggedVlans(d *schema.ResourceData, v int
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["vlan-name"], _ = expandSwitchControllerVlanPolicyUntaggedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 		}
 
@@ -510,7 +517,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerVlanPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -520,7 +526,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSwitchControllerVlanPolicyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -530,7 +535,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
-
 		t, err := expandSwitchControllerVlanPolicyFortilink(d, v, "fortilink", sv)
 		if err != nil {
 			return &obj, err
@@ -540,7 +544,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
-
 		t, err := expandSwitchControllerVlanPolicyVlan(d, v, "vlan", sv)
 		if err != nil {
 			return &obj, err
@@ -550,7 +553,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("allowed_vlans"); ok || d.HasChange("allowed_vlans") {
-
 		t, err := expandSwitchControllerVlanPolicyAllowedVlans(d, v, "allowed_vlans", sv)
 		if err != nil {
 			return &obj, err
@@ -560,7 +562,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("untagged_vlans"); ok || d.HasChange("untagged_vlans") {
-
 		t, err := expandSwitchControllerVlanPolicyUntaggedVlans(d, v, "untagged_vlans", sv)
 		if err != nil {
 			return &obj, err
@@ -570,7 +571,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("allowed_vlans_all"); ok {
-
 		t, err := expandSwitchControllerVlanPolicyAllowedVlansAll(d, v, "allowed_vlans_all", sv)
 		if err != nil {
 			return &obj, err
@@ -580,7 +580,6 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("discard_mode"); ok {
-
 		t, err := expandSwitchControllerVlanPolicyDiscardMode(d, v, "discard_mode", sv)
 		if err != nil {
 			return &obj, err

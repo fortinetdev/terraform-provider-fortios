@@ -332,6 +332,11 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -519,7 +524,6 @@ func flattenWirelessControllerWidsProfileApBgscanDisableSchedules(v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenWirelessControllerWidsProfileApBgscanDisableSchedulesName(i["name"], d, pre_append, sv)
 		}
 
@@ -702,6 +706,12 @@ func flattenWirelessControllerWidsProfileDeauthUnknownSrcThresh(v interface{}, d
 
 func refreshObjectWirelessControllerWidsProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenWirelessControllerWidsProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -757,7 +767,7 @@ func refreshObjectWirelessControllerWidsProfile(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ap_bgscan_disable_schedules", flattenWirelessControllerWidsProfileApBgscanDisableSchedules(o["ap-bgscan-disable-schedules"], d, "ap_bgscan_disable_schedules", sv)); err != nil {
 			if !fortiAPIPatch(o["ap-bgscan-disable-schedules"]) {
 				return fmt.Errorf("Error reading ap_bgscan_disable_schedules: %v", err)
@@ -1080,7 +1090,6 @@ func expandWirelessControllerWidsProfileApBgscanDisableSchedules(d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandWirelessControllerWidsProfileApBgscanDisableSchedulesName(d, i["name"], pre_append, sv)
 		}
 
@@ -1264,7 +1273,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWirelessControllerWidsProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1274,7 +1282,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWirelessControllerWidsProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1284,7 +1291,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("sensor_mode"); ok {
-
 		t, err := expandWirelessControllerWidsProfileSensorMode(d, v, "sensor_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1294,7 +1300,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_scan"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApScan(d, v, "ap_scan", sv)
 		if err != nil {
 			return &obj, err
@@ -1304,7 +1309,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_period"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanPeriod(d, v, "ap_bgscan_period", sv)
 		if err != nil {
 			return &obj, err
@@ -1314,7 +1318,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanIntv(d, v, "ap_bgscan_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1324,7 +1327,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_duration"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanDuration(d, v, "ap_bgscan_duration", sv)
 		if err != nil {
 			return &obj, err
@@ -1334,7 +1336,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("ap_bgscan_idle"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanIdle(d, v, "ap_bgscan_idle", sv)
 		if err != nil {
 			return &obj, err
@@ -1344,7 +1345,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_report_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanReportIntv(d, v, "ap_bgscan_report_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1354,7 +1354,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_disable_schedules"); ok || d.HasChange("ap_bgscan_disable_schedules") {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanDisableSchedules(d, v, "ap_bgscan_disable_schedules", sv)
 		if err != nil {
 			return &obj, err
@@ -1364,7 +1363,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_disable_day"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanDisableDay(d, v, "ap_bgscan_disable_day", sv)
 		if err != nil {
 			return &obj, err
@@ -1374,7 +1372,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_disable_start"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanDisableStart(d, v, "ap_bgscan_disable_start", sv)
 		if err != nil {
 			return &obj, err
@@ -1384,7 +1381,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_disable_end"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApBgscanDisableEnd(d, v, "ap_bgscan_disable_end", sv)
 		if err != nil {
 			return &obj, err
@@ -1394,7 +1390,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_fgscan_report_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApFgscanReportIntv(d, v, "ap_fgscan_report_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1404,7 +1399,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_scan_passive"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApScanPassive(d, v, "ap_scan_passive", sv)
 		if err != nil {
 			return &obj, err
@@ -1414,7 +1408,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_scan_threshold"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApScanThreshold(d, v, "ap_scan_threshold", sv)
 		if err != nil {
 			return &obj, err
@@ -1424,7 +1417,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("ap_auto_suppress"); ok {
-
 		t, err := expandWirelessControllerWidsProfileApAutoSuppress(d, v, "ap_auto_suppress", sv)
 		if err != nil {
 			return &obj, err
@@ -1434,7 +1426,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("wireless_bridge"); ok {
-
 		t, err := expandWirelessControllerWidsProfileWirelessBridge(d, v, "wireless_bridge", sv)
 		if err != nil {
 			return &obj, err
@@ -1444,7 +1435,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("deauth_broadcast"); ok {
-
 		t, err := expandWirelessControllerWidsProfileDeauthBroadcast(d, v, "deauth_broadcast", sv)
 		if err != nil {
 			return &obj, err
@@ -1454,7 +1444,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("null_ssid_probe_resp"); ok {
-
 		t, err := expandWirelessControllerWidsProfileNullSsidProbeResp(d, v, "null_ssid_probe_resp", sv)
 		if err != nil {
 			return &obj, err
@@ -1464,7 +1453,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("long_duration_attack"); ok {
-
 		t, err := expandWirelessControllerWidsProfileLongDurationAttack(d, v, "long_duration_attack", sv)
 		if err != nil {
 			return &obj, err
@@ -1474,7 +1462,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("long_duration_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileLongDurationThresh(d, v, "long_duration_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1484,7 +1471,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("invalid_mac_oui"); ok {
-
 		t, err := expandWirelessControllerWidsProfileInvalidMacOui(d, v, "invalid_mac_oui", sv)
 		if err != nil {
 			return &obj, err
@@ -1494,7 +1480,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("weak_wep_iv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileWeakWepIv(d, v, "weak_wep_iv", sv)
 		if err != nil {
 			return &obj, err
@@ -1504,7 +1489,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("auth_frame_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAuthFrameFlood(d, v, "auth_frame_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1514,7 +1498,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("auth_flood_time"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAuthFloodTime(d, v, "auth_flood_time", sv)
 		if err != nil {
 			return &obj, err
@@ -1524,7 +1507,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("auth_flood_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAuthFloodThresh(d, v, "auth_flood_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1534,7 +1516,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("assoc_frame_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAssocFrameFlood(d, v, "assoc_frame_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1544,7 +1525,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("assoc_flood_time"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAssocFloodTime(d, v, "assoc_flood_time", sv)
 		if err != nil {
 			return &obj, err
@@ -1554,7 +1534,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("assoc_flood_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAssocFloodThresh(d, v, "assoc_flood_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1564,7 +1543,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("spoofed_deauth"); ok {
-
 		t, err := expandWirelessControllerWidsProfileSpoofedDeauth(d, v, "spoofed_deauth", sv)
 		if err != nil {
 			return &obj, err
@@ -1574,7 +1552,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("asleap_attack"); ok {
-
 		t, err := expandWirelessControllerWidsProfileAsleapAttack(d, v, "asleap_attack", sv)
 		if err != nil {
 			return &obj, err
@@ -1584,7 +1561,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_start_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolStartFlood(d, v, "eapol_start_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1594,7 +1570,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_start_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolStartThresh(d, v, "eapol_start_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1604,7 +1579,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_start_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolStartIntv(d, v, "eapol_start_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1614,7 +1588,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_logoff_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolLogoffFlood(d, v, "eapol_logoff_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1624,7 +1597,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_logoff_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolLogoffThresh(d, v, "eapol_logoff_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1634,7 +1606,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_logoff_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolLogoffIntv(d, v, "eapol_logoff_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1644,7 +1615,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_succ_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolSuccFlood(d, v, "eapol_succ_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1654,7 +1624,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_succ_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolSuccThresh(d, v, "eapol_succ_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1664,7 +1633,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_succ_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolSuccIntv(d, v, "eapol_succ_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1674,7 +1642,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_fail_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolFailFlood(d, v, "eapol_fail_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1684,7 +1651,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_fail_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolFailThresh(d, v, "eapol_fail_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1694,7 +1660,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_fail_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolFailIntv(d, v, "eapol_fail_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1704,7 +1669,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_pre_succ_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolPreSuccFlood(d, v, "eapol_pre_succ_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1714,7 +1678,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_pre_succ_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolPreSuccThresh(d, v, "eapol_pre_succ_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1724,7 +1687,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_pre_succ_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolPreSuccIntv(d, v, "eapol_pre_succ_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1734,7 +1696,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_pre_fail_flood"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolPreFailFlood(d, v, "eapol_pre_fail_flood", sv)
 		if err != nil {
 			return &obj, err
@@ -1744,7 +1705,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_pre_fail_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolPreFailThresh(d, v, "eapol_pre_fail_thresh", sv)
 		if err != nil {
 			return &obj, err
@@ -1754,7 +1714,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("eapol_pre_fail_intv"); ok {
-
 		t, err := expandWirelessControllerWidsProfileEapolPreFailIntv(d, v, "eapol_pre_fail_intv", sv)
 		if err != nil {
 			return &obj, err
@@ -1764,7 +1723,6 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOkExists("deauth_unknown_src_thresh"); ok {
-
 		t, err := expandWirelessControllerWidsProfileDeauthUnknownSrcThresh(d, v, "deauth_unknown_src_thresh", sv)
 		if err != nil {
 			return &obj, err

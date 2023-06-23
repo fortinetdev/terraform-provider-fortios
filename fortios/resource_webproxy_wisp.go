@@ -311,7 +311,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandWebProxyWispName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -321,7 +320,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWebProxyWispComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -331,7 +329,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("outgoing_ip"); ok {
-
 		t, err := expandWebProxyWispOutgoingIp(d, v, "outgoing_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -341,7 +338,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("server_ip"); ok {
-
 		t, err := expandWebProxyWispServerIp(d, v, "server_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -351,7 +347,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("server_port"); ok {
-
 		t, err := expandWebProxyWispServerPort(d, v, "server_port", sv)
 		if err != nil {
 			return &obj, err
@@ -361,7 +356,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("max_connections"); ok {
-
 		t, err := expandWebProxyWispMaxConnections(d, v, "max_connections", sv)
 		if err != nil {
 			return &obj, err
@@ -371,7 +365,6 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {
-
 		t, err := expandWebProxyWispTimeout(d, v, "timeout", sv)
 		if err != nil {
 			return &obj, err

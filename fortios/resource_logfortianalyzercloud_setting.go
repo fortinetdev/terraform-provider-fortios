@@ -167,6 +167,11 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -303,7 +308,6 @@ func flattenLogFortianalyzerCloudSettingSerial(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenLogFortianalyzerCloudSettingSerialName(i["name"], d, pre_append, sv)
 		}
 
@@ -394,6 +398,12 @@ func flattenLogFortianalyzerCloudSettingInterface(v interface{}, d *schema.Resou
 
 func refreshObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenLogFortianalyzerCloudSettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -413,7 +423,7 @@ func refreshObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, o map[str
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("serial", flattenLogFortianalyzerCloudSettingSerial(o["serial"], d, "serial", sv)); err != nil {
 			if !fortiAPIPatch(o["serial"]) {
 				return fmt.Errorf("Error reading serial: %v", err)
@@ -574,7 +584,6 @@ func expandLogFortianalyzerCloudSettingSerial(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandLogFortianalyzerCloudSettingSerialName(d, i["name"], pre_append, sv)
 		}
 
@@ -669,7 +678,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -683,7 +691,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["ips-archive"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingIpsArchive(d, v, "ips_archive", sv)
 			if err != nil {
 				return &obj, err
@@ -697,7 +704,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["certificate-verification"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingCertificateVerification(d, v, "certificate_verification", sv)
 			if err != nil {
 				return &obj, err
@@ -711,7 +717,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["serial"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingSerial(d, v, "serial", sv)
 			if err != nil {
 				return &obj, err
@@ -725,7 +730,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["preshared-key"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingPresharedKey(d, v, "preshared_key", sv)
 			if err != nil {
 				return &obj, err
@@ -739,7 +743,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["access-config"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingAccessConfig(d, v, "access_config", sv)
 			if err != nil {
 				return &obj, err
@@ -753,7 +756,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["hmac-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingHmacAlgorithm(d, v, "hmac_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -767,7 +769,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["enc-algorithm"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingEncAlgorithm(d, v, "enc_algorithm", sv)
 			if err != nil {
 				return &obj, err
@@ -781,7 +782,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["ssl-min-proto-version"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 			if err != nil {
 				return &obj, err
@@ -795,7 +795,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["conn-timeout"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingConnTimeout(d, v, "conn_timeout", sv)
 			if err != nil {
 				return &obj, err
@@ -809,7 +808,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["monitor-keepalive-period"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingMonitorKeepalivePeriod(d, v, "monitor_keepalive_period", sv)
 			if err != nil {
 				return &obj, err
@@ -823,7 +821,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["monitor-failure-retry-period"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingMonitorFailureRetryPeriod(d, v, "monitor_failure_retry_period", sv)
 			if err != nil {
 				return &obj, err
@@ -837,7 +834,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["certificate"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingCertificate(d, v, "certificate", sv)
 			if err != nil {
 				return &obj, err
@@ -851,7 +847,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["source-ip"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingSourceIp(d, v, "source_ip", sv)
 			if err != nil {
 				return &obj, err
@@ -865,7 +860,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-option"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingUploadOption(d, v, "upload_option", sv)
 			if err != nil {
 				return &obj, err
@@ -879,7 +873,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-interval"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingUploadInterval(d, v, "upload_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -893,7 +886,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-day"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingUploadDay(d, v, "upload_day", sv)
 			if err != nil {
 				return &obj, err
@@ -907,7 +899,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["upload-time"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingUploadTime(d, v, "upload_time", sv)
 			if err != nil {
 				return &obj, err
@@ -921,7 +912,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["priority"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingPriority(d, v, "priority", sv)
 			if err != nil {
 				return &obj, err
@@ -935,7 +925,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["max-log-rate"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingMaxLogRate(d, v, "max_log_rate", sv)
 			if err != nil {
 				return &obj, err
@@ -949,7 +938,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["interface-select-method"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
 			if err != nil {
 				return &obj, err
@@ -963,7 +951,6 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 		if setArgNil {
 			obj["interface"] = nil
 		} else {
-
 			t, err := expandLogFortianalyzerCloudSettingInterface(d, v, "interface", sv)
 			if err != nil {
 				return &obj, err

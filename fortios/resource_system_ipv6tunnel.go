@@ -292,7 +292,6 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemIpv6TunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -302,7 +301,6 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandSystemIpv6TunnelSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
@@ -312,7 +310,6 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("destination"); ok {
-
 		t, err := expandSystemIpv6TunnelDestination(d, v, "destination", sv)
 		if err != nil {
 			return &obj, err
@@ -322,7 +319,6 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemIpv6TunnelInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -332,7 +328,6 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {
-
 		t, err := expandSystemIpv6TunnelUseSdwan(d, v, "use_sdwan", sv)
 		if err != nil {
 			return &obj, err
@@ -342,7 +337,6 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
-
 		t, err := expandSystemIpv6TunnelAutoAsicOffload(d, v, "auto_asic_offload", sv)
 		if err != nil {
 			return &obj, err

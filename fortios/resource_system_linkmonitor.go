@@ -148,7 +148,7 @@ func resourceSystemLinkMonitor() *schema.Resource {
 			},
 			"probe_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(500, 5000),
+				ValidateFunc: validation.IntBetween(20, 5000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -183,7 +183,7 @@ func resourceSystemLinkMonitor() *schema.Resource {
 			},
 			"packet_size": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(64, 1024),
+				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -272,6 +272,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				},
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -447,7 +452,6 @@ func flattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := i["address"]; ok {
-
 			tmp["address"] = flattenSystemLinkMonitorServerAddress(i["address"], d, pre_append, sv)
 		}
 
@@ -506,7 +510,6 @@ func flattenSystemLinkMonitorRoute(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := i["subnet"]; ok {
-
 			tmp["subnet"] = flattenSystemLinkMonitorRouteSubnet(i["subnet"], d, pre_append, sv)
 		}
 
@@ -637,31 +640,26 @@ func flattenSystemLinkMonitorServerList(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemLinkMonitorServerListId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-
 			tmp["dst"] = flattenSystemLinkMonitorServerListDst(i["dst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-
 			tmp["protocol"] = flattenSystemLinkMonitorServerListProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-
 			tmp["port"] = flattenSystemLinkMonitorServerListPort(i["port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := i["weight"]; ok {
-
 			tmp["weight"] = flattenSystemLinkMonitorServerListWeight(i["weight"], d, pre_append, sv)
 		}
 
@@ -696,6 +694,12 @@ func flattenSystemLinkMonitorServerListWeight(v interface{}, d *schema.ResourceD
 
 func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemLinkMonitorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -727,7 +731,7 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server", sv)); err != nil {
 			if !fortiAPIPatch(o["server"]) {
 				return fmt.Errorf("Error reading server: %v", err)
@@ -767,7 +771,7 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("route", flattenSystemLinkMonitorRoute(o["route"], d, "route", sv)); err != nil {
 			if !fortiAPIPatch(o["route"]) {
 				return fmt.Errorf("Error reading route: %v", err)
@@ -909,7 +913,7 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("server_list", flattenSystemLinkMonitorServerList(o["server-list"], d, "server_list", sv)); err != nil {
 			if !fortiAPIPatch(o["server-list"]) {
 				return fmt.Errorf("Error reading server_list: %v", err)
@@ -970,7 +974,6 @@ func expandSystemLinkMonitorServer(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["address"], _ = expandSystemLinkMonitorServerAddress(d, i["address"], pre_append, sv)
 		}
 
@@ -1018,7 +1021,6 @@ func expandSystemLinkMonitorRoute(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["subnet"], _ = expandSystemLinkMonitorRouteSubnet(d, i["subnet"], pre_append, sv)
 		}
 
@@ -1138,31 +1140,26 @@ func expandSystemLinkMonitorServerList(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemLinkMonitorServerListId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["dst"], _ = expandSystemLinkMonitorServerListDst(d, i["dst"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["protocol"], _ = expandSystemLinkMonitorServerListProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["port"], _ = expandSystemLinkMonitorServerListPort(d, i["port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["weight"], _ = expandSystemLinkMonitorServerListWeight(d, i["weight"], pre_append, sv)
 		}
 
@@ -1198,7 +1195,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemLinkMonitorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1208,7 +1204,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("addr_mode"); ok {
-
 		t, err := expandSystemLinkMonitorAddrMode(d, v, "addr_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1218,7 +1213,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok {
-
 		t, err := expandSystemLinkMonitorSrcintf(d, v, "srcintf", sv)
 		if err != nil {
 			return &obj, err
@@ -1228,7 +1222,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("server_config"); ok {
-
 		t, err := expandSystemLinkMonitorServerConfig(d, v, "server_config", sv)
 		if err != nil {
 			return &obj, err
@@ -1238,7 +1231,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-
 		t, err := expandSystemLinkMonitorServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1248,7 +1240,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("server"); ok || d.HasChange("server") {
-
 		t, err := expandSystemLinkMonitorServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -1258,7 +1249,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-
 		t, err := expandSystemLinkMonitorProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1268,7 +1258,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandSystemLinkMonitorPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -1278,7 +1267,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("gateway_ip"); ok {
-
 		t, err := expandSystemLinkMonitorGatewayIp(d, v, "gateway_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1288,7 +1276,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("gateway_ip6"); ok {
-
 		t, err := expandSystemLinkMonitorGatewayIp6(d, v, "gateway_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1298,7 +1285,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("route"); ok || d.HasChange("route") {
-
 		t, err := expandSystemLinkMonitorRoute(d, v, "route", sv)
 		if err != nil {
 			return &obj, err
@@ -1308,7 +1294,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandSystemLinkMonitorSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -1318,7 +1303,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
-
 		t, err := expandSystemLinkMonitorSourceIp6(d, v, "source_ip6", sv)
 		if err != nil {
 			return &obj, err
@@ -1328,7 +1312,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("http_get"); ok {
-
 		t, err := expandSystemLinkMonitorHttpGet(d, v, "http_get", sv)
 		if err != nil {
 			return &obj, err
@@ -1338,7 +1321,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("http_agent"); ok {
-
 		t, err := expandSystemLinkMonitorHttpAgent(d, v, "http_agent", sv)
 		if err != nil {
 			return &obj, err
@@ -1348,7 +1330,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("http_match"); ok {
-
 		t, err := expandSystemLinkMonitorHttpMatch(d, v, "http_match", sv)
 		if err != nil {
 			return &obj, err
@@ -1358,7 +1339,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("interval"); ok {
-
 		t, err := expandSystemLinkMonitorInterval(d, v, "interval", sv)
 		if err != nil {
 			return &obj, err
@@ -1368,7 +1348,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("probe_timeout"); ok {
-
 		t, err := expandSystemLinkMonitorProbeTimeout(d, v, "probe_timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -1378,7 +1357,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("failtime"); ok {
-
 		t, err := expandSystemLinkMonitorFailtime(d, v, "failtime", sv)
 		if err != nil {
 			return &obj, err
@@ -1388,7 +1366,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("recoverytime"); ok {
-
 		t, err := expandSystemLinkMonitorRecoverytime(d, v, "recoverytime", sv)
 		if err != nil {
 			return &obj, err
@@ -1398,7 +1375,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("probe_count"); ok {
-
 		t, err := expandSystemLinkMonitorProbeCount(d, v, "probe_count", sv)
 		if err != nil {
 			return &obj, err
@@ -1408,7 +1384,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("security_mode"); ok {
-
 		t, err := expandSystemLinkMonitorSecurityMode(d, v, "security_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -1418,7 +1393,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandSystemLinkMonitorPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -1427,8 +1401,7 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("packet_size"); ok {
-
+	if v, ok := d.GetOkExists("packet_size"); ok {
 		t, err := expandSystemLinkMonitorPacketSize(d, v, "packet_size", sv)
 		if err != nil {
 			return &obj, err
@@ -1438,7 +1411,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ha_priority"); ok {
-
 		t, err := expandSystemLinkMonitorHaPriority(d, v, "ha_priority", sv)
 		if err != nil {
 			return &obj, err
@@ -1448,7 +1420,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("fail_weight"); ok {
-
 		t, err := expandSystemLinkMonitorFailWeight(d, v, "fail_weight", sv)
 		if err != nil {
 			return &obj, err
@@ -1458,7 +1429,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("update_cascade_interface"); ok {
-
 		t, err := expandSystemLinkMonitorUpdateCascadeInterface(d, v, "update_cascade_interface", sv)
 		if err != nil {
 			return &obj, err
@@ -1468,7 +1438,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("update_static_route"); ok {
-
 		t, err := expandSystemLinkMonitorUpdateStaticRoute(d, v, "update_static_route", sv)
 		if err != nil {
 			return &obj, err
@@ -1478,7 +1447,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("update_policy_route"); ok {
-
 		t, err := expandSystemLinkMonitorUpdatePolicyRoute(d, v, "update_policy_route", sv)
 		if err != nil {
 			return &obj, err
@@ -1488,7 +1456,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemLinkMonitorStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -1498,7 +1465,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("diffservcode"); ok {
-
 		t, err := expandSystemLinkMonitorDiffservcode(d, v, "diffservcode", sv)
 		if err != nil {
 			return &obj, err
@@ -1508,7 +1474,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("class_id"); ok {
-
 		t, err := expandSystemLinkMonitorClassId(d, v, "class_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1518,7 +1483,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("service_detection"); ok {
-
 		t, err := expandSystemLinkMonitorServiceDetection(d, v, "service_detection", sv)
 		if err != nil {
 			return &obj, err
@@ -1528,7 +1492,6 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("server_list"); ok || d.HasChange("server_list") {
-
 		t, err := expandSystemLinkMonitorServerList(d, v, "server_list", sv)
 		if err != nil {
 			return &obj, err

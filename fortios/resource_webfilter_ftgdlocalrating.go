@@ -253,7 +253,6 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("url"); ok {
-
 		t, err := expandWebfilterFtgdLocalRatingUrl(d, v, "url", sv)
 		if err != nil {
 			return &obj, err
@@ -263,7 +262,6 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandWebfilterFtgdLocalRatingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -273,7 +271,6 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandWebfilterFtgdLocalRatingComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -283,7 +280,6 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("rating"); ok {
-
 		t, err := expandWebfilterFtgdLocalRatingRating(d, v, "rating", sv)
 		if err != nil {
 			return &obj, err

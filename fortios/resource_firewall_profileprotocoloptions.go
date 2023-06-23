@@ -167,6 +167,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"unknown_content_encoding": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 26214),
@@ -890,6 +895,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1050,193 +1060,166 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsHttpPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsHttpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := i["inspect-all"]; ok {
-
 		result["inspect_all"] = flattenFirewallProfileProtocolOptionsHttpInspectAll(i["inspect-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
-
 		result["proxy_after_tcp_handshake"] = flattenFirewallProfileProtocolOptionsHttpProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsHttpOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := i["comfort-interval"]; ok {
-
 		result["comfort_interval"] = flattenFirewallProfileProtocolOptionsHttpComfortInterval(i["comfort-interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "comfort_amount"
 	if _, ok := i["comfort-amount"]; ok {
-
 		result["comfort_amount"] = flattenFirewallProfileProtocolOptionsHttpComfortAmount(i["comfort-amount"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "range_block"
 	if _, ok := i["range-block"]; ok {
-
 		result["range_block"] = flattenFirewallProfileProtocolOptionsHttpRangeBlock(i["range-block"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "http_policy"
 	if _, ok := i["http-policy"]; ok {
-
 		result["http_policy"] = flattenFirewallProfileProtocolOptionsHttpHttpPolicy(i["http-policy"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "strip_x_forwarded_for"
 	if _, ok := i["strip-x-forwarded-for"]; ok {
-
 		result["strip_x_forwarded_for"] = flattenFirewallProfileProtocolOptionsHttpStripXForwardedFor(i["strip-x-forwarded-for"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "post_lang"
 	if _, ok := i["post-lang"]; ok {
-
 		result["post_lang"] = flattenFirewallProfileProtocolOptionsHttpPostLang(i["post-lang"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fortinet_bar"
 	if _, ok := i["fortinet-bar"]; ok {
-
 		result["fortinet_bar"] = flattenFirewallProfileProtocolOptionsHttpFortinetBar(i["fortinet-bar"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "fortinet_bar_port"
 	if _, ok := i["fortinet-bar-port"]; ok {
-
 		result["fortinet_bar_port"] = flattenFirewallProfileProtocolOptionsHttpFortinetBarPort(i["fortinet-bar-port"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "streaming_content_bypass"
 	if _, ok := i["streaming-content-bypass"]; ok {
-
 		result["streaming_content_bypass"] = flattenFirewallProfileProtocolOptionsHttpStreamingContentBypass(i["streaming-content-bypass"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "switching_protocols"
 	if _, ok := i["switching-protocols"]; ok {
-
 		result["switching_protocols"] = flattenFirewallProfileProtocolOptionsHttpSwitchingProtocols(i["switching-protocols"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unknown_http_version"
 	if _, ok := i["unknown-http-version"]; ok {
-
 		result["unknown_http_version"] = flattenFirewallProfileProtocolOptionsHttpUnknownHttpVersion(i["unknown-http-version"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := i["tunnel-non-http"]; ok {
-
 		result["tunnel_non_http"] = flattenFirewallProfileProtocolOptionsHttpTunnelNonHttp(i["tunnel-non-http"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "h2c"
 	if _, ok := i["h2c"]; ok {
-
 		result["h2c"] = flattenFirewallProfileProtocolOptionsHttpH2C(i["h2c"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "unknown_content_encoding"
+	if _, ok := i["unknown-content-encoding"]; ok {
+		result["unknown_content_encoding"] = flattenFirewallProfileProtocolOptionsHttpUnknownContentEncoding(i["unknown-content-encoding"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsHttpOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsHttpUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsHttpUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := i["stream-based-uncompressed-limit"]; ok {
-
 		result["stream_based_uncompressed_limit"] = flattenFirewallProfileProtocolOptionsHttpStreamBasedUncompressedLimit(i["stream-based-uncompressed-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsHttpScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "verify_dns_for_policy_matching"
 	if _, ok := i["verify-dns-for-policy-matching"]; ok {
-
 		result["verify_dns_for_policy_matching"] = flattenFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(i["verify-dns-for-policy-matching"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "block_page_status_code"
 	if _, ok := i["block-page-status-code"]; ok {
-
 		result["block_page_status_code"] = flattenFirewallProfileProtocolOptionsHttpBlockPageStatusCode(i["block-page-status-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "retry_count"
 	if _, ok := i["retry-count"]; ok {
-
 		result["retry_count"] = flattenFirewallProfileProtocolOptionsHttpRetryCount(i["retry-count"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := i["tcp-window-type"]; ok {
-
 		result["tcp_window_type"] = flattenFirewallProfileProtocolOptionsHttpTcpWindowType(i["tcp-window-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := i["tcp-window-minimum"]; ok {
-
 		result["tcp_window_minimum"] = flattenFirewallProfileProtocolOptionsHttpTcpWindowMinimum(i["tcp-window-minimum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := i["tcp-window-maximum"]; ok {
-
 		result["tcp_window_maximum"] = flattenFirewallProfileProtocolOptionsHttpTcpWindowMaximum(i["tcp-window-maximum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := i["tcp-window-size"]; ok {
-
 		result["tcp_window_size"] = flattenFirewallProfileProtocolOptionsHttpTcpWindowSize(i["tcp-window-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := i["ssl-offloaded"]; ok {
-
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsHttpSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "address_ip_rating"
 	if _, ok := i["address-ip-rating"]; ok {
-
 		result["address_ip_rating"] = flattenFirewallProfileProtocolOptionsHttpAddressIpRating(i["address-ip-rating"], d, pre_append, sv)
 	}
 
@@ -1316,6 +1299,10 @@ func flattenFirewallProfileProtocolOptionsHttpH2C(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenFirewallProfileProtocolOptionsHttpUnknownContentEncoding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileProtocolOptionsHttpOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1383,103 +1370,86 @@ func flattenFirewallProfileProtocolOptionsFtp(v interface{}, d *schema.ResourceD
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsFtpPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsFtpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := i["inspect-all"]; ok {
-
 		result["inspect_all"] = flattenFirewallProfileProtocolOptionsFtpInspectAll(i["inspect-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsFtpOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := i["comfort-interval"]; ok {
-
 		result["comfort_interval"] = flattenFirewallProfileProtocolOptionsFtpComfortInterval(i["comfort-interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "comfort_amount"
 	if _, ok := i["comfort-amount"]; ok {
-
 		result["comfort_amount"] = flattenFirewallProfileProtocolOptionsFtpComfortAmount(i["comfort-amount"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsFtpOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsFtpUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsFtpUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := i["stream-based-uncompressed-limit"]; ok {
-
 		result["stream_based_uncompressed_limit"] = flattenFirewallProfileProtocolOptionsFtpStreamBasedUncompressedLimit(i["stream-based-uncompressed-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsFtpScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := i["tcp-window-type"]; ok {
-
 		result["tcp_window_type"] = flattenFirewallProfileProtocolOptionsFtpTcpWindowType(i["tcp-window-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := i["tcp-window-minimum"]; ok {
-
 		result["tcp_window_minimum"] = flattenFirewallProfileProtocolOptionsFtpTcpWindowMinimum(i["tcp-window-minimum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := i["tcp-window-maximum"]; ok {
-
 		result["tcp_window_maximum"] = flattenFirewallProfileProtocolOptionsFtpTcpWindowMaximum(i["tcp-window-maximum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := i["tcp-window-size"]; ok {
-
 		result["tcp_window_size"] = flattenFirewallProfileProtocolOptionsFtpTcpWindowSize(i["tcp-window-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := i["ssl-offloaded"]; ok {
-
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsFtpSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "explicit_ftp_tls"
 	if _, ok := i["explicit-ftp-tls"]; ok {
-
 		result["explicit_ftp_tls"] = flattenFirewallProfileProtocolOptionsFtpExplicitFtpTls(i["explicit-ftp-tls"], d, pre_append, sv)
 	}
 
@@ -1566,61 +1536,51 @@ func flattenFirewallProfileProtocolOptionsImap(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsImapPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsImapStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := i["inspect-all"]; ok {
-
 		result["inspect_all"] = flattenFirewallProfileProtocolOptionsImapInspectAll(i["inspect-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
-
 		result["proxy_after_tcp_handshake"] = flattenFirewallProfileProtocolOptionsImapProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsImapOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsImapOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsImapUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsImapUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsImapScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := i["ssl-offloaded"]; ok {
-
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsImapSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
@@ -1679,43 +1639,36 @@ func flattenFirewallProfileProtocolOptionsMapi(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsMapiPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsMapiStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsMapiOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsMapiOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsMapiUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsMapiUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsMapiScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
@@ -1762,61 +1715,51 @@ func flattenFirewallProfileProtocolOptionsPop3(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsPop3Ports(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsPop3Status(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := i["inspect-all"]; ok {
-
 		result["inspect_all"] = flattenFirewallProfileProtocolOptionsPop3InspectAll(i["inspect-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
-
 		result["proxy_after_tcp_handshake"] = flattenFirewallProfileProtocolOptionsPop3ProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsPop3Options(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsPop3OversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsPop3UncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsPop3UncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsPop3ScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := i["ssl-offloaded"]; ok {
-
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsPop3SslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
@@ -1875,67 +1818,56 @@ func flattenFirewallProfileProtocolOptionsSmtp(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsSmtpPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsSmtpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := i["inspect-all"]; ok {
-
 		result["inspect_all"] = flattenFirewallProfileProtocolOptionsSmtpInspectAll(i["inspect-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
-
 		result["proxy_after_tcp_handshake"] = flattenFirewallProfileProtocolOptionsSmtpProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsSmtpOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsSmtpOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsSmtpUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsSmtpUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsSmtpScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "server_busy"
 	if _, ok := i["server-busy"]; ok {
-
 		result["server_busy"] = flattenFirewallProfileProtocolOptionsSmtpServerBusy(i["server-busy"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := i["ssl-offloaded"]; ok {
-
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsSmtpSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
@@ -1998,55 +1930,46 @@ func flattenFirewallProfileProtocolOptionsNntp(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsNntpPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsNntpStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := i["inspect-all"]; ok {
-
 		result["inspect_all"] = flattenFirewallProfileProtocolOptionsNntpInspectAll(i["inspect-all"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
-
 		result["proxy_after_tcp_handshake"] = flattenFirewallProfileProtocolOptionsNntpProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsNntpOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsNntpOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsNntpUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsNntpUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsNntpScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
@@ -2101,79 +2024,66 @@ func flattenFirewallProfileProtocolOptionsSsh(v interface{}, d *schema.ResourceD
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsSshOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := i["comfort-interval"]; ok {
-
 		result["comfort_interval"] = flattenFirewallProfileProtocolOptionsSshComfortInterval(i["comfort-interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "comfort_amount"
 	if _, ok := i["comfort-amount"]; ok {
-
 		result["comfort_amount"] = flattenFirewallProfileProtocolOptionsSshComfortAmount(i["comfort-amount"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsSshOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsSshUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsSshUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := i["stream-based-uncompressed-limit"]; ok {
-
 		result["stream_based_uncompressed_limit"] = flattenFirewallProfileProtocolOptionsSshStreamBasedUncompressedLimit(i["stream-based-uncompressed-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsSshScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := i["tcp-window-type"]; ok {
-
 		result["tcp_window_type"] = flattenFirewallProfileProtocolOptionsSshTcpWindowType(i["tcp-window-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := i["tcp-window-minimum"]; ok {
-
 		result["tcp_window_minimum"] = flattenFirewallProfileProtocolOptionsSshTcpWindowMinimum(i["tcp-window-minimum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := i["tcp-window-maximum"]; ok {
-
 		result["tcp_window_maximum"] = flattenFirewallProfileProtocolOptionsSshTcpWindowMaximum(i["tcp-window-maximum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := i["tcp-window-size"]; ok {
-
 		result["tcp_window_size"] = flattenFirewallProfileProtocolOptionsSshTcpWindowSize(i["tcp-window-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := i["ssl-offloaded"]; ok {
-
 		result["ssl_offloaded"] = flattenFirewallProfileProtocolOptionsSshSslOffloaded(i["ssl-offloaded"], d, pre_append, sv)
 	}
 
@@ -2244,13 +2154,11 @@ func flattenFirewallProfileProtocolOptionsDns(v interface{}, d *schema.ResourceD
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsDnsPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsDnsStatus(i["status"], d, pre_append, sv)
 	}
 
@@ -2277,85 +2185,71 @@ func flattenFirewallProfileProtocolOptionsCifs(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := i["ports"]; ok {
-
 		result["ports"] = flattenFirewallProfileProtocolOptionsCifsPorts(i["ports"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsCifsStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
-
 		result["options"] = flattenFirewallProfileProtocolOptionsCifsOptions(i["options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := i["oversize-limit"]; ok {
-
 		result["oversize_limit"] = flattenFirewallProfileProtocolOptionsCifsOversizeLimit(i["oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := i["uncompressed-oversize-limit"]; ok {
-
 		result["uncompressed_oversize_limit"] = flattenFirewallProfileProtocolOptionsCifsUncompressedOversizeLimit(i["uncompressed-oversize-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := i["uncompressed-nest-limit"]; ok {
-
 		result["uncompressed_nest_limit"] = flattenFirewallProfileProtocolOptionsCifsUncompressedNestLimit(i["uncompressed-nest-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := i["scan-bzip2"]; ok {
-
 		result["scan_bzip2"] = flattenFirewallProfileProtocolOptionsCifsScanBzip2(i["scan-bzip2"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := i["tcp-window-type"]; ok {
-
 		result["tcp_window_type"] = flattenFirewallProfileProtocolOptionsCifsTcpWindowType(i["tcp-window-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := i["tcp-window-minimum"]; ok {
-
 		result["tcp_window_minimum"] = flattenFirewallProfileProtocolOptionsCifsTcpWindowMinimum(i["tcp-window-minimum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := i["tcp-window-maximum"]; ok {
-
 		result["tcp_window_maximum"] = flattenFirewallProfileProtocolOptionsCifsTcpWindowMaximum(i["tcp-window-maximum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := i["tcp-window-size"]; ok {
-
 		result["tcp_window_size"] = flattenFirewallProfileProtocolOptionsCifsTcpWindowSize(i["tcp-window-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "server_credential_type"
 	if _, ok := i["server-credential-type"]; ok {
-
 		result["server_credential_type"] = flattenFirewallProfileProtocolOptionsCifsServerCredentialType(i["server-credential-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "domain_controller"
 	if _, ok := i["domain-controller"]; ok {
-
 		result["domain_controller"] = flattenFirewallProfileProtocolOptionsCifsDomainController(i["domain-controller"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "server_keytab"
 	if _, ok := i["server-keytab"]; ok {
-
 		result["server_keytab"] = flattenFirewallProfileProtocolOptionsCifsServerKeytab(i["server-keytab"], d, pre_append, sv)
 	}
 
@@ -2441,13 +2335,11 @@ func flattenFirewallProfileProtocolOptionsCifsServerKeytab(v interface{}, d *sch
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if _, ok := i["principal"]; ok {
-
 			tmp["principal"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabPrincipal(i["principal"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if _, ok := i["keytab"]; ok {
-
 			tmp["keytab"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabKeytab(i["keytab"], d, pre_append, sv)
 		}
 
@@ -2479,13 +2371,11 @@ func flattenFirewallProfileProtocolOptionsMailSignature(v interface{}, d *schema
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenFirewallProfileProtocolOptionsMailSignatureStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "signature"
 	if _, ok := i["signature"]; ok {
-
 		result["signature"] = flattenFirewallProfileProtocolOptionsMailSignatureSignature(i["signature"], d, pre_append, sv)
 	}
 
@@ -2507,6 +2397,12 @@ func flattenFirewallProfileProtocolOptionsRpcOverHttp(v interface{}, d *schema.R
 
 func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallProfileProtocolOptionsName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -2544,7 +2440,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("http", flattenFirewallProfileProtocolOptionsHttp(o["http"], d, "http", sv)); err != nil {
 			if !fortiAPIPatch(o["http"]) {
 				return fmt.Errorf("Error reading http: %v", err)
@@ -2560,7 +2456,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ftp", flattenFirewallProfileProtocolOptionsFtp(o["ftp"], d, "ftp", sv)); err != nil {
 			if !fortiAPIPatch(o["ftp"]) {
 				return fmt.Errorf("Error reading ftp: %v", err)
@@ -2576,7 +2472,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("imap", flattenFirewallProfileProtocolOptionsImap(o["imap"], d, "imap", sv)); err != nil {
 			if !fortiAPIPatch(o["imap"]) {
 				return fmt.Errorf("Error reading imap: %v", err)
@@ -2592,7 +2488,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("mapi", flattenFirewallProfileProtocolOptionsMapi(o["mapi"], d, "mapi", sv)); err != nil {
 			if !fortiAPIPatch(o["mapi"]) {
 				return fmt.Errorf("Error reading mapi: %v", err)
@@ -2608,7 +2504,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("pop3", flattenFirewallProfileProtocolOptionsPop3(o["pop3"], d, "pop3", sv)); err != nil {
 			if !fortiAPIPatch(o["pop3"]) {
 				return fmt.Errorf("Error reading pop3: %v", err)
@@ -2624,7 +2520,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("smtp", flattenFirewallProfileProtocolOptionsSmtp(o["smtp"], d, "smtp", sv)); err != nil {
 			if !fortiAPIPatch(o["smtp"]) {
 				return fmt.Errorf("Error reading smtp: %v", err)
@@ -2640,7 +2536,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("nntp", flattenFirewallProfileProtocolOptionsNntp(o["nntp"], d, "nntp", sv)); err != nil {
 			if !fortiAPIPatch(o["nntp"]) {
 				return fmt.Errorf("Error reading nntp: %v", err)
@@ -2656,7 +2552,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ssh", flattenFirewallProfileProtocolOptionsSsh(o["ssh"], d, "ssh", sv)); err != nil {
 			if !fortiAPIPatch(o["ssh"]) {
 				return fmt.Errorf("Error reading ssh: %v", err)
@@ -2672,7 +2568,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dns", flattenFirewallProfileProtocolOptionsDns(o["dns"], d, "dns", sv)); err != nil {
 			if !fortiAPIPatch(o["dns"]) {
 				return fmt.Errorf("Error reading dns: %v", err)
@@ -2688,7 +2584,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("cifs", flattenFirewallProfileProtocolOptionsCifs(o["cifs"], d, "cifs", sv)); err != nil {
 			if !fortiAPIPatch(o["cifs"]) {
 				return fmt.Errorf("Error reading cifs: %v", err)
@@ -2704,7 +2600,7 @@ func refreshObjectFirewallProfileProtocolOptions(d *schema.ResourceData, o map[s
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("mail_signature", flattenFirewallProfileProtocolOptionsMailSignature(o["mail-signature"], d, "mail_signature", sv)); err != nil {
 			if !fortiAPIPatch(o["mail-signature"]) {
 				return fmt.Errorf("Error reading mail_signature: %v", err)
@@ -2771,162 +2667,134 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsHttpPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsHttpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["inspect-all"], _ = expandFirewallProfileProtocolOptionsHttpInspectAll(d, i["inspect_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["proxy-after-tcp-handshake"], _ = expandFirewallProfileProtocolOptionsHttpProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsHttpOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["comfort-interval"], _ = expandFirewallProfileProtocolOptionsHttpComfortInterval(d, i["comfort_interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "comfort_amount"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["comfort-amount"], _ = expandFirewallProfileProtocolOptionsHttpComfortAmount(d, i["comfort_amount"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "range_block"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["range-block"], _ = expandFirewallProfileProtocolOptionsHttpRangeBlock(d, i["range_block"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "http_policy"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["http-policy"], _ = expandFirewallProfileProtocolOptionsHttpHttpPolicy(d, i["http_policy"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "strip_x_forwarded_for"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["strip-x-forwarded-for"], _ = expandFirewallProfileProtocolOptionsHttpStripXForwardedFor(d, i["strip_x_forwarded_for"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "post_lang"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["post-lang"], _ = expandFirewallProfileProtocolOptionsHttpPostLang(d, i["post_lang"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "fortinet_bar"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["fortinet-bar"], _ = expandFirewallProfileProtocolOptionsHttpFortinetBar(d, i["fortinet_bar"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "fortinet_bar_port"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["fortinet-bar-port"], _ = expandFirewallProfileProtocolOptionsHttpFortinetBarPort(d, i["fortinet_bar_port"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "streaming_content_bypass"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["streaming-content-bypass"], _ = expandFirewallProfileProtocolOptionsHttpStreamingContentBypass(d, i["streaming_content_bypass"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "switching_protocols"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["switching-protocols"], _ = expandFirewallProfileProtocolOptionsHttpSwitchingProtocols(d, i["switching_protocols"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unknown_http_version"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unknown-http-version"], _ = expandFirewallProfileProtocolOptionsHttpUnknownHttpVersion(d, i["unknown_http_version"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tunnel-non-http"], _ = expandFirewallProfileProtocolOptionsHttpTunnelNonHttp(d, i["tunnel_non_http"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "h2c"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["h2c"], _ = expandFirewallProfileProtocolOptionsHttpH2C(d, i["h2c"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "unknown_content_encoding"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["unknown-content-encoding"], _ = expandFirewallProfileProtocolOptionsHttpUnknownContentEncoding(d, i["unknown_content_encoding"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsHttpOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsHttpUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsHttpUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["stream-based-uncompressed-limit"], _ = expandFirewallProfileProtocolOptionsHttpStreamBasedUncompressedLimit(d, i["stream_based_uncompressed_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsHttpScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "verify_dns_for_policy_matching"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["verify-dns-for-policy-matching"], _ = expandFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(d, i["verify_dns_for_policy_matching"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "block_page_status_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["block-page-status-code"], _ = expandFirewallProfileProtocolOptionsHttpBlockPageStatusCode(d, i["block_page_status_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "retry_count"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["retry-count"], _ = expandFirewallProfileProtocolOptionsHttpRetryCount(d, i["retry_count"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-type"], _ = expandFirewallProfileProtocolOptionsHttpTcpWindowType(d, i["tcp_window_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-minimum"], _ = expandFirewallProfileProtocolOptionsHttpTcpWindowMinimum(d, i["tcp_window_minimum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-maximum"], _ = expandFirewallProfileProtocolOptionsHttpTcpWindowMaximum(d, i["tcp_window_maximum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-size"], _ = expandFirewallProfileProtocolOptionsHttpTcpWindowSize(d, i["tcp_window_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsHttpSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "address_ip_rating"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["address-ip-rating"], _ = expandFirewallProfileProtocolOptionsHttpAddressIpRating(d, i["address_ip_rating"], pre_append, sv)
 	}
 
@@ -3005,6 +2873,10 @@ func expandFirewallProfileProtocolOptionsHttpH2C(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandFirewallProfileProtocolOptionsHttpUnknownContentEncoding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileProtocolOptionsHttpOversizeLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3073,87 +2945,70 @@ func expandFirewallProfileProtocolOptionsFtp(d *schema.ResourceData, v interface
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsFtpPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsFtpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["inspect-all"], _ = expandFirewallProfileProtocolOptionsFtpInspectAll(d, i["inspect_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsFtpOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["comfort-interval"], _ = expandFirewallProfileProtocolOptionsFtpComfortInterval(d, i["comfort_interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "comfort_amount"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["comfort-amount"], _ = expandFirewallProfileProtocolOptionsFtpComfortAmount(d, i["comfort_amount"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsFtpOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsFtpUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsFtpUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["stream-based-uncompressed-limit"], _ = expandFirewallProfileProtocolOptionsFtpStreamBasedUncompressedLimit(d, i["stream_based_uncompressed_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsFtpScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-type"], _ = expandFirewallProfileProtocolOptionsFtpTcpWindowType(d, i["tcp_window_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-minimum"], _ = expandFirewallProfileProtocolOptionsFtpTcpWindowMinimum(d, i["tcp_window_minimum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-maximum"], _ = expandFirewallProfileProtocolOptionsFtpTcpWindowMaximum(d, i["tcp_window_maximum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-size"], _ = expandFirewallProfileProtocolOptionsFtpTcpWindowSize(d, i["tcp_window_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsFtpSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "explicit_ftp_tls"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["explicit-ftp-tls"], _ = expandFirewallProfileProtocolOptionsFtpExplicitFtpTls(d, i["explicit_ftp_tls"], pre_append, sv)
 	}
 
@@ -3240,52 +3095,42 @@ func expandFirewallProfileProtocolOptionsImap(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsImapPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsImapStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["inspect-all"], _ = expandFirewallProfileProtocolOptionsImapInspectAll(d, i["inspect_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["proxy-after-tcp-handshake"], _ = expandFirewallProfileProtocolOptionsImapProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsImapOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsImapOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsImapUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsImapUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsImapScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsImapSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
 
@@ -3344,37 +3189,30 @@ func expandFirewallProfileProtocolOptionsMapi(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsMapiPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsMapiStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsMapiOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsMapiOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsMapiUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsMapiUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsMapiScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 
@@ -3421,52 +3259,42 @@ func expandFirewallProfileProtocolOptionsPop3(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsPop3Ports(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsPop3Status(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["inspect-all"], _ = expandFirewallProfileProtocolOptionsPop3InspectAll(d, i["inspect_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["proxy-after-tcp-handshake"], _ = expandFirewallProfileProtocolOptionsPop3ProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsPop3Options(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsPop3OversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsPop3UncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsPop3UncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsPop3ScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsPop3SslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
 
@@ -3525,57 +3353,46 @@ func expandFirewallProfileProtocolOptionsSmtp(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsSmtpPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsSmtpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["inspect-all"], _ = expandFirewallProfileProtocolOptionsSmtpInspectAll(d, i["inspect_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["proxy-after-tcp-handshake"], _ = expandFirewallProfileProtocolOptionsSmtpProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsSmtpOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsSmtpOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsSmtpUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsSmtpUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsSmtpScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "server_busy"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["server-busy"], _ = expandFirewallProfileProtocolOptionsSmtpServerBusy(d, i["server_busy"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsSmtpSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
 
@@ -3638,47 +3455,38 @@ func expandFirewallProfileProtocolOptionsNntp(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsNntpPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsNntpStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "inspect_all"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["inspect-all"], _ = expandFirewallProfileProtocolOptionsNntpInspectAll(d, i["inspect_all"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["proxy-after-tcp-handshake"], _ = expandFirewallProfileProtocolOptionsNntpProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsNntpOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsNntpOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsNntpUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsNntpUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsNntpScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 
@@ -3733,67 +3541,54 @@ func expandFirewallProfileProtocolOptionsSsh(d *schema.ResourceData, v interface
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsSshOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["comfort-interval"], _ = expandFirewallProfileProtocolOptionsSshComfortInterval(d, i["comfort_interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "comfort_amount"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["comfort-amount"], _ = expandFirewallProfileProtocolOptionsSshComfortAmount(d, i["comfort_amount"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsSshOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsSshUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsSshUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["stream-based-uncompressed-limit"], _ = expandFirewallProfileProtocolOptionsSshStreamBasedUncompressedLimit(d, i["stream_based_uncompressed_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsSshScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-type"], _ = expandFirewallProfileProtocolOptionsSshTcpWindowType(d, i["tcp_window_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-minimum"], _ = expandFirewallProfileProtocolOptionsSshTcpWindowMinimum(d, i["tcp_window_minimum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-maximum"], _ = expandFirewallProfileProtocolOptionsSshTcpWindowMaximum(d, i["tcp_window_maximum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-size"], _ = expandFirewallProfileProtocolOptionsSshTcpWindowSize(d, i["tcp_window_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ssl_offloaded"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ssl-offloaded"], _ = expandFirewallProfileProtocolOptionsSshSslOffloaded(d, i["ssl_offloaded"], pre_append, sv)
 	}
 
@@ -3864,12 +3659,10 @@ func expandFirewallProfileProtocolOptionsDns(d *schema.ResourceData, v interface
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsDnsPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsDnsStatus(d, i["status"], pre_append, sv)
 	}
 
@@ -3896,72 +3689,58 @@ func expandFirewallProfileProtocolOptionsCifs(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["ports"], _ = expandFirewallProfileProtocolOptionsCifsPorts(d, i["ports"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsCifsStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["options"], _ = expandFirewallProfileProtocolOptionsCifsOptions(d, i["options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["oversize-limit"], _ = expandFirewallProfileProtocolOptionsCifsOversizeLimit(d, i["oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-oversize-limit"], _ = expandFirewallProfileProtocolOptionsCifsUncompressedOversizeLimit(d, i["uncompressed_oversize_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "uncompressed_nest_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["uncompressed-nest-limit"], _ = expandFirewallProfileProtocolOptionsCifsUncompressedNestLimit(d, i["uncompressed_nest_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scan-bzip2"], _ = expandFirewallProfileProtocolOptionsCifsScanBzip2(d, i["scan_bzip2"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-type"], _ = expandFirewallProfileProtocolOptionsCifsTcpWindowType(d, i["tcp_window_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_minimum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-minimum"], _ = expandFirewallProfileProtocolOptionsCifsTcpWindowMinimum(d, i["tcp_window_minimum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_maximum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-maximum"], _ = expandFirewallProfileProtocolOptionsCifsTcpWindowMaximum(d, i["tcp_window_maximum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tcp_window_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tcp-window-size"], _ = expandFirewallProfileProtocolOptionsCifsTcpWindowSize(d, i["tcp_window_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "server_credential_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["server-credential-type"], _ = expandFirewallProfileProtocolOptionsCifsServerCredentialType(d, i["server_credential_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "domain_controller"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["domain-controller"], _ = expandFirewallProfileProtocolOptionsCifsDomainController(d, i["domain_controller"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "server_keytab"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["server-keytab"], _ = expandFirewallProfileProtocolOptionsCifsServerKeytab(d, i["server_keytab"], pre_append, sv)
 	} else {
 		result["server-keytab"] = make([]string, 0)
@@ -4038,13 +3817,11 @@ func expandFirewallProfileProtocolOptionsCifsServerKeytab(d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["principal"], _ = expandFirewallProfileProtocolOptionsCifsServerKeytabPrincipal(d, i["principal"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["keytab"], _ = expandFirewallProfileProtocolOptionsCifsServerKeytabKeytab(d, i["keytab"], pre_append, sv)
 		}
 
@@ -4076,12 +3853,10 @@ func expandFirewallProfileProtocolOptionsMailSignature(d *schema.ResourceData, v
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandFirewallProfileProtocolOptionsMailSignatureStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "signature"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["signature"], _ = expandFirewallProfileProtocolOptionsMailSignatureSignature(d, i["signature"], pre_append, sv)
 	}
 
@@ -4104,7 +3879,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -4114,7 +3888,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -4124,7 +3897,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsFeatureSet(d, v, "feature_set", sv)
 		if err != nil {
 			return &obj, err
@@ -4134,7 +3906,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsReplacemsgGroup(d, v, "replacemsg_group", sv)
 		if err != nil {
 			return &obj, err
@@ -4144,7 +3915,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("oversize_log"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsOversizeLog(d, v, "oversize_log", sv)
 		if err != nil {
 			return &obj, err
@@ -4154,7 +3924,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("switching_protocols_log"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsSwitchingProtocolsLog(d, v, "switching_protocols_log", sv)
 		if err != nil {
 			return &obj, err
@@ -4164,7 +3933,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("http"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsHttp(d, v, "http", sv)
 		if err != nil {
 			return &obj, err
@@ -4174,7 +3942,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ftp"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsFtp(d, v, "ftp", sv)
 		if err != nil {
 			return &obj, err
@@ -4184,7 +3951,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("imap"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsImap(d, v, "imap", sv)
 		if err != nil {
 			return &obj, err
@@ -4194,7 +3960,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("mapi"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsMapi(d, v, "mapi", sv)
 		if err != nil {
 			return &obj, err
@@ -4204,7 +3969,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("pop3"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsPop3(d, v, "pop3", sv)
 		if err != nil {
 			return &obj, err
@@ -4214,7 +3978,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("smtp"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsSmtp(d, v, "smtp", sv)
 		if err != nil {
 			return &obj, err
@@ -4224,7 +3987,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("nntp"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsNntp(d, v, "nntp", sv)
 		if err != nil {
 			return &obj, err
@@ -4234,7 +3996,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsSsh(d, v, "ssh", sv)
 		if err != nil {
 			return &obj, err
@@ -4244,7 +4005,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("dns"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsDns(d, v, "dns", sv)
 		if err != nil {
 			return &obj, err
@@ -4254,7 +4014,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("cifs"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsCifs(d, v, "cifs", sv)
 		if err != nil {
 			return &obj, err
@@ -4264,7 +4023,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("mail_signature"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsMailSignature(d, v, "mail_signature", sv)
 		if err != nil {
 			return &obj, err
@@ -4274,7 +4032,6 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 	}
 
 	if v, ok := d.GetOk("rpc_over_http"); ok {
-
 		t, err := expandFirewallProfileProtocolOptionsRpcOverHttp(d, v, "rpc_over_http", sv)
 		if err != nil {
 			return &obj, err

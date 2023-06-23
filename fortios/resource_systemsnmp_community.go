@@ -202,6 +202,11 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -365,31 +370,26 @@ func flattenSystemSnmpCommunityHosts(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemSnmpCommunityHostsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
 		if _, ok := i["source-ip"]; ok {
-
 			tmp["source_ip"] = flattenSystemSnmpCommunityHostsSourceIp(i["source-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-
 			tmp["ip"] = flattenSystemSnmpCommunityHostsIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
 		if _, ok := i["ha-direct"]; ok {
-
 			tmp["ha_direct"] = flattenSystemSnmpCommunityHostsHaDirect(i["ha-direct"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
 		if _, ok := i["host-type"]; ok {
-
 			tmp["host_type"] = flattenSystemSnmpCommunityHostsHostType(i["host-type"], d, pre_append, sv)
 		}
 
@@ -448,31 +448,26 @@ func flattenSystemSnmpCommunityHosts6(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemSnmpCommunityHosts6Id(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ipv6"
 		if _, ok := i["source-ipv6"]; ok {
-
 			tmp["source_ipv6"] = flattenSystemSnmpCommunityHosts6SourceIpv6(i["source-ipv6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
 		if _, ok := i["ipv6"]; ok {
-
 			tmp["ipv6"] = flattenSystemSnmpCommunityHosts6Ipv6(i["ipv6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
 		if _, ok := i["ha-direct"]; ok {
-
 			tmp["ha_direct"] = flattenSystemSnmpCommunityHosts6HaDirect(i["ha-direct"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
 		if _, ok := i["host-type"]; ok {
-
 			tmp["host_type"] = flattenSystemSnmpCommunityHosts6HostType(i["host-type"], d, pre_append, sv)
 		}
 
@@ -579,7 +574,6 @@ func flattenSystemSnmpCommunityVdoms(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemSnmpCommunityVdomsName(i["name"], d, pre_append, sv)
 		}
 
@@ -598,6 +592,12 @@ func flattenSystemSnmpCommunityVdomsName(v interface{}, d *schema.ResourceData, 
 
 func refreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("fosid", flattenSystemSnmpCommunityId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -617,7 +617,7 @@ func refreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("hosts", flattenSystemSnmpCommunityHosts(o["hosts"], d, "hosts", sv)); err != nil {
 			if !fortiAPIPatch(o["hosts"]) {
 				return fmt.Errorf("Error reading hosts: %v", err)
@@ -633,7 +633,7 @@ func refreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("hosts6", flattenSystemSnmpCommunityHosts6(o["hosts6"], d, "hosts6", sv)); err != nil {
 			if !fortiAPIPatch(o["hosts6"]) {
 				return fmt.Errorf("Error reading hosts6: %v", err)
@@ -721,7 +721,7 @@ func refreshObjectSystemSnmpCommunity(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vdoms", flattenSystemSnmpCommunityVdoms(o["vdoms"], d, "vdoms", sv)); err != nil {
 			if !fortiAPIPatch(o["vdoms"]) {
 				return fmt.Errorf("Error reading vdoms: %v", err)
@@ -774,31 +774,26 @@ func expandSystemSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemSnmpCommunityHostsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["source-ip"], _ = expandSystemSnmpCommunityHostsSourceIp(d, i["source_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip"], _ = expandSystemSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ha-direct"], _ = expandSystemSnmpCommunityHostsHaDirect(d, i["ha_direct"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["host-type"], _ = expandSystemSnmpCommunityHostsHostType(d, i["host_type"], pre_append, sv)
 		}
 
@@ -846,31 +841,26 @@ func expandSystemSnmpCommunityHosts6(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemSnmpCommunityHosts6Id(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ipv6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["source-ipv6"], _ = expandSystemSnmpCommunityHosts6SourceIpv6(d, i["source_ipv6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv6"], _ = expandSystemSnmpCommunityHosts6Ipv6(d, i["ipv6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ha-direct"], _ = expandSystemSnmpCommunityHosts6HaDirect(d, i["ha_direct"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["host-type"], _ = expandSystemSnmpCommunityHosts6HostType(d, i["host_type"], pre_append, sv)
 		}
 
@@ -966,7 +956,6 @@ func expandSystemSnmpCommunityVdoms(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemSnmpCommunityVdomsName(d, i["name"], pre_append, sv)
 		}
 
@@ -986,7 +975,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandSystemSnmpCommunityId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -996,7 +984,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSnmpCommunityName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1006,7 +993,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemSnmpCommunityStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -1016,7 +1002,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("hosts"); ok || d.HasChange("hosts") {
-
 		t, err := expandSystemSnmpCommunityHosts(d, v, "hosts", sv)
 		if err != nil {
 			return &obj, err
@@ -1026,7 +1011,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("hosts6"); ok || d.HasChange("hosts6") {
-
 		t, err := expandSystemSnmpCommunityHosts6(d, v, "hosts6", sv)
 		if err != nil {
 			return &obj, err
@@ -1036,7 +1020,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("query_v1_status"); ok {
-
 		t, err := expandSystemSnmpCommunityQueryV1Status(d, v, "query_v1_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1046,7 +1029,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("query_v1_port"); ok {
-
 		t, err := expandSystemSnmpCommunityQueryV1Port(d, v, "query_v1_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1056,7 +1038,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("query_v2c_status"); ok {
-
 		t, err := expandSystemSnmpCommunityQueryV2CStatus(d, v, "query_v2c_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1066,7 +1047,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOkExists("query_v2c_port"); ok {
-
 		t, err := expandSystemSnmpCommunityQueryV2CPort(d, v, "query_v2c_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1076,7 +1056,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("trap_v1_status"); ok {
-
 		t, err := expandSystemSnmpCommunityTrapV1Status(d, v, "trap_v1_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1086,7 +1065,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("trap_v1_lport"); ok {
-
 		t, err := expandSystemSnmpCommunityTrapV1Lport(d, v, "trap_v1_lport", sv)
 		if err != nil {
 			return &obj, err
@@ -1096,7 +1074,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("trap_v1_rport"); ok {
-
 		t, err := expandSystemSnmpCommunityTrapV1Rport(d, v, "trap_v1_rport", sv)
 		if err != nil {
 			return &obj, err
@@ -1106,7 +1083,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("trap_v2c_status"); ok {
-
 		t, err := expandSystemSnmpCommunityTrapV2CStatus(d, v, "trap_v2c_status", sv)
 		if err != nil {
 			return &obj, err
@@ -1116,7 +1092,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("trap_v2c_lport"); ok {
-
 		t, err := expandSystemSnmpCommunityTrapV2CLport(d, v, "trap_v2c_lport", sv)
 		if err != nil {
 			return &obj, err
@@ -1126,7 +1101,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("trap_v2c_rport"); ok {
-
 		t, err := expandSystemSnmpCommunityTrapV2CRport(d, v, "trap_v2c_rport", sv)
 		if err != nil {
 			return &obj, err
@@ -1136,7 +1110,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("events"); ok {
-
 		t, err := expandSystemSnmpCommunityEvents(d, v, "events", sv)
 		if err != nil {
 			return &obj, err
@@ -1146,7 +1119,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("mib_view"); ok {
-
 		t, err := expandSystemSnmpCommunityMibView(d, v, "mib_view", sv)
 		if err != nil {
 			return &obj, err
@@ -1156,7 +1128,6 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("vdoms"); ok || d.HasChange("vdoms") {
-
 		t, err := expandSystemSnmpCommunityVdoms(d, v, "vdoms", sv)
 		if err != nil {
 			return &obj, err

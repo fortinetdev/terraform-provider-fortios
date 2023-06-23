@@ -526,7 +526,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserSamlName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -536,7 +535,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
-
 		t, err := expandUserSamlCert(d, v, "cert", sv)
 		if err != nil {
 			return &obj, err
@@ -546,7 +544,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("entity_id"); ok {
-
 		t, err := expandUserSamlEntityId(d, v, "entity_id", sv)
 		if err != nil {
 			return &obj, err
@@ -556,7 +553,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("single_sign_on_url"); ok {
-
 		t, err := expandUserSamlSingleSignOnUrl(d, v, "single_sign_on_url", sv)
 		if err != nil {
 			return &obj, err
@@ -566,7 +562,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("single_logout_url"); ok {
-
 		t, err := expandUserSamlSingleLogoutUrl(d, v, "single_logout_url", sv)
 		if err != nil {
 			return &obj, err
@@ -576,7 +571,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("idp_entity_id"); ok {
-
 		t, err := expandUserSamlIdpEntityId(d, v, "idp_entity_id", sv)
 		if err != nil {
 			return &obj, err
@@ -586,7 +580,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("idp_single_sign_on_url"); ok {
-
 		t, err := expandUserSamlIdpSingleSignOnUrl(d, v, "idp_single_sign_on_url", sv)
 		if err != nil {
 			return &obj, err
@@ -596,7 +589,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("idp_single_logout_url"); ok {
-
 		t, err := expandUserSamlIdpSingleLogoutUrl(d, v, "idp_single_logout_url", sv)
 		if err != nil {
 			return &obj, err
@@ -606,7 +598,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("idp_cert"); ok {
-
 		t, err := expandUserSamlIdpCert(d, v, "idp_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -616,7 +607,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {
-
 		t, err := expandUserSamlUserName(d, v, "user_name", sv)
 		if err != nil {
 			return &obj, err
@@ -626,7 +616,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_name"); ok {
-
 		t, err := expandUserSamlGroupName(d, v, "group_name", sv)
 		if err != nil {
 			return &obj, err
@@ -636,7 +625,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("digest_method"); ok {
-
 		t, err := expandUserSamlDigestMethod(d, v, "digest_method", sv)
 		if err != nil {
 			return &obj, err
@@ -646,7 +634,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("limit_relaystate"); ok {
-
 		t, err := expandUserSamlLimitRelaystate(d, v, "limit_relaystate", sv)
 		if err != nil {
 			return &obj, err
@@ -656,7 +643,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOkExists("clock_tolerance"); ok {
-
 		t, err := expandUserSamlClockTolerance(d, v, "clock_tolerance", sv)
 		if err != nil {
 			return &obj, err
@@ -666,7 +652,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("auth_url"); ok {
-
 		t, err := expandUserSamlAuthUrl(d, v, "auth_url", sv)
 		if err != nil {
 			return &obj, err
@@ -676,7 +661,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("adfs_claim"); ok {
-
 		t, err := expandUserSamlAdfsClaim(d, v, "adfs_claim", sv)
 		if err != nil {
 			return &obj, err
@@ -686,7 +670,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("user_claim_type"); ok {
-
 		t, err := expandUserSamlUserClaimType(d, v, "user_claim_type", sv)
 		if err != nil {
 			return &obj, err
@@ -696,7 +679,6 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("group_claim_type"); ok {
-
 		t, err := expandUserSamlGroupClaimType(d, v, "group_claim_type", sv)
 		if err != nil {
 			return &obj, err

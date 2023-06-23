@@ -245,6 +245,11 @@ func resourceVpnOcvpn() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -389,7 +394,6 @@ func flattenVpnOcvpnWanInterface(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenVpnOcvpnWanInterfaceName(i["name"], d, pre_append, sv)
 		}
 
@@ -467,49 +471,41 @@ func flattenVpnOcvpnOverlays(v interface{}, d *schema.ResourceData, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if _, ok := i["overlay-name"]; ok {
-
 			tmp["overlay_name"] = flattenVpnOcvpnOverlaysOverlayName(i["overlay-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "inter_overlay"
 		if _, ok := i["inter-overlay"]; ok {
-
 			tmp["inter_overlay"] = flattenVpnOcvpnOverlaysInterOverlay(i["inter-overlay"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenVpnOcvpnOverlaysId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenVpnOcvpnOverlaysName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_ip"
 		if _, ok := i["assign-ip"]; ok {
-
 			tmp["assign_ip"] = flattenVpnOcvpnOverlaysAssignIp(i["assign-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_start_ip"
 		if _, ok := i["ipv4-start-ip"]; ok {
-
 			tmp["ipv4_start_ip"] = flattenVpnOcvpnOverlaysIpv4StartIp(i["ipv4-start-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_end_ip"
 		if _, ok := i["ipv4-end-ip"]; ok {
-
 			tmp["ipv4_end_ip"] = flattenVpnOcvpnOverlaysIpv4EndIp(i["ipv4-end-ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
 		if _, ok := i["subnets"]; ok {
-
 			tmp["subnets"] = flattenVpnOcvpnOverlaysSubnets(i["subnets"], d, pre_append, sv)
 		}
 
@@ -576,25 +572,21 @@ func flattenVpnOcvpnOverlaysSubnets(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenVpnOcvpnOverlaysSubnetsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-
 			tmp["type"] = flattenVpnOcvpnOverlaysSubnetsType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := i["subnet"]; ok {
-
 			tmp["subnet"] = flattenVpnOcvpnOverlaysSubnetsSubnet(i["subnet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-
 			tmp["interface"] = flattenVpnOcvpnOverlaysSubnetsInterface(i["interface"], d, pre_append, sv)
 		}
 
@@ -641,13 +633,11 @@ func flattenVpnOcvpnForticlientAccess(v interface{}, d *schema.ResourceData, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenVpnOcvpnForticlientAccessStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "psksecret"
 	if _, ok := i["psksecret"]; ok {
-
 		result["psksecret"] = flattenVpnOcvpnForticlientAccessPsksecret(i["psksecret"], d, pre_append, sv)
 		c := d.Get(pre_append).(string)
 		if c != "" {
@@ -657,7 +647,6 @@ func flattenVpnOcvpnForticlientAccess(v interface{}, d *schema.ResourceData, pre
 
 	pre_append = pre + ".0." + "auth_groups"
 	if _, ok := i["auth-groups"]; ok {
-
 		result["auth_groups"] = flattenVpnOcvpnForticlientAccessAuthGroups(i["auth-groups"], d, pre_append, sv)
 	}
 
@@ -699,19 +688,16 @@ func flattenVpnOcvpnForticlientAccessAuthGroups(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenVpnOcvpnForticlientAccessAuthGroupsName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_group"
 		if _, ok := i["auth-group"]; ok {
-
 			tmp["auth_group"] = flattenVpnOcvpnForticlientAccessAuthGroupsAuthGroup(i["auth-group"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
 		if _, ok := i["overlays"]; ok {
-
 			tmp["overlays"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(i["overlays"], d, pre_append, sv)
 		}
 
@@ -758,7 +744,6 @@ func flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if _, ok := i["overlay-name"]; ok {
-
 			tmp["overlay_name"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(i["overlay-name"], d, pre_append, sv)
 		}
 
@@ -777,6 +762,12 @@ func flattenVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(v interface{}
 
 func refreshObjectVpnOcvpn(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("status", flattenVpnOcvpnStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -808,7 +799,7 @@ func refreshObjectVpnOcvpn(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("wan_interface", flattenVpnOcvpnWanInterface(o["wan-interface"], d, "wan_interface", sv)); err != nil {
 			if !fortiAPIPatch(o["wan-interface"]) {
 				return fmt.Errorf("Error reading wan_interface: %v", err)
@@ -866,7 +857,7 @@ func refreshObjectVpnOcvpn(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("overlays", flattenVpnOcvpnOverlays(o["overlays"], d, "overlays", sv)); err != nil {
 			if !fortiAPIPatch(o["overlays"]) {
 				return fmt.Errorf("Error reading overlays: %v", err)
@@ -882,7 +873,7 @@ func refreshObjectVpnOcvpn(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("forticlient_access", flattenVpnOcvpnForticlientAccess(o["forticlient-access"], d, "forticlient_access", sv)); err != nil {
 			if !fortiAPIPatch(o["forticlient-access"]) {
 				return fmt.Errorf("Error reading forticlient_access: %v", err)
@@ -943,7 +934,6 @@ func expandVpnOcvpnWanInterface(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandVpnOcvpnWanInterfaceName(d, i["name"], pre_append, sv)
 		}
 
@@ -1003,49 +993,41 @@ func expandVpnOcvpnOverlays(d *schema.ResourceData, v interface{}, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["overlay-name"], _ = expandVpnOcvpnOverlaysOverlayName(d, i["overlay_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "inter_overlay"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["inter-overlay"], _ = expandVpnOcvpnOverlaysInterOverlay(d, i["inter_overlay"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandVpnOcvpnOverlaysId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandVpnOcvpnOverlaysName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["assign-ip"], _ = expandVpnOcvpnOverlaysAssignIp(d, i["assign_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_start_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv4-start-ip"], _ = expandVpnOcvpnOverlaysIpv4StartIp(d, i["ipv4_start_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_end_ip"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ipv4-end-ip"], _ = expandVpnOcvpnOverlaysIpv4EndIp(d, i["ipv4_end_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["subnets"], _ = expandVpnOcvpnOverlaysSubnets(d, i["subnets"], pre_append, sv)
 		} else {
 			tmp["subnets"] = make([]string, 0)
@@ -1103,25 +1085,21 @@ func expandVpnOcvpnOverlaysSubnets(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandVpnOcvpnOverlaysSubnetsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["type"], _ = expandVpnOcvpnOverlaysSubnetsType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["subnet"], _ = expandVpnOcvpnOverlaysSubnetsSubnet(d, i["subnet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["interface"], _ = expandVpnOcvpnOverlaysSubnetsInterface(d, i["interface"], pre_append, sv)
 		}
 
@@ -1164,7 +1142,6 @@ func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["status"] = nil
 		} else {
-
 			result["status"], _ = expandVpnOcvpnForticlientAccessStatus(d, i["status"], pre_append, sv)
 		}
 	}
@@ -1173,7 +1150,6 @@ func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["psksecret"] = nil
 		} else {
-
 			result["psksecret"], _ = expandVpnOcvpnForticlientAccessPsksecret(d, i["psksecret"], pre_append, sv)
 		}
 	}
@@ -1182,7 +1158,6 @@ func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre 
 		if setArgNil {
 			result["auth-groups"] = make([]struct{}, 0)
 		} else {
-
 			result["auth-groups"], _ = expandVpnOcvpnForticlientAccessAuthGroups(d, i["auth_groups"], pre_append, sv)
 		}
 	} else {
@@ -1216,19 +1191,16 @@ func expandVpnOcvpnForticlientAccessAuthGroups(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandVpnOcvpnForticlientAccessAuthGroupsName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_group"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-group"], _ = expandVpnOcvpnForticlientAccessAuthGroupsAuthGroup(d, i["auth_group"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["overlays"], _ = expandVpnOcvpnForticlientAccessAuthGroupsOverlays(d, i["overlays"], pre_append, sv)
 		} else {
 			tmp["overlays"] = make([]string, 0)
@@ -1266,7 +1238,6 @@ func expandVpnOcvpnForticlientAccessAuthGroupsOverlays(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["overlay-name"], _ = expandVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(d, i["overlay_name"], pre_append, sv)
 		}
 
@@ -1289,7 +1260,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -1303,7 +1273,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["role"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnRole(d, v, "role", sv)
 			if err != nil {
 				return &obj, err
@@ -1317,7 +1286,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["multipath"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnMultipath(d, v, "multipath", sv)
 			if err != nil {
 				return &obj, err
@@ -1331,7 +1299,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["sdwan"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnSdwan(d, v, "sdwan", sv)
 			if err != nil {
 				return &obj, err
@@ -1345,7 +1312,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["sdwan-zone"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnSdwanZone(d, v, "sdwan_zone", sv)
 			if err != nil {
 				return &obj, err
@@ -1359,7 +1325,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["wan-interface"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandVpnOcvpnWanInterface(d, v, "wan_interface", sv)
 			if err != nil {
 				return &obj, err
@@ -1373,7 +1338,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["ip-allocation-block"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnIpAllocationBlock(d, v, "ip_allocation_block", sv)
 			if err != nil {
 				return &obj, err
@@ -1387,7 +1351,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["poll-interval"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnPollInterval(d, v, "poll_interval", sv)
 			if err != nil {
 				return &obj, err
@@ -1401,7 +1364,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["auto-discovery"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnAutoDiscovery(d, v, "auto_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -1415,7 +1377,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["auto-discovery-shortcut-mode"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnAutoDiscoveryShortcutMode(d, v, "auto_discovery_shortcut_mode", sv)
 			if err != nil {
 				return &obj, err
@@ -1429,7 +1390,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["eap"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnEap(d, v, "eap", sv)
 			if err != nil {
 				return &obj, err
@@ -1443,7 +1403,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["eap-users"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnEapUsers(d, v, "eap_users", sv)
 			if err != nil {
 				return &obj, err
@@ -1457,7 +1416,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["nat"] = nil
 		} else {
-
 			t, err := expandVpnOcvpnNat(d, v, "nat", sv)
 			if err != nil {
 				return &obj, err
@@ -1471,7 +1429,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		if setArgNil {
 			obj["overlays"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandVpnOcvpnOverlays(d, v, "overlays", sv)
 			if err != nil {
 				return &obj, err
@@ -1482,7 +1439,6 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("forticlient_access"); ok {
-
 		t, err := expandVpnOcvpnForticlientAccess(d, v, "forticlient_access", sv, setArgNil)
 		if err != nil {
 			return &obj, err

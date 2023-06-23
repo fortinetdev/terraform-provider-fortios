@@ -271,7 +271,6 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("seq_num"); ok {
-
 		t, err := expandFirewallIpmacbindingTableSeqNum(d, v, "seq_num", sv)
 		if err != nil {
 			return &obj, err
@@ -281,7 +280,6 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-
 		t, err := expandFirewallIpmacbindingTableIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
@@ -291,7 +289,6 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-
 		t, err := expandFirewallIpmacbindingTableMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
@@ -301,7 +298,6 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallIpmacbindingTableName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -311,7 +307,6 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallIpmacbindingTableStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err

@@ -95,6 +95,11 @@ func resourceSystemExternalResource() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"server_identity_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"refresh_rate": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 43200),
@@ -285,6 +290,10 @@ func flattenSystemExternalResourceUserAgent(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenSystemExternalResourceServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemExternalResourceRefreshRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -361,6 +370,12 @@ func refreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]in
 	if err = d.Set("user_agent", flattenSystemExternalResourceUserAgent(o["user-agent"], d, "user_agent", sv)); err != nil {
 		if !fortiAPIPatch(o["user-agent"]) {
 			return fmt.Errorf("Error reading user_agent: %v", err)
+		}
+	}
+
+	if err = d.Set("server_identity_check", flattenSystemExternalResourceServerIdentityCheck(o["server-identity-check"], d, "server_identity_check", sv)); err != nil {
+		if !fortiAPIPatch(o["server-identity-check"]) {
+			return fmt.Errorf("Error reading server_identity_check: %v", err)
 		}
 	}
 
@@ -441,6 +456,10 @@ func expandSystemExternalResourceUserAgent(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandSystemExternalResourceServerIdentityCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemExternalResourceRefreshRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -461,7 +480,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemExternalResourceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -471,7 +489,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandSystemExternalResourceUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -481,7 +498,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandSystemExternalResourceStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -491,7 +507,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandSystemExternalResourceType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -501,7 +516,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("update_method"); ok {
-
 		t, err := expandSystemExternalResourceUpdateMethod(d, v, "update_method", sv)
 		if err != nil {
 			return &obj, err
@@ -511,7 +525,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("category"); ok {
-
 		t, err := expandSystemExternalResourceCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
@@ -521,7 +534,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandSystemExternalResourceUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -531,7 +543,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandSystemExternalResourcePassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -541,7 +552,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandSystemExternalResourceComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -551,7 +561,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("resource"); ok {
-
 		t, err := expandSystemExternalResourceResource(d, v, "resource", sv)
 		if err != nil {
 			return &obj, err
@@ -561,7 +570,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("user_agent"); ok {
-
 		t, err := expandSystemExternalResourceUserAgent(d, v, "user_agent", sv)
 		if err != nil {
 			return &obj, err
@@ -570,8 +578,16 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("refresh_rate"); ok {
+	if v, ok := d.GetOk("server_identity_check"); ok {
+		t, err := expandSystemExternalResourceServerIdentityCheck(d, v, "server_identity_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-identity-check"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("refresh_rate"); ok {
 		t, err := expandSystemExternalResourceRefreshRate(d, v, "refresh_rate", sv)
 		if err != nil {
 			return &obj, err
@@ -581,7 +597,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandSystemExternalResourceSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -591,7 +606,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
-
 		t, err := expandSystemExternalResourceInterfaceSelectMethod(d, v, "interface_select_method", sv)
 		if err != nil {
 			return &obj, err
@@ -601,7 +615,6 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandSystemExternalResourceInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err

@@ -145,6 +145,11 @@ func resourceLogSyslogd2Filter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -313,25 +318,21 @@ func flattenLogSyslogd2FilterFreeStyle(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogSyslogd2FilterFreeStyleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogSyslogd2FilterFreeStyleCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenLogSyslogd2FilterFreeStyleFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-
 			tmp["filter_type"] = flattenLogSyslogd2FilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
@@ -378,6 +379,12 @@ func flattenLogSyslogd2FilterFilterType(v interface{}, d *schema.ResourceData, p
 
 func refreshObjectLogSyslogd2Filter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("severity", flattenLogSyslogd2FilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -445,7 +452,7 @@ func refreshObjectLogSyslogd2Filter(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogSyslogd2FilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
 				return fmt.Errorf("Error reading free_style: %v", err)
@@ -554,25 +561,21 @@ func expandLogSyslogd2FilterFreeStyle(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogSyslogd2FilterFreeStyleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogSyslogd2FilterFreeStyleCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandLogSyslogd2FilterFreeStyleFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-type"], _ = expandLogSyslogd2FilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
@@ -623,7 +626,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err
@@ -637,7 +639,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["forward-traffic"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterForwardTraffic(d, v, "forward_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -651,7 +652,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["local-traffic"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterLocalTraffic(d, v, "local_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -665,7 +665,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["multicast-traffic"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterMulticastTraffic(d, v, "multicast_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -679,7 +678,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["sniffer-traffic"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -693,7 +691,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["ztna-traffic"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterZtnaTraffic(d, v, "ztna_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -707,7 +704,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["anomaly"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterAnomaly(d, v, "anomaly", sv)
 			if err != nil {
 				return &obj, err
@@ -721,7 +717,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["netscan-discovery"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterNetscanDiscovery(d, v, "netscan_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -735,7 +730,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["netscan-vulnerability"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
 			if err != nil {
 				return &obj, err
@@ -749,7 +743,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["voip"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterVoip(d, v, "voip", sv)
 			if err != nil {
 				return &obj, err
@@ -763,7 +756,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["gtp"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterGtp(d, v, "gtp", sv)
 			if err != nil {
 				return &obj, err
@@ -777,7 +769,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogSyslogd2FilterFreeStyle(d, v, "free_style", sv)
 			if err != nil {
 				return &obj, err
@@ -791,7 +782,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["dns"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterDns(d, v, "dns", sv)
 			if err != nil {
 				return &obj, err
@@ -805,7 +795,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["ssh"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterSsh(d, v, "ssh", sv)
 			if err != nil {
 				return &obj, err
@@ -819,7 +808,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["filter"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterFilter(d, v, "filter", sv)
 			if err != nil {
 				return &obj, err
@@ -833,7 +821,6 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData, setArgNil bool, sv strin
 		if setArgNil {
 			obj["filter-type"] = nil
 		} else {
-
 			t, err := expandLogSyslogd2FilterFilterType(d, v, "filter_type", sv)
 			if err != nil {
 				return &obj, err

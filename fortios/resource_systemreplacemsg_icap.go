@@ -230,7 +230,6 @@ func getObjectSystemReplacemsgIcap(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["msg-type"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgIcapMsgType(d, v, "msg_type", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemReplacemsgIcap(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["buffer"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgIcapBuffer(d, v, "buffer", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemReplacemsgIcap(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["header"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgIcapHeader(d, v, "header", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemReplacemsgIcap(d *schema.ResourceData, setArgNil bool, sv st
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgIcapFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err

@@ -315,7 +315,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemAutoScriptName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -325,7 +324,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("interval"); ok {
-
 		t, err := expandSystemAutoScriptInterval(d, v, "interval", sv)
 		if err != nil {
 			return &obj, err
@@ -335,7 +333,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("repeat"); ok {
-
 		t, err := expandSystemAutoScriptRepeat(d, v, "repeat", sv)
 		if err != nil {
 			return &obj, err
@@ -345,7 +342,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("start"); ok {
-
 		t, err := expandSystemAutoScriptStart(d, v, "start", sv)
 		if err != nil {
 			return &obj, err
@@ -355,7 +351,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("script"); ok {
-
 		t, err := expandSystemAutoScriptScript(d, v, "script", sv)
 		if err != nil {
 			return &obj, err
@@ -365,7 +360,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("output_size"); ok {
-
 		t, err := expandSystemAutoScriptOutputSize(d, v, "output_size", sv)
 		if err != nil {
 			return &obj, err
@@ -375,7 +369,6 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("timeout"); ok {
-
 		t, err := expandSystemAutoScriptTimeout(d, v, "timeout", sv)
 		if err != nil {
 			return &obj, err

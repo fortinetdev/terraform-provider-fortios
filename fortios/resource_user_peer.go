@@ -421,7 +421,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserPeerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -431,7 +430,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("mandatory_ca_verify"); ok {
-
 		t, err := expandUserPeerMandatoryCaVerify(d, v, "mandatory_ca_verify", sv)
 		if err != nil {
 			return &obj, err
@@ -441,7 +439,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ca"); ok {
-
 		t, err := expandUserPeerCa(d, v, "ca", sv)
 		if err != nil {
 			return &obj, err
@@ -451,7 +448,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("subject"); ok {
-
 		t, err := expandUserPeerSubject(d, v, "subject", sv)
 		if err != nil {
 			return &obj, err
@@ -461,7 +457,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("cn"); ok {
-
 		t, err := expandUserPeerCn(d, v, "cn", sv)
 		if err != nil {
 			return &obj, err
@@ -471,7 +466,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("cn_type"); ok {
-
 		t, err := expandUserPeerCnType(d, v, "cn_type", sv)
 		if err != nil {
 			return &obj, err
@@ -481,7 +475,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandUserPeerLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
@@ -491,7 +484,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_username"); ok {
-
 		t, err := expandUserPeerLdapUsername(d, v, "ldap_username", sv)
 		if err != nil {
 			return &obj, err
@@ -501,7 +493,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_password"); ok {
-
 		t, err := expandUserPeerLdapPassword(d, v, "ldap_password", sv)
 		if err != nil {
 			return &obj, err
@@ -511,7 +502,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ldap_mode"); ok {
-
 		t, err := expandUserPeerLdapMode(d, v, "ldap_mode", sv)
 		if err != nil {
 			return &obj, err
@@ -521,7 +511,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("ocsp_override_server"); ok {
-
 		t, err := expandUserPeerOcspOverrideServer(d, v, "ocsp_override_server", sv)
 		if err != nil {
 			return &obj, err
@@ -531,7 +520,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
-
 		t, err := expandUserPeerTwoFactor(d, v, "two_factor", sv)
 		if err != nil {
 			return &obj, err
@@ -541,7 +529,6 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("passwd"); ok {
-
 		t, err := expandUserPeerPasswd(d, v, "passwd", sv)
 		if err != nil {
 			return &obj, err

@@ -90,6 +90,7 @@ The following arguments are supported:
 * `dns_suffix` - DNS suffix.
 * `wins_server1` - IPv4 WINS server 1.
 * `wins_server2` - IPv4 WINS server 1.
+* `dhcp_ra_giaddr` - Relay agent gateway IP address to use in the giaddr field of DHCP requests.
 * `ipv6_tunnel_mode` - Enable/disable IPv6 SSL-VPN tunnel mode. Valid values: `enable`, `disable`.
 * `ipv6_pools` - IPv4 firewall source address objects reserved for SSL-VPN tunnel mode clients. The structure of `ipv6_pools` block is documented below.
 * `ipv6_exclusive_routing` - Enable/disable all IPv6 traffic go through tunnel only. Valid values: `enable`, `disable`.
@@ -101,7 +102,10 @@ The following arguments are supported:
 * `ipv6_dns_server2` - IPv6 DNS server 2.
 * `ipv6_wins_server1` - IPv6 WINS server 1.
 * `ipv6_wins_server2` - IPv6 WINS server 2.
+* `dhcp6_ra_linkaddr` - Relay agent IPv6 link address to use in DHCP6 requests.
+* `client_src_range` - Allow client to add source range for the tunnel traffic. Valid values: `enable`, `disable`.
 * `web_mode` - Enable/disable SSL VPN web mode. Valid values: `enable`, `disable`.
+* `landing_page_mode` - Enable/disable SSL-VPN landing page mode. Valid values: `enable`, `disable`.
 * `display_bookmark` - Enable to display the web portal bookmark widget. Valid values: `enable`, `disable`.
 * `user_bookmark` - Enable to allow web portal users to create their own bookmarks. Valid values: `enable`, `disable`.
 * `allow_user_access` - Allow user access to SSL-VPN applications.
@@ -143,7 +147,9 @@ The following arguments are supported:
 * `skip_check_for_browser` - Enable to skip host check for browser support. Valid values: `enable`, `disable`.
 * `hide_sso_credential` - Enable to prevent SSO credential being sent to client. Valid values: `enable`, `disable`.
 * `split_dns` - Split DNS for SSL VPN. The structure of `split_dns` block is documented below.
+* `landing_page` - Landing page options. The structure of `landing_page` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `ip_pools` block supports:
@@ -200,6 +206,7 @@ The `bookmarks` block supports:
 * `sso_credential_sent_once` - Single sign-on credentials are only sent once to remote server. Valid values: `enable`, `disable`.
 * `width` - Screen width (range from 640 - 65535, default = 1024).
 * `height` - Screen height (range from 480 - 65535, default = 768).
+* `vnc_keyboard_layout` - Keyboard layout. Valid values: `default`, `da`, `nl`, `en-uk`, `en-uk-ext`, `fi`, `fr`, `fr-be`, `fr-ca-mul`, `de`, `de-ch`, `it`, `it-142`, `pt`, `pt-br-abnt2`, `no`, `gd`, `es`, `sv`, `us-intl`.
 
 The `form_data` block supports:
 
@@ -235,6 +242,21 @@ The `split_dns` block supports:
 * `dns_server2` - DNS server 2.
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
+
+The `landing_page` block supports:
+
+* `url` - Landing page URL.
+* `logout_url` - Landing page log out URL.
+* `sso` - Single sign-on. Valid values: `disable`, `static`, `auto`.
+* `form_data` - Form data. The structure of `form_data` block is documented below.
+* `sso_credential` - Single sign-on credentials. Valid values: `sslvpn-login`, `alternative`.
+* `sso_username` - SSO user name.
+* `sso_password` - SSO password.
+
+The `form_data` block supports:
+
+* `name` - Name.
+* `value` - Value.
 
 
 ## Attribute Reference

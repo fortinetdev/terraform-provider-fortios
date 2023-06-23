@@ -431,7 +431,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallLdbMonitorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -441,7 +440,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallLdbMonitorType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -451,7 +449,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("interval"); ok {
-
 		t, err := expandFirewallLdbMonitorInterval(d, v, "interval", sv)
 		if err != nil {
 			return &obj, err
@@ -461,7 +458,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {
-
 		t, err := expandFirewallLdbMonitorTimeout(d, v, "timeout", sv)
 		if err != nil {
 			return &obj, err
@@ -471,7 +467,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("retry"); ok {
-
 		t, err := expandFirewallLdbMonitorRetry(d, v, "retry", sv)
 		if err != nil {
 			return &obj, err
@@ -481,7 +476,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-
 		t, err := expandFirewallLdbMonitorPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -491,7 +485,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("src_ip"); ok {
-
 		t, err := expandFirewallLdbMonitorSrcIp(d, v, "src_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -501,7 +494,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("http_get"); ok {
-
 		t, err := expandFirewallLdbMonitorHttpGet(d, v, "http_get", sv)
 		if err != nil {
 			return &obj, err
@@ -511,7 +503,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("http_match"); ok {
-
 		t, err := expandFirewallLdbMonitorHttpMatch(d, v, "http_match", sv)
 		if err != nil {
 			return &obj, err
@@ -521,7 +512,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("http_max_redirects"); ok {
-
 		t, err := expandFirewallLdbMonitorHttpMaxRedirects(d, v, "http_max_redirects", sv)
 		if err != nil {
 			return &obj, err
@@ -531,7 +521,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dns_protocol"); ok {
-
 		t, err := expandFirewallLdbMonitorDnsProtocol(d, v, "dns_protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -541,7 +530,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dns_request_domain"); ok {
-
 		t, err := expandFirewallLdbMonitorDnsRequestDomain(d, v, "dns_request_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -551,7 +539,6 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 	}
 
 	if v, ok := d.GetOk("dns_match_ip"); ok {
-
 		t, err := expandFirewallLdbMonitorDnsMatchIp(d, v, "dns_match_ip", sv)
 		if err != nil {
 			return &obj, err

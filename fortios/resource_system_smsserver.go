@@ -216,7 +216,6 @@ func getObjectSystemSmsServer(d *schema.ResourceData, sv string) (*map[string]in
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemSmsServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -226,7 +225,6 @@ func getObjectSystemSmsServer(d *schema.ResourceData, sv string) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("mail_server"); ok {
-
 		t, err := expandSystemSmsServerMailServer(d, v, "mail_server", sv)
 		if err != nil {
 			return &obj, err

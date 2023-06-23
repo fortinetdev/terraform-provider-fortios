@@ -89,6 +89,11 @@ func resourceFirewallIdentityBasedRoute() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -248,25 +253,21 @@ func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenFirewallIdentityBasedRouteRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := i["gateway"]; ok {
-
 			tmp["gateway"] = flattenFirewallIdentityBasedRouteRuleGateway(i["gateway"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := i["device"]; ok {
-
 			tmp["device"] = flattenFirewallIdentityBasedRouteRuleDevice(i["device"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
 		if _, ok := i["groups"]; ok {
-
 			tmp["groups"] = flattenFirewallIdentityBasedRouteRuleGroups(i["groups"], d, pre_append, sv)
 		}
 
@@ -317,7 +318,6 @@ func flattenFirewallIdentityBasedRouteRuleGroups(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallIdentityBasedRouteRuleGroupsName(i["name"], d, pre_append, sv)
 		}
 
@@ -336,6 +336,12 @@ func flattenFirewallIdentityBasedRouteRuleGroupsName(v interface{}, d *schema.Re
 
 func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenFirewallIdentityBasedRouteName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -349,7 +355,7 @@ func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
@@ -398,25 +404,21 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandFirewallIdentityBasedRouteRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["gateway"], _ = expandFirewallIdentityBasedRouteRuleGateway(d, i["gateway"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["device"], _ = expandFirewallIdentityBasedRouteRuleDevice(d, i["device"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["groups"], _ = expandFirewallIdentityBasedRouteRuleGroups(d, i["groups"], pre_append, sv)
 		} else {
 			tmp["groups"] = make([]string, 0)
@@ -458,7 +460,6 @@ func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallIdentityBasedRouteRuleGroupsName(d, i["name"], pre_append, sv)
 		}
 
@@ -478,7 +479,6 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallIdentityBasedRouteName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -488,7 +488,6 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallIdentityBasedRouteComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -498,7 +497,6 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
-
 		t, err := expandFirewallIdentityBasedRouteRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err

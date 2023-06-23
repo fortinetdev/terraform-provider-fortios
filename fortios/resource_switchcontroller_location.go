@@ -322,6 +322,11 @@ func resourceSwitchControllerLocation() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -462,205 +467,171 @@ func flattenSwitchControllerLocationAddressCivic(v interface{}, d *schema.Resour
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "additional"
 	if _, ok := i["additional"]; ok {
-
 		result["additional"] = flattenSwitchControllerLocationAddressCivicAdditional(i["additional"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "additional_code"
 	if _, ok := i["additional-code"]; ok {
-
 		result["additional_code"] = flattenSwitchControllerLocationAddressCivicAdditionalCode(i["additional-code"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "block"
 	if _, ok := i["block"]; ok {
-
 		result["block"] = flattenSwitchControllerLocationAddressCivicBlock(i["block"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "branch_road"
 	if _, ok := i["branch-road"]; ok {
-
 		result["branch_road"] = flattenSwitchControllerLocationAddressCivicBranchRoad(i["branch-road"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "building"
 	if _, ok := i["building"]; ok {
-
 		result["building"] = flattenSwitchControllerLocationAddressCivicBuilding(i["building"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "city"
 	if _, ok := i["city"]; ok {
-
 		result["city"] = flattenSwitchControllerLocationAddressCivicCity(i["city"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "city_division"
 	if _, ok := i["city-division"]; ok {
-
 		result["city_division"] = flattenSwitchControllerLocationAddressCivicCityDivision(i["city-division"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "country"
 	if _, ok := i["country"]; ok {
-
 		result["country"] = flattenSwitchControllerLocationAddressCivicCountry(i["country"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "country_subdivision"
 	if _, ok := i["country-subdivision"]; ok {
-
 		result["country_subdivision"] = flattenSwitchControllerLocationAddressCivicCountrySubdivision(i["country-subdivision"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "county"
 	if _, ok := i["county"]; ok {
-
 		result["county"] = flattenSwitchControllerLocationAddressCivicCounty(i["county"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "direction"
 	if _, ok := i["direction"]; ok {
-
 		result["direction"] = flattenSwitchControllerLocationAddressCivicDirection(i["direction"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "floor"
 	if _, ok := i["floor"]; ok {
-
 		result["floor"] = flattenSwitchControllerLocationAddressCivicFloor(i["floor"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "landmark"
 	if _, ok := i["landmark"]; ok {
-
 		result["landmark"] = flattenSwitchControllerLocationAddressCivicLandmark(i["landmark"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "language"
 	if _, ok := i["language"]; ok {
-
 		result["language"] = flattenSwitchControllerLocationAddressCivicLanguage(i["language"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "name"
 	if _, ok := i["name"]; ok {
-
 		result["name"] = flattenSwitchControllerLocationAddressCivicName(i["name"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "number"
 	if _, ok := i["number"]; ok {
-
 		result["number"] = flattenSwitchControllerLocationAddressCivicNumber(i["number"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "number_suffix"
 	if _, ok := i["number-suffix"]; ok {
-
 		result["number_suffix"] = flattenSwitchControllerLocationAddressCivicNumberSuffix(i["number-suffix"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "place_type"
 	if _, ok := i["place-type"]; ok {
-
 		result["place_type"] = flattenSwitchControllerLocationAddressCivicPlaceType(i["place-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "post_office_box"
 	if _, ok := i["post-office-box"]; ok {
-
 		result["post_office_box"] = flattenSwitchControllerLocationAddressCivicPostOfficeBox(i["post-office-box"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "postal_community"
 	if _, ok := i["postal-community"]; ok {
-
 		result["postal_community"] = flattenSwitchControllerLocationAddressCivicPostalCommunity(i["postal-community"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "primary_road"
 	if _, ok := i["primary-road"]; ok {
-
 		result["primary_road"] = flattenSwitchControllerLocationAddressCivicPrimaryRoad(i["primary-road"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "road_section"
 	if _, ok := i["road-section"]; ok {
-
 		result["road_section"] = flattenSwitchControllerLocationAddressCivicRoadSection(i["road-section"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "room"
 	if _, ok := i["room"]; ok {
-
 		result["room"] = flattenSwitchControllerLocationAddressCivicRoom(i["room"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "script"
 	if _, ok := i["script"]; ok {
-
 		result["script"] = flattenSwitchControllerLocationAddressCivicScript(i["script"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "seat"
 	if _, ok := i["seat"]; ok {
-
 		result["seat"] = flattenSwitchControllerLocationAddressCivicSeat(i["seat"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "street"
 	if _, ok := i["street"]; ok {
-
 		result["street"] = flattenSwitchControllerLocationAddressCivicStreet(i["street"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "street_name_post_mod"
 	if _, ok := i["street-name-post-mod"]; ok {
-
 		result["street_name_post_mod"] = flattenSwitchControllerLocationAddressCivicStreetNamePostMod(i["street-name-post-mod"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "street_name_pre_mod"
 	if _, ok := i["street-name-pre-mod"]; ok {
-
 		result["street_name_pre_mod"] = flattenSwitchControllerLocationAddressCivicStreetNamePreMod(i["street-name-pre-mod"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "street_suffix"
 	if _, ok := i["street-suffix"]; ok {
-
 		result["street_suffix"] = flattenSwitchControllerLocationAddressCivicStreetSuffix(i["street-suffix"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "sub_branch_road"
 	if _, ok := i["sub-branch-road"]; ok {
-
 		result["sub_branch_road"] = flattenSwitchControllerLocationAddressCivicSubBranchRoad(i["sub-branch-road"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "trailing_str_suffix"
 	if _, ok := i["trailing-str-suffix"]; ok {
-
 		result["trailing_str_suffix"] = flattenSwitchControllerLocationAddressCivicTrailingStrSuffix(i["trailing-str-suffix"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unit"
 	if _, ok := i["unit"]; ok {
-
 		result["unit"] = flattenSwitchControllerLocationAddressCivicUnit(i["unit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "zip"
 	if _, ok := i["zip"]; ok {
-
 		result["zip"] = flattenSwitchControllerLocationAddressCivicZip(i["zip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := i["parent-key"]; ok {
-
 		result["parent_key"] = flattenSwitchControllerLocationAddressCivicParentKey(i["parent-key"], d, pre_append, sv)
 	}
 
@@ -815,37 +786,31 @@ func flattenSwitchControllerLocationCoordinates(v interface{}, d *schema.Resourc
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "altitude"
 	if _, ok := i["altitude"]; ok {
-
 		result["altitude"] = flattenSwitchControllerLocationCoordinatesAltitude(i["altitude"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "altitude_unit"
 	if _, ok := i["altitude-unit"]; ok {
-
 		result["altitude_unit"] = flattenSwitchControllerLocationCoordinatesAltitudeUnit(i["altitude-unit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "datum"
 	if _, ok := i["datum"]; ok {
-
 		result["datum"] = flattenSwitchControllerLocationCoordinatesDatum(i["datum"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "latitude"
 	if _, ok := i["latitude"]; ok {
-
 		result["latitude"] = flattenSwitchControllerLocationCoordinatesLatitude(i["latitude"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "longitude"
 	if _, ok := i["longitude"]; ok {
-
 		result["longitude"] = flattenSwitchControllerLocationCoordinatesLongitude(i["longitude"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := i["parent-key"]; ok {
-
 		result["parent_key"] = flattenSwitchControllerLocationCoordinatesParentKey(i["parent-key"], d, pre_append, sv)
 	}
 
@@ -888,13 +853,11 @@ func flattenSwitchControllerLocationElinNumber(v interface{}, d *schema.Resource
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "elin_num"
 	if _, ok := i["elin-num"]; ok {
-
 		result["elin_num"] = flattenSwitchControllerLocationElinNumberElinNum(i["elin-num"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := i["parent-key"]; ok {
-
 		result["parent_key"] = flattenSwitchControllerLocationElinNumberParentKey(i["parent-key"], d, pre_append, sv)
 	}
 
@@ -912,6 +875,12 @@ func flattenSwitchControllerLocationElinNumberParentKey(v interface{}, d *schema
 
 func refreshObjectSwitchControllerLocation(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSwitchControllerLocationName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -919,7 +888,7 @@ func refreshObjectSwitchControllerLocation(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("address_civic", flattenSwitchControllerLocationAddressCivic(o["address-civic"], d, "address_civic", sv)); err != nil {
 			if !fortiAPIPatch(o["address-civic"]) {
 				return fmt.Errorf("Error reading address_civic: %v", err)
@@ -935,7 +904,7 @@ func refreshObjectSwitchControllerLocation(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("coordinates", flattenSwitchControllerLocationCoordinates(o["coordinates"], d, "coordinates", sv)); err != nil {
 			if !fortiAPIPatch(o["coordinates"]) {
 				return fmt.Errorf("Error reading coordinates: %v", err)
@@ -951,7 +920,7 @@ func refreshObjectSwitchControllerLocation(d *schema.ResourceData, o map[string]
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("elin_number", flattenSwitchControllerLocationElinNumber(o["elin-number"], d, "elin_number", sv)); err != nil {
 			if !fortiAPIPatch(o["elin-number"]) {
 				return fmt.Errorf("Error reading elin_number: %v", err)
@@ -992,172 +961,138 @@ func expandSwitchControllerLocationAddressCivic(d *schema.ResourceData, v interf
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "additional"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["additional"], _ = expandSwitchControllerLocationAddressCivicAdditional(d, i["additional"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "additional_code"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["additional-code"], _ = expandSwitchControllerLocationAddressCivicAdditionalCode(d, i["additional_code"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "block"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["block"], _ = expandSwitchControllerLocationAddressCivicBlock(d, i["block"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "branch_road"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["branch-road"], _ = expandSwitchControllerLocationAddressCivicBranchRoad(d, i["branch_road"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "building"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["building"], _ = expandSwitchControllerLocationAddressCivicBuilding(d, i["building"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "city"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["city"], _ = expandSwitchControllerLocationAddressCivicCity(d, i["city"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "city_division"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["city-division"], _ = expandSwitchControllerLocationAddressCivicCityDivision(d, i["city_division"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "country"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["country"], _ = expandSwitchControllerLocationAddressCivicCountry(d, i["country"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "country_subdivision"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["country-subdivision"], _ = expandSwitchControllerLocationAddressCivicCountrySubdivision(d, i["country_subdivision"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "county"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["county"], _ = expandSwitchControllerLocationAddressCivicCounty(d, i["county"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "direction"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["direction"], _ = expandSwitchControllerLocationAddressCivicDirection(d, i["direction"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "floor"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["floor"], _ = expandSwitchControllerLocationAddressCivicFloor(d, i["floor"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "landmark"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["landmark"], _ = expandSwitchControllerLocationAddressCivicLandmark(d, i["landmark"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "language"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["language"], _ = expandSwitchControllerLocationAddressCivicLanguage(d, i["language"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "name"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["name"], _ = expandSwitchControllerLocationAddressCivicName(d, i["name"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "number"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["number"], _ = expandSwitchControllerLocationAddressCivicNumber(d, i["number"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "number_suffix"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["number-suffix"], _ = expandSwitchControllerLocationAddressCivicNumberSuffix(d, i["number_suffix"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "place_type"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["place-type"], _ = expandSwitchControllerLocationAddressCivicPlaceType(d, i["place_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "post_office_box"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["post-office-box"], _ = expandSwitchControllerLocationAddressCivicPostOfficeBox(d, i["post_office_box"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "postal_community"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["postal-community"], _ = expandSwitchControllerLocationAddressCivicPostalCommunity(d, i["postal_community"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "primary_road"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["primary-road"], _ = expandSwitchControllerLocationAddressCivicPrimaryRoad(d, i["primary_road"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "road_section"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["road-section"], _ = expandSwitchControllerLocationAddressCivicRoadSection(d, i["road_section"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "room"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["room"], _ = expandSwitchControllerLocationAddressCivicRoom(d, i["room"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "script"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["script"], _ = expandSwitchControllerLocationAddressCivicScript(d, i["script"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "seat"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["seat"], _ = expandSwitchControllerLocationAddressCivicSeat(d, i["seat"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "street"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["street"], _ = expandSwitchControllerLocationAddressCivicStreet(d, i["street"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "street_name_post_mod"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["street-name-post-mod"], _ = expandSwitchControllerLocationAddressCivicStreetNamePostMod(d, i["street_name_post_mod"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "street_name_pre_mod"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["street-name-pre-mod"], _ = expandSwitchControllerLocationAddressCivicStreetNamePreMod(d, i["street_name_pre_mod"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "street_suffix"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["street-suffix"], _ = expandSwitchControllerLocationAddressCivicStreetSuffix(d, i["street_suffix"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "sub_branch_road"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["sub-branch-road"], _ = expandSwitchControllerLocationAddressCivicSubBranchRoad(d, i["sub_branch_road"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "trailing_str_suffix"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["trailing-str-suffix"], _ = expandSwitchControllerLocationAddressCivicTrailingStrSuffix(d, i["trailing_str_suffix"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unit"], _ = expandSwitchControllerLocationAddressCivicUnit(d, i["unit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "zip"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["zip"], _ = expandSwitchControllerLocationAddressCivicZip(d, i["zip"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["parent-key"], _ = expandSwitchControllerLocationAddressCivicParentKey(d, i["parent_key"], pre_append, sv)
 	}
 
@@ -1312,32 +1247,26 @@ func expandSwitchControllerLocationCoordinates(d *schema.ResourceData, v interfa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "altitude"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["altitude"], _ = expandSwitchControllerLocationCoordinatesAltitude(d, i["altitude"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "altitude_unit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["altitude-unit"], _ = expandSwitchControllerLocationCoordinatesAltitudeUnit(d, i["altitude_unit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "datum"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["datum"], _ = expandSwitchControllerLocationCoordinatesDatum(d, i["datum"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "latitude"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["latitude"], _ = expandSwitchControllerLocationCoordinatesLatitude(d, i["latitude"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "longitude"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["longitude"], _ = expandSwitchControllerLocationCoordinatesLongitude(d, i["longitude"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["parent-key"], _ = expandSwitchControllerLocationCoordinatesParentKey(d, i["parent_key"], pre_append, sv)
 	}
 
@@ -1380,12 +1309,10 @@ func expandSwitchControllerLocationElinNumber(d *schema.ResourceData, v interfac
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "elin_num"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["elin-num"], _ = expandSwitchControllerLocationElinNumberElinNum(d, i["elin_num"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["parent-key"], _ = expandSwitchControllerLocationElinNumberParentKey(d, i["parent_key"], pre_append, sv)
 	}
 
@@ -1404,7 +1331,6 @@ func getObjectSwitchControllerLocation(d *schema.ResourceData, sv string) (*map[
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSwitchControllerLocationName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1414,7 +1340,6 @@ func getObjectSwitchControllerLocation(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("address_civic"); ok {
-
 		t, err := expandSwitchControllerLocationAddressCivic(d, v, "address_civic", sv)
 		if err != nil {
 			return &obj, err
@@ -1424,7 +1349,6 @@ func getObjectSwitchControllerLocation(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("coordinates"); ok {
-
 		t, err := expandSwitchControllerLocationCoordinates(d, v, "coordinates", sv)
 		if err != nil {
 			return &obj, err
@@ -1434,7 +1358,6 @@ func getObjectSwitchControllerLocation(d *schema.ResourceData, sv string) (*map[
 	}
 
 	if v, ok := d.GetOk("elin_number"); ok {
-
 		t, err := expandSwitchControllerLocationElinNumber(d, v, "elin_number", sv)
 		if err != nil {
 			return &obj, err

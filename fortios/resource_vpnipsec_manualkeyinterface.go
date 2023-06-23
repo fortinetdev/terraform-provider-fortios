@@ -449,7 +449,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -459,7 +458,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -469,7 +467,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceIpVersion(d, v, "ip_version", sv)
 		if err != nil {
 			return &obj, err
@@ -479,7 +476,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("addr_type"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceAddrType(d, v, "addr_type", sv)
 		if err != nil {
 			return &obj, err
@@ -489,7 +485,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceRemoteGw(d, v, "remote_gw", sv)
 		if err != nil {
 			return &obj, err
@@ -499,7 +494,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("remote_gw6"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceRemoteGw6(d, v, "remote_gw6", sv)
 		if err != nil {
 			return &obj, err
@@ -509,7 +503,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("local_gw"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceLocalGw(d, v, "local_gw", sv)
 		if err != nil {
 			return &obj, err
@@ -519,7 +512,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("local_gw6"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceLocalGw6(d, v, "local_gw6", sv)
 		if err != nil {
 			return &obj, err
@@ -529,7 +521,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("auth_alg"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceAuthAlg(d, v, "auth_alg", sv)
 		if err != nil {
 			return &obj, err
@@ -539,7 +530,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("enc_alg"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceEncAlg(d, v, "enc_alg", sv)
 		if err != nil {
 			return &obj, err
@@ -549,7 +539,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("auth_key"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceAuthKey(d, v, "auth_key", sv)
 		if err != nil {
 			return &obj, err
@@ -559,7 +548,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("enc_key"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceEncKey(d, v, "enc_key", sv)
 		if err != nil {
 			return &obj, err
@@ -569,7 +557,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("local_spi"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceLocalSpi(d, v, "local_spi", sv)
 		if err != nil {
 			return &obj, err
@@ -579,7 +566,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("remote_spi"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceRemoteSpi(d, v, "remote_spi", sv)
 		if err != nil {
 			return &obj, err
@@ -589,7 +575,6 @@ func getObjectVpnIpsecManualkeyInterface(d *schema.ResourceData, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("npu_offload"); ok {
-
 		t, err := expandVpnIpsecManualkeyInterfaceNpuOffload(d, v, "npu_offload", sv)
 		if err != nil {
 			return &obj, err

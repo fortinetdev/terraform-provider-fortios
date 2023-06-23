@@ -195,6 +195,11 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -418,19 +423,16 @@ func flattenRouterospf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := i["spi"]; ok {
-
 			tmp["spi"] = flattenRouterospf6Ospf6InterfaceIpsecKeysSpi(i["spi"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := i["auth-key"]; ok {
-
 			tmp["auth_key"] = flattenRouterospf6Ospf6InterfaceIpsecKeysAuthKey(i["auth-key"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := i["enc-key"]; ok {
-
 			tmp["enc_key"] = flattenRouterospf6Ospf6InterfaceIpsecKeysEncKey(i["enc-key"], d, pre_append, sv)
 		}
 
@@ -481,25 +483,21 @@ func flattenRouterospf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := i["ip6"]; ok {
-
 			tmp["ip6"] = flattenRouterospf6Ospf6InterfaceNeighborIp6(i["ip6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poll_interval"
 		if _, ok := i["poll-interval"]; ok {
-
 			tmp["poll_interval"] = flattenRouterospf6Ospf6InterfaceNeighborPollInterval(i["poll-interval"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := i["cost"]; ok {
-
 			tmp["cost"] = flattenRouterospf6Ospf6InterfaceNeighborCost(i["cost"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-
 			tmp["priority"] = flattenRouterospf6Ospf6InterfaceNeighborPriority(i["priority"], d, pre_append, sv)
 		}
 
@@ -530,6 +528,12 @@ func flattenRouterospf6Ospf6InterfaceNeighborPriority(v interface{}, d *schema.R
 
 func refreshObjectRouterospf6Ospf6Interface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenRouterospf6Ospf6InterfaceName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -639,7 +643,7 @@ func refreshObjectRouterospf6Ospf6Interface(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("ipsec_keys", flattenRouterospf6Ospf6InterfaceIpsecKeys(o["ipsec-keys"], d, "ipsec_keys", sv)); err != nil {
 			if !fortiAPIPatch(o["ipsec-keys"]) {
 				return fmt.Errorf("Error reading ipsec_keys: %v", err)
@@ -655,7 +659,7 @@ func refreshObjectRouterospf6Ospf6Interface(d *schema.ResourceData, o map[string
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("neighbor", flattenRouterospf6Ospf6InterfaceNeighbor(o["neighbor"], d, "neighbor", sv)); err != nil {
 			if !fortiAPIPatch(o["neighbor"]) {
 				return fmt.Errorf("Error reading neighbor: %v", err)
@@ -768,19 +772,16 @@ func expandRouterospf6Ospf6InterfaceIpsecKeys(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["spi"], _ = expandRouterospf6Ospf6InterfaceIpsecKeysSpi(d, i["spi"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["auth-key"], _ = expandRouterospf6Ospf6InterfaceIpsecKeysAuthKey(d, i["auth_key"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["enc-key"], _ = expandRouterospf6Ospf6InterfaceIpsecKeysEncKey(d, i["enc_key"], pre_append, sv)
 		}
 
@@ -820,25 +821,21 @@ func expandRouterospf6Ospf6InterfaceNeighbor(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["ip6"], _ = expandRouterospf6Ospf6InterfaceNeighborIp6(d, i["ip6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poll_interval"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["poll-interval"], _ = expandRouterospf6Ospf6InterfaceNeighborPollInterval(d, i["poll_interval"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["cost"], _ = expandRouterospf6Ospf6InterfaceNeighborCost(d, i["cost"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["priority"], _ = expandRouterospf6Ospf6InterfaceNeighborPriority(d, i["priority"], pre_append, sv)
 		}
 
@@ -870,7 +867,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -880,7 +876,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("area_id"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceAreaId(d, v, "area_id", sv)
 		if err != nil {
 			return &obj, err
@@ -890,7 +885,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -900,7 +894,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("retransmit_interval"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceRetransmitInterval(d, v, "retransmit_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -910,7 +903,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("transmit_delay"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceTransmitDelay(d, v, "transmit_delay", sv)
 		if err != nil {
 			return &obj, err
@@ -920,7 +912,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOkExists("cost"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceCost(d, v, "cost", sv)
 		if err != nil {
 			return &obj, err
@@ -930,7 +921,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfacePriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
@@ -940,7 +930,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("dead_interval"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceDeadInterval(d, v, "dead_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -950,7 +939,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("hello_interval"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceHelloInterval(d, v, "hello_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -960,7 +948,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -970,7 +957,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("network_type"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceNetworkType(d, v, "network_type", sv)
 		if err != nil {
 			return &obj, err
@@ -980,7 +966,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceBfd(d, v, "bfd", sv)
 		if err != nil {
 			return &obj, err
@@ -990,7 +975,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("mtu"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceMtu(d, v, "mtu", sv)
 		if err != nil {
 			return &obj, err
@@ -1000,7 +984,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("mtu_ignore"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceMtuIgnore(d, v, "mtu_ignore", sv)
 		if err != nil {
 			return &obj, err
@@ -1010,7 +993,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceAuthentication(d, v, "authentication", sv)
 		if err != nil {
 			return &obj, err
@@ -1020,7 +1002,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("key_rollover_interval"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceKeyRolloverInterval(d, v, "key_rollover_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -1030,7 +1011,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("ipsec_auth_alg"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceIpsecAuthAlg(d, v, "ipsec_auth_alg", sv)
 		if err != nil {
 			return &obj, err
@@ -1040,7 +1020,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("ipsec_enc_alg"); ok {
-
 		t, err := expandRouterospf6Ospf6InterfaceIpsecEncAlg(d, v, "ipsec_enc_alg", sv)
 		if err != nil {
 			return &obj, err
@@ -1050,7 +1029,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("ipsec_keys"); ok || d.HasChange("ipsec_keys") {
-
 		t, err := expandRouterospf6Ospf6InterfaceIpsecKeys(d, v, "ipsec_keys", sv)
 		if err != nil {
 			return &obj, err
@@ -1060,7 +1038,6 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("neighbor"); ok || d.HasChange("neighbor") {
-
 		t, err := expandRouterospf6Ospf6InterfaceNeighbor(d, v, "neighbor", sv)
 		if err != nil {
 			return &obj, err

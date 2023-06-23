@@ -224,7 +224,6 @@ func getObjectFirewallInternetServiceIpblVendor(d *schema.ResourceData, sv strin
 
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-    
 		t, err := expandFirewallInternetServiceIpblVendorId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -235,7 +234,6 @@ func getObjectFirewallInternetServiceIpblVendor(d *schema.ResourceData, sv strin
 
 
 	if v, ok := d.GetOk("name"); ok {
-    
 		t, err := expandFirewallInternetServiceIpblVendorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err

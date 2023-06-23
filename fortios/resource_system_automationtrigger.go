@@ -86,6 +86,20 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"logid_block": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"logid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 99999),
@@ -179,21 +193,12 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
-			"logid_block": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
-						},
-					},
-				},
-			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -365,7 +370,6 @@ func flattenSystemAutomationTriggerVdom(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemAutomationTriggerVdomName(i["name"], d, pre_append, sv)
 		}
 
@@ -391,6 +395,48 @@ func flattenSystemAutomationTriggerIocLevel(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemAutomationTriggerReportType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationTriggerLogid_Block(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAutomationTriggerLogid_BlockId(i["id"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemAutomationTriggerLogid_BlockId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -448,19 +494,16 @@ func flattenSystemAutomationTriggerFields(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenSystemAutomationTriggerFieldsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenSystemAutomationTriggerFieldsName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-
 			tmp["value"] = flattenSystemAutomationTriggerFieldsValue(i["value"], d, pre_append, sv)
 		}
 
@@ -509,51 +552,14 @@ func flattenSystemAutomationTriggerFabricEventSeverity(v interface{}, d *schema.
 	return v
 }
 
-func flattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
-	if v == nil {
-		return nil
-	}
-
-	if _, ok := v.([]interface{}); !ok {
-		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
-		return nil
-	}
-
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil
-	}
-
-	result := make([]map[string]interface{}, 0, len(l))
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-
-			tmp["id"] = flattenSystemAutomationTriggerLogidBlockId(i["id"], d, pre_append, sv)
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	dynamic_sort_subtable(result, "id", d)
-	return result
-}
-
-func flattenSystemAutomationTriggerLogidBlockId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemAutomationTriggerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -579,7 +585,7 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("vdom", flattenSystemAutomationTriggerVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
@@ -613,9 +619,29 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if err = d.Set("logid", flattenSystemAutomationTriggerLogid(o["logid"], d, "logid", sv)); err != nil {
-		if !fortiAPIPatch(o["logid"]) {
-			return fmt.Errorf("Error reading logid: %v", err)
+	if _, ok := o["logid"].([]interface{}); ok {
+		if b_get_all_tables {
+			if err = d.Set("logid_block", flattenSystemAutomationTriggerLogid_Block(o["logid"], d, "logid_block", sv)); err != nil {
+				if !fortiAPIPatch(o["logid"]) {
+					return fmt.Errorf("Error reading logid_block: %v", err)
+				}
+			}
+		} else {
+			if _, ok := d.GetOk("logid_block"); ok {
+				if err = d.Set("logid_block", flattenSystemAutomationTriggerLogid_Block(o["logid"], d, "logid_block", sv)); err != nil {
+					if !fortiAPIPatch(o["logid"]) {
+						return fmt.Errorf("Error reading logid_block: %v", err)
+					}
+				}
+			}
+		}
+	}
+
+	if _, ok := o["logid"].(float64); ok {
+		if err = d.Set("logid", flattenSystemAutomationTriggerLogid(o["logid"], d, "logid", sv)); err != nil {
+			if !fortiAPIPatch(o["logid"]) {
+				return fmt.Errorf("Error reading logid: %v", err)
+			}
 		}
 	}
 
@@ -655,7 +681,7 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("fields", flattenSystemAutomationTriggerFields(o["fields"], d, "fields", sv)); err != nil {
 			if !fortiAPIPatch(o["fields"]) {
 				return fmt.Errorf("Error reading fields: %v", err)
@@ -707,22 +733,6 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
-		if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
-			if !fortiAPIPatch(o["logid"]) {
-				return fmt.Errorf("Error reading logid_block: %v", err)
-			}
-		}
-	} else {
-		if _, ok := d.GetOk("logid_block"); ok {
-			if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
-				if !fortiAPIPatch(o["logid"]) {
-					return fmt.Errorf("Error reading logid_block: %v", err)
-				}
-			}
-		}
-	}
-
 	return nil
 }
 
@@ -764,7 +774,6 @@ func expandSystemAutomationTriggerVdom(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemAutomationTriggerVdomName(d, i["name"], pre_append, sv)
 		}
 
@@ -789,6 +798,37 @@ func expandSystemAutomationTriggerIocLevel(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemAutomationTriggerReportType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerLogid_Block(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemAutomationTriggerLogid_BlockId(d, i["id"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAutomationTriggerLogid_BlockId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -836,19 +876,16 @@ func expandSystemAutomationTriggerFields(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandSystemAutomationTriggerFieldsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandSystemAutomationTriggerFieldsName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value"], _ = expandSystemAutomationTriggerFieldsValue(d, i["value"], pre_append, sv)
 		}
 
@@ -896,43 +933,10 @@ func expandSystemAutomationTriggerFabricEventSeverity(d *schema.ResourceData, v 
 	return v, nil
 }
 
-func expandSystemAutomationTriggerLogidBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-
-			tmp["id"], _ = expandSystemAutomationTriggerLogidBlockId(d, i["id"], pre_append, sv)
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandSystemAutomationTriggerLogidBlockId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemAutomationTriggerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -942,7 +946,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-
 		t, err := expandSystemAutomationTriggerDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
@@ -952,7 +955,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("trigger_type"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerType(d, v, "trigger_type", sv)
 		if err != nil {
 			return &obj, err
@@ -962,7 +964,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("event_type"); ok {
-
 		t, err := expandSystemAutomationTriggerEventType(d, v, "event_type", sv)
 		if err != nil {
 			return &obj, err
@@ -972,7 +973,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
-
 		t, err := expandSystemAutomationTriggerVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -982,7 +982,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("license_type"); ok {
-
 		t, err := expandSystemAutomationTriggerLicenseType(d, v, "license_type", sv)
 		if err != nil {
 			return &obj, err
@@ -992,7 +991,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("ioc_level"); ok {
-
 		t, err := expandSystemAutomationTriggerIocLevel(d, v, "ioc_level", sv)
 		if err != nil {
 			return &obj, err
@@ -1002,7 +1000,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("report_type"); ok {
-
 		t, err := expandSystemAutomationTriggerReportType(d, v, "report_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1011,8 +1008,16 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("logid"); ok {
+	if v, ok := d.GetOk("logid_block"); ok || d.HasChange("logid_block") {
+		t, err := expandSystemAutomationTriggerLogid_Block(d, v, "logid_block", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["logid"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("logid"); ok {
 		t, err := expandSystemAutomationTriggerLogid(d, v, "logid", sv)
 		if err != nil {
 			return &obj, err
@@ -1022,7 +1027,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("trigger_frequency"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerFrequency(d, v, "trigger_frequency", sv)
 		if err != nil {
 			return &obj, err
@@ -1032,7 +1036,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("trigger_weekday"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerWeekday(d, v, "trigger_weekday", sv)
 		if err != nil {
 			return &obj, err
@@ -1042,7 +1045,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("trigger_day"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerDay(d, v, "trigger_day", sv)
 		if err != nil {
 			return &obj, err
@@ -1052,7 +1054,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("trigger_hour"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerHour(d, v, "trigger_hour", sv)
 		if err != nil {
 			return &obj, err
@@ -1062,7 +1063,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOkExists("trigger_minute"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerMinute(d, v, "trigger_minute", sv)
 		if err != nil {
 			return &obj, err
@@ -1072,7 +1072,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("trigger_datetime"); ok {
-
 		t, err := expandSystemAutomationTriggerTriggerDatetime(d, v, "trigger_datetime", sv)
 		if err != nil {
 			return &obj, err
@@ -1082,7 +1081,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("fields"); ok || d.HasChange("fields") {
-
 		t, err := expandSystemAutomationTriggerFields(d, v, "fields", sv)
 		if err != nil {
 			return &obj, err
@@ -1092,7 +1090,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("faz_event_name"); ok {
-
 		t, err := expandSystemAutomationTriggerFazEventName(d, v, "faz_event_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1102,7 +1099,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("faz_event_severity"); ok {
-
 		t, err := expandSystemAutomationTriggerFazEventSeverity(d, v, "faz_event_severity", sv)
 		if err != nil {
 			return &obj, err
@@ -1112,7 +1108,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("faz_event_tags"); ok {
-
 		t, err := expandSystemAutomationTriggerFazEventTags(d, v, "faz_event_tags", sv)
 		if err != nil {
 			return &obj, err
@@ -1122,7 +1117,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("serial"); ok {
-
 		t, err := expandSystemAutomationTriggerSerial(d, v, "serial", sv)
 		if err != nil {
 			return &obj, err
@@ -1132,7 +1126,6 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("fabric_event_name"); ok {
-
 		t, err := expandSystemAutomationTriggerFabricEventName(d, v, "fabric_event_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1142,22 +1135,11 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("fabric_event_severity"); ok {
-
 		t, err := expandSystemAutomationTriggerFabricEventSeverity(d, v, "fabric_event_severity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["fabric-event-severity"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("logid_block"); ok || d.HasChange("logid_block") {
-
-		t, err := expandSystemAutomationTriggerLogidBlock(d, v, "logid_block", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["logid"] = t
 		}
 	}
 

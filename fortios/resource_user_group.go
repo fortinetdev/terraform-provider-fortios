@@ -258,6 +258,11 @@ func resourceUserGroup() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -441,7 +446,6 @@ func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string, s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
@@ -484,19 +488,16 @@ func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenUserGroupMatchId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"
 		if _, ok := i["server-name"]; ok {
-
 			tmp["server_name"] = flattenUserGroupMatchServerName(i["server-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_name"
 		if _, ok := i["group-name"]; ok {
-
 			tmp["group_name"] = flattenUserGroupMatchGroupName(i["group-name"], d, pre_append, sv)
 		}
 
@@ -599,25 +600,21 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenUserGroupGuestId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
 		if _, ok := i["user-id"]; ok {
-
 			tmp["user_id"] = flattenUserGroupGuestUserId(i["user-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenUserGroupGuestName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
-
 			tmp["password"] = flattenUserGroupGuestPassword(i["password"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
@@ -627,37 +624,31 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"
 		if _, ok := i["mobile-phone"]; ok {
-
 			tmp["mobile_phone"] = flattenUserGroupGuestMobilePhone(i["mobile-phone"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sponsor"
 		if _, ok := i["sponsor"]; ok {
-
 			tmp["sponsor"] = flattenUserGroupGuestSponsor(i["sponsor"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company"
 		if _, ok := i["company"]; ok {
-
 			tmp["company"] = flattenUserGroupGuestCompany(i["company"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := i["email"]; ok {
-
 			tmp["email"] = flattenUserGroupGuestEmail(i["email"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiration"
 		if _, ok := i["expiration"]; ok {
-
 			tmp["expiration"] = flattenUserGroupGuestExpiration(i["expiration"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-
 			tmp["comment"] = flattenUserGroupGuestComment(i["comment"], d, pre_append, sv)
 		}
 
@@ -712,6 +703,12 @@ func flattenUserGroupGuestComment(v interface{}, d *schema.ResourceData, pre str
 
 func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenUserGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -761,7 +758,7 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
@@ -777,7 +774,7 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match", sv)); err != nil {
 			if !fortiAPIPatch(o["match"]) {
 				return fmt.Errorf("Error reading match: %v", err)
@@ -871,7 +868,7 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest", sv)); err != nil {
 			if !fortiAPIPatch(o["guest"]) {
 				return fmt.Errorf("Error reading guest: %v", err)
@@ -944,7 +941,6 @@ func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string, sv
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
@@ -976,19 +972,16 @@ func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandUserGroupMatchId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["server-name"], _ = expandUserGroupMatchServerName(d, i["server_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["group-name"], _ = expandUserGroupMatchGroupName(d, i["group_name"], pre_append, sv)
 		}
 
@@ -1080,61 +1073,51 @@ func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string, sv 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandUserGroupGuestId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["user-id"], _ = expandUserGroupGuestUserId(d, i["user_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandUserGroupGuestName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["password"], _ = expandUserGroupGuestPassword(d, i["password"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["mobile-phone"], _ = expandUserGroupGuestMobilePhone(d, i["mobile_phone"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sponsor"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["sponsor"], _ = expandUserGroupGuestSponsor(d, i["sponsor"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["company"], _ = expandUserGroupGuestCompany(d, i["company"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["email"], _ = expandUserGroupGuestEmail(d, i["email"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiration"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["expiration"], _ = expandUserGroupGuestExpiration(d, i["expiration"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["comment"], _ = expandUserGroupGuestComment(d, i["comment"], pre_append, sv)
 		}
 
@@ -1190,7 +1173,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1200,7 +1182,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandUserGroupId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
@@ -1210,7 +1191,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("group_type"); ok {
-
 		t, err := expandUserGroupGroupType(d, v, "group_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1220,7 +1200,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("authtimeout"); ok {
-
 		t, err := expandUserGroupAuthtimeout(d, v, "authtimeout", sv)
 		if err != nil {
 			return &obj, err
@@ -1230,7 +1209,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("auth_concurrent_override"); ok {
-
 		t, err := expandUserGroupAuthConcurrentOverride(d, v, "auth_concurrent_override", sv)
 		if err != nil {
 			return &obj, err
@@ -1240,7 +1218,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("auth_concurrent_value"); ok {
-
 		t, err := expandUserGroupAuthConcurrentValue(d, v, "auth_concurrent_value", sv)
 		if err != nil {
 			return &obj, err
@@ -1250,7 +1227,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("http_digest_realm"); ok {
-
 		t, err := expandUserGroupHttpDigestRealm(d, v, "http_digest_realm", sv)
 		if err != nil {
 			return &obj, err
@@ -1260,7 +1236,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sso_attribute_value"); ok {
-
 		t, err := expandUserGroupSsoAttributeValue(d, v, "sso_attribute_value", sv)
 		if err != nil {
 			return &obj, err
@@ -1270,7 +1245,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
-
 		t, err := expandUserGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
@@ -1280,7 +1254,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("match"); ok || d.HasChange("match") {
-
 		t, err := expandUserGroupMatch(d, v, "match", sv)
 		if err != nil {
 			return &obj, err
@@ -1290,7 +1263,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("user_id"); ok {
-
 		t, err := expandUserGroupUserId(d, v, "user_id", sv)
 		if err != nil {
 			return &obj, err
@@ -1300,7 +1272,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandUserGroupPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -1310,7 +1281,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {
-
 		t, err := expandUserGroupUserName(d, v, "user_name", sv)
 		if err != nil {
 			return &obj, err
@@ -1320,7 +1290,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sponsor"); ok {
-
 		t, err := expandUserGroupSponsor(d, v, "sponsor", sv)
 		if err != nil {
 			return &obj, err
@@ -1330,7 +1299,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("company"); ok {
-
 		t, err := expandUserGroupCompany(d, v, "company", sv)
 		if err != nil {
 			return &obj, err
@@ -1340,7 +1308,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("email"); ok {
-
 		t, err := expandUserGroupEmail(d, v, "email", sv)
 		if err != nil {
 			return &obj, err
@@ -1350,7 +1317,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("mobile_phone"); ok {
-
 		t, err := expandUserGroupMobilePhone(d, v, "mobile_phone", sv)
 		if err != nil {
 			return &obj, err
@@ -1360,7 +1326,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sms_server"); ok {
-
 		t, err := expandUserGroupSmsServer(d, v, "sms_server", sv)
 		if err != nil {
 			return &obj, err
@@ -1370,7 +1335,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("sms_custom_server"); ok {
-
 		t, err := expandUserGroupSmsCustomServer(d, v, "sms_custom_server", sv)
 		if err != nil {
 			return &obj, err
@@ -1380,7 +1344,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("expire_type"); ok {
-
 		t, err := expandUserGroupExpireType(d, v, "expire_type", sv)
 		if err != nil {
 			return &obj, err
@@ -1390,7 +1353,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("expire"); ok {
-
 		t, err := expandUserGroupExpire(d, v, "expire", sv)
 		if err != nil {
 			return &obj, err
@@ -1400,7 +1362,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("max_accounts"); ok {
-
 		t, err := expandUserGroupMaxAccounts(d, v, "max_accounts", sv)
 		if err != nil {
 			return &obj, err
@@ -1410,7 +1371,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("multiple_guest_add"); ok {
-
 		t, err := expandUserGroupMultipleGuestAdd(d, v, "multiple_guest_add", sv)
 		if err != nil {
 			return &obj, err
@@ -1420,7 +1380,6 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("guest"); ok || d.HasChange("guest") {
-
 		t, err := expandUserGroupGuest(d, v, "guest", sv)
 		if err != nil {
 			return &obj, err

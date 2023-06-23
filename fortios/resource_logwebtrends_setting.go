@@ -191,7 +191,6 @@ func getObjectLogWebtrendsSetting(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogWebtrendsSettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -205,7 +204,6 @@ func getObjectLogWebtrendsSetting(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["server"] = nil
 		} else {
-
 			t, err := expandLogWebtrendsSettingServer(d, v, "server", sv)
 			if err != nil {
 				return &obj, err

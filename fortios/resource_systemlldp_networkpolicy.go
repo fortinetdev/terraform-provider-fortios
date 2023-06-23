@@ -350,6 +350,11 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 					},
 				},
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -494,31 +499,26 @@ func flattenSystemLldpNetworkPolicyVoice(v interface{}, d *schema.ResourceData, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyVoiceStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyVoiceTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyVoiceVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyVoicePriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyVoiceDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -557,31 +557,26 @@ func flattenSystemLldpNetworkPolicyVoiceSignaling(v interface{}, d *schema.Resou
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyVoiceSignalingStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyVoiceSignalingTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyVoiceSignalingVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyVoiceSignalingPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyVoiceSignalingDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -620,31 +615,26 @@ func flattenSystemLldpNetworkPolicyGuest(v interface{}, d *schema.ResourceData, 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyGuestStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyGuestTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyGuestVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyGuestPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyGuestDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -683,31 +673,26 @@ func flattenSystemLldpNetworkPolicyGuestVoiceSignaling(v interface{}, d *schema.
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyGuestVoiceSignalingStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyGuestVoiceSignalingTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyGuestVoiceSignalingVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyGuestVoiceSignalingPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyGuestVoiceSignalingDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -746,31 +731,26 @@ func flattenSystemLldpNetworkPolicySoftphone(v interface{}, d *schema.ResourceDa
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicySoftphoneStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicySoftphoneTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicySoftphoneVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicySoftphonePriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicySoftphoneDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -809,31 +789,26 @@ func flattenSystemLldpNetworkPolicyVideoConferencing(v interface{}, d *schema.Re
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyVideoConferencingStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyVideoConferencingTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyVideoConferencingVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyVideoConferencingPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyVideoConferencingDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -872,31 +847,26 @@ func flattenSystemLldpNetworkPolicyStreamingVideo(v interface{}, d *schema.Resou
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyStreamingVideoStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyStreamingVideoTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyStreamingVideoVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyStreamingVideoPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyStreamingVideoDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -935,31 +905,26 @@ func flattenSystemLldpNetworkPolicyVideoSignaling(v interface{}, d *schema.Resou
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
-
 		result["status"] = flattenSystemLldpNetworkPolicyVideoSignalingStatus(i["status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "tag"
 	if _, ok := i["tag"]; ok {
-
 		result["tag"] = flattenSystemLldpNetworkPolicyVideoSignalingTag(i["tag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := i["vlan"]; ok {
-
 		result["vlan"] = flattenSystemLldpNetworkPolicyVideoSignalingVlan(i["vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
-
 		result["priority"] = flattenSystemLldpNetworkPolicyVideoSignalingPriority(i["priority"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := i["dscp"]; ok {
-
 		result["dscp"] = flattenSystemLldpNetworkPolicyVideoSignalingDscp(i["dscp"], d, pre_append, sv)
 	}
 
@@ -989,6 +954,12 @@ func flattenSystemLldpNetworkPolicyVideoSignalingDscp(v interface{}, d *schema.R
 
 func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenSystemLldpNetworkPolicyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1002,7 +973,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("voice", flattenSystemLldpNetworkPolicyVoice(o["voice"], d, "voice", sv)); err != nil {
 			if !fortiAPIPatch(o["voice"]) {
 				return fmt.Errorf("Error reading voice: %v", err)
@@ -1018,7 +989,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("voice_signaling", flattenSystemLldpNetworkPolicyVoiceSignaling(o["voice-signaling"], d, "voice_signaling", sv)); err != nil {
 			if !fortiAPIPatch(o["voice-signaling"]) {
 				return fmt.Errorf("Error reading voice_signaling: %v", err)
@@ -1034,7 +1005,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("guest", flattenSystemLldpNetworkPolicyGuest(o["guest"], d, "guest", sv)); err != nil {
 			if !fortiAPIPatch(o["guest"]) {
 				return fmt.Errorf("Error reading guest: %v", err)
@@ -1050,7 +1021,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("guest_voice_signaling", flattenSystemLldpNetworkPolicyGuestVoiceSignaling(o["guest-voice-signaling"], d, "guest_voice_signaling", sv)); err != nil {
 			if !fortiAPIPatch(o["guest-voice-signaling"]) {
 				return fmt.Errorf("Error reading guest_voice_signaling: %v", err)
@@ -1066,7 +1037,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("softphone", flattenSystemLldpNetworkPolicySoftphone(o["softphone"], d, "softphone", sv)); err != nil {
 			if !fortiAPIPatch(o["softphone"]) {
 				return fmt.Errorf("Error reading softphone: %v", err)
@@ -1082,7 +1053,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("video_conferencing", flattenSystemLldpNetworkPolicyVideoConferencing(o["video-conferencing"], d, "video_conferencing", sv)); err != nil {
 			if !fortiAPIPatch(o["video-conferencing"]) {
 				return fmt.Errorf("Error reading video_conferencing: %v", err)
@@ -1098,7 +1069,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("streaming_video", flattenSystemLldpNetworkPolicyStreamingVideo(o["streaming-video"], d, "streaming_video", sv)); err != nil {
 			if !fortiAPIPatch(o["streaming-video"]) {
 				return fmt.Errorf("Error reading streaming_video: %v", err)
@@ -1114,7 +1085,7 @@ func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("video_signaling", flattenSystemLldpNetworkPolicyVideoSignaling(o["video-signaling"], d, "video_signaling", sv)); err != nil {
 			if !fortiAPIPatch(o["video-signaling"]) {
 				return fmt.Errorf("Error reading video_signaling: %v", err)
@@ -1159,27 +1130,22 @@ func expandSystemLldpNetworkPolicyVoice(d *schema.ResourceData, v interface{}, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyVoiceStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyVoiceTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVoiceVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyVoicePriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyVoiceDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1218,27 +1184,22 @@ func expandSystemLldpNetworkPolicyVoiceSignaling(d *schema.ResourceData, v inter
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyVoiceSignalingStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyVoiceSignalingTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVoiceSignalingVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyVoiceSignalingPriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyVoiceSignalingDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1277,27 +1238,22 @@ func expandSystemLldpNetworkPolicyGuest(d *schema.ResourceData, v interface{}, p
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyGuestStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyGuestTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyGuestVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyGuestPriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyGuestDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1336,27 +1292,22 @@ func expandSystemLldpNetworkPolicyGuestVoiceSignaling(d *schema.ResourceData, v 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyGuestVoiceSignalingStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyGuestVoiceSignalingTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyGuestVoiceSignalingVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyGuestVoiceSignalingPriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyGuestVoiceSignalingDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1395,27 +1346,22 @@ func expandSystemLldpNetworkPolicySoftphone(d *schema.ResourceData, v interface{
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicySoftphoneStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicySoftphoneTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicySoftphoneVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicySoftphonePriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicySoftphoneDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1454,27 +1400,22 @@ func expandSystemLldpNetworkPolicyVideoConferencing(d *schema.ResourceData, v in
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyVideoConferencingStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyVideoConferencingTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVideoConferencingVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyVideoConferencingPriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyVideoConferencingDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1513,27 +1454,22 @@ func expandSystemLldpNetworkPolicyStreamingVideo(d *schema.ResourceData, v inter
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyStreamingVideoStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyStreamingVideoTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyStreamingVideoVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyStreamingVideoPriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyStreamingVideoDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1572,27 +1508,22 @@ func expandSystemLldpNetworkPolicyVideoSignaling(d *schema.ResourceData, v inter
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["status"], _ = expandSystemLldpNetworkPolicyVideoSignalingStatus(d, i["status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "tag"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["tag"], _ = expandSystemLldpNetworkPolicyVideoSignalingTag(d, i["tag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVideoSignalingVlan(d, i["vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["priority"], _ = expandSystemLldpNetworkPolicyVideoSignalingPriority(d, i["priority"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dscp"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["dscp"], _ = expandSystemLldpNetworkPolicyVideoSignalingDscp(d, i["dscp"], pre_append, sv)
 	}
 
@@ -1623,7 +1554,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1633,7 +1563,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -1643,7 +1572,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("voice"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyVoice(d, v, "voice", sv)
 		if err != nil {
 			return &obj, err
@@ -1653,7 +1581,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("voice_signaling"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyVoiceSignaling(d, v, "voice_signaling", sv)
 		if err != nil {
 			return &obj, err
@@ -1663,7 +1590,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("guest"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyGuest(d, v, "guest", sv)
 		if err != nil {
 			return &obj, err
@@ -1673,7 +1599,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("guest_voice_signaling"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyGuestVoiceSignaling(d, v, "guest_voice_signaling", sv)
 		if err != nil {
 			return &obj, err
@@ -1683,7 +1608,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("softphone"); ok {
-
 		t, err := expandSystemLldpNetworkPolicySoftphone(d, v, "softphone", sv)
 		if err != nil {
 			return &obj, err
@@ -1693,7 +1617,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("video_conferencing"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyVideoConferencing(d, v, "video_conferencing", sv)
 		if err != nil {
 			return &obj, err
@@ -1703,7 +1626,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("streaming_video"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyStreamingVideo(d, v, "streaming_video", sv)
 		if err != nil {
 			return &obj, err
@@ -1713,7 +1635,6 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("video_signaling"); ok {
-
 		t, err := expandSystemLldpNetworkPolicyVideoSignaling(d, v, "video_signaling", sv)
 		if err != nil {
 			return &obj, err

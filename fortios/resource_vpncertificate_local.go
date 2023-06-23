@@ -198,7 +198,7 @@ func resourceVpnCertificateLocal() *schema.Resource {
 			},
 			"acme_renew_window": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 60),
+				ValidateFunc: validation.IntBetween(1, 100),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -739,7 +739,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnCertificateLocalName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -749,7 +748,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandVpnCertificateLocalPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -759,7 +757,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandVpnCertificateLocalComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -769,7 +766,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("private_key"); ok {
-
 		t, err := expandVpnCertificateLocalPrivateKey(d, v, "private_key", sv)
 		if err != nil {
 			return &obj, err
@@ -779,7 +775,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-
 		t, err := expandVpnCertificateLocalCertificate(d, v, "certificate", sv)
 		if err != nil {
 			return &obj, err
@@ -789,7 +784,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("csr"); ok {
-
 		t, err := expandVpnCertificateLocalCsr(d, v, "csr", sv)
 		if err != nil {
 			return &obj, err
@@ -799,7 +793,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("state"); ok {
-
 		t, err := expandVpnCertificateLocalState(d, v, "state", sv)
 		if err != nil {
 			return &obj, err
@@ -809,7 +802,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-
 		t, err := expandVpnCertificateLocalScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
@@ -819,7 +811,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-
 		t, err := expandVpnCertificateLocalRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
@@ -829,7 +820,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandVpnCertificateLocalSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
@@ -839,7 +829,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days"); ok {
-
 		t, err := expandVpnCertificateLocalAutoRegenerateDays(d, v, "auto_regenerate_days", sv)
 		if err != nil {
 			return &obj, err
@@ -849,7 +838,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days_warning"); ok {
-
 		t, err := expandVpnCertificateLocalAutoRegenerateDaysWarning(d, v, "auto_regenerate_days_warning", sv)
 		if err != nil {
 			return &obj, err
@@ -859,7 +847,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("scep_password"); ok {
-
 		t, err := expandVpnCertificateLocalScepPassword(d, v, "scep_password", sv)
 		if err != nil {
 			return &obj, err
@@ -869,7 +856,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("ca_identifier"); ok {
-
 		t, err := expandVpnCertificateLocalCaIdentifier(d, v, "ca_identifier", sv)
 		if err != nil {
 			return &obj, err
@@ -879,7 +865,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("name_encoding"); ok {
-
 		t, err := expandVpnCertificateLocalNameEncoding(d, v, "name_encoding", sv)
 		if err != nil {
 			return &obj, err
@@ -889,7 +874,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandVpnCertificateLocalSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -899,7 +883,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("ike_localid"); ok {
-
 		t, err := expandVpnCertificateLocalIkeLocalid(d, v, "ike_localid", sv)
 		if err != nil {
 			return &obj, err
@@ -909,7 +892,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("ike_localid_type"); ok {
-
 		t, err := expandVpnCertificateLocalIkeLocalidType(d, v, "ike_localid_type", sv)
 		if err != nil {
 			return &obj, err
@@ -919,7 +901,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-
 		t, err := expandVpnCertificateLocalLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err
@@ -929,7 +910,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("enroll_protocol"); ok {
-
 		t, err := expandVpnCertificateLocalEnrollProtocol(d, v, "enroll_protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -939,7 +919,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("private_key_retain"); ok {
-
 		t, err := expandVpnCertificateLocalPrivateKeyRetain(d, v, "private_key_retain", sv)
 		if err != nil {
 			return &obj, err
@@ -949,7 +928,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("cmp_server"); ok {
-
 		t, err := expandVpnCertificateLocalCmpServer(d, v, "cmp_server", sv)
 		if err != nil {
 			return &obj, err
@@ -959,7 +937,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("cmp_path"); ok {
-
 		t, err := expandVpnCertificateLocalCmpPath(d, v, "cmp_path", sv)
 		if err != nil {
 			return &obj, err
@@ -969,7 +946,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("cmp_server_cert"); ok {
-
 		t, err := expandVpnCertificateLocalCmpServerCert(d, v, "cmp_server_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -979,7 +955,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("cmp_regeneration_method"); ok {
-
 		t, err := expandVpnCertificateLocalCmpRegenerationMethod(d, v, "cmp_regeneration_method", sv)
 		if err != nil {
 			return &obj, err
@@ -989,7 +964,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("acme_ca_url"); ok {
-
 		t, err := expandVpnCertificateLocalAcmeCaUrl(d, v, "acme_ca_url", sv)
 		if err != nil {
 			return &obj, err
@@ -999,7 +973,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("acme_domain"); ok {
-
 		t, err := expandVpnCertificateLocalAcmeDomain(d, v, "acme_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1009,7 +982,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("acme_email"); ok {
-
 		t, err := expandVpnCertificateLocalAcmeEmail(d, v, "acme_email", sv)
 		if err != nil {
 			return &obj, err
@@ -1019,7 +991,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("acme_rsa_key_size"); ok {
-
 		t, err := expandVpnCertificateLocalAcmeRsaKeySize(d, v, "acme_rsa_key_size", sv)
 		if err != nil {
 			return &obj, err
@@ -1029,7 +1000,6 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 	}
 
 	if v, ok := d.GetOk("acme_renew_window"); ok {
-
 		t, err := expandVpnCertificateLocalAcmeRenewWindow(d, v, "acme_renew_window", sv)
 		if err != nil {
 			return &obj, err

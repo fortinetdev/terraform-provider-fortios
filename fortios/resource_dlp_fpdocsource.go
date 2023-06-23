@@ -520,7 +520,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandDlpFpDocSourceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -530,7 +529,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-
 		t, err := expandDlpFpDocSourceServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
@@ -540,7 +538,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandDlpFpDocSourceServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -550,7 +547,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("period"); ok {
-
 		t, err := expandDlpFpDocSourcePeriod(d, v, "period", sv)
 		if err != nil {
 			return &obj, err
@@ -560,7 +556,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-
 		t, err := expandDlpFpDocSourceVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -570,7 +565,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("scan_subdirectories"); ok {
-
 		t, err := expandDlpFpDocSourceScanSubdirectories(d, v, "scan_subdirectories", sv)
 		if err != nil {
 			return &obj, err
@@ -580,7 +574,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("scan_on_creation"); ok {
-
 		t, err := expandDlpFpDocSourceScanOnCreation(d, v, "scan_on_creation", sv)
 		if err != nil {
 			return &obj, err
@@ -590,7 +583,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("remove_deleted"); ok {
-
 		t, err := expandDlpFpDocSourceRemoveDeleted(d, v, "remove_deleted", sv)
 		if err != nil {
 			return &obj, err
@@ -600,7 +592,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("keep_modified"); ok {
-
 		t, err := expandDlpFpDocSourceKeepModified(d, v, "keep_modified", sv)
 		if err != nil {
 			return &obj, err
@@ -610,7 +601,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-
 		t, err := expandDlpFpDocSourceUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
@@ -620,7 +610,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandDlpFpDocSourcePassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -630,7 +619,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("file_path"); ok {
-
 		t, err := expandDlpFpDocSourceFilePath(d, v, "file_path", sv)
 		if err != nil {
 			return &obj, err
@@ -640,7 +628,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("file_pattern"); ok {
-
 		t, err := expandDlpFpDocSourceFilePattern(d, v, "file_pattern", sv)
 		if err != nil {
 			return &obj, err
@@ -650,7 +637,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("sensitivity"); ok {
-
 		t, err := expandDlpFpDocSourceSensitivity(d, v, "sensitivity", sv)
 		if err != nil {
 			return &obj, err
@@ -660,7 +646,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("tod_hour"); ok {
-
 		t, err := expandDlpFpDocSourceTodHour(d, v, "tod_hour", sv)
 		if err != nil {
 			return &obj, err
@@ -670,7 +655,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("tod_min"); ok {
-
 		t, err := expandDlpFpDocSourceTodMin(d, v, "tod_min", sv)
 		if err != nil {
 			return &obj, err
@@ -680,7 +664,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("weekday"); ok {
-
 		t, err := expandDlpFpDocSourceWeekday(d, v, "weekday", sv)
 		if err != nil {
 			return &obj, err
@@ -690,7 +673,6 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("date"); ok {
-
 		t, err := expandDlpFpDocSourceDate(d, v, "date", sv)
 		if err != nil {
 			return &obj, err

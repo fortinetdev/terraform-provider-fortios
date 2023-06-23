@@ -182,6 +182,11 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dst_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -202,6 +207,11 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				Optional:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "false",
@@ -373,7 +383,6 @@ func flattenFirewallCentralSnatMapOrigAddr(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapOrigAddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -416,7 +425,6 @@ func flattenFirewallCentralSnatMapOrigAddr6(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapOrigAddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -459,7 +467,6 @@ func flattenFirewallCentralSnatMapSrcintf(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapSrcintfName(i["name"], d, pre_append, sv)
 		}
 
@@ -502,7 +509,6 @@ func flattenFirewallCentralSnatMapDstAddr(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapDstAddrName(i["name"], d, pre_append, sv)
 		}
 
@@ -545,7 +551,6 @@ func flattenFirewallCentralSnatMapDstAddr6(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapDstAddr6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -588,7 +593,6 @@ func flattenFirewallCentralSnatMapDstintf(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapDstintfName(i["name"], d, pre_append, sv)
 		}
 
@@ -631,7 +635,6 @@ func flattenFirewallCentralSnatMapNatIppool(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapNatIppoolName(i["name"], d, pre_append, sv)
 		}
 
@@ -674,7 +677,6 @@ func flattenFirewallCentralSnatMapNatIppool6(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-
 			tmp["name"] = flattenFirewallCentralSnatMapNatIppool6Name(i["name"], d, pre_append, sv)
 		}
 
@@ -703,6 +705,10 @@ func flattenFirewallCentralSnatMapNatPort(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenFirewallCentralSnatMapDstPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallCentralSnatMapNat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -721,6 +727,12 @@ func flattenFirewallCentralSnatMapComments(v interface{}, d *schema.ResourceData
 
 func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("policyid", flattenFirewallCentralSnatMapPolicyid(o["policyid"], d, "policyid", sv)); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -746,7 +758,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("orig_addr", flattenFirewallCentralSnatMapOrigAddr(o["orig-addr"], d, "orig_addr", sv)); err != nil {
 			if !fortiAPIPatch(o["orig-addr"]) {
 				return fmt.Errorf("Error reading orig_addr: %v", err)
@@ -762,7 +774,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("orig_addr6", flattenFirewallCentralSnatMapOrigAddr6(o["orig-addr6"], d, "orig_addr6", sv)); err != nil {
 			if !fortiAPIPatch(o["orig-addr6"]) {
 				return fmt.Errorf("Error reading orig_addr6: %v", err)
@@ -778,7 +790,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("srcintf", flattenFirewallCentralSnatMapSrcintf(o["srcintf"], d, "srcintf", sv)); err != nil {
 			if !fortiAPIPatch(o["srcintf"]) {
 				return fmt.Errorf("Error reading srcintf: %v", err)
@@ -794,7 +806,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dst_addr", flattenFirewallCentralSnatMapDstAddr(o["dst-addr"], d, "dst_addr", sv)); err != nil {
 			if !fortiAPIPatch(o["dst-addr"]) {
 				return fmt.Errorf("Error reading dst_addr: %v", err)
@@ -810,7 +822,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dst_addr6", flattenFirewallCentralSnatMapDstAddr6(o["dst-addr6"], d, "dst_addr6", sv)); err != nil {
 			if !fortiAPIPatch(o["dst-addr6"]) {
 				return fmt.Errorf("Error reading dst_addr6: %v", err)
@@ -826,7 +838,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("dstintf", flattenFirewallCentralSnatMapDstintf(o["dstintf"], d, "dstintf", sv)); err != nil {
 			if !fortiAPIPatch(o["dstintf"]) {
 				return fmt.Errorf("Error reading dstintf: %v", err)
@@ -842,7 +854,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("nat_ippool", flattenFirewallCentralSnatMapNatIppool(o["nat-ippool"], d, "nat_ippool", sv)); err != nil {
 			if !fortiAPIPatch(o["nat-ippool"]) {
 				return fmt.Errorf("Error reading nat_ippool: %v", err)
@@ -858,7 +870,7 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("nat_ippool6", flattenFirewallCentralSnatMapNatIppool6(o["nat-ippool6"], d, "nat_ippool6", sv)); err != nil {
 			if !fortiAPIPatch(o["nat-ippool6"]) {
 				return fmt.Errorf("Error reading nat_ippool6: %v", err)
@@ -889,6 +901,12 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 	if err = d.Set("nat_port", flattenFirewallCentralSnatMapNatPort(o["nat-port"], d, "nat_port", sv)); err != nil {
 		if !fortiAPIPatch(o["nat-port"]) {
 			return fmt.Errorf("Error reading nat_port: %v", err)
+		}
+	}
+
+	if err = d.Set("dst_port", flattenFirewallCentralSnatMapDstPort(o["dst-port"], d, "dst_port", sv)); err != nil {
+		if !fortiAPIPatch(o["dst-port"]) {
+			return fmt.Errorf("Error reading dst_port: %v", err)
 		}
 	}
 
@@ -957,7 +975,6 @@ func expandFirewallCentralSnatMapOrigAddr(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapOrigAddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -989,7 +1006,6 @@ func expandFirewallCentralSnatMapOrigAddr6(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapOrigAddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -1021,7 +1037,6 @@ func expandFirewallCentralSnatMapSrcintf(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapSrcintfName(d, i["name"], pre_append, sv)
 		}
 
@@ -1053,7 +1068,6 @@ func expandFirewallCentralSnatMapDstAddr(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapDstAddrName(d, i["name"], pre_append, sv)
 		}
 
@@ -1085,7 +1099,6 @@ func expandFirewallCentralSnatMapDstAddr6(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapDstAddr6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -1117,7 +1130,6 @@ func expandFirewallCentralSnatMapDstintf(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapDstintfName(d, i["name"], pre_append, sv)
 		}
 
@@ -1149,7 +1161,6 @@ func expandFirewallCentralSnatMapNatIppool(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapNatIppoolName(d, i["name"], pre_append, sv)
 		}
 
@@ -1181,7 +1192,6 @@ func expandFirewallCentralSnatMapNatIppool6(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["name"], _ = expandFirewallCentralSnatMapNatIppool6Name(d, i["name"], pre_append, sv)
 		}
 
@@ -1209,6 +1219,10 @@ func expandFirewallCentralSnatMapNatPort(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandFirewallCentralSnatMapDstPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallCentralSnatMapNat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1229,7 +1243,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("policyid"); ok {
-
 		t, err := expandFirewallCentralSnatMapPolicyid(d, v, "policyid", sv)
 		if err != nil {
 			return &obj, err
@@ -1239,7 +1252,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-
 		t, err := expandFirewallCentralSnatMapUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
@@ -1249,7 +1261,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandFirewallCentralSnatMapStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -1259,7 +1270,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandFirewallCentralSnatMapType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -1269,7 +1279,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("orig_addr"); ok || d.HasChange("orig_addr") {
-
 		t, err := expandFirewallCentralSnatMapOrigAddr(d, v, "orig_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -1279,7 +1288,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("orig_addr6"); ok || d.HasChange("orig_addr6") {
-
 		t, err := expandFirewallCentralSnatMapOrigAddr6(d, v, "orig_addr6", sv)
 		if err != nil {
 			return &obj, err
@@ -1289,7 +1297,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
-
 		t, err := expandFirewallCentralSnatMapSrcintf(d, v, "srcintf", sv)
 		if err != nil {
 			return &obj, err
@@ -1299,7 +1306,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("dst_addr"); ok || d.HasChange("dst_addr") {
-
 		t, err := expandFirewallCentralSnatMapDstAddr(d, v, "dst_addr", sv)
 		if err != nil {
 			return &obj, err
@@ -1309,7 +1315,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("dst_addr6"); ok || d.HasChange("dst_addr6") {
-
 		t, err := expandFirewallCentralSnatMapDstAddr6(d, v, "dst_addr6", sv)
 		if err != nil {
 			return &obj, err
@@ -1319,7 +1324,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("dstintf"); ok || d.HasChange("dstintf") {
-
 		t, err := expandFirewallCentralSnatMapDstintf(d, v, "dstintf", sv)
 		if err != nil {
 			return &obj, err
@@ -1329,7 +1333,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("nat_ippool"); ok || d.HasChange("nat_ippool") {
-
 		t, err := expandFirewallCentralSnatMapNatIppool(d, v, "nat_ippool", sv)
 		if err != nil {
 			return &obj, err
@@ -1339,7 +1342,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("nat_ippool6"); ok || d.HasChange("nat_ippool6") {
-
 		t, err := expandFirewallCentralSnatMapNatIppool6(d, v, "nat_ippool6", sv)
 		if err != nil {
 			return &obj, err
@@ -1349,7 +1351,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-
 		t, err := expandFirewallCentralSnatMapProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -1359,7 +1360,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("orig_port"); ok {
-
 		t, err := expandFirewallCentralSnatMapOrigPort(d, v, "orig_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1369,7 +1369,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("nat_port"); ok {
-
 		t, err := expandFirewallCentralSnatMapNatPort(d, v, "nat_port", sv)
 		if err != nil {
 			return &obj, err
@@ -1378,8 +1377,16 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("nat"); ok {
+	if v, ok := d.GetOk("dst_port"); ok {
+		t, err := expandFirewallCentralSnatMapDstPort(d, v, "dst_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dst-port"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("nat"); ok {
 		t, err := expandFirewallCentralSnatMapNat(d, v, "nat", sv)
 		if err != nil {
 			return &obj, err
@@ -1389,7 +1396,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("nat46"); ok {
-
 		t, err := expandFirewallCentralSnatMapNat46(d, v, "nat46", sv)
 		if err != nil {
 			return &obj, err
@@ -1399,7 +1405,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("nat64"); ok {
-
 		t, err := expandFirewallCentralSnatMapNat64(d, v, "nat64", sv)
 		if err != nil {
 			return &obj, err
@@ -1409,7 +1414,6 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandFirewallCentralSnatMapComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err

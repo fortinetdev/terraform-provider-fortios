@@ -255,7 +255,6 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandUserAdgrpName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -265,7 +264,6 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("server_name"); ok {
-
 		t, err := expandUserAdgrpServerName(d, v, "server_name", sv)
 		if err != nil {
 			return &obj, err
@@ -275,7 +273,6 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("connector_source"); ok {
-
 		t, err := expandUserAdgrpConnectorSource(d, v, "connector_source", sv)
 		if err != nil {
 			return &obj, err
@@ -285,7 +282,6 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-
 		t, err := expandUserAdgrpId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err

@@ -106,6 +106,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ips_voip_filter": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -327,6 +333,10 @@ func flattenFirewallProfileGroupVoipProfile(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallProfileGroupIpsVoipFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupSctpFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -431,6 +441,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("voip_profile", flattenFirewallProfileGroupVoipProfile(o["voip-profile"], d, "voip_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["voip-profile"]) {
 			return fmt.Errorf("Error reading voip_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("ips_voip_filter", flattenFirewallProfileGroupIpsVoipFilter(o["ips-voip-filter"], d, "ips_voip_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["ips-voip-filter"]) {
+			return fmt.Errorf("Error reading ips_voip_filter: %v", err)
 		}
 	}
 
@@ -539,6 +555,10 @@ func expandFirewallProfileGroupVoipProfile(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandFirewallProfileGroupIpsVoipFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileGroupSctpFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -575,7 +595,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandFirewallProfileGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -585,7 +604,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("av_profile"); ok {
-
 		t, err := expandFirewallProfileGroupAvProfile(d, v, "av_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -595,7 +613,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupWebfilterProfile(d, v, "webfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -605,7 +622,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupDnsfilterProfile(d, v, "dnsfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -615,7 +631,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupEmailfilterProfile(d, v, "emailfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -625,7 +640,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("dlp_profile"); ok {
-
 		t, err := expandFirewallProfileGroupDlpProfile(d, v, "dlp_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -635,7 +649,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupSpamfilterProfile(d, v, "spamfilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -645,7 +658,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("dlp_sensor"); ok {
-
 		t, err := expandFirewallProfileGroupDlpSensor(d, v, "dlp_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -655,7 +667,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("file_filter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupFileFilterProfile(d, v, "file_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -665,7 +676,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
-
 		t, err := expandFirewallProfileGroupIpsSensor(d, v, "ips_sensor", sv)
 		if err != nil {
 			return &obj, err
@@ -675,7 +685,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
-
 		t, err := expandFirewallProfileGroupApplicationList(d, v, "application_list", sv)
 		if err != nil {
 			return &obj, err
@@ -685,7 +694,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("voip_profile"); ok {
-
 		t, err := expandFirewallProfileGroupVoipProfile(d, v, "voip_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -694,8 +702,16 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
-	if v, ok := d.GetOk("sctp_filter_profile"); ok {
+	if v, ok := d.GetOk("ips_voip_filter"); ok {
+		t, err := expandFirewallProfileGroupIpsVoipFilter(d, v, "ips_voip_filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ips-voip-filter"] = t
+		}
+	}
 
+	if v, ok := d.GetOk("sctp_filter_profile"); ok {
 		t, err := expandFirewallProfileGroupSctpFilterProfile(d, v, "sctp_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -705,7 +721,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("icap_profile"); ok {
-
 		t, err := expandFirewallProfileGroupIcapProfile(d, v, "icap_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -715,7 +730,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("cifs_profile"); ok {
-
 		t, err := expandFirewallProfileGroupCifsProfile(d, v, "cifs_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -725,7 +739,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("videofilter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupVideofilterProfile(d, v, "videofilter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -735,7 +748,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("waf_profile"); ok {
-
 		t, err := expandFirewallProfileGroupWafProfile(d, v, "waf_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -745,7 +757,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ssh_filter_profile"); ok {
-
 		t, err := expandFirewallProfileGroupSshFilterProfile(d, v, "ssh_filter_profile", sv)
 		if err != nil {
 			return &obj, err
@@ -755,7 +766,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("profile_protocol_options"); ok {
-
 		t, err := expandFirewallProfileGroupProfileProtocolOptions(d, v, "profile_protocol_options", sv)
 		if err != nil {
 			return &obj, err
@@ -765,7 +775,6 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 	}
 
 	if v, ok := d.GetOk("ssl_ssh_profile"); ok {
-
 		t, err := expandFirewallProfileGroupSslSshProfile(d, v, "ssl_ssh_profile", sv)
 		if err != nil {
 			return &obj, err

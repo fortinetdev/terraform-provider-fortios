@@ -196,7 +196,7 @@ func resourceCertificateLocal() *schema.Resource {
 			},
 			"acme_renew_window": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 60),
+				ValidateFunc: validation.IntBetween(1, 100),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -743,7 +743,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandCertificateLocalName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -753,7 +752,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-
 		t, err := expandCertificateLocalPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
@@ -763,7 +761,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandCertificateLocalComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -773,7 +770,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("private_key"); ok {
-
 		t, err := expandCertificateLocalPrivateKey(d, v, "private_key", sv)
 		if err != nil {
 			return &obj, err
@@ -783,7 +779,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-
 		t, err := expandCertificateLocalCertificate(d, v, "certificate", sv)
 		if err != nil {
 			return &obj, err
@@ -793,7 +788,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("csr"); ok {
-
 		t, err := expandCertificateLocalCsr(d, v, "csr", sv)
 		if err != nil {
 			return &obj, err
@@ -803,7 +797,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("state"); ok {
-
 		t, err := expandCertificateLocalState(d, v, "state", sv)
 		if err != nil {
 			return &obj, err
@@ -813,7 +806,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-
 		t, err := expandCertificateLocalScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
@@ -823,7 +815,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-
 		t, err := expandCertificateLocalRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
@@ -833,7 +824,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandCertificateLocalSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
@@ -843,7 +833,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days"); ok {
-
 		t, err := expandCertificateLocalAutoRegenerateDays(d, v, "auto_regenerate_days", sv)
 		if err != nil {
 			return &obj, err
@@ -853,7 +842,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days_warning"); ok {
-
 		t, err := expandCertificateLocalAutoRegenerateDaysWarning(d, v, "auto_regenerate_days_warning", sv)
 		if err != nil {
 			return &obj, err
@@ -863,7 +851,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("scep_password"); ok {
-
 		t, err := expandCertificateLocalScepPassword(d, v, "scep_password", sv)
 		if err != nil {
 			return &obj, err
@@ -873,7 +860,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("ca_identifier"); ok {
-
 		t, err := expandCertificateLocalCaIdentifier(d, v, "ca_identifier", sv)
 		if err != nil {
 			return &obj, err
@@ -883,7 +869,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("name_encoding"); ok {
-
 		t, err := expandCertificateLocalNameEncoding(d, v, "name_encoding", sv)
 		if err != nil {
 			return &obj, err
@@ -893,7 +878,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandCertificateLocalSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -903,7 +887,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("ike_localid"); ok {
-
 		t, err := expandCertificateLocalIkeLocalid(d, v, "ike_localid", sv)
 		if err != nil {
 			return &obj, err
@@ -913,7 +896,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("ike_localid_type"); ok {
-
 		t, err := expandCertificateLocalIkeLocalidType(d, v, "ike_localid_type", sv)
 		if err != nil {
 			return &obj, err
@@ -923,7 +905,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-
 		t, err := expandCertificateLocalLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err
@@ -933,7 +914,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("enroll_protocol"); ok {
-
 		t, err := expandCertificateLocalEnrollProtocol(d, v, "enroll_protocol", sv)
 		if err != nil {
 			return &obj, err
@@ -943,7 +923,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("private_key_retain"); ok {
-
 		t, err := expandCertificateLocalPrivateKeyRetain(d, v, "private_key_retain", sv)
 		if err != nil {
 			return &obj, err
@@ -953,7 +932,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("cmp_server"); ok {
-
 		t, err := expandCertificateLocalCmpServer(d, v, "cmp_server", sv)
 		if err != nil {
 			return &obj, err
@@ -963,7 +941,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("cmp_path"); ok {
-
 		t, err := expandCertificateLocalCmpPath(d, v, "cmp_path", sv)
 		if err != nil {
 			return &obj, err
@@ -973,7 +950,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("cmp_server_cert"); ok {
-
 		t, err := expandCertificateLocalCmpServerCert(d, v, "cmp_server_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -983,7 +959,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("cmp_regeneration_method"); ok {
-
 		t, err := expandCertificateLocalCmpRegenerationMethod(d, v, "cmp_regeneration_method", sv)
 		if err != nil {
 			return &obj, err
@@ -993,7 +968,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("acme_ca_url"); ok {
-
 		t, err := expandCertificateLocalAcmeCaUrl(d, v, "acme_ca_url", sv)
 		if err != nil {
 			return &obj, err
@@ -1003,7 +977,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("acme_domain"); ok {
-
 		t, err := expandCertificateLocalAcmeDomain(d, v, "acme_domain", sv)
 		if err != nil {
 			return &obj, err
@@ -1013,7 +986,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("acme_email"); ok {
-
 		t, err := expandCertificateLocalAcmeEmail(d, v, "acme_email", sv)
 		if err != nil {
 			return &obj, err
@@ -1023,7 +995,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("acme_rsa_key_size"); ok {
-
 		t, err := expandCertificateLocalAcmeRsaKeySize(d, v, "acme_rsa_key_size", sv)
 		if err != nil {
 			return &obj, err
@@ -1033,7 +1004,6 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("acme_renew_window"); ok {
-
 		t, err := expandCertificateLocalAcmeRenewWindow(d, v, "acme_renew_window", sv)
 		if err != nil {
 			return &obj, err

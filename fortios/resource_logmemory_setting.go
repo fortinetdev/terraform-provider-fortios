@@ -190,7 +190,6 @@ func getObjectLogMemorySetting(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["status"] = nil
 		} else {
-
 			t, err := expandLogMemorySettingStatus(d, v, "status", sv)
 			if err != nil {
 				return &obj, err
@@ -204,7 +203,6 @@ func getObjectLogMemorySetting(d *schema.ResourceData, setArgNil bool, sv string
 		if setArgNil {
 			obj["diskfull"] = nil
 		} else {
-
 			t, err := expandLogMemorySettingDiskfull(d, v, "diskfull", sv)
 			if err != nil {
 				return &obj, err

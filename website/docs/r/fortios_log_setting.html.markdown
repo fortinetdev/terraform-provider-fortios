@@ -44,6 +44,7 @@ The following arguments are supported:
 * `log_user_in_upper` - Enable/disable logs with user-in-upper. Valid values: `enable`, `disable`.
 * `fwpolicy_implicit_log` - Enable/disable implicit firewall policy logging. Valid values: `enable`, `disable`.
 * `fwpolicy6_implicit_log` - Enable/disable implicit firewall policy6 logging. Valid values: `enable`, `disable`.
+* `extended_log` - Enable/disable extended traffic logging. Valid values: `enable`, `disable`.
 * `log_invalid_packet` - Enable/disable invalid packet traffic logging. Valid values: `enable`, `disable`.
 * `local_in_allow` - Enable/disable local-in-allow logging. Valid values: `enable`, `disable`.
 * `local_in_deny_unicast` - Enable/disable local-in-deny-unicast logging. Valid values: `enable`, `disable`.
@@ -64,6 +65,7 @@ The following arguments are supported:
 * `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
 * `anonymization_hash` - User name anonymization hash salt.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `custom_log_fields` block supports:

@@ -27,7 +27,9 @@ The following arguments are supported:
 
 * `name` - (Required) Onetime schedule name.
 * `start` - (Required) Schedule start date and time, format hh:mm yyyy/mm/dd.
+* `start_utc` - Schedule start date and time, in epoch format.
 * `end` - (Required) Schedule end date and time, format hh:mm yyyy/mm/dd.
+* `end_utc` - Schedule end date and time, in epoch format.
 * `color` - Color of icon on the GUI.
 * `expiration_days` - Write an event log message this many days before the schedule expires.
 * `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.

@@ -145,6 +145,11 @@ func resourceLogNullDeviceFilter() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -313,25 +318,21 @@ func flattenLogNullDeviceFilterFreeStyle(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenLogNullDeviceFilterFreeStyleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-
 			tmp["category"] = flattenLogNullDeviceFilterFreeStyleCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := i["filter"]; ok {
-
 			tmp["filter"] = flattenLogNullDeviceFilterFreeStyleFilter(i["filter"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-
 			tmp["filter_type"] = flattenLogNullDeviceFilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
@@ -378,6 +379,12 @@ func flattenLogNullDeviceFilterFilterType(v interface{}, d *schema.ResourceData,
 
 func refreshObjectLogNullDeviceFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("severity", flattenLogNullDeviceFilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -445,7 +452,7 @@ func refreshObjectLogNullDeviceFilter(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogNullDeviceFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
 				return fmt.Errorf("Error reading free_style: %v", err)
@@ -554,25 +561,21 @@ func expandLogNullDeviceFilterFreeStyle(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandLogNullDeviceFilterFreeStyleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["category"], _ = expandLogNullDeviceFilterFreeStyleCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter"], _ = expandLogNullDeviceFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["filter-type"], _ = expandLogNullDeviceFilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
@@ -623,7 +626,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["severity"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterSeverity(d, v, "severity", sv)
 			if err != nil {
 				return &obj, err
@@ -637,7 +639,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["forward-traffic"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterForwardTraffic(d, v, "forward_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -651,7 +652,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["local-traffic"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterLocalTraffic(d, v, "local_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -665,7 +665,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["multicast-traffic"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterMulticastTraffic(d, v, "multicast_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -679,7 +678,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["sniffer-traffic"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -693,7 +691,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ztna-traffic"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterZtnaTraffic(d, v, "ztna_traffic", sv)
 			if err != nil {
 				return &obj, err
@@ -707,7 +704,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["anomaly"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterAnomaly(d, v, "anomaly", sv)
 			if err != nil {
 				return &obj, err
@@ -721,7 +717,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["netscan-discovery"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterNetscanDiscovery(d, v, "netscan_discovery", sv)
 			if err != nil {
 				return &obj, err
@@ -735,7 +730,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["netscan-vulnerability"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
 			if err != nil {
 				return &obj, err
@@ -749,7 +743,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["voip"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterVoip(d, v, "voip", sv)
 			if err != nil {
 				return &obj, err
@@ -763,7 +756,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["gtp"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterGtp(d, v, "gtp", sv)
 			if err != nil {
 				return &obj, err
@@ -777,7 +769,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["free-style"] = make([]struct{}, 0)
 		} else {
-
 			t, err := expandLogNullDeviceFilterFreeStyle(d, v, "free_style", sv)
 			if err != nil {
 				return &obj, err
@@ -791,7 +782,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["dns"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterDns(d, v, "dns", sv)
 			if err != nil {
 				return &obj, err
@@ -805,7 +795,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["ssh"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterSsh(d, v, "ssh", sv)
 			if err != nil {
 				return &obj, err
@@ -819,7 +808,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["filter"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterFilter(d, v, "filter", sv)
 			if err != nil {
 				return &obj, err
@@ -833,7 +821,6 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["filter-type"] = nil
 		} else {
-
 			t, err := expandLogNullDeviceFilterFilterType(d, v, "filter_type", sv)
 			if err != nil {
 				return &obj, err

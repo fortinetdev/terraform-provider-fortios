@@ -230,7 +230,6 @@ func getObjectSystemReplacemsgNacQuar(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["msg-type"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgNacQuarMsgType(d, v, "msg_type", sv)
 			if err != nil {
 				return &obj, err
@@ -244,7 +243,6 @@ func getObjectSystemReplacemsgNacQuar(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["buffer"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgNacQuarBuffer(d, v, "buffer", sv)
 			if err != nil {
 				return &obj, err
@@ -258,7 +256,6 @@ func getObjectSystemReplacemsgNacQuar(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["header"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgNacQuarHeader(d, v, "header", sv)
 			if err != nil {
 				return &obj, err
@@ -272,7 +269,6 @@ func getObjectSystemReplacemsgNacQuar(d *schema.ResourceData, setArgNil bool, sv
 		if setArgNil {
 			obj["format"] = nil
 		} else {
-
 			t, err := expandSystemReplacemsgNacQuarFormat(d, v, "format", sv)
 			if err != nil {
 				return &obj, err

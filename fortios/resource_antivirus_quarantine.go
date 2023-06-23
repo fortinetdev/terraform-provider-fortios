@@ -401,7 +401,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["agelimit"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineAgelimit(d, v, "agelimit", sv)
 			if err != nil {
 				return &obj, err
@@ -415,7 +414,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["maxfilesize"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineMaxfilesize(d, v, "maxfilesize", sv)
 			if err != nil {
 				return &obj, err
@@ -429,7 +427,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["quarantine-quota"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineQuarantineQuota(d, v, "quarantine_quota", sv)
 			if err != nil {
 				return &obj, err
@@ -443,7 +440,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["drop-infected"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineDropInfected(d, v, "drop_infected", sv)
 			if err != nil {
 				return &obj, err
@@ -457,7 +453,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["store-infected"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineStoreInfected(d, v, "store_infected", sv)
 			if err != nil {
 				return &obj, err
@@ -471,7 +466,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["drop-blocked"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineDropBlocked(d, v, "drop_blocked", sv)
 			if err != nil {
 				return &obj, err
@@ -485,7 +479,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["store-blocked"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineStoreBlocked(d, v, "store_blocked", sv)
 			if err != nil {
 				return &obj, err
@@ -499,7 +492,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["drop-machine-learning"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineDropMachineLearning(d, v, "drop_machine_learning", sv)
 			if err != nil {
 				return &obj, err
@@ -513,7 +505,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["store-machine-learning"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineStoreMachineLearning(d, v, "store_machine_learning", sv)
 			if err != nil {
 				return &obj, err
@@ -527,7 +518,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["drop-heuristic"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineDropHeuristic(d, v, "drop_heuristic", sv)
 			if err != nil {
 				return &obj, err
@@ -541,7 +531,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["store-heuristic"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineStoreHeuristic(d, v, "store_heuristic", sv)
 			if err != nil {
 				return &obj, err
@@ -555,7 +544,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["lowspace"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineLowspace(d, v, "lowspace", sv)
 			if err != nil {
 				return &obj, err
@@ -569,7 +557,6 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 		if setArgNil {
 			obj["destination"] = nil
 		} else {
-
 			t, err := expandAntivirusQuarantineDestination(d, v, "destination", sv)
 			if err != nil {
 				return &obj, err

@@ -444,7 +444,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnCertificateCrlName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -454,7 +453,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("crl"); ok {
-
 		t, err := expandVpnCertificateCrlCrl(d, v, "crl", sv)
 		if err != nil {
 			return &obj, err
@@ -464,7 +462,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-
 		t, err := expandVpnCertificateCrlRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
@@ -474,7 +471,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-
 		t, err := expandVpnCertificateCrlSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
@@ -484,7 +480,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("update_vdom"); ok {
-
 		t, err := expandVpnCertificateCrlUpdateVdom(d, v, "update_vdom", sv)
 		if err != nil {
 			return &obj, err
@@ -494,7 +489,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-
 		t, err := expandVpnCertificateCrlLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
@@ -504,7 +498,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ldap_username"); ok {
-
 		t, err := expandVpnCertificateCrlLdapUsername(d, v, "ldap_username", sv)
 		if err != nil {
 			return &obj, err
@@ -514,7 +507,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ldap_password"); ok {
-
 		t, err := expandVpnCertificateCrlLdapPassword(d, v, "ldap_password", sv)
 		if err != nil {
 			return &obj, err
@@ -524,7 +516,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("http_url"); ok {
-
 		t, err := expandVpnCertificateCrlHttpUrl(d, v, "http_url", sv)
 		if err != nil {
 			return &obj, err
@@ -534,7 +525,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-
 		t, err := expandVpnCertificateCrlScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
@@ -544,7 +534,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("scep_cert"); ok {
-
 		t, err := expandVpnCertificateCrlScepCert(d, v, "scep_cert", sv)
 		if err != nil {
 			return &obj, err
@@ -554,7 +543,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("update_interval"); ok {
-
 		t, err := expandVpnCertificateCrlUpdateInterval(d, v, "update_interval", sv)
 		if err != nil {
 			return &obj, err
@@ -564,7 +552,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandVpnCertificateCrlSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -574,7 +561,6 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-
 		t, err := expandVpnCertificateCrlLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err

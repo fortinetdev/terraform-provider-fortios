@@ -420,6 +420,11 @@ func resourceReportChart() *schema.Resource {
 				Optional: true,
 				Default:  "false",
 			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -587,19 +592,16 @@ func flattenReportChartDrillDownCharts(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenReportChartDrillDownChartsId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_name"
 		if _, ok := i["chart-name"]; ok {
-
 			tmp["chart_name"] = flattenReportChartDrillDownChartsChartName(i["chart-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-
 			tmp["status"] = flattenReportChartDrillDownChartsStatus(i["status"], d, pre_append, sv)
 		}
 
@@ -663,67 +665,56 @@ func flattenReportChartXSeries(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := i["databind"]; ok {
-
 		result["databind"] = flattenReportChartXSeriesDatabind(i["databind"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "caption"
 	if _, ok := i["caption"]; ok {
-
 		result["caption"] = flattenReportChartXSeriesCaption(i["caption"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "caption_font_size"
 	if _, ok := i["caption-font-size"]; ok {
-
 		result["caption_font_size"] = flattenReportChartXSeriesCaptionFontSize(i["caption-font-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "font_size"
 	if _, ok := i["font-size"]; ok {
-
 		result["font_size"] = flattenReportChartXSeriesFontSize(i["font-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "label_angle"
 	if _, ok := i["label-angle"]; ok {
-
 		result["label_angle"] = flattenReportChartXSeriesLabelAngle(i["label-angle"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "is_category"
 	if _, ok := i["is-category"]; ok {
-
 		result["is_category"] = flattenReportChartXSeriesIsCategory(i["is-category"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scale_unit"
 	if _, ok := i["scale-unit"]; ok {
-
 		result["scale_unit"] = flattenReportChartXSeriesScaleUnit(i["scale-unit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scale_step"
 	if _, ok := i["scale-step"]; ok {
-
 		result["scale_step"] = flattenReportChartXSeriesScaleStep(i["scale-step"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scale_direction"
 	if _, ok := i["scale-direction"]; ok {
-
 		result["scale_direction"] = flattenReportChartXSeriesScaleDirection(i["scale-direction"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "scale_format"
 	if _, ok := i["scale-format"]; ok {
-
 		result["scale_format"] = flattenReportChartXSeriesScaleFormat(i["scale-format"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unit"
 	if _, ok := i["unit"]; ok {
-
 		result["unit"] = flattenReportChartXSeriesUnit(i["unit"], d, pre_append, sv)
 	}
 
@@ -786,67 +777,56 @@ func flattenReportChartYSeries(v interface{}, d *schema.ResourceData, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := i["databind"]; ok {
-
 		result["databind"] = flattenReportChartYSeriesDatabind(i["databind"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "caption"
 	if _, ok := i["caption"]; ok {
-
 		result["caption"] = flattenReportChartYSeriesCaption(i["caption"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "caption_font_size"
 	if _, ok := i["caption-font-size"]; ok {
-
 		result["caption_font_size"] = flattenReportChartYSeriesCaptionFontSize(i["caption-font-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "font_size"
 	if _, ok := i["font-size"]; ok {
-
 		result["font_size"] = flattenReportChartYSeriesFontSize(i["font-size"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "label_angle"
 	if _, ok := i["label-angle"]; ok {
-
 		result["label_angle"] = flattenReportChartYSeriesLabelAngle(i["label-angle"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "group"
 	if _, ok := i["group"]; ok {
-
 		result["group"] = flattenReportChartYSeriesGroup(i["group"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "unit"
 	if _, ok := i["unit"]; ok {
-
 		result["unit"] = flattenReportChartYSeriesUnit(i["unit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "extra_y"
 	if _, ok := i["extra-y"]; ok {
-
 		result["extra_y"] = flattenReportChartYSeriesExtraY(i["extra-y"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "extra_databind"
 	if _, ok := i["extra-databind"]; ok {
-
 		result["extra_databind"] = flattenReportChartYSeriesExtraDatabind(i["extra-databind"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "y_legend"
 	if _, ok := i["y-legend"]; ok {
-
 		result["y_legend"] = flattenReportChartYSeriesYLegend(i["y-legend"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "extra_y_legend"
 	if _, ok := i["extra-y-legend"]; ok {
-
 		result["extra_y_legend"] = flattenReportChartYSeriesExtraYLegend(i["extra-y-legend"], d, pre_append, sv)
 	}
 
@@ -909,13 +889,11 @@ func flattenReportChartCategorySeries(v interface{}, d *schema.ResourceData, pre
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := i["databind"]; ok {
-
 		result["databind"] = flattenReportChartCategorySeriesDatabind(i["databind"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "font_size"
 	if _, ok := i["font-size"]; ok {
-
 		result["font_size"] = flattenReportChartCategorySeriesFontSize(i["font-size"], d, pre_append, sv)
 	}
 
@@ -942,7 +920,6 @@ func flattenReportChartValueSeries(v interface{}, d *schema.ResourceData, pre st
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := i["databind"]; ok {
-
 		result["databind"] = flattenReportChartValueSeriesDatabind(i["databind"], d, pre_append, sv)
 	}
 
@@ -1004,43 +981,36 @@ func flattenReportChartColumn(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenReportChartColumnId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_value"
 		if _, ok := i["header-value"]; ok {
-
 			tmp["header_value"] = flattenReportChartColumnHeaderValue(i["header-value"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_value"
 		if _, ok := i["detail-value"]; ok {
-
 			tmp["detail_value"] = flattenReportChartColumnDetailValue(i["detail-value"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_value"
 		if _, ok := i["footer-value"]; ok {
-
 			tmp["footer_value"] = flattenReportChartColumnFooterValue(i["footer-value"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_unit"
 		if _, ok := i["detail-unit"]; ok {
-
 			tmp["detail_unit"] = flattenReportChartColumnDetailUnit(i["detail-unit"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_unit"
 		if _, ok := i["footer-unit"]; ok {
-
 			tmp["footer_unit"] = flattenReportChartColumnFooterUnit(i["footer-unit"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping"
 		if _, ok := i["mapping"]; ok {
-
 			tmp["mapping"] = flattenReportChartColumnMapping(i["mapping"], d, pre_append, sv)
 		}
 
@@ -1103,37 +1073,31 @@ func flattenReportChartColumnMapping(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-
 			tmp["id"] = flattenReportChartColumnMappingId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "op"
 		if _, ok := i["op"]; ok {
-
 			tmp["op"] = flattenReportChartColumnMappingOp(i["op"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value_type"
 		if _, ok := i["value-type"]; ok {
-
 			tmp["value_type"] = flattenReportChartColumnMappingValueType(i["value-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value1"
 		if _, ok := i["value1"]; ok {
-
 			tmp["value1"] = flattenReportChartColumnMappingValue1(i["value1"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value2"
 		if _, ok := i["value2"]; ok {
-
 			tmp["value2"] = flattenReportChartColumnMappingValue2(i["value2"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := i["displayname"]; ok {
-
 			tmp["displayname"] = flattenReportChartColumnMappingDisplayname(i["displayname"], d, pre_append, sv)
 		}
 
@@ -1172,6 +1136,12 @@ func flattenReportChartColumnMappingDisplayname(v interface{}, d *schema.Resourc
 
 func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenReportChartName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1197,7 +1167,7 @@ func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("drill_down_charts", flattenReportChartDrillDownCharts(o["drill-down-charts"], d, "drill_down_charts", sv)); err != nil {
 			if !fortiAPIPatch(o["drill-down-charts"]) {
 				return fmt.Errorf("Error reading drill_down_charts: %v", err)
@@ -1255,7 +1225,7 @@ func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("x_series", flattenReportChartXSeries(o["x-series"], d, "x_series", sv)); err != nil {
 			if !fortiAPIPatch(o["x-series"]) {
 				return fmt.Errorf("Error reading x_series: %v", err)
@@ -1271,7 +1241,7 @@ func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("y_series", flattenReportChartYSeries(o["y-series"], d, "y_series", sv)); err != nil {
 			if !fortiAPIPatch(o["y-series"]) {
 				return fmt.Errorf("Error reading y_series: %v", err)
@@ -1287,7 +1257,7 @@ func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("category_series", flattenReportChartCategorySeries(o["category-series"], d, "category_series", sv)); err != nil {
 			if !fortiAPIPatch(o["category-series"]) {
 				return fmt.Errorf("Error reading category_series: %v", err)
@@ -1303,7 +1273,7 @@ func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("value_series", flattenReportChartValueSeries(o["value-series"], d, "value_series", sv)); err != nil {
 			if !fortiAPIPatch(o["value-series"]) {
 				return fmt.Errorf("Error reading value_series: %v", err)
@@ -1355,7 +1325,7 @@ func refreshObjectReportChart(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if isImportTable() {
+	if b_get_all_tables {
 		if err = d.Set("column", flattenReportChartColumn(o["column"], d, "column", sv)); err != nil {
 			if !fortiAPIPatch(o["column"]) {
 				return fmt.Errorf("Error reading column: %v", err)
@@ -1412,19 +1382,16 @@ func expandReportChartDrillDownCharts(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandReportChartDrillDownChartsId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_name"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["chart-name"], _ = expandReportChartDrillDownChartsChartName(d, i["chart_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["status"], _ = expandReportChartDrillDownChartsStatus(d, i["status"], pre_append, sv)
 		}
 
@@ -1488,57 +1455,46 @@ func expandReportChartXSeries(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["databind"], _ = expandReportChartXSeriesDatabind(d, i["databind"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "caption"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["caption"], _ = expandReportChartXSeriesCaption(d, i["caption"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "caption_font_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["caption-font-size"], _ = expandReportChartXSeriesCaptionFontSize(d, i["caption_font_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "font_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["font-size"], _ = expandReportChartXSeriesFontSize(d, i["font_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "label_angle"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["label-angle"], _ = expandReportChartXSeriesLabelAngle(d, i["label_angle"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "is_category"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["is-category"], _ = expandReportChartXSeriesIsCategory(d, i["is_category"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scale_unit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scale-unit"], _ = expandReportChartXSeriesScaleUnit(d, i["scale_unit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scale_step"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scale-step"], _ = expandReportChartXSeriesScaleStep(d, i["scale_step"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scale_direction"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scale-direction"], _ = expandReportChartXSeriesScaleDirection(d, i["scale_direction"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "scale_format"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["scale-format"], _ = expandReportChartXSeriesScaleFormat(d, i["scale_format"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unit"], _ = expandReportChartXSeriesUnit(d, i["unit"], pre_append, sv)
 	}
 
@@ -1601,57 +1557,46 @@ func expandReportChartYSeries(d *schema.ResourceData, v interface{}, pre string,
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["databind"], _ = expandReportChartYSeriesDatabind(d, i["databind"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "caption"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["caption"], _ = expandReportChartYSeriesCaption(d, i["caption"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "caption_font_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["caption-font-size"], _ = expandReportChartYSeriesCaptionFontSize(d, i["caption_font_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "font_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["font-size"], _ = expandReportChartYSeriesFontSize(d, i["font_size"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "label_angle"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["label-angle"], _ = expandReportChartYSeriesLabelAngle(d, i["label_angle"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "group"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["group"], _ = expandReportChartYSeriesGroup(d, i["group"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "unit"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["unit"], _ = expandReportChartYSeriesUnit(d, i["unit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "extra_y"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["extra-y"], _ = expandReportChartYSeriesExtraY(d, i["extra_y"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "extra_databind"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["extra-databind"], _ = expandReportChartYSeriesExtraDatabind(d, i["extra_databind"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "y_legend"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["y-legend"], _ = expandReportChartYSeriesYLegend(d, i["y_legend"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "extra_y_legend"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["extra-y-legend"], _ = expandReportChartYSeriesExtraYLegend(d, i["extra_y_legend"], pre_append, sv)
 	}
 
@@ -1714,12 +1659,10 @@ func expandReportChartCategorySeries(d *schema.ResourceData, v interface{}, pre 
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["databind"], _ = expandReportChartCategorySeriesDatabind(d, i["databind"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "font_size"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["font-size"], _ = expandReportChartCategorySeriesFontSize(d, i["font_size"], pre_append, sv)
 	}
 
@@ -1746,7 +1689,6 @@ func expandReportChartValueSeries(d *schema.ResourceData, v interface{}, pre str
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "databind"
 	if _, ok := d.GetOk(pre_append); ok {
-
 		result["databind"], _ = expandReportChartValueSeriesDatabind(d, i["databind"], pre_append, sv)
 	}
 
@@ -1797,43 +1739,36 @@ func expandReportChartColumn(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandReportChartColumnId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["header-value"], _ = expandReportChartColumnHeaderValue(d, i["header_value"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["detail-value"], _ = expandReportChartColumnDetailValue(d, i["detail_value"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_value"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["footer-value"], _ = expandReportChartColumnFooterValue(d, i["footer_value"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_unit"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["detail-unit"], _ = expandReportChartColumnDetailUnit(d, i["detail_unit"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_unit"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["footer-unit"], _ = expandReportChartColumnFooterUnit(d, i["footer_unit"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-
 			tmp["mapping"], _ = expandReportChartColumnMapping(d, i["mapping"], pre_append, sv)
 		} else {
 			tmp["mapping"] = make([]string, 0)
@@ -1887,37 +1822,31 @@ func expandReportChartColumnMapping(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["id"], _ = expandReportChartColumnMappingId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "op"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["op"], _ = expandReportChartColumnMappingOp(d, i["op"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value_type"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value-type"], _ = expandReportChartColumnMappingValueType(d, i["value_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value1"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value1"], _ = expandReportChartColumnMappingValue1(d, i["value1"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value2"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["value2"], _ = expandReportChartColumnMappingValue2(d, i["value2"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := d.GetOk(pre_append); ok {
-
 			tmp["displayname"], _ = expandReportChartColumnMappingDisplayname(d, i["displayname"], pre_append, sv)
 		}
 
@@ -1957,7 +1886,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandReportChartName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -1967,7 +1895,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOkExists("policy"); ok {
-
 		t, err := expandReportChartPolicy(d, v, "policy", sv)
 		if err != nil {
 			return &obj, err
@@ -1977,7 +1904,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-
 		t, err := expandReportChartType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
@@ -1987,7 +1913,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("period"); ok {
-
 		t, err := expandReportChartPeriod(d, v, "period", sv)
 		if err != nil {
 			return &obj, err
@@ -1997,7 +1922,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("drill_down_charts"); ok || d.HasChange("drill_down_charts") {
-
 		t, err := expandReportChartDrillDownCharts(d, v, "drill_down_charts", sv)
 		if err != nil {
 			return &obj, err
@@ -2007,7 +1931,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-
 		t, err := expandReportChartComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
@@ -2017,7 +1940,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("dataset"); ok {
-
 		t, err := expandReportChartDataset(d, v, "dataset", sv)
 		if err != nil {
 			return &obj, err
@@ -2027,7 +1949,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("category"); ok {
-
 		t, err := expandReportChartCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
@@ -2037,7 +1958,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("favorite"); ok {
-
 		t, err := expandReportChartFavorite(d, v, "favorite", sv)
 		if err != nil {
 			return &obj, err
@@ -2047,7 +1967,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("graph_type"); ok {
-
 		t, err := expandReportChartGraphType(d, v, "graph_type", sv)
 		if err != nil {
 			return &obj, err
@@ -2057,7 +1976,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("style"); ok {
-
 		t, err := expandReportChartStyle(d, v, "style", sv)
 		if err != nil {
 			return &obj, err
@@ -2067,7 +1985,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("dimension"); ok {
-
 		t, err := expandReportChartDimension(d, v, "dimension", sv)
 		if err != nil {
 			return &obj, err
@@ -2077,7 +1994,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("x_series"); ok {
-
 		t, err := expandReportChartXSeries(d, v, "x_series", sv)
 		if err != nil {
 			return &obj, err
@@ -2087,7 +2003,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("y_series"); ok {
-
 		t, err := expandReportChartYSeries(d, v, "y_series", sv)
 		if err != nil {
 			return &obj, err
@@ -2097,7 +2012,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("category_series"); ok {
-
 		t, err := expandReportChartCategorySeries(d, v, "category_series", sv)
 		if err != nil {
 			return &obj, err
@@ -2107,7 +2021,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("value_series"); ok {
-
 		t, err := expandReportChartValueSeries(d, v, "value_series", sv)
 		if err != nil {
 			return &obj, err
@@ -2117,7 +2030,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("title"); ok {
-
 		t, err := expandReportChartTitle(d, v, "title", sv)
 		if err != nil {
 			return &obj, err
@@ -2127,7 +2039,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOkExists("title_font_size"); ok {
-
 		t, err := expandReportChartTitleFontSize(d, v, "title_font_size", sv)
 		if err != nil {
 			return &obj, err
@@ -2137,7 +2048,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("background"); ok {
-
 		t, err := expandReportChartBackground(d, v, "background", sv)
 		if err != nil {
 			return &obj, err
@@ -2147,7 +2057,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("color_palette"); ok {
-
 		t, err := expandReportChartColorPalette(d, v, "color_palette", sv)
 		if err != nil {
 			return &obj, err
@@ -2157,7 +2066,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("legend"); ok {
-
 		t, err := expandReportChartLegend(d, v, "legend", sv)
 		if err != nil {
 			return &obj, err
@@ -2167,7 +2075,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOkExists("legend_font_size"); ok {
-
 		t, err := expandReportChartLegendFontSize(d, v, "legend_font_size", sv)
 		if err != nil {
 			return &obj, err
@@ -2177,7 +2084,6 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("column"); ok || d.HasChange("column") {
-
 		t, err := expandReportChartColumn(d, v, "column", sv)
 		if err != nil {
 			return &obj, err

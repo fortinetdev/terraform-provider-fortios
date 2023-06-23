@@ -29,7 +29,7 @@ The following arguments are supported:
 * `name` - (Required) External resource name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable user resource. Valid values: `enable`, `disable`.
-* `type` - User resource type. Valid values: `category`, `address`, `domain`, `malware`.
+* `type` - User resource type.
 * `update_method` - External resource update method. Valid values: `feed`, `push`.
 * `category` - User resource category.
 * `username` - HTTP basic authentication user name.
@@ -37,6 +37,7 @@ The following arguments are supported:
 * `comments` - Comment.
 * `resource` - (Required) URI of external resource.
 * `user_agent` - Override HTTP User-Agent header used when retrieving this external resource.
+* `server_identity_check` - Certificate verification option. Valid values: `none`, `basic`, `full`.
 * `refresh_rate` - (Required) Time interval to refresh external resource (1 - 43200 min, default = 5 min).
 * `source_ip` - Source IPv4 address used to communicate with server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

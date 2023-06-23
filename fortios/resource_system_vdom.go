@@ -274,7 +274,6 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandSystemVdomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -284,7 +283,6 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("short_name"); ok {
-
 		t, err := expandSystemVdomShortName(d, v, "short_name", sv)
 		if err != nil {
 			return &obj, err
@@ -294,7 +292,6 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("vcluster_id"); ok {
-
 		t, err := expandSystemVdomVclusterId(d, v, "vcluster_id", sv)
 		if err != nil {
 			return &obj, err
@@ -304,7 +301,6 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("flag"); ok {
-
 		t, err := expandSystemVdomFlag(d, v, "flag", sv)
 		if err != nil {
 			return &obj, err
@@ -314,7 +310,6 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("temporary"); ok {
-
 		t, err := expandSystemVdomTemporary(d, v, "temporary", sv)
 		if err != nil {
 			return &obj, err

@@ -120,6 +120,18 @@ func resourceVpnSslClient() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipv4_subnets": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ipv6_subnets": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -305,6 +317,14 @@ func flattenVpnSslClientClassId(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenVpnSslClientIpv4Subnets(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslClientIpv6Subnets(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnSslClient(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -398,6 +418,18 @@ func refreshObjectVpnSslClient(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ipv4_subnets", flattenVpnSslClientIpv4Subnets(o["ipv4-subnets"], d, "ipv4_subnets", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv4-subnets"]) {
+			return fmt.Errorf("Error reading ipv4_subnets: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv6_subnets", flattenVpnSslClientIpv6Subnets(o["ipv6-subnets"], d, "ipv6_subnets", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-subnets"]) {
+			return fmt.Errorf("Error reading ipv6_subnets: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -467,11 +499,18 @@ func expandVpnSslClientClassId(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
+func expandVpnSslClientIpv4Subnets(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslClientIpv6Subnets(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-
 		t, err := expandVpnSslClientName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
@@ -481,7 +520,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-
 		t, err := expandVpnSslClientComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
@@ -491,7 +529,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-
 		t, err := expandVpnSslClientInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
@@ -501,7 +538,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("user"); ok {
-
 		t, err := expandVpnSslClientUser(d, v, "user", sv)
 		if err != nil {
 			return &obj, err
@@ -511,7 +547,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("psk"); ok {
-
 		t, err := expandVpnSslClientPsk(d, v, "psk", sv)
 		if err != nil {
 			return &obj, err
@@ -521,7 +556,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("peer"); ok {
-
 		t, err := expandVpnSslClientPeer(d, v, "peer", sv)
 		if err != nil {
 			return &obj, err
@@ -531,7 +565,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-
 		t, err := expandVpnSslClientServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
@@ -541,7 +574,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-
 		t, err := expandVpnSslClientPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
@@ -551,7 +583,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("realm"); ok {
-
 		t, err := expandVpnSslClientRealm(d, v, "realm", sv)
 		if err != nil {
 			return &obj, err
@@ -561,7 +592,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-
 		t, err := expandVpnSslClientStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
@@ -571,7 +601,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-
 		t, err := expandVpnSslClientCertificate(d, v, "certificate", sv)
 		if err != nil {
 			return &obj, err
@@ -581,7 +610,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-
 		t, err := expandVpnSslClientSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
@@ -591,7 +619,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
-
 		t, err := expandVpnSslClientDistance(d, v, "distance", sv)
 		if err != nil {
 			return &obj, err
@@ -601,7 +628,6 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-
 		t, err := expandVpnSslClientPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
@@ -611,12 +637,29 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 	}
 
 	if v, ok := d.GetOkExists("class_id"); ok {
-
 		t, err := expandVpnSslClientClassId(d, v, "class_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["class-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ipv4_subnets"); ok {
+		t, err := expandVpnSslClientIpv4Subnets(d, v, "ipv4_subnets", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipv4-subnets"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ipv6_subnets"); ok {
+		t, err := expandVpnSslClientIpv6Subnets(d, v, "ipv6_subnets", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipv6-subnets"] = t
 		}
 	}
 

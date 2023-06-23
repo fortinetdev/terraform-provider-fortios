@@ -209,7 +209,6 @@ func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["bindthroughfw"] = nil
 		} else {
-
 			t, err := expandFirewallIpmacbindingSettingBindthroughfw(d, v, "bindthroughfw", sv)
 			if err != nil {
 				return &obj, err
@@ -223,7 +222,6 @@ func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["bindtofw"] = nil
 		} else {
-
 			t, err := expandFirewallIpmacbindingSettingBindtofw(d, v, "bindtofw", sv)
 			if err != nil {
 				return &obj, err
@@ -237,7 +235,6 @@ func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData, setArgNil bool
 		if setArgNil {
 			obj["undefinedhost"] = nil
 		} else {
-
 			t, err := expandFirewallIpmacbindingSettingUndefinedhost(d, v, "undefinedhost", sv)
 			if err != nil {
 				return &obj, err
