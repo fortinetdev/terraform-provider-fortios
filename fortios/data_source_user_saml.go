@@ -100,6 +100,10 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"reauth": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -219,6 +223,10 @@ func dataSourceFlattenUserSamlGroupClaimType(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenUserSamlReauth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -327,6 +335,12 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("group_claim_type", dataSourceFlattenUserSamlGroupClaimType(o["group-claim-type"], d, "group_claim_type")); err != nil {
 		if !fortiAPIPatch(o["group-claim-type"]) {
 			return fmt.Errorf("Error reading group_claim_type: %v", err)
+		}
+	}
+
+	if err = d.Set("reauth", dataSourceFlattenUserSamlReauth(o["reauth"], d, "reauth")); err != nil {
+		if !fortiAPIPatch(o["reauth"]) {
+			return fmt.Errorf("Error reading reauth: %v", err)
 		}
 	}
 

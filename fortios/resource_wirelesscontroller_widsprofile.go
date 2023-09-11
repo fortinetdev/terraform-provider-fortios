@@ -58,6 +58,34 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ap_scan_channel_list_2g_5g": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"chan": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 3),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"ap_scan_channel_list_6g": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"chan": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 3),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"ap_bgscan_period": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 3600),
@@ -478,6 +506,90 @@ func flattenWirelessControllerWidsProfileApScan(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenWirelessControllerWidsProfileApScanChannelList2G5G(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+		if _, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWidsProfileApScanChannelList2G5GChan(i["chan"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "chan", d)
+	return result
+}
+
+func flattenWirelessControllerWidsProfileApScanChannelList2G5GChan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWidsProfileApScanChannelList6G(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+		if _, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWidsProfileApScanChannelList6GChan(i["chan"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "chan", d)
+	return result
+}
+
+func flattenWirelessControllerWidsProfileApScanChannelList6GChan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWidsProfileApBgscanPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -734,6 +846,38 @@ func refreshObjectWirelessControllerWidsProfile(d *schema.ResourceData, o map[st
 	if err = d.Set("ap_scan", flattenWirelessControllerWidsProfileApScan(o["ap-scan"], d, "ap_scan", sv)); err != nil {
 		if !fortiAPIPatch(o["ap-scan"]) {
 			return fmt.Errorf("Error reading ap_scan: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("ap_scan_channel_list_2g_5g", flattenWirelessControllerWidsProfileApScanChannelList2G5G(o["ap-scan-channel-list-2G-5G"], d, "ap_scan_channel_list_2g_5g", sv)); err != nil {
+			if !fortiAPIPatch(o["ap-scan-channel-list-2G-5G"]) {
+				return fmt.Errorf("Error reading ap_scan_channel_list_2g_5g: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ap_scan_channel_list_2g_5g"); ok {
+			if err = d.Set("ap_scan_channel_list_2g_5g", flattenWirelessControllerWidsProfileApScanChannelList2G5G(o["ap-scan-channel-list-2G-5G"], d, "ap_scan_channel_list_2g_5g", sv)); err != nil {
+				if !fortiAPIPatch(o["ap-scan-channel-list-2G-5G"]) {
+					return fmt.Errorf("Error reading ap_scan_channel_list_2g_5g: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("ap_scan_channel_list_6g", flattenWirelessControllerWidsProfileApScanChannelList6G(o["ap-scan-channel-list-6G"], d, "ap_scan_channel_list_6g", sv)); err != nil {
+			if !fortiAPIPatch(o["ap-scan-channel-list-6G"]) {
+				return fmt.Errorf("Error reading ap_scan_channel_list_6g: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ap_scan_channel_list_6g"); ok {
+			if err = d.Set("ap_scan_channel_list_6g", flattenWirelessControllerWidsProfileApScanChannelList6G(o["ap-scan-channel-list-6G"], d, "ap_scan_channel_list_6g", sv)); err != nil {
+				if !fortiAPIPatch(o["ap-scan-channel-list-6G"]) {
+					return fmt.Errorf("Error reading ap_scan_channel_list_6g: %v", err)
+				}
+			}
 		}
 	}
 
@@ -1054,6 +1198,68 @@ func expandWirelessControllerWidsProfileApScan(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandWirelessControllerWidsProfileApScanChannelList2G5G(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["chan"], _ = expandWirelessControllerWidsProfileApScanChannelList2G5GChan(d, i["chan"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandWirelessControllerWidsProfileApScanChannelList2G5GChan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWidsProfileApScanChannelList6G(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["chan"], _ = expandWirelessControllerWidsProfileApScanChannelList6GChan(d, i["chan"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandWirelessControllerWidsProfileApScanChannelList6GChan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWidsProfileApBgscanPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1305,6 +1511,24 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["ap-scan"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ap_scan_channel_list_2g_5g"); ok || d.HasChange("ap_scan_channel_list_2g_5g") {
+		t, err := expandWirelessControllerWidsProfileApScanChannelList2G5G(d, v, "ap_scan_channel_list_2g_5g", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ap-scan-channel-list-2G-5G"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ap_scan_channel_list_6g"); ok || d.HasChange("ap_scan_channel_list_6g") {
+		t, err := expandWirelessControllerWidsProfileApScanChannelList6G(d, v, "ap_scan_channel_list_6g", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ap-scan-channel-list-6G"] = t
 		}
 	}
 

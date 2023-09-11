@@ -44,15 +44,15 @@ func (c *FortiSDKClient) CreateUpdateFirewallCentralsnatmapMove(srcId, dstId, mv
 	return
 }
 
-// JSONFirewallCentralsnatmapItem contains the necessary parameters for each item
-type JSONFirewallCentralsnatmapItem struct {
+// JSONMoveFirewallCentralsnatmapItem contains the necessary parameters for each item
+type JSONMoveFirewallCentralsnatmapItem struct {
 	Policyid string `json:"policyid"`
 }
 
 // GetFirewallCentralsnatmapList API operation for FortiOS gets the list
 // Returns the requested API user value when the request executes successfully.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) GetFirewallCentralsnatmapList(vdomparam string) (out []JSONFirewallCentralsnatmapItem, err error) {
+func (c *FortiSDKClient) GetFirewallCentralsnatmapList(vdomparam string) (out []JSONMoveFirewallCentralsnatmapItem, err error) {
 
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/central-snat-map/"
@@ -92,12 +92,12 @@ func (c *FortiSDKClient) GetFirewallCentralsnatmapList(vdomparam string) (out []
 			return
 		}
 
-		var members []JSONFirewallCentralsnatmapItem
+		var members []JSONMoveFirewallCentralsnatmapItem
 		for _, v := range mapTmp {
 			c := v.(map[string]interface{})
 
 			members = append(members,
-				JSONFirewallCentralsnatmapItem{
+				JSONMoveFirewallCentralsnatmapItem{
 					Policyid: strconv.Itoa(int(c["policyid"].(float64))),
 				})
 		}

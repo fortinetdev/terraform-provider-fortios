@@ -167,6 +167,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"monitor_min": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"monitor_hold_down_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -298,6 +303,20 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"internal_domain_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"domain_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
 			},
 			"ipv4_wins_server1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -943,6 +962,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ems_sn_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1208,6 +1232,10 @@ func flattenVpnIpsecPhase1InterfaceMonitor(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceMonitorMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceMonitorHoldDownType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1309,6 +1337,48 @@ func flattenVpnIpsecPhase1InterfaceIpv4DnsServer2(v interface{}, d *schema.Resou
 }
 
 func flattenVpnIpsecPhase1InterfaceIpv4DnsServer3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceInternalDomainList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
+		if _, ok := i["domain-name"]; ok {
+			tmp["domain_name"] = flattenVpnIpsecPhase1InterfaceInternalDomainListDomainName(i["domain-name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "domain_name", d)
+	return result
+}
+
+func flattenVpnIpsecPhase1InterfaceInternalDomainListDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1914,6 +1984,10 @@ func flattenVpnIpsecPhase1InterfaceExchangeFgtDeviceId(v interface{}, d *schema.
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceEmsSnCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -2065,9 +2139,48 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if err = d.Set("monitor", flattenVpnIpsecPhase1InterfaceMonitor(o["monitor"], d, "monitor", sv)); err != nil {
-		if !fortiAPIPatch(o["monitor"]) {
-			return fmt.Errorf("Error reading monitor: %v", err)
+	{
+		v := flattenVpnIpsecPhase1InterfaceMonitor(o["monitor"], d, "monitor", sv)
+		vx := ""
+		bstring := false
+		new_version_map := map[string][]string{
+			">=": []string{"7.4.1"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["name"]; ok {
+						if xv, ok := i["name"].(string); ok {
+							vx += xv
+							if k < len(l)-1 {
+								vx += ", "
+							}
+						}
+					}
+				}
+			}
+			bstring = true
+		}
+		if bstring == true {
+			if err = d.Set("monitor", vx); err != nil {
+				if !fortiAPIPatch(o["monitor"]) {
+					return fmt.Errorf("Error reading monitor: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("monitor", v); err != nil {
+				if !fortiAPIPatch(o["monitor"]) {
+					return fmt.Errorf("Error reading monitor: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("monitor_min", flattenVpnIpsecPhase1InterfaceMonitorMin(o["monitor-min"], d, "monitor_min", sv)); err != nil {
+		if !fortiAPIPatch(o["monitor-min"]) {
+			return fmt.Errorf("Error reading monitor_min: %v", err)
 		}
 	}
 
@@ -2224,6 +2337,22 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("ipv4_dns_server3", flattenVpnIpsecPhase1InterfaceIpv4DnsServer3(o["ipv4-dns-server3"], d, "ipv4_dns_server3", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv4-dns-server3"]) {
 			return fmt.Errorf("Error reading ipv4_dns_server3: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internal_domain_list", flattenVpnIpsecPhase1InterfaceInternalDomainList(o["internal-domain-list"], d, "internal_domain_list", sv)); err != nil {
+			if !fortiAPIPatch(o["internal-domain-list"]) {
+				return fmt.Errorf("Error reading internal_domain_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internal_domain_list"); ok {
+			if err = d.Set("internal_domain_list", flattenVpnIpsecPhase1InterfaceInternalDomainList(o["internal-domain-list"], d, "internal_domain_list", sv)); err != nil {
+				if !fortiAPIPatch(o["internal-domain-list"]) {
+					return fmt.Errorf("Error reading internal_domain_list: %v", err)
+				}
+			}
 		}
 	}
 
@@ -2909,6 +3038,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("ems_sn_check", flattenVpnIpsecPhase1InterfaceEmsSnCheck(o["ems-sn-check"], d, "ems_sn_check", sv)); err != nil {
+		if !fortiAPIPatch(o["ems-sn-check"]) {
+			return fmt.Errorf("Error reading ems_sn_check: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -3037,6 +3172,10 @@ func expandVpnIpsecPhase1InterfaceMonitor(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceMonitorMin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceMonitorHoldDownType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3138,6 +3277,37 @@ func expandVpnIpsecPhase1InterfaceIpv4DnsServer2(d *schema.ResourceData, v inter
 }
 
 func expandVpnIpsecPhase1InterfaceIpv4DnsServer3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceInternalDomainList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["domain-name"], _ = expandVpnIpsecPhase1InterfaceInternalDomainListDomainName(d, i["domain_name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandVpnIpsecPhase1InterfaceInternalDomainListDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3710,6 +3880,10 @@ func expandVpnIpsecPhase1InterfaceExchangeFgtDeviceId(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceEmsSnCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -3916,7 +4090,34 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["monitor"] = t
+			new_version_map := map[string][]string{
+				">=": []string{"7.4.1"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				vx := fmt.Sprintf("%v", t)
+				vxx := strings.Split(vx, ", ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["name"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["monitor"] = tmps
+			} else {
+				obj["monitor"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("monitor_min"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceMonitorMin(d, v, "monitor_min", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["monitor-min"] = t
 		}
 	}
 
@@ -4151,6 +4352,15 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["ipv4-dns-server3"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internal_domain_list"); ok || d.HasChange("internal_domain_list") {
+		t, err := expandVpnIpsecPhase1InterfaceInternalDomainList(d, v, "internal_domain_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internal-domain-list"] = t
 		}
 	}
 
@@ -5168,6 +5378,15 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["exchange-fgt-device-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ems_sn_check"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceEmsSnCheck(d, v, "ems_sn_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ems-sn-check"] = t
 		}
 	}
 

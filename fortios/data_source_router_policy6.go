@@ -96,6 +96,14 @@ func dataSourceRouterPolicy6() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"start_source_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"end_source_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -307,6 +315,14 @@ func dataSourceFlattenRouterPolicy6EndPort(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenRouterPolicy6StartSourcePort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicy6EndSourcePort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterPolicy6Gateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -481,6 +497,18 @@ func dataSourceRefreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]i
 	if err = d.Set("end_port", dataSourceFlattenRouterPolicy6EndPort(o["end-port"], d, "end_port")); err != nil {
 		if !fortiAPIPatch(o["end-port"]) {
 			return fmt.Errorf("Error reading end_port: %v", err)
+		}
+	}
+
+	if err = d.Set("start_source_port", dataSourceFlattenRouterPolicy6StartSourcePort(o["start-source-port"], d, "start_source_port")); err != nil {
+		if !fortiAPIPatch(o["start-source-port"]) {
+			return fmt.Errorf("Error reading start_source_port: %v", err)
+		}
+	}
+
+	if err = d.Set("end_source_port", dataSourceFlattenRouterPolicy6EndSourcePort(o["end-source-port"], d, "end_source_port")); err != nil {
+		if !fortiAPIPatch(o["end-source-port"]) {
+			return fmt.Errorf("Error reading end_source_port: %v", err)
 		}
 	}
 

@@ -202,6 +202,54 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"est_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_ca_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_http_username": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_http_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_client_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_server_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_srp_username": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"est_srp_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -447,6 +495,38 @@ func flattenVpnCertificateLocalAcmeRenewWindow(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenVpnCertificateLocalEstServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstCaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstHttpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstHttpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstSrpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnCertificateLocalEstSrpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -606,6 +686,54 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("est_server", flattenVpnCertificateLocalEstServer(o["est-server"], d, "est_server", sv)); err != nil {
+		if !fortiAPIPatch(o["est-server"]) {
+			return fmt.Errorf("Error reading est_server: %v", err)
+		}
+	}
+
+	if err = d.Set("est_ca_id", flattenVpnCertificateLocalEstCaId(o["est-ca-id"], d, "est_ca_id", sv)); err != nil {
+		if !fortiAPIPatch(o["est-ca-id"]) {
+			return fmt.Errorf("Error reading est_ca_id: %v", err)
+		}
+	}
+
+	if err = d.Set("est_http_username", flattenVpnCertificateLocalEstHttpUsername(o["est-http-username"], d, "est_http_username", sv)); err != nil {
+		if !fortiAPIPatch(o["est-http-username"]) {
+			return fmt.Errorf("Error reading est_http_username: %v", err)
+		}
+	}
+
+	if err = d.Set("est_http_password", flattenVpnCertificateLocalEstHttpPassword(o["est-http-password"], d, "est_http_password", sv)); err != nil {
+		if !fortiAPIPatch(o["est-http-password"]) {
+			return fmt.Errorf("Error reading est_http_password: %v", err)
+		}
+	}
+
+	if err = d.Set("est_client_cert", flattenVpnCertificateLocalEstClientCert(o["est-client-cert"], d, "est_client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["est-client-cert"]) {
+			return fmt.Errorf("Error reading est_client_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("est_server_cert", flattenVpnCertificateLocalEstServerCert(o["est-server-cert"], d, "est_server_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["est-server-cert"]) {
+			return fmt.Errorf("Error reading est_server_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("est_srp_username", flattenVpnCertificateLocalEstSrpUsername(o["est-srp-username"], d, "est_srp_username", sv)); err != nil {
+		if !fortiAPIPatch(o["est-srp-username"]) {
+			return fmt.Errorf("Error reading est_srp_username: %v", err)
+		}
+	}
+
+	if err = d.Set("est_srp_password", flattenVpnCertificateLocalEstSrpPassword(o["est-srp-password"], d, "est_srp_password", sv)); err != nil {
+		if !fortiAPIPatch(o["est-srp-password"]) {
+			return fmt.Errorf("Error reading est_srp_password: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -732,6 +860,38 @@ func expandVpnCertificateLocalAcmeRsaKeySize(d *schema.ResourceData, v interface
 }
 
 func expandVpnCertificateLocalAcmeRenewWindow(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstCaId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstHttpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstHttpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstServerCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstSrpUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstSrpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1005,6 +1165,78 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["acme-renew-window"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_server"); ok {
+		t, err := expandVpnCertificateLocalEstServer(d, v, "est_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_ca_id"); ok {
+		t, err := expandVpnCertificateLocalEstCaId(d, v, "est_ca_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-ca-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_http_username"); ok {
+		t, err := expandVpnCertificateLocalEstHttpUsername(d, v, "est_http_username", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-http-username"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_http_password"); ok {
+		t, err := expandVpnCertificateLocalEstHttpPassword(d, v, "est_http_password", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-http-password"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_client_cert"); ok {
+		t, err := expandVpnCertificateLocalEstClientCert(d, v, "est_client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-client-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_server_cert"); ok {
+		t, err := expandVpnCertificateLocalEstServerCert(d, v, "est_server_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-server-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_srp_username"); ok {
+		t, err := expandVpnCertificateLocalEstSrpUsername(d, v, "est_srp_username", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-srp-username"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_srp_password"); ok {
+		t, err := expandVpnCertificateLocalEstSrpPassword(d, v, "est_srp_password", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-srp-password"] = t
 		}
 	}
 

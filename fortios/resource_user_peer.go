@@ -70,6 +70,28 @@ func resourceUserPeer() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mfa_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mfa_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"mfa_username": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"mfa_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -259,6 +281,22 @@ func flattenUserPeerCnType(v interface{}, d *schema.ResourceData, pre string, sv
 	return v
 }
 
+func flattenUserPeerMfaMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserPeerMfaServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserPeerMfaUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserPeerMfaPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserPeerLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -326,6 +364,30 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("mfa_mode", flattenUserPeerMfaMode(o["mfa-mode"], d, "mfa_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["mfa-mode"]) {
+			return fmt.Errorf("Error reading mfa_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("mfa_server", flattenUserPeerMfaServer(o["mfa-server"], d, "mfa_server", sv)); err != nil {
+		if !fortiAPIPatch(o["mfa-server"]) {
+			return fmt.Errorf("Error reading mfa_server: %v", err)
+		}
+	}
+
+	if err = d.Set("mfa_username", flattenUserPeerMfaUsername(o["mfa-username"], d, "mfa_username", sv)); err != nil {
+		if !fortiAPIPatch(o["mfa-username"]) {
+			return fmt.Errorf("Error reading mfa_username: %v", err)
+		}
+	}
+
+	if err = d.Set("mfa_password", flattenUserPeerMfaPassword(o["mfa-password"], d, "mfa_password", sv)); err != nil {
+		if !fortiAPIPatch(o["mfa-password"]) {
+			return fmt.Errorf("Error reading mfa_password: %v", err)
+		}
+	}
+
 	if err = d.Set("ldap_server", flattenUserPeerLdapServer(o["ldap-server"], d, "ldap_server", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-server"]) {
 			return fmt.Errorf("Error reading ldap_server: %v", err)
@@ -386,6 +448,22 @@ func expandUserPeerCn(d *schema.ResourceData, v interface{}, pre string, sv stri
 }
 
 func expandUserPeerCnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerMfaMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerMfaServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerMfaUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerMfaPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -471,6 +549,42 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["cn-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mfa_mode"); ok {
+		t, err := expandUserPeerMfaMode(d, v, "mfa_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mfa-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mfa_server"); ok {
+		t, err := expandUserPeerMfaServer(d, v, "mfa_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mfa-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mfa_username"); ok {
+		t, err := expandUserPeerMfaUsername(d, v, "mfa_username", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mfa-username"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mfa_password"); ok {
+		t, err := expandUserPeerMfaPassword(d, v, "mfa_password", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mfa-password"] = t
 		}
 	}
 

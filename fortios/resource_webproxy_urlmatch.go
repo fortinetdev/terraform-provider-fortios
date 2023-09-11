@@ -58,6 +58,12 @@ func resourceWebProxyUrlMatch() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fast_fallback": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"cache_exemption": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -209,6 +215,10 @@ func flattenWebProxyUrlMatchForwardServer(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenWebProxyUrlMatchFastFallback(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyUrlMatchCacheExemption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -241,6 +251,12 @@ func refreshObjectWebProxyUrlMatch(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("forward_server", flattenWebProxyUrlMatchForwardServer(o["forward-server"], d, "forward_server", sv)); err != nil {
 		if !fortiAPIPatch(o["forward-server"]) {
 			return fmt.Errorf("Error reading forward_server: %v", err)
+		}
+	}
+
+	if err = d.Set("fast_fallback", flattenWebProxyUrlMatchFastFallback(o["fast-fallback"], d, "fast_fallback", sv)); err != nil {
+		if !fortiAPIPatch(o["fast-fallback"]) {
+			return fmt.Errorf("Error reading fast_fallback: %v", err)
 		}
 	}
 
@@ -278,6 +294,10 @@ func expandWebProxyUrlMatchUrlPattern(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandWebProxyUrlMatchForwardServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyUrlMatchFastFallback(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -325,6 +345,15 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["forward-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fast_fallback"); ok {
+		t, err := expandWebProxyUrlMatchFastFallback(d, v, "fast_fallback", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fast-fallback"] = t
 		}
 	}
 

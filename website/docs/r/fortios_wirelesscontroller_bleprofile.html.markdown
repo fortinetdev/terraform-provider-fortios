@@ -26,6 +26,12 @@ The following arguments are supported:
 * `txpower` - Transmit power level (default = 0). Valid values: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`.
 * `beacon_interval` - Beacon interval (default = 100 msec).
 * `ble_scanning` - Enable/disable Bluetooth Low Energy (BLE) scanning. Valid values: `enable`, `disable`.
+* `scan_type` - Scan Type (default = active). Valid values: `active`, `passive`.
+* `scan_threshold` - Minimum signal level/threshold in dBm required for the AP to report detected BLE device (-95 to -20, default = -90).
+* `scan_period` - Scan Period (default = 4000 msec).
+* `scan_time` - Scan Time (default = 1000 msec).
+* `scan_interval` - Scan Interval (default = 50 msec).
+* `scan_window` - Scan Windows (default = 50 msec).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

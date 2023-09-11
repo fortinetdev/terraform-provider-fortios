@@ -1,0 +1,322 @@
+// Copyright 2020 Fortinet, Inc. All rights reserved.
+// Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
+// Documentation:
+// Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
+// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
+
+// Description: Proxy destination connection fast-fallback.
+
+package fortios
+
+import (
+	"fmt"
+	"log"
+	"strconv"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+)
+
+func resourceWebProxyFastFallback() *schema.Resource {
+	return &schema.Resource{
+		Create: resourceWebProxyFastFallbackCreate,
+		Read:   resourceWebProxyFastFallbackRead,
+		Update: resourceWebProxyFastFallbackUpdate,
+		Delete: resourceWebProxyFastFallbackDelete,
+
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
+		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+			"name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
+			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"connection_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"connection_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(200, 1800000),
+				Optional:     true,
+				Computed:     true,
+			},
+		},
+	}
+}
+
+func resourceWebProxyFastFallbackCreate(d *schema.ResourceData, m interface{}) error {
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	obj, err := getObjectWebProxyFastFallback(d, c.Fv)
+	if err != nil {
+		return fmt.Errorf("Error creating WebProxyFastFallback resource while getting object: %v", err)
+	}
+
+	o, err := c.CreateWebProxyFastFallback(obj, vdomparam)
+
+	if err != nil {
+		return fmt.Errorf("Error creating WebProxyFastFallback resource: %v", err)
+	}
+
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(o["mkey"].(string))
+	} else {
+		d.SetId("WebProxyFastFallback")
+	}
+
+	return resourceWebProxyFastFallbackRead(d, m)
+}
+
+func resourceWebProxyFastFallbackUpdate(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	obj, err := getObjectWebProxyFastFallback(d, c.Fv)
+	if err != nil {
+		return fmt.Errorf("Error updating WebProxyFastFallback resource while getting object: %v", err)
+	}
+
+	o, err := c.UpdateWebProxyFastFallback(obj, mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error updating WebProxyFastFallback resource: %v", err)
+	}
+
+	log.Printf(strconv.Itoa(c.Retries))
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(o["mkey"].(string))
+	} else {
+		d.SetId("WebProxyFastFallback")
+	}
+
+	return resourceWebProxyFastFallbackRead(d, m)
+}
+
+func resourceWebProxyFastFallbackDelete(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebProxyFastFallback(mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error deleting WebProxyFastFallback resource: %v", err)
+	}
+
+	d.SetId("")
+
+	return nil
+}
+
+func resourceWebProxyFastFallbackRead(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebProxyFastFallback(mkey, vdomparam)
+	if err != nil {
+		return fmt.Errorf("Error reading WebProxyFastFallback resource: %v", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
+	err = refreshObjectWebProxyFastFallback(d, o, c.Fv)
+	if err != nil {
+		return fmt.Errorf("Error reading WebProxyFastFallback resource from API: %v", err)
+	}
+	return nil
+}
+
+func flattenWebProxyFastFallbackName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyFastFallbackStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyFastFallbackConnectionMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyFastFallbackProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyFastFallbackConnectionTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectWebProxyFastFallback(d *schema.ResourceData, o map[string]interface{}, sv string) error {
+	var err error
+
+	if err = d.Set("name", flattenWebProxyFastFallbackName(o["name"], d, "name", sv)); err != nil {
+		if !fortiAPIPatch(o["name"]) {
+			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("status", flattenWebProxyFastFallbackStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("connection_mode", flattenWebProxyFastFallbackConnectionMode(o["connection-mode"], d, "connection_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["connection-mode"]) {
+			return fmt.Errorf("Error reading connection_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", flattenWebProxyFastFallbackProtocol(o["protocol"], d, "protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
+		}
+	}
+
+	if err = d.Set("connection_timeout", flattenWebProxyFastFallbackConnectionTimeout(o["connection-timeout"], d, "connection_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["connection-timeout"]) {
+			return fmt.Errorf("Error reading connection_timeout: %v", err)
+		}
+	}
+
+	return nil
+}
+
+func flattenWebProxyFastFallbackFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
+	log.Printf(strconv.Itoa(fosdebugsn))
+	e := validation.IntBetween(fosdebugbeg, fosdebugend)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
+}
+
+func expandWebProxyFastFallbackName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyFastFallbackStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyFastFallbackConnectionMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyFastFallbackProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyFastFallbackConnectionTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectWebProxyFastFallback(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("name"); ok {
+		t, err := expandWebProxyFastFallbackName(d, v, "name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("status"); ok {
+		t, err := expandWebProxyFastFallbackStatus(d, v, "status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("connection_mode"); ok {
+		t, err := expandWebProxyFastFallbackConnectionMode(d, v, "connection_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["connection-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("protocol"); ok {
+		t, err := expandWebProxyFastFallbackProtocol(d, v, "protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["protocol"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("connection_timeout"); ok {
+		t, err := expandWebProxyFastFallbackConnectionTimeout(d, v, "connection_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["connection-timeout"] = t
+		}
+	}
+
+	return &obj, nil
+}

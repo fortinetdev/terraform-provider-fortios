@@ -8,12 +8,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceFirewallSecurityPolicySeq() *schema.Resource {
+func resourceFirewallPolicyOldvSeq() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceFirewallSecurityPolicySeqCreateUpdate,
-		Read:   resourceFirewallSecurityPolicySeqRead,
-		Update: resourceFirewallSecurityPolicySeqCreateUpdate,
-		Delete: resourceFirewallSecurityPolicySeqDel,
+		Create:             resourceFirewallPolicyOldvSeqCreateUpdate,
+		Read:               resourceFirewallPolicyOldvSeqRead,
+		Update:             resourceFirewallPolicyOldvSeqCreateUpdate,
+		Delete:             resourceFirewallPolicyOldvSeqDel,
+		DeprecationMessage: "This resource will be deprecated after 3 releases from v1.18.0, use fortios_firewall_policy_move resource instead.",
 
 		Schema: map[string]*schema.Schema{
 			"vdomparam": &schema.Schema{
@@ -74,7 +75,7 @@ func resourceFirewallSecurityPolicySeq() *schema.Resource {
 	}
 }
 
-func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallPolicyOldvSeqCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 
 	if c == nil {
@@ -102,28 +103,28 @@ func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m int
 		return fmt.Errorf("<alter_position> param should be only 'after' or 'before'")
 	}
 
-	err := c.CreateUpdateFirewallSecurityPolicySeq(srcId, dstId, alterPos, vdomparam)
+	err := c.CreateUpdateFirewallPolicyOldvSeq(srcId, dstId, alterPos, vdomparam)
 	if err != nil {
-		return fmt.Errorf("Error Altering Firewall Security Policy Sequence: %s", err)
+		return fmt.Errorf("Error Altering Firewall Policy Sequence: %s", err)
 	}
 
 	d.SetId(srcId)
 
-	return resourceFirewallSecurityPolicySeqRead(d, m)
+	return resourceFirewallPolicyOldvSeqRead(d, m)
 }
 
 // Not suitable operation
-func resourceFirewallSecurityPolicySeqDel(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallPolicyOldvSeqDel(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 
 	if c == nil {
 		return fmt.Errorf("FortiOS connection did not initialize successfully!")
 	}
 
-	return c.DelFirewallSecurityPolicySeq()
+	return c.DelFirewallPolicyOldvSeq()
 }
 
-func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallPolicyOldvSeqRead(d *schema.ResourceData, m interface{}) error {
 	enable_state_checking := d.Get("enable_state_checking").(bool)
 
 	if enable_state_checking == false {
@@ -151,9 +152,9 @@ func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}
 	did := d.Get("policy_dst_id").(int)
 	action := d.Get("alter_position").(string)
 
-	o, err := c.GetSecurityPolicyList(vdomparam)
+	o, err := c.GetPolicyList(vdomparam)
 	if err != nil {
-		return fmt.Errorf("Error reading Firewall Security Policy List: %s", err)
+		return fmt.Errorf("Error reading Firewall Policy List: %s", err)
 	}
 
 	if o != nil {
@@ -185,7 +186,7 @@ func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}
 		}
 
 		if err := d.Set("state_policy_list", items); err != nil {
-			log.Printf("[WARN] Error reading Firewall Security Policy List for (%s): %s", d.Id(), err)
+			log.Printf("[WARN] Error reading Firewall Policy List for (%s): %s", d.Id(), err)
 		}
 
 		state_policy_srcdst_pos := ""

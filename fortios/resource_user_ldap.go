@@ -190,6 +190,11 @@ func resourceUserLdap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"account_key_cert_field": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"account_key_upn_san": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -487,6 +492,10 @@ func flattenUserLdapAccountKeyProcessing(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenUserLdapAccountKeyCertField(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapAccountKeyUpnSan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -696,6 +705,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("account_key_cert_field", flattenUserLdapAccountKeyCertField(o["account-key-cert-field"], d, "account_key_cert_field", sv)); err != nil {
+		if !fortiAPIPatch(o["account-key-cert-field"]) {
+			return fmt.Errorf("Error reading account_key_cert_field: %v", err)
+		}
+	}
+
 	if err = d.Set("account_key_upn_san", flattenUserLdapAccountKeyUpnSan(o["account-key-upn-san"], d, "account_key_upn_san", sv)); err != nil {
 		if !fortiAPIPatch(o["account-key-upn-san"]) {
 			return fmt.Errorf("Error reading account_key_upn_san: %v", err)
@@ -880,6 +895,10 @@ func expandUserLdapMemberAttr(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandUserLdapAccountKeyProcessing(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapAccountKeyCertField(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1179,6 +1198,15 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["account-key-processing"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("account_key_cert_field"); ok {
+		t, err := expandUserLdapAccountKeyCertField(d, v, "account_key_cert_field", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["account-key-cert-field"] = t
 		}
 	}
 

@@ -52,7 +52,9 @@ The following arguments are supported:
 * `ttl` - (Required) Default time-to-live value for the entries of this DNS zone (0 - 2147483647 sec, default = 86400).
 * `authoritative` - (Required) Enable/disable authoritative zone. Valid values: `enable`, `disable`.
 * `forwarder` - DNS zone forwarder IP address list.
+* `forwarder6` - Forwarder IPv6 address.
 * `source_ip` - Source IP for forwarding to DNS server.
+* `source_ip6` - IPv6 source IP address for forwarding to DNS server.
 * `rr_max` - Maximum number of resource records (10 - 65536, 0 means infinite).
 * `dns_entry` - DNS entry. The structure of `dns_entry` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

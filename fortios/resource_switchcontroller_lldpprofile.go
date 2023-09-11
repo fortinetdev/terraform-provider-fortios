@@ -85,6 +85,40 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auto_isl_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auto_isl_auth_user": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auto_isl_auth_identity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auto_isl_auth_reauth": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auto_isl_auth_encrypt": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auto_isl_auth_macsec_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"med_network_policy": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -356,6 +390,30 @@ func flattenSwitchControllerLldpProfileAutoIslPortGroup(v interface{}, d *schema
 }
 
 func flattenSwitchControllerLldpProfileAutoMclagIcl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerLldpProfileAutoIslAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerLldpProfileAutoIslAuthUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerLldpProfileAutoIslAuthIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerLldpProfileAutoIslAuthReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerLldpProfileAutoIslAuthEncrypt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerLldpProfileAutoIslAuthMacsecProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -647,6 +705,42 @@ func refreshObjectSwitchControllerLldpProfile(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("auto_isl_auth", flattenSwitchControllerLldpProfileAutoIslAuth(o["auto-isl-auth"], d, "auto_isl_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth"]) {
+			return fmt.Errorf("Error reading auto_isl_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_user", flattenSwitchControllerLldpProfileAutoIslAuthUser(o["auto-isl-auth-user"], d, "auto_isl_auth_user", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-user"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_user: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_identity", flattenSwitchControllerLldpProfileAutoIslAuthIdentity(o["auto-isl-auth-identity"], d, "auto_isl_auth_identity", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-identity"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_identity: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_reauth", flattenSwitchControllerLldpProfileAutoIslAuthReauth(o["auto-isl-auth-reauth"], d, "auto_isl_auth_reauth", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-reauth"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_reauth: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_encrypt", flattenSwitchControllerLldpProfileAutoIslAuthEncrypt(o["auto-isl-auth-encrypt"], d, "auto_isl_auth_encrypt", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-encrypt"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_encrypt: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_macsec_profile", flattenSwitchControllerLldpProfileAutoIslAuthMacsecProfile(o["auto-isl-auth-macsec-profile"], d, "auto_isl_auth_macsec_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-macsec-profile"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_macsec_profile: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("med_network_policy", flattenSwitchControllerLldpProfileMedNetworkPolicy(o["med-network-policy"], d, "med_network_policy", sv)); err != nil {
 			if !fortiAPIPatch(o["med-network-policy"]) {
@@ -737,6 +831,30 @@ func expandSwitchControllerLldpProfileAutoIslPortGroup(d *schema.ResourceData, v
 }
 
 func expandSwitchControllerLldpProfileAutoMclagIcl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerLldpProfileAutoIslAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerLldpProfileAutoIslAuthUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerLldpProfileAutoIslAuthIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerLldpProfileAutoIslAuthReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerLldpProfileAutoIslAuthEncrypt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerLldpProfileAutoIslAuthMacsecProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1013,6 +1131,60 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 			return &obj, err
 		} else if t != nil {
 			obj["auto-mclag-icl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth"); ok {
+		t, err := expandSwitchControllerLldpProfileAutoIslAuth(d, v, "auto_isl_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_user"); ok {
+		t, err := expandSwitchControllerLldpProfileAutoIslAuthUser(d, v, "auto_isl_auth_user", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-user"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_identity"); ok {
+		t, err := expandSwitchControllerLldpProfileAutoIslAuthIdentity(d, v, "auto_isl_auth_identity", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-identity"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_reauth"); ok {
+		t, err := expandSwitchControllerLldpProfileAutoIslAuthReauth(d, v, "auto_isl_auth_reauth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-reauth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_encrypt"); ok {
+		t, err := expandSwitchControllerLldpProfileAutoIslAuthEncrypt(d, v, "auto_isl_auth_encrypt", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-encrypt"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_macsec_profile"); ok {
+		t, err := expandSwitchControllerLldpProfileAutoIslAuthMacsecProfile(d, v, "auto_isl_auth_macsec_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-macsec-profile"] = t
 		}
 	}
 

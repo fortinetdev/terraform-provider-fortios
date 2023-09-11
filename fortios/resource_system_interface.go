@@ -149,6 +149,17 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_relay_source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dhcp_relay_circuit_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dhcp_relay_link_selection": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1370,6 +1381,21 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"switch_controller_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_offload_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_offload_gw": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"swc_vlan": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -1760,6 +1786,17 @@ func resourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"dhcp6_relay_source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"dhcp6_relay_interface_id": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+							Computed:     true,
 						},
 						"dhcp6_client_options": &schema.Schema{
 							Type:     schema.TypeString,
@@ -2186,6 +2223,14 @@ func flattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.ResourceData, pr
 		var rst_v interface{} = temp_v
 		return rst_v
 	}
+	return v
+}
+
+func flattenSystemInterfaceDhcpRelaySourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceDhcpRelayCircuitId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3508,6 +3553,18 @@ func flattenSystemInterfaceSwitchControllerIotScanning(v interface{}, d *schema.
 	return v
 }
 
+func flattenSystemInterfaceSwitchControllerOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerOffloadIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerOffloadGw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemInterfaceSwcVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3837,6 +3894,16 @@ func flattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData, pre strin
 	pre_append = pre + ".0." + "dhcp6_relay_ip"
 	if _, ok := i["dhcp6-relay-ip"]; ok {
 		result["dhcp6_relay_ip"] = flattenSystemInterfaceIpv6Dhcp6RelayIp(i["dhcp6-relay-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "dhcp6_relay_source_ip"
+	if _, ok := i["dhcp6-relay-source-ip"]; ok {
+		result["dhcp6_relay_source_ip"] = flattenSystemInterfaceIpv6Dhcp6RelaySourceIp(i["dhcp6-relay-source-ip"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "dhcp6_relay_interface_id"
+	if _, ok := i["dhcp6-relay-interface-id"]; ok {
+		result["dhcp6_relay_interface_id"] = flattenSystemInterfaceIpv6Dhcp6RelayInterfaceId(i["dhcp6-relay-interface-id"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_client_options"
@@ -4311,6 +4378,14 @@ func flattenSystemInterfaceIpv6Dhcp6RelayIp(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenSystemInterfaceIpv6Dhcp6RelaySourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Dhcp6RelayInterfaceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemInterfaceIpv6Dhcp6ClientOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -4645,6 +4720,18 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("dhcp_relay_ip", flattenSystemInterfaceDhcpRelayIp(o["dhcp-relay-ip"], d, "dhcp_relay_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-ip"]) {
 			return fmt.Errorf("Error reading dhcp_relay_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_source_ip", flattenSystemInterfaceDhcpRelaySourceIp(o["dhcp-relay-source-ip"], d, "dhcp_relay_source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-source-ip"]) {
+			return fmt.Errorf("Error reading dhcp_relay_source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_circuit_id", flattenSystemInterfaceDhcpRelayCircuitId(o["dhcp-relay-circuit-id"], d, "dhcp_relay_circuit_id", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-circuit-id"]) {
+			return fmt.Errorf("Error reading dhcp_relay_circuit_id: %v", err)
 		}
 	}
 
@@ -5876,6 +5963,24 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("switch_controller_offload", flattenSystemInterfaceSwitchControllerOffload(o["switch-controller-offload"], d, "switch_controller_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-offload"]) {
+			return fmt.Errorf("Error reading switch_controller_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_offload_ip", flattenSystemInterfaceSwitchControllerOffloadIp(o["switch-controller-offload-ip"], d, "switch_controller_offload_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-offload-ip"]) {
+			return fmt.Errorf("Error reading switch_controller_offload_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_offload_gw", flattenSystemInterfaceSwitchControllerOffloadGw(o["switch-controller-offload-gw"], d, "switch_controller_offload_gw", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-offload-gw"]) {
+			return fmt.Errorf("Error reading switch_controller_offload_gw: %v", err)
+		}
+	}
+
 	if err = d.Set("swc_vlan", flattenSystemInterfaceSwcVlan(o["swc-vlan"], d, "swc_vlan", sv)); err != nil {
 		if !fortiAPIPatch(o["swc-vlan"]) {
 			return fmt.Errorf("Error reading swc_vlan: %v", err)
@@ -6097,6 +6202,14 @@ func expandSystemInterfaceDhcpRelayService(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemInterfaceDhcpRelayIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceDhcpRelaySourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceDhcpRelayCircuitId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7305,6 +7418,18 @@ func expandSystemInterfaceSwitchControllerIotScanning(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandSystemInterfaceSwitchControllerOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerOffloadIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerOffloadGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemInterfaceSwcVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7586,6 +7711,14 @@ func expandSystemInterfaceIpv6(d *schema.ResourceData, v interface{}, pre string
 	pre_append = pre + ".0." + "dhcp6_relay_ip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-relay-ip"], _ = expandSystemInterfaceIpv6Dhcp6RelayIp(d, i["dhcp6_relay_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "dhcp6_relay_source_ip"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["dhcp6-relay-source-ip"], _ = expandSystemInterfaceIpv6Dhcp6RelaySourceIp(d, i["dhcp6_relay_source_ip"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "dhcp6_relay_interface_id"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["dhcp6-relay-interface-id"], _ = expandSystemInterfaceIpv6Dhcp6RelayInterfaceId(d, i["dhcp6_relay_interface_id"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_client_options"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -8010,6 +8143,14 @@ func expandSystemInterfaceIpv6Dhcp6RelayIp(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandSystemInterfaceIpv6Dhcp6RelaySourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Dhcp6RelayInterfaceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemInterfaceIpv6Dhcp6ClientOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -8351,6 +8492,24 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["dhcp-relay-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_relay_source_ip"); ok {
+		t, err := expandSystemInterfaceDhcpRelaySourceIp(d, v, "dhcp_relay_source_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-relay-source-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_relay_circuit_id"); ok {
+		t, err := expandSystemInterfaceDhcpRelayCircuitId(d, v, "dhcp_relay_circuit_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-relay-circuit-id"] = t
 		}
 	}
 
@@ -10106,6 +10265,33 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["switch-controller-iot-scanning"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_offload"); ok {
+		t, err := expandSystemInterfaceSwitchControllerOffload(d, v, "switch_controller_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-offload"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_offload_ip"); ok {
+		t, err := expandSystemInterfaceSwitchControllerOffloadIp(d, v, "switch_controller_offload_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-offload-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_offload_gw"); ok {
+		t, err := expandSystemInterfaceSwitchControllerOffloadGw(d, v, "switch_controller_offload_gw", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-offload-gw"] = t
 		}
 	}
 

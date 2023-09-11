@@ -71,6 +71,12 @@ func resourceVpnCertificateCa() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"est_url": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"auto_update_days": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -255,6 +261,10 @@ func flattenVpnCertificateCaScepUrl(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenVpnCertificateCaEstUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -321,6 +331,12 @@ func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("scep_url", flattenVpnCertificateCaScepUrl(o["scep-url"], d, "scep_url", sv)); err != nil {
 		if !fortiAPIPatch(o["scep-url"]) {
 			return fmt.Errorf("Error reading scep_url: %v", err)
+		}
+	}
+
+	if err = d.Set("est_url", flattenVpnCertificateCaEstUrl(o["est-url"], d, "est_url", sv)); err != nil {
+		if !fortiAPIPatch(o["est-url"]) {
+			return fmt.Errorf("Error reading est_url: %v", err)
 		}
 	}
 
@@ -394,6 +410,10 @@ func expandVpnCertificateCaTrusted(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandVpnCertificateCaScepUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateCaEstUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -484,6 +504,15 @@ func getObjectVpnCertificateCa(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["scep-url"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("est_url"); ok {
+		t, err := expandVpnCertificateCaEstUrl(d, v, "est_url", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-url"] = t
 		}
 	}
 

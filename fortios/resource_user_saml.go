@@ -133,6 +133,11 @@ func resourceUserSaml() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"reauth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -330,6 +335,10 @@ func flattenUserSamlGroupClaimType(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenUserSamlReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -441,6 +450,12 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("reauth", flattenUserSamlReauth(o["reauth"], d, "reauth", sv)); err != nil {
+		if !fortiAPIPatch(o["reauth"]) {
+			return fmt.Errorf("Error reading reauth: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -519,6 +534,10 @@ func expandUserSamlUserClaimType(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandUserSamlGroupClaimType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -684,6 +703,15 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["group-claim-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("reauth"); ok {
+		t, err := expandUserSamlReauth(d, v, "reauth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["reauth"] = t
 		}
 	}
 

@@ -38,6 +38,8 @@ The following arguments are supported:
 * `active_auth_method` - Select an active authentication method.
 * `sso_auth_method` - Select a single-sign on (SSO) authentication method.
 * `web_auth_cookie` - Enable/disable Web authentication cookies (default = disable). Valid values: `enable`, `disable`.
+* `cors_stateful` - Enable/disable allowance of CORS access (default = disable). Valid values: `enable`, `disable`.
+* `cors_depth` - Depth to allow CORS access (default = 3).
 * `transaction_based` - Enable/disable transaction based authentication (default = disable). Valid values: `enable`, `disable`.
 * `web_portal` - Enable/disable web portal for proxy transparent policy (default = enable). Valid values: `enable`, `disable`.
 * `comments` - Comment.

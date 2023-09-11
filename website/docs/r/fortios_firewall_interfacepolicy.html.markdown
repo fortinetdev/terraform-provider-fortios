@@ -63,6 +63,8 @@ The following arguments are supported:
 * `av_profile` - Antivirus profile.
 * `webfilter_profile_status` - Enable/disable web filtering. Valid values: `enable`, `disable`.
 * `webfilter_profile` - Web filter profile.
+* `casb_profile_status` - Enable/disable CASB. Valid values: `enable`, `disable`.
+* `casb_profile` - CASB profile.
 * `emailfilter_profile_status` - Enable/disable email filter. Valid values: `enable`, `disable`.
 * `emailfilter_profile` - Email filter profile.
 * `dlp_profile_status` - Enable/disable DLP. Valid values: `enable`, `disable`.

@@ -162,6 +162,10 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"upgrade_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"uninterruptible_upgrade": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -657,6 +661,10 @@ func dataSourceFlattenSystemHaSessionPickupDelay(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenSystemHaLinkFailedSignal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaUpgradeMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1402,6 +1410,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("link_failed_signal", dataSourceFlattenSystemHaLinkFailedSignal(o["link-failed-signal"], d, "link_failed_signal")); err != nil {
 		if !fortiAPIPatch(o["link-failed-signal"]) {
 			return fmt.Errorf("Error reading link_failed_signal: %v", err)
+		}
+	}
+
+	if err = d.Set("upgrade_mode", dataSourceFlattenSystemHaUpgradeMode(o["upgrade-mode"], d, "upgrade_mode")); err != nil {
+		if !fortiAPIPatch(o["upgrade-mode"]) {
+			return fmt.Errorf("Error reading upgrade_mode: %v", err)
 		}
 	}
 

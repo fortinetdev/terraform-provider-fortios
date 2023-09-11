@@ -8,9 +8,9 @@ import (
 	"strconv"
 )
 
-// CreateUpdateFirewallSecurityPolicySeq API operation for FortiOS alters the specified firewall policy sequence.
+// CreateUpdateFirewallPolicyOldvSeq API operation for FortiOS alters the specified firewall policy sequence.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySeq(srcId, dstId, alterPos, vdomparam string) (err error) {
+func (c *FortiSDKClient) CreateUpdateFirewallPolicyOldvSeq(srcId, dstId, alterPos, vdomparam string) (err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/policy"
 	path += "/" + srcId
@@ -45,28 +45,28 @@ func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySeq(srcId, dstId, alt
 }
 
 // Not suitable operation
-func (c *FortiSDKClient) ReadFirewallSecurityPolicySeq() (err error) {
+func (c *FortiSDKClient) ReadFirewallPolicyOldvSeq() (err error) {
 
 	return
 }
 
 // Not suitable operation
-func (c *FortiSDKClient) DelFirewallSecurityPolicySeq() (err error) {
+func (c *FortiSDKClient) DelFirewallPolicyOldvSeq() (err error) {
 
 	return
 }
 
-// JSONSecurityPolicyItem contains the parameters for each Security Policy item
-type JSONSecurityPolicyItem struct {
+// JSONPolicyItem contains the parameters for each  Policy item
+type JSONPolicyItem struct {
 	PolicyID string `json:"policyid"`
 	Name     string `json:"name"`
 	Action   string `json:"action"`
 }
 
-// GetSecurityPolicyList API operation for FortiOS gets the Security Policy list
+// GetPolicyList API operation for FortiOS gets the  Policy list
 // Returns the requested API user value when the request executes successfully.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) GetSecurityPolicyList(vdomparam string) (out []JSONSecurityPolicyItem, err error) {
+func (c *FortiSDKClient) GetPolicyList(vdomparam string) (out []JSONPolicyItem, err error) {
 
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/policy/"
@@ -106,12 +106,12 @@ func (c *FortiSDKClient) GetSecurityPolicyList(vdomparam string) (out []JSONSecu
 			return
 		}
 
-		var members []JSONSecurityPolicyItem
+		var members []JSONPolicyItem
 		for _, v := range mapTmp {
 			c := v.(map[string]interface{})
 
 			members = append(members,
-				JSONSecurityPolicyItem{
+				JSONPolicyItem{
 					PolicyID: strconv.Itoa(int(c["policyid"].(float64))),
 					Name:     c["name"].(string),
 					Action:   c["action"].(string),

@@ -10,8 +10,8 @@ description: |-
 
 Methods used to sort security policies.
 
-## Option I: Sort security policies on FGT by policyid with fortios_firewall_security_policysort
-* See resource [fortios_firewall_security_policysort](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/fortios_firewall_security_policysort) for further information.
+## Option I: Sort security policies on FGT by policyid with fortios_firewall_policy_sort
+* See resource [fortios_firewall_policy_sort](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/fortios_firewall_policy_sort) for further information.
 
 ## Option II: Sort security policies with terraform depends_on during configuration
 Terraform is a parallel system, that means when Terraform walks the dependency tree, it will create as many resources in parallel as it can, so terraform can figure out the most efficient way to make it happen. We can make resources be submitted to the device in order with the help of terraform's depends_on feature, which includes 'depends_on for resource' and 'depends_on for modules' (supported in terraform0.13). For example, let's suppose there are the following modules:

@@ -35,6 +35,12 @@ The following arguments are supported:
 * `auto_isl_receive_timeout` - Auto inter-switch LAG timeout if no response is received (3 - 90 sec, default = 9).
 * `auto_isl_port_group` - Auto inter-switch LAG port group ID (0 - 9).
 * `auto_mclag_icl` - Enable/disable MCLAG inter chassis link. Valid values: `disable`, `enable`.
+* `auto_isl_auth` - Auto inter-switch LAG authentication mode. Valid values: `legacy`, `strict`, `relax`.
+* `auto_isl_auth_user` - Auto inter-switch LAG authentication user certificate.
+* `auto_isl_auth_identity` - Auto inter-switch LAG authentication identity.
+* `auto_isl_auth_reauth` - Auto inter-switch LAG authentication reauth period in seconds(10 - 3600, default = 3600).
+* `auto_isl_auth_encrypt` - Auto inter-switch LAG encryption mode. Valid values: `none`, `mixed`, `must`.
+* `auto_isl_auth_macsec_profile` - Auto inter-switch LAG macsec profile for encryption.
 * `med_network_policy` - Configuration method to edit Media Endpoint Discovery (MED) network policy type-length-value (TLV) categories. The structure of `med_network_policy` block is documented below.
 * `med_location_service` - Configuration method to edit Media Endpoint Discovery (MED) location service type-length-value (TLV) categories. The structure of `med_location_service` block is documented below.
 * `custom_tlvs` - Configuration method to edit custom TLV entries. The structure of `custom_tlvs` block is documented below.

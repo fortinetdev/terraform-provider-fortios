@@ -2,6 +2,7 @@ package fortios
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -22,24 +23,85 @@ func resourceFirewallCentralsnatmapSort() *schema.Resource {
 			"sortby": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
+				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
+					v := val.(string)
+					availableOptions := []string{"policyid", "name"}
+					var validValue bool
+					for _, ele := range availableOptions {
+						if ele == v {
+							validValue = true
+							break
+						}
+					}
+					if !validValue {
+						errs = append(errs, fmt.Errorf("%q must be one of the option of [\"policyid\", \"name\"], got: \"%v\"", key, v))
+					}
+					return
+				},
 			},
 			"sortdirection": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
+				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
+					v := val.(string)
+					availableOptions := []string{"ascending", "descending", "manual"}
+					var validValue bool
+					for _, ele := range availableOptions {
+						if ele == v {
+							validValue = true
+							break
+						}
+					}
+					if !validValue {
+						errs = append(errs, fmt.Errorf("%q must be one of the option of [\"ascending\", \"descending\", \"manual\"], got: \"%v\"", key, v))
+					}
+					return
+				},
+			},
+			"manual_order": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"force_recreate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				ForceNew: true,
+				Computed: true,
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"state_policy_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"policyid": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"action": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -64,16 +126,21 @@ func resourceFirewallCentralsnatmapSortCreateUpdate(d *schema.ResourceData, m in
 
 	sortby := d.Get("sortby").(string)
 	sortdirection := d.Get("sortdirection").(string)
+	manual_order_d := d.Get("manual_order").([]interface{})
+	manual_order := make([]string, len(manual_order_d))
+	for cIndex, cValue := range manual_order_d {
+		manual_order[cIndex] = fmt.Sprint(cValue)
+	}
 
-	if sortby != "policyid" {
+	if sortby != "policyid" && sortby != "name" {
 		return fmt.Errorf("Unsupported sort type: " + sortby)
 	}
 
-	if sortdirection != "ascending" && sortdirection != "descending" {
+	if sortdirection != "ascending" && sortdirection != "descending" && sortdirection != "manual" {
 		return fmt.Errorf("Unsupported sort direction: " + sortdirection)
 	}
 
-	err := c.CreateUpdateFirewallCentralsnatmapSort(sortby, sortdirection, vdomparam)
+	err := c.CreateUpdateFirewallCentralsnatmapSort(sortby, sortdirection, vdomparam, manual_order)
 	if err != nil {
 		return fmt.Errorf("Error sorting FirewallCentralsnatmap: %s", err)
 	}
@@ -104,16 +171,21 @@ func resourceFirewallCentralsnatmapSortRead(d *schema.ResourceData, m interface{
 
 	sortby := d.Get("sortby").(string)
 	sortdirection := d.Get("sortdirection").(string)
+	manual_order_d := d.Get("manual_order").([]interface{})
+	manual_order := make([]string, len(manual_order_d))
+	for cIndex, cValue := range manual_order_d {
+		manual_order[cIndex] = fmt.Sprint(cValue)
+	}
 
-	if sortby != "policyid" {
+	if sortby != "policyid" && sortby != "name" {
 		return fmt.Errorf("Unsupported sort type: " + sortby)
 	}
 
-	if sortdirection != "ascending" && sortdirection != "descending" {
+	if sortdirection != "ascending" && sortdirection != "descending" && sortdirection != "manual" {
 		return fmt.Errorf("Unsupported sort direction: " + sortdirection)
 	}
 
-	sorted, err := c.ReadFirewallCentralsnatmapSort(sortby, sortdirection, vdomparam)
+	sorted, o, err := c.ReadFirewallCentralsnatmapSort(sortby, sortdirection, vdomparam, manual_order)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallCentralsnatmap sort status: %s %s", err, mkey)
 	}
@@ -122,6 +194,16 @@ func resourceFirewallCentralsnatmapSortRead(d *schema.ResourceData, m interface{
 		d.Set("status", "unsorted")
 	} else {
 		d.Set("status", "")
+	}
+
+	d.Set("force_recreate", "False")
+
+	if o != nil {
+		if err := d.Set("state_policy_list", o); err != nil {
+			log.Printf("[WARN] Error reading Firewall Security Policy List for (%s): %s", d.Id(), err)
+		}
+	} else {
+		d.Set("state_policy_list", nil)
 	}
 
 	return nil

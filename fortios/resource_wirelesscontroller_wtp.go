@@ -120,6 +120,18 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ble_major_id": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ble_minor_id": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"override_led_state": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1056,6 +1068,14 @@ func flattenWirelessControllerWtpApcfgProfile(v interface{}, d *schema.ResourceD
 }
 
 func flattenWirelessControllerWtpBonjourProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpBleMajorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpBleMinorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2515,6 +2535,18 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("ble_major_id", flattenWirelessControllerWtpBleMajorId(o["ble-major-id"], d, "ble_major_id", sv)); err != nil {
+		if !fortiAPIPatch(o["ble-major-id"]) {
+			return fmt.Errorf("Error reading ble_major_id: %v", err)
+		}
+	}
+
+	if err = d.Set("ble_minor_id", flattenWirelessControllerWtpBleMinorId(o["ble-minor-id"], d, "ble_minor_id", sv)); err != nil {
+		if !fortiAPIPatch(o["ble-minor-id"]) {
+			return fmt.Errorf("Error reading ble_minor_id: %v", err)
+		}
+	}
+
 	if err = d.Set("override_led_state", flattenWirelessControllerWtpOverrideLedState(o["override-led-state"], d, "override_led_state", sv)); err != nil {
 		if !fortiAPIPatch(o["override-led-state"]) {
 			return fmt.Errorf("Error reading override_led_state: %v", err)
@@ -2797,6 +2829,14 @@ func expandWirelessControllerWtpApcfgProfile(d *schema.ResourceData, v interface
 }
 
 func expandWirelessControllerWtpBonjourProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpBleMajorId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpBleMinorId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4113,6 +4153,24 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["bonjour-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("ble_major_id"); ok {
+		t, err := expandWirelessControllerWtpBleMajorId(d, v, "ble_major_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ble-major-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("ble_minor_id"); ok {
+		t, err := expandWirelessControllerWtpBleMinorId(d, v, "ble_minor_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ble-minor-id"] = t
 		}
 	}
 

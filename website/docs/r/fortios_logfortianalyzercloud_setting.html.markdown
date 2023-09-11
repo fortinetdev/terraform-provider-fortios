@@ -19,7 +19,7 @@ The following arguments are supported:
 * `serial` - Serial numbers of the FortiAnalyzer. The structure of `serial` block is documented below.
 * `preshared_key` - Preshared-key used for auto-authorization on FortiAnalyzer.
 * `access_config` - Enable/disable FortiAnalyzer access to configuration and data. Valid values: `enable`, `disable`.
-* `hmac_algorithm` - FortiAnalyzer IPsec tunnel HMAC algorithm. Valid values: `sha256`, `sha1`.
+* `hmac_algorithm` - FortiAnalyzer IPsec tunnel HMAC algorithm.
 * `enc_algorithm` - Configure the level of SSL protection for secure communication with FortiAnalyzer. Valid values: `high-medium`, `high`, `low`.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `conn_timeout` - FortiAnalyzer connection time-out in seconds (for status and log buffer).

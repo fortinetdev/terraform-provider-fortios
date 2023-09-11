@@ -581,11 +581,19 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"filter_list_in_vpnv4": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"filter_list_out": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"filter_list_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_list_out_vpnv4": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1138,11 +1146,19 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"filter_list_in_vpnv4": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"filter_list_out": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"filter_list_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_list_out_vpnv4": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -2483,6 +2499,11 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 			tmp["filter_list_in6"] = dataSourceFlattenRouterBgpNeighborFilterListIn6(i["filter-list-in6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv4"
+		if _, ok := i["filter-list-in-vpnv4"]; ok {
+			tmp["filter_list_in_vpnv4"] = dataSourceFlattenRouterBgpNeighborFilterListInVpnv4(i["filter-list-in-vpnv4"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
 		if _, ok := i["filter-list-out"]; ok {
 			tmp["filter_list_out"] = dataSourceFlattenRouterBgpNeighborFilterListOut(i["filter-list-out"], d, pre_append)
@@ -2491,6 +2512,11 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
 		if _, ok := i["filter-list-out6"]; ok {
 			tmp["filter_list_out6"] = dataSourceFlattenRouterBgpNeighborFilterListOut6(i["filter-list-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv4"
+		if _, ok := i["filter-list-out-vpnv4"]; ok {
+			tmp["filter_list_out_vpnv4"] = dataSourceFlattenRouterBgpNeighborFilterListOutVpnv4(i["filter-list-out-vpnv4"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
@@ -3069,11 +3095,19 @@ func dataSourceFlattenRouterBgpNeighborFilterListIn6(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenRouterBgpNeighborFilterListInVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterBgpNeighborFilterListOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenRouterBgpNeighborFilterListOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborFilterListOutVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3775,6 +3809,11 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 			tmp["filter_list_in6"] = dataSourceFlattenRouterBgpNeighborGroupFilterListIn6(i["filter-list-in6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv4"
+		if _, ok := i["filter-list-in-vpnv4"]; ok {
+			tmp["filter_list_in_vpnv4"] = dataSourceFlattenRouterBgpNeighborGroupFilterListInVpnv4(i["filter-list-in-vpnv4"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
 		if _, ok := i["filter-list-out"]; ok {
 			tmp["filter_list_out"] = dataSourceFlattenRouterBgpNeighborGroupFilterListOut(i["filter-list-out"], d, pre_append)
@@ -3783,6 +3822,11 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
 		if _, ok := i["filter-list-out6"]; ok {
 			tmp["filter_list_out6"] = dataSourceFlattenRouterBgpNeighborGroupFilterListOut6(i["filter-list-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv4"
+		if _, ok := i["filter-list-out-vpnv4"]; ok {
+			tmp["filter_list_out_vpnv4"] = dataSourceFlattenRouterBgpNeighborGroupFilterListOutVpnv4(i["filter-list-out-vpnv4"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
@@ -4351,11 +4395,19 @@ func dataSourceFlattenRouterBgpNeighborGroupFilterListIn6(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenRouterBgpNeighborGroupFilterListInVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterBgpNeighborGroupFilterListOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenRouterBgpNeighborGroupFilterListOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupFilterListOutVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

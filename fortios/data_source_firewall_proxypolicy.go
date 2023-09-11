@@ -456,6 +456,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"virtual_patch_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -473,6 +477,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"ssh_filter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"casb_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -517,6 +525,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"decrypted_traffic_mirror": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"detect_https_in_http_request": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1523,6 +1535,10 @@ func dataSourceFlattenFirewallProxyPolicySctpFilterProfile(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyIcapProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1540,6 +1556,10 @@ func dataSourceFlattenFirewallProxyPolicyWafProfile(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenFirewallProxyPolicySshFilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyCasbProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1584,6 +1604,10 @@ func dataSourceFlattenFirewallProxyPolicyRedirectUrl(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenFirewallProxyPolicyDecryptedTrafficMirror(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyDetectHttpsInHttpRequest(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1968,6 +1992,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("virtual_patch_profile", dataSourceFlattenFirewallProxyPolicyVirtualPatchProfile(o["virtual-patch-profile"], d, "virtual_patch_profile")); err != nil {
+		if !fortiAPIPatch(o["virtual-patch-profile"]) {
+			return fmt.Errorf("Error reading virtual_patch_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", dataSourceFlattenFirewallProxyPolicyIcapProfile(o["icap-profile"], d, "icap_profile")); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -1995,6 +2025,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("ssh_filter_profile", dataSourceFlattenFirewallProxyPolicySshFilterProfile(o["ssh-filter-profile"], d, "ssh_filter_profile")); err != nil {
 		if !fortiAPIPatch(o["ssh-filter-profile"]) {
 			return fmt.Errorf("Error reading ssh_filter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile", dataSourceFlattenFirewallProxyPolicyCasbProfile(o["casb-profile"], d, "casb_profile")); err != nil {
+		if !fortiAPIPatch(o["casb-profile"]) {
+			return fmt.Errorf("Error reading casb_profile: %v", err)
 		}
 	}
 
@@ -2061,6 +2097,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("decrypted_traffic_mirror", dataSourceFlattenFirewallProxyPolicyDecryptedTrafficMirror(o["decrypted-traffic-mirror"], d, "decrypted_traffic_mirror")); err != nil {
 		if !fortiAPIPatch(o["decrypted-traffic-mirror"]) {
 			return fmt.Errorf("Error reading decrypted_traffic_mirror: %v", err)
+		}
+	}
+
+	if err = d.Set("detect_https_in_http_request", dataSourceFlattenFirewallProxyPolicyDetectHttpsInHttpRequest(o["detect-https-in-http-request"], d, "detect_https_in_http_request")); err != nil {
+		if !fortiAPIPatch(o["detect-https-in-http-request"]) {
+			return fmt.Errorf("Error reading detect_https_in_http_request: %v", err)
 		}
 	}
 

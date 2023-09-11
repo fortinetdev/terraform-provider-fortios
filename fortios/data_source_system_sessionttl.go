@@ -57,6 +57,10 @@ func dataSourceSystemSessionTtl() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"refresh_direction": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -146,6 +150,11 @@ func dataSourceFlattenSystemSessionTtlPort(v interface{}, d *schema.ResourceData
 			tmp["timeout"] = dataSourceFlattenSystemSessionTtlPortTimeout(i["timeout"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "refresh_direction"
+		if _, ok := i["refresh-direction"]; ok {
+			tmp["refresh_direction"] = dataSourceFlattenSystemSessionTtlPortRefreshDirection(i["refresh-direction"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -171,6 +180,10 @@ func dataSourceFlattenSystemSessionTtlPortEndPort(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemSessionTtlPortTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSessionTtlPortRefreshDirection(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

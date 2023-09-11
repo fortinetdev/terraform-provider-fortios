@@ -122,6 +122,7 @@ The following arguments are supported:
 * `ipv4_dns_server1` - IPv4 DNS server 1.
 * `ipv4_dns_server2` - IPv4 DNS server 2.
 * `ipv4_dns_server3` - IPv4 DNS server 3.
+* `internal_domain_list` - One or more internal domain names in quotes separated by spaces. The structure of `internal_domain_list` block is documented below.
 * `ipv4_wins_server1` - WINS server 1.
 * `ipv4_wins_server2` - WINS server 2.
 * `ipv4_exclude_range` - Configuration Method IPv4 exclude ranges. The structure of `ipv4_exclude_range` block is documented below.
@@ -222,6 +223,10 @@ The following arguments are supported:
 The `certificate` block supports:
 
 * `name` - Certificate name.
+
+The `internal_domain_list` block supports:
+
+* `domain_name` - Domain name.
 
 The `ipv4_exclude_range` block supports:
 

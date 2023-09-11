@@ -52,6 +52,7 @@ The following attributes are exported:
 * `session_pickup_nat` - Enable/disable NAT session sync for FGSP.
 * `session_pickup_delay` - Enable to sync sessions longer than 30 sec. Only longer lived sessions need to be synced.
 * `link_failed_signal` - Enable to shut down all interfaces for 1 sec after a failover. Use if gratuitous ARPs do not update network.
+* `upgrade_mode` - The mode to upgrade a cluster.
 * `uninterruptible_upgrade` - Enable to upgrade a cluster without blocking network traffic.
 * `uninterruptible_primary_wait` - Number of minutes the primary HA unit waits before the secondary HA unit is considered upgraded and the system is started before starting its own upgrade (1 - 300, default = 30).
 * `standalone_mgmt_vdom` - Enable/disable standalone management VDOM.

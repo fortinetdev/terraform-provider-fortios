@@ -110,6 +110,11 @@ func resourceUserRadius() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"call_station_id_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"nas_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -248,6 +253,16 @@ func resourceUserRadius() *schema.Resource {
 				Computed:     true,
 			},
 			"server_identity_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"account_key_processing": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"account_key_cert_field": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -576,6 +591,10 @@ func flattenUserRadiusNasIdType(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenUserRadiusCallStationIdType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserRadiusNasId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -711,6 +730,14 @@ func flattenUserRadiusClientCert(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenUserRadiusServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusAccountKeyProcessing(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusAccountKeyCertField(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -956,6 +983,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("call_station_id_type", flattenUserRadiusCallStationIdType(o["call-station-id-type"], d, "call_station_id_type", sv)); err != nil {
+		if !fortiAPIPatch(o["call-station-id-type"]) {
+			return fmt.Errorf("Error reading call_station_id_type: %v", err)
+		}
+	}
+
 	if err = d.Set("nas_id", flattenUserRadiusNasId(o["nas-id"], d, "nas_id", sv)); err != nil {
 		if !fortiAPIPatch(o["nas-id"]) {
 			return fmt.Errorf("Error reading nas_id: %v", err)
@@ -1113,6 +1146,18 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("server_identity_check", flattenUserRadiusServerIdentityCheck(o["server-identity-check"], d, "server_identity_check", sv)); err != nil {
 		if !fortiAPIPatch(o["server-identity-check"]) {
 			return fmt.Errorf("Error reading server_identity_check: %v", err)
+		}
+	}
+
+	if err = d.Set("account_key_processing", flattenUserRadiusAccountKeyProcessing(o["account-key-processing"], d, "account_key_processing", sv)); err != nil {
+		if !fortiAPIPatch(o["account-key-processing"]) {
+			return fmt.Errorf("Error reading account_key_processing: %v", err)
+		}
+	}
+
+	if err = d.Set("account_key_cert_field", flattenUserRadiusAccountKeyCertField(o["account-key-cert-field"], d, "account_key_cert_field", sv)); err != nil {
+		if !fortiAPIPatch(o["account-key-cert-field"]) {
+			return fmt.Errorf("Error reading account_key_cert_field: %v", err)
 		}
 	}
 
@@ -1277,6 +1322,10 @@ func expandUserRadiusNasIdType(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
+func expandUserRadiusCallStationIdType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserRadiusNasId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1401,6 +1450,14 @@ func expandUserRadiusClientCert(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandUserRadiusServerIdentityCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusAccountKeyProcessing(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusAccountKeyCertField(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1682,6 +1739,15 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
+	if v, ok := d.GetOk("call_station_id_type"); ok {
+		t, err := expandUserRadiusCallStationIdType(d, v, "call_station_id_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["call-station-id-type"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("nas_id"); ok {
 		t, err := expandUserRadiusNasId(d, v, "nas_id", sv)
 		if err != nil {
@@ -1904,6 +1970,24 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["server-identity-check"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("account_key_processing"); ok {
+		t, err := expandUserRadiusAccountKeyProcessing(d, v, "account_key_processing", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["account-key-processing"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("account_key_cert_field"); ok {
+		t, err := expandUserRadiusAccountKeyCertField(d, v, "account_key_cert_field", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["account-key-cert-field"] = t
 		}
 	}
 

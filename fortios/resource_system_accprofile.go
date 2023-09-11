@@ -308,6 +308,16 @@ func resourceSystemAccprofile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"virtual_patch": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"casb": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -803,6 +813,16 @@ func flattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.ResourceDa
 		result["videofilter"] = flattenSystemAccprofileUtmgrpPermissionVideofilter(i["videofilter"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "virtual_patch"
+	if _, ok := i["virtual-patch"]; ok {
+		result["virtual_patch"] = flattenSystemAccprofileUtmgrpPermissionVirtualPatch(i["virtual-patch"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "casb"
+	if _, ok := i["casb"]; ok {
+		result["casb"] = flattenSystemAccprofileUtmgrpPermissionCasb(i["casb"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -864,6 +884,14 @@ func flattenSystemAccprofileUtmgrpPermissionEndpointControl(v interface{}, d *sc
 }
 
 func flattenSystemAccprofileUtmgrpPermissionVideofilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileUtmgrpPermissionVirtualPatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileUtmgrpPermissionCasb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1409,6 +1437,14 @@ func expandSystemAccprofileUtmgrpPermission(d *schema.ResourceData, v interface{
 	if _, ok := d.GetOk(pre_append); ok {
 		result["videofilter"], _ = expandSystemAccprofileUtmgrpPermissionVideofilter(d, i["videofilter"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "virtual_patch"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["virtual-patch"], _ = expandSystemAccprofileUtmgrpPermissionVirtualPatch(d, i["virtual_patch"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "casb"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["casb"], _ = expandSystemAccprofileUtmgrpPermissionCasb(d, i["casb"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -1470,6 +1506,14 @@ func expandSystemAccprofileUtmgrpPermissionEndpointControl(d *schema.ResourceDat
 }
 
 func expandSystemAccprofileUtmgrpPermissionVideofilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileUtmgrpPermissionVirtualPatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileUtmgrpPermissionCasb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

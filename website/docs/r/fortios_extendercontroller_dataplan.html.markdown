@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_extendercontroller_dataplan
-FortiExtender dataplan configuration. Applies to FortiOS Version `6.4.2,6.4.10,6.4.11,6.4.12,7.0.0,7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.2.0`.
+FortiExtender dataplan configuration. Applies to FortiOS Version `6.4.2,6.4.10,6.4.11,6.4.12,6.4.13,6.4.14,7.0.0,7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.0.12,7.2.0`.
 
 ## Argument Reference
 

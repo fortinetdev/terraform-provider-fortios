@@ -59,6 +59,7 @@ The `rule` block contains:
 * `set_extcommunity_soo` - Site-of-Origin extended community. The structure of `set_extcommunity_soo` block is documented below.
 * `set_ip_nexthop` - IP address of next hop.
 * `set_ip_prefsrc` - IP address of preferred source.
+* `set_vpnv4_nexthop` - IP address of VPNv4 next-hop.
 * `set_ip6_nexthop` - IPv6 global address of next hop.
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
 * `set_local_preference` - BGP local preference path attribute.

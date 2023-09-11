@@ -209,6 +209,10 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"set_vpnv4_nexthop": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"set_ip6_nexthop": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -506,6 +510,11 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_prefsrc"
 		if _, ok := i["set-ip-prefsrc"]; ok {
 			tmp["set_ip_prefsrc"] = dataSourceFlattenRouterRouteMapRuleSetIpPrefsrc(i["set-ip-prefsrc"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv4_nexthop"
+		if _, ok := i["set-vpnv4-nexthop"]; ok {
+			tmp["set_vpnv4_nexthop"] = dataSourceFlattenRouterRouteMapRuleSetVpnv4Nexthop(i["set-vpnv4-nexthop"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
@@ -842,6 +851,10 @@ func dataSourceFlattenRouterRouteMapRuleSetIpNexthop(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenRouterRouteMapRuleSetIpPrefsrc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleSetVpnv4Nexthop(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

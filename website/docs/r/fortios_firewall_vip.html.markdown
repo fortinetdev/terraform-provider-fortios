@@ -88,6 +88,9 @@ The following arguments are supported:
 * `service` - Service name. The structure of `service` block is documented below.
 * `extip` - IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `extaddr` - External FQDN address name. The structure of `extaddr` block is documented below.
+* `h2_support` - Enable/disable HTTP2 support (default = enable). Valid values: `enable`, `disable`.
+* `h3_support` - Enable/disable HTTP3/QUIC support (default = disable). Valid values: `enable`, `disable`.
+* `quic` - QUIC setting. The structure of `quic` block is documented below.
 * `nat44` - Enable/disable NAT44. Valid values: `disable`, `enable`.
 * `nat46` - Enable/disable NAT46. Valid values: `disable`, `enable`.
 * `add_nat46_route` - Enable/disable adding NAT46 route. Valid values: `disable`, `enable`.
@@ -118,6 +121,7 @@ The following arguments are supported:
 * `http_multiplex` - Enable/disable HTTP multiplexing. Valid values: `enable`, `disable`.
 * `http_multiplex_ttl` - Time-to-live for idle connections to servers.
 * `http_multiplex_max_request` - Maximum number of requests that a multiplex server can handle before disconnecting sessions (default = unlimited).
+* `http_multiplex_max_concurrent_request` - Maximum number of concurrent requests that a multiplex server can handle (default = unlimited).
 * `http_supported_max_version` - Maximum supported HTTP versions. default = HTTP2 Valid values: `http1`, `http2`.
 * `http_ip_header` - For HTTP multiplexing, enable to add the original client IP address in the XForwarded-For HTTP header. Valid values: `enable`, `disable`.
 * `http_ip_header_name` - For HTTP multiplexing, enter a custom HTTPS header name. The original client IP address is added to this header. If empty, X-Forwarded-For is used.
@@ -179,6 +183,17 @@ The `service` block supports:
 The `extaddr` block supports:
 
 * `name` - Address name.
+
+The `quic` block supports:
+
+* `max_idle_timeout` - Maximum idle timeout milliseconds (1 - 60000, default = 30000).
+* `max_udp_payload_size` - Maximum UDP payload size in bytes (1200 - 1500, default = 1500).
+* `active_connection_id_limit` - Active connection ID limit (1 - 8, default = 2).
+* `ack_delay_exponent` - ACK delay exponent (1 - 20, default = 3).
+* `max_ack_delay` - Maximum ACK delay in milliseconds (1 - 16383, default = 25).
+* `max_datagram_frame_size` - Maximum datagram frame size in bytes (1 - 1500, default = 1500).
+* `active_migration` - Enable/disable active migration (default = disable). Valid values: `enable`, `disable`.
+* `grease_quic_bit` - Enable/disable grease QUIC bit (default = enable). Valid values: `enable`, `disable`.
 
 The `mappedip` block supports:
 

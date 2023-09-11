@@ -564,6 +564,12 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"virtual_patch_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -589,6 +595,12 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -654,6 +666,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
+			},
+			"detect_https_in_http_request": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1878,6 +1895,10 @@ func flattenFirewallProxyPolicySctpFilterProfile(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenFirewallProxyPolicyVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyIcapProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1895,6 +1916,10 @@ func flattenFirewallProxyPolicyWafProfile(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallProxyPolicySshFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyCasbProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1939,6 +1964,10 @@ func flattenFirewallProxyPolicyRedirectUrl(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallProxyPolicyDecryptedTrafficMirror(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyDetectHttpsInHttpRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2549,6 +2578,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("virtual_patch_profile", flattenFirewallProxyPolicyVirtualPatchProfile(o["virtual-patch-profile"], d, "virtual_patch_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["virtual-patch-profile"]) {
+			return fmt.Errorf("Error reading virtual_patch_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", flattenFirewallProxyPolicyIcapProfile(o["icap-profile"], d, "icap_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -2576,6 +2611,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("ssh_filter_profile", flattenFirewallProxyPolicySshFilterProfile(o["ssh-filter-profile"], d, "ssh_filter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh-filter-profile"]) {
 			return fmt.Errorf("Error reading ssh_filter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile", flattenFirewallProxyPolicyCasbProfile(o["casb-profile"], d, "casb_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["casb-profile"]) {
+			return fmt.Errorf("Error reading casb_profile: %v", err)
 		}
 	}
 
@@ -2642,6 +2683,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("decrypted_traffic_mirror", flattenFirewallProxyPolicyDecryptedTrafficMirror(o["decrypted-traffic-mirror"], d, "decrypted_traffic_mirror", sv)); err != nil {
 		if !fortiAPIPatch(o["decrypted-traffic-mirror"]) {
 			return fmt.Errorf("Error reading decrypted_traffic_mirror: %v", err)
+		}
+	}
+
+	if err = d.Set("detect_https_in_http_request", flattenFirewallProxyPolicyDetectHttpsInHttpRequest(o["detect-https-in-http-request"], d, "detect_https_in_http_request", sv)); err != nil {
+		if !fortiAPIPatch(o["detect-https-in-http-request"]) {
+			return fmt.Errorf("Error reading detect_https_in_http_request: %v", err)
 		}
 	}
 
@@ -3500,6 +3547,10 @@ func expandFirewallProxyPolicySctpFilterProfile(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandFirewallProxyPolicyVirtualPatchProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyPolicyIcapProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3517,6 +3568,10 @@ func expandFirewallProxyPolicyWafProfile(d *schema.ResourceData, v interface{}, 
 }
 
 func expandFirewallProxyPolicySshFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyCasbProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3561,6 +3616,10 @@ func expandFirewallProxyPolicyRedirectUrl(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallProxyPolicyDecryptedTrafficMirror(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyDetectHttpsInHttpRequest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4134,6 +4193,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
+	if v, ok := d.GetOk("virtual_patch_profile"); ok {
+		t, err := expandFirewallProxyPolicyVirtualPatchProfile(d, v, "virtual_patch_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["virtual-patch-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("icap_profile"); ok {
 		t, err := expandFirewallProxyPolicyIcapProfile(d, v, "icap_profile", sv)
 		if err != nil {
@@ -4176,6 +4244,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["ssh-filter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("casb_profile"); ok {
+		t, err := expandFirewallProxyPolicyCasbProfile(d, v, "casb_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["casb-profile"] = t
 		}
 	}
 
@@ -4275,6 +4352,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["decrypted-traffic-mirror"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("detect_https_in_http_request"); ok {
+		t, err := expandFirewallProxyPolicyDetectHttpsInHttpRequest(d, v, "detect_https_in_http_request", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["detect-https-in-http-request"] = t
 		}
 	}
 

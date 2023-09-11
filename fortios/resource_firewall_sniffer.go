@@ -128,6 +128,17 @@ func resourceFirewallSniffer() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"casb_profile_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"casb_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"webfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -486,6 +497,14 @@ func flattenFirewallSnifferAvProfile(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenFirewallSnifferCasbProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferCasbProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSnifferWebfilterProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -817,6 +836,18 @@ func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("casb_profile_status", flattenFirewallSnifferCasbProfileStatus(o["casb-profile-status"], d, "casb_profile_status", sv)); err != nil {
+		if !fortiAPIPatch(o["casb-profile-status"]) {
+			return fmt.Errorf("Error reading casb_profile_status: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile", flattenFirewallSnifferCasbProfile(o["casb-profile"], d, "casb_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["casb-profile"]) {
+			return fmt.Errorf("Error reading casb_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("webfilter_profile_status", flattenFirewallSnifferWebfilterProfileStatus(o["webfilter-profile-status"], d, "webfilter_profile_status", sv)); err != nil {
 		if !fortiAPIPatch(o["webfilter-profile-status"]) {
 			return fmt.Errorf("Error reading webfilter_profile_status: %v", err)
@@ -1019,6 +1050,14 @@ func expandFirewallSnifferAvProfileStatus(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallSnifferAvProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferCasbProfileStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferCasbProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1373,6 +1412,24 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["av-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("casb_profile_status"); ok {
+		t, err := expandFirewallSnifferCasbProfileStatus(d, v, "casb_profile_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["casb-profile-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("casb_profile"); ok {
+		t, err := expandFirewallSnifferCasbProfile(d, v, "casb_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["casb-profile"] = t
 		}
 	}
 

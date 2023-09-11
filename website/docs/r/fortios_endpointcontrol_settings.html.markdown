@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_endpointcontrol_settings
-Configure endpoint control settings. Applies to FortiOS Version `6.2.0,6.2.4,6.2.6,7.4.0`.
+Configure endpoint control settings. Applies to FortiOS Version `6.2.0,6.2.4,6.2.6,7.4.0,7.4.1`.
 
 ## Example Usage
 

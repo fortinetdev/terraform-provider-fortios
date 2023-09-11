@@ -44,15 +44,15 @@ func (c *FortiSDKClient) CreateUpdateFirewallProxypolicyMove(srcId, dstId, mv, v
 	return
 }
 
-// JSONFirewallProxypolicyItem contains the necessary parameters for each item
-type JSONFirewallProxypolicyItem struct {
+// JSONMoveFirewallProxypolicyItem contains the necessary parameters for each item
+type JSONMoveFirewallProxypolicyItem struct {
 	Policyid string `json:"policyid"`
 }
 
 // GetFirewallProxypolicyList API operation for FortiOS gets the list
 // Returns the requested API user value when the request executes successfully.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) GetFirewallProxypolicyList(vdomparam string) (out []JSONFirewallProxypolicyItem, err error) {
+func (c *FortiSDKClient) GetFirewallProxypolicyList(vdomparam string) (out []JSONMoveFirewallProxypolicyItem, err error) {
 
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/proxy-policy/"
@@ -92,12 +92,12 @@ func (c *FortiSDKClient) GetFirewallProxypolicyList(vdomparam string) (out []JSO
 			return
 		}
 
-		var members []JSONFirewallProxypolicyItem
+		var members []JSONMoveFirewallProxypolicyItem
 		for _, v := range mapTmp {
 			c := v.(map[string]interface{})
 
 			members = append(members,
-				JSONFirewallProxypolicyItem{
+				JSONMoveFirewallProxypolicyItem{
 					Policyid: strconv.Itoa(int(c["policyid"].(float64))),
 				})
 		}

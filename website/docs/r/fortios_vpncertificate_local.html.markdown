@@ -43,6 +43,14 @@ The following arguments are supported:
 * `acme_email` - Contact email address that is required by some CAs like LetsEncrypt.
 * `acme_rsa_key_size` - Length of the RSA private key of the generated cert (Minimum 2048 bits).
 * `acme_renew_window` - Beginning of the renewal window (in days before certificate expiration, 30 by default).
+* `est_server` - Address and port for EST server (e.g. https://example.com:1234).
+* `est_ca_id` - CA identifier of the CA server for signing via EST.
+* `est_http_username` - HTTP Authentication username for signing via EST.
+* `est_http_password` - HTTP Authentication password for signing via EST.
+* `est_client_cert` - Certificate used to authenticate this FortiGate to EST server.
+* `est_server_cert` - EST server's certificate must be verifiable by this certificate to be authenticated.
+* `est_srp_username` - EST SRP authentication username.
+* `est_srp_password` - EST SRP authentication password.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

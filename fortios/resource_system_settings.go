@@ -593,6 +593,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_sslvpn": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_wireless_controller": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -654,6 +659,16 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"gui_dlp_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_virtual_patch_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_casb": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1385,6 +1400,10 @@ func flattenSystemSettingsGuiVpn(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemSettingsGuiSslvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsGuiWirelessController(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1434,6 +1453,14 @@ func flattenSystemSettingsGuiWafProfile(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemSettingsGuiDlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsGuiVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsGuiCasb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2218,6 +2245,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_sslvpn", flattenSystemSettingsGuiSslvpn(o["gui-sslvpn"], d, "gui_sslvpn", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-sslvpn"]) {
+			return fmt.Errorf("Error reading gui_sslvpn: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_wireless_controller", flattenSystemSettingsGuiWirelessController(o["gui-wireless-controller"], d, "gui_wireless_controller", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-wireless-controller"]) {
 			return fmt.Errorf("Error reading gui_wireless_controller: %v", err)
@@ -2293,6 +2326,18 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("gui_dlp_profile", flattenSystemSettingsGuiDlpProfile(o["gui-dlp-profile"], d, "gui_dlp_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-dlp-profile"]) {
 			return fmt.Errorf("Error reading gui_dlp_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_virtual_patch_profile", flattenSystemSettingsGuiVirtualPatchProfile(o["gui-virtual-patch-profile"], d, "gui_virtual_patch_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-virtual-patch-profile"]) {
+			return fmt.Errorf("Error reading gui_virtual_patch_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_casb", flattenSystemSettingsGuiCasb(o["gui-casb"], d, "gui_casb", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-casb"]) {
+			return fmt.Errorf("Error reading gui_casb: %v", err)
 		}
 	}
 
@@ -2940,6 +2985,10 @@ func expandSystemSettingsGuiVpn(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemSettingsGuiSslvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsGuiWirelessController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2989,6 +3038,14 @@ func expandSystemSettingsGuiWafProfile(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemSettingsGuiDlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsGuiVirtualPatchProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsGuiCasb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4506,6 +4563,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_sslvpn"); ok {
+		if setArgNil {
+			obj["gui-sslvpn"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiSslvpn(d, v, "gui_sslvpn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-sslvpn"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_wireless_controller"); ok {
 		if setArgNil {
 			obj["gui-wireless-controller"] = nil
@@ -4671,6 +4741,32 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["gui-dlp-profile"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("gui_virtual_patch_profile"); ok {
+		if setArgNil {
+			obj["gui-virtual-patch-profile"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiVirtualPatchProfile(d, v, "gui_virtual_patch_profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-virtual-patch-profile"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("gui_casb"); ok {
+		if setArgNil {
+			obj["gui-casb"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiCasb(d, v, "gui_casb", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-casb"] = t
 			}
 		}
 	}

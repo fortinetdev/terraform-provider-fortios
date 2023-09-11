@@ -114,6 +114,7 @@ The `https` block supports:
 
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status. Valid values: `disable`, `certificate-inspection`, `deep-inspection`.
+* `quic` - Enable/disable QUIC inspection (default = disable). Valid values: `disable`, `enable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `client_certificate` - Action based on received client certificate. Valid values: `bypass`, `inspect`, `block`.
 * `unsupported_ssl_version` - Action based on the SSL version used being unsupported.
@@ -221,6 +222,7 @@ The `ssh` block supports:
 The `dot` block supports:
 
 * `status` - Configure protocol inspection status. Valid values: `disable`, `deep-inspection`.
+* `quic` - Enable/disable QUIC inspection (default = disable). Valid values: `disable`, `enable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `client_certificate` - Action based on received client certificate. Valid values: `bypass`, `inspect`, `block`.
 * `unsupported_ssl_version` - Action based on the SSL version used being unsupported.

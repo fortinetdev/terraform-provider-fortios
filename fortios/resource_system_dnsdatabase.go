@@ -99,7 +99,17 @@ func resourceSystemDnsDatabase() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"forwarder6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_ip6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -353,7 +363,15 @@ func flattenSystemDnsDatabaseForwarder(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemDnsDatabaseForwarder6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDnsDatabaseSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsDatabaseSourceIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -562,9 +580,21 @@ func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("forwarder6", flattenSystemDnsDatabaseForwarder6(o["forwarder6"], d, "forwarder6", sv)); err != nil {
+		if !fortiAPIPatch(o["forwarder6"]) {
+			return fmt.Errorf("Error reading forwarder6: %v", err)
+		}
+	}
+
 	if err = d.Set("source_ip", flattenSystemDnsDatabaseSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip6", flattenSystemDnsDatabaseSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip6"]) {
+			return fmt.Errorf("Error reading source_ip6: %v", err)
 		}
 	}
 
@@ -651,7 +681,15 @@ func expandSystemDnsDatabaseForwarder(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemDnsDatabaseForwarder6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDnsDatabaseSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsDatabaseSourceIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -882,12 +920,30 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("forwarder6"); ok {
+		t, err := expandSystemDnsDatabaseForwarder6(d, v, "forwarder6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["forwarder6"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("source_ip"); ok {
 		t, err := expandSystemDnsDatabaseSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["source-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip6"); ok {
+		t, err := expandSystemDnsDatabaseSourceIp6(d, v, "source_ip6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip6"] = t
 		}
 	}
 

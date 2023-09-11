@@ -37,11 +37,13 @@ The following arguments are supported:
 * `voip_profile` - Name of an existing VoIP profile.
 * `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
+* `virtual_patch_profile` - Name of an existing virtual-patch profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.
 * `videofilter_profile` - Name of an existing VideoFilter profile.
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
+* `casb_profile` - Name of an existing CASB profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

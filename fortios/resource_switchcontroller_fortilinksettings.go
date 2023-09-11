@@ -59,6 +59,11 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"access_vlan_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"nac_ports": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -263,6 +268,10 @@ func flattenSwitchControllerFortilinkSettingsLinkDownFlush(v interface{}, d *sch
 	return v
 }
 
+func flattenSwitchControllerFortilinkSettingsAccessVlanMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerFortilinkSettingsNacPorts(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -410,6 +419,12 @@ func refreshObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, o ma
 		}
 	}
 
+	if err = d.Set("access_vlan_mode", flattenSwitchControllerFortilinkSettingsAccessVlanMode(o["access-vlan-mode"], d, "access_vlan_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["access-vlan-mode"]) {
+			return fmt.Errorf("Error reading access_vlan_mode: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("nac_ports", flattenSwitchControllerFortilinkSettingsNacPorts(o["nac-ports"], d, "nac_ports", sv)); err != nil {
 			if !fortiAPIPatch(o["nac-ports"]) {
@@ -448,6 +463,10 @@ func expandSwitchControllerFortilinkSettingsInactiveTimer(d *schema.ResourceData
 }
 
 func expandSwitchControllerFortilinkSettingsLinkDownFlush(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerFortilinkSettingsAccessVlanMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -586,6 +605,15 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 			return &obj, err
 		} else if t != nil {
 			obj["link-down-flush"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("access_vlan_mode"); ok {
+		t, err := expandSwitchControllerFortilinkSettingsAccessVlanMode(d, v, "access_vlan_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["access-vlan-mode"] = t
 		}
 	}
 

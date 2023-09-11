@@ -58,13 +58,14 @@ The following arguments are supported:
 * `group_object_filter` - Filter used for group searching.
 * `group_filter` - Filter used for group matching.
 * `secure` - Port to be used for authentication. Valid values: `disable`, `starttls`, `ldaps`.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `ca_cert` - CA certificate name.
 * `port` - Port to be used for communication with the LDAP server (default = 389).
 * `password_expiry_warning` - Enable/disable password expiry warnings. Valid values: `enable`, `disable`.
 * `password_renewal` - Enable/disable online password renewal. Valid values: `enable`, `disable`.
 * `member_attr` - Name of attribute from which to get group membership.
 * `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token. Valid values: `same`, `strip`.
+* `account_key_cert_field` - Define subject identity field in certificate for user access right checking. Valid values: `othername`, `rfc822name`, `dnsname`.
 * `account_key_upn_san` - Define SAN in certificate for user principle name matching. Valid values: `othername`, `rfc822name`, `dnsname`.
 * `account_key_filter` - Account key filter, using the UPN as the search filter.
 * `search_type` - Search type. Valid values: `recursive`.

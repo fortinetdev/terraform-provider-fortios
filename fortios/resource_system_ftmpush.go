@@ -35,6 +35,11 @@ func resourceSystemFtmPush() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+			"proxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"server_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -161,6 +166,10 @@ func resourceSystemFtmPushRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func flattenSystemFtmPushProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -183,6 +192,12 @@ func flattenSystemFtmPushStatus(v interface{}, d *schema.ResourceData, pre strin
 
 func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("proxy", flattenSystemFtmPushProxy(o["proxy"], d, "proxy", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy"]) {
+			return fmt.Errorf("Error reading proxy: %v", err)
+		}
+	}
 
 	if err = d.Set("server_port", flattenSystemFtmPushServerPort(o["server-port"], d, "server_port", sv)); err != nil {
 		if !fortiAPIPatch(o["server-port"]) {
@@ -223,6 +238,10 @@ func flattenSystemFtmPushFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandSystemFtmPushProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFtmPushServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -245,6 +264,19 @@ func expandSystemFtmPushStatus(d *schema.ResourceData, v interface{}, pre string
 
 func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("proxy"); ok {
+		if setArgNil {
+			obj["proxy"] = nil
+		} else {
+			t, err := expandSystemFtmPushProxy(d, v, "proxy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy"] = t
+			}
+		}
+	}
 
 	if v, ok := d.GetOk("server_port"); ok {
 		if setArgNil {

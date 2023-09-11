@@ -51,6 +51,17 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"alt_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+				Computed:     true,
+			},
+			"fallback_to_primary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"certificate_verification": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -310,6 +321,14 @@ func flattenLogFortianalyzerSettingServer(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenLogFortianalyzerSettingAltServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzerSettingFallbackToPrimary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzerSettingCertificateVerification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -468,6 +487,18 @@ func refreshObjectLogFortianalyzerSetting(d *schema.ResourceData, o map[string]i
 	if err = d.Set("server", flattenLogFortianalyzerSettingServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
+		}
+	}
+
+	if err = d.Set("alt_server", flattenLogFortianalyzerSettingAltServer(o["alt-server"], d, "alt_server", sv)); err != nil {
+		if !fortiAPIPatch(o["alt-server"]) {
+			return fmt.Errorf("Error reading alt_server: %v", err)
+		}
+	}
+
+	if err = d.Set("fallback_to_primary", flattenLogFortianalyzerSettingFallbackToPrimary(o["fallback-to-primary"], d, "fallback_to_primary", sv)); err != nil {
+		if !fortiAPIPatch(o["fallback-to-primary"]) {
+			return fmt.Errorf("Error reading fallback_to_primary: %v", err)
 		}
 	}
 
@@ -646,6 +677,14 @@ func expandLogFortianalyzerSettingServer(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandLogFortianalyzerSettingAltServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzerSettingFallbackToPrimary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzerSettingCertificateVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -807,6 +846,32 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["server"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("alt_server"); ok {
+		if setArgNil {
+			obj["alt-server"] = nil
+		} else {
+			t, err := expandLogFortianalyzerSettingAltServer(d, v, "alt_server", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["alt-server"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("fallback_to_primary"); ok {
+		if setArgNil {
+			obj["fallback-to-primary"] = nil
+		} else {
+			t, err := expandLogFortianalyzerSettingFallbackToPrimary(d, v, "fallback_to_primary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fallback-to-primary"] = t
 			}
 		}
 	}

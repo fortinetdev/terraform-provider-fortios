@@ -166,6 +166,12 @@ func resourceUserSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"default_user_password_policy": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -414,6 +420,10 @@ func flattenUserSettingAuthSslSigalgs(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenUserSettingDefaultUserPasswordPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -559,6 +569,12 @@ func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("default_user_password_policy", flattenUserSettingDefaultUserPasswordPolicy(o["default-user-password-policy"], d, "default_user_password_policy", sv)); err != nil {
+		if !fortiAPIPatch(o["default-user-password-policy"]) {
+			return fmt.Errorf("Error reading default_user_password_policy: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -694,6 +710,10 @@ func expandUserSettingAuthSslMaxProtoVersion(d *schema.ResourceData, v interface
 }
 
 func expandUserSettingAuthSslSigalgs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSettingDefaultUserPasswordPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -969,6 +989,19 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["auth-ssl-sigalgs"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("default_user_password_policy"); ok {
+		if setArgNil {
+			obj["default-user-password-policy"] = nil
+		} else {
+			t, err := expandUserSettingDefaultUserPasswordPolicy(d, v, "default_user_password_policy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default-user-password-policy"] = t
 			}
 		}
 	}

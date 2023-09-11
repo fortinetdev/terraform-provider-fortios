@@ -79,6 +79,12 @@ The following attributes are exported:
 * `timezone` - Number corresponding to your time zone from 00 to 86. Enter set timezone ? to view the list of time zones and the numbers that represent them.
 * `traffic_priority` - Choose Type of Service (ToS) or Differentiated Services Code Point (DSCP) for traffic prioritization in traffic shaping.
 * `traffic_priority_level` - Default system-wide level of priority for traffic prioritization.
+* `quic_congestion_control_algo` - QUIC congestion control algorithm (default = cubic).
+* `quic_max_datagram_size` - Maximum transmit datagram size (1200 - 1500, default = 1500).
+* `quic_udp_payload_size_shaping_per_cid` - Enable/disable UDP payload size shaping per connection ID (default = enable).
+* `quic_ack_thresold` - Maximum number of unacknowledged packets before sending ACK (2 - 5, default = 3).
+* `quic_pmtud` - Enable/disable path MTU discovery (default = enable).
+* `quic_tls_handshake_timeout` - Time-to-live (TTL) for TLS handshake in seconds (1 - 60, default = 5).
 * `anti_replay` - Level of checking for packet replay and TCP sequence checking.
 * `send_pmtu_icmp` - Enable/disable sending of path maximum transmission unit (PMTU) - ICMP destination unreachable packet and to support PMTUD protocol on your network to reduce fragmentation of packets.
 * `honor_df` - Enable/disable honoring of Don't-Fragment (DF) flag.
@@ -91,6 +97,7 @@ The following attributes are exported:
 * `hostname` - FortiGate unit's hostname. Most models will truncate names longer than 24 characters. Some models support hostnames up to 35 characters.
 * `gui_allow_default_hostname` - Enable/disable the GUI warning about using a default hostname
 * `gui_forticare_registration_setup_warning` - Enable/disable the FortiCare registration setup warning on the GUI.
+* `gui_auto_upgrade_setup_warning` - Enable/disable the automatic patch upgrade setup prompt on the GUI.
 * `gui_workflow_management` - Enable/disable Workflow management features on the GUI.
 * `gui_cdn_usage` - Enable/disable Load GUI static files from a CDN.
 * `alias` - Alias for your FortiGate unit.
@@ -221,6 +228,7 @@ The following attributes are exported:
 * `cert_chain_max` - Maximum number of certificates that can be traversed in a certificate chain.
 * `sslvpn_max_worker_count` - Maximum number of SSL VPN processes. Upper limit for this value is the number of CPUs and depends on the model.
 * `vpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN and IPsec VPN connection.
+* `sslvpn_web_mode` - Enable/disable SSL-VPN web mode.
 * `sslvpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN connection.
 * `sslvpn_kxp_hardware_acceleration` - Enable/disable SSL VPN KXP hardware acceleration.
 * `sslvpn_cipher_hardware_acceleration` - Enable/disable SSL VPN hardware acceleration.
@@ -283,6 +291,8 @@ The following attributes are exported:
 * `fec_port` - Local UDP port for Forward Error Correction (49152 - 65535).
 * `ipsec_ha_seqjump_rate` - ESP jump ahead rate (1G - 10G pps equivalent).
 * `fortitoken_cloud` - Enable/disable FortiToken Cloud service.
+* `fortitoken_cloud_push_status` - Enable/disable FTM push service of FortiToken Cloud.
+* `fortitoken_cloud_sync_interval` - Interval in which to clean up remote users in FortiToken Cloud (0 - 336 hours (14 days), default = 24, disable = 0).
 * `faz_disk_buffer_size` - Maximum disk buffer size to temporarily store logs destined for FortiAnalyzer. To be used in the event that FortiAnalyzer is unavailalble.
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode.
 * `fortiipam_integration` - Enable/disable integration with the FortiIPAM cloud service.

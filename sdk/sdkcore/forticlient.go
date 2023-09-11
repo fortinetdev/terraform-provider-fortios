@@ -77,9 +77,9 @@ func (c *FortiSDKClient) CheckUP() error {
 	_, err = read(c, "GET", "/api/v2/monitor/system/status", true, "")
 	if err != nil {
 		if c.Config.Auth.Token == "" {
-			err = fmt.Errorf("Username or Password not correct.")
+			err = fmt.Errorf("Error using Username/Password to login: %v", err)
 		} else {
-			err = fmt.Errorf("Token is not valid.")
+			err = fmt.Errorf("Error using Token to login: %v", err)
 		}
 	}
 	return err

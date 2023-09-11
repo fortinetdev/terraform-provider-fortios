@@ -58,6 +58,11 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"schedules": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -262,6 +267,10 @@ func flattenSystemSpeedTestScheduleServerName(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemSpeedTestScheduleMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSpeedTestScheduleSchedules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -365,6 +374,12 @@ func refreshObjectSystemSpeedTestSchedule(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("mode", flattenSystemSpeedTestScheduleMode(o["mode"], d, "mode", sv)); err != nil {
+		if !fortiAPIPatch(o["mode"]) {
+			return fmt.Errorf("Error reading mode: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("schedules", flattenSystemSpeedTestScheduleSchedules(o["schedules"], d, "schedules", sv)); err != nil {
 			if !fortiAPIPatch(o["schedules"]) {
@@ -445,6 +460,10 @@ func expandSystemSpeedTestScheduleDiffserv(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemSpeedTestScheduleServerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSpeedTestScheduleMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -543,6 +562,15 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["server-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mode"); ok {
+		t, err := expandSystemSpeedTestScheduleMode(d, v, "mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mode"] = t
 		}
 	}
 

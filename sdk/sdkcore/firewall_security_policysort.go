@@ -18,7 +18,7 @@ func getPolicyList(c *FortiSDKClient, vdomparam string) (idlist []policySort, er
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/policy/"
 
-	specialparams := "format=policyid|name"
+	specialparams := "format=policyid|name|action"
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.SendWithSpecialParams(specialparams, vdomparam)
@@ -175,11 +175,11 @@ func sortPolicyList(idlist []policySort, sortby, sortdirection string, c *FortiS
 	return nil
 }
 
-// CreateUpdateFirewallSecurityPolicySort API operation for FortiOS to sort the firewall policies.
+// CreateUpdateFirewallPolicyOldvSort API operation for FortiOS to sort the firewall policies.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySort(sortby, sortdirection, vdomparam string) (err error) {
+func (c *FortiSDKClient) CreateUpdateFirewallPolicyOldvSort(sortby, sortdirection, vdomparam string) (err error) {
 	idlist, err := getPolicyList(c, vdomparam)
-	log.Printf("shengh: %v", idlist)
+	log.Printf("[INFO] Firewall policy id list: %v", idlist)
 	if err != nil {
 		err = fmt.Errorf("sort err %s", err)
 		return
@@ -199,10 +199,10 @@ func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySort(sortby, sortdire
 	return
 }
 
-// ReadFirewallSecurityPolicySort API operation for FortiOS to read the firewall policies sort results
+// ReadFirewallPolicyOldvSort API operation for FortiOS to read the firewall policies sort results
 // Returns sort status
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) ReadFirewallSecurityPolicySort(sortby, sortdirection, vdomparam string) (sorted bool, err error) {
+func (c *FortiSDKClient) ReadFirewallPolicyOldvSort(sortby, sortdirection, vdomparam string) (sorted bool, err error) {
 	idlist, err := getPolicyList(c, vdomparam)
 	if err != nil {
 		err = fmt.Errorf("sort err %s", err)
@@ -210,7 +210,6 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicySort(sortby, sortdirection, v
 	}
 
 	bsorted := bPolicyListSorted(idlist, sortby, sortdirection)
-	log.Printf("shengh: %v", bsorted)
 	if bsorted == true {
 		sorted = true
 		return

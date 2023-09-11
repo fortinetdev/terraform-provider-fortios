@@ -140,6 +140,7 @@ The following arguments are supported:
 * `peer` - Accept this peer certificate.
 * `peergrp` - Accept this peer certificate group.
 * `monitor` - IPsec interface as backup for primary interface.
+* `monitor_min` - Minimum number of links to become degraded before activating this interface.  Zero (0) means all links must be down before activating this interface.
 * `monitor_hold_down_type` - Recovery time method when primary interface re-establishes. Valid values: `immediate`, `delay`, `time`.
 * `monitor_hold_down_delay` - Time to wait in seconds before recovery once primary re-establishes.
 * `monitor_hold_down_weekday` - Day of the week to recover once primary re-establishes. Valid values: `everyday`, `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
@@ -166,6 +167,7 @@ The following arguments are supported:
 * `ipv4_dns_server1` - IPv4 DNS server 1.
 * `ipv4_dns_server2` - IPv4 DNS server 2.
 * `ipv4_dns_server3` - IPv4 DNS server 3.
+* `internal_domain_list` - One or more internal domain names in quotes separated by spaces. The structure of `internal_domain_list` block is documented below.
 * `ipv4_wins_server1` - WINS server 1.
 * `ipv4_wins_server2` - WINS server 2.
 * `ipv4_exclude_range` - Configuration Method IPv4 exclude ranges. The structure of `ipv4_exclude_range` block is documented below.
@@ -279,6 +281,7 @@ The following arguments are supported:
 * `link_cost` - VPN tunnel underlay link cost.
 * `kms` - Key Management Services server.
 * `exchange_fgt_device_id` - Enable/disable device identifier exchange with peer FortiGate units for use of VPN monitor data by FortiManager. Valid values: `enable`, `disable`.
+* `ems_sn_check` - Enable/disable verification of EMS serial number. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -286,6 +289,10 @@ The following arguments are supported:
 The `certificate` block supports:
 
 * `name` - Certificate name.
+
+The `internal_domain_list` block supports:
+
+* `domain_name` - Domain name.
 
 The `ipv4_exclude_range` block supports:
 

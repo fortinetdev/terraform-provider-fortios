@@ -23,4 +23,6 @@ The following attributes are exported:
 * `mode` - DNS server mode.
 * `dnsfilter_profile` - DNS filter profile.
 * `doh` - DNS over HTTPS.
+* `doh3` - Enable/disable DNS over QUIC/HTTP3/443 (default = disable).
+* `doq` - Enable/disable DNS over QUIC/853 (default = disable).
 

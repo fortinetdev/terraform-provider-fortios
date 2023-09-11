@@ -219,6 +219,20 @@ func resourceDnsfilterProfile() *schema.Resource {
 					},
 				},
 			},
+			"transparent_dns_database": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -672,6 +686,48 @@ func flattenDnsfilterProfileDnsTranslationPrefix(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenDnsfilterProfileTransparentDnsDatabase(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenDnsfilterProfileTransparentDnsDatabaseName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenDnsfilterProfileTransparentDnsDatabaseName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -806,6 +862,22 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 			if err = d.Set("dns_translation", flattenDnsfilterProfileDnsTranslation(o["dns-translation"], d, "dns_translation", sv)); err != nil {
 				if !fortiAPIPatch(o["dns-translation"]) {
 					return fmt.Errorf("Error reading dns_translation: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("transparent_dns_database", flattenDnsfilterProfileTransparentDnsDatabase(o["transparent-dns-database"], d, "transparent_dns_database", sv)); err != nil {
+			if !fortiAPIPatch(o["transparent-dns-database"]) {
+				return fmt.Errorf("Error reading transparent_dns_database: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("transparent_dns_database"); ok {
+			if err = d.Set("transparent_dns_database", flattenDnsfilterProfileTransparentDnsDatabase(o["transparent-dns-database"], d, "transparent_dns_database", sv)); err != nil {
+				if !fortiAPIPatch(o["transparent-dns-database"]) {
+					return fmt.Errorf("Error reading transparent_dns_database: %v", err)
 				}
 			}
 		}
@@ -1106,6 +1178,37 @@ func expandDnsfilterProfileDnsTranslationPrefix(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandDnsfilterProfileTransparentDnsDatabase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandDnsfilterProfileTransparentDnsDatabaseName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandDnsfilterProfileTransparentDnsDatabaseName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1241,6 +1344,15 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["dns-translation"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("transparent_dns_database"); ok || d.HasChange("transparent_dns_database") {
+		t, err := expandDnsfilterProfileTransparentDnsDatabase(d, v, "transparent_dns_database", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["transparent-dns-database"] = t
 		}
 	}
 

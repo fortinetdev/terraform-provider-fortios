@@ -17,7 +17,7 @@ The following arguments are supported:
 * `server_list` - KMIP server list. The structure of `server_list` block is documented below.
 * `username` - User name to use for connectivity to the KMIP server.
 * `password` - Password to use for connectivity to the KMIP server.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `server_identity_check` - Enable/disable KMIP server identity check (verify server FQDN/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.

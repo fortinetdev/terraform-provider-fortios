@@ -50,6 +50,12 @@ func resourceSystemAffinityInterrupt() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Required:     true,
 			},
+			"default_affinity_cpumask": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -187,6 +193,10 @@ func flattenSystemAffinityInterruptAffinityCpumask(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSystemAffinityInterruptDefaultAffinityCpumask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemAffinityInterrupt(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -208,6 +218,12 @@ func refreshObjectSystemAffinityInterrupt(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("default_affinity_cpumask", flattenSystemAffinityInterruptDefaultAffinityCpumask(o["default-affinity-cpumask"], d, "default_affinity_cpumask", sv)); err != nil {
+		if !fortiAPIPatch(o["default-affinity-cpumask"]) {
+			return fmt.Errorf("Error reading default_affinity_cpumask: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -226,6 +242,10 @@ func expandSystemAffinityInterruptInterrupt(d *schema.ResourceData, v interface{
 }
 
 func expandSystemAffinityInterruptAffinityCpumask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAffinityInterruptDefaultAffinityCpumask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -256,6 +276,15 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["affinity-cpumask"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("default_affinity_cpumask"); ok {
+		t, err := expandSystemAffinityInterruptDefaultAffinityCpumask(d, v, "default_affinity_cpumask", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-affinity-cpumask"] = t
 		}
 	}
 

@@ -41,6 +41,7 @@ The `zone` block supports:
 
 * `name` - Zone name.
 * `service_sla_tie_break` - Method of selecting member if more than one meets the SLA.
+* `minimum_sla_meet_members` - Minimum number of members which meet SLA when the neighbor is preferred.
 
 The `members` block supports:
 
@@ -132,6 +133,7 @@ The `neighbor` block supports:
 * `member_block` - Member sequence number list. The structure of `member_block` block is documented below.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA when the neighbor is preferred.
 * `member` - Member sequence number.
+* `service_id` - SD-WAN service ID to work with the neighbor.
 * `mode` - What metric to select the neighbor. Valid values: `sla`, `speedtest`.
 * `role` - Role of neighbor. Valid values: `standalone`, `primary`, `secondary`.
 * `health_check` - SD-WAN health-check name.
@@ -146,11 +148,13 @@ The `service` block supports:
 * `id` - SD-WAN rule ID (1 - 4000).
 * `name` - SD-WAN rule name.
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
+* `load_balance` - Enable/disable load-balance. Valid values: `enable`, `disable`.
 * `shortcut_stickiness` - Enable/disable shortcut-stickiness of ADVPN. Valid values: `enable`, `disable`.
 * `input_device` - Source interface name. The structure of `input_device` block is documented below.
 * `input_device_negate` - Enable/disable negation of input device match. Valid values: `enable`, `disable`.
 * `input_zone` - Source input-zone name. The structure of `input_zone` block is documented below.
-* `mode` - Control how the SD-WAN rule sets the priority of interfaces in the SD-WAN. Valid values: `auto`, `manual`, `priority`, `sla`, `load-balance`.
+* `mode` - Control how the SD-WAN rule sets the priority of interfaces in the SD-WAN.
+* `zone_mode` - Enable/disable zone mode. Valid values: `enable`, `disable`.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA.
 * `hash_mode` - Hash algorithm for selected priority members for load balance mode. Valid values: `round-robin`, `source-ip-based`, `source-dest-ip-based`, `inbandwidth`, `outbandwidth`, `bibandwidth`.
 * `role` - Service role to work with neighbor. Valid values: `standalone`, `primary`, `secondary`.
@@ -161,6 +165,8 @@ The `service` block supports:
 * `protocol` - Protocol number.
 * `start_port` - Start destination port number.
 * `end_port` - End destination port number.
+* `start_src_port` - Start source port number.
+* `end_src_port` - End source port number.
 * `route_tag` - IPv4 route map route-tag.
 * `dst` - Destination address name. The structure of `dst` block is documented below.
 * `dst_negate` - Enable/disable negation of destination address match. Valid values: `enable`, `disable`.
@@ -186,6 +192,7 @@ The `service` block supports:
 * `bandwidth_weight` - Coefficient of reciprocal of available bidirectional bandwidth in the formula of custom-profile-1.
 * `link_cost_threshold` - Percentage threshold change of link cost values that will result in policy route regeneration (0 - 10000000, default = 10).
 * `hold_down_time` - Waiting period in seconds when switching from the back-up member to the primary member (0 - 10000000, default = 0).
+* `sla_stickiness` - Enable/disable SLA stickiness (default = disable). Valid values: `enable`, `disable`.
 * `dscp_forward` - Enable/disable forward traffic DSCP tag. Valid values: `enable`, `disable`.
 * `dscp_reverse` - Enable/disable reverse traffic DSCP tag. Valid values: `enable`, `disable`.
 * `dscp_forward_tag` - Forward traffic DSCP tag.

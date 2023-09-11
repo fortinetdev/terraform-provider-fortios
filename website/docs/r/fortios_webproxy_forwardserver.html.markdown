@@ -28,8 +28,9 @@ resource "fortios_webproxy_forwardserver" "trname" {
 The following arguments are supported:
 
 * `name` - Server name.
-* `addr_type` - Address type of the forwarding proxy server: IP or FQDN. Valid values: `ip`, `fqdn`.
+* `addr_type` - Address type of the forwarding proxy server: IP or FQDN.
 * `ip` - Forward proxy server IP address.
+* `ipv6` - Forward proxy server IPv6 address.
 * `fqdn` - Forward server Fully Qualified Domain Name (FQDN).
 * `port` - Port number that the forwarding server expects to receive HTTP sessions on (1 - 65535, default = 3128).
 * `healthcheck` - Enable/disable forward server health checking. Attempts to connect through the remote forwarding server to a destination to verify that the forwarding server is operating normally. Valid values: `disable`, `enable`.

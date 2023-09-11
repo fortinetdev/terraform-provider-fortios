@@ -39,6 +39,7 @@ The following arguments are supported:
 * `status` - Enable/disable exempting the URLs matching the URL pattern from web proxy forwarding and caching. Valid values: `enable`, `disable`.
 * `url_pattern` - (Required) URL pattern to be exempted from web proxy forwarding and caching.
 * `forward_server` - Forward server name.
+* `fast_fallback` - Fast fallback configuration entry name.
 * `cache_exemption` - Enable/disable exempting this URL pattern from caching. Valid values: `enable`, `disable`.
 * `comment` - Comment.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

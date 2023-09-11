@@ -273,6 +273,11 @@ func resourceRouterRouteMap() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"set_vpnv4_nexthop": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"set_ip6_nexthop": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -681,6 +686,11 @@ func flattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, pre string
 			tmp["set_ip_prefsrc"] = flattenRouterRouteMapRuleSetIpPrefsrc(i["set-ip-prefsrc"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv4_nexthop"
+		if _, ok := i["set-vpnv4-nexthop"]; ok {
+			tmp["set_vpnv4_nexthop"] = flattenRouterRouteMapRuleSetVpnv4Nexthop(i["set-vpnv4-nexthop"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
 		if _, ok := i["set-ip6-nexthop"]; ok {
 			tmp["set_ip6_nexthop"] = flattenRouterRouteMapRuleSetIp6Nexthop(i["set-ip6-nexthop"], d, pre_append, sv)
@@ -1043,6 +1053,10 @@ func flattenRouterRouteMapRuleSetIpPrefsrc(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenRouterRouteMapRuleSetVpnv4Nexthop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterRouteMapRuleSetIp6Nexthop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1339,6 +1353,11 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_prefsrc"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-ip-prefsrc"], _ = expandRouterRouteMapRuleSetIpPrefsrc(d, i["set_ip_prefsrc"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv4_nexthop"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["set-vpnv4-nexthop"], _ = expandRouterRouteMapRuleSetVpnv4Nexthop(d, i["set_vpnv4_nexthop"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
@@ -1655,6 +1674,10 @@ func expandRouterRouteMapRuleSetIpNexthop(d *schema.ResourceData, v interface{},
 }
 
 func expandRouterRouteMapRuleSetIpPrefsrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterRouteMapRuleSetVpnv4Nexthop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

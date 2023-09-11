@@ -93,7 +93,7 @@ The `server_list` block supports:
 
 * `id` - Server ID.
 * `dst` - IP address of the server to be monitored.
-* `protocol` - Protocols used to monitor the server. Valid values: `ping`, `tcp-echo`, `udp-echo`, `http`, `twamp`.
+* `protocol` - Protocols used to monitor the server.
 * `port` - Port number of the traffic to be used to monitor the server.
 * `weight` - Weight of the monitor to this dst (0 - 255).
 

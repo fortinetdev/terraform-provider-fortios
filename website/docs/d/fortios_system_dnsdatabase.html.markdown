@@ -34,7 +34,9 @@ The following attributes are exported:
 * `ttl` - Default time-to-live value for the entries of this DNS zone (0 - 2147483647 sec, default = 86400).
 * `authoritative` - Enable/disable authoritative zone.
 * `forwarder` - DNS zone forwarder IP address list.
+* `forwarder6` - Forwarder IPv6 address.
 * `source_ip` - Source IP for forwarding to DNS server.
+* `source_ip6` - IPv6 source IP address for forwarding to DNS server.
 * `rr_max` - Maximum number of resource records (10 - 65536, 0 means infinite).
 * `dns_entry` - DNS entry. The structure of `dns_entry` block is documented below.
 

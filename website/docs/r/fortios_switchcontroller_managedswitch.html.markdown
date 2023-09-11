@@ -38,6 +38,11 @@ The following arguments are supported:
 * `switch_dhcp_opt43_key` - DHCP option43 key.
 * `mclag_igmp_snooping_aware` - Enable/disable MCLAG IGMP-snooping awareness. Valid values: `enable`, `disable`.
 * `dynamically_discovered` - Dynamically discovered FortiSwitch.
+* `ptp_status` - Enable/disable PTP profile on this FortiSwitch. Valid values: `disable`, `enable`.
+* `ptp_profile` - PTP profile configuration.
+* `route_offload` - Enable/disable route offload on this FortiSwitch. Valid values: `disable`, `enable`.
+* `route_offload_mclag` - Enable/disable route offload MCLAG on this FortiSwitch. Valid values: `disable`, `enable`.
+* `route_offload_router` - Configure route offload MCLAG IP address. The structure of `route_offload_router` block is documented below.
 * `type` - Indication of switch type, physical or virtual. Valid values: `virtual`, `physical`.
 * `owner_vdom` - VDOM which owner of port belongs to.
 * `flow_identity` - Flow-tracking netflow ipfix switch identity in hex format(00000000-FFFFFFFF default=0).
@@ -74,6 +79,11 @@ The following arguments are supported:
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
+The `route_offload_router` block supports:
+
+* `vlan_name` - VLAN name.
+* `router_ip` - Router IP address.
+
 The `ports` block supports:
 
 * `port_name` - Switch port name.
@@ -84,6 +94,7 @@ The `ports` block supports:
 * `status` - Switch port admin status: up or down. Valid values: `up`, `down`.
 * `poe_status` - Enable/disable PoE status. Valid values: `enable`, `disable`.
 * `ip_source_guard` - Enable/disable IP source guard. Valid values: `disable`, `enable`.
+* `ptp_status` - Enable/disable PTP policy on this FortiSwitch port. Valid values: `disable`, `enable`.
 * `ptp_policy` - PTP policy configuration.
 * `aggregator_mode` - LACP member select mode. Valid values: `bandwidth`, `count`.
 * `flapguard` - Enable/disable flap guard. Valid values: `enable`, `disable`.
@@ -100,6 +111,9 @@ The `ports` block supports:
 * `stacking_port` - Stacking port.
 * `p2p_port` - General peer to peer tunnel port.
 * `mclag_icl_port` - MCLAG-ICL port.
+* `authenticated_port` - Peer to Peer Authenticated port.
+* `restricted_auth_port` - Peer to Peer Restricted Authenticated port.
+* `encrypted_port` - Peer to Peer Encrypted port.
 * `fiber_port` - Fiber-port.
 * `media_type` - Media type.
 * `poe_standard` - PoE standard supported.

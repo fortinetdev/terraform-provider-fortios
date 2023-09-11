@@ -132,6 +132,7 @@ The following arguments are supported:
 * `gui_endpoint_control_advanced` - Enable/disable advanced endpoint control options on the GUI. Valid values: `enable`, `disable`.
 * `gui_dhcp_advanced` - Enable/disable advanced DHCP options on the GUI. Valid values: `enable`, `disable`.
 * `gui_vpn` - Enable/disable VPN tunnels on the GUI. Valid values: `enable`, `disable`.
+* `gui_sslvpn` - Enable/disable SSL-VPN settings pages on the GUI. Valid values: `enable`, `disable`.
 * `gui_wireless_controller` - Enable/disable the wireless controller on the GUI. Valid values: `enable`, `disable`.
 * `gui_advanced_wireless_features` - Enable/disable advanced wireless features in GUI. Valid values: `enable`, `disable`.
 * `gui_switch_controller` - Enable/disable the switch controller on the GUI. Valid values: `enable`, `disable`.
@@ -145,6 +146,8 @@ The following arguments are supported:
 * `gui_dnsfilter` - Enable/disable DNS Filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_waf_profile` - Enable/disable Web Application Firewall on the GUI. Valid values: `enable`, `disable`.
 * `gui_dlp_profile` - Enable/disable Data Leak Prevention on the GUI. Valid values: `enable`, `disable`.
+* `gui_virtual_patch_profile` - Enable/disable Virtual Patching on the GUI. Valid values: `enable`, `disable`.
+* `gui_casb` - Enable/disable Inline-CASB on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortiextender_controller` - Enable/disable FortiExtender on the GUI. Valid values: `enable`, `disable`.
 * `gui_proxy_inspection` - Enable/disable the proxy features on the GUI. Valid values: `enable`, `disable`.
 * `gui_advanced_policy` - Enable/disable advanced policy configuration on the GUI. Valid values: `enable`, `disable`.

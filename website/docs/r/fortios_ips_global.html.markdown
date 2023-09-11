@@ -47,7 +47,7 @@ The following arguments are supported:
 * `skype_client_public_ipaddr` - Public IP addresses of your network that receive Skype sessions. Helps identify Skype sessions. Separate IP addresses with commas.
 * `deep_app_insp_timeout` - Timeout for Deep application inspection (1 - 2147483647 sec., 0 = use recommended setting).
 * `deep_app_insp_db_limit` - Limit on number of entries in deep application inspection database (1 - 2147483647, 0 = use recommended setting)
-* `exclude_signatures` - Excluded signatures. Valid values: `none`, `industrial`.
+* `exclude_signatures` - Excluded signatures.
 * `packet_log_queue_depth` - Packet/pcap log queue depth per IPS engine.
 * `ngfw_max_scan_range` - NGFW policy-mode app detection threshold.
 * `tls_active_probe` - TLS active probe configuration. The structure of `tls_active_probe` block is documented below.

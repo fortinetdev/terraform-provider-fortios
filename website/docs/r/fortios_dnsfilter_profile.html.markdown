@@ -75,6 +75,7 @@ The following arguments are supported:
 * `youtube_restrict` - Set safe search for YouTube restriction level. Valid values: `strict`, `moderate`.
 * `external_ip_blocklist` - One or more external IP block lists. The structure of `external_ip_blocklist` block is documented below.
 * `dns_translation` - DNS translation settings. The structure of `dns_translation` block is documented below.
+* `transparent_dns_database` - Transparent DNS database zones. The structure of `transparent_dns_database` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -110,6 +111,10 @@ The `dns_translation` block supports:
 * `src6` - IPv6 address or subnet on the internal network to compare with the resolved address in DNS query replies. If the resolved address matches, the resolved address is substituted with dst6.
 * `dst6` - IPv6 address or subnet on the external network to substitute for the resolved address in DNS query replies. Can be single IP address or subnet on the external network, but number of addresses must equal number of mapped IP addresses in src6.
 * `prefix` - If src6 and dst6 are subnets rather than single IP addresses, enter the prefix for both src6 and dst6 (1 - 128, default = 128).
+
+The `transparent_dns_database` block supports:
+
+* `name` - DNS database zone name.
 
 
 ## Attribute Reference

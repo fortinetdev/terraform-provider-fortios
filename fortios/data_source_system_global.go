@@ -224,6 +224,30 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"quic_congestion_control_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"quic_max_datagram_size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"quic_udp_payload_size_shaping_per_cid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"quic_ack_thresold": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"quic_pmtud": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"quic_tls_handshake_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"anti_replay": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -269,6 +293,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"gui_forticare_registration_setup_warning": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_auto_upgrade_setup_warning": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -792,6 +820,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sslvpn_web_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"sslvpn_ems_sn_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1038,6 +1070,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"fortitoken_cloud": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fortitoken_cloud_push_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fortitoken_cloud_sync_interval": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"faz_disk_buffer_size": &schema.Schema{
@@ -1334,6 +1374,30 @@ func dataSourceFlattenSystemGlobalTrafficPriorityLevel(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemGlobalQuicCongestionControlAlgo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalQuicMaxDatagramSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalQuicUdpPayloadSizeShapingPerCid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalQuicAckThresold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalQuicPmtud(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalQuicTlsHandshakeTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalAntiReplay(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1379,6 +1443,10 @@ func dataSourceFlattenSystemGlobalGuiAllowDefaultHostname(v interface{}, d *sche
 }
 
 func dataSourceFlattenSystemGlobalGuiForticareRegistrationSetupWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGuiAutoUpgradeSetupWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1909,6 +1977,10 @@ func dataSourceFlattenSystemGlobalVpnEmsSnCheck(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenSystemGlobalSslvpnWebMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalSslvpnEmsSnCheck(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2154,6 +2226,14 @@ func dataSourceFlattenSystemGlobalIpsecHaSeqjumpRate(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemGlobalFortitokenCloud(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalFortitokenCloudPushStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalFortitokenCloudSyncInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2538,6 +2618,42 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("quic_congestion_control_algo", dataSourceFlattenSystemGlobalQuicCongestionControlAlgo(o["quic-congestion-control-algo"], d, "quic_congestion_control_algo")); err != nil {
+		if !fortiAPIPatch(o["quic-congestion-control-algo"]) {
+			return fmt.Errorf("Error reading quic_congestion_control_algo: %v", err)
+		}
+	}
+
+	if err = d.Set("quic_max_datagram_size", dataSourceFlattenSystemGlobalQuicMaxDatagramSize(o["quic-max-datagram-size"], d, "quic_max_datagram_size")); err != nil {
+		if !fortiAPIPatch(o["quic-max-datagram-size"]) {
+			return fmt.Errorf("Error reading quic_max_datagram_size: %v", err)
+		}
+	}
+
+	if err = d.Set("quic_udp_payload_size_shaping_per_cid", dataSourceFlattenSystemGlobalQuicUdpPayloadSizeShapingPerCid(o["quic-udp-payload-size-shaping-per-cid"], d, "quic_udp_payload_size_shaping_per_cid")); err != nil {
+		if !fortiAPIPatch(o["quic-udp-payload-size-shaping-per-cid"]) {
+			return fmt.Errorf("Error reading quic_udp_payload_size_shaping_per_cid: %v", err)
+		}
+	}
+
+	if err = d.Set("quic_ack_thresold", dataSourceFlattenSystemGlobalQuicAckThresold(o["quic-ack-thresold"], d, "quic_ack_thresold")); err != nil {
+		if !fortiAPIPatch(o["quic-ack-thresold"]) {
+			return fmt.Errorf("Error reading quic_ack_thresold: %v", err)
+		}
+	}
+
+	if err = d.Set("quic_pmtud", dataSourceFlattenSystemGlobalQuicPmtud(o["quic-pmtud"], d, "quic_pmtud")); err != nil {
+		if !fortiAPIPatch(o["quic-pmtud"]) {
+			return fmt.Errorf("Error reading quic_pmtud: %v", err)
+		}
+	}
+
+	if err = d.Set("quic_tls_handshake_timeout", dataSourceFlattenSystemGlobalQuicTlsHandshakeTimeout(o["quic-tls-handshake-timeout"], d, "quic_tls_handshake_timeout")); err != nil {
+		if !fortiAPIPatch(o["quic-tls-handshake-timeout"]) {
+			return fmt.Errorf("Error reading quic_tls_handshake_timeout: %v", err)
+		}
+	}
+
 	if err = d.Set("anti_replay", dataSourceFlattenSystemGlobalAntiReplay(o["anti-replay"], d, "anti_replay")); err != nil {
 		if !fortiAPIPatch(o["anti-replay"]) {
 			return fmt.Errorf("Error reading anti_replay: %v", err)
@@ -2607,6 +2723,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gui_forticare_registration_setup_warning", dataSourceFlattenSystemGlobalGuiForticareRegistrationSetupWarning(o["gui-forticare-registration-setup-warning"], d, "gui_forticare_registration_setup_warning")); err != nil {
 		if !fortiAPIPatch(o["gui-forticare-registration-setup-warning"]) {
 			return fmt.Errorf("Error reading gui_forticare_registration_setup_warning: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_auto_upgrade_setup_warning", dataSourceFlattenSystemGlobalGuiAutoUpgradeSetupWarning(o["gui-auto-upgrade-setup-warning"], d, "gui_auto_upgrade_setup_warning")); err != nil {
+		if !fortiAPIPatch(o["gui-auto-upgrade-setup-warning"]) {
+			return fmt.Errorf("Error reading gui_auto_upgrade_setup_warning: %v", err)
 		}
 	}
 
@@ -3390,6 +3512,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("sslvpn_web_mode", dataSourceFlattenSystemGlobalSslvpnWebMode(o["sslvpn-web-mode"], d, "sslvpn_web_mode")); err != nil {
+		if !fortiAPIPatch(o["sslvpn-web-mode"]) {
+			return fmt.Errorf("Error reading sslvpn_web_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("sslvpn_ems_sn_check", dataSourceFlattenSystemGlobalSslvpnEmsSnCheck(o["sslvpn-ems-sn-check"], d, "sslvpn_ems_sn_check")); err != nil {
 		if !fortiAPIPatch(o["sslvpn-ems-sn-check"]) {
 			return fmt.Errorf("Error reading sslvpn_ems_sn_check: %v", err)
@@ -3759,6 +3887,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("fortitoken_cloud", dataSourceFlattenSystemGlobalFortitokenCloud(o["fortitoken-cloud"], d, "fortitoken_cloud")); err != nil {
 		if !fortiAPIPatch(o["fortitoken-cloud"]) {
 			return fmt.Errorf("Error reading fortitoken_cloud: %v", err)
+		}
+	}
+
+	if err = d.Set("fortitoken_cloud_push_status", dataSourceFlattenSystemGlobalFortitokenCloudPushStatus(o["fortitoken-cloud-push-status"], d, "fortitoken_cloud_push_status")); err != nil {
+		if !fortiAPIPatch(o["fortitoken-cloud-push-status"]) {
+			return fmt.Errorf("Error reading fortitoken_cloud_push_status: %v", err)
+		}
+	}
+
+	if err = d.Set("fortitoken_cloud_sync_interval", dataSourceFlattenSystemGlobalFortitokenCloudSyncInterval(o["fortitoken-cloud-sync-interval"], d, "fortitoken_cloud_sync_interval")); err != nil {
+		if !fortiAPIPatch(o["fortitoken-cloud-sync-interval"]) {
+			return fmt.Errorf("Error reading fortitoken_cloud_sync_interval: %v", err)
 		}
 	}
 

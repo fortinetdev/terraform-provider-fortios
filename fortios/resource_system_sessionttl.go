@@ -74,6 +74,11 @@ func resourceSystemSessionTtl() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"refresh_direction": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -238,6 +243,11 @@ func flattenSystemSessionTtlPort(v interface{}, d *schema.ResourceData, pre stri
 			tmp["timeout"] = flattenSystemSessionTtlPortTimeout(i["timeout"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "refresh_direction"
+		if _, ok := i["refresh-direction"]; ok {
+			tmp["refresh_direction"] = flattenSystemSessionTtlPortRefreshDirection(i["refresh-direction"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -264,6 +274,10 @@ func flattenSystemSessionTtlPortEndPort(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemSessionTtlPortTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSessionTtlPortRefreshDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -350,6 +364,11 @@ func expandSystemSessionTtlPort(d *schema.ResourceData, v interface{}, pre strin
 			tmp["timeout"], _ = expandSystemSessionTtlPortTimeout(d, i["timeout"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "refresh_direction"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["refresh-direction"], _ = expandSystemSessionTtlPortRefreshDirection(d, i["refresh_direction"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -375,6 +394,10 @@ func expandSystemSessionTtlPortEndPort(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemSessionTtlPortTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSessionTtlPortRefreshDirection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

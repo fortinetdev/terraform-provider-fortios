@@ -50,6 +50,8 @@ The following arguments are supported:
 * `dhcp_broadcast_flag` - Enable/disable setting of the broadcast flag in messages sent by the DHCP client (default = enable). Valid values: `disable`, `enable`.
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay. Valid values: `disable`, `enable`.
 * `dhcp_relay_ip` - DHCP relay IP address.
+* `dhcp_relay_source_ip` - IP address used by the DHCP relay as its source IP.
+* `dhcp_relay_circuit_id` - DHCP relay circuit ID.
 * `dhcp_relay_link_selection` - DHCP relay link selection.
 * `dhcp_relay_request_all_server` - Enable/disable sending DHCP request to all servers. Valid values: `disable`, `enable`.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec). Valid values: `regular`, `ipsec`.
@@ -245,6 +247,9 @@ The following arguments are supported:
 * `switch_controller_dynamic` - Integrated FortiLink settings for managed FortiSwitch.
 * `switch_controller_feature` - Interface's purpose when assigning traffic (read only).
 * `switch_controller_iot_scanning` - Enable/disable managed FortiSwitch IoT scanning. Valid values: `enable`, `disable`.
+* `switch_controller_offload` - Enable/disable managed FortiSwitch routing offload. Valid values: `enable`, `disable`.
+* `switch_controller_offload_ip` - IP for routing offload on FortiSwitch.
+* `switch_controller_offload_gw` - Enable/disable managed FortiSwitch routing offload gateway. Valid values: `enable`, `disable`.
 * `swc_vlan` - Creation status for switch-controller VLANs.
 * `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
@@ -374,6 +379,8 @@ The `ipv6` block supports:
 * `dhcp6_relay_type` - DHCPv6 relay type. Valid values: `regular`.
 * `dhcp6_relay_source_interface` - Enable/disable use of address on this interface as the source address of the relay message. Valid values: `disable`, `enable`.
 * `dhcp6_relay_ip` - DHCPv6 relay IP address.
+* `dhcp6_relay_source_ip` - IPv6 address used by the DHCP6 relay as its source IP.
+* `dhcp6_relay_interface_id` - DHCP6 relay interface ID.
 * `dhcp6_client_options` - DHCPv6 client options. Valid values: `rapid`, `iapd`, `iana`.
 * `dhcp6_prefix_delegation` - Enable/disable DHCPv6 prefix delegation. Valid values: `enable`, `disable`.
 * `dhcp6_information_request` - Enable/disable DHCPv6 information request. Valid values: `enable`, `disable`.

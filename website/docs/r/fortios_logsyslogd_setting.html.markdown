@@ -38,7 +38,7 @@ The following arguments are supported:
 * `priority` - Set log transmission priority. Valid values: `default`, `low`.
 * `max_log_rate` - Syslog maximum log rate in MBps (0 = unlimited).
 * `enc_algorithm` - Enable/disable reliable syslogging with TLS encryption. Valid values: `high-medium`, `high`, `low`, `disable`.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `certificate` - Certificate used to communicate with Syslog server.
 * `custom_field_name` - Custom field name for CEF format logging. The structure of `custom_field_name` block is documented below.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

@@ -366,6 +366,16 @@ func (r *Request) LoginToken() (string, error) {
 		}
 	}
 
+	if rsp == nil {
+		err = fmt.Errorf("Host is unreachable. HTTP response is nil.")
+		return token, err
+	}
+
+	if rsp.Header == nil {
+		err = fmt.Errorf("HTTP response header is nil.")
+		return token, err
+	}
+
 	body, err := ioutil.ReadAll(rsp.Body)
 	rsp.Body.Close()
 
@@ -415,6 +425,16 @@ func (r *Request) LoginSession() (*Cookies, error) {
 			err = fmt.Errorf("HTTP request error: %v", err)
 			return nil, err
 		}
+	}
+
+	if rsp == nil {
+		err = fmt.Errorf("Host is unreachable. HTTP response is nil.")
+		return nil, err
+	}
+
+	if rsp.Header == nil {
+		err = fmt.Errorf("HTTP response header is nil.")
+		return nil, err
 	}
 
 	csrfToken := ""

@@ -408,6 +408,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"filter_list_in_vpnv4": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"filter_list_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -415,6 +421,12 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Computed:     true,
 			},
 			"filter_list_out6": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"filter_list_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -1194,11 +1206,19 @@ func flattenRouterbgpNeighborFilterListIn6(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenRouterbgpNeighborFilterListInVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborFilterListOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborFilterListOut6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborFilterListOutVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2027,6 +2047,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("filter_list_in_vpnv4", flattenRouterbgpNeighborFilterListInVpnv4(o["filter-list-in-vpnv4"], d, "filter_list_in_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["filter-list-in-vpnv4"]) {
+			return fmt.Errorf("Error reading filter_list_in_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("filter_list_out", flattenRouterbgpNeighborFilterListOut(o["filter-list-out"], d, "filter_list_out", sv)); err != nil {
 		if !fortiAPIPatch(o["filter-list-out"]) {
 			return fmt.Errorf("Error reading filter_list_out: %v", err)
@@ -2036,6 +2062,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("filter_list_out6", flattenRouterbgpNeighborFilterListOut6(o["filter-list-out6"], d, "filter_list_out6", sv)); err != nil {
 		if !fortiAPIPatch(o["filter-list-out6"]) {
 			return fmt.Errorf("Error reading filter_list_out6: %v", err)
+		}
+	}
+
+	if err = d.Set("filter_list_out_vpnv4", flattenRouterbgpNeighborFilterListOutVpnv4(o["filter-list-out-vpnv4"], d, "filter_list_out_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["filter-list-out-vpnv4"]) {
+			return fmt.Errorf("Error reading filter_list_out_vpnv4: %v", err)
 		}
 	}
 
@@ -2712,11 +2744,19 @@ func expandRouterbgpNeighborFilterListIn6(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandRouterbgpNeighborFilterListInVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborFilterListOut(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandRouterbgpNeighborFilterListOut6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborFilterListOutVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3730,6 +3770,15 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("filter_list_in_vpnv4"); ok {
+		t, err := expandRouterbgpNeighborFilterListInVpnv4(d, v, "filter_list_in_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["filter-list-in-vpnv4"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("filter_list_out"); ok {
 		t, err := expandRouterbgpNeighborFilterListOut(d, v, "filter_list_out", sv)
 		if err != nil {
@@ -3745,6 +3794,15 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["filter-list-out6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("filter_list_out_vpnv4"); ok {
+		t, err := expandRouterbgpNeighborFilterListOutVpnv4(d, v, "filter_list_out_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["filter-list-out-vpnv4"] = t
 		}
 	}
 

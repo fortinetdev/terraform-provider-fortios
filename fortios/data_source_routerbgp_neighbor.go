@@ -312,11 +312,19 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"filter_list_in_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"filter_list_out": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"filter_list_out6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"filter_list_out_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -908,11 +916,19 @@ func dataSourceFlattenRouterbgpNeighborFilterListIn6(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenRouterbgpNeighborFilterListInVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterbgpNeighborFilterListOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenRouterbgpNeighborFilterListOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborFilterListOutVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1669,6 +1685,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("filter_list_in_vpnv4", dataSourceFlattenRouterbgpNeighborFilterListInVpnv4(o["filter-list-in-vpnv4"], d, "filter_list_in_vpnv4")); err != nil {
+		if !fortiAPIPatch(o["filter-list-in-vpnv4"]) {
+			return fmt.Errorf("Error reading filter_list_in_vpnv4: %v", err)
+		}
+	}
+
 	if err = d.Set("filter_list_out", dataSourceFlattenRouterbgpNeighborFilterListOut(o["filter-list-out"], d, "filter_list_out")); err != nil {
 		if !fortiAPIPatch(o["filter-list-out"]) {
 			return fmt.Errorf("Error reading filter_list_out: %v", err)
@@ -1678,6 +1700,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("filter_list_out6", dataSourceFlattenRouterbgpNeighborFilterListOut6(o["filter-list-out6"], d, "filter_list_out6")); err != nil {
 		if !fortiAPIPatch(o["filter-list-out6"]) {
 			return fmt.Errorf("Error reading filter_list_out6: %v", err)
+		}
+	}
+
+	if err = d.Set("filter_list_out_vpnv4", dataSourceFlattenRouterbgpNeighborFilterListOutVpnv4(o["filter-list-out-vpnv4"], d, "filter_list_out_vpnv4")); err != nil {
+		if !fortiAPIPatch(o["filter-list-out-vpnv4"]) {
+			return fmt.Errorf("Error reading filter_list_out_vpnv4: %v", err)
 		}
 	}
 

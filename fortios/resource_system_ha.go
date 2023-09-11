@@ -214,6 +214,11 @@ func resourceSystemHa() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"upgrade_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"uninterruptible_upgrade": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -876,6 +881,10 @@ func flattenSystemHaSessionPickupDelay(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemHaLinkFailedSignal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaUpgradeMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1654,6 +1663,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("upgrade_mode", flattenSystemHaUpgradeMode(o["upgrade-mode"], d, "upgrade_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["upgrade-mode"]) {
+			return fmt.Errorf("Error reading upgrade_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("uninterruptible_upgrade", flattenSystemHaUninterruptibleUpgrade(o["uninterruptible-upgrade"], d, "uninterruptible_upgrade", sv)); err != nil {
 		if !fortiAPIPatch(o["uninterruptible-upgrade"]) {
 			return fmt.Errorf("Error reading uninterruptible_upgrade: %v", err)
@@ -2126,6 +2141,10 @@ func expandSystemHaSessionPickupDelay(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemHaLinkFailedSignal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaUpgradeMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3119,6 +3138,19 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				return &obj, err
 			} else if t != nil {
 				obj["link-failed-signal"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("upgrade_mode"); ok {
+		if setArgNil {
+			obj["upgrade-mode"] = nil
+		} else {
+			t, err := expandSystemHaUpgradeMode(d, v, "upgrade_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upgrade-mode"] = t
 			}
 		}
 	}

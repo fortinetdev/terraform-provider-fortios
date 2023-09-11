@@ -189,8 +189,10 @@ The `neighbor` block contains:
 * `ebgp_multihop_ttl` - EBGP multihop TTL for this peer.
 * `filter_list_in` - BGP filter for IPv4 inbound routes.
 * `filter_list_in6` - BGP filter for IPv6 inbound routes.
+* `filter_list_in_vpnv4` - BGP filter for VPNv4 inbound routes.
 * `filter_list_out` - BGP filter for IPv4 outbound routes.
 * `filter_list_out6` - BGP filter for IPv6 outbound routes.
+* `filter_list_out_vpnv4` - BGP filter for VPNv4 outbound routes.
 * `interface` - Interface
 * `maximum_prefix` - Maximum number of IPv4 prefixes to accept from this peer.
 * `maximum_prefix6` - Maximum number of IPv6 prefixes to accept from this peer.
@@ -333,8 +335,10 @@ The `neighbor_group` block contains:
 * `ebgp_multihop_ttl` - EBGP multihop TTL for this peer.
 * `filter_list_in` - BGP filter for IPv4 inbound routes.
 * `filter_list_in6` - BGP filter for IPv6 inbound routes.
+* `filter_list_in_vpnv4` - BGP filter for VPNv4 inbound routes.
 * `filter_list_out` - BGP filter for IPv4 outbound routes.
 * `filter_list_out6` - BGP filter for IPv6 outbound routes.
+* `filter_list_out_vpnv4` - BGP filter for VPNv4 outbound routes.
 * `interface` - Interface
 * `maximum_prefix` - Maximum number of IPv4 prefixes to accept from this peer.
 * `maximum_prefix6` - Maximum number of IPv6 prefixes to accept from this peer.

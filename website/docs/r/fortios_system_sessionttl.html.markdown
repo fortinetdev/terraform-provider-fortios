@@ -34,6 +34,7 @@ The `port` block supports:
 * `start_port` - Start port number.
 * `end_port` - End port number.
 * `timeout` - Session timeout (TTL).
+* `refresh_direction` - Refresh direction: Both, outgoing, incoming Valid values: `both`, `outgoing`, `incoming`.
 
 
 ## Attribute Reference

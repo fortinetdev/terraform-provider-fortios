@@ -109,10 +109,12 @@ The following arguments are supported:
 * `display_bookmark` - Enable to display the web portal bookmark widget. Valid values: `enable`, `disable`.
 * `user_bookmark` - Enable to allow web portal users to create their own bookmarks. Valid values: `enable`, `disable`.
 * `allow_user_access` - Allow user access to SSL-VPN applications.
+* `default_protocol` - Application type that is set by default. Valid values: `web`, `ftp`, `telnet`, `smb`, `vnc`, `rdp`, `ssh`, `sftp`.
 * `user_group_bookmark` - Enable to allow web portal users to create bookmarks for all users in the same user group. Valid values: `enable`, `disable`.
 * `bookmark_group` - Portal bookmark group. The structure of `bookmark_group` block is documented below.
 * `display_connection_tools` - Enable to display the web portal connection tools widget. Valid values: `enable`, `disable`.
 * `display_history` - Enable to display the web portal user login history widget. Valid values: `enable`, `disable`.
+* `focus_bookmark` - Enable to prioritize the placement of the bookmark section over the quick-connection section in the SSL-VPN application. Valid values: `enable`, `disable`.
 * `display_status` - Enable to display the web portal status widget. Valid values: `enable`, `disable`.
 * `rewrite_ip_uri_ui` - Rewrite contents for URI contains IP and "/ui/". (default = disable) Valid values: `enable`, `disable`.
 * `heading` - Web portal heading message.

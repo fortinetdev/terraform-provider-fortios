@@ -56,7 +56,7 @@ The following arguments are supported:
 * `crl_verification` - CRL verification options. The structure of `crl_verification` block is documented below.
 * `strict_crl_check` - Enable/disable strict mode CRL checking. Valid values: `enable`, `disable`.
 * `strict_ocsp_check` - Enable/disable strict mode OCSP checking. Valid values: `enable`, `disable`.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `cmp_save_extra_certs` - Enable/disable saving extra certificates in CMP mode. Valid values: `enable`, `disable`.
 * `cmp_key_usage_checking` - Enable/disable server certificate key usage checking in CMP mode (default = enable). Valid values: `enable`, `disable`.
 * `cert_expire_warning` - Number of days before a certificate expires to send a warning. Set to 0 to disable sending of the warning (0 - 100, default = 14).

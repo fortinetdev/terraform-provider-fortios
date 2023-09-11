@@ -8,12 +8,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceFirewallSecurityPolicySort() *schema.Resource {
+func resourceFirewallPolicyOldvSort() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceFirewallSecurityPolicySortCreateUpdate,
-		Read:   resourceFirewallSecurityPolicySortRead,
-		Update: resourceFirewallSecurityPolicySortCreateUpdate,
-		Delete: schema.Noop,
+		Create:             resourceFirewallPolicyOldvSortCreateUpdate,
+		Read:               resourceFirewallPolicyOldvSortRead,
+		Update:             resourceFirewallPolicyOldvSortCreateUpdate,
+		Delete:             schema.Noop,
+		DeprecationMessage: "This resource will be deprecated after 3 releases from v1.18.0, use fortios_firewall_policy_sort resource instead.",
 
 		Schema: map[string]*schema.Schema{
 			"vdomparam": &schema.Schema{
@@ -32,7 +33,7 @@ func resourceFirewallSecurityPolicySort() *schema.Resource {
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"state_policy_list": &schema.Schema{
 				Type:     schema.TypeList,
@@ -60,7 +61,7 @@ func resourceFirewallSecurityPolicySort() *schema.Resource {
 			"force_recreate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				ForceNew: true,
+				Computed: true,
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
@@ -70,7 +71,7 @@ func resourceFirewallSecurityPolicySort() *schema.Resource {
 	}
 }
 
-func resourceFirewallSecurityPolicySortCreateUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallPolicyOldvSortCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 
 	if c == nil {
@@ -98,17 +99,17 @@ func resourceFirewallSecurityPolicySortCreateUpdate(d *schema.ResourceData, m in
 		return fmt.Errorf("Unsupported sort direction: " + sortdirection)
 	}
 
-	err := c.CreateUpdateFirewallSecurityPolicySort(sortby, sortdirection, vdomparam)
+	err := c.CreateUpdateFirewallPolicyOldvSort(sortby, sortdirection, vdomparam)
 	if err != nil {
-		return fmt.Errorf("Error Sort Firewall Security Policies: %s", err)
+		return fmt.Errorf("Error Sort Firewall Policies: %s", err)
 	}
 
 	d.SetId(sortby + sortdirection)
 
-	return resourceFirewallSecurityPolicySortRead(d, m)
+	return resourceFirewallPolicyOldvSortRead(d, m)
 }
 
-func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallPolicyOldvSortRead(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
@@ -138,9 +139,9 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 		return fmt.Errorf("Unsupported sort direction: " + sortdirection)
 	}
 
-	sorted, err := c.ReadFirewallSecurityPolicySort(sortby, sortdirection, vdomparam)
+	sorted, err := c.ReadFirewallPolicyOldvSort(sortby, sortdirection, vdomparam)
 	if err != nil {
-		return fmt.Errorf("Error reading Firewall Security Policy Sort Status: %s %s", err, mkey)
+		return fmt.Errorf("Error reading Firewall Policy Sort Status: %s %s", err, mkey)
 	}
 
 	if sorted == false {
@@ -149,9 +150,11 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 		d.Set("status", "")
 	}
 
-	o, err := c.GetSecurityPolicyList(vdomparam)
+	d.Set("force_recreate", "False")
+
+	o, err := c.GetPolicyList(vdomparam)
 	if err != nil {
-		return fmt.Errorf("Error reading Firewall Security Policy List: %s", err)
+		return fmt.Errorf("Error reading Firewall Policy List: %s", err)
 	}
 
 	if o != nil {
@@ -170,7 +173,7 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 		}
 
 		if err := d.Set("state_policy_list", items); err != nil {
-			log.Printf("[WARN] Error reading Firewall Security Policy List for (%s): %s", d.Id(), err)
+			log.Printf("[WARN] Error reading Firewall Policy List for (%s): %s", d.Id(), err)
 		}
 	} else {
 		d.Set("state_policy_list", nil)

@@ -115,6 +115,12 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"minimum_sla_meet_members": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 255),
+							Optional:     true,
+							Computed:     true,
+						},
 					},
 				},
 			},
@@ -573,6 +579,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"service_id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 						"mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -619,6 +630,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"load_balance": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"shortcut_stickiness": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -658,6 +674,11 @@ func resourceSystemSdwan() *schema.Resource {
 							},
 						},
 						"mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"zone_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -712,6 +733,18 @@ func resourceSystemSdwan() *schema.Resource {
 							Computed:     true,
 						},
 						"end_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"start_src_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"end_src_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
@@ -971,6 +1004,11 @@ func resourceSystemSdwan() *schema.Resource {
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
 							Computed:     true,
+						},
+						"sla_stickiness": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"dscp_forward": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1446,6 +1484,11 @@ func flattenSystemSdwanZone(v interface{}, d *schema.ResourceData, pre string, s
 			tmp["service_sla_tie_break"] = flattenSystemSdwanZoneServiceSlaTieBreak(i["service-sla-tie-break"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
+		if _, ok := i["minimum-sla-meet-members"]; ok {
+			tmp["minimum_sla_meet_members"] = flattenSystemSdwanZoneMinimumSlaMeetMembers(i["minimum-sla-meet-members"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1460,6 +1503,10 @@ func flattenSystemSdwanZoneName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemSdwanZoneServiceSlaTieBreak(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanZoneMinimumSlaMeetMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2287,6 +2334,11 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
+		if _, ok := i["service-id"]; ok {
+			tmp["service_id"] = flattenSystemSdwanNeighborServiceId(i["service-id"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := i["mode"]; ok {
 			tmp["mode"] = flattenSystemSdwanNeighborMode(i["mode"], d, pre_append, sv)
@@ -2370,6 +2422,10 @@ func flattenSystemSdwanNeighborMember(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSystemSdwanNeighborServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanNeighborMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2425,6 +2481,11 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 			tmp["addr_mode"] = flattenSystemSdwanServiceAddrMode(i["addr-mode"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balance"
+		if _, ok := i["load-balance"]; ok {
+			tmp["load_balance"] = flattenSystemSdwanServiceLoadBalance(i["load-balance"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut_stickiness"
 		if _, ok := i["shortcut-stickiness"]; ok {
 			tmp["shortcut_stickiness"] = flattenSystemSdwanServiceShortcutStickiness(i["shortcut-stickiness"], d, pre_append, sv)
@@ -2448,6 +2509,11 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := i["mode"]; ok {
 			tmp["mode"] = flattenSystemSdwanServiceMode(i["mode"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "zone_mode"
+		if _, ok := i["zone-mode"]; ok {
+			tmp["zone_mode"] = flattenSystemSdwanServiceZoneMode(i["zone-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
@@ -2498,6 +2564,16 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := i["end-port"]; ok {
 			tmp["end_port"] = flattenSystemSdwanServiceEndPort(i["end-port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_src_port"
+		if _, ok := i["start-src-port"]; ok {
+			tmp["start_src_port"] = flattenSystemSdwanServiceStartSrcPort(i["start-src-port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_src_port"
+		if _, ok := i["end-src-port"]; ok {
+			tmp["end_src_port"] = flattenSystemSdwanServiceEndSrcPort(i["end-src-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_tag"
@@ -2625,6 +2701,11 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 			tmp["hold_down_time"] = flattenSystemSdwanServiceHoldDownTime(i["hold-down-time"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_stickiness"
+		if _, ok := i["sla-stickiness"]; ok {
+			tmp["sla_stickiness"] = flattenSystemSdwanServiceSlaStickiness(i["sla-stickiness"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward"
 		if _, ok := i["dscp-forward"]; ok {
 			tmp["dscp_forward"] = flattenSystemSdwanServiceDscpForward(i["dscp-forward"], d, pre_append, sv)
@@ -2726,6 +2807,10 @@ func flattenSystemSdwanServiceAddrMode(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemSdwanServiceLoadBalance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanServiceShortcutStickiness(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2822,6 +2907,10 @@ func flattenSystemSdwanServiceMode(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemSdwanServiceZoneMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanServiceMinimumSlaMeetMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2859,6 +2948,14 @@ func flattenSystemSdwanServiceStartPort(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemSdwanServiceEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceStartSrcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceEndSrcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3491,6 +3588,10 @@ func flattenSystemSdwanServiceLinkCostThreshold(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemSdwanServiceHoldDownTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceSlaStickiness(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4401,6 +4502,11 @@ func expandSystemSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv
 			tmp["service-sla-tie-break"], _ = expandSystemSdwanZoneServiceSlaTieBreak(d, i["service_sla_tie_break"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["minimum-sla-meet-members"], _ = expandSystemSdwanZoneMinimumSlaMeetMembers(d, i["minimum_sla_meet_members"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -4414,6 +4520,10 @@ func expandSystemSdwanZoneName(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemSdwanZoneServiceSlaTieBreak(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanZoneMinimumSlaMeetMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5185,6 +5295,11 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 			tmp["member"], _ = expandSystemSdwanNeighborMember(d, i["member"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["service-id"], _ = expandSystemSdwanNeighborServiceId(d, i["service_id"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mode"], _ = expandSystemSdwanNeighborMode(d, i["mode"], pre_append, sv)
@@ -5256,6 +5371,10 @@ func expandSystemSdwanNeighborMember(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandSystemSdwanNeighborServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanNeighborMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5301,6 +5420,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 			tmp["addr-mode"], _ = expandSystemSdwanServiceAddrMode(d, i["addr_mode"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balance"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["load-balance"], _ = expandSystemSdwanServiceLoadBalance(d, i["load_balance"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut_stickiness"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["shortcut-stickiness"], _ = expandSystemSdwanServiceShortcutStickiness(d, i["shortcut_stickiness"], pre_append, sv)
@@ -5328,6 +5452,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mode"], _ = expandSystemSdwanServiceMode(d, i["mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "zone_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["zone-mode"], _ = expandSystemSdwanServiceZoneMode(d, i["zone_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
@@ -5378,6 +5507,16 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["end-port"], _ = expandSystemSdwanServiceEndPort(d, i["end_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_src_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["start-src-port"], _ = expandSystemSdwanServiceStartSrcPort(d, i["start_src_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_src_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["end-src-port"], _ = expandSystemSdwanServiceEndSrcPort(d, i["end_src_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_tag"
@@ -5533,6 +5672,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 			tmp["hold-down-time"], _ = expandSystemSdwanServiceHoldDownTime(d, i["hold_down_time"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_stickiness"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sla-stickiness"], _ = expandSystemSdwanServiceSlaStickiness(d, i["sla_stickiness"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-forward"], _ = expandSystemSdwanServiceDscpForward(d, i["dscp_forward"], pre_append, sv)
@@ -5639,6 +5783,10 @@ func expandSystemSdwanServiceAddrMode(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemSdwanServiceLoadBalance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanServiceShortcutStickiness(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5713,6 +5861,10 @@ func expandSystemSdwanServiceMode(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandSystemSdwanServiceZoneMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanServiceMinimumSlaMeetMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5750,6 +5902,14 @@ func expandSystemSdwanServiceStartPort(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemSdwanServiceEndPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServiceStartSrcPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServiceEndSrcPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6228,6 +6388,10 @@ func expandSystemSdwanServiceLinkCostThreshold(d *schema.ResourceData, v interfa
 }
 
 func expandSystemSdwanServiceHoldDownTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServiceSlaStickiness(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

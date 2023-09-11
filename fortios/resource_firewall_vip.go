@@ -120,6 +120,72 @@ func resourceFirewallVip() *schema.Resource {
 					},
 				},
 			},
+			"h2_support": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"h3_support": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"quic": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Optional: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"max_idle_timeout": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 60000),
+							Optional:     true,
+							Computed:     true,
+						},
+						"max_udp_payload_size": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1200, 1500),
+							Optional:     true,
+							Computed:     true,
+						},
+						"active_connection_id_limit": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 8),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ack_delay_exponent": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 20),
+							Optional:     true,
+							Computed:     true,
+						},
+						"max_ack_delay": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 16383),
+							Optional:     true,
+							Computed:     true,
+						},
+						"max_datagram_frame_size": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 1500),
+							Optional:     true,
+							Computed:     true,
+						},
+						"active_migration": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"grease_quic_bit": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"nat44": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -369,6 +435,11 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"http_multiplex_max_request": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"http_multiplex_max_concurrent_request": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
@@ -954,6 +1025,99 @@ func flattenFirewallVipExtaddrName(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenFirewallVipH2Support(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipH3Support(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuic(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "max_idle_timeout"
+	if _, ok := i["max-idle-timeout"]; ok {
+		result["max_idle_timeout"] = flattenFirewallVipQuicMaxIdleTimeout(i["max-idle-timeout"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "max_udp_payload_size"
+	if _, ok := i["max-udp-payload-size"]; ok {
+		result["max_udp_payload_size"] = flattenFirewallVipQuicMaxUdpPayloadSize(i["max-udp-payload-size"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "active_connection_id_limit"
+	if _, ok := i["active-connection-id-limit"]; ok {
+		result["active_connection_id_limit"] = flattenFirewallVipQuicActiveConnectionIdLimit(i["active-connection-id-limit"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ack_delay_exponent"
+	if _, ok := i["ack-delay-exponent"]; ok {
+		result["ack_delay_exponent"] = flattenFirewallVipQuicAckDelayExponent(i["ack-delay-exponent"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "max_ack_delay"
+	if _, ok := i["max-ack-delay"]; ok {
+		result["max_ack_delay"] = flattenFirewallVipQuicMaxAckDelay(i["max-ack-delay"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "max_datagram_frame_size"
+	if _, ok := i["max-datagram-frame-size"]; ok {
+		result["max_datagram_frame_size"] = flattenFirewallVipQuicMaxDatagramFrameSize(i["max-datagram-frame-size"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "active_migration"
+	if _, ok := i["active-migration"]; ok {
+		result["active_migration"] = flattenFirewallVipQuicActiveMigration(i["active-migration"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "grease_quic_bit"
+	if _, ok := i["grease-quic-bit"]; ok {
+		result["grease_quic_bit"] = flattenFirewallVipQuicGreaseQuicBit(i["grease-quic-bit"], d, pre_append, sv)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func flattenFirewallVipQuicMaxIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicMaxUdpPayloadSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicActiveConnectionIdLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicAckDelayExponent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicMaxAckDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicMaxDatagramFrameSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicActiveMigration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipQuicGreaseQuicBit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVipNat44(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1329,6 +1493,10 @@ func flattenFirewallVipHttpMultiplexTtl(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallVipHttpMultiplexMaxRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipHttpMultiplexMaxConcurrentRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1771,6 +1939,34 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("h2_support", flattenFirewallVipH2Support(o["h2-support"], d, "h2_support", sv)); err != nil {
+		if !fortiAPIPatch(o["h2-support"]) {
+			return fmt.Errorf("Error reading h2_support: %v", err)
+		}
+	}
+
+	if err = d.Set("h3_support", flattenFirewallVipH3Support(o["h3-support"], d, "h3_support", sv)); err != nil {
+		if !fortiAPIPatch(o["h3-support"]) {
+			return fmt.Errorf("Error reading h3_support: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("quic", flattenFirewallVipQuic(o["quic"], d, "quic", sv)); err != nil {
+			if !fortiAPIPatch(o["quic"]) {
+				return fmt.Errorf("Error reading quic: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("quic"); ok {
+			if err = d.Set("quic", flattenFirewallVipQuic(o["quic"], d, "quic", sv)); err != nil {
+				if !fortiAPIPatch(o["quic"]) {
+					return fmt.Errorf("Error reading quic: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("nat44", flattenFirewallVipNat44(o["nat44"], d, "nat44", sv)); err != nil {
 		if !fortiAPIPatch(o["nat44"]) {
 			return fmt.Errorf("Error reading nat44: %v", err)
@@ -1978,6 +2174,12 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("http_multiplex_max_request", flattenFirewallVipHttpMultiplexMaxRequest(o["http-multiplex-max-request"], d, "http_multiplex_max_request", sv)); err != nil {
 		if !fortiAPIPatch(o["http-multiplex-max-request"]) {
 			return fmt.Errorf("Error reading http_multiplex_max_request: %v", err)
+		}
+	}
+
+	if err = d.Set("http_multiplex_max_concurrent_request", flattenFirewallVipHttpMultiplexMaxConcurrentRequest(o["http-multiplex-max-concurrent-request"], d, "http_multiplex_max_concurrent_request", sv)); err != nil {
+		if !fortiAPIPatch(o["http-multiplex-max-concurrent-request"]) {
+			return fmt.Errorf("Error reading http_multiplex_max_concurrent_request: %v", err)
 		}
 	}
 
@@ -2421,6 +2623,92 @@ func expandFirewallVipExtaddrName(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandFirewallVipH2Support(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipH3Support(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	i := l[0].(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "max_idle_timeout"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["max-idle-timeout"], _ = expandFirewallVipQuicMaxIdleTimeout(d, i["max_idle_timeout"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "max_udp_payload_size"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["max-udp-payload-size"], _ = expandFirewallVipQuicMaxUdpPayloadSize(d, i["max_udp_payload_size"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "active_connection_id_limit"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["active-connection-id-limit"], _ = expandFirewallVipQuicActiveConnectionIdLimit(d, i["active_connection_id_limit"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ack_delay_exponent"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ack-delay-exponent"], _ = expandFirewallVipQuicAckDelayExponent(d, i["ack_delay_exponent"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "max_ack_delay"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["max-ack-delay"], _ = expandFirewallVipQuicMaxAckDelay(d, i["max_ack_delay"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "max_datagram_frame_size"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["max-datagram-frame-size"], _ = expandFirewallVipQuicMaxDatagramFrameSize(d, i["max_datagram_frame_size"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "active_migration"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["active-migration"], _ = expandFirewallVipQuicActiveMigration(d, i["active_migration"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "grease_quic_bit"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["grease-quic-bit"], _ = expandFirewallVipQuicGreaseQuicBit(d, i["grease_quic_bit"], pre_append, sv)
+	}
+
+	return result, nil
+}
+
+func expandFirewallVipQuicMaxIdleTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicMaxUdpPayloadSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicActiveConnectionIdLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicAckDelayExponent(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicMaxAckDelay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicMaxDatagramFrameSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicActiveMigration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipQuicGreaseQuicBit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallVipNat44(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2763,6 +3051,10 @@ func expandFirewallVipHttpMultiplexTtl(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallVipHttpMultiplexMaxRequest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipHttpMultiplexMaxConcurrentRequest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3169,6 +3461,33 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
+	if v, ok := d.GetOk("h2_support"); ok {
+		t, err := expandFirewallVipH2Support(d, v, "h2_support", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["h2-support"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("h3_support"); ok {
+		t, err := expandFirewallVipH3Support(d, v, "h3_support", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["h3-support"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("quic"); ok {
+		t, err := expandFirewallVipQuic(d, v, "quic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["quic"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("nat44"); ok {
 		t, err := expandFirewallVipNat44(d, v, "nat44", sv)
 		if err != nil {
@@ -3436,6 +3755,15 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["http-multiplex-max-request"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("http_multiplex_max_concurrent_request"); ok {
+		t, err := expandFirewallVipHttpMultiplexMaxConcurrentRequest(d, v, "http_multiplex_max_concurrent_request", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["http-multiplex-max-concurrent-request"] = t
 		}
 	}
 

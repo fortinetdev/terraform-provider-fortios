@@ -10,6 +10,8 @@ description: |-
 # fortios_firewall_security_policyseq
 Provides a resource to alter firewall security policy sequence
 
+!> **Warning:** "This resource will be deprecated after 3 releases from v1.18.0, use `fortios_firewall_policy_move` resource instead. 
+
 ## Example Usage
 ```hcl
 resource "fortios_firewall_security_policy" "test1" {

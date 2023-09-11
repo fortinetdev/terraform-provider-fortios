@@ -58,6 +58,16 @@ func resourceSystemDnsServer() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"doh3": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"doq": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -199,6 +209,14 @@ func flattenSystemDnsServerDoh(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemDnsServerDoh3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsServerDoq(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -226,6 +244,18 @@ func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("doh3", flattenSystemDnsServerDoh3(o["doh3"], d, "doh3", sv)); err != nil {
+		if !fortiAPIPatch(o["doh3"]) {
+			return fmt.Errorf("Error reading doh3: %v", err)
+		}
+	}
+
+	if err = d.Set("doq", flattenSystemDnsServerDoq(o["doq"], d, "doq", sv)); err != nil {
+		if !fortiAPIPatch(o["doq"]) {
+			return fmt.Errorf("Error reading doq: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -248,6 +278,14 @@ func expandSystemDnsServerDnsfilterProfile(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemDnsServerDoh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsServerDoh3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsServerDoq(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -287,6 +325,24 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["doh"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("doh3"); ok {
+		t, err := expandSystemDnsServerDoh3(d, v, "doh3", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["doh3"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("doq"); ok {
+		t, err := expandSystemDnsServerDoq(d, v, "doq", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["doq"] = t
 		}
 	}
 

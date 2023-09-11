@@ -37,4 +37,5 @@ The following attributes are exported:
 * `adfs_claim` - Enable/disable ADFS Claim for user/group attribute in assertion statement (default = disable).
 * `user_claim_type` - User name claim in assertion statement.
 * `group_claim_type` - Group claim in assertion statement.
+* `reauth` - Enable/disable signalling of IDP to force user re-authentication (default = disable).
 

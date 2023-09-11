@@ -21,7 +21,7 @@ The following arguments are supported:
 * `upgrade_path` - Fortinet OS image versions to upgrade through in major-minor-patch format, such as 7-0-4.
 * `device_type` - Fortinet device type. Valid values: `fortiswitch`, `fortiap`, `fortiextender`.
 * `status` - Current status of the upgrade. Valid values: `disabled`, `initialized`, `downloading`, `device-disconnected`, `ready`, `coordinating`, `staging`, `final-check`, `upgrade-devices`, `cancelled`, `confirmed`, `done`, `failed`.
-* `failure_reason` - Upgrade failure reason. Valid values: `none`, `internal`, `timeout`, `device-type-unsupported`, `download-failed`, `device-missing`, `version-unavailable`, `staging-failed`, `reboot-failed`, `device-not-reconnected`, `node-not-ready`, `no-final-confirmation`, `no-confirmation-query`, `config-error-log-nonempty`, `node-failed`.
+* `failure_reason` - Upgrade failure reason.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -60,6 +60,7 @@ The following arguments are supported:
 * `use_management_vdom` - Enable/disable using management VDOM to send requests. Valid values: `enable`, `disable`.
 * `nas_ip` - IP address used to communicate with the RADIUS server and used as NAS-IP-Address and Called-Station-ID attributes.
 * `nas_id_type` - NAS identifier type configuration (default = legacy). Valid values: `legacy`, `custom`, `hostname`.
+* `call_station_id_type` - Calling & Called station identifier type configuration (default = legacy), this option is not available for 802.1x authentication.  Valid values: `legacy`, `IP`, `MAC`.
 * `nas_id` - Custom NAS identifier.
 * `acct_interim_interval` - Time in seconds between each accounting interim update message.
 * `radius_coa` - Enable to allow a mechanism to change the attributes of an authentication, authorization, and accounting session after it is authenticated. Valid values: `enable`, `disable`.
@@ -81,10 +82,12 @@ The following arguments are supported:
 * `interface` - Specify outgoing interface to reach server.
 * `switch_controller_service_type` - RADIUS service type. Valid values: `login`, `framed`, `callback-login`, `callback-framed`, `outbound`, `administrative`, `nas-prompt`, `authenticate-only`, `callback-nas-prompt`, `call-check`, `callback-administrative`.
 * `transport_protocol` - Transport protocol to be used (default = udp). Valid values: `udp`, `tcp`, `tls`.
-* `tls_min_proto_version` - Minimum supported protocol version for TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `tls_min_proto_version` - Minimum supported protocol version for TLS connections (default is to follow system global setting).
 * `ca_cert` - CA of server to trust under TLS.
 * `client_cert` - Client certificate to use under TLS.
 * `server_identity_check` - Enable/disable RADIUS server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
+* `account_key_processing` - Account key processing operation. The FortiGate will keep either the whole domain or strip the domain from the subject identity. Valid values: `same`, `strip`.
+* `account_key_cert_field` - Define subject identity field in certificate for user access right checking. Valid values: `othername`, `rfc822name`, `dnsname`.
 * `rsso` - Enable/disable RADIUS based single sign on feature. Valid values: `enable`, `disable`.
 * `rsso_radius_server_port` - UDP port to listen on for RADIUS Start and Stop records.
 * `rsso_radius_response` - Enable/disable sending RADIUS response packets after receiving Start and Stop records. Valid values: `enable`, `disable`.

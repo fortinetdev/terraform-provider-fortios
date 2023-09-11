@@ -61,6 +61,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vlan_identity": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"disable_discovery": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -317,6 +322,10 @@ func flattenSwitchControllerGlobalVlanOptimization(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSwitchControllerGlobalVlanIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerGlobalDisableDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -521,6 +530,12 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("vlan_identity", flattenSwitchControllerGlobalVlanIdentity(o["vlan-identity"], d, "vlan_identity", sv)); err != nil {
+		if !fortiAPIPatch(o["vlan-identity"]) {
+			return fmt.Errorf("Error reading vlan_identity: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("disable_discovery", flattenSwitchControllerGlobalDisableDiscovery(o["disable-discovery"], d, "disable_discovery", sv)); err != nil {
 			if !fortiAPIPatch(o["disable-discovery"]) {
@@ -687,6 +702,10 @@ func expandSwitchControllerGlobalVlanAllMode(d *schema.ResourceData, v interface
 }
 
 func expandSwitchControllerGlobalVlanOptimization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalVlanIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -897,6 +916,19 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["vlan-optimization"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("vlan_identity"); ok {
+		if setArgNil {
+			obj["vlan-identity"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalVlanIdentity(d, v, "vlan_identity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vlan-identity"] = t
 			}
 		}
 	}

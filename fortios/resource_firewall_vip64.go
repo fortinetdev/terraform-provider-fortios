@@ -508,7 +508,7 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 			vx := ""
 			bstring := false
 			new_version_map := map[string][]string{
-				"=": []string{"6.4.10", "6.4.11", "6.4.12", "7.0.0"},
+				"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "7.0.0"},
 			}
 			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 				l := v.([]interface{})
@@ -937,7 +937,7 @@ func expandFirewallVip64Realservers(d *schema.ResourceData, v interface{}, pre s
 			t, _ := expandFirewallVip64RealserversMonitor(d, i["monitor"], pre_append, sv)
 			if t != nil {
 				new_version_map := map[string][]string{
-					"=": []string{"6.4.10", "6.4.11", "6.4.12", "7.0.0"},
+					"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "7.0.0"},
 				}
 				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
 					bstring = true

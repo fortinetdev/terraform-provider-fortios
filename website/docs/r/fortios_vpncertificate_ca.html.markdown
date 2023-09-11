@@ -20,6 +20,7 @@ The following arguments are supported:
 * `ssl_inspection_trusted` - Enable/disable this CA as a trusted CA for SSL inspection. Valid values: `enable`, `disable`.
 * `trusted` - Enable/disable as a trusted CA. Valid values: `enable`, `disable`.
 * `scep_url` - URL of the SCEP server.
+* `est_url` - URL of the EST server.
 * `auto_update_days` - Number of days to wait before requesting an updated CA certificate (0 - 4294967295, 0 = disabled).
 * `auto_update_days_warning` - Number of days before an expiry-warning message is generated (0 - 4294967295, 0 = disabled).
 * `source_ip` - Source IP address for communications to the SCEP server.

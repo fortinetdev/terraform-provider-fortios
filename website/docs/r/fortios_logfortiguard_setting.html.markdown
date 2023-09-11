@@ -36,7 +36,7 @@ The following arguments are supported:
 * `max_log_rate` - FortiCloud maximum log rate in MBps (0 = unlimited).
 * `access_config` - Enable/disable FortiCloud access to configuration and data. Valid values: `enable`, `disable`.
 * `enc_algorithm` - Enable and set the SSL security level for for sending encrypted logs to FortiCloud. Valid values: `high-medium`, `high`, `low`.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `conn_timeout` - FortiGate Cloud connection timeout in seconds.
 * `source_ip` - Source IP address used to connect FortiCloud.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

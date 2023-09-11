@@ -17,6 +17,7 @@ The following arguments are supported:
 * `status` - Enable/disable scheduled speed test. Valid values: `disable`, `enable`.
 * `diffserv` - DSCP used for speed test.
 * `server_name` - Speed test server name.
+* `mode` - Protocol Auto(default), TCP or UDP used for speed test. Valid values: `UDP`, `TCP`, `Auto`.
 * `schedules` - Schedules for the interface. The structure of `schedules` block is documented below.
 * `dynamic_server` - Enable/disable dynamic server option. Valid values: `disable`, `enable`.
 * `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting. Valid values: `disable`, `enable`.

@@ -122,6 +122,18 @@ func resourceRouterPolicy6() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"start_source_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"end_source_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -443,6 +455,14 @@ func flattenRouterPolicy6EndPort(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenRouterPolicy6StartSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterPolicy6EndSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterPolicy6Gateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -757,6 +777,18 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("start_source_port", flattenRouterPolicy6StartSourcePort(o["start-source-port"], d, "start_source_port", sv)); err != nil {
+		if !fortiAPIPatch(o["start-source-port"]) {
+			return fmt.Errorf("Error reading start_source_port: %v", err)
+		}
+	}
+
+	if err = d.Set("end_source_port", flattenRouterPolicy6EndSourcePort(o["end-source-port"], d, "end_source_port", sv)); err != nil {
+		if !fortiAPIPatch(o["end-source-port"]) {
+			return fmt.Errorf("Error reading end_source_port: %v", err)
+		}
+	}
+
 	if err = d.Set("gateway", flattenRouterPolicy6Gateway(o["gateway"], d, "gateway", sv)); err != nil {
 		if !fortiAPIPatch(o["gateway"]) {
 			return fmt.Errorf("Error reading gateway: %v", err)
@@ -937,6 +969,14 @@ func expandRouterPolicy6StartPort(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandRouterPolicy6EndPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6StartSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterPolicy6EndSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1197,6 +1237,24 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["end-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("start_source_port"); ok {
+		t, err := expandRouterPolicy6StartSourcePort(d, v, "start_source_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["start-source-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("end_source_port"); ok {
+		t, err := expandRouterPolicy6EndSourcePort(d, v, "end_source_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["end-source-port"] = t
 		}
 	}
 

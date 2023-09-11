@@ -31,6 +31,7 @@ The following arguments are supported:
 * `https_image_push` - Enable/disable image push to FortiSwitch using HTTPS. Valid values: `enable`, `disable`.
 * `vlan_all_mode` - VLAN configuration mode, user-defined-vlans or all-possible-vlans. Valid values: `all`, `defined`.
 * `vlan_optimization` - FortiLink VLAN optimization. Valid values: `enable`, `disable`.
+* `vlan_identity` - Identity of the VLAN. Commonly used for RADIUS Tunnel-Private-Group-Id. Valid values: `description`, `name`.
 * `disable_discovery` - Prevent this FortiSwitch from discovering. The structure of `disable_discovery` block is documented below.
 * `mac_retention_period` - Time in hours after which an inactive MAC is removed from client DB.
 * `default_virtual_switch_vlan` - Default VLAN for ports when added to the virtual-switch.

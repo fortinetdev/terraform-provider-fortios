@@ -47,6 +47,12 @@ func resourceWirelessControllerWtpGroup() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ble_major_id": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"wtps": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -204,6 +210,10 @@ func flattenWirelessControllerWtpGroupPlatformType(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenWirelessControllerWtpGroupBleMajorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -267,6 +277,12 @@ func refreshObjectWirelessControllerWtpGroup(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("ble_major_id", flattenWirelessControllerWtpGroupBleMajorId(o["ble-major-id"], d, "ble_major_id", sv)); err != nil {
+		if !fortiAPIPatch(o["ble-major-id"]) {
+			return fmt.Errorf("Error reading ble_major_id: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("wtps", flattenWirelessControllerWtpGroupWtps(o["wtps"], d, "wtps", sv)); err != nil {
 			if !fortiAPIPatch(o["wtps"]) {
@@ -297,6 +313,10 @@ func expandWirelessControllerWtpGroupName(d *schema.ResourceData, v interface{},
 }
 
 func expandWirelessControllerWtpGroupPlatformType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpGroupBleMajorId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -349,6 +369,15 @@ func getObjectWirelessControllerWtpGroup(d *schema.ResourceData, sv string) (*ma
 			return &obj, err
 		} else if t != nil {
 			obj["platform-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("ble_major_id"); ok {
+		t, err := expandWirelessControllerWtpGroupBleMajorId(d, v, "ble_major_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ble-major-id"] = t
 		}
 	}
 

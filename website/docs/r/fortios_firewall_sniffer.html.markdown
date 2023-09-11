@@ -53,6 +53,8 @@ The following arguments are supported:
 * `dsri` - Enable/disable DSRI. Valid values: `enable`, `disable`.
 * `av_profile_status` - Enable/disable antivirus profile. Valid values: `enable`, `disable`.
 * `av_profile` - Name of an existing antivirus profile.
+* `casb_profile_status` - Enable/disable CASB profile. Valid values: `enable`, `disable`.
+* `casb_profile` - Name of an existing CASB profile.
 * `webfilter_profile_status` - Enable/disable web filter profile. Valid values: `enable`, `disable`.
 * `webfilter_profile` - Name of an existing web filter profile.
 * `emailfilter_profile_status` - Enable/disable emailfilter. Valid values: `enable`, `disable`.

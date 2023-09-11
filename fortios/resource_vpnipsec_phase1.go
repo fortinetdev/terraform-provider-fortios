@@ -201,6 +201,20 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"internal_domain_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"domain_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"ipv4_wins_server1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1033,6 +1047,48 @@ func flattenVpnIpsecPhase1Ipv4DnsServer3(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenVpnIpsecPhase1InternalDomainList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
+		if _, ok := i["domain-name"]; ok {
+			tmp["domain_name"] = flattenVpnIpsecPhase1InternalDomainListDomainName(i["domain-name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "domain_name", d)
+	return result
+}
+
+func flattenVpnIpsecPhase1InternalDomainListDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1Ipv4WinsServer1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1754,6 +1810,22 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("internal_domain_list", flattenVpnIpsecPhase1InternalDomainList(o["internal-domain-list"], d, "internal_domain_list", sv)); err != nil {
+			if !fortiAPIPatch(o["internal-domain-list"]) {
+				return fmt.Errorf("Error reading internal_domain_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internal_domain_list"); ok {
+			if err = d.Set("internal_domain_list", flattenVpnIpsecPhase1InternalDomainList(o["internal-domain-list"], d, "internal_domain_list", sv)); err != nil {
+				if !fortiAPIPatch(o["internal-domain-list"]) {
+					return fmt.Errorf("Error reading internal_domain_list: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("ipv4_wins_server1", flattenVpnIpsecPhase1Ipv4WinsServer1(o["ipv4-wins-server1"], d, "ipv4_wins_server1", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv4-wins-server1"]) {
 			return fmt.Errorf("Error reading ipv4_wins_server1: %v", err)
@@ -2469,6 +2541,37 @@ func expandVpnIpsecPhase1Ipv4DnsServer2(d *schema.ResourceData, v interface{}, p
 }
 
 func expandVpnIpsecPhase1Ipv4DnsServer3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InternalDomainList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["domain-name"], _ = expandVpnIpsecPhase1InternalDomainListDomainName(d, i["domain_name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandVpnIpsecPhase1InternalDomainListDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3231,6 +3334,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["ipv4-dns-server3"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internal_domain_list"); ok || d.HasChange("internal_domain_list") {
+		t, err := expandVpnIpsecPhase1InternalDomainList(d, v, "internal_domain_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internal-domain-list"] = t
 		}
 	}
 

@@ -73,6 +73,12 @@ The following arguments are supported:
 * `timezone` - Number corresponding to your time zone from 00 to 86. Enter set timezone ? to view the list of time zones and the numbers that represent them. Valid values: `01`, `02`, `03`, `04`, `05`, `81`, `06`, `07`, `08`, `09`, `10`, `11`, `12`, `13`, `74`, `14`, `77`, `15`, `87`, `16`, `17`, `18`, `19`, `20`, `75`, `21`, `22`, `23`, `24`, `80`, `79`, `25`, `26`, `27`, `28`, `78`, `29`, `30`, `31`, `32`, `33`, `34`, `35`, `36`, `37`, `38`, `83`, `84`, `40`, `85`, `41`, `42`, `43`, `39`, `44`, `46`, `47`, `51`, `48`, `45`, `49`, `50`, `52`, `53`, `54`, `55`, `56`, `57`, `58`, `59`, `60`, `62`, `63`, `61`, `64`, `65`, `66`, `67`, `68`, `69`, `70`, `71`, `72`, `00`, `82`, `73`, `86`, `76`.
 * `traffic_priority` - Choose Type of Service (ToS) or Differentiated Services Code Point (DSCP) for traffic prioritization in traffic shaping. Valid values: `tos`, `dscp`.
 * `traffic_priority_level` - Default system-wide level of priority for traffic prioritization. Valid values: `low`, `medium`, `high`.
+* `quic_congestion_control_algo` - QUIC congestion control algorithm (default = cubic). Valid values: `cubic`, `bbr`, `bbr2`, `reno`.
+* `quic_max_datagram_size` - Maximum transmit datagram size (1200 - 1500, default = 1500).
+* `quic_udp_payload_size_shaping_per_cid` - Enable/disable UDP payload size shaping per connection ID (default = enable). Valid values: `enable`, `disable`.
+* `quic_ack_thresold` - Maximum number of unacknowledged packets before sending ACK (2 - 5, default = 3).
+* `quic_pmtud` - Enable/disable path MTU discovery (default = enable). Valid values: `enable`, `disable`.
+* `quic_tls_handshake_timeout` - Time-to-live (TTL) for TLS handshake in seconds (1 - 60, default = 5).
 * `anti_replay` - Level of checking for packet replay and TCP sequence checking. Valid values: `disable`, `loose`, `strict`.
 * `send_pmtu_icmp` - Enable/disable sending of path maximum transmission unit (PMTU) - ICMP destination unreachable packet and to support PMTUD protocol on your network to reduce fragmentation of packets. Valid values: `enable`, `disable`.
 * `honor_df` - Enable/disable honoring of Don't-Fragment (DF) flag. Valid values: `enable`, `disable`.
@@ -85,6 +91,7 @@ The following arguments are supported:
 * `hostname` - FortiGate unit's hostname. Most models will truncate names longer than 24 characters. Some models support hostnames up to 35 characters.
 * `gui_allow_default_hostname` - Enable/disable the GUI warning about using a default hostname Valid values: `enable`, `disable`.
 * `gui_forticare_registration_setup_warning` - Enable/disable the FortiCare registration setup warning on the GUI. Valid values: `enable`, `disable`.
+* `gui_auto_upgrade_setup_warning` - Enable/disable the automatic patch upgrade setup prompt on the GUI. Valid values: `enable`, `disable`.
 * `gui_workflow_management` - Enable/disable Workflow management features on the GUI. Valid values: `enable`, `disable`.
 * `gui_cdn_usage` - Enable/disable Load GUI static files from a CDN. Valid values: `enable`, `disable`.
 * `alias` - Alias for your FortiGate unit.
@@ -94,7 +101,7 @@ The following arguments are supported:
 * `ssh_kex_sha1` - Enable/disable SHA1 key exchange for SSH access. Valid values: `enable`, `disable`.
 * `ssh_mac_weak` - Enable/disable HMAC-SHA1 and UMAC-64-ETM for SSH access. Valid values: `enable`, `disable`.
 * `ssl_static_key_ciphers` - Enable/disable static key ciphers in SSL/TLS connections (e.g. AES128-SHA, AES256-SHA, AES128-SHA256, AES256-SHA256). Valid values: `enable`, `disable`.
-* `ssh_kex_algo` - Select one or more SSH kex algorithms. Valid values: `diffie-hellman-group1-sha1`, `diffie-hellman-group14-sha1`, `diffie-hellman-group-exchange-sha1`, `diffie-hellman-group-exchange-sha256`, `curve25519-sha256@libssh.org`, `ecdh-sha2-nistp256`, `ecdh-sha2-nistp384`, `ecdh-sha2-nistp521`.
+* `ssh_kex_algo` - Select one or more SSH kex algorithms.
 * `ssh_enc_algo` - Select one or more SSH ciphers. Valid values: `chacha20-poly1305@openssh.com`, `aes128-ctr`, `aes192-ctr`, `aes256-ctr`, `arcfour256`, `arcfour128`, `aes128-cbc`, `3des-cbc`, `blowfish-cbc`, `cast128-cbc`, `aes192-cbc`, `aes256-cbc`, `arcfour`, `rijndael-cbc@lysator.liu.se`, `aes128-gcm@openssh.com`, `aes256-gcm@openssh.com`.
 * `ssh_mac_algo` - Select one or more SSH MAC algorithms. Valid values: `hmac-md5`, `hmac-md5-etm@openssh.com`, `hmac-md5-96`, `hmac-md5-96-etm@openssh.com`, `hmac-sha1`, `hmac-sha1-etm@openssh.com`, `hmac-sha2-256`, `hmac-sha2-256-etm@openssh.com`, `hmac-sha2-512`, `hmac-sha2-512-etm@openssh.com`, `hmac-ripemd160`, `hmac-ripemd160@openssh.com`, `hmac-ripemd160-etm@openssh.com`, `umac-64@openssh.com`, `umac-128@openssh.com`, `umac-64-etm@openssh.com`, `umac-128-etm@openssh.com`.
 * `ssh_hostkey_algo` - Select one or more SSH hostkey algorithms. Valid values: `ssh-rsa`, `ecdsa-sha2-nistp521`, `rsa-sha2-256`, `rsa-sha2-512`, `ssh-ed25519`.
@@ -215,6 +222,7 @@ The following arguments are supported:
 * `cert_chain_max` - Maximum number of certificates that can be traversed in a certificate chain.
 * `sslvpn_max_worker_count` - Maximum number of SSL VPN processes. Upper limit for this value is the number of CPUs and depends on the model.
 * `vpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN and IPsec VPN connection. Valid values: `enable`, `disable`.
+* `sslvpn_web_mode` - Enable/disable SSL-VPN web mode. Valid values: `enable`, `disable`.
 * `sslvpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN connection. Valid values: `enable`, `disable`.
 * `sslvpn_kxp_hardware_acceleration` - Enable/disable SSL VPN KXP hardware acceleration. Valid values: `enable`, `disable`.
 * `sslvpn_cipher_hardware_acceleration` - Enable/disable SSL VPN hardware acceleration. Valid values: `enable`, `disable`.
@@ -277,6 +285,8 @@ The following arguments are supported:
 * `fec_port` - Local UDP port for Forward Error Correction (49152 - 65535).
 * `ipsec_ha_seqjump_rate` - ESP jump ahead rate (1G - 10G pps equivalent).
 * `fortitoken_cloud` - Enable/disable FortiToken Cloud service. Valid values: `enable`, `disable`.
+* `fortitoken_cloud_push_status` - Enable/disable FTM push service of FortiToken Cloud. Valid values: `enable`, `disable`.
+* `fortitoken_cloud_sync_interval` - Interval in which to clean up remote users in FortiToken Cloud (0 - 336 hours (14 days), default = 24, disable = 0).
 * `faz_disk_buffer_size` - Maximum disk buffer size to temporarily store logs destined for FortiAnalyzer. To be used in the event that FortiAnalyzer is unavailalble.
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode. Valid values: `auto`, `force`.
 * `fortiipam_integration` - Enable/disable integration with the FortiIPAM cloud service. Valid values: `enable`, `disable`.

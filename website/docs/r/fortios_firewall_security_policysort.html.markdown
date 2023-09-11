@@ -10,6 +10,8 @@ description: |-
 # fortios_firewall_security_policysort
 Resource to sort firewall security policies by policyid or policy name, in ascending or descending order.
 
+!> **Warning:** "This resource will be deprecated after 3 releases from v1.18.0, use `fortios_firewall_policy_sort` resource instead. 
+
 ## Example Usage
 
 ### Example1

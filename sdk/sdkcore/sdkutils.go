@@ -20,7 +20,7 @@ func createUpdate(c *FortiSDKClient, method string, path string, params *map[str
 	req := c.NewRequest(method, path, nil, bytes)
 	err = req.Send3(vdomparam)
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request %v", err)
+		err = fmt.Errorf("Cannot send request: %v", err)
 		return
 	}
 
@@ -28,7 +28,7 @@ func createUpdate(c *FortiSDKClient, method string, path string, params *map[str
 	req.HTTPResponse.Body.Close() //#
 
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %v", err)
+		err = fmt.Errorf("Cannot get response body: %v", err)
 		return
 	}
 
@@ -54,7 +54,7 @@ func delete(c *FortiSDKClient, method string, path string, vdomparam string) (er
 	req := c.NewRequest(method, path, nil, nil)
 	err = req.Send3(vdomparam)
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request %v", err)
+		err = fmt.Errorf("Cannot send request: %v", err)
 		return
 	}
 
@@ -62,7 +62,7 @@ func delete(c *FortiSDKClient, method string, path string, vdomparam string) (er
 	req.HTTPResponse.Body.Close() //#
 
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %v", err)
+		err = fmt.Errorf("Cannot get response body: %v", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
@@ -79,7 +79,7 @@ func read(c *FortiSDKClient, method string, path string, bcomplex bool, vdompara
 	req := c.NewRequest(method, path, nil, nil)
 	err = req.Send3(vdomparam)
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request %v", err)
+		err = fmt.Errorf("Cannot send request: %v", err)
 		return
 	}
 
@@ -87,7 +87,7 @@ func read(c *FortiSDKClient, method string, path string, bcomplex bool, vdompara
 	req.HTTPResponse.Body.Close() //#
 
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %v", err)
+		err = fmt.Errorf("Cannot get response body: %v", err)
 		return
 	}
 	log.Printf("FOS-fortios reading response: %s", string(body))

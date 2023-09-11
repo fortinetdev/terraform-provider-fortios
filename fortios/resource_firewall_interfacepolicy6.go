@@ -157,6 +157,17 @@ func resourceFirewallInterfacePolicy6() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"casb_profile_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"casb_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"emailfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -533,6 +544,14 @@ func flattenFirewallInterfacePolicy6WebfilterProfile(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenFirewallInterfacePolicy6CasbProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallInterfacePolicy6CasbProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallInterfacePolicy6EmailfilterProfileStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -717,6 +736,18 @@ func refreshObjectFirewallInterfacePolicy6(d *schema.ResourceData, o map[string]
 	if err = d.Set("webfilter_profile", flattenFirewallInterfacePolicy6WebfilterProfile(o["webfilter-profile"], d, "webfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["webfilter-profile"]) {
 			return fmt.Errorf("Error reading webfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile_status", flattenFirewallInterfacePolicy6CasbProfileStatus(o["casb-profile-status"], d, "casb_profile_status", sv)); err != nil {
+		if !fortiAPIPatch(o["casb-profile-status"]) {
+			return fmt.Errorf("Error reading casb_profile_status: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile", flattenFirewallInterfacePolicy6CasbProfile(o["casb-profile"], d, "casb_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["casb-profile"]) {
+			return fmt.Errorf("Error reading casb_profile: %v", err)
 		}
 	}
 
@@ -942,6 +973,14 @@ func expandFirewallInterfacePolicy6WebfilterProfile(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandFirewallInterfacePolicy6CasbProfileStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallInterfacePolicy6CasbProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallInterfacePolicy6EmailfilterProfileStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1144,6 +1183,24 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["webfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("casb_profile_status"); ok {
+		t, err := expandFirewallInterfacePolicy6CasbProfileStatus(d, v, "casb_profile_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["casb-profile-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("casb_profile"); ok {
+		t, err := expandFirewallInterfacePolicy6CasbProfile(d, v, "casb_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["casb-profile"] = t
 		}
 	}
 

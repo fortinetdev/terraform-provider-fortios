@@ -44,6 +44,14 @@ func dataSourceSystemDnsServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"doh3": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"doq": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -107,6 +115,14 @@ func dataSourceFlattenSystemDnsServerDoh(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenSystemDnsServerDoh3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsServerDoq(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -131,6 +147,18 @@ func dataSourceRefreshObjectSystemDnsServer(d *schema.ResourceData, o map[string
 	if err = d.Set("doh", dataSourceFlattenSystemDnsServerDoh(o["doh"], d, "doh")); err != nil {
 		if !fortiAPIPatch(o["doh"]) {
 			return fmt.Errorf("Error reading doh: %v", err)
+		}
+	}
+
+	if err = d.Set("doh3", dataSourceFlattenSystemDnsServerDoh3(o["doh3"], d, "doh3")); err != nil {
+		if !fortiAPIPatch(o["doh3"]) {
+			return fmt.Errorf("Error reading doh3: %v", err)
+		}
+	}
+
+	if err = d.Set("doq", dataSourceFlattenSystemDnsServerDoq(o["doq"], d, "doq")); err != nil {
+		if !fortiAPIPatch(o["doq"]) {
+			return fmt.Errorf("Error reading doq: %v", err)
 		}
 	}
 

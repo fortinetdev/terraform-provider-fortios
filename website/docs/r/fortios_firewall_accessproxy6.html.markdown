@@ -26,6 +26,7 @@ The following arguments are supported:
 * `svr_pool_multiplex` - Enable/disable server pool multiplexing. Share connected server in HTTP, HTTPS, and web-portal api-gateway. Valid values: `enable`, `disable`.
 * `svr_pool_ttl` - Time-to-live in the server pool for idle connections to servers.
 * `svr_pool_server_max_request` - Maximum number of requests that servers in server pool handle before disconnecting (default = unlimited).
+* `svr_pool_server_max_concurrent_request` - Maximum number of concurrent requests that servers in server pool could handle (default = unlimited).
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `api_gateway` - Set IPv4 API Gateway. The structure of `api_gateway` block is documented below.
 * `api_gateway6` - Set IPv6 API Gateway. The structure of `api_gateway6` block is documented below.
@@ -41,6 +42,9 @@ The `api_gateway` block supports:
 * `ldb_method` - Method used to distribute sessions to real servers. Valid values: `static`, `round-robin`, `weighted`, `first-alive`, `http-host`.
 * `virtual_host` - Virtual host.
 * `url_map_type` - Type of url-map. Valid values: `sub-string`, `wildcard`, `regex`.
+* `h2_support` - HTTP2 support, default=Enable. Valid values: `enable`, `disable`.
+* `h3_support` - HTTP3/QUIC support, default=Disable. Valid values: `enable`, `disable`.
+* `quic` - QUIC setting. The structure of `quic` block is documented below.
 * `realservers` - Select the real servers that this Access Proxy will distribute traffic to. The structure of `realservers` block is documented below.
 * `application` - SaaS application controlled by this Access Proxy. The structure of `application` block is documented below.
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`.
@@ -60,6 +64,17 @@ The `api_gateway` block supports:
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a server. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
 * `ssl_renegotiation` - Enable/disable secure renegotiation to comply with RFC 5746. Valid values: `enable`, `disable`.
 * `ssl_vpn_web_portal` - SSL-VPN web portal.
+
+The `quic` block supports:
+
+* `max_idle_timeout` - Maximum idle timeout milliseconds (1 - 60000, default = 30000).
+* `max_udp_payload_size` - Maximum UDP payload size in bytes (1200 - 1500, default = 1500).
+* `active_connection_id_limit` - Active connection ID limit (1 - 8, default = 2).
+* `ack_delay_exponent` - ACK delay exponent (1 - 20, default = 3).
+* `max_ack_delay` - Maximum ACK delay in milliseconds (1 - 16383, default = 25).
+* `max_datagram_frame_size` - Maximum datagram frame size in bytes (1 - 1500, default = 1500).
+* `active_migration` - Enable/disable active migration (default = disable). Valid values: `enable`, `disable`.
+* `grease_quic_bit` - Enable/disable grease QUIC bit (default = enable). Valid values: `enable`, `disable`.
 
 The `realservers` block supports:
 
@@ -106,6 +121,9 @@ The `api_gateway6` block supports:
 * `ldb_method` - Method used to distribute sessions to real servers. Valid values: `static`, `round-robin`, `weighted`, `first-alive`, `http-host`.
 * `virtual_host` - Virtual host.
 * `url_map_type` - Type of url-map. Valid values: `sub-string`, `wildcard`, `regex`.
+* `h2_support` - HTTP2 support, default=Enable. Valid values: `enable`, `disable`.
+* `h3_support` - HTTP3/QUIC support, default=Disable. Valid values: `enable`, `disable`.
+* `quic` - QUIC setting. The structure of `quic` block is documented below.
 * `realservers` - Select the real servers that this Access Proxy will distribute traffic to. The structure of `realservers` block is documented below.
 * `application` - SaaS application controlled by this Access Proxy. The structure of `application` block is documented below.
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`.
@@ -125,6 +143,17 @@ The `api_gateway6` block supports:
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a server. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
 * `ssl_renegotiation` - Enable/disable secure renegotiation to comply with RFC 5746. Valid values: `enable`, `disable`.
 * `ssl_vpn_web_portal` - SSL-VPN web portal.
+
+The `quic` block supports:
+
+* `max_idle_timeout` - Maximum idle timeout milliseconds (1 - 60000, default = 30000).
+* `max_udp_payload_size` - Maximum UDP payload size in bytes (1200 - 1500, default = 1500).
+* `active_connection_id_limit` - Active connection ID limit (1 - 8, default = 2).
+* `ack_delay_exponent` - ACK delay exponent (1 - 20, default = 3).
+* `max_ack_delay` - Maximum ACK delay in milliseconds (1 - 16383, default = 25).
+* `max_datagram_frame_size` - Maximum datagram frame size in bytes (1 - 1500, default = 1500).
+* `active_migration` - Enable/disable active migration (default = disable). Valid values: `enable`, `disable`.
+* `grease_quic_bit` - Enable/disable grease QUIC bit (default = enable). Valid values: `enable`, `disable`.
 
 The `realservers` block supports:
 

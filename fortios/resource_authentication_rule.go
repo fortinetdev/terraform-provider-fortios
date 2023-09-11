@@ -144,6 +144,17 @@ func resourceAuthenticationRule() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cors_stateful": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cors_depth": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 8),
+				Optional:     true,
+				Computed:     true,
+			},
 			"transaction_based": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -532,6 +543,14 @@ func flattenAuthenticationRuleWebAuthCookie(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenAuthenticationRuleCorsStateful(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationRuleCorsDepth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationRuleTransactionBased(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -672,6 +691,18 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("web_auth_cookie", flattenAuthenticationRuleWebAuthCookie(o["web-auth-cookie"], d, "web_auth_cookie", sv)); err != nil {
 		if !fortiAPIPatch(o["web-auth-cookie"]) {
 			return fmt.Errorf("Error reading web_auth_cookie: %v", err)
+		}
+	}
+
+	if err = d.Set("cors_stateful", flattenAuthenticationRuleCorsStateful(o["cors-stateful"], d, "cors_stateful", sv)); err != nil {
+		if !fortiAPIPatch(o["cors-stateful"]) {
+			return fmt.Errorf("Error reading cors_stateful: %v", err)
+		}
+	}
+
+	if err = d.Set("cors_depth", flattenAuthenticationRuleCorsDepth(o["cors-depth"], d, "cors_depth", sv)); err != nil {
+		if !fortiAPIPatch(o["cors-depth"]) {
+			return fmt.Errorf("Error reading cors_depth: %v", err)
 		}
 	}
 
@@ -885,6 +916,14 @@ func expandAuthenticationRuleWebAuthCookie(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandAuthenticationRuleCorsStateful(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationRuleCorsDepth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAuthenticationRuleTransactionBased(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1005,6 +1044,24 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["web-auth-cookie"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cors_stateful"); ok {
+		t, err := expandAuthenticationRuleCorsStateful(d, v, "cors_stateful", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cors-stateful"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cors_depth"); ok {
+		t, err := expandAuthenticationRuleCorsDepth(d, v, "cors_depth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cors-depth"] = t
 		}
 	}
 

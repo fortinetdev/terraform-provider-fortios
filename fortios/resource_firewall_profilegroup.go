@@ -118,6 +118,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"virtual_patch_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -143,6 +149,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Computed:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -341,6 +353,10 @@ func flattenFirewallProfileGroupSctpFilterProfile(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenFirewallProfileGroupVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupIcapProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -358,6 +374,10 @@ func flattenFirewallProfileGroupWafProfile(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallProfileGroupSshFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileGroupCasbProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -456,6 +476,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("virtual_patch_profile", flattenFirewallProfileGroupVirtualPatchProfile(o["virtual-patch-profile"], d, "virtual_patch_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["virtual-patch-profile"]) {
+			return fmt.Errorf("Error reading virtual_patch_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", flattenFirewallProfileGroupIcapProfile(o["icap-profile"], d, "icap_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -483,6 +509,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("ssh_filter_profile", flattenFirewallProfileGroupSshFilterProfile(o["ssh-filter-profile"], d, "ssh_filter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh-filter-profile"]) {
 			return fmt.Errorf("Error reading ssh_filter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile", flattenFirewallProfileGroupCasbProfile(o["casb-profile"], d, "casb_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["casb-profile"]) {
+			return fmt.Errorf("Error reading casb_profile: %v", err)
 		}
 	}
 
@@ -563,6 +595,10 @@ func expandFirewallProfileGroupSctpFilterProfile(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandFirewallProfileGroupVirtualPatchProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileGroupIcapProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -580,6 +616,10 @@ func expandFirewallProfileGroupWafProfile(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallProfileGroupSshFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupCasbProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -720,6 +760,15 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("virtual_patch_profile"); ok {
+		t, err := expandFirewallProfileGroupVirtualPatchProfile(d, v, "virtual_patch_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["virtual-patch-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("icap_profile"); ok {
 		t, err := expandFirewallProfileGroupIcapProfile(d, v, "icap_profile", sv)
 		if err != nil {
@@ -762,6 +811,15 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["ssh-filter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("casb_profile"); ok {
+		t, err := expandFirewallProfileGroupCasbProfile(d, v, "casb_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["casb-profile"] = t
 		}
 	}
 

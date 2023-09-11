@@ -177,6 +177,46 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ptp_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ptp_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"route_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"route_offload_mclag": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"route_offload_router": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vlan_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+							Computed:     true,
+						},
+						"router_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -270,6 +310,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"ptp_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"ptp_policy": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
@@ -356,6 +401,24 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed:     true,
 						},
 						"mclag_icl_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 1),
+							Optional:     true,
+							Computed:     true,
+						},
+						"authenticated_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 1),
+							Optional:     true,
+							Computed:     true,
+						},
+						"restricted_auth_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 1),
+							Optional:     true,
+							Computed:     true,
+						},
+						"encrypted_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
@@ -1861,6 +1924,73 @@ func flattenSwitchControllerManagedSwitchDynamicallyDiscovered(v interface{}, d 
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPtpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchRouteOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchRouteOffloadMclag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchRouteOffloadRouter(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
+		if _, ok := i["vlan-name"]; ok {
+			tmp["vlan_name"] = flattenSwitchControllerManagedSwitchRouteOffloadRouterVlanName(i["vlan-name"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "router_ip"
+		if _, ok := i["router-ip"]; ok {
+			tmp["router_ip"] = flattenSwitchControllerManagedSwitchRouteOffloadRouterRouterIp(i["router-ip"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vlan_name", d)
+	return result
+}
+
+func flattenSwitchControllerManagedSwitchRouteOffloadRouterVlanName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchRouteOffloadRouterRouterIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1957,6 +2087,11 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 			tmp["ip_source_guard"] = flattenSwitchControllerManagedSwitchPortsIpSourceGuard(i["ip-source-guard"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ptp_status"
+		if _, ok := i["ptp-status"]; ok {
+			tmp["ptp_status"] = flattenSwitchControllerManagedSwitchPortsPtpStatus(i["ptp-status"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ptp_policy"
 		if _, ok := i["ptp-policy"]; ok {
 			tmp["ptp_policy"] = flattenSwitchControllerManagedSwitchPortsPtpPolicy(i["ptp-policy"], d, pre_append, sv)
@@ -2035,6 +2170,21 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag_icl_port"
 		if _, ok := i["mclag-icl-port"]; ok {
 			tmp["mclag_icl_port"] = flattenSwitchControllerManagedSwitchPortsMclagIclPort(i["mclag-icl-port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "authenticated_port"
+		if _, ok := i["authenticated-port"]; ok {
+			tmp["authenticated_port"] = flattenSwitchControllerManagedSwitchPortsAuthenticatedPort(i["authenticated-port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_auth_port"
+		if _, ok := i["restricted-auth-port"]; ok {
+			tmp["restricted_auth_port"] = flattenSwitchControllerManagedSwitchPortsRestrictedAuthPort(i["restricted-auth-port"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "encrypted_port"
+		if _, ok := i["encrypted-port"]; ok {
+			tmp["encrypted_port"] = flattenSwitchControllerManagedSwitchPortsEncryptedPort(i["encrypted-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fiber_port"
@@ -2468,6 +2618,10 @@ func flattenSwitchControllerManagedSwitchPortsIpSourceGuard(v interface{}, d *sc
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsPtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsPtpPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2529,6 +2683,18 @@ func flattenSwitchControllerManagedSwitchPortsP2PPort(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerManagedSwitchPortsMclagIclPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsAuthenticatedPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsRestrictedAuthPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsEncryptedPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4836,6 +5002,46 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("ptp_status", flattenSwitchControllerManagedSwitchPtpStatus(o["ptp-status"], d, "ptp_status", sv)); err != nil {
+		if !fortiAPIPatch(o["ptp-status"]) {
+			return fmt.Errorf("Error reading ptp_status: %v", err)
+		}
+	}
+
+	if err = d.Set("ptp_profile", flattenSwitchControllerManagedSwitchPtpProfile(o["ptp-profile"], d, "ptp_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["ptp-profile"]) {
+			return fmt.Errorf("Error reading ptp_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("route_offload", flattenSwitchControllerManagedSwitchRouteOffload(o["route-offload"], d, "route_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["route-offload"]) {
+			return fmt.Errorf("Error reading route_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("route_offload_mclag", flattenSwitchControllerManagedSwitchRouteOffloadMclag(o["route-offload-mclag"], d, "route_offload_mclag", sv)); err != nil {
+		if !fortiAPIPatch(o["route-offload-mclag"]) {
+			return fmt.Errorf("Error reading route_offload_mclag: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("route_offload_router", flattenSwitchControllerManagedSwitchRouteOffloadRouter(o["route-offload-router"], d, "route_offload_router", sv)); err != nil {
+			if !fortiAPIPatch(o["route-offload-router"]) {
+				return fmt.Errorf("Error reading route_offload_router: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("route_offload_router"); ok {
+			if err = d.Set("route_offload_router", flattenSwitchControllerManagedSwitchRouteOffloadRouter(o["route-offload-router"], d, "route_offload_router", sv)); err != nil {
+				if !fortiAPIPatch(o["route-offload-router"]) {
+					return fmt.Errorf("Error reading route_offload_router: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("type", flattenSwitchControllerManagedSwitchType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
@@ -5317,6 +5523,62 @@ func expandSwitchControllerManagedSwitchDynamicallyDiscovered(d *schema.Resource
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPtpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPtpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchRouteOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchRouteOffloadMclag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchRouteOffloadRouter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchRouteOffloadRouterVlanName(d, i["vlan_name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "router_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["router-ip"], _ = expandSwitchControllerManagedSwitchRouteOffloadRouterRouterIp(d, i["router_ip"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSwitchControllerManagedSwitchRouteOffloadRouterVlanName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchRouteOffloadRouterRouterIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5403,6 +5665,11 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["ip-source-guard"], _ = expandSwitchControllerManagedSwitchPortsIpSourceGuard(d, i["ip_source_guard"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ptp_status"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ptp-status"], _ = expandSwitchControllerManagedSwitchPortsPtpStatus(d, i["ptp_status"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ptp_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ptp-policy"], _ = expandSwitchControllerManagedSwitchPortsPtpPolicy(d, i["ptp_policy"], pre_append, sv)
@@ -5481,6 +5748,21 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag_icl_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mclag-icl-port"], _ = expandSwitchControllerManagedSwitchPortsMclagIclPort(d, i["mclag_icl_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "authenticated_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["authenticated-port"], _ = expandSwitchControllerManagedSwitchPortsAuthenticatedPort(d, i["authenticated_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_auth_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["restricted-auth-port"], _ = expandSwitchControllerManagedSwitchPortsRestrictedAuthPort(d, i["restricted_auth_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "encrypted_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["encrypted-port"], _ = expandSwitchControllerManagedSwitchPortsEncryptedPort(d, i["encrypted_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fiber_port"
@@ -5929,6 +6211,10 @@ func expandSwitchControllerManagedSwitchPortsIpSourceGuard(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsPtpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsPtpPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5990,6 +6276,18 @@ func expandSwitchControllerManagedSwitchPortsP2PPort(d *schema.ResourceData, v i
 }
 
 func expandSwitchControllerManagedSwitchPortsMclagIclPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsAuthenticatedPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsRestrictedAuthPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsEncryptedPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8087,6 +8385,51 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["dynamically-discovered"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ptp_status"); ok {
+		t, err := expandSwitchControllerManagedSwitchPtpStatus(d, v, "ptp_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ptp-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ptp_profile"); ok {
+		t, err := expandSwitchControllerManagedSwitchPtpProfile(d, v, "ptp_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ptp-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("route_offload"); ok {
+		t, err := expandSwitchControllerManagedSwitchRouteOffload(d, v, "route_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-offload"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("route_offload_mclag"); ok {
+		t, err := expandSwitchControllerManagedSwitchRouteOffloadMclag(d, v, "route_offload_mclag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-offload-mclag"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("route_offload_router"); ok || d.HasChange("route_offload_router") {
+		t, err := expandSwitchControllerManagedSwitchRouteOffloadRouter(d, v, "route_offload_router", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["route-offload-router"] = t
 		}
 	}
 

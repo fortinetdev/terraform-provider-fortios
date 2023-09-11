@@ -640,6 +640,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"virtual_patch_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"icap_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -657,6 +661,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"ssh_filter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"casb_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -2595,6 +2603,10 @@ func dataSourceFlattenFirewallPolicySctpFilterProfile(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyIcapProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2612,6 +2624,10 @@ func dataSourceFlattenFirewallPolicyWafProfile(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenFirewallPolicySshFilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyCasbProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4027,6 +4043,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("virtual_patch_profile", dataSourceFlattenFirewallPolicyVirtualPatchProfile(o["virtual-patch-profile"], d, "virtual_patch_profile")); err != nil {
+		if !fortiAPIPatch(o["virtual-patch-profile"]) {
+			return fmt.Errorf("Error reading virtual_patch_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("icap_profile", dataSourceFlattenFirewallPolicyIcapProfile(o["icap-profile"], d, "icap_profile")); err != nil {
 		if !fortiAPIPatch(o["icap-profile"]) {
 			return fmt.Errorf("Error reading icap_profile: %v", err)
@@ -4054,6 +4076,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("ssh_filter_profile", dataSourceFlattenFirewallPolicySshFilterProfile(o["ssh-filter-profile"], d, "ssh_filter_profile")); err != nil {
 		if !fortiAPIPatch(o["ssh-filter-profile"]) {
 			return fmt.Errorf("Error reading ssh_filter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("casb_profile", dataSourceFlattenFirewallPolicyCasbProfile(o["casb-profile"], d, "casb_profile")); err != nil {
+		if !fortiAPIPatch(o["casb-profile"]) {
+			return fmt.Errorf("Error reading casb_profile: %v", err)
 		}
 	}
 

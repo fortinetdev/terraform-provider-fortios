@@ -32,6 +32,8 @@ The following attributes are exported:
 * `protocol` - Protocol number (0 - 255).
 * `start_port` - Start destination port number (1 - 65535).
 * `end_port` - End destination port number (1 - 65535).
+* `start_source_port` - Start source port number (1 - 65535).
+* `end_source_port` - End source port number (1 - 65535).
 * `gateway` - IPv6 address of the gateway.
 * `output_device` - Outgoing interface name.
 * `tos` - Type of service bit pattern.

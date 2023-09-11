@@ -258,6 +258,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"default_protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"user_group_bookmark": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -473,6 +478,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Computed: true,
 			},
 			"display_history": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"focus_bookmark": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1241,6 +1251,10 @@ func flattenVpnSslWebPortalAllowUserAccess(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenVpnSslWebPortalDefaultProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnSslWebPortalUserGroupBookmark(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1673,6 +1687,10 @@ func flattenVpnSslWebPortalDisplayConnectionTools(v interface{}, d *schema.Resou
 }
 
 func flattenVpnSslWebPortalDisplayHistory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslWebPortalFocusBookmark(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2486,6 +2504,12 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("default_protocol", flattenVpnSslWebPortalDefaultProtocol(o["default-protocol"], d, "default_protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["default-protocol"]) {
+			return fmt.Errorf("Error reading default_protocol: %v", err)
+		}
+	}
+
 	if err = d.Set("user_group_bookmark", flattenVpnSslWebPortalUserGroupBookmark(o["user-group-bookmark"], d, "user_group_bookmark", sv)); err != nil {
 		if !fortiAPIPatch(o["user-group-bookmark"]) {
 			return fmt.Errorf("Error reading user_group_bookmark: %v", err)
@@ -2517,6 +2541,12 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("display_history", flattenVpnSslWebPortalDisplayHistory(o["display-history"], d, "display_history", sv)); err != nil {
 		if !fortiAPIPatch(o["display-history"]) {
 			return fmt.Errorf("Error reading display_history: %v", err)
+		}
+	}
+
+	if err = d.Set("focus_bookmark", flattenVpnSslWebPortalFocusBookmark(o["focus-bookmark"], d, "focus_bookmark", sv)); err != nil {
+		if !fortiAPIPatch(o["focus-bookmark"]) {
+			return fmt.Errorf("Error reading focus_bookmark: %v", err)
 		}
 	}
 
@@ -3045,6 +3075,10 @@ func expandVpnSslWebPortalAllowUserAccess(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandVpnSslWebPortalDefaultProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnSslWebPortalUserGroupBookmark(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3440,6 +3474,10 @@ func expandVpnSslWebPortalDisplayConnectionTools(d *schema.ResourceData, v inter
 }
 
 func expandVpnSslWebPortalDisplayHistory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslWebPortalFocusBookmark(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4250,6 +4288,15 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	if v, ok := d.GetOk("default_protocol"); ok {
+		t, err := expandVpnSslWebPortalDefaultProtocol(d, v, "default_protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-protocol"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("user_group_bookmark"); ok {
 		t, err := expandVpnSslWebPortalUserGroupBookmark(d, v, "user_group_bookmark", sv)
 		if err != nil {
@@ -4283,6 +4330,15 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["display-history"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("focus_bookmark"); ok {
+		t, err := expandVpnSslWebPortalFocusBookmark(d, v, "focus_bookmark", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["focus-bookmark"] = t
 		}
 	}
 

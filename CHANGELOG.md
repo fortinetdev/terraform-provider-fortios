@@ -1,5 +1,31 @@
-## 1.18.0 (Unreleased)
+## 1.19.0 (Unreleased)
 
+
+## 1.18.0 (Sep 11, 2023)
+BUG FIXES:
+
+* Fix crash issue (#291);
+
+IMPROVEMENTS:
+
+* Support FortiOS v6.4.13, v6.4.14, v7.0.12, v7.4.1;
+
+FEATURES:
+
+* **New Resource:** `fortios_casb_useractivity`
+* **New Resource:** `fortios_casb_saasapplication`
+* **New Resource:** `fortios_casb_profile`
+* **New Resource:** `fortios_rule_otvp`
+* **New Resource:** `fortios_rule_otdt`
+* **New Resource:** `fortios_switchcontrollerptp_profile`
+* **New Resource:** `fortios_switchcontrollerptp_interfacepolicy`
+* **New Resource:** `fortios_system_speedtestsetting`
+* **New Resource:** `fortios_virtualpatch_profile`
+* **New Resource:** `fortios_webproxy_fastfallback`
+* **New Resource:** `fortios_firewall_policy_sort`
+* **New Resource:** `fortios_firewall_policy_move`
+* **New Resource:** `fortios_firewall_securitypolicy_sort`
+* **New Resource:** `fortiof_firewall_securitypolicy_move`
 
 ## 1.17.0 (Jun 22, 2023)
 BUG FIXES:

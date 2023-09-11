@@ -245,6 +245,14 @@ func dataSourceSystemAccprofile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"virtual_patch": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"casb": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -651,6 +659,16 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.
 		result["videofilter"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionVideofilter(i["videofilter"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "virtual_patch"
+	if _, ok := i["virtual-patch"]; ok {
+		result["virtual_patch"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionVirtualPatch(i["virtual-patch"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "casb"
+	if _, ok := i["casb"]; ok {
+		result["casb"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionCasb(i["casb"], d, pre_append)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -712,6 +730,14 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermissionEndpointControl(v interfac
 }
 
 func dataSourceFlattenSystemAccprofileUtmgrpPermissionVideofilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileUtmgrpPermissionVirtualPatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileUtmgrpPermissionCasb(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

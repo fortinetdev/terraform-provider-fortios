@@ -29,7 +29,7 @@ The following arguments are supported:
 * `pull_tags` - Enable/disable pulling FortiClient user tags from EMS. Valid values: `enable`, `disable`.
 * `pull_malware_hash` - Enable/disable pulling FortiClient malware hash from EMS. Valid values: `enable`, `disable`.
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
-* `capabilities` - List of EMS capabilities. Valid values: `fabric-auth`, `silent-approval`, `websocket`, `websocket-malware`, `push-ca-certs`, `common-tags-api`, `tenant-id`, `single-vdom-connector`.
+* `capabilities` - List of EMS capabilities.
 * `call_timeout` - FortiClient EMS call timeout in seconds (1 - 180 seconds, default = 30).
 * `out_of_sync_threshold` - Outdated resource threshold in seconds (10 - 3600, default = 180).
 * `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.

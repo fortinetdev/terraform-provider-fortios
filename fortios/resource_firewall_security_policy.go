@@ -11,10 +11,11 @@ import (
 
 func resourceFirewallSecurityPolicy1() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceFirewallSecurityPolicyCreate1,
-		Read:   resourceFirewallSecurityPolicyRead1,
-		Update: resourceFirewallSecurityPolicyUpdate1,
-		Delete: resourceFirewallSecurityPolicyDelete1,
+		Create:             resourceFirewallSecurityPolicyCreate1,
+		Read:               resourceFirewallSecurityPolicyRead1,
+		Update:             resourceFirewallSecurityPolicyUpdate1,
+		Delete:             resourceFirewallSecurityPolicyDelete1,
+		DeprecationMessage: "This resource will be deprecated after 3 releases from v1.18.0, use fortios_firewall_policy resource instead.",
 
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,

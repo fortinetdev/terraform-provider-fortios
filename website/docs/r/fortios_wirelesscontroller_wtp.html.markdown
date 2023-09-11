@@ -28,6 +28,8 @@ The following arguments are supported:
 * `wtp_mode` - WTP, AP, or FortiAP operating mode; normal (by default) or remote. A tunnel mode SSID can be assigned to an AP in normal mode but not remote mode, while a local-bridge mode SSID can be assigned to an AP in either normal mode or remote mode. Valid values: `normal`, `remote`.
 * `apcfg_profile` - AP local configuration profile name.
 * `bonjour_profile` - Bonjour profile name.
+* `ble_major_id` - Override BLE Major ID.
+* `ble_minor_id` - Override BLE Minor ID.
 * `override_led_state` - Enable to override the profile LED state setting for this FortiAP. You must enable this option to use the led-state command to turn off the FortiAP's LEDs. Valid values: `enable`, `disable`.
 * `led_state` - Enable to allow the FortiAPs LEDs to light. Disable to keep the LEDs off. You may want to keep the LEDs off so they are not distracting in low light areas etc. Valid values: `enable`, `disable`.
 * `override_wan_port_mode` - Enable/disable overriding the wan-port-mode in the WTP profile. Valid values: `enable`, `disable`.

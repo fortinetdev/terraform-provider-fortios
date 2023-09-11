@@ -147,6 +147,8 @@ The `utmgrp_permission` block supports:
 * `dnsfilter` - DNS Filter profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `endpoint_control` - FortiClient Profiles. Valid values: `none`, `read`, `read-write`.
 * `videofilter` - Video filter profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `virtual_patch` - Virtual patch profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `casb` - Inline CASB filter profile and settings Valid values: `none`, `read`, `read-write`.
 
 
 ## Attribute Reference
