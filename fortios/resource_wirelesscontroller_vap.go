@@ -281,7 +281,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed:     true,
 			},
 			"radius_mac_auth_usergroups": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -403,7 +403,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed: true,
 			},
 			"usergroup": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -462,7 +462,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed: true,
 			},
 			"selected_usergroups": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -593,7 +593,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Optional:     true,
 						},
 						"mpsk_schedules": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -3721,7 +3721,7 @@ func expandWirelessControllerVapRadiusMacMpskTimeout(d *schema.ResourceData, v i
 }
 
 func expandWirelessControllerVapRadiusMacAuthUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3734,10 +3734,7 @@ func expandWirelessControllerVapRadiusMacAuthUsergroups(d *schema.ResourceData, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerVapRadiusMacAuthUsergroupsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerVapRadiusMacAuthUsergroupsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3832,7 +3829,7 @@ func expandWirelessControllerVapLocalAuthentication(d *schema.ResourceData, v in
 }
 
 func expandWirelessControllerVapUsergroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3845,10 +3842,7 @@ func expandWirelessControllerVapUsergroup(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerVapUsergroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerVapUsergroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3917,7 +3911,7 @@ func expandWirelessControllerVapPortalType(d *schema.ResourceData, v interface{}
 }
 
 func expandWirelessControllerVapSelectedUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3930,10 +3924,7 @@ func expandWirelessControllerVapSelectedUsergroups(d *schema.ResourceData, v int
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerVapSelectedUsergroupsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerVapSelectedUsergroupsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4077,7 +4068,7 @@ func expandWirelessControllerVapMpskKeyComment(d *schema.ResourceData, v interfa
 }
 
 func expandWirelessControllerVapMpskKeyMpskSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4090,10 +4081,7 @@ func expandWirelessControllerVapMpskKeyMpskSchedules(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerVapMpskKeyMpskSchedulesName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerVapMpskKeyMpskSchedulesName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

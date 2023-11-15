@@ -102,7 +102,7 @@ func resourceUserExchange() *schema.Resource {
 				Computed: true,
 			},
 			"kdc_ip": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -489,7 +489,7 @@ func expandUserExchangeAutoDiscoverKdc(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandUserExchangeKdcIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -502,10 +502,7 @@ func expandUserExchangeKdcIp(d *schema.ResourceData, v interface{}, pre string, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ipv4"], _ = expandUserExchangeKdcIpIpv4(d, i["ipv4"], pre_append, sv)
-		}
+		tmp["ipv4"], _ = expandUserExchangeKdcIpIpv4(d, i["ipv4"], pre_append, sv)
 
 		result = append(result, tmp)
 

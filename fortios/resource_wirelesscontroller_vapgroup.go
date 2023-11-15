@@ -47,7 +47,7 @@ func resourceWirelessControllerVapGroup() *schema.Resource {
 				Optional:     true,
 			},
 			"vaps": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -300,7 +300,7 @@ func expandWirelessControllerVapGroupComment(d *schema.ResourceData, v interface
 }
 
 func expandWirelessControllerVapGroupVaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -313,10 +313,7 @@ func expandWirelessControllerVapGroupVaps(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerVapGroupVapsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerVapGroupVapsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

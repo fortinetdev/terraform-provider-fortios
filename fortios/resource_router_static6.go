@@ -99,7 +99,7 @@ func resourceRouterStatic6() *schema.Resource {
 				Computed: true,
 			},
 			"sdwan_zone": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -584,7 +584,7 @@ func expandRouterStatic6DynamicGateway(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandRouterStatic6SdwanZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -597,10 +597,7 @@ func expandRouterStatic6SdwanZone(d *schema.ResourceData, v interface{}, pre str
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterStatic6SdwanZoneName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterStatic6SdwanZoneName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

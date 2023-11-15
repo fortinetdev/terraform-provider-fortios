@@ -528,7 +528,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed: true,
 						},
 						"allowed_vlans": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -542,7 +542,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							},
 						},
 						"untagged_vlans": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -578,7 +578,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed:     true,
 						},
 						"acl_group": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -592,7 +592,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							},
 						},
 						"fortiswitch_acls": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -802,7 +802,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed:     true,
 						},
 						"interface_tags": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -816,7 +816,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							},
 						},
 						"export_tags": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -917,7 +917,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed:     true,
 						},
 						"members": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1458,7 +1458,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed:     true,
 						},
 						"src_ingress": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1472,7 +1472,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							},
 						},
 						"src_egress": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -6364,7 +6364,7 @@ func expandSwitchControllerManagedSwitchPortsAllowedVlansAll(d *schema.ResourceD
 }
 
 func expandSwitchControllerManagedSwitchPortsAllowedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6377,10 +6377,7 @@ func expandSwitchControllerManagedSwitchPortsAllowedVlans(d *schema.ResourceData
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlansVlanName(d, i["vlan_name"], pre_append, sv)
-		}
+		tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6395,7 +6392,7 @@ func expandSwitchControllerManagedSwitchPortsAllowedVlansVlanName(d *schema.Reso
 }
 
 func expandSwitchControllerManagedSwitchPortsUntaggedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6408,10 +6405,7 @@ func expandSwitchControllerManagedSwitchPortsUntaggedVlans(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsUntaggedVlansVlanName(d, i["vlan_name"], pre_append, sv)
-		}
+		tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsUntaggedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6442,7 +6436,7 @@ func expandSwitchControllerManagedSwitchPortsMatchedDppIntfTags(d *schema.Resour
 }
 
 func expandSwitchControllerManagedSwitchPortsAclGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6455,10 +6449,7 @@ func expandSwitchControllerManagedSwitchPortsAclGroup(d *schema.ResourceData, v 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSwitchControllerManagedSwitchPortsAclGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSwitchControllerManagedSwitchPortsAclGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6473,7 +6464,7 @@ func expandSwitchControllerManagedSwitchPortsAclGroupName(d *schema.ResourceData
 }
 
 func expandSwitchControllerManagedSwitchPortsFortiswitchAcls(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6486,10 +6477,7 @@ func expandSwitchControllerManagedSwitchPortsFortiswitchAcls(d *schema.ResourceD
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSwitchControllerManagedSwitchPortsFortiswitchAclsId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandSwitchControllerManagedSwitchPortsFortiswitchAclsId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6681,7 +6669,7 @@ func expandSwitchControllerManagedSwitchPortsExportToPool(d *schema.ResourceData
 }
 
 func expandSwitchControllerManagedSwitchPortsInterfaceTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6694,10 +6682,7 @@ func expandSwitchControllerManagedSwitchPortsInterfaceTags(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d, i["tag_name"], pre_append, sv)
-		}
+		tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d, i["tag_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6712,7 +6697,7 @@ func expandSwitchControllerManagedSwitchPortsInterfaceTagsTagName(d *schema.Reso
 }
 
 func expandSwitchControllerManagedSwitchPortsExportTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6725,10 +6710,7 @@ func expandSwitchControllerManagedSwitchPortsExportTags(d *schema.ResourceData, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsExportTagsTagName(d, i["tag_name"], pre_append, sv)
-		}
+		tmp["tag-name"], _ = expandSwitchControllerManagedSwitchPortsExportTagsTagName(d, i["tag_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6807,7 +6789,7 @@ func expandSwitchControllerManagedSwitchPortsMaxBundle(d *schema.ResourceData, v
 }
 
 func expandSwitchControllerManagedSwitchPortsMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6820,10 +6802,7 @@ func expandSwitchControllerManagedSwitchPortsMembers(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["member-name"], _ = expandSwitchControllerManagedSwitchPortsMembersMemberName(d, i["member_name"], pre_append, sv)
-		}
+		tmp["member-name"], _ = expandSwitchControllerManagedSwitchPortsMembersMemberName(d, i["member_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -7736,7 +7715,7 @@ func expandSwitchControllerManagedSwitchMirrorDst(d *schema.ResourceData, v inte
 }
 
 func expandSwitchControllerManagedSwitchMirrorSrcIngress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7749,10 +7728,7 @@ func expandSwitchControllerManagedSwitchMirrorSrcIngress(d *schema.ResourceData,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorSrcIngressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorSrcIngressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -7767,7 +7743,7 @@ func expandSwitchControllerManagedSwitchMirrorSrcIngressName(d *schema.ResourceD
 }
 
 func expandSwitchControllerManagedSwitchMirrorSrcEgress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7780,10 +7756,7 @@ func expandSwitchControllerManagedSwitchMirrorSrcEgress(d *schema.ResourceData, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorSrcEgressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorSrcEgressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

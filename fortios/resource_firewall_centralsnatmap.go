@@ -57,7 +57,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				Computed: true,
 			},
 			"orig_addr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -71,7 +71,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"orig_addr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -85,7 +85,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"srcintf": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -99,7 +99,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"dst_addr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -113,7 +113,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"dst_addr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -127,7 +127,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"dstintf": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -141,7 +141,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"nat_ippool": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -155,7 +155,7 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				},
 			},
 			"nat_ippool6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -960,7 +960,7 @@ func expandFirewallCentralSnatMapType(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandFirewallCentralSnatMapOrigAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -973,10 +973,7 @@ func expandFirewallCentralSnatMapOrigAddr(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapOrigAddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapOrigAddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -991,7 +988,7 @@ func expandFirewallCentralSnatMapOrigAddrName(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallCentralSnatMapOrigAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1004,10 +1001,7 @@ func expandFirewallCentralSnatMapOrigAddr6(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapOrigAddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapOrigAddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1022,7 +1016,7 @@ func expandFirewallCentralSnatMapOrigAddr6Name(d *schema.ResourceData, v interfa
 }
 
 func expandFirewallCentralSnatMapSrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1035,10 +1029,7 @@ func expandFirewallCentralSnatMapSrcintf(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapSrcintfName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapSrcintfName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1053,7 +1044,7 @@ func expandFirewallCentralSnatMapSrcintfName(d *schema.ResourceData, v interface
 }
 
 func expandFirewallCentralSnatMapDstAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1066,10 +1057,7 @@ func expandFirewallCentralSnatMapDstAddr(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapDstAddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapDstAddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1084,7 +1072,7 @@ func expandFirewallCentralSnatMapDstAddrName(d *schema.ResourceData, v interface
 }
 
 func expandFirewallCentralSnatMapDstAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1097,10 +1085,7 @@ func expandFirewallCentralSnatMapDstAddr6(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapDstAddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapDstAddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1115,7 +1100,7 @@ func expandFirewallCentralSnatMapDstAddr6Name(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallCentralSnatMapDstintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1128,10 +1113,7 @@ func expandFirewallCentralSnatMapDstintf(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapDstintfName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapDstintfName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1146,7 +1128,7 @@ func expandFirewallCentralSnatMapDstintfName(d *schema.ResourceData, v interface
 }
 
 func expandFirewallCentralSnatMapNatIppool(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1159,10 +1141,7 @@ func expandFirewallCentralSnatMapNatIppool(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapNatIppoolName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapNatIppoolName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1177,7 +1156,7 @@ func expandFirewallCentralSnatMapNatIppoolName(d *schema.ResourceData, v interfa
 }
 
 func expandFirewallCentralSnatMapNatIppool6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1190,10 +1169,7 @@ func expandFirewallCentralSnatMapNatIppool6(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallCentralSnatMapNatIppool6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallCentralSnatMapNatIppool6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

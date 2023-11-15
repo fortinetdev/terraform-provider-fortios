@@ -59,7 +59,7 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 				Computed: true,
 			},
 			"ap_scan_channel_list_2g_5g": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -73,7 +73,7 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 				},
 			},
 			"ap_scan_channel_list_6g": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -117,7 +117,7 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 				Computed:     true,
 			},
 			"ap_bgscan_disable_schedules": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1199,7 +1199,7 @@ func expandWirelessControllerWidsProfileApScan(d *schema.ResourceData, v interfa
 }
 
 func expandWirelessControllerWidsProfileApScanChannelList2G5G(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1212,10 +1212,7 @@ func expandWirelessControllerWidsProfileApScanChannelList2G5G(d *schema.Resource
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["chan"], _ = expandWirelessControllerWidsProfileApScanChannelList2G5GChan(d, i["chan"], pre_append, sv)
-		}
+		tmp["chan"], _ = expandWirelessControllerWidsProfileApScanChannelList2G5GChan(d, i["chan"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1230,7 +1227,7 @@ func expandWirelessControllerWidsProfileApScanChannelList2G5GChan(d *schema.Reso
 }
 
 func expandWirelessControllerWidsProfileApScanChannelList6G(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1243,10 +1240,7 @@ func expandWirelessControllerWidsProfileApScanChannelList6G(d *schema.ResourceDa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["chan"], _ = expandWirelessControllerWidsProfileApScanChannelList6GChan(d, i["chan"], pre_append, sv)
-		}
+		tmp["chan"], _ = expandWirelessControllerWidsProfileApScanChannelList6GChan(d, i["chan"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1281,7 +1275,7 @@ func expandWirelessControllerWidsProfileApBgscanReportIntv(d *schema.ResourceDat
 }
 
 func expandWirelessControllerWidsProfileApBgscanDisableSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1294,10 +1288,7 @@ func expandWirelessControllerWidsProfileApBgscanDisableSchedules(d *schema.Resou
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerWidsProfileApBgscanDisableSchedulesName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerWidsProfileApBgscanDisableSchedulesName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

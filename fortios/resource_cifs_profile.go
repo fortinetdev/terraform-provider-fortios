@@ -91,7 +91,7 @@ func resourceCifsProfile() *schema.Resource {
 										Computed: true,
 									},
 									"file_type": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -664,7 +664,7 @@ func expandCifsProfileFileFilterEntriesDirection(d *schema.ResourceData, v inter
 }
 
 func expandCifsProfileFileFilterEntriesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -677,10 +677,7 @@ func expandCifsProfileFileFilterEntriesFileType(d *schema.ResourceData, v interf
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandCifsProfileFileFilterEntriesFileTypeName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandCifsProfileFileFilterEntriesFileTypeName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

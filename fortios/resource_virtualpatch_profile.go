@@ -78,7 +78,7 @@ func resourceVirtualPatchProfile() *schema.Resource {
 							Computed: true,
 						},
 						"rule": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -91,7 +91,7 @@ func resourceVirtualPatchProfile() *schema.Resource {
 							},
 						},
 						"device": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -545,7 +545,7 @@ func expandVirtualPatchProfileExemptionStatus(d *schema.ResourceData, v interfac
 }
 
 func expandVirtualPatchProfileExemptionRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -558,10 +558,7 @@ func expandVirtualPatchProfileExemptionRule(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandVirtualPatchProfileExemptionRuleId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandVirtualPatchProfileExemptionRuleId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -576,7 +573,7 @@ func expandVirtualPatchProfileExemptionRuleId(d *schema.ResourceData, v interfac
 }
 
 func expandVirtualPatchProfileExemptionDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -589,10 +586,7 @@ func expandVirtualPatchProfileExemptionDevice(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["mac"], _ = expandVirtualPatchProfileExemptionDeviceMac(d, i["mac"], pre_append, sv)
-		}
+		tmp["mac"], _ = expandVirtualPatchProfileExemptionDeviceMac(d, i["mac"], pre_append, sv)
 
 		result = append(result, tmp)
 

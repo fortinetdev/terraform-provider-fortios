@@ -162,7 +162,7 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed: true,
 						},
 						"set_aspath": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -187,7 +187,7 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed:     true,
 						},
 						"set_community": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -236,7 +236,7 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed:     true,
 						},
 						"set_extcommunity_rt": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -250,7 +250,7 @@ func resourceRouterRouteMap() *schema.Resource {
 							},
 						},
 						"set_extcommunity_soo": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1514,7 +1514,7 @@ func expandRouterRouteMapRuleSetAspathAction(d *schema.ResourceData, v interface
 }
 
 func expandRouterRouteMapRuleSetAspath(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1527,10 +1527,7 @@ func expandRouterRouteMapRuleSetAspath(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["as"], _ = expandRouterRouteMapRuleSetAspathAs(d, i["as"], pre_append, sv)
-		}
+		tmp["as"], _ = expandRouterRouteMapRuleSetAspathAs(d, i["as"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1553,7 +1550,7 @@ func expandRouterRouteMapRuleSetCommunityDelete(d *schema.ResourceData, v interf
 }
 
 func expandRouterRouteMapRuleSetCommunity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1566,10 +1563,7 @@ func expandRouterRouteMapRuleSetCommunity(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["community"], _ = expandRouterRouteMapRuleSetCommunityCommunity(d, i["community"], pre_append, sv)
-		}
+		tmp["community"], _ = expandRouterRouteMapRuleSetCommunityCommunity(d, i["community"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1608,7 +1602,7 @@ func expandRouterRouteMapRuleSetDampeningUnreachabilityHalfLife(d *schema.Resour
 }
 
 func expandRouterRouteMapRuleSetExtcommunityRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1621,10 +1615,7 @@ func expandRouterRouteMapRuleSetExtcommunityRt(d *schema.ResourceData, v interfa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["community"], _ = expandRouterRouteMapRuleSetExtcommunityRtCommunity(d, i["community"], pre_append, sv)
-		}
+		tmp["community"], _ = expandRouterRouteMapRuleSetExtcommunityRtCommunity(d, i["community"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1639,7 +1630,7 @@ func expandRouterRouteMapRuleSetExtcommunityRtCommunity(d *schema.ResourceData, 
 }
 
 func expandRouterRouteMapRuleSetExtcommunitySoo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1652,10 +1643,7 @@ func expandRouterRouteMapRuleSetExtcommunitySoo(d *schema.ResourceData, v interf
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["community"], _ = expandRouterRouteMapRuleSetExtcommunitySooCommunity(d, i["community"], pre_append, sv)
-		}
+		tmp["community"], _ = expandRouterRouteMapRuleSetExtcommunitySooCommunity(d, i["community"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -123,7 +123,7 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"learn_client_ip_srcaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -137,7 +137,7 @@ func resourceWebProxyGlobal() *schema.Resource {
 				},
 			},
 			"learn_client_ip_srcaddr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -662,7 +662,7 @@ func expandWebProxyGlobalLearnClientIpFromHeader(d *schema.ResourceData, v inter
 }
 
 func expandWebProxyGlobalLearnClientIpSrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -675,10 +675,7 @@ func expandWebProxyGlobalLearnClientIpSrcaddr(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyGlobalLearnClientIpSrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebProxyGlobalLearnClientIpSrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -693,7 +690,7 @@ func expandWebProxyGlobalLearnClientIpSrcaddrName(d *schema.ResourceData, v inte
 }
 
 func expandWebProxyGlobalLearnClientIpSrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -706,10 +703,7 @@ func expandWebProxyGlobalLearnClientIpSrcaddr6(d *schema.ResourceData, v interfa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyGlobalLearnClientIpSrcaddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebProxyGlobalLearnClientIpSrcaddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

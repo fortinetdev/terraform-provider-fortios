@@ -63,7 +63,7 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 				Optional:     true,
 			},
 			"member": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -82,7 +82,7 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 				Computed: true,
 			},
 			"exclude_member": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -113,7 +113,7 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -608,7 +608,7 @@ func expandFirewallAddrgrp6Comment(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandFirewallAddrgrp6Member(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -621,10 +621,7 @@ func expandFirewallAddrgrp6Member(d *schema.ResourceData, v interface{}, pre str
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallAddrgrp6MemberName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallAddrgrp6MemberName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -643,7 +640,7 @@ func expandFirewallAddrgrp6Exclude(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandFirewallAddrgrp6ExcludeMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -656,10 +653,7 @@ func expandFirewallAddrgrp6ExcludeMember(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallAddrgrp6ExcludeMemberName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallAddrgrp6ExcludeMemberName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -721,7 +715,7 @@ func expandFirewallAddrgrp6TaggingCategory(d *schema.ResourceData, v interface{}
 }
 
 func expandFirewallAddrgrp6TaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -734,10 +728,7 @@ func expandFirewallAddrgrp6TaggingTags(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallAddrgrp6TaggingTagsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallAddrgrp6TaggingTagsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

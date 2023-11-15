@@ -64,7 +64,7 @@ func resourceFirewallDosPolicy() *schema.Resource {
 				Required:     true,
 			},
 			"srcaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -78,7 +78,7 @@ func resourceFirewallDosPolicy() *schema.Resource {
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -92,7 +92,7 @@ func resourceFirewallDosPolicy() *schema.Resource {
 				},
 			},
 			"service": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -687,7 +687,7 @@ func expandFirewallDosPolicyInterface(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandFirewallDosPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -700,10 +700,7 @@ func expandFirewallDosPolicySrcaddr(d *schema.ResourceData, v interface{}, pre s
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallDosPolicySrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallDosPolicySrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -718,7 +715,7 @@ func expandFirewallDosPolicySrcaddrName(d *schema.ResourceData, v interface{}, p
 }
 
 func expandFirewallDosPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -731,10 +728,7 @@ func expandFirewallDosPolicyDstaddr(d *schema.ResourceData, v interface{}, pre s
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallDosPolicyDstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallDosPolicyDstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -749,7 +743,7 @@ func expandFirewallDosPolicyDstaddrName(d *schema.ResourceData, v interface{}, p
 }
 
 func expandFirewallDosPolicyService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -762,10 +756,7 @@ func expandFirewallDosPolicyService(d *schema.ResourceData, v interface{}, pre s
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallDosPolicyServiceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallDosPolicyServiceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -73,7 +73,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"srcaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -87,7 +87,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -101,7 +101,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"srcaddr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -115,7 +115,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"dstaddr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -134,7 +134,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"internet_service_name": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -148,7 +148,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_id": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -161,7 +161,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_group": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -175,7 +175,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_custom": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -189,7 +189,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_custom_group": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -208,7 +208,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"internet_service_src_name": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -222,7 +222,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_src_id": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -235,7 +235,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_src_group": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -249,7 +249,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_src_custom": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -263,7 +263,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_src_custom_group": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -277,7 +277,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"service": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -297,7 +297,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"users": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -311,7 +311,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"groups": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -325,7 +325,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"application": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -338,7 +338,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"app_category": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -351,7 +351,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"app_group": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -365,7 +365,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"url_category": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -378,7 +378,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"srcintf": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -392,7 +392,7 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				},
 			},
 			"dstintf": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -2219,7 +2219,7 @@ func expandFirewallShapingPolicyTrafficType(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallShapingPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2232,10 +2232,7 @@ func expandFirewallShapingPolicySrcaddr(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicySrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicySrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2250,7 +2247,7 @@ func expandFirewallShapingPolicySrcaddrName(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallShapingPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2263,10 +2260,7 @@ func expandFirewallShapingPolicyDstaddr(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyDstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyDstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2281,7 +2275,7 @@ func expandFirewallShapingPolicyDstaddrName(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallShapingPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2294,10 +2288,7 @@ func expandFirewallShapingPolicySrcaddr6(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicySrcaddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicySrcaddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2312,7 +2303,7 @@ func expandFirewallShapingPolicySrcaddr6Name(d *schema.ResourceData, v interface
 }
 
 func expandFirewallShapingPolicyDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2325,10 +2316,7 @@ func expandFirewallShapingPolicyDstaddr6(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyDstaddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyDstaddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2347,7 +2335,7 @@ func expandFirewallShapingPolicyInternetService(d *schema.ResourceData, v interf
 }
 
 func expandFirewallShapingPolicyInternetServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2360,10 +2348,7 @@ func expandFirewallShapingPolicyInternetServiceName(d *schema.ResourceData, v in
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceNameName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceNameName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2378,7 +2363,7 @@ func expandFirewallShapingPolicyInternetServiceNameName(d *schema.ResourceData, 
 }
 
 func expandFirewallShapingPolicyInternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2391,10 +2376,7 @@ func expandFirewallShapingPolicyInternetServiceId(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallShapingPolicyInternetServiceIdId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandFirewallShapingPolicyInternetServiceIdId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2409,7 +2391,7 @@ func expandFirewallShapingPolicyInternetServiceIdId(d *schema.ResourceData, v in
 }
 
 func expandFirewallShapingPolicyInternetServiceGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2422,10 +2404,7 @@ func expandFirewallShapingPolicyInternetServiceGroup(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2440,7 +2419,7 @@ func expandFirewallShapingPolicyInternetServiceGroupName(d *schema.ResourceData,
 }
 
 func expandFirewallShapingPolicyInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2453,10 +2432,7 @@ func expandFirewallShapingPolicyInternetServiceCustom(d *schema.ResourceData, v 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceCustomName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceCustomName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2471,7 +2447,7 @@ func expandFirewallShapingPolicyInternetServiceCustomName(d *schema.ResourceData
 }
 
 func expandFirewallShapingPolicyInternetServiceCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2484,10 +2460,7 @@ func expandFirewallShapingPolicyInternetServiceCustomGroup(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceCustomGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceCustomGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2506,7 +2479,7 @@ func expandFirewallShapingPolicyInternetServiceSrc(d *schema.ResourceData, v int
 }
 
 func expandFirewallShapingPolicyInternetServiceSrcName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2519,10 +2492,7 @@ func expandFirewallShapingPolicyInternetServiceSrcName(d *schema.ResourceData, v
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcNameName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcNameName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2537,7 +2507,7 @@ func expandFirewallShapingPolicyInternetServiceSrcNameName(d *schema.ResourceDat
 }
 
 func expandFirewallShapingPolicyInternetServiceSrcId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2550,10 +2520,7 @@ func expandFirewallShapingPolicyInternetServiceSrcId(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallShapingPolicyInternetServiceSrcIdId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandFirewallShapingPolicyInternetServiceSrcIdId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2568,7 +2535,7 @@ func expandFirewallShapingPolicyInternetServiceSrcIdId(d *schema.ResourceData, v
 }
 
 func expandFirewallShapingPolicyInternetServiceSrcGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2581,10 +2548,7 @@ func expandFirewallShapingPolicyInternetServiceSrcGroup(d *schema.ResourceData, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2599,7 +2563,7 @@ func expandFirewallShapingPolicyInternetServiceSrcGroupName(d *schema.ResourceDa
 }
 
 func expandFirewallShapingPolicyInternetServiceSrcCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2612,10 +2576,7 @@ func expandFirewallShapingPolicyInternetServiceSrcCustom(d *schema.ResourceData,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcCustomName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcCustomName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2630,7 +2591,7 @@ func expandFirewallShapingPolicyInternetServiceSrcCustomName(d *schema.ResourceD
 }
 
 func expandFirewallShapingPolicyInternetServiceSrcCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2643,10 +2604,7 @@ func expandFirewallShapingPolicyInternetServiceSrcCustomGroup(d *schema.Resource
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcCustomGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyInternetServiceSrcCustomGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2661,7 +2619,7 @@ func expandFirewallShapingPolicyInternetServiceSrcCustomGroupName(d *schema.Reso
 }
 
 func expandFirewallShapingPolicyService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2674,10 +2632,7 @@ func expandFirewallShapingPolicyService(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyServiceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyServiceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2696,7 +2651,7 @@ func expandFirewallShapingPolicySchedule(d *schema.ResourceData, v interface{}, 
 }
 
 func expandFirewallShapingPolicyUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2709,10 +2664,7 @@ func expandFirewallShapingPolicyUsers(d *schema.ResourceData, v interface{}, pre
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyUsersName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyUsersName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2727,7 +2679,7 @@ func expandFirewallShapingPolicyUsersName(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallShapingPolicyGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2740,10 +2692,7 @@ func expandFirewallShapingPolicyGroups(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyGroupsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyGroupsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2758,7 +2707,7 @@ func expandFirewallShapingPolicyGroupsName(d *schema.ResourceData, v interface{}
 }
 
 func expandFirewallShapingPolicyApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2771,10 +2720,7 @@ func expandFirewallShapingPolicyApplication(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallShapingPolicyApplicationId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandFirewallShapingPolicyApplicationId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2789,7 +2735,7 @@ func expandFirewallShapingPolicyApplicationId(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallShapingPolicyAppCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2802,10 +2748,7 @@ func expandFirewallShapingPolicyAppCategory(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallShapingPolicyAppCategoryId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandFirewallShapingPolicyAppCategoryId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2820,7 +2763,7 @@ func expandFirewallShapingPolicyAppCategoryId(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallShapingPolicyAppGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2833,10 +2776,7 @@ func expandFirewallShapingPolicyAppGroup(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyAppGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyAppGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2851,7 +2791,7 @@ func expandFirewallShapingPolicyAppGroupName(d *schema.ResourceData, v interface
 }
 
 func expandFirewallShapingPolicyUrlCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2864,10 +2804,7 @@ func expandFirewallShapingPolicyUrlCategory(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallShapingPolicyUrlCategoryId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandFirewallShapingPolicyUrlCategoryId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2882,7 +2819,7 @@ func expandFirewallShapingPolicyUrlCategoryId(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallShapingPolicySrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2895,10 +2832,7 @@ func expandFirewallShapingPolicySrcintf(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicySrcintfName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicySrcintfName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2913,7 +2847,7 @@ func expandFirewallShapingPolicySrcintfName(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallShapingPolicyDstintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2926,10 +2860,7 @@ func expandFirewallShapingPolicyDstintf(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallShapingPolicyDstintfName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallShapingPolicyDstintfName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

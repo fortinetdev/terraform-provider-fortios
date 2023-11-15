@@ -68,7 +68,7 @@ func resourceLogFortianalyzer2Setting() *schema.Resource {
 				Computed: true,
 			},
 			"serial": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -690,7 +690,7 @@ func expandLogFortianalyzer2SettingCertificateVerification(d *schema.ResourceDat
 }
 
 func expandLogFortianalyzer2SettingSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -703,10 +703,7 @@ func expandLogFortianalyzer2SettingSerial(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandLogFortianalyzer2SettingSerialName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandLogFortianalyzer2SettingSerialName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

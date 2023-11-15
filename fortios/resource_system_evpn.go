@@ -49,7 +49,7 @@ func resourceSystemEvpn() *schema.Resource {
 				Computed:     true,
 			},
 			"import_rt": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -63,7 +63,7 @@ func resourceSystemEvpn() *schema.Resource {
 				},
 			},
 			"export_rt": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -404,7 +404,7 @@ func expandSystemEvpnRd(d *schema.ResourceData, v interface{}, pre string, sv st
 }
 
 func expandSystemEvpnImportRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -417,10 +417,7 @@ func expandSystemEvpnImportRt(d *schema.ResourceData, v interface{}, pre string,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["route-target"], _ = expandSystemEvpnImportRtRouteTarget(d, i["route_target"], pre_append, sv)
-		}
+		tmp["route-target"], _ = expandSystemEvpnImportRtRouteTarget(d, i["route_target"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -435,7 +432,7 @@ func expandSystemEvpnImportRtRouteTarget(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemEvpnExportRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -448,10 +445,7 @@ func expandSystemEvpnExportRt(d *schema.ResourceData, v interface{}, pre string,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["route-target"], _ = expandSystemEvpnExportRtRouteTarget(d, i["route_target"], pre_append, sv)
-		}
+		tmp["route-target"], _ = expandSystemEvpnExportRtRouteTarget(d, i["route_target"], pre_append, sv)
 
 		result = append(result, tmp)
 

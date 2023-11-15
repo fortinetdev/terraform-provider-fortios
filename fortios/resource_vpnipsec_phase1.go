@@ -79,7 +79,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed:     true,
 			},
 			"certificate": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -202,7 +202,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"internal_domain_list": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -387,7 +387,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"backup_gateway": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -2430,7 +2430,7 @@ func expandVpnIpsecPhase1Keylife(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandVpnIpsecPhase1Certificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2443,10 +2443,7 @@ func expandVpnIpsecPhase1Certificate(d *schema.ResourceData, v interface{}, pre 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnIpsecPhase1CertificateName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnIpsecPhase1CertificateName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2545,7 +2542,7 @@ func expandVpnIpsecPhase1Ipv4DnsServer3(d *schema.ResourceData, v interface{}, p
 }
 
 func expandVpnIpsecPhase1InternalDomainList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2558,10 +2555,7 @@ func expandVpnIpsecPhase1InternalDomainList(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["domain-name"], _ = expandVpnIpsecPhase1InternalDomainListDomainName(d, i["domain_name"], pre_append, sv)
-		}
+		tmp["domain-name"], _ = expandVpnIpsecPhase1InternalDomainListDomainName(d, i["domain_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2766,7 +2760,7 @@ func expandVpnIpsecPhase1ClientKeepAlive(d *schema.ResourceData, v interface{}, 
 }
 
 func expandVpnIpsecPhase1BackupGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2779,10 +2773,7 @@ func expandVpnIpsecPhase1BackupGateway(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["address"], _ = expandVpnIpsecPhase1BackupGatewayAddress(d, i["address"], pre_append, sv)
-		}
+		tmp["address"], _ = expandVpnIpsecPhase1BackupGatewayAddress(d, i["address"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -68,7 +68,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 				Computed: true,
 			},
 			"fail_alert_interfaces": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -359,7 +359,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Computed: true,
 						},
 						"members": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -469,7 +469,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Computed: true,
 						},
 						"input_device": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -547,7 +547,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Computed: true,
 						},
 						"dst": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -566,7 +566,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Computed: true,
 						},
 						"src": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -580,7 +580,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"dst6": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -594,7 +594,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"src6": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -613,7 +613,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Computed: true,
 						},
 						"users": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -627,7 +627,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"groups": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -646,7 +646,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Computed: true,
 						},
 						"internet_service_custom": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -660,7 +660,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"internet_service_custom_group": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -674,7 +674,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"internet_service_name": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -688,7 +688,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"internet_service_id": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -701,7 +701,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"internet_service_group": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -715,7 +715,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"internet_service_app_ctrl": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -728,7 +728,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"internet_service_app_ctrl_group": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -855,7 +855,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"priority_members": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -3185,7 +3185,7 @@ func expandSystemVirtualWanLinkFailDetect(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemVirtualWanLinkFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3198,10 +3198,7 @@ func expandSystemVirtualWanLinkFailAlertInterfaces(d *schema.ResourceData, v int
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkFailAlertInterfacesName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkFailAlertInterfacesName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3710,7 +3707,7 @@ func expandSystemVirtualWanLinkHealthCheckThresholdAlertJitter(d *schema.Resourc
 }
 
 func expandSystemVirtualWanLinkHealthCheckMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3723,10 +3720,7 @@ func expandSystemVirtualWanLinkHealthCheckMembers(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["seq-num"], _ = expandSystemVirtualWanLinkHealthCheckMembersSeqNum(d, i["seq_num"], pre_append, sv)
-		}
+		tmp["seq-num"], _ = expandSystemVirtualWanLinkHealthCheckMembersSeqNum(d, i["seq_num"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4232,7 +4226,7 @@ func expandSystemVirtualWanLinkServiceAddrMode(d *schema.ResourceData, v interfa
 }
 
 func expandSystemVirtualWanLinkServiceInputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4245,10 +4239,7 @@ func expandSystemVirtualWanLinkServiceInputDevice(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceInputDeviceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceInputDeviceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4311,7 +4302,7 @@ func expandSystemVirtualWanLinkServiceRouteTag(d *schema.ResourceData, v interfa
 }
 
 func expandSystemVirtualWanLinkServiceDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4324,10 +4315,7 @@ func expandSystemVirtualWanLinkServiceDst(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceDstName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceDstName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4346,7 +4334,7 @@ func expandSystemVirtualWanLinkServiceDstNegate(d *schema.ResourceData, v interf
 }
 
 func expandSystemVirtualWanLinkServiceSrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4359,10 +4347,7 @@ func expandSystemVirtualWanLinkServiceSrc(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceSrcName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceSrcName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4377,7 +4362,7 @@ func expandSystemVirtualWanLinkServiceSrcName(d *schema.ResourceData, v interfac
 }
 
 func expandSystemVirtualWanLinkServiceDst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4390,10 +4375,7 @@ func expandSystemVirtualWanLinkServiceDst6(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceDst6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceDst6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4408,7 +4390,7 @@ func expandSystemVirtualWanLinkServiceDst6Name(d *schema.ResourceData, v interfa
 }
 
 func expandSystemVirtualWanLinkServiceSrc6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4421,10 +4403,7 @@ func expandSystemVirtualWanLinkServiceSrc6(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceSrc6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceSrc6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4443,7 +4422,7 @@ func expandSystemVirtualWanLinkServiceSrcNegate(d *schema.ResourceData, v interf
 }
 
 func expandSystemVirtualWanLinkServiceUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4456,10 +4435,7 @@ func expandSystemVirtualWanLinkServiceUsers(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceUsersName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceUsersName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4474,7 +4450,7 @@ func expandSystemVirtualWanLinkServiceUsersName(d *schema.ResourceData, v interf
 }
 
 func expandSystemVirtualWanLinkServiceGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4487,10 +4463,7 @@ func expandSystemVirtualWanLinkServiceGroups(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceGroupsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceGroupsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4509,7 +4482,7 @@ func expandSystemVirtualWanLinkServiceInternetService(d *schema.ResourceData, v 
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4522,10 +4495,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceCustom(d *schema.ResourceDa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustomName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustomName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4540,7 +4510,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceCustomName(d *schema.Resour
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceCustomGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4553,10 +4523,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceCustomGroup(d *schema.Resou
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustomGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustomGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4571,7 +4538,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceCustomGroupName(d *schema.R
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4584,10 +4551,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceName(d *schema.ResourceData
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceNameName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceNameName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4602,7 +4566,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceNameName(d *schema.Resource
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4615,10 +4579,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceId(d *schema.ResourceData, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemVirtualWanLinkServiceInternetServiceIdId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandSystemVirtualWanLinkServiceInternetServiceIdId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4633,7 +4594,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceIdId(d *schema.ResourceData
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4646,10 +4607,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceGroup(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4664,7 +4622,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceGroupName(d *schema.Resourc
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceAppCtrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4677,10 +4635,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceAppCtrl(d *schema.ResourceD
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrlId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrlId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4695,7 +4650,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceAppCtrlId(d *schema.Resourc
 }
 
 func expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4708,10 +4663,7 @@ func expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(d *schema.Reso
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4876,7 +4828,7 @@ func expandSystemVirtualWanLinkServiceSlaId(d *schema.ResourceData, v interface{
 }
 
 func expandSystemVirtualWanLinkServicePriorityMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4889,10 +4841,7 @@ func expandSystemVirtualWanLinkServicePriorityMembers(d *schema.ResourceData, v 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["seq-num"], _ = expandSystemVirtualWanLinkServicePriorityMembersSeqNum(d, i["seq_num"], pre_append, sv)
-		}
+		tmp["seq-num"], _ = expandSystemVirtualWanLinkServicePriorityMembersSeqNum(d, i["seq_num"], pre_append, sv)
 
 		result = append(result, tmp)
 

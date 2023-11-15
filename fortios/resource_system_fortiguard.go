@@ -142,6 +142,11 @@ func resourceSystemFortiguard() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"gui_prompt_auto_upgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fds_license_expiring_days": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100),
@@ -550,6 +555,10 @@ func flattenSystemFortiguardAutoFirmwareUpgradeEndHour(v interface{}, d *schema.
 	return v
 }
 
+func flattenSystemFortiguardGuiPromptAutoUpgrade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -842,6 +851,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("auto_firmware_upgrade_end_hour", flattenSystemFortiguardAutoFirmwareUpgradeEndHour(o["auto-firmware-upgrade-end-hour"], d, "auto_firmware_upgrade_end_hour", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-firmware-upgrade-end-hour"]) {
 			return fmt.Errorf("Error reading auto_firmware_upgrade_end_hour: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_prompt_auto_upgrade", flattenSystemFortiguardGuiPromptAutoUpgrade(o["gui-prompt-auto-upgrade"], d, "gui_prompt_auto_upgrade", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-prompt-auto-upgrade"]) {
+			return fmt.Errorf("Error reading gui_prompt_auto_upgrade: %v", err)
 		}
 	}
 
@@ -1183,6 +1198,10 @@ func expandSystemFortiguardAutoFirmwareUpgradeStartHour(d *schema.ResourceData, 
 }
 
 func expandSystemFortiguardAutoFirmwareUpgradeEndHour(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortiguardGuiPromptAutoUpgrade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1617,6 +1636,19 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["auto-firmware-upgrade-end-hour"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("gui_prompt_auto_upgrade"); ok {
+		if setArgNil {
+			obj["gui-prompt-auto-upgrade"] = nil
+		} else {
+			t, err := expandSystemFortiguardGuiPromptAutoUpgrade(d, v, "gui_prompt_auto_upgrade", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-prompt-auto-upgrade"] = t
 			}
 		}
 	}

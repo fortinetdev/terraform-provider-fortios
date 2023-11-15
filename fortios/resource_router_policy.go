@@ -43,7 +43,7 @@ func resourceRouterPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"input_device": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -62,7 +62,7 @@ func resourceRouterPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"src": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -76,7 +76,7 @@ func resourceRouterPolicy() *schema.Resource {
 				},
 			},
 			"srcaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -95,7 +95,7 @@ func resourceRouterPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"dst": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -109,7 +109,7 @@ func resourceRouterPolicy() *schema.Resource {
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -194,7 +194,7 @@ func resourceRouterPolicy() *schema.Resource {
 				Optional:     true,
 			},
 			"internet_service_id": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -207,7 +207,7 @@ func resourceRouterPolicy() *schema.Resource {
 				},
 			},
 			"internet_service_custom": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -944,7 +944,7 @@ func expandRouterPolicySeqNum(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandRouterPolicyInputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -957,10 +957,7 @@ func expandRouterPolicyInputDevice(d *schema.ResourceData, v interface{}, pre st
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicyInputDeviceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicyInputDeviceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -979,7 +976,7 @@ func expandRouterPolicyInputDeviceNegate(d *schema.ResourceData, v interface{}, 
 }
 
 func expandRouterPolicySrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -992,10 +989,7 @@ func expandRouterPolicySrc(d *schema.ResourceData, v interface{}, pre string, sv
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["subnet"], _ = expandRouterPolicySrcSubnet(d, i["subnet"], pre_append, sv)
-		}
+		tmp["subnet"], _ = expandRouterPolicySrcSubnet(d, i["subnet"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1010,7 +1004,7 @@ func expandRouterPolicySrcSubnet(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandRouterPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1023,10 +1017,7 @@ func expandRouterPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicySrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicySrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1045,7 +1036,7 @@ func expandRouterPolicySrcNegate(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandRouterPolicyDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1058,10 +1049,7 @@ func expandRouterPolicyDst(d *schema.ResourceData, v interface{}, pre string, sv
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["subnet"], _ = expandRouterPolicyDstSubnet(d, i["subnet"], pre_append, sv)
-		}
+		tmp["subnet"], _ = expandRouterPolicyDstSubnet(d, i["subnet"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1076,7 +1064,7 @@ func expandRouterPolicyDstSubnet(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandRouterPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1089,10 +1077,7 @@ func expandRouterPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicyDstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicyDstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1159,7 +1144,7 @@ func expandRouterPolicyComments(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandRouterPolicyInternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1172,10 +1157,7 @@ func expandRouterPolicyInternetServiceId(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRouterPolicyInternetServiceIdId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandRouterPolicyInternetServiceIdId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1190,7 +1172,7 @@ func expandRouterPolicyInternetServiceIdId(d *schema.ResourceData, v interface{}
 }
 
 func expandRouterPolicyInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1203,10 +1185,7 @@ func expandRouterPolicyInternetServiceCustom(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicyInternetServiceCustomName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicyInternetServiceCustomName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

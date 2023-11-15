@@ -57,7 +57,7 @@ func resourceRouterPolicy6() *schema.Resource {
 				Computed: true,
 			},
 			"srcaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -81,7 +81,7 @@ func resourceRouterPolicy6() *schema.Resource {
 				Computed: true,
 			},
 			"dstaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -166,7 +166,7 @@ func resourceRouterPolicy6() *schema.Resource {
 				Optional:     true,
 			},
 			"internet_service_id": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -179,7 +179,7 @@ func resourceRouterPolicy6() *schema.Resource {
 				},
 			},
 			"internet_service_custom": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -883,7 +883,7 @@ func expandRouterPolicy6Src(d *schema.ResourceData, v interface{}, pre string, s
 }
 
 func expandRouterPolicy6Srcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -896,10 +896,7 @@ func expandRouterPolicy6Srcaddr(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicy6SrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicy6SrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -922,7 +919,7 @@ func expandRouterPolicy6Dst(d *schema.ResourceData, v interface{}, pre string, s
 }
 
 func expandRouterPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -935,10 +932,7 @@ func expandRouterPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicy6DstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicy6DstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1005,7 +999,7 @@ func expandRouterPolicy6Comments(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandRouterPolicy6InternetServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1018,10 +1012,7 @@ func expandRouterPolicy6InternetServiceId(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRouterPolicy6InternetServiceIdId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandRouterPolicy6InternetServiceIdId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1036,7 +1027,7 @@ func expandRouterPolicy6InternetServiceIdId(d *schema.ResourceData, v interface{
 }
 
 func expandRouterPolicy6InternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1049,10 +1040,7 @@ func expandRouterPolicy6InternetServiceCustom(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterPolicy6InternetServiceCustomName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterPolicy6InternetServiceCustomName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

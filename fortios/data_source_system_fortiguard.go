@@ -108,6 +108,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"gui_prompt_auto_upgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fds_license_expiring_days": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -396,6 +400,10 @@ func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeStartHour(v interface{}
 }
 
 func dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeEndHour(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardGuiPromptAutoUpgrade(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -691,6 +699,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("auto_firmware_upgrade_end_hour", dataSourceFlattenSystemFortiguardAutoFirmwareUpgradeEndHour(o["auto-firmware-upgrade-end-hour"], d, "auto_firmware_upgrade_end_hour")); err != nil {
 		if !fortiAPIPatch(o["auto-firmware-upgrade-end-hour"]) {
 			return fmt.Errorf("Error reading auto_firmware_upgrade_end_hour: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_prompt_auto_upgrade", dataSourceFlattenSystemFortiguardGuiPromptAutoUpgrade(o["gui-prompt-auto-upgrade"], d, "gui_prompt_auto_upgrade")); err != nil {
+		if !fortiAPIPatch(o["gui-prompt-auto-upgrade"]) {
+			return fmt.Errorf("Error reading gui_prompt_auto_upgrade: %v", err)
 		}
 	}
 

@@ -73,7 +73,7 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Computed:     true,
 			},
 			"server_list": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -169,7 +169,7 @@ func resourceSystemSdnConnector() *schema.Resource {
 							Computed:     true,
 						},
 						"region_list": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -440,7 +440,7 @@ func resourceSystemSdnConnector() *schema.Resource {
 							Computed:     true,
 						},
 						"gcp_zone_list": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1987,7 +1987,7 @@ func expandSystemSdnConnectorServer(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemSdnConnectorServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2000,10 +2000,7 @@ func expandSystemSdnConnectorServerList(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandSystemSdnConnectorServerListIp(d, i["ip"], pre_append, sv)
-		}
+		tmp["ip"], _ = expandSystemSdnConnectorServerListIp(d, i["ip"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2109,7 +2106,7 @@ func expandSystemSdnConnectorExternalAccountListExternalId(d *schema.ResourceDat
 }
 
 func expandSystemSdnConnectorExternalAccountListRegionList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2122,10 +2119,7 @@ func expandSystemSdnConnectorExternalAccountListRegionList(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["region"], _ = expandSystemSdnConnectorExternalAccountListRegionListRegion(d, i["region"], pre_append, sv)
-		}
+		tmp["region"], _ = expandSystemSdnConnectorExternalAccountListRegionListRegion(d, i["region"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2581,7 +2575,7 @@ func expandSystemSdnConnectorGcpProjectListId(d *schema.ResourceData, v interfac
 }
 
 func expandSystemSdnConnectorGcpProjectListGcpZoneList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2594,10 +2588,7 @@ func expandSystemSdnConnectorGcpProjectListGcpZoneList(d *schema.ResourceData, v
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemSdnConnectorGcpProjectListGcpZoneListName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemSdnConnectorGcpProjectListGcpZoneListName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

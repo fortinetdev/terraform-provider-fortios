@@ -123,7 +123,7 @@ func resourceApplicationList() *schema.Resource {
 							Computed: true,
 						},
 						"risk": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -136,7 +136,7 @@ func resourceApplicationList() *schema.Resource {
 							},
 						},
 						"category": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -149,7 +149,7 @@ func resourceApplicationList() *schema.Resource {
 							},
 						},
 						"sub_category": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -162,7 +162,7 @@ func resourceApplicationList() *schema.Resource {
 							},
 						},
 						"application": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -200,7 +200,7 @@ func resourceApplicationList() *schema.Resource {
 							Computed: true,
 						},
 						"exclusion": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1580,7 +1580,7 @@ func expandApplicationListEntriesId(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandApplicationListEntriesRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1593,10 +1593,7 @@ func expandApplicationListEntriesRisk(d *schema.ResourceData, v interface{}, pre
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["level"], _ = expandApplicationListEntriesRiskLevel(d, i["level"], pre_append, sv)
-		}
+		tmp["level"], _ = expandApplicationListEntriesRiskLevel(d, i["level"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1611,7 +1608,7 @@ func expandApplicationListEntriesRiskLevel(d *schema.ResourceData, v interface{}
 }
 
 func expandApplicationListEntriesCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1624,10 +1621,7 @@ func expandApplicationListEntriesCategory(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandApplicationListEntriesCategoryId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandApplicationListEntriesCategoryId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1642,7 +1636,7 @@ func expandApplicationListEntriesCategoryId(d *schema.ResourceData, v interface{
 }
 
 func expandApplicationListEntriesSubCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1655,10 +1649,7 @@ func expandApplicationListEntriesSubCategory(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandApplicationListEntriesSubCategoryId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandApplicationListEntriesSubCategoryId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1673,7 +1664,7 @@ func expandApplicationListEntriesSubCategoryId(d *schema.ResourceData, v interfa
 }
 
 func expandApplicationListEntriesApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1686,10 +1677,7 @@ func expandApplicationListEntriesApplication(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandApplicationListEntriesApplicationId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandApplicationListEntriesApplicationId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1724,7 +1712,7 @@ func expandApplicationListEntriesPopularity(d *schema.ResourceData, v interface{
 }
 
 func expandApplicationListEntriesExclusion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1737,10 +1725,7 @@ func expandApplicationListEntriesExclusion(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandApplicationListEntriesExclusionId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandApplicationListEntriesExclusionId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 

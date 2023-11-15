@@ -115,7 +115,7 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				Computed: true,
 			},
 			"dscp_wmm_vo": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -129,7 +129,7 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				},
 			},
 			"dscp_wmm_vi": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -143,7 +143,7 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				},
 			},
 			"dscp_wmm_be": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -157,7 +157,7 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				},
 			},
 			"dscp_wmm_bk": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -831,7 +831,7 @@ func expandWirelessControllerQosProfileDscpWmmMapping(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -844,10 +844,7 @@ func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmVoId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmVoId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -862,7 +859,7 @@ func expandWirelessControllerQosProfileDscpWmmVoId(d *schema.ResourceData, v int
 }
 
 func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -875,10 +872,7 @@ func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmViId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmViId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -893,7 +887,7 @@ func expandWirelessControllerQosProfileDscpWmmViId(d *schema.ResourceData, v int
 }
 
 func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -906,10 +900,7 @@ func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBeId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBeId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -924,7 +915,7 @@ func expandWirelessControllerQosProfileDscpWmmBeId(d *schema.ResourceData, v int
 }
 
 func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -937,10 +928,7 @@ func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBkId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBkId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 

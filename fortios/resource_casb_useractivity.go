@@ -112,7 +112,7 @@ func resourceCasbUserActivity() *schema.Resource {
 										Computed: true,
 									},
 									"domains": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -126,7 +126,7 @@ func resourceCasbUserActivity() *schema.Resource {
 										},
 									},
 									"methods": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -237,7 +237,7 @@ func resourceCasbUserActivity() *schema.Resource {
 										Computed: true,
 									},
 									"values": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -1134,7 +1134,7 @@ func expandCasbUserActivityMatchRulesType(d *schema.ResourceData, v interface{},
 }
 
 func expandCasbUserActivityMatchRulesDomains(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1147,10 +1147,7 @@ func expandCasbUserActivityMatchRulesDomains(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["domain"], _ = expandCasbUserActivityMatchRulesDomainsDomain(d, i["domain"], pre_append, sv)
-		}
+		tmp["domain"], _ = expandCasbUserActivityMatchRulesDomainsDomain(d, i["domain"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1165,7 +1162,7 @@ func expandCasbUserActivityMatchRulesDomainsDomain(d *schema.ResourceData, v int
 }
 
 func expandCasbUserActivityMatchRulesMethods(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1178,10 +1175,7 @@ func expandCasbUserActivityMatchRulesMethods(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["method"], _ = expandCasbUserActivityMatchRulesMethodsMethod(d, i["method"], pre_append, sv)
-		}
+		tmp["method"], _ = expandCasbUserActivityMatchRulesMethodsMethod(d, i["method"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1364,7 +1358,7 @@ func expandCasbUserActivityControlOptionsOperationsValueFromInput(d *schema.Reso
 }
 
 func expandCasbUserActivityControlOptionsOperationsValues(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1377,10 +1371,7 @@ func expandCasbUserActivityControlOptionsOperationsValues(d *schema.ResourceData
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["value"], _ = expandCasbUserActivityControlOptionsOperationsValuesValue(d, i["value"], pre_append, sv)
-		}
+		tmp["value"], _ = expandCasbUserActivityControlOptionsOperationsValuesValue(d, i["value"], pre_append, sv)
 
 		result = append(result, tmp)
 

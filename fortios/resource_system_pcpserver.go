@@ -63,7 +63,7 @@ func resourceSystemPcpServer() *schema.Resource {
 							Computed: true,
 						},
 						"client_subnet": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -132,7 +132,7 @@ func resourceSystemPcpServer() *schema.Resource {
 							Computed: true,
 						},
 						"third_party_subnet": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -157,7 +157,7 @@ func resourceSystemPcpServer() *schema.Resource {
 							Computed:     true,
 						},
 						"intl_intf": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -789,7 +789,7 @@ func expandSystemPcpServerPoolsId(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandSystemPcpServerPoolsClientSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -802,10 +802,7 @@ func expandSystemPcpServerPoolsClientSubnet(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["subnet"], _ = expandSystemPcpServerPoolsClientSubnetSubnet(d, i["subnet"], pre_append, sv)
-		}
+		tmp["subnet"], _ = expandSystemPcpServerPoolsClientSubnetSubnet(d, i["subnet"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -860,7 +857,7 @@ func expandSystemPcpServerPoolsThirdParty(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemPcpServerPoolsThirdPartySubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -873,10 +870,7 @@ func expandSystemPcpServerPoolsThirdPartySubnet(d *schema.ResourceData, v interf
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["subnet"], _ = expandSystemPcpServerPoolsThirdPartySubnetSubnet(d, i["subnet"], pre_append, sv)
-		}
+		tmp["subnet"], _ = expandSystemPcpServerPoolsThirdPartySubnetSubnet(d, i["subnet"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -899,7 +893,7 @@ func expandSystemPcpServerPoolsAnnouncementCount(d *schema.ResourceData, v inter
 }
 
 func expandSystemPcpServerPoolsIntlIntf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -912,10 +906,7 @@ func expandSystemPcpServerPoolsIntlIntf(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemPcpServerPoolsIntlIntfInterfaceName(d, i["interface_name"], pre_append, sv)
-		}
+		tmp["interface-name"], _ = expandSystemPcpServerPoolsIntlIntfInterfaceName(d, i["interface_name"], pre_append, sv)
 
 		result = append(result, tmp)
 

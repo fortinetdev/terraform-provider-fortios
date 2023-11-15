@@ -126,7 +126,7 @@ func resourceWebfilterProfile() *schema.Resource {
 										Computed: true,
 									},
 									"file_type": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -198,7 +198,7 @@ func resourceWebfilterProfile() *schema.Resource {
 							Computed: true,
 						},
 						"ovrd_user_group": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -212,7 +212,7 @@ func resourceWebfilterProfile() *schema.Resource {
 							},
 						},
 						"profile": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -297,7 +297,7 @@ func resourceWebfilterProfile() *schema.Resource {
 							Computed: true,
 						},
 						"keyword_match": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -392,7 +392,7 @@ func resourceWebfilterProfile() *schema.Resource {
 										Computed: true,
 									},
 									"auth_usr_grp": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -613,7 +613,7 @@ func resourceWebfilterProfile() *schema.Resource {
 				Computed: true,
 			},
 			"wisp_servers": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -2630,7 +2630,7 @@ func expandWebfilterProfileFileFilterEntriesPasswordProtected(d *schema.Resource
 }
 
 func expandWebfilterProfileFileFilterEntriesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2643,10 +2643,7 @@ func expandWebfilterProfileFileFilterEntriesFileType(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebfilterProfileFileFilterEntriesFileTypeName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebfilterProfileFileFilterEntriesFileTypeName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2747,7 +2744,7 @@ func expandWebfilterProfileOverrideProfileAttribute(d *schema.ResourceData, v in
 }
 
 func expandWebfilterProfileOverrideOvrdUserGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2760,10 +2757,7 @@ func expandWebfilterProfileOverrideOvrdUserGroup(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebfilterProfileOverrideOvrdUserGroupName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebfilterProfileOverrideOvrdUserGroupName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2778,7 +2772,7 @@ func expandWebfilterProfileOverrideOvrdUserGroupName(d *schema.ResourceData, v i
 }
 
 func expandWebfilterProfileOverrideProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2791,10 +2785,7 @@ func expandWebfilterProfileOverrideProfile(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebfilterProfileOverrideProfileName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebfilterProfileOverrideProfileName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2925,7 +2916,7 @@ func expandWebfilterProfileWebLogSearch(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWebfilterProfileWebKeywordMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2938,10 +2929,7 @@ func expandWebfilterProfileWebKeywordMatch(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern"], _ = expandWebfilterProfileWebKeywordMatchPattern(d, i["pattern"], pre_append, sv)
-		}
+		tmp["pattern"], _ = expandWebfilterProfileWebKeywordMatchPattern(d, i["pattern"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3164,7 +3152,7 @@ func expandWebfilterProfileFtgdWfFiltersWarnDuration(d *schema.ResourceData, v i
 }
 
 func expandWebfilterProfileFtgdWfFiltersAuthUsrGrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3177,10 +3165,7 @@ func expandWebfilterProfileFtgdWfFiltersAuthUsrGrp(d *schema.ResourceData, v int
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebfilterProfileFtgdWfFiltersAuthUsrGrpName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebfilterProfileFtgdWfFiltersAuthUsrGrpName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3516,7 +3501,7 @@ func expandWebfilterProfileWisp(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandWebfilterProfileWispServers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3529,10 +3514,7 @@ func expandWebfilterProfileWispServers(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebfilterProfileWispServersName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebfilterProfileWispServersName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

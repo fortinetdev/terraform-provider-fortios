@@ -271,7 +271,7 @@ func resourceIcapProfile() *schema.Resource {
 							Computed: true,
 						},
 						"http_resp_status_code": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1294,7 +1294,7 @@ func expandIcapProfileRespmodForwardRulesAction(d *schema.ResourceData, v interf
 }
 
 func expandIcapProfileRespmodForwardRulesHttpRespStatusCode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1307,10 +1307,7 @@ func expandIcapProfileRespmodForwardRulesHttpRespStatusCode(d *schema.ResourceDa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["code"], _ = expandIcapProfileRespmodForwardRulesHttpRespStatusCodeCode(d, i["code"], pre_append, sv)
-		}
+		tmp["code"], _ = expandIcapProfileRespmodForwardRulesHttpRespStatusCodeCode(d, i["code"], pre_append, sv)
 
 		result = append(result, tmp)
 

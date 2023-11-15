@@ -200,7 +200,7 @@ func resourceRouterRip() *schema.Resource {
 				},
 			},
 			"passive_interface": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1546,7 +1546,7 @@ func expandRouterRipOffsetListInterface(d *schema.ResourceData, v interface{}, p
 }
 
 func expandRouterRipPassiveInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1559,10 +1559,7 @@ func expandRouterRipPassiveInterface(d *schema.ResourceData, v interface{}, pre 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRouterRipPassiveInterfaceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandRouterRipPassiveInterfaceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

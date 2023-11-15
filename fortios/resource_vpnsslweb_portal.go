@@ -73,7 +73,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Computed: true,
 			},
 			"ip_pools": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -107,7 +107,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Computed: true,
 			},
 			"split_tunneling_routing_address": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -156,7 +156,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Computed: true,
 			},
 			"ipv6_pools": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -190,7 +190,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Computed: true,
 			},
 			"ipv6_split_tunneling_routing_address": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -583,7 +583,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Computed:     true,
 			},
 			"host_check_policy": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -629,7 +629,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Computed:     true,
 						},
 						"mac_addr_list": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -2848,7 +2848,7 @@ func expandVpnSslWebPortalSavePassword(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandVpnSslWebPortalIpPools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2861,10 +2861,7 @@ func expandVpnSslWebPortalIpPools(d *schema.ResourceData, v interface{}, pre str
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslWebPortalIpPoolsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslWebPortalIpPoolsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2895,7 +2892,7 @@ func expandVpnSslWebPortalSplitTunnelingRoutingNegate(d *schema.ResourceData, v 
 }
 
 func expandVpnSslWebPortalSplitTunnelingRoutingAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2908,10 +2905,7 @@ func expandVpnSslWebPortalSplitTunnelingRoutingAddress(d *schema.ResourceData, v
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslWebPortalSplitTunnelingRoutingAddressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslWebPortalSplitTunnelingRoutingAddressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2954,7 +2948,7 @@ func expandVpnSslWebPortalIpv6TunnelMode(d *schema.ResourceData, v interface{}, 
 }
 
 func expandVpnSslWebPortalIpv6Pools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2967,10 +2961,7 @@ func expandVpnSslWebPortalIpv6Pools(d *schema.ResourceData, v interface{}, pre s
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslWebPortalIpv6PoolsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslWebPortalIpv6PoolsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3001,7 +2992,7 @@ func expandVpnSslWebPortalIpv6SplitTunnelingRoutingNegate(d *schema.ResourceData
 }
 
 func expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3014,10 +3005,7 @@ func expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3554,7 +3542,7 @@ func expandVpnSslWebPortalHostCheckInterval(d *schema.ResourceData, v interface{
 }
 
 func expandVpnSslWebPortalHostCheckPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3567,10 +3555,7 @@ func expandVpnSslWebPortalHostCheckPolicy(d *schema.ResourceData, v interface{},
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslWebPortalHostCheckPolicyName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslWebPortalHostCheckPolicyName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3644,7 +3629,7 @@ func expandVpnSslWebPortalMacAddrCheckRuleMacAddrMask(d *schema.ResourceData, v 
 }
 
 func expandVpnSslWebPortalMacAddrCheckRuleMacAddrList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3657,10 +3642,7 @@ func expandVpnSslWebPortalMacAddrCheckRuleMacAddrList(d *schema.ResourceData, v 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["addr"], _ = expandVpnSslWebPortalMacAddrCheckRuleMacAddrListAddr(d, i["addr"], pre_append, sv)
-		}
+		tmp["addr"], _ = expandVpnSslWebPortalMacAddrCheckRuleMacAddrListAddr(d, i["addr"], pre_append, sv)
 
 		result = append(result, tmp)
 

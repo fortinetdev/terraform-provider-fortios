@@ -61,7 +61,7 @@ func resourceSwitchControllerVlanPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"allowed_vlans": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -75,7 +75,7 @@ func resourceSwitchControllerVlanPolicy() *schema.Resource {
 				},
 			},
 			"untagged_vlans": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -444,7 +444,7 @@ func expandSwitchControllerVlanPolicyVlan(d *schema.ResourceData, v interface{},
 }
 
 func expandSwitchControllerVlanPolicyAllowedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -457,10 +457,7 @@ func expandSwitchControllerVlanPolicyAllowedVlans(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vlan-name"], _ = expandSwitchControllerVlanPolicyAllowedVlansVlanName(d, i["vlan_name"], pre_append, sv)
-		}
+		tmp["vlan-name"], _ = expandSwitchControllerVlanPolicyAllowedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -475,7 +472,7 @@ func expandSwitchControllerVlanPolicyAllowedVlansVlanName(d *schema.ResourceData
 }
 
 func expandSwitchControllerVlanPolicyUntaggedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -488,10 +485,7 @@ func expandSwitchControllerVlanPolicyUntaggedVlans(d *schema.ResourceData, v int
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vlan-name"], _ = expandSwitchControllerVlanPolicyUntaggedVlansVlanName(d, i["vlan_name"], pre_append, sv)
-		}
+		tmp["vlan-name"], _ = expandSwitchControllerVlanPolicyUntaggedVlansVlanName(d, i["vlan_name"], pre_append, sv)
 
 		result = append(result, tmp)
 

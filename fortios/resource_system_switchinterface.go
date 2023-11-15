@@ -54,7 +54,7 @@ func resourceSystemSwitchInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"span_source_port": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -68,7 +68,7 @@ func resourceSystemSwitchInterface() *schema.Resource {
 				},
 			},
 			"member": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -469,7 +469,7 @@ func expandSystemSwitchInterfaceSpanDestPort(d *schema.ResourceData, v interface
 }
 
 func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -482,10 +482,7 @@ func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interfa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d, i["interface_name"], pre_append, sv)
-		}
+		tmp["interface-name"], _ = expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d, i["interface_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -500,7 +497,7 @@ func expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d *schema.ResourceDa
 }
 
 func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -513,10 +510,7 @@ func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemSwitchInterfaceMemberInterfaceName(d, i["interface_name"], pre_append, sv)
-		}
+		tmp["interface-name"], _ = expandSystemSwitchInterfaceMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 
 		result = append(result, tmp)
 

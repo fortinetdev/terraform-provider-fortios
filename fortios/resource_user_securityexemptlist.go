@@ -59,7 +59,7 @@ func resourceUserSecurityExemptList() *schema.Resource {
 							Computed: true,
 						},
 						"srcaddr": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -87,7 +87,7 @@ func resourceUserSecurityExemptList() *schema.Resource {
 							},
 						},
 						"dstaddr": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -101,7 +101,7 @@ func resourceUserSecurityExemptList() *schema.Resource {
 							},
 						},
 						"service": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -604,7 +604,7 @@ func expandUserSecurityExemptListRuleId(d *schema.ResourceData, v interface{}, p
 }
 
 func expandUserSecurityExemptListRuleSrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -617,10 +617,7 @@ func expandUserSecurityExemptListRuleSrcaddr(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserSecurityExemptListRuleSrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandUserSecurityExemptListRuleSrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -666,7 +663,7 @@ func expandUserSecurityExemptListRuleDevicesName(d *schema.ResourceData, v inter
 }
 
 func expandUserSecurityExemptListRuleDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -679,10 +676,7 @@ func expandUserSecurityExemptListRuleDstaddr(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserSecurityExemptListRuleDstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandUserSecurityExemptListRuleDstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -697,7 +691,7 @@ func expandUserSecurityExemptListRuleDstaddrName(d *schema.ResourceData, v inter
 }
 
 func expandUserSecurityExemptListRuleService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -710,10 +704,7 @@ func expandUserSecurityExemptListRuleService(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserSecurityExemptListRuleServiceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandUserSecurityExemptListRuleServiceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

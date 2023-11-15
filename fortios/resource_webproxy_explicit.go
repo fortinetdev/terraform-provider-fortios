@@ -71,7 +71,7 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Computed: true,
 			},
 			"secure_web_proxy_cert": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -208,7 +208,7 @@ func resourceWebProxyExplicit() *schema.Resource {
 							Computed: true,
 						},
 						"srcaddr": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -222,7 +222,7 @@ func resourceWebProxyExplicit() *schema.Resource {
 							},
 						},
 						"srcaddr6": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -236,7 +236,7 @@ func resourceWebProxyExplicit() *schema.Resource {
 							},
 						},
 						"dstaddr": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1026,7 +1026,7 @@ func expandWebProxyExplicitHttpsIncomingPort(d *schema.ResourceData, v interface
 }
 
 func expandWebProxyExplicitSecureWebProxyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1039,10 +1039,7 @@ func expandWebProxyExplicitSecureWebProxyCert(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitSecureWebProxyCertName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebProxyExplicitSecureWebProxyCertName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1217,7 +1214,7 @@ func expandWebProxyExplicitPacPolicyStatus(d *schema.ResourceData, v interface{}
 }
 
 func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1230,10 +1227,7 @@ func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1248,7 +1242,7 @@ func expandWebProxyExplicitPacPolicySrcaddrName(d *schema.ResourceData, v interf
 }
 
 func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1261,10 +1255,7 @@ func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1279,7 +1270,7 @@ func expandWebProxyExplicitPacPolicySrcaddr6Name(d *schema.ResourceData, v inter
 }
 
 func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1292,10 +1283,7 @@ func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitPacPolicyDstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWebProxyExplicitPacPolicyDstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -93,7 +93,7 @@ func resourceWafProfile() *schema.Resource {
 							},
 						},
 						"disabled_sub_class": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -106,7 +106,7 @@ func resourceWafProfile() *schema.Resource {
 							},
 						},
 						"disabled_signature": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -810,7 +810,7 @@ func resourceWafProfile() *schema.Resource {
 							Computed: true,
 						},
 						"trusted_address": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -824,7 +824,7 @@ func resourceWafProfile() *schema.Resource {
 							},
 						},
 						"blocked_address": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -3041,7 +3041,7 @@ func expandWafProfileSignatureMainClassSeverity(d *schema.ResourceData, v interf
 }
 
 func expandWafProfileSignatureDisabledSubClass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3054,10 +3054,7 @@ func expandWafProfileSignatureDisabledSubClass(d *schema.ResourceData, v interfa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWafProfileSignatureDisabledSubClassId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandWafProfileSignatureDisabledSubClassId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3072,7 +3069,7 @@ func expandWafProfileSignatureDisabledSubClassId(d *schema.ResourceData, v inter
 }
 
 func expandWafProfileSignatureDisabledSignature(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3085,10 +3082,7 @@ func expandWafProfileSignatureDisabledSignature(d *schema.ResourceData, v interf
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWafProfileSignatureDisabledSignatureId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandWafProfileSignatureDisabledSignatureId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4322,7 +4316,7 @@ func expandWafProfileAddressListSeverity(d *schema.ResourceData, v interface{}, 
 }
 
 func expandWafProfileAddressListTrustedAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4335,10 +4329,7 @@ func expandWafProfileAddressListTrustedAddress(d *schema.ResourceData, v interfa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWafProfileAddressListTrustedAddressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWafProfileAddressListTrustedAddressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -4353,7 +4344,7 @@ func expandWafProfileAddressListTrustedAddressName(d *schema.ResourceData, v int
 }
 
 func expandWafProfileAddressListBlockedAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -4366,10 +4357,7 @@ func expandWafProfileAddressListBlockedAddress(d *schema.ResourceData, v interfa
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWafProfileAddressListBlockedAddressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWafProfileAddressListBlockedAddressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

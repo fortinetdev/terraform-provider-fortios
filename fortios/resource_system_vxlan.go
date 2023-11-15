@@ -57,7 +57,7 @@ func resourceSystemVxlan() *schema.Resource {
 				Required: true,
 			},
 			"remote_ip": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -71,7 +71,7 @@ func resourceSystemVxlan() *schema.Resource {
 				},
 			},
 			"remote_ip6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -473,7 +473,7 @@ func expandSystemVxlanIpVersion(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -486,10 +486,7 @@ func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandSystemVxlanRemoteIpIp(d, i["ip"], pre_append, sv)
-		}
+		tmp["ip"], _ = expandSystemVxlanRemoteIpIp(d, i["ip"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -504,7 +501,7 @@ func expandSystemVxlanRemoteIpIp(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -517,10 +514,7 @@ func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip6"], _ = expandSystemVxlanRemoteIp6Ip6(d, i["ip6"], pre_append, sv)
-		}
+		tmp["ip6"], _ = expandSystemVxlanRemoteIp6Ip6(d, i["ip6"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -78,7 +78,7 @@ func resourceIpsSensor() *schema.Resource {
 							Computed: true,
 						},
 						"rule": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -126,7 +126,7 @@ func resourceIpsSensor() *schema.Resource {
 							Computed: true,
 						},
 						"cve": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -140,7 +140,7 @@ func resourceIpsSensor() *schema.Resource {
 							},
 						},
 						"vuln_type": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -754,6 +754,11 @@ func flattenIpsSensorEntriesRuleId(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenIpsSensorEntriesLocation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
@@ -767,14 +772,29 @@ func flattenIpsSensorEntriesSeverity(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenIpsSensorEntriesProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
 func flattenIpsSensorEntriesOs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
 func flattenIpsSensorEntriesApplication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
@@ -1099,6 +1119,11 @@ func flattenIpsSensorFilterName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenIpsSensorFilterLocation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
@@ -1112,14 +1137,29 @@ func flattenIpsSensorFilterSeverity(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenIpsSensorFilterProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
 func flattenIpsSensorFilterOs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
 func flattenIpsSensorFilterApplication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.TrimRight(temp_v, " ")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 
@@ -1621,7 +1661,7 @@ func expandIpsSensorEntriesId(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandIpsSensorEntriesRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1634,10 +1674,7 @@ func expandIpsSensorEntriesRule(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandIpsSensorEntriesRuleId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandIpsSensorEntriesRuleId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1680,7 +1717,7 @@ func expandIpsSensorEntriesDefaultStatus(d *schema.ResourceData, v interface{}, 
 }
 
 func expandIpsSensorEntriesCve(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1693,10 +1730,7 @@ func expandIpsSensorEntriesCve(d *schema.ResourceData, v interface{}, pre string
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cve_entry"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["cve-entry"], _ = expandIpsSensorEntriesCveCveEntry(d, i["cve_entry"], pre_append, sv)
-		}
+		tmp["cve-entry"], _ = expandIpsSensorEntriesCveCveEntry(d, i["cve_entry"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1711,7 +1745,7 @@ func expandIpsSensorEntriesCveCveEntry(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandIpsSensorEntriesVulnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1724,10 +1758,7 @@ func expandIpsSensorEntriesVulnType(d *schema.ResourceData, v interface{}, pre s
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandIpsSensorEntriesVulnTypeId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandIpsSensorEntriesVulnTypeId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 

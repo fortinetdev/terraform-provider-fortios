@@ -69,7 +69,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Computed: true,
 			},
 			"email_to": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -329,7 +329,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				},
 			},
 			"headers": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -382,7 +382,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Computed:     true,
 			},
 			"sdn_connector": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1325,7 +1325,7 @@ func expandSystemAutomationActionForticareEmail(d *schema.ResourceData, v interf
 }
 
 func expandSystemAutomationActionEmailTo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1338,10 +1338,7 @@ func expandSystemAutomationActionEmailTo(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemAutomationActionEmailToName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemAutomationActionEmailToName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1561,7 +1558,7 @@ func expandSystemAutomationActionHttpHeadersValue(d *schema.ResourceData, v inte
 }
 
 func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1574,10 +1571,7 @@ func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["header"], _ = expandSystemAutomationActionHeadersHeader(d, i["header"], pre_append, sv)
-		}
+		tmp["header"], _ = expandSystemAutomationActionHeadersHeader(d, i["header"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1620,7 +1614,7 @@ func expandSystemAutomationActionSecurityTag(d *schema.ResourceData, v interface
 }
 
 func expandSystemAutomationActionSdnConnector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1633,10 +1627,7 @@ func expandSystemAutomationActionSdnConnector(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemAutomationActionSdnConnectorName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemAutomationActionSdnConnectorName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -59,7 +59,7 @@ func resourceCasbProfile() *schema.Resource {
 							Computed: true,
 						},
 						"safe_search_control": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -78,7 +78,7 @@ func resourceCasbProfile() *schema.Resource {
 							Computed: true,
 						},
 						"tenant_control_tenants": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -97,7 +97,7 @@ func resourceCasbProfile() *schema.Resource {
 							Computed: true,
 						},
 						"domain_control_domains": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -162,7 +162,7 @@ func resourceCasbProfile() *schema.Resource {
 													Computed:     true,
 												},
 												"user_input": &schema.Schema{
-													Type:     schema.TypeList,
+													Type:     schema.TypeSet,
 													Optional: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -883,7 +883,7 @@ func expandCasbProfileSaasApplicationSafeSearch(d *schema.ResourceData, v interf
 }
 
 func expandCasbProfileSaasApplicationSafeSearchControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -896,10 +896,7 @@ func expandCasbProfileSaasApplicationSafeSearchControl(d *schema.ResourceData, v
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandCasbProfileSaasApplicationSafeSearchControlName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandCasbProfileSaasApplicationSafeSearchControlName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -918,7 +915,7 @@ func expandCasbProfileSaasApplicationTenantControl(d *schema.ResourceData, v int
 }
 
 func expandCasbProfileSaasApplicationTenantControlTenants(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -931,10 +928,7 @@ func expandCasbProfileSaasApplicationTenantControlTenants(d *schema.ResourceData
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandCasbProfileSaasApplicationTenantControlTenantsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandCasbProfileSaasApplicationTenantControlTenantsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -953,7 +947,7 @@ func expandCasbProfileSaasApplicationDomainControl(d *schema.ResourceData, v int
 }
 
 func expandCasbProfileSaasApplicationDomainControlDomains(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -966,10 +960,7 @@ func expandCasbProfileSaasApplicationDomainControlDomains(d *schema.ResourceData
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandCasbProfileSaasApplicationDomainControlDomainsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandCasbProfileSaasApplicationDomainControlDomainsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -1113,7 +1104,7 @@ func expandCasbProfileSaasApplicationCustomControlOptionName(d *schema.ResourceD
 }
 
 func expandCasbProfileSaasApplicationCustomControlOptionUserInput(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -1126,10 +1117,7 @@ func expandCasbProfileSaasApplicationCustomControlOptionUserInput(d *schema.Reso
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["value"], _ = expandCasbProfileSaasApplicationCustomControlOptionUserInputValue(d, i["value"], pre_append, sv)
-		}
+		tmp["value"], _ = expandCasbProfileSaasApplicationCustomControlOptionUserInputValue(d, i["value"], pre_append, sv)
 
 		result = append(result, tmp)
 

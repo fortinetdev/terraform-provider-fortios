@@ -253,7 +253,7 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"fail_alert_interfaces": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -745,7 +745,7 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"member": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -932,7 +932,7 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"security_groups": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1430,7 +1430,7 @@ func resourceSystemInterface() *schema.Resource {
 							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1702,7 +1702,7 @@ func resourceSystemInterface() *schema.Resource {
 										Computed: true,
 									},
 									"dnssl": &schema.Schema{
-										Type:     schema.TypeList,
+										Type:     schema.TypeSet,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -6286,7 +6286,7 @@ func expandSystemInterfaceFailActionOnExtender(d *schema.ResourceData, v interfa
 }
 
 func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6299,10 +6299,7 @@ func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceFailAlertInterfacesName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemInterfaceFailAlertInterfacesName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6677,7 +6674,7 @@ func expandSystemInterfaceRemoteIp(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6690,10 +6687,7 @@ func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre stri
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemInterfaceMemberInterfaceName(d, i["interface_name"], pre_append, sv)
-		}
+		tmp["interface-name"], _ = expandSystemInterfaceMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -6855,7 +6849,7 @@ func expandSystemInterfaceSecurityExemptList(d *schema.ResourceData, v interface
 }
 
 func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -6868,10 +6862,7 @@ func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceSecurityGroupsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemInterfaceSecurityGroupsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -7490,7 +7481,7 @@ func expandSystemInterfaceTaggingCategory(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7503,10 +7494,7 @@ func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceTaggingTagsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandSystemInterfaceTaggingTagsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -8003,7 +7991,7 @@ func expandSystemInterfaceIpv6Ip6PrefixListRdnss(d *schema.ResourceData, v inter
 }
 
 func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -8016,10 +8004,7 @@ func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["domain"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d, i["domain"], pre_append, sv)
-		}
+		tmp["domain"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d, i["domain"], pre_append, sv)
 
 		result = append(result, tmp)
 

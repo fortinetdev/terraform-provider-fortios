@@ -187,7 +187,7 @@ func resourceRouterBgp() *schema.Resource {
 				Computed: true,
 			},
 			"confederation_peers": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -2080,7 +2080,7 @@ func resourceRouterBgp() *schema.Resource {
 							Computed:     true,
 						},
 						"export_rt": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -2094,7 +2094,7 @@ func resourceRouterBgp() *schema.Resource {
 							},
 						},
 						"import_rt": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -7175,7 +7175,7 @@ func expandRouterBgpConfederationIdentifier(d *schema.ResourceData, v interface{
 }
 
 func expandRouterBgpConfederationPeers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7188,10 +7188,7 @@ func expandRouterBgpConfederationPeers(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["peer"], _ = expandRouterBgpConfederationPeersPeer(d, i["peer"], pre_append, sv)
-		}
+		tmp["peer"], _ = expandRouterBgpConfederationPeersPeer(d, i["peer"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -10483,7 +10480,7 @@ func expandRouterBgpVrfRd(d *schema.ResourceData, v interface{}, pre string, sv 
 }
 
 func expandRouterBgpVrfExportRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -10496,10 +10493,7 @@ func expandRouterBgpVrfExportRt(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["route-target"], _ = expandRouterBgpVrfExportRtRouteTarget(d, i["route_target"], pre_append, sv)
-		}
+		tmp["route-target"], _ = expandRouterBgpVrfExportRtRouteTarget(d, i["route_target"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -10514,7 +10508,7 @@ func expandRouterBgpVrfExportRtRouteTarget(d *schema.ResourceData, v interface{}
 }
 
 func expandRouterBgpVrfImportRt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -10527,10 +10521,7 @@ func expandRouterBgpVrfImportRt(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["route-target"], _ = expandRouterBgpVrfImportRtRouteTarget(d, i["route_target"], pre_append, sv)
-		}
+		tmp["route-target"], _ = expandRouterBgpVrfImportRtRouteTarget(d, i["route_target"], pre_append, sv)
 
 		result = append(result, tmp)
 

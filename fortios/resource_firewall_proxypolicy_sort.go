@@ -205,6 +205,7 @@ func resourceFirewallProxypolicySortRead(d *schema.ResourceData, m interface{}) 
 	} else {
 		d.Set("state_policy_list", nil)
 	}
+	d.Set("manual_order", manual_order)
 
 	return nil
 }

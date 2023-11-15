@@ -231,7 +231,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Computed: true,
 			},
 			"led_schedules": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -750,7 +750,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Computed: true,
 						},
 						"vaps": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -764,7 +764,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							},
 						},
 						"channel": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1173,7 +1173,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Computed: true,
 						},
 						"vaps": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1187,7 +1187,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							},
 						},
 						"channel": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1590,7 +1590,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Computed: true,
 						},
 						"vaps": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1604,7 +1604,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							},
 						},
 						"channel": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -2007,7 +2007,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Computed: true,
 						},
 						"vaps": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -2021,7 +2021,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							},
 						},
 						"channel": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -7161,7 +7161,7 @@ func expandWirelessControllerWtpProfileLedState(d *schema.ResourceData, v interf
 }
 
 func expandWirelessControllerWtpProfileLedSchedules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7174,10 +7174,7 @@ func expandWirelessControllerWtpProfileLedSchedules(d *schema.ResourceData, v in
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerWtpProfileLedSchedulesName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerWtpProfileLedSchedulesName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -7934,7 +7931,7 @@ func expandWirelessControllerWtpProfileRadio1VapAll(d *schema.ResourceData, v in
 }
 
 func expandWirelessControllerWtpProfileRadio1Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7947,10 +7944,7 @@ func expandWirelessControllerWtpProfileRadio1Vaps(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerWtpProfileRadio1VapsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerWtpProfileRadio1VapsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -7965,7 +7959,7 @@ func expandWirelessControllerWtpProfileRadio1VapsName(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio1Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -7978,10 +7972,7 @@ func expandWirelessControllerWtpProfileRadio1Channel(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["chan"], _ = expandWirelessControllerWtpProfileRadio1ChannelChan(d, i["chan"], pre_append, sv)
-		}
+		tmp["chan"], _ = expandWirelessControllerWtpProfileRadio1ChannelChan(d, i["chan"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -8598,7 +8589,7 @@ func expandWirelessControllerWtpProfileRadio2VapAll(d *schema.ResourceData, v in
 }
 
 func expandWirelessControllerWtpProfileRadio2Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -8611,10 +8602,7 @@ func expandWirelessControllerWtpProfileRadio2Vaps(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerWtpProfileRadio2VapsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerWtpProfileRadio2VapsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -8629,7 +8617,7 @@ func expandWirelessControllerWtpProfileRadio2VapsName(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio2Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -8642,10 +8630,7 @@ func expandWirelessControllerWtpProfileRadio2Channel(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["chan"], _ = expandWirelessControllerWtpProfileRadio2ChannelChan(d, i["chan"], pre_append, sv)
-		}
+		tmp["chan"], _ = expandWirelessControllerWtpProfileRadio2ChannelChan(d, i["chan"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -9254,7 +9239,7 @@ func expandWirelessControllerWtpProfileRadio3VapAll(d *schema.ResourceData, v in
 }
 
 func expandWirelessControllerWtpProfileRadio3Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -9267,10 +9252,7 @@ func expandWirelessControllerWtpProfileRadio3Vaps(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerWtpProfileRadio3VapsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerWtpProfileRadio3VapsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -9285,7 +9267,7 @@ func expandWirelessControllerWtpProfileRadio3VapsName(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio3Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -9298,10 +9280,7 @@ func expandWirelessControllerWtpProfileRadio3Channel(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["chan"], _ = expandWirelessControllerWtpProfileRadio3ChannelChan(d, i["chan"], pre_append, sv)
-		}
+		tmp["chan"], _ = expandWirelessControllerWtpProfileRadio3ChannelChan(d, i["chan"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -9910,7 +9889,7 @@ func expandWirelessControllerWtpProfileRadio4VapAll(d *schema.ResourceData, v in
 }
 
 func expandWirelessControllerWtpProfileRadio4Vaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -9923,10 +9902,7 @@ func expandWirelessControllerWtpProfileRadio4Vaps(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerWtpProfileRadio4VapsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandWirelessControllerWtpProfileRadio4VapsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -9941,7 +9917,7 @@ func expandWirelessControllerWtpProfileRadio4VapsName(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio4Channel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -9954,10 +9930,7 @@ func expandWirelessControllerWtpProfileRadio4Channel(d *schema.ResourceData, v i
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["chan"], _ = expandWirelessControllerWtpProfileRadio4ChannelChan(d, i["chan"], pre_append, sv)
-		}
+		tmp["chan"], _ = expandWirelessControllerWtpProfileRadio4ChannelChan(d, i["chan"], pre_append, sv)
 
 		result = append(result, tmp)
 

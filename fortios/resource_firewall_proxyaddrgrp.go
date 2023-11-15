@@ -52,7 +52,7 @@ func resourceFirewallProxyAddrgrp() *schema.Resource {
 				Computed: true,
 			},
 			"member": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -89,7 +89,7 @@ func resourceFirewallProxyAddrgrp() *schema.Resource {
 							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -513,7 +513,7 @@ func expandFirewallProxyAddrgrpUuid(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandFirewallProxyAddrgrpMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -526,10 +526,7 @@ func expandFirewallProxyAddrgrpMember(d *schema.ResourceData, v interface{}, pre
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallProxyAddrgrpMemberName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallProxyAddrgrpMemberName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -595,7 +592,7 @@ func expandFirewallProxyAddrgrpTaggingCategory(d *schema.ResourceData, v interfa
 }
 
 func expandFirewallProxyAddrgrpTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -608,10 +605,7 @@ func expandFirewallProxyAddrgrpTaggingTags(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallProxyAddrgrpTaggingTagsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallProxyAddrgrpTaggingTagsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

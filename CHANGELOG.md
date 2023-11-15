@@ -1,6 +1,22 @@
 ## 1.19.0 (Unreleased)
 
 
+## 1.18.1 (Nov 14, 2023)
+BUG FIXES:
+
+* Fix move resources always show changes issue (#289);
+* Fix extra spaces issue (#299);
+
+IMPROVEMENTS:
+
+* Support FortiOS v7.0.13, 7.2.6;
+* Set non-order variables to TypeSet;
+* Set variable 'name' as required of resource fortios_user_ldap (#298);
+
+FEATURES:
+
+* **New Data source:** `data_source_vpnssl_settings`
+
 ## 1.18.0 (Sep 11, 2023)
 BUG FIXES:
 

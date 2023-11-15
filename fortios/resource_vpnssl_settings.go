@@ -185,7 +185,7 @@ func resourceVpnSslSettings() *schema.Resource {
 				Computed:     true,
 			},
 			"tunnel_ip_pools": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -199,7 +199,7 @@ func resourceVpnSslSettings() *schema.Resource {
 				},
 			},
 			"tunnel_ipv6_pools": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -311,7 +311,7 @@ func resourceVpnSslSettings() *schema.Resource {
 				Computed: true,
 			},
 			"source_interface": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -325,7 +325,7 @@ func resourceVpnSslSettings() *schema.Resource {
 				},
 			},
 			"source_address": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -344,7 +344,7 @@ func resourceVpnSslSettings() *schema.Resource {
 				Computed: true,
 			},
 			"source_address6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -379,7 +379,7 @@ func resourceVpnSslSettings() *schema.Resource {
 							Computed: true,
 						},
 						"source_interface": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -393,7 +393,7 @@ func resourceVpnSslSettings() *schema.Resource {
 							},
 						},
 						"source_address": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -412,7 +412,7 @@ func resourceVpnSslSettings() *schema.Resource {
 							Computed: true,
 						},
 						"source_address6": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -431,7 +431,7 @@ func resourceVpnSslSettings() *schema.Resource {
 							Computed: true,
 						},
 						"users": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -445,7 +445,7 @@ func resourceVpnSslSettings() *schema.Resource {
 							},
 						},
 						"groups": &schema.Schema{
-							Type:     schema.TypeList,
+							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -2206,7 +2206,7 @@ func expandVpnSslSettingsDtlsHeartbeatFailCount(d *schema.ResourceData, v interf
 }
 
 func expandVpnSslSettingsTunnelIpPools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2219,10 +2219,7 @@ func expandVpnSslSettingsTunnelIpPools(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsTunnelIpPoolsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsTunnelIpPoolsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2237,7 +2234,7 @@ func expandVpnSslSettingsTunnelIpPoolsName(d *schema.ResourceData, v interface{}
 }
 
 func expandVpnSslSettingsTunnelIpv6Pools(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2250,10 +2247,7 @@ func expandVpnSslSettingsTunnelIpv6Pools(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsTunnelIpv6PoolsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsTunnelIpv6PoolsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2344,7 +2338,7 @@ func expandVpnSslSettingsHeaderXForwardedFor(d *schema.ResourceData, v interface
 }
 
 func expandVpnSslSettingsSourceInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2357,10 +2351,7 @@ func expandVpnSslSettingsSourceInterface(d *schema.ResourceData, v interface{}, 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsSourceInterfaceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsSourceInterfaceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2375,7 +2366,7 @@ func expandVpnSslSettingsSourceInterfaceName(d *schema.ResourceData, v interface
 }
 
 func expandVpnSslSettingsSourceAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2388,10 +2379,7 @@ func expandVpnSslSettingsSourceAddress(d *schema.ResourceData, v interface{}, pr
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsSourceAddressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsSourceAddressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2410,7 +2398,7 @@ func expandVpnSslSettingsSourceAddressNegate(d *schema.ResourceData, v interface
 }
 
 func expandVpnSslSettingsSourceAddress6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2423,10 +2411,7 @@ func expandVpnSslSettingsSourceAddress6(d *schema.ResourceData, v interface{}, p
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsSourceAddress6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsSourceAddress6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2555,7 +2540,7 @@ func expandVpnSslSettingsAuthenticationRuleId(d *schema.ResourceData, v interfac
 }
 
 func expandVpnSslSettingsAuthenticationRuleSourceInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2568,10 +2553,7 @@ func expandVpnSslSettingsAuthenticationRuleSourceInterface(d *schema.ResourceDat
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleSourceInterfaceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleSourceInterfaceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2586,7 +2568,7 @@ func expandVpnSslSettingsAuthenticationRuleSourceInterfaceName(d *schema.Resourc
 }
 
 func expandVpnSslSettingsAuthenticationRuleSourceAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2599,10 +2581,7 @@ func expandVpnSslSettingsAuthenticationRuleSourceAddress(d *schema.ResourceData,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleSourceAddressName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleSourceAddressName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2621,7 +2600,7 @@ func expandVpnSslSettingsAuthenticationRuleSourceAddressNegate(d *schema.Resourc
 }
 
 func expandVpnSslSettingsAuthenticationRuleSourceAddress6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2634,10 +2613,7 @@ func expandVpnSslSettingsAuthenticationRuleSourceAddress6(d *schema.ResourceData
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleSourceAddress6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleSourceAddress6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2656,7 +2632,7 @@ func expandVpnSslSettingsAuthenticationRuleSourceAddress6Negate(d *schema.Resour
 }
 
 func expandVpnSslSettingsAuthenticationRuleUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2669,10 +2645,7 @@ func expandVpnSslSettingsAuthenticationRuleUsers(d *schema.ResourceData, v inter
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleUsersName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleUsersName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2687,7 +2660,7 @@ func expandVpnSslSettingsAuthenticationRuleUsersName(d *schema.ResourceData, v i
 }
 
 func expandVpnSslSettingsAuthenticationRuleGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2700,10 +2673,7 @@ func expandVpnSslSettingsAuthenticationRuleGroups(d *schema.ResourceData, v inte
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleGroupsName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandVpnSslSettingsAuthenticationRuleGroupsName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

@@ -8,9 +8,7 @@ description: |-
 
 # fortios_extendercontroller_extender1
 Extender controller configuration.
-
--> The resource applies to FortiOS Version >= 6.4.2. For FortiOS Version < 6.4.2, see `fortios_extendercontroller_extender`.
-
+This resource will be deprecated. For FortiOS Version >= 7.2.1, using `fortios_extensioncontroller_extender`. For FortiOS version < 7.2.1, see `fortios_extendercontroller_extender`
 
 ## Example Usage
 

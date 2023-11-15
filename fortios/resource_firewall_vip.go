@@ -74,7 +74,7 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"src_filter": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -88,7 +88,7 @@ func resourceFirewallVip() *schema.Resource {
 				},
 			},
 			"service": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -107,7 +107,7 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"extaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -202,7 +202,7 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"mappedip": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -284,7 +284,7 @@ func resourceFirewallVip() *schema.Resource {
 				Computed:     true,
 			},
 			"srcintf_filter": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -697,7 +697,7 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"monitor": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -2527,7 +2527,7 @@ func expandFirewallVipLdbMethod(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandFirewallVipSrcFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2540,10 +2540,7 @@ func expandFirewallVipSrcFilter(d *schema.ResourceData, v interface{}, pre strin
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["range"], _ = expandFirewallVipSrcFilterRange(d, i["range"], pre_append, sv)
-		}
+		tmp["range"], _ = expandFirewallVipSrcFilterRange(d, i["range"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2558,7 +2555,7 @@ func expandFirewallVipSrcFilterRange(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandFirewallVipService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2571,10 +2568,7 @@ func expandFirewallVipService(d *schema.ResourceData, v interface{}, pre string,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallVipServiceName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallVipServiceName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2593,7 +2587,7 @@ func expandFirewallVipExtip(d *schema.ResourceData, v interface{}, pre string, s
 }
 
 func expandFirewallVipExtaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2606,10 +2600,7 @@ func expandFirewallVipExtaddr(d *schema.ResourceData, v interface{}, pre string,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallVipExtaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallVipExtaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2722,7 +2713,7 @@ func expandFirewallVipAddNat46Route(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandFirewallVipMappedip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2735,10 +2726,7 @@ func expandFirewallVipMappedip(d *schema.ResourceData, v interface{}, pre string
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["range"], _ = expandFirewallVipMappedipRange(d, i["range"], pre_append, sv)
-		}
+		tmp["range"], _ = expandFirewallVipMappedipRange(d, i["range"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -2805,7 +2793,7 @@ func expandFirewallVipGratuitousArpInterval(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallVipSrcintfFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2818,10 +2806,7 @@ func expandFirewallVipSrcintfFilter(d *schema.ResourceData, v interface{}, pre s
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandFirewallVipSrcintfFilterInterfaceName(d, i["interface_name"], pre_append, sv)
-		}
+		tmp["interface-name"], _ = expandFirewallVipSrcintfFilterInterfaceName(d, i["interface_name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -3313,7 +3298,7 @@ func expandFirewallVipSslHstsIncludeSubdomains(d *schema.ResourceData, v interfa
 }
 
 func expandFirewallVipMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -3326,10 +3311,7 @@ func expandFirewallVipMonitor(d *schema.ResourceData, v interface{}, pre string,
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallVipMonitorName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandFirewallVipMonitorName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 

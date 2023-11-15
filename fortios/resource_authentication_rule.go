@@ -53,7 +53,7 @@ func resourceAuthenticationRule() *schema.Resource {
 				Computed: true,
 			},
 			"srcintf": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -67,7 +67,7 @@ func resourceAuthenticationRule() *schema.Resource {
 				},
 			},
 			"srcaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -81,7 +81,7 @@ func resourceAuthenticationRule() *schema.Resource {
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -95,7 +95,7 @@ func resourceAuthenticationRule() *schema.Resource {
 				},
 			},
 			"srcaddr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -109,7 +109,7 @@ func resourceAuthenticationRule() *schema.Resource {
 				},
 			},
 			"dstaddr6": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -746,7 +746,7 @@ func expandAuthenticationRuleProtocol(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandAuthenticationRuleSrcintf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -759,10 +759,7 @@ func expandAuthenticationRuleSrcintf(d *schema.ResourceData, v interface{}, pre 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandAuthenticationRuleSrcintfName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandAuthenticationRuleSrcintfName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -777,7 +774,7 @@ func expandAuthenticationRuleSrcintfName(d *schema.ResourceData, v interface{}, 
 }
 
 func expandAuthenticationRuleSrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -790,10 +787,7 @@ func expandAuthenticationRuleSrcaddr(d *schema.ResourceData, v interface{}, pre 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandAuthenticationRuleSrcaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandAuthenticationRuleSrcaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -808,7 +802,7 @@ func expandAuthenticationRuleSrcaddrName(d *schema.ResourceData, v interface{}, 
 }
 
 func expandAuthenticationRuleDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -821,10 +815,7 @@ func expandAuthenticationRuleDstaddr(d *schema.ResourceData, v interface{}, pre 
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandAuthenticationRuleDstaddrName(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandAuthenticationRuleDstaddrName(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -839,7 +830,7 @@ func expandAuthenticationRuleDstaddrName(d *schema.ResourceData, v interface{}, 
 }
 
 func expandAuthenticationRuleSrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -852,10 +843,7 @@ func expandAuthenticationRuleSrcaddr6(d *schema.ResourceData, v interface{}, pre
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandAuthenticationRuleSrcaddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandAuthenticationRuleSrcaddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -870,7 +858,7 @@ func expandAuthenticationRuleSrcaddr6Name(d *schema.ResourceData, v interface{},
 }
 
 func expandAuthenticationRuleDstaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -883,10 +871,7 @@ func expandAuthenticationRuleDstaddr6(d *schema.ResourceData, v interface{}, pre
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandAuthenticationRuleDstaddr6Name(d, i["name"], pre_append, sv)
-		}
+		tmp["name"], _ = expandAuthenticationRuleDstaddr6Name(d, i["name"], pre_append, sv)
 
 		result = append(result, tmp)
 
