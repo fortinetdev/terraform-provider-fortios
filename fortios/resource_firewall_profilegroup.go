@@ -118,6 +118,12 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"diameter_filter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"virtual_patch_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -353,6 +359,10 @@ func flattenFirewallProfileGroupSctpFilterProfile(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenFirewallProfileGroupDiameterFilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -476,6 +486,12 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("diameter_filter_profile", flattenFirewallProfileGroupDiameterFilterProfile(o["diameter-filter-profile"], d, "diameter_filter_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["diameter-filter-profile"]) {
+			return fmt.Errorf("Error reading diameter_filter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("virtual_patch_profile", flattenFirewallProfileGroupVirtualPatchProfile(o["virtual-patch-profile"], d, "virtual_patch_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["virtual-patch-profile"]) {
 			return fmt.Errorf("Error reading virtual_patch_profile: %v", err)
@@ -592,6 +608,10 @@ func expandFirewallProfileGroupIpsVoipFilter(d *schema.ResourceData, v interface
 }
 
 func expandFirewallProfileGroupSctpFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupDiameterFilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -757,6 +777,15 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["sctp-filter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("diameter_filter_profile"); ok {
+		t, err := expandFirewallProfileGroupDiameterFilterProfile(d, v, "diameter_filter_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["diameter-filter-profile"] = t
 		}
 	}
 

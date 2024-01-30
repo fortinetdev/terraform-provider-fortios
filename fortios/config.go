@@ -241,3 +241,12 @@ func toCertFormat(v interface{}) interface{} {
 	}
 	return v
 }
+
+func remove_quote(v interface{}) interface{} {
+	if t, ok := v.(string); ok {
+		t = strings.ReplaceAll(t, "\"", "")
+		t = strings.TrimSpace(t)
+		return t
+	}
+	return v
+}

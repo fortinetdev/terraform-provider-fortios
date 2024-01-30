@@ -316,98 +316,98 @@ func flattenSystemPcpServerPools(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemPcpServerPoolsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemPcpServerPoolsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSystemPcpServerPoolsDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSystemPcpServerPoolsDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemPcpServerPoolsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemPcpServerPoolsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_subnet"
-		if _, ok := i["client-subnet"]; ok {
-			tmp["client_subnet"] = flattenSystemPcpServerPoolsClientSubnet(i["client-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["client-subnet"]; ok {
+			tmp["client_subnet"] = flattenSystemPcpServerPoolsClientSubnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ext_intf"
-		if _, ok := i["ext-intf"]; ok {
-			tmp["ext_intf"] = flattenSystemPcpServerPoolsExtIntf(i["ext-intf"], d, pre_append, sv)
+		if cur_v, ok := i["ext-intf"]; ok {
+			tmp["ext_intf"] = flattenSystemPcpServerPoolsExtIntf(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "arp_reply"
-		if _, ok := i["arp-reply"]; ok {
-			tmp["arp_reply"] = flattenSystemPcpServerPoolsArpReply(i["arp-reply"], d, pre_append, sv)
+		if cur_v, ok := i["arp-reply"]; ok {
+			tmp["arp_reply"] = flattenSystemPcpServerPoolsArpReply(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "extip"
-		if _, ok := i["extip"]; ok {
-			tmp["extip"] = flattenSystemPcpServerPoolsExtip(i["extip"], d, pre_append, sv)
+		if cur_v, ok := i["extip"]; ok {
+			tmp["extip"] = flattenSystemPcpServerPoolsExtip(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "extport"
-		if _, ok := i["extport"]; ok {
-			tmp["extport"] = flattenSystemPcpServerPoolsExtport(i["extport"], d, pre_append, sv)
+		if cur_v, ok := i["extport"]; ok {
+			tmp["extport"] = flattenSystemPcpServerPoolsExtport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimal_lifetime"
-		if _, ok := i["minimal-lifetime"]; ok {
-			tmp["minimal_lifetime"] = flattenSystemPcpServerPoolsMinimalLifetime(i["minimal-lifetime"], d, pre_append, sv)
+		if cur_v, ok := i["minimal-lifetime"]; ok {
+			tmp["minimal_lifetime"] = flattenSystemPcpServerPoolsMinimalLifetime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximal_lifetime"
-		if _, ok := i["maximal-lifetime"]; ok {
-			tmp["maximal_lifetime"] = flattenSystemPcpServerPoolsMaximalLifetime(i["maximal-lifetime"], d, pre_append, sv)
+		if cur_v, ok := i["maximal-lifetime"]; ok {
+			tmp["maximal_lifetime"] = flattenSystemPcpServerPoolsMaximalLifetime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_mapping_limit"
-		if _, ok := i["client-mapping-limit"]; ok {
-			tmp["client_mapping_limit"] = flattenSystemPcpServerPoolsClientMappingLimit(i["client-mapping-limit"], d, pre_append, sv)
+		if cur_v, ok := i["client-mapping-limit"]; ok {
+			tmp["client_mapping_limit"] = flattenSystemPcpServerPoolsClientMappingLimit(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping_filter_limit"
-		if _, ok := i["mapping-filter-limit"]; ok {
-			tmp["mapping_filter_limit"] = flattenSystemPcpServerPoolsMappingFilterLimit(i["mapping-filter-limit"], d, pre_append, sv)
+		if cur_v, ok := i["mapping-filter-limit"]; ok {
+			tmp["mapping_filter_limit"] = flattenSystemPcpServerPoolsMappingFilterLimit(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_opcode"
-		if _, ok := i["allow-opcode"]; ok {
-			tmp["allow_opcode"] = flattenSystemPcpServerPoolsAllowOpcode(i["allow-opcode"], d, pre_append, sv)
+		if cur_v, ok := i["allow-opcode"]; ok {
+			tmp["allow_opcode"] = flattenSystemPcpServerPoolsAllowOpcode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party"
-		if _, ok := i["third-party"]; ok {
-			tmp["third_party"] = flattenSystemPcpServerPoolsThirdParty(i["third-party"], d, pre_append, sv)
+		if cur_v, ok := i["third-party"]; ok {
+			tmp["third_party"] = flattenSystemPcpServerPoolsThirdParty(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party_subnet"
-		if _, ok := i["third-party-subnet"]; ok {
-			tmp["third_party_subnet"] = flattenSystemPcpServerPoolsThirdPartySubnet(i["third-party-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["third-party-subnet"]; ok {
+			tmp["third_party_subnet"] = flattenSystemPcpServerPoolsThirdPartySubnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "multicast_announcement"
-		if _, ok := i["multicast-announcement"]; ok {
-			tmp["multicast_announcement"] = flattenSystemPcpServerPoolsMulticastAnnouncement(i["multicast-announcement"], d, pre_append, sv)
+		if cur_v, ok := i["multicast-announcement"]; ok {
+			tmp["multicast_announcement"] = flattenSystemPcpServerPoolsMulticastAnnouncement(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "announcement_count"
-		if _, ok := i["announcement-count"]; ok {
-			tmp["announcement_count"] = flattenSystemPcpServerPoolsAnnouncementCount(i["announcement-count"], d, pre_append, sv)
+		if cur_v, ok := i["announcement-count"]; ok {
+			tmp["announcement_count"] = flattenSystemPcpServerPoolsAnnouncementCount(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "intl_intf"
-		if _, ok := i["intl-intf"]; ok {
-			tmp["intl_intf"] = flattenSystemPcpServerPoolsIntlIntf(i["intl-intf"], d, pre_append, sv)
+		if cur_v, ok := i["intl-intf"]; ok {
+			tmp["intl_intf"] = flattenSystemPcpServerPoolsIntlIntf(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "recycle_delay"
-		if _, ok := i["recycle-delay"]; ok {
-			tmp["recycle_delay"] = flattenSystemPcpServerPoolsRecycleDelay(i["recycle-delay"], d, pre_append, sv)
+		if cur_v, ok := i["recycle-delay"]; ok {
+			tmp["recycle_delay"] = flattenSystemPcpServerPoolsRecycleDelay(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -456,8 +456,8 @@ func flattenSystemPcpServerPoolsClientSubnet(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenSystemPcpServerPoolsClientSubnetSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenSystemPcpServerPoolsClientSubnetSubnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -538,8 +538,8 @@ func flattenSystemPcpServerPoolsThirdPartySubnet(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenSystemPcpServerPoolsThirdPartySubnetSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenSystemPcpServerPoolsThirdPartySubnetSubnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -588,8 +588,8 @@ func flattenSystemPcpServerPoolsIntlIntf(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemPcpServerPoolsIntlIntfInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemPcpServerPoolsIntlIntfInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

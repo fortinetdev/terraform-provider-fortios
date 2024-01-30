@@ -432,5 +432,6 @@ The `vrrp6` block contains:
 * `preempt` - Enable/disable preempt mode.
 * `accept_mode` - Enable/disable accept mode.
 * `vrdst6` - Monitor the route to this destination.
+* `ignore_default_route` - Enable/disable ignoring of default route when checking destination.
 * `status` - Enable/disable VRRP.
 

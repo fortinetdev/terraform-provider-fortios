@@ -19,6 +19,7 @@ The following arguments are supported:
 * `description` - Description.
 * `switch_profile` - FortiSwitch profile.
 * `access_profile` - FortiSwitch access profile.
+* `purdue_level` - Purdue Level of this FortiSwitch. Valid values: `1`, `1.5`, `2`, `2.5`, `3`, `3.5`, `4`, `5`, `5.5`.
 * `fsw_wan1_peer` - (Required) Fortiswitch WAN1 peer port.
 * `fsw_wan1_admin` - FortiSwitch WAN1 admin status; enable to authorize the FortiSwitch as a managed switch. Valid values: `discovered`, `disable`, `enable`.
 * `fsw_wan2_peer` - FortiSwitch WAN2 peer port.
@@ -32,6 +33,8 @@ The following arguments are supported:
 * `max_allowed_trunk_members` - FortiSwitch maximum allowed trunk members.
 * `pre_provisioned` - Pre-provisioned managed switch.
 * `l3_discovered` - Layer 3 management discovered.
+* `mgmt_mode` - FortiLink management mode.
+* `tunnel_discovered` - SOCKS tunnel management discovered.
 * `tdr_supported` - TDR supported.
 * `dynamic_capability` - List of features this FortiSwitch supports (not configurable) that is sent to the FortiGate device for subsequent configuration initiated by the FortiGate device.
 * `switch_device_tag` - User definable label/tag.
@@ -40,9 +43,12 @@ The following arguments are supported:
 * `dynamically_discovered` - Dynamically discovered FortiSwitch.
 * `ptp_status` - Enable/disable PTP profile on this FortiSwitch. Valid values: `disable`, `enable`.
 * `ptp_profile` - PTP profile configuration.
+* `radius_nas_ip_override` - Use locally defined NAS-IP. Valid values: `disable`, `enable`.
+* `radius_nas_ip` - NAS-IP address.
 * `route_offload` - Enable/disable route offload on this FortiSwitch. Valid values: `disable`, `enable`.
 * `route_offload_mclag` - Enable/disable route offload MCLAG on this FortiSwitch. Valid values: `disable`, `enable`.
 * `route_offload_router` - Configure route offload MCLAG IP address. The structure of `route_offload_router` block is documented below.
+* `vlan` - Configure VLAN assignment priority. The structure of `vlan` block is documented below.
 * `type` - Indication of switch type, physical or virtual. Valid values: `virtual`, `physical`.
 * `owner_vdom` - VDOM which owner of port belongs to.
 * `flow_identity` - Flow-tracking netflow ipfix switch identity in hex format(00000000-FFFFFFFF default=0).
@@ -83,6 +89,11 @@ The `route_offload_router` block supports:
 
 * `vlan_name` - VLAN name.
 * `router_ip` - Router IP address.
+
+The `vlan` block supports:
+
+* `vlan_name` - VLAN name.
+* `assignment_priority` - 802.1x Radius (Tunnel-Private-Group-Id) VLANID assign-by-name priority. A smaller value has a higher priority.
 
 The `ports` block supports:
 
@@ -162,7 +173,7 @@ The `ports` block supports:
 * `sflow_counter_interval` - sFlow sampler counter polling interval (1 - 255 sec).
 * `sample_direction` - sFlow sample direction. Valid values: `tx`, `rx`, `both`.
 * `fec_capable` - FEC capable.
-* `fec_state` - State of forward error correction. Valid values: `disabled`, `cl74`, `cl91`.
+* `fec_state` - State of forward error correction.
 * `flow_control` - Flow control direction. Valid values: `disable`, `tx`, `rx`, `both`.
 * `pause_meter` - Configure ingress pause metering rate, in kbps (default = 0, disabled).
 * `pause_meter_resume` - Resume threshold for resuming traffic on ingress port. Valid values: `75%`, `50%`, `25%`.
@@ -394,6 +405,11 @@ The `n802_1x_settings` block supports:
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
 * `tx_period` - 802.1X Tx period (seconds, default=30).
 * `mab_reauth` - Enable or disable MAB reauthentication settings. Valid values: `disable`, `enable`.
+* `mac_username_delimiter` - MAC authentication username delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
+* `mac_password_delimiter` - MAC authentication password delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
+* `mac_calling_station_delimiter` - MAC calling station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
+* `mac_called_station_delimiter` - MAC called station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
+* `mac_case` - MAC case (default = lowercase). Valid values: `lowercase`, `uppercase`.
 
 
 ## Attribute Reference

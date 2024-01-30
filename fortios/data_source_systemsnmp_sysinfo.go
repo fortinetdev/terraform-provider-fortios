@@ -64,6 +64,14 @@ func dataSourceSystemSnmpSysinfo() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"trap_free_memory_threshold": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"trap_freeable_memory_threshold": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -138,6 +146,14 @@ func dataSourceFlattenSystemSnmpSysinfoTrapLogFullThreshold(v interface{}, d *sc
 	return v
 }
 
+func dataSourceFlattenSystemSnmpSysinfoTrapFreeMemoryThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpSysinfoTrapFreeableMemoryThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -192,6 +208,18 @@ func dataSourceRefreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[stri
 	if err = d.Set("trap_log_full_threshold", dataSourceFlattenSystemSnmpSysinfoTrapLogFullThreshold(o["trap-log-full-threshold"], d, "trap_log_full_threshold")); err != nil {
 		if !fortiAPIPatch(o["trap-log-full-threshold"]) {
 			return fmt.Errorf("Error reading trap_log_full_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("trap_free_memory_threshold", dataSourceFlattenSystemSnmpSysinfoTrapFreeMemoryThreshold(o["trap-free-memory-threshold"], d, "trap_free_memory_threshold")); err != nil {
+		if !fortiAPIPatch(o["trap-free-memory-threshold"]) {
+			return fmt.Errorf("Error reading trap_free_memory_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("trap_freeable_memory_threshold", dataSourceFlattenSystemSnmpSysinfoTrapFreeableMemoryThreshold(o["trap-freeable-memory-threshold"], d, "trap_freeable_memory_threshold")); err != nil {
+		if !fortiAPIPatch(o["trap-freeable-memory-threshold"]) {
+			return fmt.Errorf("Error reading trap_freeable_memory_threshold: %v", err)
 		}
 	}
 

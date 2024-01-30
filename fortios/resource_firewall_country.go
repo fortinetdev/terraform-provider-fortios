@@ -229,8 +229,8 @@ func flattenFirewallCountryRegion(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallCountryRegionId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallCountryRegionId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

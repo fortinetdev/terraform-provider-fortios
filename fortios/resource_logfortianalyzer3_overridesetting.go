@@ -91,6 +91,12 @@ func resourceLogFortianalyzer3OverrideSetting() *schema.Resource {
 					},
 				},
 			},
+			"server_cert_ca": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"preshared_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -376,8 +382,8 @@ func flattenLogFortianalyzer3OverrideSettingSerial(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenLogFortianalyzer3OverrideSettingSerialName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenLogFortianalyzer3OverrideSettingSerialName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -390,6 +396,10 @@ func flattenLogFortianalyzer3OverrideSettingSerial(v interface{}, d *schema.Reso
 }
 
 func flattenLogFortianalyzer3OverrideSettingSerialName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzer3OverrideSettingServerCertCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -551,6 +561,12 @@ func refreshObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, o map
 					return fmt.Errorf("Error reading serial: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("server_cert_ca", flattenLogFortianalyzer3OverrideSettingServerCertCa(o["server-cert-ca"], d, "server_cert_ca", sv)); err != nil {
+		if !fortiAPIPatch(o["server-cert-ca"]) {
+			return fmt.Errorf("Error reading server_cert_ca: %v", err)
 		}
 	}
 
@@ -752,6 +768,10 @@ func expandLogFortianalyzer3OverrideSettingSerial(d *schema.ResourceData, v inte
 }
 
 func expandLogFortianalyzer3OverrideSettingSerialName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer3OverrideSettingServerCertCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -959,6 +979,19 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData, setArgNil
 				return &obj, err
 			} else if t != nil {
 				obj["serial"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("server_cert_ca"); ok {
+		if setArgNil {
+			obj["server-cert-ca"] = nil
+		} else {
+			t, err := expandLogFortianalyzer3OverrideSettingServerCertCa(d, v, "server_cert_ca", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-cert-ca"] = t
 			}
 		}
 	}

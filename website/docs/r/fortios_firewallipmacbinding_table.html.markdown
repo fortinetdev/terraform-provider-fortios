@@ -27,7 +27,7 @@ The following arguments are supported:
 
 * `seq_num` - Entry number.
 * `ip` - (Required) IPv4 address portion of the pair (format: xxx.xxx.xxx.xxx).
-* `mac` - MAC address portion of the pair (format: xx:xx:xx:xx:xx:xx in hexidecimal).
+* `mac` - MAC address portion of the pair (format = xx:xx:xx:xx:xx:xx in hexadecimal).
 * `name` - Name of the pair (optional, default = no name).
 * `status` - Enable/disable this IP-mac binding pair. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

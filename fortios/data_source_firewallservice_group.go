@@ -32,6 +32,10 @@ func dataSourceFirewallServiceGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -111,6 +115,10 @@ func dataSourceFlattenFirewallServiceGroupName(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenFirewallServiceGroupUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -169,6 +177,12 @@ func dataSourceRefreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[s
 	if err = d.Set("name", dataSourceFlattenFirewallServiceGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallServiceGroupUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 

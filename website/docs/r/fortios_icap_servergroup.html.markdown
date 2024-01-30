@@ -23,7 +23,7 @@ The following arguments are supported:
 The `server_list` block supports:
 
 * `name` - ICAP server name.
-* `weight` - Optionally assign a weight of the ICAP server for weighted load balancing (1 - 100, default = 10)
+* `weight` - Optionally assign a weight of the forwarding server for weighted load balancing (1 - 100, default = 10).
 
 
 ## Attribute Reference

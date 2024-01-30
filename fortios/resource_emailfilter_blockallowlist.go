@@ -284,53 +284,53 @@ func flattenEmailfilterBlockAllowListEntries(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenEmailfilterBlockAllowListEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenEmailfilterBlockAllowListEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEmailfilterBlockAllowListEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEmailfilterBlockAllowListEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenEmailfilterBlockAllowListEntriesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenEmailfilterBlockAllowListEntriesType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenEmailfilterBlockAllowListEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenEmailfilterBlockAllowListEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenEmailfilterBlockAllowListEntriesAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenEmailfilterBlockAllowListEntriesAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
-		if _, ok := i["ip4-subnet"]; ok {
-			tmp["ip4_subnet"] = flattenEmailfilterBlockAllowListEntriesIp4Subnet(i["ip4-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip4-subnet"]; ok {
+			tmp["ip4_subnet"] = flattenEmailfilterBlockAllowListEntriesIp4Subnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
-		if _, ok := i["ip6-subnet"]; ok {
-			tmp["ip6_subnet"] = flattenEmailfilterBlockAllowListEntriesIp6Subnet(i["ip6-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip6-subnet"]; ok {
+			tmp["ip6_subnet"] = flattenEmailfilterBlockAllowListEntriesIp6Subnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenEmailfilterBlockAllowListEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenEmailfilterBlockAllowListEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenEmailfilterBlockAllowListEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenEmailfilterBlockAllowListEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
-		if _, ok := i["email-pattern"]; ok {
-			tmp["email_pattern"] = flattenEmailfilterBlockAllowListEntriesEmailPattern(i["email-pattern"], d, pre_append, sv)
+		if cur_v, ok := i["email-pattern"]; ok {
+			tmp["email_pattern"] = flattenEmailfilterBlockAllowListEntriesEmailPattern(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

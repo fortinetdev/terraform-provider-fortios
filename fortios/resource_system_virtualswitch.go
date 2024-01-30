@@ -267,13 +267,13 @@ func flattenSystemVirtualSwitchPort(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualSwitchPortName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualSwitchPortName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alias"
-		if _, ok := i["alias"]; ok {
-			tmp["alias"] = flattenSystemVirtualSwitchPortAlias(i["alias"], d, pre_append, sv)
+		if cur_v, ok := i["alias"]; ok {
+			tmp["alias"] = flattenSystemVirtualSwitchPortAlias(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

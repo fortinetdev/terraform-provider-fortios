@@ -61,12 +61,15 @@ The following attributes are exported:
 * `refresh` - Statistics refresh interval in GUI.
 * `interval` - Dead gateway detection interval.
 * `failtime` - Fail-time for server lost.
+* `purdue_level` - Purdue Level of this FortiGate.
 * `daily_restart` - Enable/disable daily restart of FortiGate unit. Use the restart-time option to set the time of day for the restart.
 * `restart_time` - Daily restart time (hh:mm).
 * `wad_restart_mode` - WAD worker restart mode (default = none).
 * `wad_restart_start_time` - WAD workers daily restart time (hh:mm).
 * `wad_restart_end_time` - WAD workers daily restart end time (hh:mm).
 * `radius_port` - RADIUS service port number.
+* `speedtestd_server_port` - Speedtest server port number.
+* `speedtestd_ctrl_port` - Speedtest server controller port number.
 * `admin_login_max` - Maximum number of administrators who can be logged in at the same time (1 - 100, default = 100)
 * `remoteauthtimeout` - Number of seconds that the FortiGate waits for responses from remote RADIUS, LDAP, or TACACS+ authentication servers. (0-300 sec, default = 5, 0 means no timeout).
 * `ldapconntimeout` - Global timeout for connections with remote LDAP servers in milliseconds (1 - 300000, default 500).
@@ -111,6 +114,9 @@ The following attributes are exported:
 * `ssh_enc_algo` - Select one or more SSH ciphers.
 * `ssh_mac_algo` - Select one or more SSH MAC algorithms.
 * `ssh_hostkey_algo` - Select one or more SSH hostkey algorithms.
+* `ssh_hostkey_override` - Enable/disable SSH host key override in SSH daemon.
+* `ssh_hostkey_password` - Password for ssh-hostkey.
+* `ssh_hostkey` - Config SSH host key.
 * `snat_route_change` - Enable/disable the ability to change the static NAT route.
 * `speedtest_server` - Enable/disable speed test server.
 * `cli_audit_log` - Enable/disable CLI audit log.
@@ -258,6 +264,7 @@ The following attributes are exported:
 * `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments.
 * `arp_max_entry` - Maximum number of dynamically learned MAC addresses that can be added to the ARP table (131072 - 2147483647, default = 131072).
 * `ha_affinity` - Affinity setting for HA daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
+* `bfd_affinity` - Affinity setting for BFD daemon (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `cmdbsvr_affinity` - Affinity setting for cmdbsvr (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `av_affinity` - Affinity setting for AV scanning (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `wad_affinity` - Affinity setting for wad (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
@@ -306,6 +313,7 @@ The following attributes are exported:
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session.
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable).
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
+* `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service.
 
 The `internet_service_download_list` block contains:
 

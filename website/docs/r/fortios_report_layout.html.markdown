@@ -41,9 +41,9 @@ The following arguments are supported:
 * `format` - Report format. Valid values: `pdf`.
 * `schedule_type` - Report schedule type. Valid values: `demand`, `daily`, `weekly`.
 * `day` - Schedule days of week to generate report. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
-* `time` - Schedule time to generate report [hh:mm].
+* `time` - Schedule time to generate report (format = hh:mm).
 * `cutoff_option` - Cutoff-option is either run-time or custom. Valid values: `run-time`, `custom`.
-* `cutoff_time` - Custom cutoff time to generate report [hh:mm].
+* `cutoff_time` - Custom cutoff time to generate report (format = hh:mm).
 * `email_send` - Enable/disable sending emails after reports are generated. Valid values: `enable`, `disable`.
 * `email_recipients` - Email recipients for generated reports.
 * `max_pdf_report` - Maximum number of PDF reports to keep at one time (oldest report is overwritten).

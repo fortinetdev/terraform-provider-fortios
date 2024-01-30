@@ -426,7 +426,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"keepalive": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10, 900),
+				ValidateFunc: validation.IntBetween(5, 900),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -529,6 +529,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
+			},
+			"eap_cert_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"acct_verify": &schema.Schema{
 				Type:     schema.TypeString,
@@ -646,6 +651,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"azure_ad_autoconnect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"rekey": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -749,10 +759,75 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dev_id_notification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dev_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"loopback_asymroute": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"link_cost": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"kms": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"exchange_fgt_device_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ems_sn_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cert_trust_store": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"qkd": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"qkd_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"transport": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fortinet_esp": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fallback_tcp_threshold": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 300),
+				Optional:     true,
+				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -946,8 +1021,8 @@ func flattenVpnIpsecPhase1Certificate(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnIpsecPhase1CertificateName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnIpsecPhase1CertificateName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1072,8 +1147,8 @@ func flattenVpnIpsecPhase1InternalDomainList(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
-		if _, ok := i["domain-name"]; ok {
-			tmp["domain_name"] = flattenVpnIpsecPhase1InternalDomainListDomainName(i["domain-name"], d, pre_append, sv)
+		if cur_v, ok := i["domain-name"]; ok {
+			tmp["domain_name"] = flattenVpnIpsecPhase1InternalDomainListDomainName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1122,18 +1197,18 @@ func flattenVpnIpsecPhase1Ipv4ExcludeRange(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnIpsecPhase1Ipv4ExcludeRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnIpsecPhase1Ipv4ExcludeRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenVpnIpsecPhase1Ipv4ExcludeRangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenVpnIpsecPhase1Ipv4ExcludeRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenVpnIpsecPhase1Ipv4ExcludeRangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenVpnIpsecPhase1Ipv4ExcludeRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1218,18 +1293,18 @@ func flattenVpnIpsecPhase1Ipv6ExcludeRange(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnIpsecPhase1Ipv6ExcludeRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnIpsecPhase1Ipv6ExcludeRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenVpnIpsecPhase1Ipv6ExcludeRangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenVpnIpsecPhase1Ipv6ExcludeRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenVpnIpsecPhase1Ipv6ExcludeRangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenVpnIpsecPhase1Ipv6ExcludeRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1326,8 +1401,8 @@ func flattenVpnIpsecPhase1BackupGateway(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenVpnIpsecPhase1BackupGatewayAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenVpnIpsecPhase1BackupGatewayAddress(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1443,6 +1518,10 @@ func flattenVpnIpsecPhase1EapExcludePeergrp(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenVpnIpsecPhase1EapCertAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1AcctVerify(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1531,6 +1610,10 @@ func flattenVpnIpsecPhase1ChildlessIke(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenVpnIpsecPhase1AzureAdAutoconnect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1Rekey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1607,7 +1690,55 @@ func flattenVpnIpsecPhase1NetworkId(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenVpnIpsecPhase1DevIdNotification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1DevId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1LoopbackAsymroute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1LinkCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1Kms(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1ExchangeFgtDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1EmsSnCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1CertTrustStore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1Qkd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1QkdProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1Transport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1FortinetEsp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1FallbackTcpThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2150,6 +2281,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("eap_cert_auth", flattenVpnIpsecPhase1EapCertAuth(o["eap-cert-auth"], d, "eap_cert_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-cert-auth"]) {
+			return fmt.Errorf("Error reading eap_cert_auth: %v", err)
+		}
+	}
+
 	if err = d.Set("acct_verify", flattenVpnIpsecPhase1AcctVerify(o["acct-verify"], d, "acct_verify", sv)); err != nil {
 		if !fortiAPIPatch(o["acct-verify"]) {
 			return fmt.Errorf("Error reading acct_verify: %v", err)
@@ -2261,6 +2398,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("childless_ike", flattenVpnIpsecPhase1ChildlessIke(o["childless-ike"], d, "childless_ike", sv)); err != nil {
 		if !fortiAPIPatch(o["childless-ike"]) {
 			return fmt.Errorf("Error reading childless_ike: %v", err)
+		}
+	}
+
+	if err = d.Set("azure_ad_autoconnect", flattenVpnIpsecPhase1AzureAdAutoconnect(o["azure-ad-autoconnect"], d, "azure_ad_autoconnect", sv)); err != nil {
+		if !fortiAPIPatch(o["azure-ad-autoconnect"]) {
+			return fmt.Errorf("Error reading azure_ad_autoconnect: %v", err)
 		}
 	}
 
@@ -2382,9 +2525,81 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("dev_id_notification", flattenVpnIpsecPhase1DevIdNotification(o["dev-id-notification"], d, "dev_id_notification", sv)); err != nil {
+		if !fortiAPIPatch(o["dev-id-notification"]) {
+			return fmt.Errorf("Error reading dev_id_notification: %v", err)
+		}
+	}
+
+	if err = d.Set("dev_id", flattenVpnIpsecPhase1DevId(o["dev-id"], d, "dev_id", sv)); err != nil {
+		if !fortiAPIPatch(o["dev-id"]) {
+			return fmt.Errorf("Error reading dev_id: %v", err)
+		}
+	}
+
 	if err = d.Set("loopback_asymroute", flattenVpnIpsecPhase1LoopbackAsymroute(o["loopback-asymroute"], d, "loopback_asymroute", sv)); err != nil {
 		if !fortiAPIPatch(o["loopback-asymroute"]) {
 			return fmt.Errorf("Error reading loopback_asymroute: %v", err)
+		}
+	}
+
+	if err = d.Set("link_cost", flattenVpnIpsecPhase1LinkCost(o["link-cost"], d, "link_cost", sv)); err != nil {
+		if !fortiAPIPatch(o["link-cost"]) {
+			return fmt.Errorf("Error reading link_cost: %v", err)
+		}
+	}
+
+	if err = d.Set("kms", flattenVpnIpsecPhase1Kms(o["kms"], d, "kms", sv)); err != nil {
+		if !fortiAPIPatch(o["kms"]) {
+			return fmt.Errorf("Error reading kms: %v", err)
+		}
+	}
+
+	if err = d.Set("exchange_fgt_device_id", flattenVpnIpsecPhase1ExchangeFgtDeviceId(o["exchange-fgt-device-id"], d, "exchange_fgt_device_id", sv)); err != nil {
+		if !fortiAPIPatch(o["exchange-fgt-device-id"]) {
+			return fmt.Errorf("Error reading exchange_fgt_device_id: %v", err)
+		}
+	}
+
+	if err = d.Set("ems_sn_check", flattenVpnIpsecPhase1EmsSnCheck(o["ems-sn-check"], d, "ems_sn_check", sv)); err != nil {
+		if !fortiAPIPatch(o["ems-sn-check"]) {
+			return fmt.Errorf("Error reading ems_sn_check: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_trust_store", flattenVpnIpsecPhase1CertTrustStore(o["cert-trust-store"], d, "cert_trust_store", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-trust-store"]) {
+			return fmt.Errorf("Error reading cert_trust_store: %v", err)
+		}
+	}
+
+	if err = d.Set("qkd", flattenVpnIpsecPhase1Qkd(o["qkd"], d, "qkd", sv)); err != nil {
+		if !fortiAPIPatch(o["qkd"]) {
+			return fmt.Errorf("Error reading qkd: %v", err)
+		}
+	}
+
+	if err = d.Set("qkd_profile", flattenVpnIpsecPhase1QkdProfile(o["qkd-profile"], d, "qkd_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["qkd-profile"]) {
+			return fmt.Errorf("Error reading qkd_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("transport", flattenVpnIpsecPhase1Transport(o["transport"], d, "transport", sv)); err != nil {
+		if !fortiAPIPatch(o["transport"]) {
+			return fmt.Errorf("Error reading transport: %v", err)
+		}
+	}
+
+	if err = d.Set("fortinet_esp", flattenVpnIpsecPhase1FortinetEsp(o["fortinet-esp"], d, "fortinet_esp", sv)); err != nil {
+		if !fortiAPIPatch(o["fortinet-esp"]) {
+			return fmt.Errorf("Error reading fortinet_esp: %v", err)
+		}
+	}
+
+	if err = d.Set("fallback_tcp_threshold", flattenVpnIpsecPhase1FallbackTcpThreshold(o["fallback-tcp-threshold"], d, "fallback_tcp_threshold", sv)); err != nil {
+		if !fortiAPIPatch(o["fallback-tcp-threshold"]) {
+			return fmt.Errorf("Error reading fallback_tcp_threshold: %v", err)
 		}
 	}
 
@@ -2887,6 +3102,10 @@ func expandVpnIpsecPhase1EapExcludePeergrp(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandVpnIpsecPhase1EapCertAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1AcctVerify(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2975,6 +3194,10 @@ func expandVpnIpsecPhase1ChildlessIke(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandVpnIpsecPhase1AzureAdAutoconnect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1Rekey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3051,7 +3274,55 @@ func expandVpnIpsecPhase1NetworkId(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandVpnIpsecPhase1DevIdNotification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1DevId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1LoopbackAsymroute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1LinkCost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1Kms(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1ExchangeFgtDeviceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1EmsSnCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1CertTrustStore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1Qkd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1QkdProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1Transport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1FortinetEsp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1FallbackTcpThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3796,6 +4067,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("eap_cert_auth"); ok {
+		t, err := expandVpnIpsecPhase1EapCertAuth(d, v, "eap_cert_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-cert-auth"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("acct_verify"); ok {
 		t, err := expandVpnIpsecPhase1AcctVerify(d, v, "acct_verify", sv)
 		if err != nil {
@@ -3994,6 +4274,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("azure_ad_autoconnect"); ok {
+		t, err := expandVpnIpsecPhase1AzureAdAutoconnect(d, v, "azure_ad_autoconnect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["azure-ad-autoconnect"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("rekey"); ok {
 		t, err := expandVpnIpsecPhase1Rekey(d, v, "rekey", sv)
 		if err != nil {
@@ -4165,12 +4454,120 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("dev_id_notification"); ok {
+		t, err := expandVpnIpsecPhase1DevIdNotification(d, v, "dev_id_notification", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dev-id-notification"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dev_id"); ok {
+		t, err := expandVpnIpsecPhase1DevId(d, v, "dev_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dev-id"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("loopback_asymroute"); ok {
 		t, err := expandVpnIpsecPhase1LoopbackAsymroute(d, v, "loopback_asymroute", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["loopback-asymroute"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("link_cost"); ok {
+		t, err := expandVpnIpsecPhase1LinkCost(d, v, "link_cost", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["link-cost"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("kms"); ok {
+		t, err := expandVpnIpsecPhase1Kms(d, v, "kms", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["kms"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("exchange_fgt_device_id"); ok {
+		t, err := expandVpnIpsecPhase1ExchangeFgtDeviceId(d, v, "exchange_fgt_device_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["exchange-fgt-device-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ems_sn_check"); ok {
+		t, err := expandVpnIpsecPhase1EmsSnCheck(d, v, "ems_sn_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ems-sn-check"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cert_trust_store"); ok {
+		t, err := expandVpnIpsecPhase1CertTrustStore(d, v, "cert_trust_store", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-trust-store"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("qkd"); ok {
+		t, err := expandVpnIpsecPhase1Qkd(d, v, "qkd", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["qkd"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("qkd_profile"); ok {
+		t, err := expandVpnIpsecPhase1QkdProfile(d, v, "qkd_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["qkd-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("transport"); ok {
+		t, err := expandVpnIpsecPhase1Transport(d, v, "transport", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["transport"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fortinet_esp"); ok {
+		t, err := expandVpnIpsecPhase1FortinetEsp(d, v, "fortinet_esp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortinet-esp"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fallback_tcp_threshold"); ok {
+		t, err := expandVpnIpsecPhase1FallbackTcpThreshold(d, v, "fallback_tcp_threshold", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fallback-tcp-threshold"] = t
 		}
 	}
 

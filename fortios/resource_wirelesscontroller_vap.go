@@ -137,6 +137,16 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"n80211k": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"n80211v": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"voice_enterprise": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -329,6 +339,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Sensitive:    true,
 			},
 			"sae_h2e_only": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sae_hnp_only": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -866,6 +881,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"roaming_acct_interim_update": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"qos_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -1336,6 +1356,14 @@ func flattenWirelessControllerVapMboCellDataConnPref(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenWirelessControllerVap80211K(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVap80211V(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapVoiceEnterprise(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1469,8 +1497,8 @@ func flattenWirelessControllerVapRadiusMacAuthUsergroups(v interface{}, d *schem
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerVapRadiusMacAuthUsergroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerVapRadiusMacAuthUsergroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1511,6 +1539,10 @@ func flattenWirelessControllerVapSaePassword(v interface{}, d *schema.ResourceDa
 }
 
 func flattenWirelessControllerVapSaeH2EOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapSaeHnpOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1591,8 +1623,8 @@ func flattenWirelessControllerVapUsergroup(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerVapUsergroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerVapUsergroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1690,8 +1722,8 @@ func flattenWirelessControllerVapSelectedUsergroups(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerVapSelectedUsergroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerVapSelectedUsergroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1796,13 +1828,13 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_name"
-		if _, ok := i["key-name"]; ok {
-			tmp["key_name"] = flattenWirelessControllerVapMpskKeyKeyName(i["key-name"], d, pre_append, sv)
+		if cur_v, ok := i["key-name"]; ok {
+			tmp["key_name"] = flattenWirelessControllerVapMpskKeyKeyName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
-		if _, ok := i["passphrase"]; ok {
-			tmp["passphrase"] = flattenWirelessControllerVapMpskKeyPassphrase(i["passphrase"], d, pre_append, sv)
+		if cur_v, ok := i["passphrase"]; ok {
+			tmp["passphrase"] = flattenWirelessControllerVapMpskKeyPassphrase(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["passphrase"] = c
@@ -1810,18 +1842,18 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
-		if _, ok := i["concurrent-clients"]; ok {
-			tmp["concurrent_clients"] = flattenWirelessControllerVapMpskKeyConcurrentClients(i["concurrent-clients"], d, pre_append, sv)
+		if cur_v, ok := i["concurrent-clients"]; ok {
+			tmp["concurrent_clients"] = flattenWirelessControllerVapMpskKeyConcurrentClients(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWirelessControllerVapMpskKeyComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWirelessControllerVapMpskKeyComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
-		if _, ok := i["mpsk-schedules"]; ok {
-			tmp["mpsk_schedules"] = flattenWirelessControllerVapMpskKeyMpskSchedules(i["mpsk-schedules"], d, pre_append, sv)
+		if cur_v, ok := i["mpsk-schedules"]; ok {
+			tmp["mpsk_schedules"] = flattenWirelessControllerVapMpskKeyMpskSchedules(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1874,8 +1906,8 @@ func flattenWirelessControllerVapMpskKeyMpskSchedules(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerVapMpskKeyMpskSchedulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerVapMpskKeyMpskSchedulesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2032,13 +2064,13 @@ func flattenWirelessControllerVapVlanName(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerVapVlanNameName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerVapVlanNameName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
-		if _, ok := i["vlan-id"]; ok {
-			tmp["vlan_id"] = flattenWirelessControllerVapVlanNameVlanId(i["vlan-id"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-id"]; ok {
+			tmp["vlan_id"] = flattenWirelessControllerVapVlanNameVlanId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2087,13 +2119,13 @@ func flattenWirelessControllerVapVlanPool(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerVapVlanPoolId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerVapVlanPoolId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_group"
-		if _, ok := i["wtp-group"]; ok {
-			tmp["wtp_group"] = flattenWirelessControllerVapVlanPoolWtpGroup(i["wtp-group"], d, pre_append, sv)
+		if cur_v, ok := i["wtp-group"]; ok {
+			tmp["wtp_group"] = flattenWirelessControllerVapVlanPoolWtpGroup(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2150,6 +2182,10 @@ func flattenWirelessControllerVapEapReauth(v interface{}, d *schema.ResourceData
 }
 
 func flattenWirelessControllerVapEapReauthIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapRoamingAcctInterimUpdate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2294,18 +2330,18 @@ func flattenWirelessControllerVapMacFilterList(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerVapMacFilterListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerVapMacFilterListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenWirelessControllerVapMacFilterListMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenWirelessControllerVapMacFilterListMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_filter_policy"
-		if _, ok := i["mac-filter-policy"]; ok {
-			tmp["mac_filter_policy"] = flattenWirelessControllerVapMacFilterListMacFilterPolicy(i["mac-filter-policy"], d, pre_append, sv)
+		if cur_v, ok := i["mac-filter-policy"]; ok {
+			tmp["mac_filter_policy"] = flattenWirelessControllerVapMacFilterListMacFilterPolicy(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2508,6 +2544,18 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("n80211k", flattenWirelessControllerVap80211K(o["80211k"], d, "n80211k", sv)); err != nil {
+		if !fortiAPIPatch(o["80211k"]) {
+			return fmt.Errorf("Error reading n80211k: %v", err)
+		}
+	}
+
+	if err = d.Set("n80211v", flattenWirelessControllerVap80211V(o["80211v"], d, "n80211v", sv)); err != nil {
+		if !fortiAPIPatch(o["80211v"]) {
+			return fmt.Errorf("Error reading n80211v: %v", err)
+		}
+	}
+
 	if err = d.Set("voice_enterprise", flattenWirelessControllerVapVoiceEnterprise(o["voice-enterprise"], d, "voice_enterprise", sv)); err != nil {
 		if !fortiAPIPatch(o["voice-enterprise"]) {
 			return fmt.Errorf("Error reading voice_enterprise: %v", err)
@@ -2707,6 +2755,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("sae_h2e_only", flattenWirelessControllerVapSaeH2EOnly(o["sae-h2e-only"], d, "sae_h2e_only", sv)); err != nil {
 		if !fortiAPIPatch(o["sae-h2e-only"]) {
 			return fmt.Errorf("Error reading sae_h2e_only: %v", err)
+		}
+	}
+
+	if err = d.Set("sae_hnp_only", flattenWirelessControllerVapSaeHnpOnly(o["sae-hnp-only"], d, "sae_hnp_only", sv)); err != nil {
+		if !fortiAPIPatch(o["sae-hnp-only"]) {
+			return fmt.Errorf("Error reading sae_hnp_only: %v", err)
 		}
 	}
 
@@ -3253,6 +3307,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("roaming_acct_interim_update", flattenWirelessControllerVapRoamingAcctInterimUpdate(o["roaming-acct-interim-update"], d, "roaming_acct_interim_update", sv)); err != nil {
+		if !fortiAPIPatch(o["roaming-acct-interim-update"]) {
+			return fmt.Errorf("Error reading roaming_acct_interim_update: %v", err)
+		}
+	}
+
 	if err = d.Set("qos_profile", flattenWirelessControllerVapQosProfile(o["qos-profile"], d, "qos_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["qos-profile"]) {
 			return fmt.Errorf("Error reading qos_profile: %v", err)
@@ -3612,6 +3672,14 @@ func expandWirelessControllerVapMboCellDataConnPref(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandWirelessControllerVap80211K(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVap80211V(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapVoiceEnterprise(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3773,6 +3841,10 @@ func expandWirelessControllerVapSaePassword(d *schema.ResourceData, v interface{
 }
 
 func expandWirelessControllerVapSaeH2EOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapSaeHnpOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4335,6 +4407,10 @@ func expandWirelessControllerVapEapReauthIntv(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandWirelessControllerVapRoamingAcctInterimUpdate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapQosProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4730,6 +4806,24 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("n80211k"); ok {
+		t, err := expandWirelessControllerVap80211K(d, v, "n80211k", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["80211k"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("n80211v"); ok {
+		t, err := expandWirelessControllerVap80211V(d, v, "n80211v", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["80211v"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("voice_enterprise"); ok {
 		t, err := expandWirelessControllerVapVoiceEnterprise(d, v, "voice_enterprise", sv)
 		if err != nil {
@@ -5042,6 +5136,15 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["sae-h2e-only"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sae_hnp_only"); ok {
+		t, err := expandWirelessControllerVapSaeHnpOnly(d, v, "sae_hnp_only", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sae-hnp-only"] = t
 		}
 	}
 
@@ -5753,6 +5856,15 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["eap-reauth-intv"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("roaming_acct_interim_update"); ok {
+		t, err := expandWirelessControllerVapRoamingAcctInterimUpdate(d, v, "roaming_acct_interim_update", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["roaming-acct-interim-update"] = t
 		}
 	}
 

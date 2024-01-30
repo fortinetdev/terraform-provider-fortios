@@ -340,28 +340,28 @@ func flattenCifsProfileFileFilterEntries(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
-		if _, ok := i["filter"]; ok {
-			tmp["filter"] = flattenCifsProfileFileFilterEntriesFilter(i["filter"], d, pre_append, sv)
+		if cur_v, ok := i["filter"]; ok {
+			tmp["filter"] = flattenCifsProfileFileFilterEntriesFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenCifsProfileFileFilterEntriesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenCifsProfileFileFilterEntriesComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenCifsProfileFileFilterEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenCifsProfileFileFilterEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenCifsProfileFileFilterEntriesDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenCifsProfileFileFilterEntriesDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenCifsProfileFileFilterEntriesFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenCifsProfileFileFilterEntriesFileType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -414,8 +414,8 @@ func flattenCifsProfileFileFilterEntriesFileType(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCifsProfileFileFilterEntriesFileTypeName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCifsProfileFileFilterEntriesFileTypeName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -460,13 +460,13 @@ func flattenCifsProfileServerKeytab(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
-		if _, ok := i["principal"]; ok {
-			tmp["principal"] = flattenCifsProfileServerKeytabPrincipal(i["principal"], d, pre_append, sv)
+		if cur_v, ok := i["principal"]; ok {
+			tmp["principal"] = flattenCifsProfileServerKeytabPrincipal(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
-		if _, ok := i["keytab"]; ok {
-			tmp["keytab"] = flattenCifsProfileServerKeytabKeytab(i["keytab"], d, pre_append, sv)
+		if cur_v, ok := i["keytab"]; ok {
+			tmp["keytab"] = flattenCifsProfileServerKeytabKeytab(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

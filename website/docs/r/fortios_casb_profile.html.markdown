@@ -22,6 +22,7 @@ The following arguments are supported:
 The `saas_application` block supports:
 
 * `name` - CASB profile SaaS application name.
+* `status` - Enable/disable setting. Valid values: `enable`, `disable`.
 * `safe_search` - Enable/disable safe search. Valid values: `enable`, `disable`.
 * `safe_search_control` - CASB profile safe search control. The structure of `safe_search_control` block is documented below.
 * `tenant_control` - Enable/disable tenant control. Valid values: `enable`, `disable`.

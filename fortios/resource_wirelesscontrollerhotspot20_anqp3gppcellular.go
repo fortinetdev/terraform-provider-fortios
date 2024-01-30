@@ -232,18 +232,18 @@ func flattenWirelessControllerHotspot20Anqp3GppCellularMccMncList(v interface{},
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mcc"
-		if _, ok := i["mcc"]; ok {
-			tmp["mcc"] = flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListMcc(i["mcc"], d, pre_append, sv)
+		if cur_v, ok := i["mcc"]; ok {
+			tmp["mcc"] = flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListMcc(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mnc"
-		if _, ok := i["mnc"]; ok {
-			tmp["mnc"] = flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListMnc(i["mnc"], d, pre_append, sv)
+		if cur_v, ok := i["mnc"]; ok {
+			tmp["mnc"] = flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListMnc(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

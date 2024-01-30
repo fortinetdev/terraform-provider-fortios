@@ -41,6 +41,11 @@ func resourceFirewallSniffer() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -433,6 +438,10 @@ func flattenFirewallSnifferId(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenFirewallSnifferUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSnifferStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -574,8 +583,8 @@ func flattenFirewallSnifferIpThreatfeed(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallSnifferIpThreatfeedName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallSnifferIpThreatfeedName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -628,48 +637,48 @@ func flattenFirewallSnifferAnomaly(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallSnifferAnomalyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallSnifferAnomalyName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenFirewallSnifferAnomalyStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenFirewallSnifferAnomalyStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenFirewallSnifferAnomalyLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenFirewallSnifferAnomalyLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenFirewallSnifferAnomalyAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenFirewallSnifferAnomalyAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
-		if _, ok := i["quarantine"]; ok {
-			tmp["quarantine"] = flattenFirewallSnifferAnomalyQuarantine(i["quarantine"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine"]; ok {
+			tmp["quarantine"] = flattenFirewallSnifferAnomalyQuarantine(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
-		if _, ok := i["quarantine-expiry"]; ok {
-			tmp["quarantine_expiry"] = flattenFirewallSnifferAnomalyQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine-expiry"]; ok {
+			tmp["quarantine_expiry"] = flattenFirewallSnifferAnomalyQuarantineExpiry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
-		if _, ok := i["quarantine-log"]; ok {
-			tmp["quarantine_log"] = flattenFirewallSnifferAnomalyQuarantineLog(i["quarantine-log"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine-log"]; ok {
+			tmp["quarantine_log"] = flattenFirewallSnifferAnomalyQuarantineLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
-		if _, ok := i["threshold"]; ok {
-			tmp["threshold"] = flattenFirewallSnifferAnomalyThreshold(i["threshold"], d, pre_append, sv)
+		if cur_v, ok := i["threshold"]; ok {
+			tmp["threshold"] = flattenFirewallSnifferAnomalyThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
-		if _, ok := i["threshold(default)"]; ok {
-			tmp["thresholddefault"] = flattenFirewallSnifferAnomalyThresholdDefault(i["threshold(default)"], d, pre_append, sv)
+		if cur_v, ok := i["threshold(default)"]; ok {
+			tmp["thresholddefault"] = flattenFirewallSnifferAnomalyThresholdDefault(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -737,6 +746,12 @@ func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("fosid", flattenFirewallSnifferId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", flattenFirewallSnifferUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
@@ -986,6 +1001,10 @@ func flattenFirewallSnifferFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 }
 
 func expandFirewallSnifferId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1265,6 +1284,15 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandFirewallSnifferUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
 		}
 	}
 

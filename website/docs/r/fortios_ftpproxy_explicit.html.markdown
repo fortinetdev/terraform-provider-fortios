@@ -30,7 +30,7 @@ The following arguments are supported:
 * `sec_default_action` - Accept or deny explicit FTP proxy sessions when no FTP proxy firewall policy exists. Valid values: `accept`, `deny`.
 * `server_data_mode` - Determine mode of data session on FTP server side. Valid values: `client`, `passive`.
 * `ssl` - Enable/disable the explicit FTPS proxy. Valid values: `enable`, `disable`.
-* `ssl_cert` - Name of certificate for SSL connections to this server (default = "Fortinet_CA_SSL").
+* `ssl_cert` - Name of certificate for SSL connections to this server. On FortiOS versions 6.2.4-7.4.0: default = "Fortinet_CA_SSL". On FortiOS versions 7.4.1: default = "Fortinet_SSL".
 * `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048). Valid values: `768`, `1024`, `1536`, `2048`.
 * `ssl_algorithm` - Relative strength of encryption algorithms accepted in negotiation. Valid values: `high`, `medium`, `low`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

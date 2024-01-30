@@ -1124,28 +1124,28 @@ func flattenWafProfileSignatureMainClass(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileSignatureMainClassId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileSignatureMainClassId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenWafProfileSignatureMainClassStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenWafProfileSignatureMainClassStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWafProfileSignatureMainClassAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWafProfileSignatureMainClassAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenWafProfileSignatureMainClassLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenWafProfileSignatureMainClassLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
-		if _, ok := i["severity"]; ok {
-			tmp["severity"] = flattenWafProfileSignatureMainClassSeverity(i["severity"], d, pre_append, sv)
+		if cur_v, ok := i["severity"]; ok {
+			tmp["severity"] = flattenWafProfileSignatureMainClassSeverity(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1202,8 +1202,8 @@ func flattenWafProfileSignatureDisabledSubClass(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileSignatureDisabledSubClassId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileSignatureDisabledSubClassId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1244,8 +1244,8 @@ func flattenWafProfileSignatureDisabledSignature(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileSignatureDisabledSignatureId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileSignatureDisabledSignatureId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1290,48 +1290,48 @@ func flattenWafProfileSignatureCustomSignature(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWafProfileSignatureCustomSignatureName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWafProfileSignatureCustomSignatureName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenWafProfileSignatureCustomSignatureStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenWafProfileSignatureCustomSignatureStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWafProfileSignatureCustomSignatureAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWafProfileSignatureCustomSignatureAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenWafProfileSignatureCustomSignatureLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenWafProfileSignatureCustomSignatureLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
-		if _, ok := i["severity"]; ok {
-			tmp["severity"] = flattenWafProfileSignatureCustomSignatureSeverity(i["severity"], d, pre_append, sv)
+		if cur_v, ok := i["severity"]; ok {
+			tmp["severity"] = flattenWafProfileSignatureCustomSignatureSeverity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenWafProfileSignatureCustomSignatureDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenWafProfileSignatureCustomSignatureDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
-		if _, ok := i["case-sensitivity"]; ok {
-			tmp["case_sensitivity"] = flattenWafProfileSignatureCustomSignatureCaseSensitivity(i["case-sensitivity"], d, pre_append, sv)
+		if cur_v, ok := i["case-sensitivity"]; ok {
+			tmp["case_sensitivity"] = flattenWafProfileSignatureCustomSignatureCaseSensitivity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWafProfileSignatureCustomSignaturePattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWafProfileSignatureCustomSignaturePattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenWafProfileSignatureCustomSignatureTarget(i["target"], d, pre_append, sv)
+		if cur_v, ok := i["target"]; ok {
+			tmp["target"] = flattenWafProfileSignatureCustomSignatureTarget(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2205,88 +2205,88 @@ func flattenWafProfileConstraintException(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileConstraintExceptionId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileConstraintExceptionId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWafProfileConstraintExceptionPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWafProfileConstraintExceptionPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
-		if _, ok := i["regex"]; ok {
-			tmp["regex"] = flattenWafProfileConstraintExceptionRegex(i["regex"], d, pre_append, sv)
+		if cur_v, ok := i["regex"]; ok {
+			tmp["regex"] = flattenWafProfileConstraintExceptionRegex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenWafProfileConstraintExceptionAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenWafProfileConstraintExceptionAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_length"
-		if _, ok := i["header-length"]; ok {
-			tmp["header_length"] = flattenWafProfileConstraintExceptionHeaderLength(i["header-length"], d, pre_append, sv)
+		if cur_v, ok := i["header-length"]; ok {
+			tmp["header_length"] = flattenWafProfileConstraintExceptionHeaderLength(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content_length"
-		if _, ok := i["content-length"]; ok {
-			tmp["content_length"] = flattenWafProfileConstraintExceptionContentLength(i["content-length"], d, pre_append, sv)
+		if cur_v, ok := i["content-length"]; ok {
+			tmp["content_length"] = flattenWafProfileConstraintExceptionContentLength(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "param_length"
-		if _, ok := i["param-length"]; ok {
-			tmp["param_length"] = flattenWafProfileConstraintExceptionParamLength(i["param-length"], d, pre_append, sv)
+		if cur_v, ok := i["param-length"]; ok {
+			tmp["param_length"] = flattenWafProfileConstraintExceptionParamLength(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "line_length"
-		if _, ok := i["line-length"]; ok {
-			tmp["line_length"] = flattenWafProfileConstraintExceptionLineLength(i["line-length"], d, pre_append, sv)
+		if cur_v, ok := i["line-length"]; ok {
+			tmp["line_length"] = flattenWafProfileConstraintExceptionLineLength(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_param_length"
-		if _, ok := i["url-param-length"]; ok {
-			tmp["url_param_length"] = flattenWafProfileConstraintExceptionUrlParamLength(i["url-param-length"], d, pre_append, sv)
+		if cur_v, ok := i["url-param-length"]; ok {
+			tmp["url_param_length"] = flattenWafProfileConstraintExceptionUrlParamLength(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
-		if _, ok := i["version"]; ok {
-			tmp["version"] = flattenWafProfileConstraintExceptionVersion(i["version"], d, pre_append, sv)
+		if cur_v, ok := i["version"]; ok {
+			tmp["version"] = flattenWafProfileConstraintExceptionVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
-		if _, ok := i["method"]; ok {
-			tmp["method"] = flattenWafProfileConstraintExceptionMethod(i["method"], d, pre_append, sv)
+		if cur_v, ok := i["method"]; ok {
+			tmp["method"] = flattenWafProfileConstraintExceptionMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
-		if _, ok := i["hostname"]; ok {
-			tmp["hostname"] = flattenWafProfileConstraintExceptionHostname(i["hostname"], d, pre_append, sv)
+		if cur_v, ok := i["hostname"]; ok {
+			tmp["hostname"] = flattenWafProfileConstraintExceptionHostname(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "malformed"
-		if _, ok := i["malformed"]; ok {
-			tmp["malformed"] = flattenWafProfileConstraintExceptionMalformed(i["malformed"], d, pre_append, sv)
+		if cur_v, ok := i["malformed"]; ok {
+			tmp["malformed"] = flattenWafProfileConstraintExceptionMalformed(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_cookie"
-		if _, ok := i["max-cookie"]; ok {
-			tmp["max_cookie"] = flattenWafProfileConstraintExceptionMaxCookie(i["max-cookie"], d, pre_append, sv)
+		if cur_v, ok := i["max-cookie"]; ok {
+			tmp["max_cookie"] = flattenWafProfileConstraintExceptionMaxCookie(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_header_line"
-		if _, ok := i["max-header-line"]; ok {
-			tmp["max_header_line"] = flattenWafProfileConstraintExceptionMaxHeaderLine(i["max-header-line"], d, pre_append, sv)
+		if cur_v, ok := i["max-header-line"]; ok {
+			tmp["max_header_line"] = flattenWafProfileConstraintExceptionMaxHeaderLine(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_url_param"
-		if _, ok := i["max-url-param"]; ok {
-			tmp["max_url_param"] = flattenWafProfileConstraintExceptionMaxUrlParam(i["max-url-param"], d, pre_append, sv)
+		if cur_v, ok := i["max-url-param"]; ok {
+			tmp["max_url_param"] = flattenWafProfileConstraintExceptionMaxUrlParam(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_range_segment"
-		if _, ok := i["max-range-segment"]; ok {
-			tmp["max_range_segment"] = flattenWafProfileConstraintExceptionMaxRangeSegment(i["max-range-segment"], d, pre_append, sv)
+		if cur_v, ok := i["max-range-segment"]; ok {
+			tmp["max_range_segment"] = flattenWafProfileConstraintExceptionMaxRangeSegment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2445,28 +2445,28 @@ func flattenWafProfileMethodMethodPolicy(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileMethodMethodPolicyId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileMethodMethodPolicyId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWafProfileMethodMethodPolicyPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWafProfileMethodMethodPolicyPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
-		if _, ok := i["regex"]; ok {
-			tmp["regex"] = flattenWafProfileMethodMethodPolicyRegex(i["regex"], d, pre_append, sv)
+		if cur_v, ok := i["regex"]; ok {
+			tmp["regex"] = flattenWafProfileMethodMethodPolicyRegex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenWafProfileMethodMethodPolicyAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenWafProfileMethodMethodPolicyAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_methods"
-		if _, ok := i["allowed-methods"]; ok {
-			tmp["allowed_methods"] = flattenWafProfileMethodMethodPolicyAllowedMethods(i["allowed-methods"], d, pre_append, sv)
+		if cur_v, ok := i["allowed-methods"]; ok {
+			tmp["allowed_methods"] = flattenWafProfileMethodMethodPolicyAllowedMethods(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2573,8 +2573,8 @@ func flattenWafProfileAddressListTrustedAddress(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWafProfileAddressListTrustedAddressName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWafProfileAddressListTrustedAddressName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2615,8 +2615,8 @@ func flattenWafProfileAddressListBlockedAddress(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWafProfileAddressListBlockedAddressName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWafProfileAddressListBlockedAddressName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2657,33 +2657,33 @@ func flattenWafProfileUrlAccess(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileUrlAccessId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileUrlAccessId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenWafProfileUrlAccessAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenWafProfileUrlAccessAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWafProfileUrlAccessAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWafProfileUrlAccessAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenWafProfileUrlAccessLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenWafProfileUrlAccessLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
-		if _, ok := i["severity"]; ok {
-			tmp["severity"] = flattenWafProfileUrlAccessSeverity(i["severity"], d, pre_append, sv)
+		if cur_v, ok := i["severity"]; ok {
+			tmp["severity"] = flattenWafProfileUrlAccessSeverity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_pattern"
-		if _, ok := i["access-pattern"]; ok {
-			tmp["access_pattern"] = flattenWafProfileUrlAccessAccessPattern(i["access-pattern"], d, pre_append, sv)
+		if cur_v, ok := i["access-pattern"]; ok {
+			tmp["access_pattern"] = flattenWafProfileUrlAccessAccessPattern(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2740,28 +2740,28 @@ func flattenWafProfileUrlAccessAccessPattern(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWafProfileUrlAccessAccessPatternId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWafProfileUrlAccessAccessPatternId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenWafProfileUrlAccessAccessPatternSrcaddr(i["srcaddr"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr"]; ok {
+			tmp["srcaddr"] = flattenWafProfileUrlAccessAccessPatternSrcaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWafProfileUrlAccessAccessPatternPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWafProfileUrlAccessAccessPatternPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
-		if _, ok := i["regex"]; ok {
-			tmp["regex"] = flattenWafProfileUrlAccessAccessPatternRegex(i["regex"], d, pre_append, sv)
+		if cur_v, ok := i["regex"]; ok {
+			tmp["regex"] = flattenWafProfileUrlAccessAccessPatternRegex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "negate"
-		if _, ok := i["negate"]; ok {
-			tmp["negate"] = flattenWafProfileUrlAccessAccessPatternNegate(i["negate"], d, pre_append, sv)
+		if cur_v, ok := i["negate"]; ok {
+			tmp["negate"] = flattenWafProfileUrlAccessAccessPatternNegate(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

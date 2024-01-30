@@ -20,6 +20,7 @@ Use this data source to get information on an fortios firewallservice group
 The following attributes are exported:
 
 * `name` - Address group name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - Service objects contained within the group. The structure of `member` block is documented below.
 * `proxy` - Enable/disable web proxy service group.
 * `comment` - Comment.

@@ -38,8 +38,8 @@ func resourceFirewallTrafficClass() *schema.Resource {
 			"class_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 31),
-				Optional:     true,
-				Computed:     true,
+				ForceNew:     true,
+				Required:     true,
 			},
 			"class_name": &schema.Schema{
 				Type:         schema.TypeString,

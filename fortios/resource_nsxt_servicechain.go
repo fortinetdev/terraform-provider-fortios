@@ -248,23 +248,23 @@ func flattenNsxtServiceChainServiceIndex(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenNsxtServiceChainServiceIndexId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenNsxtServiceChainServiceIndexId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "reverse_index"
-		if _, ok := i["reverse-index"]; ok {
-			tmp["reverse_index"] = flattenNsxtServiceChainServiceIndexReverseIndex(i["reverse-index"], d, pre_append, sv)
+		if cur_v, ok := i["reverse-index"]; ok {
+			tmp["reverse_index"] = flattenNsxtServiceChainServiceIndexReverseIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenNsxtServiceChainServiceIndexName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenNsxtServiceChainServiceIndexName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vd"
-		if _, ok := i["vd"]; ok {
-			tmp["vd"] = flattenNsxtServiceChainServiceIndexVd(i["vd"], d, pre_append, sv)
+		if cur_v, ok := i["vd"]; ok {
+			tmp["vd"] = flattenNsxtServiceChainServiceIndexVd(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

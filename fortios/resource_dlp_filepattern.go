@@ -246,18 +246,18 @@ func flattenDlpFilepatternEntries(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
-		if _, ok := i["filter-type"]; ok {
-			tmp["filter_type"] = flattenDlpFilepatternEntriesFilterType(i["filter-type"], d, pre_append, sv)
+		if cur_v, ok := i["filter-type"]; ok {
+			tmp["filter_type"] = flattenDlpFilepatternEntriesFilterType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenDlpFilepatternEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenDlpFilepatternEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenDlpFilepatternEntriesFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenDlpFilepatternEntriesFileType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

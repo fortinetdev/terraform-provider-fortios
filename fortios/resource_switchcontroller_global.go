@@ -351,8 +351,8 @@ func flattenSwitchControllerGlobalDisableDiscovery(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerGlobalDisableDiscoveryName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerGlobalDisableDiscoveryName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -457,13 +457,13 @@ func flattenSwitchControllerGlobalCustomCommand(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
-		if _, ok := i["command-entry"]; ok {
-			tmp["command_entry"] = flattenSwitchControllerGlobalCustomCommandCommandEntry(i["command-entry"], d, pre_append, sv)
+		if cur_v, ok := i["command-entry"]; ok {
+			tmp["command_entry"] = flattenSwitchControllerGlobalCustomCommandCommandEntry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
-		if _, ok := i["command-name"]; ok {
-			tmp["command_name"] = flattenSwitchControllerGlobalCustomCommandCommandName(i["command-name"], d, pre_append, sv)
+		if cur_v, ok := i["command-name"]; ok {
+			tmp["command_name"] = flattenSwitchControllerGlobalCustomCommandCommandName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

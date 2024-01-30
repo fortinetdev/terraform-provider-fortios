@@ -90,6 +90,11 @@ func resourceLogSyslogdFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"forti_switch": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -292,6 +297,10 @@ func flattenLogSyslogdFilterGtp(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenLogSyslogdFilterFortiSwitch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSyslogdFilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -317,23 +326,23 @@ func flattenLogSyslogdFilterFreeStyle(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogSyslogdFilterFreeStyleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogSyslogdFilterFreeStyleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenLogSyslogdFilterFreeStyleCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenLogSyslogdFilterFreeStyleCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
-		if _, ok := i["filter"]; ok {
-			tmp["filter"] = flattenLogSyslogdFilterFreeStyleFilter(i["filter"], d, pre_append, sv)
+		if cur_v, ok := i["filter"]; ok {
+			tmp["filter"] = flattenLogSyslogdFilterFreeStyleFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
-		if _, ok := i["filter-type"]; ok {
-			tmp["filter_type"] = flattenLogSyslogdFilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
+		if cur_v, ok := i["filter-type"]; ok {
+			tmp["filter_type"] = flattenLogSyslogdFilterFreeStyleFilterType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -452,6 +461,12 @@ func refreshObjectLogSyslogdFilter(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("forti_switch", flattenLogSyslogdFilterFortiSwitch(o["forti-switch"], d, "forti_switch", sv)); err != nil {
+		if !fortiAPIPatch(o["forti-switch"]) {
+			return fmt.Errorf("Error reading forti_switch: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogSyslogdFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -542,6 +557,10 @@ func expandLogSyslogdFilterVoip(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandLogSyslogdFilterGtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogdFilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -761,6 +780,19 @@ func getObjectLogSyslogdFilter(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["gtp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("forti_switch"); ok {
+		if setArgNil {
+			obj["forti-switch"] = nil
+		} else {
+			t, err := expandLogSyslogdFilterFortiSwitch(d, v, "forti_switch", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forti-switch"] = t
 			}
 		}
 	}

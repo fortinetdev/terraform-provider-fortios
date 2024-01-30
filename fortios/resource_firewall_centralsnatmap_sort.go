@@ -25,7 +25,7 @@ func resourceFirewallCentralsnatmapSort() *schema.Resource {
 				Required: true,
 				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
 					v := val.(string)
-					availableOptions := []string{"policyid", "name"}
+					availableOptions := []string{"policyid"}
 					var validValue bool
 					for _, ele := range availableOptions {
 						if ele == v {
@@ -34,7 +34,7 @@ func resourceFirewallCentralsnatmapSort() *schema.Resource {
 						}
 					}
 					if !validValue {
-						errs = append(errs, fmt.Errorf("%q must be one of the option of [\"policyid\", \"name\"], got: \"%v\"", key, v))
+						errs = append(errs, fmt.Errorf("%q must be one of the option of [\"policyid\"], got: \"%v\"", key, v))
 					}
 					return
 				},
@@ -90,16 +90,6 @@ func resourceFirewallCentralsnatmapSort() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
-						},
-						"action": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
-						},
 					},
 				},
 			},
@@ -132,7 +122,7 @@ func resourceFirewallCentralsnatmapSortCreateUpdate(d *schema.ResourceData, m in
 		manual_order[cIndex] = fmt.Sprint(cValue)
 	}
 
-	if sortby != "policyid" && sortby != "name" {
+	if sortby != "policyid" {
 		return fmt.Errorf("Unsupported sort type: " + sortby)
 	}
 
@@ -177,7 +167,7 @@ func resourceFirewallCentralsnatmapSortRead(d *schema.ResourceData, m interface{
 		manual_order[cIndex] = fmt.Sprint(cValue)
 	}
 
-	if sortby != "policyid" && sortby != "name" {
+	if sortby != "policyid" {
 		return fmt.Errorf("Unsupported sort type: " + sortby)
 	}
 

@@ -69,7 +69,7 @@ The `filter` block supports:
 * `regexp` - Enter a regular expression to match (max. 255 characters).
 * `archive` - Enable/disable DLP archiving. Valid values: `disable`, `enable`.
 * `action` - Action to take with content that this DLP sensor matches. Valid values: `allow`, `log-only`, `block`, `quarantine-ip`.
-* `expiry` - Quarantine duration in days, hours, minutes format (dddhhmm).
+* `expiry` - Quarantine duration in days, hours, minutes (format = dddhhmm).
 
 The `sensitivity` block supports:
 

@@ -430,8 +430,8 @@ func flattenUserNacPolicySeverity(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity_num"
-		if _, ok := i["severity-num"]; ok {
-			tmp["severity_num"] = flattenUserNacPolicySeveritySeverityNum(i["severity-num"], d, pre_append, sv)
+		if cur_v, ok := i["severity-num"]; ok {
+			tmp["severity_num"] = flattenUserNacPolicySeveritySeverityNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -476,8 +476,8 @@ func flattenUserNacPolicySwitchGroup(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserNacPolicySwitchGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserNacPolicySwitchGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -518,8 +518,8 @@ func flattenUserNacPolicySwitchScope(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
-		if _, ok := i["switch-id"]; ok {
-			tmp["switch_id"] = flattenUserNacPolicySwitchScopeSwitchId(i["switch-id"], d, pre_append, sv)
+		if cur_v, ok := i["switch-id"]; ok {
+			tmp["switch_id"] = flattenUserNacPolicySwitchScopeSwitchId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

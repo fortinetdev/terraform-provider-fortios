@@ -99,6 +99,8 @@ The `rule` block supports:
 * `set_vpnv4_nexthop` - IP address of VPNv4 next-hop.
 * `set_ip6_nexthop` - IPv6 global address of next hop.
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
+* `set_vpnv6_nexthop` - IPv6 global address of VPNv6 next-hop.
+* `set_vpnv6_nexthop_local` - IPv6 link-local address of VPNv6 next-hop.
 * `set_local_preference` - BGP local preference path attribute.
 * `set_metric` - Metric value.
 * `set_metric_type` - Metric type.
@@ -113,8 +115,7 @@ The `rule` block supports:
 
 The `set_aspath` block supports:
 
-* `as` - AS number (0 - 42949672). NOTE: Use quotes for repeating numbers, e.g.: "1 1 2"
-
+* `as` - AS number. Use quotes for repeating numbers, For example, "1 1 2". On FortiOS versions 6.2.0-7.0.0: 0 - 42949672. On FortiOS versions 7.0.1-7.0.3: 0 - 4294967295.
 
 The `set_community` block supports:
 
@@ -126,7 +127,7 @@ The `set_extcommunity_rt` block supports:
 
 The `set_extcommunity_soo` block supports:
 
-* `community` - AA:NN
+* `community` - Community (format = AA:NN).
 
 
 ## Attribute Reference

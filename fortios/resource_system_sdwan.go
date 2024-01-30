@@ -110,6 +110,17 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"advpn_select": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"advpn_health_check": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
 						"service_sla_tie_break": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -216,6 +227,12 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"transport_group": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -690,6 +707,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Computed:     true,
 						},
 						"hash_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"shortcut_priority": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1433,8 +1455,8 @@ func flattenSystemSdwanFailAlertInterfaces(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanFailAlertInterfacesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanFailAlertInterfacesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1475,18 +1497,28 @@ func flattenSystemSdwanZone(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanZoneName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanZoneName(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advpn_select"
+		if cur_v, ok := i["advpn-select"]; ok {
+			tmp["advpn_select"] = flattenSystemSdwanZoneAdvpnSelect(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advpn_health_check"
+		if cur_v, ok := i["advpn-health-check"]; ok {
+			tmp["advpn_health_check"] = flattenSystemSdwanZoneAdvpnHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_sla_tie_break"
-		if _, ok := i["service-sla-tie-break"]; ok {
-			tmp["service_sla_tie_break"] = flattenSystemSdwanZoneServiceSlaTieBreak(i["service-sla-tie-break"], d, pre_append, sv)
+		if cur_v, ok := i["service-sla-tie-break"]; ok {
+			tmp["service_sla_tie_break"] = flattenSystemSdwanZoneServiceSlaTieBreak(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
-		if _, ok := i["minimum-sla-meet-members"]; ok {
-			tmp["minimum_sla_meet_members"] = flattenSystemSdwanZoneMinimumSlaMeetMembers(i["minimum-sla-meet-members"], d, pre_append, sv)
+		if cur_v, ok := i["minimum-sla-meet-members"]; ok {
+			tmp["minimum_sla_meet_members"] = flattenSystemSdwanZoneMinimumSlaMeetMembers(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1499,6 +1531,14 @@ func flattenSystemSdwanZone(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenSystemSdwanZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanZoneAdvpnSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanZoneAdvpnHealthCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1535,88 +1575,93 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemSdwanMembersSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemSdwanMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemSdwanMembersInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemSdwanMembersInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "zone"
-		if _, ok := i["zone"]; ok {
-			tmp["zone"] = flattenSystemSdwanMembersZone(i["zone"], d, pre_append, sv)
+		if cur_v, ok := i["zone"]; ok {
+			tmp["zone"] = flattenSystemSdwanMembersZone(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
-		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenSystemSdwanMembersGateway(i["gateway"], d, pre_append, sv)
+		if cur_v, ok := i["gateway"]; ok {
+			tmp["gateway"] = flattenSystemSdwanMembersGateway(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preferred_source"
-		if _, ok := i["preferred-source"]; ok {
-			tmp["preferred_source"] = flattenSystemSdwanMembersPreferredSource(i["preferred-source"], d, pre_append, sv)
+		if cur_v, ok := i["preferred-source"]; ok {
+			tmp["preferred_source"] = flattenSystemSdwanMembersPreferredSource(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
-		if _, ok := i["source"]; ok {
-			tmp["source"] = flattenSystemSdwanMembersSource(i["source"], d, pre_append, sv)
+		if cur_v, ok := i["source"]; ok {
+			tmp["source"] = flattenSystemSdwanMembersSource(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
-		if _, ok := i["gateway6"]; ok {
-			tmp["gateway6"] = flattenSystemSdwanMembersGateway6(i["gateway6"], d, pre_append, sv)
+		if cur_v, ok := i["gateway6"]; ok {
+			tmp["gateway6"] = flattenSystemSdwanMembersGateway6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source6"
-		if _, ok := i["source6"]; ok {
-			tmp["source6"] = flattenSystemSdwanMembersSource6(i["source6"], d, pre_append, sv)
+		if cur_v, ok := i["source6"]; ok {
+			tmp["source6"] = flattenSystemSdwanMembersSource6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
-		if _, ok := i["cost"]; ok {
-			tmp["cost"] = flattenSystemSdwanMembersCost(i["cost"], d, pre_append, sv)
+		if cur_v, ok := i["cost"]; ok {
+			tmp["cost"] = flattenSystemSdwanMembersCost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenSystemSdwanMembersWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenSystemSdwanMembersWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemSdwanMembersPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenSystemSdwanMembersPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority6"
-		if _, ok := i["priority6"]; ok {
-			tmp["priority6"] = flattenSystemSdwanMembersPriority6(i["priority6"], d, pre_append, sv)
+		if cur_v, ok := i["priority6"]; ok {
+			tmp["priority6"] = flattenSystemSdwanMembersPriority6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spillover_threshold"
-		if _, ok := i["spillover-threshold"]; ok {
-			tmp["spillover_threshold"] = flattenSystemSdwanMembersSpilloverThreshold(i["spillover-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["spillover-threshold"]; ok {
+			tmp["spillover_threshold"] = flattenSystemSdwanMembersSpilloverThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ingress_spillover_threshold"
-		if _, ok := i["ingress-spillover-threshold"]; ok {
-			tmp["ingress_spillover_threshold"] = flattenSystemSdwanMembersIngressSpilloverThreshold(i["ingress-spillover-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["ingress-spillover-threshold"]; ok {
+			tmp["ingress_spillover_threshold"] = flattenSystemSdwanMembersIngressSpilloverThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "volume_ratio"
-		if _, ok := i["volume-ratio"]; ok {
-			tmp["volume_ratio"] = flattenSystemSdwanMembersVolumeRatio(i["volume-ratio"], d, pre_append, sv)
+		if cur_v, ok := i["volume-ratio"]; ok {
+			tmp["volume_ratio"] = flattenSystemSdwanMembersVolumeRatio(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemSdwanMembersStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemSdwanMembersStatus(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport_group"
+		if cur_v, ok := i["transport-group"]; ok {
+			tmp["transport_group"] = flattenSystemSdwanMembersTransportGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenSystemSdwanMembersComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenSystemSdwanMembersComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1692,6 +1737,10 @@ func flattenSystemSdwanMembersStatus(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenSystemSdwanMembersTransportGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdwanMembersComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1721,63 +1770,63 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanHealthCheckName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanHealthCheckName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
-		if _, ok := i["probe-packets"]; ok {
-			tmp["probe_packets"] = flattenSystemSdwanHealthCheckProbePackets(i["probe-packets"], d, pre_append, sv)
+		if cur_v, ok := i["probe-packets"]; ok {
+			tmp["probe_packets"] = flattenSystemSdwanHealthCheckProbePackets(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
-		if _, ok := i["addr-mode"]; ok {
-			tmp["addr_mode"] = flattenSystemSdwanHealthCheckAddrMode(i["addr-mode"], d, pre_append, sv)
+		if cur_v, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = flattenSystemSdwanHealthCheckAddrMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "system_dns"
-		if _, ok := i["system-dns"]; ok {
-			tmp["system_dns"] = flattenSystemSdwanHealthCheckSystemDns(i["system-dns"], d, pre_append, sv)
+		if cur_v, ok := i["system-dns"]; ok {
+			tmp["system_dns"] = flattenSystemSdwanHealthCheckSystemDns(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
-		if _, ok := i["server"]; ok {
-			tmp["server"] = flattenSystemSdwanHealthCheckServer(i["server"], d, pre_append, sv)
+		if cur_v, ok := i["server"]; ok {
+			tmp["server"] = flattenSystemSdwanHealthCheckServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detect_mode"
-		if _, ok := i["detect-mode"]; ok {
-			tmp["detect_mode"] = flattenSystemSdwanHealthCheckDetectMode(i["detect-mode"], d, pre_append, sv)
+		if cur_v, ok := i["detect-mode"]; ok {
+			tmp["detect_mode"] = flattenSystemSdwanHealthCheckDetectMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenSystemSdwanHealthCheckProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemSdwanHealthCheckProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenSystemSdwanHealthCheckPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenSystemSdwanHealthCheckPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_measured_method"
-		if _, ok := i["quality-measured-method"]; ok {
-			tmp["quality_measured_method"] = flattenSystemSdwanHealthCheckQualityMeasuredMethod(i["quality-measured-method"], d, pre_append, sv)
+		if cur_v, ok := i["quality-measured-method"]; ok {
+			tmp["quality_measured_method"] = flattenSystemSdwanHealthCheckQualityMeasuredMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_mode"
-		if _, ok := i["security-mode"]; ok {
-			tmp["security_mode"] = flattenSystemSdwanHealthCheckSecurityMode(i["security-mode"], d, pre_append, sv)
+		if cur_v, ok := i["security-mode"]; ok {
+			tmp["security_mode"] = flattenSystemSdwanHealthCheckSecurityMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
-		if _, ok := i["user"]; ok {
-			tmp["user"] = flattenSystemSdwanHealthCheckUser(i["user"], d, pre_append, sv)
+		if cur_v, ok := i["user"]; ok {
+			tmp["user"] = flattenSystemSdwanHealthCheckUser(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemSdwanHealthCheckPassword(i["password"], d, pre_append, sv)
+		if cur_v, ok := i["password"]; ok {
+			tmp["password"] = flattenSystemSdwanHealthCheckPassword(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -1785,173 +1834,173 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
-		if _, ok := i["packet-size"]; ok {
-			tmp["packet_size"] = flattenSystemSdwanHealthCheckPacketSize(i["packet-size"], d, pre_append, sv)
+		if cur_v, ok := i["packet-size"]; ok {
+			tmp["packet_size"] = flattenSystemSdwanHealthCheckPacketSize(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
-		if _, ok := i["ha-priority"]; ok {
-			tmp["ha_priority"] = flattenSystemSdwanHealthCheckHaPriority(i["ha-priority"], d, pre_append, sv)
+		if cur_v, ok := i["ha-priority"]; ok {
+			tmp["ha_priority"] = flattenSystemSdwanHealthCheckHaPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_mode"
-		if _, ok := i["ftp-mode"]; ok {
-			tmp["ftp_mode"] = flattenSystemSdwanHealthCheckFtpMode(i["ftp-mode"], d, pre_append, sv)
+		if cur_v, ok := i["ftp-mode"]; ok {
+			tmp["ftp_mode"] = flattenSystemSdwanHealthCheckFtpMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_file"
-		if _, ok := i["ftp-file"]; ok {
-			tmp["ftp_file"] = flattenSystemSdwanHealthCheckFtpFile(i["ftp-file"], d, pre_append, sv)
+		if cur_v, ok := i["ftp-file"]; ok {
+			tmp["ftp_file"] = flattenSystemSdwanHealthCheckFtpFile(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_get"
-		if _, ok := i["http-get"]; ok {
-			tmp["http_get"] = flattenSystemSdwanHealthCheckHttpGet(i["http-get"], d, pre_append, sv)
+		if cur_v, ok := i["http-get"]; ok {
+			tmp["http_get"] = flattenSystemSdwanHealthCheckHttpGet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_agent"
-		if _, ok := i["http-agent"]; ok {
-			tmp["http_agent"] = flattenSystemSdwanHealthCheckHttpAgent(i["http-agent"], d, pre_append, sv)
+		if cur_v, ok := i["http-agent"]; ok {
+			tmp["http_agent"] = flattenSystemSdwanHealthCheckHttpAgent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_match"
-		if _, ok := i["http-match"]; ok {
-			tmp["http_match"] = flattenSystemSdwanHealthCheckHttpMatch(i["http-match"], d, pre_append, sv)
+		if cur_v, ok := i["http-match"]; ok {
+			tmp["http_match"] = flattenSystemSdwanHealthCheckHttpMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_request_domain"
-		if _, ok := i["dns-request-domain"]; ok {
-			tmp["dns_request_domain"] = flattenSystemSdwanHealthCheckDnsRequestDomain(i["dns-request-domain"], d, pre_append, sv)
+		if cur_v, ok := i["dns-request-domain"]; ok {
+			tmp["dns_request_domain"] = flattenSystemSdwanHealthCheckDnsRequestDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_match_ip"
-		if _, ok := i["dns-match-ip"]; ok {
-			tmp["dns_match_ip"] = flattenSystemSdwanHealthCheckDnsMatchIp(i["dns-match-ip"], d, pre_append, sv)
+		if cur_v, ok := i["dns-match-ip"]; ok {
+			tmp["dns_match_ip"] = flattenSystemSdwanHealthCheckDnsMatchIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interval"
-		if _, ok := i["interval"]; ok {
-			tmp["interval"] = flattenSystemSdwanHealthCheckInterval(i["interval"], d, pre_append, sv)
+		if cur_v, ok := i["interval"]; ok {
+			tmp["interval"] = flattenSystemSdwanHealthCheckInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_timeout"
-		if _, ok := i["probe-timeout"]; ok {
-			tmp["probe_timeout"] = flattenSystemSdwanHealthCheckProbeTimeout(i["probe-timeout"], d, pre_append, sv)
+		if cur_v, ok := i["probe-timeout"]; ok {
+			tmp["probe_timeout"] = flattenSystemSdwanHealthCheckProbeTimeout(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "failtime"
-		if _, ok := i["failtime"]; ok {
-			tmp["failtime"] = flattenSystemSdwanHealthCheckFailtime(i["failtime"], d, pre_append, sv)
+		if cur_v, ok := i["failtime"]; ok {
+			tmp["failtime"] = flattenSystemSdwanHealthCheckFailtime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "recoverytime"
-		if _, ok := i["recoverytime"]; ok {
-			tmp["recoverytime"] = flattenSystemSdwanHealthCheckRecoverytime(i["recoverytime"], d, pre_append, sv)
+		if cur_v, ok := i["recoverytime"]; ok {
+			tmp["recoverytime"] = flattenSystemSdwanHealthCheckRecoverytime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_count"
-		if _, ok := i["probe-count"]; ok {
-			tmp["probe_count"] = flattenSystemSdwanHealthCheckProbeCount(i["probe-count"], d, pre_append, sv)
+		if cur_v, ok := i["probe-count"]; ok {
+			tmp["probe_count"] = flattenSystemSdwanHealthCheckProbeCount(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffservcode"
-		if _, ok := i["diffservcode"]; ok {
-			tmp["diffservcode"] = flattenSystemSdwanHealthCheckDiffservcode(i["diffservcode"], d, pre_append, sv)
+		if cur_v, ok := i["diffservcode"]; ok {
+			tmp["diffservcode"] = flattenSystemSdwanHealthCheckDiffservcode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_cascade_interface"
-		if _, ok := i["update-cascade-interface"]; ok {
-			tmp["update_cascade_interface"] = flattenSystemSdwanHealthCheckUpdateCascadeInterface(i["update-cascade-interface"], d, pre_append, sv)
+		if cur_v, ok := i["update-cascade-interface"]; ok {
+			tmp["update_cascade_interface"] = flattenSystemSdwanHealthCheckUpdateCascadeInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_static_route"
-		if _, ok := i["update-static-route"]; ok {
-			tmp["update_static_route"] = flattenSystemSdwanHealthCheckUpdateStaticRoute(i["update-static-route"], d, pre_append, sv)
+		if cur_v, ok := i["update-static-route"]; ok {
+			tmp["update_static_route"] = flattenSystemSdwanHealthCheckUpdateStaticRoute(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "embed_measured_health"
-		if _, ok := i["embed-measured-health"]; ok {
-			tmp["embed_measured_health"] = flattenSystemSdwanHealthCheckEmbedMeasuredHealth(i["embed-measured-health"], d, pre_append, sv)
+		if cur_v, ok := i["embed-measured-health"]; ok {
+			tmp["embed_measured_health"] = flattenSystemSdwanHealthCheckEmbedMeasuredHealth(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id_redistribute"
-		if _, ok := i["sla-id-redistribute"]; ok {
-			tmp["sla_id_redistribute"] = flattenSystemSdwanHealthCheckSlaIdRedistribute(i["sla-id-redistribute"], d, pre_append, sv)
+		if cur_v, ok := i["sla-id-redistribute"]; ok {
+			tmp["sla_id_redistribute"] = flattenSystemSdwanHealthCheckSlaIdRedistribute(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
-		if _, ok := i["sla-fail-log-period"]; ok {
-			tmp["sla_fail_log_period"] = flattenSystemSdwanHealthCheckSlaFailLogPeriod(i["sla-fail-log-period"], d, pre_append, sv)
+		if cur_v, ok := i["sla-fail-log-period"]; ok {
+			tmp["sla_fail_log_period"] = flattenSystemSdwanHealthCheckSlaFailLogPeriod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_pass_log_period"
-		if _, ok := i["sla-pass-log-period"]; ok {
-			tmp["sla_pass_log_period"] = flattenSystemSdwanHealthCheckSlaPassLogPeriod(i["sla-pass-log-period"], d, pre_append, sv)
+		if cur_v, ok := i["sla-pass-log-period"]; ok {
+			tmp["sla_pass_log_period"] = flattenSystemSdwanHealthCheckSlaPassLogPeriod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_packetloss"
-		if _, ok := i["threshold-warning-packetloss"]; ok {
-			tmp["threshold_warning_packetloss"] = flattenSystemSdwanHealthCheckThresholdWarningPacketloss(i["threshold-warning-packetloss"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-warning-packetloss"]; ok {
+			tmp["threshold_warning_packetloss"] = flattenSystemSdwanHealthCheckThresholdWarningPacketloss(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_packetloss"
-		if _, ok := i["threshold-alert-packetloss"]; ok {
-			tmp["threshold_alert_packetloss"] = flattenSystemSdwanHealthCheckThresholdAlertPacketloss(i["threshold-alert-packetloss"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-alert-packetloss"]; ok {
+			tmp["threshold_alert_packetloss"] = flattenSystemSdwanHealthCheckThresholdAlertPacketloss(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_latency"
-		if _, ok := i["threshold-warning-latency"]; ok {
-			tmp["threshold_warning_latency"] = flattenSystemSdwanHealthCheckThresholdWarningLatency(i["threshold-warning-latency"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-warning-latency"]; ok {
+			tmp["threshold_warning_latency"] = flattenSystemSdwanHealthCheckThresholdWarningLatency(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_latency"
-		if _, ok := i["threshold-alert-latency"]; ok {
-			tmp["threshold_alert_latency"] = flattenSystemSdwanHealthCheckThresholdAlertLatency(i["threshold-alert-latency"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-alert-latency"]; ok {
+			tmp["threshold_alert_latency"] = flattenSystemSdwanHealthCheckThresholdAlertLatency(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_jitter"
-		if _, ok := i["threshold-warning-jitter"]; ok {
-			tmp["threshold_warning_jitter"] = flattenSystemSdwanHealthCheckThresholdWarningJitter(i["threshold-warning-jitter"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-warning-jitter"]; ok {
+			tmp["threshold_warning_jitter"] = flattenSystemSdwanHealthCheckThresholdWarningJitter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_jitter"
-		if _, ok := i["threshold-alert-jitter"]; ok {
-			tmp["threshold_alert_jitter"] = flattenSystemSdwanHealthCheckThresholdAlertJitter(i["threshold-alert-jitter"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-alert-jitter"]; ok {
+			tmp["threshold_alert_jitter"] = flattenSystemSdwanHealthCheckThresholdAlertJitter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
-		if _, ok := i["vrf"]; ok {
-			tmp["vrf"] = flattenSystemSdwanHealthCheckVrf(i["vrf"], d, pre_append, sv)
+		if cur_v, ok := i["vrf"]; ok {
+			tmp["vrf"] = flattenSystemSdwanHealthCheckVrf(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
-		if _, ok := i["source"]; ok {
-			tmp["source"] = flattenSystemSdwanHealthCheckSource(i["source"], d, pre_append, sv)
+		if cur_v, ok := i["source"]; ok {
+			tmp["source"] = flattenSystemSdwanHealthCheckSource(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source6"
-		if _, ok := i["source6"]; ok {
-			tmp["source6"] = flattenSystemSdwanHealthCheckSource6(i["source6"], d, pre_append, sv)
+		if cur_v, ok := i["source6"]; ok {
+			tmp["source6"] = flattenSystemSdwanHealthCheckSource6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := i["members"]; ok {
-			tmp["members"] = flattenSystemSdwanHealthCheckMembers(i["members"], d, pre_append, sv)
+		if cur_v, ok := i["members"]; ok {
+			tmp["members"] = flattenSystemSdwanHealthCheckMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_codec"
-		if _, ok := i["mos-codec"]; ok {
-			tmp["mos_codec"] = flattenSystemSdwanHealthCheckMosCodec(i["mos-codec"], d, pre_append, sv)
+		if cur_v, ok := i["mos-codec"]; ok {
+			tmp["mos_codec"] = flattenSystemSdwanHealthCheckMosCodec(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
-		if _, ok := i["class-id"]; ok {
-			tmp["class_id"] = flattenSystemSdwanHealthCheckClassId(i["class-id"], d, pre_append, sv)
+		if cur_v, ok := i["class-id"]; ok {
+			tmp["class_id"] = flattenSystemSdwanHealthCheckClassId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := i["sla"]; ok {
-			tmp["sla"] = flattenSystemSdwanHealthCheckSla(i["sla"], d, pre_append, sv)
+		if cur_v, ok := i["sla"]; ok {
+			tmp["sla"] = flattenSystemSdwanHealthCheckSla(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2156,8 +2205,8 @@ func flattenSystemSdwanHealthCheckMembers(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemSdwanHealthCheckMembersSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemSdwanHealthCheckMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2206,43 +2255,43 @@ func flattenSystemSdwanHealthCheckSla(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanHealthCheckSlaId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanHealthCheckSlaId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
-		if _, ok := i["link-cost-factor"]; ok {
-			tmp["link_cost_factor"] = flattenSystemSdwanHealthCheckSlaLinkCostFactor(i["link-cost-factor"], d, pre_append, sv)
+		if cur_v, ok := i["link-cost-factor"]; ok {
+			tmp["link_cost_factor"] = flattenSystemSdwanHealthCheckSlaLinkCostFactor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
-		if _, ok := i["latency-threshold"]; ok {
-			tmp["latency_threshold"] = flattenSystemSdwanHealthCheckSlaLatencyThreshold(i["latency-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["latency-threshold"]; ok {
+			tmp["latency_threshold"] = flattenSystemSdwanHealthCheckSlaLatencyThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_threshold"
-		if _, ok := i["jitter-threshold"]; ok {
-			tmp["jitter_threshold"] = flattenSystemSdwanHealthCheckSlaJitterThreshold(i["jitter-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["jitter-threshold"]; ok {
+			tmp["jitter_threshold"] = flattenSystemSdwanHealthCheckSlaJitterThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packetloss_threshold"
-		if _, ok := i["packetloss-threshold"]; ok {
-			tmp["packetloss_threshold"] = flattenSystemSdwanHealthCheckSlaPacketlossThreshold(i["packetloss-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["packetloss-threshold"]; ok {
+			tmp["packetloss_threshold"] = flattenSystemSdwanHealthCheckSlaPacketlossThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_threshold"
-		if _, ok := i["mos-threshold"]; ok {
-			tmp["mos_threshold"] = flattenSystemSdwanHealthCheckSlaMosThreshold(i["mos-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["mos-threshold"]; ok {
+			tmp["mos_threshold"] = flattenSystemSdwanHealthCheckSlaMosThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
-		if _, ok := i["priority-in-sla"]; ok {
-			tmp["priority_in_sla"] = flattenSystemSdwanHealthCheckSlaPriorityInSla(i["priority-in-sla"], d, pre_append, sv)
+		if cur_v, ok := i["priority-in-sla"]; ok {
+			tmp["priority_in_sla"] = flattenSystemSdwanHealthCheckSlaPriorityInSla(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
-		if _, ok := i["priority-out-sla"]; ok {
-			tmp["priority_out_sla"] = flattenSystemSdwanHealthCheckSlaPriorityOutSla(i["priority-out-sla"], d, pre_append, sv)
+		if cur_v, ok := i["priority-out-sla"]; ok {
+			tmp["priority_out_sla"] = flattenSystemSdwanHealthCheckSlaPriorityOutSla(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2311,52 +2360,52 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemSdwanNeighborIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemSdwanNeighborIp(cur_v, d, pre_append, sv)
 		}
 
 		if _, ok := i["member"].([]interface{}); ok {
 			pre_append = pre + "." + strconv.Itoa(con) + "." + "member_block"
-			if _, ok := i["member"]; ok {
-				tmp["member_block"] = flattenSystemSdwanNeighborMember_Block(i["member"], d, pre_append, sv)
+			if cur_v, ok := i["member"]; ok {
+				tmp["member_block"] = flattenSystemSdwanNeighborMember_Block(cur_v, d, pre_append, sv)
 			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
-		if _, ok := i["minimum-sla-meet-members"]; ok {
-			tmp["minimum_sla_meet_members"] = flattenSystemSdwanNeighborMinimumSlaMeetMembers(i["minimum-sla-meet-members"], d, pre_append, sv)
+		if cur_v, ok := i["minimum-sla-meet-members"]; ok {
+			tmp["minimum_sla_meet_members"] = flattenSystemSdwanNeighborMinimumSlaMeetMembers(cur_v, d, pre_append, sv)
 		}
 
 		if _, ok := i["member"].(float64); ok {
 			pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
-			if _, ok := i["member"]; ok {
-				tmp["member"] = flattenSystemSdwanNeighborMember(i["member"], d, pre_append, sv)
+			if cur_v, ok := i["member"]; ok {
+				tmp["member"] = flattenSystemSdwanNeighborMember(cur_v, d, pre_append, sv)
 			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
-		if _, ok := i["service-id"]; ok {
-			tmp["service_id"] = flattenSystemSdwanNeighborServiceId(i["service-id"], d, pre_append, sv)
+		if cur_v, ok := i["service-id"]; ok {
+			tmp["service_id"] = flattenSystemSdwanNeighborServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
-		if _, ok := i["mode"]; ok {
-			tmp["mode"] = flattenSystemSdwanNeighborMode(i["mode"], d, pre_append, sv)
+		if cur_v, ok := i["mode"]; ok {
+			tmp["mode"] = flattenSystemSdwanNeighborMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
-		if _, ok := i["role"]; ok {
-			tmp["role"] = flattenSystemSdwanNeighborRole(i["role"], d, pre_append, sv)
+		if cur_v, ok := i["role"]; ok {
+			tmp["role"] = flattenSystemSdwanNeighborRole(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenSystemSdwanNeighborHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenSystemSdwanNeighborHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id"
-		if _, ok := i["sla-id"]; ok {
-			tmp["sla_id"] = flattenSystemSdwanNeighborSlaId(i["sla-id"], d, pre_append, sv)
+		if cur_v, ok := i["sla-id"]; ok {
+			tmp["sla_id"] = flattenSystemSdwanNeighborSlaId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2397,8 +2446,8 @@ func flattenSystemSdwanNeighborMember_Block(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemSdwanNeighborMember_BlockSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemSdwanNeighborMember_BlockSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2467,323 +2516,328 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanServiceId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
-		if _, ok := i["addr-mode"]; ok {
-			tmp["addr_mode"] = flattenSystemSdwanServiceAddrMode(i["addr-mode"], d, pre_append, sv)
+		if cur_v, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = flattenSystemSdwanServiceAddrMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balance"
-		if _, ok := i["load-balance"]; ok {
-			tmp["load_balance"] = flattenSystemSdwanServiceLoadBalance(i["load-balance"], d, pre_append, sv)
+		if cur_v, ok := i["load-balance"]; ok {
+			tmp["load_balance"] = flattenSystemSdwanServiceLoadBalance(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut_stickiness"
-		if _, ok := i["shortcut-stickiness"]; ok {
-			tmp["shortcut_stickiness"] = flattenSystemSdwanServiceShortcutStickiness(i["shortcut-stickiness"], d, pre_append, sv)
+		if cur_v, ok := i["shortcut-stickiness"]; ok {
+			tmp["shortcut_stickiness"] = flattenSystemSdwanServiceShortcutStickiness(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device"
-		if _, ok := i["input-device"]; ok {
-			tmp["input_device"] = flattenSystemSdwanServiceInputDevice(i["input-device"], d, pre_append, sv)
+		if cur_v, ok := i["input-device"]; ok {
+			tmp["input_device"] = flattenSystemSdwanServiceInputDevice(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device_negate"
-		if _, ok := i["input-device-negate"]; ok {
-			tmp["input_device_negate"] = flattenSystemSdwanServiceInputDeviceNegate(i["input-device-negate"], d, pre_append, sv)
+		if cur_v, ok := i["input-device-negate"]; ok {
+			tmp["input_device_negate"] = flattenSystemSdwanServiceInputDeviceNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_zone"
-		if _, ok := i["input-zone"]; ok {
-			tmp["input_zone"] = flattenSystemSdwanServiceInputZone(i["input-zone"], d, pre_append, sv)
+		if cur_v, ok := i["input-zone"]; ok {
+			tmp["input_zone"] = flattenSystemSdwanServiceInputZone(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
-		if _, ok := i["mode"]; ok {
-			tmp["mode"] = flattenSystemSdwanServiceMode(i["mode"], d, pre_append, sv)
+		if cur_v, ok := i["mode"]; ok {
+			tmp["mode"] = flattenSystemSdwanServiceMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "zone_mode"
-		if _, ok := i["zone-mode"]; ok {
-			tmp["zone_mode"] = flattenSystemSdwanServiceZoneMode(i["zone-mode"], d, pre_append, sv)
+		if cur_v, ok := i["zone-mode"]; ok {
+			tmp["zone_mode"] = flattenSystemSdwanServiceZoneMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
-		if _, ok := i["minimum-sla-meet-members"]; ok {
-			tmp["minimum_sla_meet_members"] = flattenSystemSdwanServiceMinimumSlaMeetMembers(i["minimum-sla-meet-members"], d, pre_append, sv)
+		if cur_v, ok := i["minimum-sla-meet-members"]; ok {
+			tmp["minimum_sla_meet_members"] = flattenSystemSdwanServiceMinimumSlaMeetMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hash_mode"
-		if _, ok := i["hash-mode"]; ok {
-			tmp["hash_mode"] = flattenSystemSdwanServiceHashMode(i["hash-mode"], d, pre_append, sv)
+		if cur_v, ok := i["hash-mode"]; ok {
+			tmp["hash_mode"] = flattenSystemSdwanServiceHashMode(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut_priority"
+		if cur_v, ok := i["shortcut-priority"]; ok {
+			tmp["shortcut_priority"] = flattenSystemSdwanServiceShortcutPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
-		if _, ok := i["role"]; ok {
-			tmp["role"] = flattenSystemSdwanServiceRole(i["role"], d, pre_append, sv)
+		if cur_v, ok := i["role"]; ok {
+			tmp["role"] = flattenSystemSdwanServiceRole(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "standalone_action"
-		if _, ok := i["standalone-action"]; ok {
-			tmp["standalone_action"] = flattenSystemSdwanServiceStandaloneAction(i["standalone-action"], d, pre_append, sv)
+		if cur_v, ok := i["standalone-action"]; ok {
+			tmp["standalone_action"] = flattenSystemSdwanServiceStandaloneAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_link"
-		if _, ok := i["quality-link"]; ok {
-			tmp["quality_link"] = flattenSystemSdwanServiceQualityLink(i["quality-link"], d, pre_append, sv)
+		if cur_v, ok := i["quality-link"]; ok {
+			tmp["quality_link"] = flattenSystemSdwanServiceQualityLink(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
-		if _, ok := i["tos"]; ok {
-			tmp["tos"] = flattenSystemSdwanServiceTos(i["tos"], d, pre_append, sv)
+		if cur_v, ok := i["tos"]; ok {
+			tmp["tos"] = flattenSystemSdwanServiceTos(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
-		if _, ok := i["tos-mask"]; ok {
-			tmp["tos_mask"] = flattenSystemSdwanServiceTosMask(i["tos-mask"], d, pre_append, sv)
+		if cur_v, ok := i["tos-mask"]; ok {
+			tmp["tos_mask"] = flattenSystemSdwanServiceTosMask(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenSystemSdwanServiceProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemSdwanServiceProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
-		if _, ok := i["start-port"]; ok {
-			tmp["start_port"] = flattenSystemSdwanServiceStartPort(i["start-port"], d, pre_append, sv)
+		if cur_v, ok := i["start-port"]; ok {
+			tmp["start_port"] = flattenSystemSdwanServiceStartPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
-		if _, ok := i["end-port"]; ok {
-			tmp["end_port"] = flattenSystemSdwanServiceEndPort(i["end-port"], d, pre_append, sv)
+		if cur_v, ok := i["end-port"]; ok {
+			tmp["end_port"] = flattenSystemSdwanServiceEndPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_src_port"
-		if _, ok := i["start-src-port"]; ok {
-			tmp["start_src_port"] = flattenSystemSdwanServiceStartSrcPort(i["start-src-port"], d, pre_append, sv)
+		if cur_v, ok := i["start-src-port"]; ok {
+			tmp["start_src_port"] = flattenSystemSdwanServiceStartSrcPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_src_port"
-		if _, ok := i["end-src-port"]; ok {
-			tmp["end_src_port"] = flattenSystemSdwanServiceEndSrcPort(i["end-src-port"], d, pre_append, sv)
+		if cur_v, ok := i["end-src-port"]; ok {
+			tmp["end_src_port"] = flattenSystemSdwanServiceEndSrcPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_tag"
-		if _, ok := i["route-tag"]; ok {
-			tmp["route_tag"] = flattenSystemSdwanServiceRouteTag(i["route-tag"], d, pre_append, sv)
+		if cur_v, ok := i["route-tag"]; ok {
+			tmp["route_tag"] = flattenSystemSdwanServiceRouteTag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenSystemSdwanServiceDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenSystemSdwanServiceDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_negate"
-		if _, ok := i["dst-negate"]; ok {
-			tmp["dst_negate"] = flattenSystemSdwanServiceDstNegate(i["dst-negate"], d, pre_append, sv)
+		if cur_v, ok := i["dst-negate"]; ok {
+			tmp["dst_negate"] = flattenSystemSdwanServiceDstNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := i["src"]; ok {
-			tmp["src"] = flattenSystemSdwanServiceSrc(i["src"], d, pre_append, sv)
+		if cur_v, ok := i["src"]; ok {
+			tmp["src"] = flattenSystemSdwanServiceSrc(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := i["dst6"]; ok {
-			tmp["dst6"] = flattenSystemSdwanServiceDst6(i["dst6"], d, pre_append, sv)
+		if cur_v, ok := i["dst6"]; ok {
+			tmp["dst6"] = flattenSystemSdwanServiceDst6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := i["src6"]; ok {
-			tmp["src6"] = flattenSystemSdwanServiceSrc6(i["src6"], d, pre_append, sv)
+		if cur_v, ok := i["src6"]; ok {
+			tmp["src6"] = flattenSystemSdwanServiceSrc6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_negate"
-		if _, ok := i["src-negate"]; ok {
-			tmp["src_negate"] = flattenSystemSdwanServiceSrcNegate(i["src-negate"], d, pre_append, sv)
+		if cur_v, ok := i["src-negate"]; ok {
+			tmp["src_negate"] = flattenSystemSdwanServiceSrcNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := i["users"]; ok {
-			tmp["users"] = flattenSystemSdwanServiceUsers(i["users"], d, pre_append, sv)
+		if cur_v, ok := i["users"]; ok {
+			tmp["users"] = flattenSystemSdwanServiceUsers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := i["groups"]; ok {
-			tmp["groups"] = flattenSystemSdwanServiceGroups(i["groups"], d, pre_append, sv)
+		if cur_v, ok := i["groups"]; ok {
+			tmp["groups"] = flattenSystemSdwanServiceGroups(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service"
-		if _, ok := i["internet-service"]; ok {
-			tmp["internet_service"] = flattenSystemSdwanServiceInternetService(i["internet-service"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service"]; ok {
+			tmp["internet_service"] = flattenSystemSdwanServiceInternetService(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom"
-		if _, ok := i["internet-service-custom"]; ok {
-			tmp["internet_service_custom"] = flattenSystemSdwanServiceInternetServiceCustom(i["internet-service-custom"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-custom"]; ok {
+			tmp["internet_service_custom"] = flattenSystemSdwanServiceInternetServiceCustom(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom_group"
-		if _, ok := i["internet-service-custom-group"]; ok {
-			tmp["internet_service_custom_group"] = flattenSystemSdwanServiceInternetServiceCustomGroup(i["internet-service-custom-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-custom-group"]; ok {
+			tmp["internet_service_custom_group"] = flattenSystemSdwanServiceInternetServiceCustomGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_name"
-		if _, ok := i["internet-service-name"]; ok {
-			tmp["internet_service_name"] = flattenSystemSdwanServiceInternetServiceName(i["internet-service-name"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-name"]; ok {
+			tmp["internet_service_name"] = flattenSystemSdwanServiceInternetServiceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_group"
-		if _, ok := i["internet-service-group"]; ok {
-			tmp["internet_service_group"] = flattenSystemSdwanServiceInternetServiceGroup(i["internet-service-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-group"]; ok {
+			tmp["internet_service_group"] = flattenSystemSdwanServiceInternetServiceGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl"
-		if _, ok := i["internet-service-app-ctrl"]; ok {
-			tmp["internet_service_app_ctrl"] = flattenSystemSdwanServiceInternetServiceAppCtrl(i["internet-service-app-ctrl"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-app-ctrl"]; ok {
+			tmp["internet_service_app_ctrl"] = flattenSystemSdwanServiceInternetServiceAppCtrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_group"
-		if _, ok := i["internet-service-app-ctrl-group"]; ok {
-			tmp["internet_service_app_ctrl_group"] = flattenSystemSdwanServiceInternetServiceAppCtrlGroup(i["internet-service-app-ctrl-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-app-ctrl-group"]; ok {
+			tmp["internet_service_app_ctrl_group"] = flattenSystemSdwanServiceInternetServiceAppCtrlGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_category"
-		if _, ok := i["internet-service-app-ctrl-category"]; ok {
-			tmp["internet_service_app_ctrl_category"] = flattenSystemSdwanServiceInternetServiceAppCtrlCategory(i["internet-service-app-ctrl-category"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-app-ctrl-category"]; ok {
+			tmp["internet_service_app_ctrl_category"] = flattenSystemSdwanServiceInternetServiceAppCtrlCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenSystemSdwanServiceHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenSystemSdwanServiceHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
-		if _, ok := i["link-cost-factor"]; ok {
-			tmp["link_cost_factor"] = flattenSystemSdwanServiceLinkCostFactor(i["link-cost-factor"], d, pre_append, sv)
+		if cur_v, ok := i["link-cost-factor"]; ok {
+			tmp["link_cost_factor"] = flattenSystemSdwanServiceLinkCostFactor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_weight"
-		if _, ok := i["packet-loss-weight"]; ok {
-			tmp["packet_loss_weight"] = flattenSystemSdwanServicePacketLossWeight(i["packet-loss-weight"], d, pre_append, sv)
+		if cur_v, ok := i["packet-loss-weight"]; ok {
+			tmp["packet_loss_weight"] = flattenSystemSdwanServicePacketLossWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_weight"
-		if _, ok := i["latency-weight"]; ok {
-			tmp["latency_weight"] = flattenSystemSdwanServiceLatencyWeight(i["latency-weight"], d, pre_append, sv)
+		if cur_v, ok := i["latency-weight"]; ok {
+			tmp["latency_weight"] = flattenSystemSdwanServiceLatencyWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_weight"
-		if _, ok := i["jitter-weight"]; ok {
-			tmp["jitter_weight"] = flattenSystemSdwanServiceJitterWeight(i["jitter-weight"], d, pre_append, sv)
+		if cur_v, ok := i["jitter-weight"]; ok {
+			tmp["jitter_weight"] = flattenSystemSdwanServiceJitterWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_weight"
-		if _, ok := i["bandwidth-weight"]; ok {
-			tmp["bandwidth_weight"] = flattenSystemSdwanServiceBandwidthWeight(i["bandwidth-weight"], d, pre_append, sv)
+		if cur_v, ok := i["bandwidth-weight"]; ok {
+			tmp["bandwidth_weight"] = flattenSystemSdwanServiceBandwidthWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_threshold"
-		if _, ok := i["link-cost-threshold"]; ok {
-			tmp["link_cost_threshold"] = flattenSystemSdwanServiceLinkCostThreshold(i["link-cost-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["link-cost-threshold"]; ok {
+			tmp["link_cost_threshold"] = flattenSystemSdwanServiceLinkCostThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hold_down_time"
-		if _, ok := i["hold-down-time"]; ok {
-			tmp["hold_down_time"] = flattenSystemSdwanServiceHoldDownTime(i["hold-down-time"], d, pre_append, sv)
+		if cur_v, ok := i["hold-down-time"]; ok {
+			tmp["hold_down_time"] = flattenSystemSdwanServiceHoldDownTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_stickiness"
-		if _, ok := i["sla-stickiness"]; ok {
-			tmp["sla_stickiness"] = flattenSystemSdwanServiceSlaStickiness(i["sla-stickiness"], d, pre_append, sv)
+		if cur_v, ok := i["sla-stickiness"]; ok {
+			tmp["sla_stickiness"] = flattenSystemSdwanServiceSlaStickiness(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward"
-		if _, ok := i["dscp-forward"]; ok {
-			tmp["dscp_forward"] = flattenSystemSdwanServiceDscpForward(i["dscp-forward"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-forward"]; ok {
+			tmp["dscp_forward"] = flattenSystemSdwanServiceDscpForward(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse"
-		if _, ok := i["dscp-reverse"]; ok {
-			tmp["dscp_reverse"] = flattenSystemSdwanServiceDscpReverse(i["dscp-reverse"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-reverse"]; ok {
+			tmp["dscp_reverse"] = flattenSystemSdwanServiceDscpReverse(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward_tag"
-		if _, ok := i["dscp-forward-tag"]; ok {
-			tmp["dscp_forward_tag"] = flattenSystemSdwanServiceDscpForwardTag(i["dscp-forward-tag"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-forward-tag"]; ok {
+			tmp["dscp_forward_tag"] = flattenSystemSdwanServiceDscpForwardTag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse_tag"
-		if _, ok := i["dscp-reverse-tag"]; ok {
-			tmp["dscp_reverse_tag"] = flattenSystemSdwanServiceDscpReverseTag(i["dscp-reverse-tag"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-reverse-tag"]; ok {
+			tmp["dscp_reverse_tag"] = flattenSystemSdwanServiceDscpReverseTag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := i["sla"]; ok {
-			tmp["sla"] = flattenSystemSdwanServiceSla(i["sla"], d, pre_append, sv)
+		if cur_v, ok := i["sla"]; ok {
+			tmp["sla"] = flattenSystemSdwanServiceSla(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_members"
-		if _, ok := i["priority-members"]; ok {
-			tmp["priority_members"] = flattenSystemSdwanServicePriorityMembers(i["priority-members"], d, pre_append, sv)
+		if cur_v, ok := i["priority-members"]; ok {
+			tmp["priority_members"] = flattenSystemSdwanServicePriorityMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_zone"
-		if _, ok := i["priority-zone"]; ok {
-			tmp["priority_zone"] = flattenSystemSdwanServicePriorityZone(i["priority-zone"], d, pre_append, sv)
+		if cur_v, ok := i["priority-zone"]; ok {
+			tmp["priority_zone"] = flattenSystemSdwanServicePriorityZone(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemSdwanServiceStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemSdwanServiceStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
-		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenSystemSdwanServiceGateway(i["gateway"], d, pre_append, sv)
+		if cur_v, ok := i["gateway"]; ok {
+			tmp["gateway"] = flattenSystemSdwanServiceGateway(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default"
-		if _, ok := i["default"]; ok {
-			tmp["default"] = flattenSystemSdwanServiceDefault(i["default"], d, pre_append, sv)
+		if cur_v, ok := i["default"]; ok {
+			tmp["default"] = flattenSystemSdwanServiceDefault(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_compare_method"
-		if _, ok := i["sla-compare-method"]; ok {
-			tmp["sla_compare_method"] = flattenSystemSdwanServiceSlaCompareMethod(i["sla-compare-method"], d, pre_append, sv)
+		if cur_v, ok := i["sla-compare-method"]; ok {
+			tmp["sla_compare_method"] = flattenSystemSdwanServiceSlaCompareMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tie_break"
-		if _, ok := i["tie-break"]; ok {
-			tmp["tie_break"] = flattenSystemSdwanServiceTieBreak(i["tie-break"], d, pre_append, sv)
+		if cur_v, ok := i["tie-break"]; ok {
+			tmp["tie_break"] = flattenSystemSdwanServiceTieBreak(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "use_shortcut_sla"
-		if _, ok := i["use-shortcut-sla"]; ok {
-			tmp["use_shortcut_sla"] = flattenSystemSdwanServiceUseShortcutSla(i["use-shortcut-sla"], d, pre_append, sv)
+		if cur_v, ok := i["use-shortcut-sla"]; ok {
+			tmp["use_shortcut_sla"] = flattenSystemSdwanServiceUseShortcutSla(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive_measurement"
-		if _, ok := i["passive-measurement"]; ok {
-			tmp["passive_measurement"] = flattenSystemSdwanServicePassiveMeasurement(i["passive-measurement"], d, pre_append, sv)
+		if cur_v, ok := i["passive-measurement"]; ok {
+			tmp["passive_measurement"] = flattenSystemSdwanServicePassiveMeasurement(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "agent_exclusive"
-		if _, ok := i["agent-exclusive"]; ok {
-			tmp["agent_exclusive"] = flattenSystemSdwanServiceAgentExclusive(i["agent-exclusive"], d, pre_append, sv)
+		if cur_v, ok := i["agent-exclusive"]; ok {
+			tmp["agent_exclusive"] = flattenSystemSdwanServiceAgentExclusive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut"
-		if _, ok := i["shortcut"]; ok {
-			tmp["shortcut"] = flattenSystemSdwanServiceShortcut(i["shortcut"], d, pre_append, sv)
+		if cur_v, ok := i["shortcut"]; ok {
+			tmp["shortcut"] = flattenSystemSdwanServiceShortcut(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2840,8 +2894,8 @@ func flattenSystemSdwanServiceInputDevice(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInputDeviceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInputDeviceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2886,8 +2940,8 @@ func flattenSystemSdwanServiceInputZone(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInputZoneName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInputZoneName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2916,6 +2970,10 @@ func flattenSystemSdwanServiceMinimumSlaMeetMembers(v interface{}, d *schema.Res
 }
 
 func flattenSystemSdwanServiceHashMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceShortcutPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2988,8 +3046,8 @@ func flattenSystemSdwanServiceDst(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceDstName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceDstName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3034,8 +3092,8 @@ func flattenSystemSdwanServiceSrc(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceSrcName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceSrcName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3076,8 +3134,8 @@ func flattenSystemSdwanServiceDst6(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceDst6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceDst6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3118,8 +3176,8 @@ func flattenSystemSdwanServiceSrc6(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceSrc6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceSrc6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3164,8 +3222,8 @@ func flattenSystemSdwanServiceUsers(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceUsersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceUsersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3206,8 +3264,8 @@ func flattenSystemSdwanServiceGroups(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3252,8 +3310,8 @@ func flattenSystemSdwanServiceInternetServiceCustom(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInternetServiceCustomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInternetServiceCustomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3294,8 +3352,8 @@ func flattenSystemSdwanServiceInternetServiceCustomGroup(v interface{}, d *schem
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInternetServiceCustomGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInternetServiceCustomGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3336,8 +3394,8 @@ func flattenSystemSdwanServiceInternetServiceName(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInternetServiceNameName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInternetServiceNameName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3378,8 +3436,8 @@ func flattenSystemSdwanServiceInternetServiceGroup(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInternetServiceGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInternetServiceGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3420,8 +3478,8 @@ func flattenSystemSdwanServiceInternetServiceAppCtrl(v interface{}, d *schema.Re
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanServiceInternetServiceAppCtrlId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanServiceInternetServiceAppCtrlId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3462,8 +3520,8 @@ func flattenSystemSdwanServiceInternetServiceAppCtrlGroup(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceInternetServiceAppCtrlGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceInternetServiceAppCtrlGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3504,8 +3562,8 @@ func flattenSystemSdwanServiceInternetServiceAppCtrlCategory(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanServiceInternetServiceAppCtrlCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanServiceInternetServiceAppCtrlCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3546,8 +3604,8 @@ func flattenSystemSdwanServiceHealthCheck(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServiceHealthCheckName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServiceHealthCheckName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3636,13 +3694,13 @@ func flattenSystemSdwanServiceSla(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenSystemSdwanServiceSlaHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenSystemSdwanServiceSlaHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanServiceSlaId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanServiceSlaId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3687,8 +3745,8 @@ func flattenSystemSdwanServicePriorityMembers(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemSdwanServicePriorityMembersSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemSdwanServicePriorityMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3729,8 +3787,8 @@ func flattenSystemSdwanServicePriorityZone(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanServicePriorityZoneName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanServicePriorityZoneName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3807,63 +3865,63 @@ func flattenSystemSdwanDuplication(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanDuplicationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanDuplicationId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
-		if _, ok := i["service-id"]; ok {
-			tmp["service_id"] = flattenSystemSdwanDuplicationServiceId(i["service-id"], d, pre_append, sv)
+		if cur_v, ok := i["service-id"]; ok {
+			tmp["service_id"] = flattenSystemSdwanDuplicationServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenSystemSdwanDuplicationSrcaddr(i["srcaddr"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr"]; ok {
+			tmp["srcaddr"] = flattenSystemSdwanDuplicationSrcaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenSystemSdwanDuplicationDstaddr(i["dstaddr"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr"]; ok {
+			tmp["dstaddr"] = flattenSystemSdwanDuplicationDstaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
-		if _, ok := i["srcaddr6"]; ok {
-			tmp["srcaddr6"] = flattenSystemSdwanDuplicationSrcaddr6(i["srcaddr6"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr6"]; ok {
+			tmp["srcaddr6"] = flattenSystemSdwanDuplicationSrcaddr6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
-		if _, ok := i["dstaddr6"]; ok {
-			tmp["dstaddr6"] = flattenSystemSdwanDuplicationDstaddr6(i["dstaddr6"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr6"]; ok {
+			tmp["dstaddr6"] = flattenSystemSdwanDuplicationDstaddr6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcintf"
-		if _, ok := i["srcintf"]; ok {
-			tmp["srcintf"] = flattenSystemSdwanDuplicationSrcintf(i["srcintf"], d, pre_append, sv)
+		if cur_v, ok := i["srcintf"]; ok {
+			tmp["srcintf"] = flattenSystemSdwanDuplicationSrcintf(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstintf"
-		if _, ok := i["dstintf"]; ok {
-			tmp["dstintf"] = flattenSystemSdwanDuplicationDstintf(i["dstintf"], d, pre_append, sv)
+		if cur_v, ok := i["dstintf"]; ok {
+			tmp["dstintf"] = flattenSystemSdwanDuplicationDstintf(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := i["service"]; ok {
-			tmp["service"] = flattenSystemSdwanDuplicationService(i["service"], d, pre_append, sv)
+		if cur_v, ok := i["service"]; ok {
+			tmp["service"] = flattenSystemSdwanDuplicationService(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_duplication"
-		if _, ok := i["packet-duplication"]; ok {
-			tmp["packet_duplication"] = flattenSystemSdwanDuplicationPacketDuplication(i["packet-duplication"], d, pre_append, sv)
+		if cur_v, ok := i["packet-duplication"]; ok {
+			tmp["packet_duplication"] = flattenSystemSdwanDuplicationPacketDuplication(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_match_service"
-		if _, ok := i["sla-match-service"]; ok {
-			tmp["sla_match_service"] = flattenSystemSdwanDuplicationSlaMatchService(i["sla-match-service"], d, pre_append, sv)
+		if cur_v, ok := i["sla-match-service"]; ok {
+			tmp["sla_match_service"] = flattenSystemSdwanDuplicationSlaMatchService(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_de_duplication"
-		if _, ok := i["packet-de-duplication"]; ok {
-			tmp["packet_de_duplication"] = flattenSystemSdwanDuplicationPacketDeDuplication(i["packet-de-duplication"], d, pre_append, sv)
+		if cur_v, ok := i["packet-de-duplication"]; ok {
+			tmp["packet_de_duplication"] = flattenSystemSdwanDuplicationPacketDeDuplication(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3904,8 +3962,8 @@ func flattenSystemSdwanDuplicationServiceId(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdwanDuplicationServiceIdId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanDuplicationServiceIdId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3946,8 +4004,8 @@ func flattenSystemSdwanDuplicationSrcaddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationSrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationSrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3988,8 +4046,8 @@ func flattenSystemSdwanDuplicationDstaddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationDstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationDstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4030,8 +4088,8 @@ func flattenSystemSdwanDuplicationSrcaddr6(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationSrcaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationSrcaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4072,8 +4130,8 @@ func flattenSystemSdwanDuplicationDstaddr6(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationDstaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationDstaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4114,8 +4172,8 @@ func flattenSystemSdwanDuplicationSrcintf(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationSrcintfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationSrcintfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4156,8 +4214,8 @@ func flattenSystemSdwanDuplicationDstintf(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationDstintfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationDstintfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4198,8 +4256,8 @@ func flattenSystemSdwanDuplicationService(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdwanDuplicationServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdwanDuplicationServiceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4494,6 +4552,16 @@ func expandSystemSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv
 			tmp["name"], _ = expandSystemSdwanZoneName(d, i["name"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advpn_select"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["advpn-select"], _ = expandSystemSdwanZoneAdvpnSelect(d, i["advpn_select"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advpn_health_check"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["advpn-health-check"], _ = expandSystemSdwanZoneAdvpnHealthCheck(d, i["advpn_health_check"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_sla_tie_break"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service-sla-tie-break"], _ = expandSystemSdwanZoneServiceSlaTieBreak(d, i["service_sla_tie_break"], pre_append, sv)
@@ -4513,6 +4581,14 @@ func expandSystemSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv
 }
 
 func expandSystemSdwanZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanZoneAdvpnSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanZoneAdvpnHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4618,6 +4694,11 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 			tmp["status"], _ = expandSystemSdwanMembersStatus(d, i["status"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport_group"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["transport-group"], _ = expandSystemSdwanMembersTransportGroup(d, i["transport_group"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandSystemSdwanMembersComment(d, i["comment"], pre_append, sv)
@@ -4692,6 +4773,10 @@ func expandSystemSdwanMembersVolumeRatio(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemSdwanMembersStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersTransportGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5460,6 +5545,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 			tmp["hash-mode"], _ = expandSystemSdwanServiceHashMode(d, i["hash_mode"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut_priority"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["shortcut-priority"], _ = expandSystemSdwanServiceShortcutPriority(d, i["shortcut_priority"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["role"], _ = expandSystemSdwanServiceRole(d, i["role"], pre_append, sv)
@@ -5855,6 +5945,10 @@ func expandSystemSdwanServiceMinimumSlaMeetMembers(d *schema.ResourceData, v int
 }
 
 func expandSystemSdwanServiceHashMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServiceShortcutPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

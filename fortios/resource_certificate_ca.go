@@ -42,8 +42,9 @@ func resourceCertificateCa() *schema.Resource {
 				Required:     true,
 			},
 			"ca": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -295,12 +296,6 @@ func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("name", flattenCertificateCaName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
-		}
-	}
-
-	if err = d.Set("ca", flattenCertificateCaCa(o["ca"], d, "ca", sv)); err != nil {
-		if !fortiAPIPatch(o["ca"]) {
-			return fmt.Errorf("Error reading ca: %v", err)
 		}
 	}
 

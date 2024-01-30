@@ -239,13 +239,13 @@ func flattenRouterBfdNeighbor(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenRouterBfdNeighborIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenRouterBfdNeighborIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenRouterBfdNeighborInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenRouterBfdNeighborInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -290,43 +290,43 @@ func flattenRouterBfdMultihopTemplate(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterBfdMultihopTemplateId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterBfdMultihopTemplateId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := i["src"]; ok {
-			tmp["src"] = flattenRouterBfdMultihopTemplateSrc(i["src"], d, pre_append, sv)
+		if cur_v, ok := i["src"]; ok {
+			tmp["src"] = flattenRouterBfdMultihopTemplateSrc(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenRouterBfdMultihopTemplateDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenRouterBfdMultihopTemplateDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_desired_min_tx"
-		if _, ok := i["bfd-desired-min-tx"]; ok {
-			tmp["bfd_desired_min_tx"] = flattenRouterBfdMultihopTemplateBfdDesiredMinTx(i["bfd-desired-min-tx"], d, pre_append, sv)
+		if cur_v, ok := i["bfd-desired-min-tx"]; ok {
+			tmp["bfd_desired_min_tx"] = flattenRouterBfdMultihopTemplateBfdDesiredMinTx(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_required_min_rx"
-		if _, ok := i["bfd-required-min-rx"]; ok {
-			tmp["bfd_required_min_rx"] = flattenRouterBfdMultihopTemplateBfdRequiredMinRx(i["bfd-required-min-rx"], d, pre_append, sv)
+		if cur_v, ok := i["bfd-required-min-rx"]; ok {
+			tmp["bfd_required_min_rx"] = flattenRouterBfdMultihopTemplateBfdRequiredMinRx(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_detect_mult"
-		if _, ok := i["bfd-detect-mult"]; ok {
-			tmp["bfd_detect_mult"] = flattenRouterBfdMultihopTemplateBfdDetectMult(i["bfd-detect-mult"], d, pre_append, sv)
+		if cur_v, ok := i["bfd-detect-mult"]; ok {
+			tmp["bfd_detect_mult"] = flattenRouterBfdMultihopTemplateBfdDetectMult(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
-		if _, ok := i["auth-mode"]; ok {
-			tmp["auth_mode"] = flattenRouterBfdMultihopTemplateAuthMode(i["auth-mode"], d, pre_append, sv)
+		if cur_v, ok := i["auth-mode"]; ok {
+			tmp["auth_mode"] = flattenRouterBfdMultihopTemplateAuthMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if _, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = flattenRouterBfdMultihopTemplateMd5Key(i["md5-key"], d, pre_append, sv)
+		if cur_v, ok := i["md5-key"]; ok {
+			tmp["md5_key"] = flattenRouterBfdMultihopTemplateMd5Key(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["md5_key"] = c

@@ -32,15 +32,15 @@ resource "fortios_firewall_ippool" "trname" {
 The following arguments are supported:
 
 * `name` - IP pool name.
-* `type` - IP pool type (overload, one-to-one, fixed port range, or port block allocation). Valid values: `overload`, `one-to-one`, `fixed-port-range`, `port-block-allocation`.
+* `type` - IP pool type. On FortiOS versions 6.2.0-7.4.1: overload, one-to-one, fixed port range, or port block allocation. On FortiOS versions >= 7.4.2: overload, one-to-one, fixed-port-range, port-block-allocation, cgn-resource-allocation (hyperscale vdom only). Valid values: `overload`, `one-to-one`, `fixed-port-range`, `port-block-allocation`.
 * `startip` - (Required) First IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `endip` - (Required) Final IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `startport` - First port number (inclusive) in the range for the address pool (Default: 5117).
 * `endport` - Final port number (inclusive) in the range for the address pool (Default: 65533).
 * `source_startip` -  First IPv4 address (inclusive) in the range of the source addresses to be translated (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `source_endip` - Final IPv4 address (inclusive) in the range of the source addresses to be translated (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
-* `block_size` -  Number of addresses in a block (64 to 4096, default = 128).
-* `port_per_user` -  Number of port for each user (32 to 60416, default = 0, auto).
+* `block_size` - Number of addresses in a block (64 - 4096, default = 128).
+* `port_per_user` - Number of port for each user (32 - 60416, default = 0, which is auto).
 * `num_blocks_per_user` - Number of addresses blocks that can be used by a user (1 to 128, default = 8).
 * `pba_timeout` - Port block allocation timeout (seconds).
 * `permit_any_host` - Enable/disable full cone NAT. Valid values: `disable`, `enable`.

@@ -2334,13 +2334,13 @@ func flattenFirewallProfileProtocolOptionsCifsServerKeytab(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
-		if _, ok := i["principal"]; ok {
-			tmp["principal"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabPrincipal(i["principal"], d, pre_append, sv)
+		if cur_v, ok := i["principal"]; ok {
+			tmp["principal"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabPrincipal(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
-		if _, ok := i["keytab"]; ok {
-			tmp["keytab"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabKeytab(i["keytab"], d, pre_append, sv)
+		if cur_v, ok := i["keytab"]; ok {
+			tmp["keytab"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabKeytab(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

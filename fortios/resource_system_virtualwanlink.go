@@ -1047,8 +1047,8 @@ func flattenSystemVirtualWanLinkFailAlertInterfaces(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkFailAlertInterfacesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkFailAlertInterfacesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1089,8 +1089,8 @@ func flattenSystemVirtualWanLinkZone(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkZoneName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkZoneName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1131,73 +1131,73 @@ func flattenSystemVirtualWanLinkMembers(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemVirtualWanLinkMembersSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemVirtualWanLinkMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemVirtualWanLinkMembersInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemVirtualWanLinkMembersInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
-		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenSystemVirtualWanLinkMembersGateway(i["gateway"], d, pre_append, sv)
+		if cur_v, ok := i["gateway"]; ok {
+			tmp["gateway"] = flattenSystemVirtualWanLinkMembersGateway(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
-		if _, ok := i["source"]; ok {
-			tmp["source"] = flattenSystemVirtualWanLinkMembersSource(i["source"], d, pre_append, sv)
+		if cur_v, ok := i["source"]; ok {
+			tmp["source"] = flattenSystemVirtualWanLinkMembersSource(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
-		if _, ok := i["gateway6"]; ok {
-			tmp["gateway6"] = flattenSystemVirtualWanLinkMembersGateway6(i["gateway6"], d, pre_append, sv)
+		if cur_v, ok := i["gateway6"]; ok {
+			tmp["gateway6"] = flattenSystemVirtualWanLinkMembersGateway6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source6"
-		if _, ok := i["source6"]; ok {
-			tmp["source6"] = flattenSystemVirtualWanLinkMembersSource6(i["source6"], d, pre_append, sv)
+		if cur_v, ok := i["source6"]; ok {
+			tmp["source6"] = flattenSystemVirtualWanLinkMembersSource6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
-		if _, ok := i["cost"]; ok {
-			tmp["cost"] = flattenSystemVirtualWanLinkMembersCost(i["cost"], d, pre_append, sv)
+		if cur_v, ok := i["cost"]; ok {
+			tmp["cost"] = flattenSystemVirtualWanLinkMembersCost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenSystemVirtualWanLinkMembersWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenSystemVirtualWanLinkMembersWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemVirtualWanLinkMembersPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenSystemVirtualWanLinkMembersPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spillover_threshold"
-		if _, ok := i["spillover-threshold"]; ok {
-			tmp["spillover_threshold"] = flattenSystemVirtualWanLinkMembersSpilloverThreshold(i["spillover-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["spillover-threshold"]; ok {
+			tmp["spillover_threshold"] = flattenSystemVirtualWanLinkMembersSpilloverThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ingress_spillover_threshold"
-		if _, ok := i["ingress-spillover-threshold"]; ok {
-			tmp["ingress_spillover_threshold"] = flattenSystemVirtualWanLinkMembersIngressSpilloverThreshold(i["ingress-spillover-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["ingress-spillover-threshold"]; ok {
+			tmp["ingress_spillover_threshold"] = flattenSystemVirtualWanLinkMembersIngressSpilloverThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "volume_ratio"
-		if _, ok := i["volume-ratio"]; ok {
-			tmp["volume_ratio"] = flattenSystemVirtualWanLinkMembersVolumeRatio(i["volume-ratio"], d, pre_append, sv)
+		if cur_v, ok := i["volume-ratio"]; ok {
+			tmp["volume_ratio"] = flattenSystemVirtualWanLinkMembersVolumeRatio(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemVirtualWanLinkMembersStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemVirtualWanLinkMembersStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenSystemVirtualWanLinkMembersComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenSystemVirtualWanLinkMembersComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1290,48 +1290,48 @@ func flattenSystemVirtualWanLinkHealthCheck(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkHealthCheckName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkHealthCheckName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
-		if _, ok := i["probe-packets"]; ok {
-			tmp["probe_packets"] = flattenSystemVirtualWanLinkHealthCheckProbePackets(i["probe-packets"], d, pre_append, sv)
+		if cur_v, ok := i["probe-packets"]; ok {
+			tmp["probe_packets"] = flattenSystemVirtualWanLinkHealthCheckProbePackets(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
-		if _, ok := i["addr-mode"]; ok {
-			tmp["addr_mode"] = flattenSystemVirtualWanLinkHealthCheckAddrMode(i["addr-mode"], d, pre_append, sv)
+		if cur_v, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = flattenSystemVirtualWanLinkHealthCheckAddrMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "system_dns"
-		if _, ok := i["system-dns"]; ok {
-			tmp["system_dns"] = flattenSystemVirtualWanLinkHealthCheckSystemDns(i["system-dns"], d, pre_append, sv)
+		if cur_v, ok := i["system-dns"]; ok {
+			tmp["system_dns"] = flattenSystemVirtualWanLinkHealthCheckSystemDns(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
-		if _, ok := i["server"]; ok {
-			tmp["server"] = flattenSystemVirtualWanLinkHealthCheckServer(i["server"], d, pre_append, sv)
+		if cur_v, ok := i["server"]; ok {
+			tmp["server"] = flattenSystemVirtualWanLinkHealthCheckServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenSystemVirtualWanLinkHealthCheckProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemVirtualWanLinkHealthCheckProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenSystemVirtualWanLinkHealthCheckPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenSystemVirtualWanLinkHealthCheckPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_mode"
-		if _, ok := i["security-mode"]; ok {
-			tmp["security_mode"] = flattenSystemVirtualWanLinkHealthCheckSecurityMode(i["security-mode"], d, pre_append, sv)
+		if cur_v, ok := i["security-mode"]; ok {
+			tmp["security_mode"] = flattenSystemVirtualWanLinkHealthCheckSecurityMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemVirtualWanLinkHealthCheckPassword(i["password"], d, pre_append, sv)
+		if cur_v, ok := i["password"]; ok {
+			tmp["password"] = flattenSystemVirtualWanLinkHealthCheckPassword(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -1339,123 +1339,123 @@ func flattenSystemVirtualWanLinkHealthCheck(v interface{}, d *schema.ResourceDat
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
-		if _, ok := i["packet-size"]; ok {
-			tmp["packet_size"] = flattenSystemVirtualWanLinkHealthCheckPacketSize(i["packet-size"], d, pre_append, sv)
+		if cur_v, ok := i["packet-size"]; ok {
+			tmp["packet_size"] = flattenSystemVirtualWanLinkHealthCheckPacketSize(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
-		if _, ok := i["ha-priority"]; ok {
-			tmp["ha_priority"] = flattenSystemVirtualWanLinkHealthCheckHaPriority(i["ha-priority"], d, pre_append, sv)
+		if cur_v, ok := i["ha-priority"]; ok {
+			tmp["ha_priority"] = flattenSystemVirtualWanLinkHealthCheckHaPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_get"
-		if _, ok := i["http-get"]; ok {
-			tmp["http_get"] = flattenSystemVirtualWanLinkHealthCheckHttpGet(i["http-get"], d, pre_append, sv)
+		if cur_v, ok := i["http-get"]; ok {
+			tmp["http_get"] = flattenSystemVirtualWanLinkHealthCheckHttpGet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_agent"
-		if _, ok := i["http-agent"]; ok {
-			tmp["http_agent"] = flattenSystemVirtualWanLinkHealthCheckHttpAgent(i["http-agent"], d, pre_append, sv)
+		if cur_v, ok := i["http-agent"]; ok {
+			tmp["http_agent"] = flattenSystemVirtualWanLinkHealthCheckHttpAgent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_match"
-		if _, ok := i["http-match"]; ok {
-			tmp["http_match"] = flattenSystemVirtualWanLinkHealthCheckHttpMatch(i["http-match"], d, pre_append, sv)
+		if cur_v, ok := i["http-match"]; ok {
+			tmp["http_match"] = flattenSystemVirtualWanLinkHealthCheckHttpMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_request_domain"
-		if _, ok := i["dns-request-domain"]; ok {
-			tmp["dns_request_domain"] = flattenSystemVirtualWanLinkHealthCheckDnsRequestDomain(i["dns-request-domain"], d, pre_append, sv)
+		if cur_v, ok := i["dns-request-domain"]; ok {
+			tmp["dns_request_domain"] = flattenSystemVirtualWanLinkHealthCheckDnsRequestDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interval"
-		if _, ok := i["interval"]; ok {
-			tmp["interval"] = flattenSystemVirtualWanLinkHealthCheckInterval(i["interval"], d, pre_append, sv)
+		if cur_v, ok := i["interval"]; ok {
+			tmp["interval"] = flattenSystemVirtualWanLinkHealthCheckInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_timeout"
-		if _, ok := i["probe-timeout"]; ok {
-			tmp["probe_timeout"] = flattenSystemVirtualWanLinkHealthCheckProbeTimeout(i["probe-timeout"], d, pre_append, sv)
+		if cur_v, ok := i["probe-timeout"]; ok {
+			tmp["probe_timeout"] = flattenSystemVirtualWanLinkHealthCheckProbeTimeout(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "failtime"
-		if _, ok := i["failtime"]; ok {
-			tmp["failtime"] = flattenSystemVirtualWanLinkHealthCheckFailtime(i["failtime"], d, pre_append, sv)
+		if cur_v, ok := i["failtime"]; ok {
+			tmp["failtime"] = flattenSystemVirtualWanLinkHealthCheckFailtime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "recoverytime"
-		if _, ok := i["recoverytime"]; ok {
-			tmp["recoverytime"] = flattenSystemVirtualWanLinkHealthCheckRecoverytime(i["recoverytime"], d, pre_append, sv)
+		if cur_v, ok := i["recoverytime"]; ok {
+			tmp["recoverytime"] = flattenSystemVirtualWanLinkHealthCheckRecoverytime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_count"
-		if _, ok := i["probe-count"]; ok {
-			tmp["probe_count"] = flattenSystemVirtualWanLinkHealthCheckProbeCount(i["probe-count"], d, pre_append, sv)
+		if cur_v, ok := i["probe-count"]; ok {
+			tmp["probe_count"] = flattenSystemVirtualWanLinkHealthCheckProbeCount(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffservcode"
-		if _, ok := i["diffservcode"]; ok {
-			tmp["diffservcode"] = flattenSystemVirtualWanLinkHealthCheckDiffservcode(i["diffservcode"], d, pre_append, sv)
+		if cur_v, ok := i["diffservcode"]; ok {
+			tmp["diffservcode"] = flattenSystemVirtualWanLinkHealthCheckDiffservcode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_cascade_interface"
-		if _, ok := i["update-cascade-interface"]; ok {
-			tmp["update_cascade_interface"] = flattenSystemVirtualWanLinkHealthCheckUpdateCascadeInterface(i["update-cascade-interface"], d, pre_append, sv)
+		if cur_v, ok := i["update-cascade-interface"]; ok {
+			tmp["update_cascade_interface"] = flattenSystemVirtualWanLinkHealthCheckUpdateCascadeInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_static_route"
-		if _, ok := i["update-static-route"]; ok {
-			tmp["update_static_route"] = flattenSystemVirtualWanLinkHealthCheckUpdateStaticRoute(i["update-static-route"], d, pre_append, sv)
+		if cur_v, ok := i["update-static-route"]; ok {
+			tmp["update_static_route"] = flattenSystemVirtualWanLinkHealthCheckUpdateStaticRoute(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
-		if _, ok := i["sla-fail-log-period"]; ok {
-			tmp["sla_fail_log_period"] = flattenSystemVirtualWanLinkHealthCheckSlaFailLogPeriod(i["sla-fail-log-period"], d, pre_append, sv)
+		if cur_v, ok := i["sla-fail-log-period"]; ok {
+			tmp["sla_fail_log_period"] = flattenSystemVirtualWanLinkHealthCheckSlaFailLogPeriod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_pass_log_period"
-		if _, ok := i["sla-pass-log-period"]; ok {
-			tmp["sla_pass_log_period"] = flattenSystemVirtualWanLinkHealthCheckSlaPassLogPeriod(i["sla-pass-log-period"], d, pre_append, sv)
+		if cur_v, ok := i["sla-pass-log-period"]; ok {
+			tmp["sla_pass_log_period"] = flattenSystemVirtualWanLinkHealthCheckSlaPassLogPeriod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_packetloss"
-		if _, ok := i["threshold-warning-packetloss"]; ok {
-			tmp["threshold_warning_packetloss"] = flattenSystemVirtualWanLinkHealthCheckThresholdWarningPacketloss(i["threshold-warning-packetloss"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-warning-packetloss"]; ok {
+			tmp["threshold_warning_packetloss"] = flattenSystemVirtualWanLinkHealthCheckThresholdWarningPacketloss(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_packetloss"
-		if _, ok := i["threshold-alert-packetloss"]; ok {
-			tmp["threshold_alert_packetloss"] = flattenSystemVirtualWanLinkHealthCheckThresholdAlertPacketloss(i["threshold-alert-packetloss"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-alert-packetloss"]; ok {
+			tmp["threshold_alert_packetloss"] = flattenSystemVirtualWanLinkHealthCheckThresholdAlertPacketloss(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_latency"
-		if _, ok := i["threshold-warning-latency"]; ok {
-			tmp["threshold_warning_latency"] = flattenSystemVirtualWanLinkHealthCheckThresholdWarningLatency(i["threshold-warning-latency"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-warning-latency"]; ok {
+			tmp["threshold_warning_latency"] = flattenSystemVirtualWanLinkHealthCheckThresholdWarningLatency(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_latency"
-		if _, ok := i["threshold-alert-latency"]; ok {
-			tmp["threshold_alert_latency"] = flattenSystemVirtualWanLinkHealthCheckThresholdAlertLatency(i["threshold-alert-latency"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-alert-latency"]; ok {
+			tmp["threshold_alert_latency"] = flattenSystemVirtualWanLinkHealthCheckThresholdAlertLatency(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_jitter"
-		if _, ok := i["threshold-warning-jitter"]; ok {
-			tmp["threshold_warning_jitter"] = flattenSystemVirtualWanLinkHealthCheckThresholdWarningJitter(i["threshold-warning-jitter"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-warning-jitter"]; ok {
+			tmp["threshold_warning_jitter"] = flattenSystemVirtualWanLinkHealthCheckThresholdWarningJitter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_jitter"
-		if _, ok := i["threshold-alert-jitter"]; ok {
-			tmp["threshold_alert_jitter"] = flattenSystemVirtualWanLinkHealthCheckThresholdAlertJitter(i["threshold-alert-jitter"], d, pre_append, sv)
+		if cur_v, ok := i["threshold-alert-jitter"]; ok {
+			tmp["threshold_alert_jitter"] = flattenSystemVirtualWanLinkHealthCheckThresholdAlertJitter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := i["members"]; ok {
-			tmp["members"] = flattenSystemVirtualWanLinkHealthCheckMembers(i["members"], d, pre_append, sv)
+		if cur_v, ok := i["members"]; ok {
+			tmp["members"] = flattenSystemVirtualWanLinkHealthCheckMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := i["sla"]; ok {
-			tmp["sla"] = flattenSystemVirtualWanLinkHealthCheckSla(i["sla"], d, pre_append, sv)
+		if cur_v, ok := i["sla"]; ok {
+			tmp["sla"] = flattenSystemVirtualWanLinkHealthCheckSla(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1616,8 +1616,8 @@ func flattenSystemVirtualWanLinkHealthCheckMembers(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemVirtualWanLinkHealthCheckMembersSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemVirtualWanLinkHealthCheckMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1658,28 +1658,28 @@ func flattenSystemVirtualWanLinkHealthCheckSla(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemVirtualWanLinkHealthCheckSlaId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVirtualWanLinkHealthCheckSlaId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
-		if _, ok := i["link-cost-factor"]; ok {
-			tmp["link_cost_factor"] = flattenSystemVirtualWanLinkHealthCheckSlaLinkCostFactor(i["link-cost-factor"], d, pre_append, sv)
+		if cur_v, ok := i["link-cost-factor"]; ok {
+			tmp["link_cost_factor"] = flattenSystemVirtualWanLinkHealthCheckSlaLinkCostFactor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
-		if _, ok := i["latency-threshold"]; ok {
-			tmp["latency_threshold"] = flattenSystemVirtualWanLinkHealthCheckSlaLatencyThreshold(i["latency-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["latency-threshold"]; ok {
+			tmp["latency_threshold"] = flattenSystemVirtualWanLinkHealthCheckSlaLatencyThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_threshold"
-		if _, ok := i["jitter-threshold"]; ok {
-			tmp["jitter_threshold"] = flattenSystemVirtualWanLinkHealthCheckSlaJitterThreshold(i["jitter-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["jitter-threshold"]; ok {
+			tmp["jitter_threshold"] = flattenSystemVirtualWanLinkHealthCheckSlaJitterThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packetloss_threshold"
-		if _, ok := i["packetloss-threshold"]; ok {
-			tmp["packetloss_threshold"] = flattenSystemVirtualWanLinkHealthCheckSlaPacketlossThreshold(i["packetloss-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["packetloss-threshold"]; ok {
+			tmp["packetloss_threshold"] = flattenSystemVirtualWanLinkHealthCheckSlaPacketlossThreshold(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1736,28 +1736,28 @@ func flattenSystemVirtualWanLinkNeighbor(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemVirtualWanLinkNeighborIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemVirtualWanLinkNeighborIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
-		if _, ok := i["member"]; ok {
-			tmp["member"] = flattenSystemVirtualWanLinkNeighborMember(i["member"], d, pre_append, sv)
+		if cur_v, ok := i["member"]; ok {
+			tmp["member"] = flattenSystemVirtualWanLinkNeighborMember(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
-		if _, ok := i["role"]; ok {
-			tmp["role"] = flattenSystemVirtualWanLinkNeighborRole(i["role"], d, pre_append, sv)
+		if cur_v, ok := i["role"]; ok {
+			tmp["role"] = flattenSystemVirtualWanLinkNeighborRole(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenSystemVirtualWanLinkNeighborHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenSystemVirtualWanLinkNeighborHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id"
-		if _, ok := i["sla-id"]; ok {
-			tmp["sla_id"] = flattenSystemVirtualWanLinkNeighborSlaId(i["sla-id"], d, pre_append, sv)
+		if cur_v, ok := i["sla-id"]; ok {
+			tmp["sla_id"] = flattenSystemVirtualWanLinkNeighborSlaId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1814,178 +1814,178 @@ func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemVirtualWanLinkServiceId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVirtualWanLinkServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
-		if _, ok := i["addr-mode"]; ok {
-			tmp["addr_mode"] = flattenSystemVirtualWanLinkServiceAddrMode(i["addr-mode"], d, pre_append, sv)
+		if cur_v, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = flattenSystemVirtualWanLinkServiceAddrMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device"
-		if _, ok := i["input-device"]; ok {
-			tmp["input_device"] = flattenSystemVirtualWanLinkServiceInputDevice(i["input-device"], d, pre_append, sv)
+		if cur_v, ok := i["input-device"]; ok {
+			tmp["input_device"] = flattenSystemVirtualWanLinkServiceInputDevice(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device_negate"
-		if _, ok := i["input-device-negate"]; ok {
-			tmp["input_device_negate"] = flattenSystemVirtualWanLinkServiceInputDeviceNegate(i["input-device-negate"], d, pre_append, sv)
+		if cur_v, ok := i["input-device-negate"]; ok {
+			tmp["input_device_negate"] = flattenSystemVirtualWanLinkServiceInputDeviceNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
-		if _, ok := i["mode"]; ok {
-			tmp["mode"] = flattenSystemVirtualWanLinkServiceMode(i["mode"], d, pre_append, sv)
+		if cur_v, ok := i["mode"]; ok {
+			tmp["mode"] = flattenSystemVirtualWanLinkServiceMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
-		if _, ok := i["role"]; ok {
-			tmp["role"] = flattenSystemVirtualWanLinkServiceRole(i["role"], d, pre_append, sv)
+		if cur_v, ok := i["role"]; ok {
+			tmp["role"] = flattenSystemVirtualWanLinkServiceRole(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "standalone_action"
-		if _, ok := i["standalone-action"]; ok {
-			tmp["standalone_action"] = flattenSystemVirtualWanLinkServiceStandaloneAction(i["standalone-action"], d, pre_append, sv)
+		if cur_v, ok := i["standalone-action"]; ok {
+			tmp["standalone_action"] = flattenSystemVirtualWanLinkServiceStandaloneAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_link"
-		if _, ok := i["quality-link"]; ok {
-			tmp["quality_link"] = flattenSystemVirtualWanLinkServiceQualityLink(i["quality-link"], d, pre_append, sv)
+		if cur_v, ok := i["quality-link"]; ok {
+			tmp["quality_link"] = flattenSystemVirtualWanLinkServiceQualityLink(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
-		if _, ok := i["member"]; ok {
-			tmp["member"] = flattenSystemVirtualWanLinkServiceMember(i["member"], d, pre_append, sv)
+		if cur_v, ok := i["member"]; ok {
+			tmp["member"] = flattenSystemVirtualWanLinkServiceMember(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
-		if _, ok := i["tos"]; ok {
-			tmp["tos"] = flattenSystemVirtualWanLinkServiceTos(i["tos"], d, pre_append, sv)
+		if cur_v, ok := i["tos"]; ok {
+			tmp["tos"] = flattenSystemVirtualWanLinkServiceTos(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
-		if _, ok := i["tos-mask"]; ok {
-			tmp["tos_mask"] = flattenSystemVirtualWanLinkServiceTosMask(i["tos-mask"], d, pre_append, sv)
+		if cur_v, ok := i["tos-mask"]; ok {
+			tmp["tos_mask"] = flattenSystemVirtualWanLinkServiceTosMask(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenSystemVirtualWanLinkServiceProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemVirtualWanLinkServiceProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
-		if _, ok := i["start-port"]; ok {
-			tmp["start_port"] = flattenSystemVirtualWanLinkServiceStartPort(i["start-port"], d, pre_append, sv)
+		if cur_v, ok := i["start-port"]; ok {
+			tmp["start_port"] = flattenSystemVirtualWanLinkServiceStartPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
-		if _, ok := i["end-port"]; ok {
-			tmp["end_port"] = flattenSystemVirtualWanLinkServiceEndPort(i["end-port"], d, pre_append, sv)
+		if cur_v, ok := i["end-port"]; ok {
+			tmp["end_port"] = flattenSystemVirtualWanLinkServiceEndPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_tag"
-		if _, ok := i["route-tag"]; ok {
-			tmp["route_tag"] = flattenSystemVirtualWanLinkServiceRouteTag(i["route-tag"], d, pre_append, sv)
+		if cur_v, ok := i["route-tag"]; ok {
+			tmp["route_tag"] = flattenSystemVirtualWanLinkServiceRouteTag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenSystemVirtualWanLinkServiceDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenSystemVirtualWanLinkServiceDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_negate"
-		if _, ok := i["dst-negate"]; ok {
-			tmp["dst_negate"] = flattenSystemVirtualWanLinkServiceDstNegate(i["dst-negate"], d, pre_append, sv)
+		if cur_v, ok := i["dst-negate"]; ok {
+			tmp["dst_negate"] = flattenSystemVirtualWanLinkServiceDstNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := i["src"]; ok {
-			tmp["src"] = flattenSystemVirtualWanLinkServiceSrc(i["src"], d, pre_append, sv)
+		if cur_v, ok := i["src"]; ok {
+			tmp["src"] = flattenSystemVirtualWanLinkServiceSrc(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := i["dst6"]; ok {
-			tmp["dst6"] = flattenSystemVirtualWanLinkServiceDst6(i["dst6"], d, pre_append, sv)
+		if cur_v, ok := i["dst6"]; ok {
+			tmp["dst6"] = flattenSystemVirtualWanLinkServiceDst6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := i["src6"]; ok {
-			tmp["src6"] = flattenSystemVirtualWanLinkServiceSrc6(i["src6"], d, pre_append, sv)
+		if cur_v, ok := i["src6"]; ok {
+			tmp["src6"] = flattenSystemVirtualWanLinkServiceSrc6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_negate"
-		if _, ok := i["src-negate"]; ok {
-			tmp["src_negate"] = flattenSystemVirtualWanLinkServiceSrcNegate(i["src-negate"], d, pre_append, sv)
+		if cur_v, ok := i["src-negate"]; ok {
+			tmp["src_negate"] = flattenSystemVirtualWanLinkServiceSrcNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := i["users"]; ok {
-			tmp["users"] = flattenSystemVirtualWanLinkServiceUsers(i["users"], d, pre_append, sv)
+		if cur_v, ok := i["users"]; ok {
+			tmp["users"] = flattenSystemVirtualWanLinkServiceUsers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := i["groups"]; ok {
-			tmp["groups"] = flattenSystemVirtualWanLinkServiceGroups(i["groups"], d, pre_append, sv)
+		if cur_v, ok := i["groups"]; ok {
+			tmp["groups"] = flattenSystemVirtualWanLinkServiceGroups(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service"
-		if _, ok := i["internet-service"]; ok {
-			tmp["internet_service"] = flattenSystemVirtualWanLinkServiceInternetService(i["internet-service"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service"]; ok {
+			tmp["internet_service"] = flattenSystemVirtualWanLinkServiceInternetService(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom"
-		if _, ok := i["internet-service-custom"]; ok {
-			tmp["internet_service_custom"] = flattenSystemVirtualWanLinkServiceInternetServiceCustom(i["internet-service-custom"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-custom"]; ok {
+			tmp["internet_service_custom"] = flattenSystemVirtualWanLinkServiceInternetServiceCustom(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom_group"
-		if _, ok := i["internet-service-custom-group"]; ok {
-			tmp["internet_service_custom_group"] = flattenSystemVirtualWanLinkServiceInternetServiceCustomGroup(i["internet-service-custom-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-custom-group"]; ok {
+			tmp["internet_service_custom_group"] = flattenSystemVirtualWanLinkServiceInternetServiceCustomGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_name"
-		if _, ok := i["internet-service-name"]; ok {
-			tmp["internet_service_name"] = flattenSystemVirtualWanLinkServiceInternetServiceName(i["internet-service-name"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-name"]; ok {
+			tmp["internet_service_name"] = flattenSystemVirtualWanLinkServiceInternetServiceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_id"
-		if _, ok := i["internet-service-id"]; ok {
-			tmp["internet_service_id"] = flattenSystemVirtualWanLinkServiceInternetServiceId(i["internet-service-id"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-id"]; ok {
+			tmp["internet_service_id"] = flattenSystemVirtualWanLinkServiceInternetServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_group"
-		if _, ok := i["internet-service-group"]; ok {
-			tmp["internet_service_group"] = flattenSystemVirtualWanLinkServiceInternetServiceGroup(i["internet-service-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-group"]; ok {
+			tmp["internet_service_group"] = flattenSystemVirtualWanLinkServiceInternetServiceGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl"
-		if _, ok := i["internet-service-app-ctrl"]; ok {
-			tmp["internet_service_app_ctrl"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrl(i["internet-service-app-ctrl"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-app-ctrl"]; ok {
+			tmp["internet_service_app_ctrl"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_group"
-		if _, ok := i["internet-service-app-ctrl-group"]; ok {
-			tmp["internet_service_app_ctrl_group"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(i["internet-service-app-ctrl-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-app-ctrl-group"]; ok {
+			tmp["internet_service_app_ctrl_group"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_ctrl"
-		if _, ok := i["internet-service-ctrl"]; ok {
-			tmp["internet_service_ctrl"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrl(i["internet-service-ctrl"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-ctrl"]; ok {
+			tmp["internet_service_ctrl"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_ctrl_group"
-		if _, ok := i["internet-service-ctrl-group"]; ok {
-			tmp["internet_service_ctrl_group"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroup(i["internet-service-ctrl-group"], d, pre_append, sv)
+		if cur_v, ok := i["internet-service-ctrl-group"]; ok {
+			tmp["internet_service_ctrl_group"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			v := flattenSystemVirtualWanLinkServiceHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			v := flattenSystemVirtualWanLinkServiceHealthCheck(cur_v, d, pre_append, sv)
 			vx := ""
 			bstring := false
 			new_version_map := map[string][]string{
@@ -2016,88 +2016,88 @@ func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
-		if _, ok := i["link-cost-factor"]; ok {
-			tmp["link_cost_factor"] = flattenSystemVirtualWanLinkServiceLinkCostFactor(i["link-cost-factor"], d, pre_append, sv)
+		if cur_v, ok := i["link-cost-factor"]; ok {
+			tmp["link_cost_factor"] = flattenSystemVirtualWanLinkServiceLinkCostFactor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_weight"
-		if _, ok := i["packet-loss-weight"]; ok {
-			tmp["packet_loss_weight"] = flattenSystemVirtualWanLinkServicePacketLossWeight(i["packet-loss-weight"], d, pre_append, sv)
+		if cur_v, ok := i["packet-loss-weight"]; ok {
+			tmp["packet_loss_weight"] = flattenSystemVirtualWanLinkServicePacketLossWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_weight"
-		if _, ok := i["latency-weight"]; ok {
-			tmp["latency_weight"] = flattenSystemVirtualWanLinkServiceLatencyWeight(i["latency-weight"], d, pre_append, sv)
+		if cur_v, ok := i["latency-weight"]; ok {
+			tmp["latency_weight"] = flattenSystemVirtualWanLinkServiceLatencyWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_weight"
-		if _, ok := i["jitter-weight"]; ok {
-			tmp["jitter_weight"] = flattenSystemVirtualWanLinkServiceJitterWeight(i["jitter-weight"], d, pre_append, sv)
+		if cur_v, ok := i["jitter-weight"]; ok {
+			tmp["jitter_weight"] = flattenSystemVirtualWanLinkServiceJitterWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_weight"
-		if _, ok := i["bandwidth-weight"]; ok {
-			tmp["bandwidth_weight"] = flattenSystemVirtualWanLinkServiceBandwidthWeight(i["bandwidth-weight"], d, pre_append, sv)
+		if cur_v, ok := i["bandwidth-weight"]; ok {
+			tmp["bandwidth_weight"] = flattenSystemVirtualWanLinkServiceBandwidthWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_threshold"
-		if _, ok := i["link-cost-threshold"]; ok {
-			tmp["link_cost_threshold"] = flattenSystemVirtualWanLinkServiceLinkCostThreshold(i["link-cost-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["link-cost-threshold"]; ok {
+			tmp["link_cost_threshold"] = flattenSystemVirtualWanLinkServiceLinkCostThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hold_down_time"
-		if _, ok := i["hold-down-time"]; ok {
-			tmp["hold_down_time"] = flattenSystemVirtualWanLinkServiceHoldDownTime(i["hold-down-time"], d, pre_append, sv)
+		if cur_v, ok := i["hold-down-time"]; ok {
+			tmp["hold_down_time"] = flattenSystemVirtualWanLinkServiceHoldDownTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward"
-		if _, ok := i["dscp-forward"]; ok {
-			tmp["dscp_forward"] = flattenSystemVirtualWanLinkServiceDscpForward(i["dscp-forward"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-forward"]; ok {
+			tmp["dscp_forward"] = flattenSystemVirtualWanLinkServiceDscpForward(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse"
-		if _, ok := i["dscp-reverse"]; ok {
-			tmp["dscp_reverse"] = flattenSystemVirtualWanLinkServiceDscpReverse(i["dscp-reverse"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-reverse"]; ok {
+			tmp["dscp_reverse"] = flattenSystemVirtualWanLinkServiceDscpReverse(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward_tag"
-		if _, ok := i["dscp-forward-tag"]; ok {
-			tmp["dscp_forward_tag"] = flattenSystemVirtualWanLinkServiceDscpForwardTag(i["dscp-forward-tag"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-forward-tag"]; ok {
+			tmp["dscp_forward_tag"] = flattenSystemVirtualWanLinkServiceDscpForwardTag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse_tag"
-		if _, ok := i["dscp-reverse-tag"]; ok {
-			tmp["dscp_reverse_tag"] = flattenSystemVirtualWanLinkServiceDscpReverseTag(i["dscp-reverse-tag"], d, pre_append, sv)
+		if cur_v, ok := i["dscp-reverse-tag"]; ok {
+			tmp["dscp_reverse_tag"] = flattenSystemVirtualWanLinkServiceDscpReverseTag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := i["sla"]; ok {
-			tmp["sla"] = flattenSystemVirtualWanLinkServiceSla(i["sla"], d, pre_append, sv)
+		if cur_v, ok := i["sla"]; ok {
+			tmp["sla"] = flattenSystemVirtualWanLinkServiceSla(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_members"
-		if _, ok := i["priority-members"]; ok {
-			tmp["priority_members"] = flattenSystemVirtualWanLinkServicePriorityMembers(i["priority-members"], d, pre_append, sv)
+		if cur_v, ok := i["priority-members"]; ok {
+			tmp["priority_members"] = flattenSystemVirtualWanLinkServicePriorityMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemVirtualWanLinkServiceStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemVirtualWanLinkServiceStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
-		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenSystemVirtualWanLinkServiceGateway(i["gateway"], d, pre_append, sv)
+		if cur_v, ok := i["gateway"]; ok {
+			tmp["gateway"] = flattenSystemVirtualWanLinkServiceGateway(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default"
-		if _, ok := i["default"]; ok {
-			tmp["default"] = flattenSystemVirtualWanLinkServiceDefault(i["default"], d, pre_append, sv)
+		if cur_v, ok := i["default"]; ok {
+			tmp["default"] = flattenSystemVirtualWanLinkServiceDefault(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_compare_method"
-		if _, ok := i["sla-compare-method"]; ok {
-			tmp["sla_compare_method"] = flattenSystemVirtualWanLinkServiceSlaCompareMethod(i["sla-compare-method"], d, pre_append, sv)
+		if cur_v, ok := i["sla-compare-method"]; ok {
+			tmp["sla_compare_method"] = flattenSystemVirtualWanLinkServiceSlaCompareMethod(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2146,8 +2146,8 @@ func flattenSystemVirtualWanLinkServiceInputDevice(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInputDeviceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInputDeviceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2236,8 +2236,8 @@ func flattenSystemVirtualWanLinkServiceDst(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceDstName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceDstName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2282,8 +2282,8 @@ func flattenSystemVirtualWanLinkServiceSrc(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceSrcName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceSrcName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2324,8 +2324,8 @@ func flattenSystemVirtualWanLinkServiceDst6(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceDst6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceDst6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2366,8 +2366,8 @@ func flattenSystemVirtualWanLinkServiceSrc6(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceSrc6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceSrc6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2412,8 +2412,8 @@ func flattenSystemVirtualWanLinkServiceUsers(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceUsersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceUsersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2454,8 +2454,8 @@ func flattenSystemVirtualWanLinkServiceGroups(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2500,8 +2500,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCustom(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceCustomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceCustomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2542,8 +2542,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCustomGroup(v interface{},
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceCustomGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceCustomGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2584,8 +2584,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceName(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceNameName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceNameName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2626,8 +2626,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceId(v interface{}, d *schem
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemVirtualWanLinkServiceInternetServiceIdId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVirtualWanLinkServiceInternetServiceIdId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2668,8 +2668,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceGroup(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2710,8 +2710,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrl(v interface{}, d *
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2752,8 +2752,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(v interface{}
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2794,8 +2794,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCtrl(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrlId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrlId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2836,8 +2836,8 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroup(v interface{}, d
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2926,13 +2926,13 @@ func flattenSystemVirtualWanLinkServiceSla(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenSystemVirtualWanLinkServiceSlaHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenSystemVirtualWanLinkServiceSlaHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemVirtualWanLinkServiceSlaId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVirtualWanLinkServiceSlaId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2977,8 +2977,8 @@ func flattenSystemVirtualWanLinkServicePriorityMembers(v interface{}, d *schema.
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemVirtualWanLinkServicePriorityMembersSeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemVirtualWanLinkServicePriorityMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

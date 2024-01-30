@@ -382,8 +382,8 @@ func flattenFirewallCentralSnatMapOrigAddr(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapOrigAddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapOrigAddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -424,8 +424,8 @@ func flattenFirewallCentralSnatMapOrigAddr6(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapOrigAddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapOrigAddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -466,8 +466,8 @@ func flattenFirewallCentralSnatMapSrcintf(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapSrcintfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapSrcintfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -508,8 +508,8 @@ func flattenFirewallCentralSnatMapDstAddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapDstAddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapDstAddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -550,8 +550,8 @@ func flattenFirewallCentralSnatMapDstAddr6(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapDstAddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapDstAddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -592,8 +592,8 @@ func flattenFirewallCentralSnatMapDstintf(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapDstintfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapDstintfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -634,8 +634,8 @@ func flattenFirewallCentralSnatMapNatIppool(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapNatIppoolName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapNatIppoolName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -676,8 +676,8 @@ func flattenFirewallCentralSnatMapNatIppool6(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallCentralSnatMapNatIppool6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallCentralSnatMapNatIppool6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

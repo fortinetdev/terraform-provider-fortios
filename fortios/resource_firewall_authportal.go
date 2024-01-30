@@ -205,8 +205,8 @@ func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAuthPortalGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAuthPortalGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

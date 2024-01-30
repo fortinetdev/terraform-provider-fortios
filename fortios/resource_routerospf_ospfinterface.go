@@ -445,13 +445,13 @@ func flattenRouterospfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterospfOspfInterfaceMd5KeysId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterospfOspfInterfaceMd5KeysId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if _, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterospfOspfInterfaceMd5KeysKeyString(i["key-string"], d, pre_append, sv)
+		if cur_v, ok := i["key-string"]; ok {
+			tmp["key_string"] = flattenRouterospfOspfInterfaceMd5KeysKeyString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

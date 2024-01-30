@@ -420,23 +420,23 @@ func flattenDlpSensorEntries(v interface{}, d *schema.ResourceData, pre string, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDlpSensorEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDlpSensorEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dictionary"
-		if _, ok := i["dictionary"]; ok {
-			tmp["dictionary"] = flattenDlpSensorEntriesDictionary(i["dictionary"], d, pre_append, sv)
+		if cur_v, ok := i["dictionary"]; ok {
+			tmp["dictionary"] = flattenDlpSensorEntriesDictionary(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "count"
-		if _, ok := i["count"]; ok {
-			tmp["count"] = flattenDlpSensorEntriesCount(i["count"], d, pre_append, sv)
+		if cur_v, ok := i["count"]; ok {
+			tmp["count"] = flattenDlpSensorEntriesCount(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenDlpSensorEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenDlpSensorEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -497,83 +497,83 @@ func flattenDlpSensorFilter(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDlpSensorFilterId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDlpSensorFilterId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDlpSensorFilterName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDlpSensorFilterName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
-		if _, ok := i["severity"]; ok {
-			tmp["severity"] = flattenDlpSensorFilterSeverity(i["severity"], d, pre_append, sv)
+		if cur_v, ok := i["severity"]; ok {
+			tmp["severity"] = flattenDlpSensorFilterSeverity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenDlpSensorFilterType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenDlpSensorFilterType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
-		if _, ok := i["proto"]; ok {
-			tmp["proto"] = flattenDlpSensorFilterProto(i["proto"], d, pre_append, sv)
+		if cur_v, ok := i["proto"]; ok {
+			tmp["proto"] = flattenDlpSensorFilterProto(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
-		if _, ok := i["filter-by"]; ok {
-			tmp["filter_by"] = flattenDlpSensorFilterFilterBy(i["filter-by"], d, pre_append, sv)
+		if cur_v, ok := i["filter-by"]; ok {
+			tmp["filter_by"] = flattenDlpSensorFilterFilterBy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
-		if _, ok := i["file-size"]; ok {
-			tmp["file_size"] = flattenDlpSensorFilterFileSize(i["file-size"], d, pre_append, sv)
+		if cur_v, ok := i["file-size"]; ok {
+			tmp["file_size"] = flattenDlpSensorFilterFileSize(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company_identifier"
-		if _, ok := i["company-identifier"]; ok {
-			tmp["company_identifier"] = flattenDlpSensorFilterCompanyIdentifier(i["company-identifier"], d, pre_append, sv)
+		if cur_v, ok := i["company-identifier"]; ok {
+			tmp["company_identifier"] = flattenDlpSensorFilterCompanyIdentifier(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
-		if _, ok := i["sensitivity"]; ok {
-			tmp["sensitivity"] = flattenDlpSensorFilterSensitivity(i["sensitivity"], d, pre_append, sv)
+		if cur_v, ok := i["sensitivity"]; ok {
+			tmp["sensitivity"] = flattenDlpSensorFilterSensitivity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fp_sensitivity"
-		if _, ok := i["fp-sensitivity"]; ok {
-			tmp["fp_sensitivity"] = flattenDlpSensorFilterFpSensitivity(i["fp-sensitivity"], d, pre_append, sv)
+		if cur_v, ok := i["fp-sensitivity"]; ok {
+			tmp["fp_sensitivity"] = flattenDlpSensorFilterFpSensitivity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_percentage"
-		if _, ok := i["match-percentage"]; ok {
-			tmp["match_percentage"] = flattenDlpSensorFilterMatchPercentage(i["match-percentage"], d, pre_append, sv)
+		if cur_v, ok := i["match-percentage"]; ok {
+			tmp["match_percentage"] = flattenDlpSensorFilterMatchPercentage(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenDlpSensorFilterFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenDlpSensorFilterFileType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
-		if _, ok := i["regexp"]; ok {
-			tmp["regexp"] = flattenDlpSensorFilterRegexp(i["regexp"], d, pre_append, sv)
+		if cur_v, ok := i["regexp"]; ok {
+			tmp["regexp"] = flattenDlpSensorFilterRegexp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
-		if _, ok := i["archive"]; ok {
-			tmp["archive"] = flattenDlpSensorFilterArchive(i["archive"], d, pre_append, sv)
+		if cur_v, ok := i["archive"]; ok {
+			tmp["archive"] = flattenDlpSensorFilterArchive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenDlpSensorFilterAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenDlpSensorFilterAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiry"
-		if _, ok := i["expiry"]; ok {
-			tmp["expiry"] = flattenDlpSensorFilterExpiry(i["expiry"], d, pre_append, sv)
+		if cur_v, ok := i["expiry"]; ok {
+			tmp["expiry"] = flattenDlpSensorFilterExpiry(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -642,8 +642,8 @@ func flattenDlpSensorFilterSensitivity(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDlpSensorFilterSensitivityName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDlpSensorFilterSensitivityName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -684,8 +684,8 @@ func flattenDlpSensorFilterFpSensitivity(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDlpSensorFilterFpSensitivityName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDlpSensorFilterFpSensitivityName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

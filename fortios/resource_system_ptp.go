@@ -247,18 +247,18 @@ func flattenSystemPtpServerInterface(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemPtpServerInterfaceId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemPtpServerInterfaceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_interface_name"
-		if _, ok := i["server-interface-name"]; ok {
-			tmp["server_interface_name"] = flattenSystemPtpServerInterfaceServerInterfaceName(i["server-interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["server-interface-name"]; ok {
+			tmp["server_interface_name"] = flattenSystemPtpServerInterfaceServerInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "delay_mechanism"
-		if _, ok := i["delay-mechanism"]; ok {
-			tmp["delay_mechanism"] = flattenSystemPtpServerInterfaceDelayMechanism(i["delay-mechanism"], d, pre_append, sv)
+		if cur_v, ok := i["delay-mechanism"]; ok {
+			tmp["delay_mechanism"] = flattenSystemPtpServerInterfaceDelayMechanism(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

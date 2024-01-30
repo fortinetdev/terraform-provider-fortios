@@ -297,18 +297,18 @@ func flattenUserDeviceTagging(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserDeviceTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserDeviceTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenUserDeviceTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenUserDeviceTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenUserDeviceTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenUserDeviceTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -353,8 +353,8 @@ func flattenUserDeviceTaggingTags(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserDeviceTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserDeviceTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

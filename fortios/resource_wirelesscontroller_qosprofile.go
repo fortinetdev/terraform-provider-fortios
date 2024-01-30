@@ -415,8 +415,8 @@ func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmVoId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmVoId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -457,8 +457,8 @@ func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmViId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmViId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -499,8 +499,8 @@ func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBeId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -541,8 +541,8 @@ func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBkId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBkId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

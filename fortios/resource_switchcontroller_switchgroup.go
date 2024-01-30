@@ -246,13 +246,13 @@ func flattenSwitchControllerSwitchGroupMembers(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
-		if _, ok := i["switch-id"]; ok {
-			tmp["switch_id"] = flattenSwitchControllerSwitchGroupMembersSwitchId(i["switch-id"], d, pre_append, sv)
+		if cur_v, ok := i["switch-id"]; ok {
+			tmp["switch_id"] = flattenSwitchControllerSwitchGroupMembersSwitchId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerSwitchGroupMembersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerSwitchGroupMembersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

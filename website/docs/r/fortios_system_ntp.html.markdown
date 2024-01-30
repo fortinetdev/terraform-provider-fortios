@@ -50,6 +50,7 @@ The `ntpserver` block supports:
 * `authentication` - Enable/disable MD5/SHA1 authentication. Valid values: `enable`, `disable`.
 * `key` - Key for MD5/SHA1 authentication.
 * `key_id` - Key ID for authentication.
+* `ip_type` - Choose to connect to IPv4 or/and IPv6 NTP server. Valid values: `IPv6`, `IPv4`, `Both`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 

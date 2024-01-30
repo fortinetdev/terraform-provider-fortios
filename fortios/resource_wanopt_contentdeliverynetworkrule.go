@@ -409,8 +409,8 @@ func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -475,33 +475,33 @@ func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleRulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleRulesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_mode"
-		if _, ok := i["match-mode"]; ok {
-			tmp["match_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(i["match-mode"], d, pre_append, sv)
+		if cur_v, ok := i["match-mode"]; ok {
+			tmp["match_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_rule_mode"
-		if _, ok := i["skip-rule-mode"]; ok {
-			tmp["skip_rule_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(i["skip-rule-mode"], d, pre_append, sv)
+		if cur_v, ok := i["skip-rule-mode"]; ok {
+			tmp["skip_rule_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_entries"
-		if _, ok := i["match-entries"]; ok {
-			tmp["match_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(i["match-entries"], d, pre_append, sv)
+		if cur_v, ok := i["match-entries"]; ok {
+			tmp["match_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_entries"
-		if _, ok := i["skip-entries"]; ok {
-			tmp["skip_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(i["skip-entries"], d, pre_append, sv)
+		if cur_v, ok := i["skip-entries"]; ok {
+			tmp["skip_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content_id"
-		if _, ok := i["content-id"]; ok {
-			tmp["content_id"] = flattenWanoptContentDeliveryNetworkRuleRulesContentId(i["content-id"], d, pre_append, sv)
+		if cur_v, ok := i["content-id"]; ok {
+			tmp["content_id"] = flattenWanoptContentDeliveryNetworkRuleRulesContentId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -550,18 +550,18 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(i["target"], d, pre_append, sv)
+		if cur_v, ok := i["target"]; ok {
+			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -606,8 +606,8 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
-		if _, ok := i["string"]; ok {
-			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(i["string"], d, pre_append, sv)
+		if cur_v, ok := i["string"]; ok {
+			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -648,18 +648,18 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(i["target"], d, pre_append, sv)
+		if cur_v, ok := i["target"]; ok {
+			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -704,8 +704,8 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
-		if _, ok := i["string"]; ok {
-			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(i["string"], d, pre_append, sv)
+		if cur_v, ok := i["string"]; ok {
+			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

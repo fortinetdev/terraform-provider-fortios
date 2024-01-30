@@ -28,7 +28,7 @@ The following arguments are supported:
 
 * `name` - Authentication rule name.
 * `status` - Enable/disable this authentication rule. Valid values: `enable`, `disable`.
-* `protocol` - Select the protocol to use for authentication (default = http). Users connect to the FortiGate using this protocol and are asked to authenticate. Valid values: `http`, `ftp`, `socks`, `ssh`.
+* `protocol` - Authentication is required for the selected protocol (default = http). Valid values: `http`, `ftp`, `socks`, `ssh`.
 * `srcintf` - Incoming (ingress) interface. The structure of `srcintf` block is documented below.
 * `srcaddr` - Select an IPv4 source address from available options. Required for web proxy authentication. The structure of `srcaddr` block is documented below.
 * `dstaddr` - Select an IPv4 destination address from available options. Required for web proxy authentication. The structure of `dstaddr` block is documented below.

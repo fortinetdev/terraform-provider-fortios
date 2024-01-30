@@ -37,6 +37,7 @@ resource "fortios_firewallservice_custom" "trname" {
 The following arguments are supported:
 
 * `name` - Custom service name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `proxy` - Enable/disable web proxy service. Valid values: `enable`, `disable`.
 * `category` - Service category.
 * `protocol` - Protocol type based on IANA numbers. Valid values: `TCP/UDP/SCTP`, `ICMP`, `ICMP6`, `IP`, `HTTP`, `FTP`, `CONNECT`, `SOCKS-TCP`, `SOCKS-UDP`, `ALL`.
@@ -53,7 +54,7 @@ The following arguments are supported:
 * `tcp_halfopen_timer` - Wait time to close a TCP session waiting for an unanswered open session packet (1 - 86400 sec, 0 = default).
 * `tcp_timewait_timer` - Set the length of the TCP TIME-WAIT state in seconds (1 - 300 sec, 0 = default).
 * `tcp_rst_timer` - Set the length of the TCP CLOSE state in seconds (5 - 300 sec, 0 = default).
-* `udp_idle_timer` - UDP half close timeout (0 - 86400 sec, 0 = default).
+* `udp_idle_timer` - Number of seconds before an idle UDP connection times out (0 - 86400 sec, 0 = default).
 * `session_ttl` - Session TTL (300 - 604800, 0 = default).
 * `check_reset_range` - Configure the type of ICMP error message verification. Valid values: `disable`, `strict`, `default`.
 * `comment` - Comment.

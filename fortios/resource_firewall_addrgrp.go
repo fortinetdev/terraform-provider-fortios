@@ -324,8 +324,8 @@ func flattenFirewallAddrgrpMember(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddrgrpMemberName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddrgrpMemberName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -374,8 +374,8 @@ func flattenFirewallAddrgrpExcludeMember(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddrgrpExcludeMemberName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddrgrpExcludeMemberName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -424,18 +424,18 @@ func flattenFirewallAddrgrpTagging(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddrgrpTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddrgrpTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenFirewallAddrgrpTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenFirewallAddrgrpTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenFirewallAddrgrpTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenFirewallAddrgrpTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -480,8 +480,8 @@ func flattenFirewallAddrgrpTaggingTags(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddrgrpTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddrgrpTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

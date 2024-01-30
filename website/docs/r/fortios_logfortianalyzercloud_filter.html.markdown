@@ -23,6 +23,7 @@ The following arguments are supported:
 * `voip` - Enable/disable VoIP logging. Valid values: `enable`, `disable`.
 * `dlp_archive` - Enable/disable DLP archive logging. Valid values: `enable`, `disable`.
 * `gtp` - Enable/disable GTP messages logging. Valid values: `enable`, `disable`.
+* `forti_switch` - Enable/disable Forti-Switch logging. Valid values: `enable`, `disable`.
 * `free_style` - Free Style Filters The structure of `free_style` block is documented below.
 * `filter` - FortiAnalyzer Cloud log filter.
 * `filter_type` - Include/exclude logs that match the filter. Valid values: `include`, `exclude`.

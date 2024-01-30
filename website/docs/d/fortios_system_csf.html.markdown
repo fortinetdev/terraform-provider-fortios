@@ -20,6 +20,7 @@ Use this data source to get information on fortios system csf
 The following attributes are exported:
 
 * `status` - Enable/disable Security Fabric.
+* `uid` - Unique ID of the current CSF node
 * `upstream` - IP/FQDN of the FortiGate upstream from this FortiGate in the Security Fabric.
 * `upstream_ip` - IP address of the FortiGate upstream from this FortiGate in the Security Fabric.
 * `upstream_port` - The port number to use to communicate with the FortiGate upstream from this FortiGate in the Security Fabric (default = 8013).

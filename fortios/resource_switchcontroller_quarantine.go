@@ -215,23 +215,23 @@ func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenSwitchControllerQuarantineTargetsMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenSwitchControllerQuarantineTargetsMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
-		if _, ok := i["entry-id"]; ok {
-			tmp["entry_id"] = flattenSwitchControllerQuarantineTargetsEntryId(i["entry-id"], d, pre_append, sv)
+		if cur_v, ok := i["entry-id"]; ok {
+			tmp["entry_id"] = flattenSwitchControllerQuarantineTargetsEntryId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerQuarantineTargetsDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSwitchControllerQuarantineTargetsDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
-		if _, ok := i["tag"]; ok {
-			tmp["tag"] = flattenSwitchControllerQuarantineTargetsTag(i["tag"], d, pre_append, sv)
+		if cur_v, ok := i["tag"]; ok {
+			tmp["tag"] = flattenSwitchControllerQuarantineTargetsTag(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -280,8 +280,8 @@ func flattenSwitchControllerQuarantineTargetsTag(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenSwitchControllerQuarantineTargetsTagTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenSwitchControllerQuarantineTargetsTagTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

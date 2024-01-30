@@ -128,6 +128,12 @@ func resourceIpsGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"av_mem_limit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 50),
+				Optional:     true,
+				Computed:     true,
+			},
 			"tls_active_probe": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -340,6 +346,10 @@ func flattenIpsGlobalNgfwMaxScanRange(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenIpsGlobalAvMemLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenIpsGlobalTlsActiveProbe(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -515,6 +525,12 @@ func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("av_mem_limit", flattenIpsGlobalAvMemLimit(o["av-mem-limit"], d, "av_mem_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["av-mem-limit"]) {
+			return fmt.Errorf("Error reading av_mem_limit: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("tls_active_probe", flattenIpsGlobalTlsActiveProbe(o["tls-active-probe"], d, "tls_active_probe", sv)); err != nil {
 			if !fortiAPIPatch(o["tls-active-probe"]) {
@@ -609,6 +625,10 @@ func expandIpsGlobalPacketLogQueueDepth(d *schema.ResourceData, v interface{}, p
 }
 
 func expandIpsGlobalNgfwMaxScanRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsGlobalAvMemLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -919,6 +939,19 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["ngfw-max-scan-range"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("av_mem_limit"); ok {
+		if setArgNil {
+			obj["av-mem-limit"] = nil
+		} else {
+			t, err := expandIpsGlobalAvMemLimit(d, v, "av_mem_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["av-mem-limit"] = t
 			}
 		}
 	}

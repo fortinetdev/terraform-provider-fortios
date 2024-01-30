@@ -633,33 +633,33 @@ func flattenEmailfilterProfileFileFilterEntries(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
-		if _, ok := i["filter"]; ok {
-			tmp["filter"] = flattenEmailfilterProfileFileFilterEntriesFilter(i["filter"], d, pre_append, sv)
+		if cur_v, ok := i["filter"]; ok {
+			tmp["filter"] = flattenEmailfilterProfileFileFilterEntriesFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenEmailfilterProfileFileFilterEntriesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenEmailfilterProfileFileFilterEntriesComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenEmailfilterProfileFileFilterEntriesProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenEmailfilterProfileFileFilterEntriesProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenEmailfilterProfileFileFilterEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenEmailfilterProfileFileFilterEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
-		if _, ok := i["password-protected"]; ok {
-			tmp["password_protected"] = flattenEmailfilterProfileFileFilterEntriesPasswordProtected(i["password-protected"], d, pre_append, sv)
+		if cur_v, ok := i["password-protected"]; ok {
+			tmp["password_protected"] = flattenEmailfilterProfileFileFilterEntriesPasswordProtected(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenEmailfilterProfileFileFilterEntriesFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenEmailfilterProfileFileFilterEntriesFileType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -716,8 +716,8 @@ func flattenEmailfilterProfileFileFilterEntriesFileType(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEmailfilterProfileFileFilterEntriesFileTypeName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEmailfilterProfileFileFilterEntriesFileTypeName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -232,18 +232,18 @@ func flattenWirelessControllerHotspot20H2QpOperatorNameValueList(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20H2QpOperatorNameValueListIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20H2QpOperatorNameValueListIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
-		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWirelessControllerHotspot20H2QpOperatorNameValueListLang(i["lang"], d, pre_append, sv)
+		if cur_v, ok := i["lang"]; ok {
+			tmp["lang"] = flattenWirelessControllerHotspot20H2QpOperatorNameValueListLang(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenWirelessControllerHotspot20H2QpOperatorNameValueListValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenWirelessControllerHotspot20H2QpOperatorNameValueListValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

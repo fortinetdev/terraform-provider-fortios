@@ -41,6 +41,12 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"nat_session_keep_alive": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"discovery_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 180),
@@ -152,6 +158,24 @@ func resourceWirelessControllerTimers() *schema.Resource {
 			"drma_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1440),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ap_reboot_wait_interval1": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ap_reboot_wait_time": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 7),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ap_reboot_wait_interval2": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -267,6 +291,10 @@ func flattenWirelessControllerTimersEchoInterval(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenWirelessControllerTimersNatSessionKeepAlive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerTimersDiscoveryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -328,8 +356,8 @@ func flattenWirelessControllerTimersDarrpTime(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
-		if _, ok := i["time"]; ok {
-			tmp["time"] = flattenWirelessControllerTimersDarrpTimeTime(i["time"], d, pre_append, sv)
+		if cur_v, ok := i["time"]; ok {
+			tmp["time"] = flattenWirelessControllerTimersDarrpTimeTime(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -377,6 +405,18 @@ func flattenWirelessControllerTimersDrmaInterval(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenWirelessControllerTimersApRebootWaitInterval1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerTimersApRebootWaitTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerTimersApRebootWaitInterval2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -389,6 +429,12 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 	if err = d.Set("echo_interval", flattenWirelessControllerTimersEchoInterval(o["echo-interval"], d, "echo_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["echo-interval"]) {
 			return fmt.Errorf("Error reading echo_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("nat_session_keep_alive", flattenWirelessControllerTimersNatSessionKeepAlive(o["nat-session-keep-alive"], d, "nat_session_keep_alive", sv)); err != nil {
+		if !fortiAPIPatch(o["nat-session-keep-alive"]) {
+			return fmt.Errorf("Error reading nat_session_keep_alive: %v", err)
 		}
 	}
 
@@ -510,6 +556,24 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("ap_reboot_wait_interval1", flattenWirelessControllerTimersApRebootWaitInterval1(o["ap-reboot-wait-interval1"], d, "ap_reboot_wait_interval1", sv)); err != nil {
+		if !fortiAPIPatch(o["ap-reboot-wait-interval1"]) {
+			return fmt.Errorf("Error reading ap_reboot_wait_interval1: %v", err)
+		}
+	}
+
+	if err = d.Set("ap_reboot_wait_time", flattenWirelessControllerTimersApRebootWaitTime(o["ap-reboot-wait-time"], d, "ap_reboot_wait_time", sv)); err != nil {
+		if !fortiAPIPatch(o["ap-reboot-wait-time"]) {
+			return fmt.Errorf("Error reading ap_reboot_wait_time: %v", err)
+		}
+	}
+
+	if err = d.Set("ap_reboot_wait_interval2", flattenWirelessControllerTimersApRebootWaitInterval2(o["ap-reboot-wait-interval2"], d, "ap_reboot_wait_interval2", sv)); err != nil {
+		if !fortiAPIPatch(o["ap-reboot-wait-interval2"]) {
+			return fmt.Errorf("Error reading ap_reboot_wait_interval2: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -520,6 +584,10 @@ func flattenWirelessControllerTimersFortiTestDebug(d *schema.ResourceData, fosde
 }
 
 func expandWirelessControllerTimersEchoInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersNatSessionKeepAlive(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -622,6 +690,18 @@ func expandWirelessControllerTimersDrmaInterval(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandWirelessControllerTimersApRebootWaitInterval1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersApRebootWaitTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersApRebootWaitInterval2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -634,6 +714,19 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["echo-interval"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("nat_session_keep_alive"); ok {
+		if setArgNil {
+			obj["nat-session-keep-alive"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersNatSessionKeepAlive(d, v, "nat_session_keep_alive", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nat-session-keep-alive"] = t
 			}
 		}
 	}
@@ -868,6 +961,45 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["drma-interval"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ap_reboot_wait_interval1"); ok {
+		if setArgNil {
+			obj["ap-reboot-wait-interval1"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersApRebootWaitInterval1(d, v, "ap_reboot_wait_interval1", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ap-reboot-wait-interval1"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ap_reboot_wait_time"); ok {
+		if setArgNil {
+			obj["ap-reboot-wait-time"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersApRebootWaitTime(d, v, "ap_reboot_wait_time", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ap-reboot-wait-time"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ap_reboot_wait_interval2"); ok {
+		if setArgNil {
+			obj["ap-reboot-wait-interval2"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersApRebootWaitInterval2(d, v, "ap_reboot_wait_interval2", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ap-reboot-wait-interval2"] = t
 			}
 		}
 	}

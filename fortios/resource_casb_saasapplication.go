@@ -48,6 +48,11 @@ func resourceCasbSaasApplication() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -222,6 +227,10 @@ func flattenCasbSaasApplicationUuid(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenCasbSaasApplicationStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCasbSaasApplicationType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -259,8 +268,8 @@ func flattenCasbSaasApplicationDomains(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenCasbSaasApplicationDomainsDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenCasbSaasApplicationDomainsDomain(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -294,6 +303,12 @@ func refreshObjectCasbSaasApplication(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("uuid", flattenCasbSaasApplicationUuid(o["uuid"], d, "uuid", sv)); err != nil {
 		if !fortiAPIPatch(o["uuid"]) {
 			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("status", flattenCasbSaasApplicationStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
@@ -345,6 +360,10 @@ func expandCasbSaasApplicationName(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandCasbSaasApplicationUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbSaasApplicationStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -406,6 +425,15 @@ func getObjectCasbSaasApplication(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("status"); ok {
+		t, err := expandCasbSaasApplicationStatus(d, v, "status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
 		}
 	}
 

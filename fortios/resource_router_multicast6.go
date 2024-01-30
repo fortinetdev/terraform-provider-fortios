@@ -246,18 +246,18 @@ func flattenRouterMulticast6Interface(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterMulticast6InterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterMulticast6InterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
-		if _, ok := i["hello-interval"]; ok {
-			tmp["hello_interval"] = flattenRouterMulticast6InterfaceHelloInterval(i["hello-interval"], d, pre_append, sv)
+		if cur_v, ok := i["hello-interval"]; ok {
+			tmp["hello_interval"] = flattenRouterMulticast6InterfaceHelloInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_holdtime"
-		if _, ok := i["hello-holdtime"]; ok {
-			tmp["hello_holdtime"] = flattenRouterMulticast6InterfaceHelloHoldtime(i["hello-holdtime"], d, pre_append, sv)
+		if cur_v, ok := i["hello-holdtime"]; ok {
+			tmp["hello_holdtime"] = flattenRouterMulticast6InterfaceHelloHoldtime(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -333,13 +333,13 @@ func flattenRouterMulticast6PimSmGlobalRpAddress(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterMulticast6PimSmGlobalRpAddressId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterMulticast6PimSmGlobalRpAddressId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_address"
-		if _, ok := i["ip6-address"]; ok {
-			tmp["ip6_address"] = flattenRouterMulticast6PimSmGlobalRpAddressIp6Address(i["ip6-address"], d, pre_append, sv)
+		if cur_v, ok := i["ip6-address"]; ok {
+			tmp["ip6_address"] = flattenRouterMulticast6PimSmGlobalRpAddressIp6Address(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

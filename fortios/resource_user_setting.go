@@ -373,18 +373,18 @@ func flattenUserSettingAuthPorts(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserSettingAuthPortsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenUserSettingAuthPortsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenUserSettingAuthPortsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenUserSettingAuthPortsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenUserSettingAuthPortsPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenUserSettingAuthPortsPort(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

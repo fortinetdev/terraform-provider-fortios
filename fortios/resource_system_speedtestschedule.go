@@ -82,6 +82,23 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ctrl_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"server_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"update_shaper": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"update_inbandwidth": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -296,8 +313,8 @@ func flattenSystemSpeedTestScheduleSchedules(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSpeedTestScheduleSchedulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSpeedTestScheduleSchedulesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -314,6 +331,18 @@ func flattenSystemSpeedTestScheduleSchedulesName(v interface{}, d *schema.Resour
 }
 
 func flattenSystemSpeedTestScheduleDynamicServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSpeedTestScheduleCtrlPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSpeedTestScheduleServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSpeedTestScheduleUpdateShaper(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -399,6 +428,24 @@ func refreshObjectSystemSpeedTestSchedule(d *schema.ResourceData, o map[string]i
 	if err = d.Set("dynamic_server", flattenSystemSpeedTestScheduleDynamicServer(o["dynamic-server"], d, "dynamic_server", sv)); err != nil {
 		if !fortiAPIPatch(o["dynamic-server"]) {
 			return fmt.Errorf("Error reading dynamic_server: %v", err)
+		}
+	}
+
+	if err = d.Set("ctrl_port", flattenSystemSpeedTestScheduleCtrlPort(o["ctrl-port"], d, "ctrl_port", sv)); err != nil {
+		if !fortiAPIPatch(o["ctrl-port"]) {
+			return fmt.Errorf("Error reading ctrl_port: %v", err)
+		}
+	}
+
+	if err = d.Set("server_port", flattenSystemSpeedTestScheduleServerPort(o["server-port"], d, "server_port", sv)); err != nil {
+		if !fortiAPIPatch(o["server-port"]) {
+			return fmt.Errorf("Error reading server_port: %v", err)
+		}
+	}
+
+	if err = d.Set("update_shaper", flattenSystemSpeedTestScheduleUpdateShaper(o["update-shaper"], d, "update_shaper", sv)); err != nil {
+		if !fortiAPIPatch(o["update-shaper"]) {
+			return fmt.Errorf("Error reading update_shaper: %v", err)
 		}
 	}
 
@@ -499,6 +546,18 @@ func expandSystemSpeedTestScheduleDynamicServer(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandSystemSpeedTestScheduleCtrlPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSpeedTestScheduleServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSpeedTestScheduleUpdateShaper(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSpeedTestScheduleUpdateInbandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -586,6 +645,33 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["dynamic-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ctrl_port"); ok {
+		t, err := expandSystemSpeedTestScheduleCtrlPort(d, v, "ctrl_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ctrl-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_port"); ok {
+		t, err := expandSystemSpeedTestScheduleServerPort(d, v, "server_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("update_shaper"); ok {
+		t, err := expandSystemSpeedTestScheduleUpdateShaper(d, v, "update_shaper", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["update-shaper"] = t
 		}
 	}
 

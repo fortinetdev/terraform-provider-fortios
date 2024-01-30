@@ -424,63 +424,63 @@ func flattenSystemSamlServiceProviders(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSamlServiceProvidersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSamlServiceProvidersName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenSystemSamlServiceProvidersPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenSystemSamlServiceProvidersPrefix(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
-		if _, ok := i["sp-binding-protocol"]; ok {
-			tmp["sp_binding_protocol"] = flattenSystemSamlServiceProvidersSpBindingProtocol(i["sp-binding-protocol"], d, pre_append, sv)
+		if cur_v, ok := i["sp-binding-protocol"]; ok {
+			tmp["sp_binding_protocol"] = flattenSystemSamlServiceProvidersSpBindingProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
-		if _, ok := i["sp-cert"]; ok {
-			tmp["sp_cert"] = flattenSystemSamlServiceProvidersSpCert(i["sp-cert"], d, pre_append, sv)
+		if cur_v, ok := i["sp-cert"]; ok {
+			tmp["sp_cert"] = flattenSystemSamlServiceProvidersSpCert(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_entity_id"
-		if _, ok := i["sp-entity-id"]; ok {
-			tmp["sp_entity_id"] = flattenSystemSamlServiceProvidersSpEntityId(i["sp-entity-id"], d, pre_append, sv)
+		if cur_v, ok := i["sp-entity-id"]; ok {
+			tmp["sp_entity_id"] = flattenSystemSamlServiceProvidersSpEntityId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_sign_on_url"
-		if _, ok := i["sp-single-sign-on-url"]; ok {
-			tmp["sp_single_sign_on_url"] = flattenSystemSamlServiceProvidersSpSingleSignOnUrl(i["sp-single-sign-on-url"], d, pre_append, sv)
+		if cur_v, ok := i["sp-single-sign-on-url"]; ok {
+			tmp["sp_single_sign_on_url"] = flattenSystemSamlServiceProvidersSpSingleSignOnUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_logout_url"
-		if _, ok := i["sp-single-logout-url"]; ok {
-			tmp["sp_single_logout_url"] = flattenSystemSamlServiceProvidersSpSingleLogoutUrl(i["sp-single-logout-url"], d, pre_append, sv)
+		if cur_v, ok := i["sp-single-logout-url"]; ok {
+			tmp["sp_single_logout_url"] = flattenSystemSamlServiceProvidersSpSingleLogoutUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_portal_url"
-		if _, ok := i["sp-portal-url"]; ok {
-			tmp["sp_portal_url"] = flattenSystemSamlServiceProvidersSpPortalUrl(i["sp-portal-url"], d, pre_append, sv)
+		if cur_v, ok := i["sp-portal-url"]; ok {
+			tmp["sp_portal_url"] = flattenSystemSamlServiceProvidersSpPortalUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
-		if _, ok := i["idp-entity-id"]; ok {
-			tmp["idp_entity_id"] = flattenSystemSamlServiceProvidersIdpEntityId(i["idp-entity-id"], d, pre_append, sv)
+		if cur_v, ok := i["idp-entity-id"]; ok {
+			tmp["idp_entity_id"] = flattenSystemSamlServiceProvidersIdpEntityId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
-		if _, ok := i["idp-single-sign-on-url"]; ok {
-			tmp["idp_single_sign_on_url"] = flattenSystemSamlServiceProvidersIdpSingleSignOnUrl(i["idp-single-sign-on-url"], d, pre_append, sv)
+		if cur_v, ok := i["idp-single-sign-on-url"]; ok {
+			tmp["idp_single_sign_on_url"] = flattenSystemSamlServiceProvidersIdpSingleSignOnUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
-		if _, ok := i["idp-single-logout-url"]; ok {
-			tmp["idp_single_logout_url"] = flattenSystemSamlServiceProvidersIdpSingleLogoutUrl(i["idp-single-logout-url"], d, pre_append, sv)
+		if cur_v, ok := i["idp-single-logout-url"]; ok {
+			tmp["idp_single_logout_url"] = flattenSystemSamlServiceProvidersIdpSingleLogoutUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
-		if _, ok := i["assertion-attributes"]; ok {
-			tmp["assertion_attributes"] = flattenSystemSamlServiceProvidersAssertionAttributes(i["assertion-attributes"], d, pre_append, sv)
+		if cur_v, ok := i["assertion-attributes"]; ok {
+			tmp["assertion_attributes"] = flattenSystemSamlServiceProvidersAssertionAttributes(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -561,13 +561,13 @@ func flattenSystemSamlServiceProvidersAssertionAttributes(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSamlServiceProvidersAssertionAttributesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSamlServiceProvidersAssertionAttributesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemSamlServiceProvidersAssertionAttributesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSystemSamlServiceProvidersAssertionAttributesType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

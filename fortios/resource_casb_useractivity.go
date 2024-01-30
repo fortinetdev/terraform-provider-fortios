@@ -48,6 +48,11 @@ func resourceCasbUserActivity() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -182,6 +187,11 @@ func resourceCasbUserActivity() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"operations": &schema.Schema{
 							Type:     schema.TypeList,
@@ -399,6 +409,10 @@ func flattenCasbUserActivityUuid(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenCasbUserActivityStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCasbUserActivityDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -448,18 +462,18 @@ func flattenCasbUserActivityMatch(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenCasbUserActivityMatchId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenCasbUserActivityMatchId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "strategy"
-		if _, ok := i["strategy"]; ok {
-			tmp["strategy"] = flattenCasbUserActivityMatchStrategy(i["strategy"], d, pre_append, sv)
+		if cur_v, ok := i["strategy"]; ok {
+			tmp["strategy"] = flattenCasbUserActivityMatchStrategy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rules"
-		if _, ok := i["rules"]; ok {
-			tmp["rules"] = flattenCasbUserActivityMatchRules(i["rules"], d, pre_append, sv)
+		if cur_v, ok := i["rules"]; ok {
+			tmp["rules"] = flattenCasbUserActivityMatchRules(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -504,48 +518,48 @@ func flattenCasbUserActivityMatchRules(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenCasbUserActivityMatchRulesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenCasbUserActivityMatchRulesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenCasbUserActivityMatchRulesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenCasbUserActivityMatchRulesType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domains"
-		if _, ok := i["domains"]; ok {
-			tmp["domains"] = flattenCasbUserActivityMatchRulesDomains(i["domains"], d, pre_append, sv)
+		if cur_v, ok := i["domains"]; ok {
+			tmp["domains"] = flattenCasbUserActivityMatchRulesDomains(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "methods"
-		if _, ok := i["methods"]; ok {
-			tmp["methods"] = flattenCasbUserActivityMatchRulesMethods(i["methods"], d, pre_append, sv)
+		if cur_v, ok := i["methods"]; ok {
+			tmp["methods"] = flattenCasbUserActivityMatchRulesMethods(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_pattern"
-		if _, ok := i["match-pattern"]; ok {
-			tmp["match_pattern"] = flattenCasbUserActivityMatchRulesMatchPattern(i["match-pattern"], d, pre_append, sv)
+		if cur_v, ok := i["match-pattern"]; ok {
+			tmp["match_pattern"] = flattenCasbUserActivityMatchRulesMatchPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_value"
-		if _, ok := i["match-value"]; ok {
-			tmp["match_value"] = flattenCasbUserActivityMatchRulesMatchValue(i["match-value"], d, pre_append, sv)
+		if cur_v, ok := i["match-value"]; ok {
+			tmp["match_value"] = flattenCasbUserActivityMatchRulesMatchValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
-		if _, ok := i["header-name"]; ok {
-			tmp["header_name"] = flattenCasbUserActivityMatchRulesHeaderName(i["header-name"], d, pre_append, sv)
+		if cur_v, ok := i["header-name"]; ok {
+			tmp["header_name"] = flattenCasbUserActivityMatchRulesHeaderName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitive"
-		if _, ok := i["case-sensitive"]; ok {
-			tmp["case_sensitive"] = flattenCasbUserActivityMatchRulesCaseSensitive(i["case-sensitive"], d, pre_append, sv)
+		if cur_v, ok := i["case-sensitive"]; ok {
+			tmp["case_sensitive"] = flattenCasbUserActivityMatchRulesCaseSensitive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "negate"
-		if _, ok := i["negate"]; ok {
-			tmp["negate"] = flattenCasbUserActivityMatchRulesNegate(i["negate"], d, pre_append, sv)
+		if cur_v, ok := i["negate"]; ok {
+			tmp["negate"] = flattenCasbUserActivityMatchRulesNegate(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -590,8 +604,8 @@ func flattenCasbUserActivityMatchRulesDomains(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenCasbUserActivityMatchRulesDomainsDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenCasbUserActivityMatchRulesDomainsDomain(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -632,8 +646,8 @@ func flattenCasbUserActivityMatchRulesMethods(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
-		if _, ok := i["method"]; ok {
-			tmp["method"] = flattenCasbUserActivityMatchRulesMethodsMethod(i["method"], d, pre_append, sv)
+		if cur_v, ok := i["method"]; ok {
+			tmp["method"] = flattenCasbUserActivityMatchRulesMethodsMethod(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -694,13 +708,18 @@ func flattenCasbUserActivityControlOptions(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbUserActivityControlOptionsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbUserActivityControlOptionsName(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenCasbUserActivityControlOptionsStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "operations"
-		if _, ok := i["operations"]; ok {
-			tmp["operations"] = flattenCasbUserActivityControlOptionsOperations(i["operations"], d, pre_append, sv)
+		if cur_v, ok := i["operations"]; ok {
+			tmp["operations"] = flattenCasbUserActivityControlOptionsOperations(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -713,6 +732,10 @@ func flattenCasbUserActivityControlOptions(v interface{}, d *schema.ResourceData
 }
 
 func flattenCasbUserActivityControlOptionsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbUserActivityControlOptionsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -741,53 +764,53 @@ func flattenCasbUserActivityControlOptionsOperations(v interface{}, d *schema.Re
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbUserActivityControlOptionsOperationsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbUserActivityControlOptionsOperationsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenCasbUserActivityControlOptionsOperationsTarget(i["target"], d, pre_append, sv)
+		if cur_v, ok := i["target"]; ok {
+			tmp["target"] = flattenCasbUserActivityControlOptionsOperationsTarget(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenCasbUserActivityControlOptionsOperationsAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenCasbUserActivityControlOptionsOperationsAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenCasbUserActivityControlOptionsOperationsDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenCasbUserActivityControlOptionsOperationsDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
-		if _, ok := i["header-name"]; ok {
-			tmp["header_name"] = flattenCasbUserActivityControlOptionsOperationsHeaderName(i["header-name"], d, pre_append, sv)
+		if cur_v, ok := i["header-name"]; ok {
+			tmp["header_name"] = flattenCasbUserActivityControlOptionsOperationsHeaderName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "search_pattern"
-		if _, ok := i["search-pattern"]; ok {
-			tmp["search_pattern"] = flattenCasbUserActivityControlOptionsOperationsSearchPattern(i["search-pattern"], d, pre_append, sv)
+		if cur_v, ok := i["search-pattern"]; ok {
+			tmp["search_pattern"] = flattenCasbUserActivityControlOptionsOperationsSearchPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "search_key"
-		if _, ok := i["search-key"]; ok {
-			tmp["search_key"] = flattenCasbUserActivityControlOptionsOperationsSearchKey(i["search-key"], d, pre_append, sv)
+		if cur_v, ok := i["search-key"]; ok {
+			tmp["search_key"] = flattenCasbUserActivityControlOptionsOperationsSearchKey(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitive"
-		if _, ok := i["case-sensitive"]; ok {
-			tmp["case_sensitive"] = flattenCasbUserActivityControlOptionsOperationsCaseSensitive(i["case-sensitive"], d, pre_append, sv)
+		if cur_v, ok := i["case-sensitive"]; ok {
+			tmp["case_sensitive"] = flattenCasbUserActivityControlOptionsOperationsCaseSensitive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value_from_input"
-		if _, ok := i["value-from-input"]; ok {
-			tmp["value_from_input"] = flattenCasbUserActivityControlOptionsOperationsValueFromInput(i["value-from-input"], d, pre_append, sv)
+		if cur_v, ok := i["value-from-input"]; ok {
+			tmp["value_from_input"] = flattenCasbUserActivityControlOptionsOperationsValueFromInput(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
-		if _, ok := i["values"]; ok {
-			tmp["values"] = flattenCasbUserActivityControlOptionsOperationsValues(i["values"], d, pre_append, sv)
+		if cur_v, ok := i["values"]; ok {
+			tmp["values"] = flattenCasbUserActivityControlOptionsOperationsValues(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -860,8 +883,8 @@ func flattenCasbUserActivityControlOptionsOperationsValues(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenCasbUserActivityControlOptionsOperationsValuesValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenCasbUserActivityControlOptionsOperationsValuesValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -895,6 +918,12 @@ func refreshObjectCasbUserActivity(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("uuid", flattenCasbUserActivityUuid(o["uuid"], d, "uuid", sv)); err != nil {
 		if !fortiAPIPatch(o["uuid"]) {
 			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("status", flattenCasbUserActivityStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
@@ -980,6 +1009,10 @@ func expandCasbUserActivityName(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandCasbUserActivityUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbUserActivityStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1228,6 +1261,11 @@ func expandCasbUserActivityControlOptions(d *schema.ResourceData, v interface{},
 			tmp["name"], _ = expandCasbUserActivityControlOptionsName(d, i["name"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["status"], _ = expandCasbUserActivityControlOptionsStatus(d, i["status"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "operations"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 			tmp["operations"], _ = expandCasbUserActivityControlOptionsOperations(d, i["operations"], pre_append, sv)
@@ -1244,6 +1282,10 @@ func expandCasbUserActivityControlOptions(d *schema.ResourceData, v interface{},
 }
 
 func expandCasbUserActivityControlOptionsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbUserActivityControlOptionsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1403,6 +1445,15 @@ func getObjectCasbUserActivity(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("status"); ok {
+		t, err := expandCasbUserActivityStatus(d, v, "status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
 		}
 	}
 

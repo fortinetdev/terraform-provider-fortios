@@ -249,33 +249,33 @@ func flattenWirelessControllerHotspot20IconIconList(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerHotspot20IconIconListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerHotspot20IconIconListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
-		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWirelessControllerHotspot20IconIconListLang(i["lang"], d, pre_append, sv)
+		if cur_v, ok := i["lang"]; ok {
+			tmp["lang"] = flattenWirelessControllerHotspot20IconIconListLang(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
-		if _, ok := i["file"]; ok {
-			tmp["file"] = flattenWirelessControllerHotspot20IconIconListFile(i["file"], d, pre_append, sv)
+		if cur_v, ok := i["file"]; ok {
+			tmp["file"] = flattenWirelessControllerHotspot20IconIconListFile(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenWirelessControllerHotspot20IconIconListType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenWirelessControllerHotspot20IconIconListType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
-		if _, ok := i["width"]; ok {
-			tmp["width"] = flattenWirelessControllerHotspot20IconIconListWidth(i["width"], d, pre_append, sv)
+		if cur_v, ok := i["width"]; ok {
+			tmp["width"] = flattenWirelessControllerHotspot20IconIconListWidth(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
-		if _, ok := i["height"]; ok {
-			tmp["height"] = flattenWirelessControllerHotspot20IconIconListHeight(i["height"], d, pre_append, sv)
+		if cur_v, ok := i["height"]; ok {
+			tmp["height"] = flattenWirelessControllerHotspot20IconIconListHeight(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -2323,38 +2323,38 @@ func flattenFirewallSslSshProfileSslExempt(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallSslSshProfileSslExemptId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallSslSshProfileSslExemptId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenFirewallSslSshProfileSslExemptType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenFirewallSslSshProfileSslExemptType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
-		if _, ok := i["fortiguard-category"]; ok {
-			tmp["fortiguard_category"] = flattenFirewallSslSshProfileSslExemptFortiguardCategory(i["fortiguard-category"], d, pre_append, sv)
+		if cur_v, ok := i["fortiguard-category"]; ok {
+			tmp["fortiguard_category"] = flattenFirewallSslSshProfileSslExemptFortiguardCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenFirewallSslSshProfileSslExemptAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenFirewallSslSshProfileSslExemptAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address6"
-		if _, ok := i["address6"]; ok {
-			tmp["address6"] = flattenFirewallSslSshProfileSslExemptAddress6(i["address6"], d, pre_append, sv)
+		if cur_v, ok := i["address6"]; ok {
+			tmp["address6"] = flattenFirewallSslSshProfileSslExemptAddress6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard_fqdn"
-		if _, ok := i["wildcard-fqdn"]; ok {
-			tmp["wildcard_fqdn"] = flattenFirewallSslSshProfileSslExemptWildcardFqdn(i["wildcard-fqdn"], d, pre_append, sv)
+		if cur_v, ok := i["wildcard-fqdn"]; ok {
+			tmp["wildcard_fqdn"] = flattenFirewallSslSshProfileSslExemptWildcardFqdn(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
-		if _, ok := i["regex"]; ok {
-			tmp["regex"] = flattenFirewallSslSshProfileSslExemptRegex(i["regex"], d, pre_append, sv)
+		if cur_v, ok := i["regex"]; ok {
+			tmp["regex"] = flattenFirewallSslSshProfileSslExemptRegex(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2439,73 +2439,73 @@ func flattenFirewallSslSshProfileSslServer(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallSslSshProfileSslServerId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallSslSshProfileSslServerId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallSslSshProfileSslServerIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallSslSshProfileSslServerIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_certificate"
-		if _, ok := i["https-client-certificate"]; ok {
-			tmp["https_client_certificate"] = flattenFirewallSslSshProfileSslServerHttpsClientCertificate(i["https-client-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["https-client-certificate"]; ok {
+			tmp["https_client_certificate"] = flattenFirewallSslSshProfileSslServerHttpsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_certificate"
-		if _, ok := i["smtps-client-certificate"]; ok {
-			tmp["smtps_client_certificate"] = flattenFirewallSslSshProfileSslServerSmtpsClientCertificate(i["smtps-client-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["smtps-client-certificate"]; ok {
+			tmp["smtps_client_certificate"] = flattenFirewallSslSshProfileSslServerSmtpsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_certificate"
-		if _, ok := i["pop3s-client-certificate"]; ok {
-			tmp["pop3s_client_certificate"] = flattenFirewallSslSshProfileSslServerPop3SClientCertificate(i["pop3s-client-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["pop3s-client-certificate"]; ok {
+			tmp["pop3s_client_certificate"] = flattenFirewallSslSshProfileSslServerPop3SClientCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_certificate"
-		if _, ok := i["imaps-client-certificate"]; ok {
-			tmp["imaps_client_certificate"] = flattenFirewallSslSshProfileSslServerImapsClientCertificate(i["imaps-client-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["imaps-client-certificate"]; ok {
+			tmp["imaps_client_certificate"] = flattenFirewallSslSshProfileSslServerImapsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_certificate"
-		if _, ok := i["ftps-client-certificate"]; ok {
-			tmp["ftps_client_certificate"] = flattenFirewallSslSshProfileSslServerFtpsClientCertificate(i["ftps-client-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["ftps-client-certificate"]; ok {
+			tmp["ftps_client_certificate"] = flattenFirewallSslSshProfileSslServerFtpsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_certificate"
-		if _, ok := i["ssl-other-client-certificate"]; ok {
-			tmp["ssl_other_client_certificate"] = flattenFirewallSslSshProfileSslServerSslOtherClientCertificate(i["ssl-other-client-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-other-client-certificate"]; ok {
+			tmp["ssl_other_client_certificate"] = flattenFirewallSslSshProfileSslServerSslOtherClientCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_cert_request"
-		if _, ok := i["https-client-cert-request"]; ok {
-			tmp["https_client_cert_request"] = flattenFirewallSslSshProfileSslServerHttpsClientCertRequest(i["https-client-cert-request"], d, pre_append, sv)
+		if cur_v, ok := i["https-client-cert-request"]; ok {
+			tmp["https_client_cert_request"] = flattenFirewallSslSshProfileSslServerHttpsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_cert_request"
-		if _, ok := i["smtps-client-cert-request"]; ok {
-			tmp["smtps_client_cert_request"] = flattenFirewallSslSshProfileSslServerSmtpsClientCertRequest(i["smtps-client-cert-request"], d, pre_append, sv)
+		if cur_v, ok := i["smtps-client-cert-request"]; ok {
+			tmp["smtps_client_cert_request"] = flattenFirewallSslSshProfileSslServerSmtpsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_cert_request"
-		if _, ok := i["pop3s-client-cert-request"]; ok {
-			tmp["pop3s_client_cert_request"] = flattenFirewallSslSshProfileSslServerPop3SClientCertRequest(i["pop3s-client-cert-request"], d, pre_append, sv)
+		if cur_v, ok := i["pop3s-client-cert-request"]; ok {
+			tmp["pop3s_client_cert_request"] = flattenFirewallSslSshProfileSslServerPop3SClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_cert_request"
-		if _, ok := i["imaps-client-cert-request"]; ok {
-			tmp["imaps_client_cert_request"] = flattenFirewallSslSshProfileSslServerImapsClientCertRequest(i["imaps-client-cert-request"], d, pre_append, sv)
+		if cur_v, ok := i["imaps-client-cert-request"]; ok {
+			tmp["imaps_client_cert_request"] = flattenFirewallSslSshProfileSslServerImapsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_cert_request"
-		if _, ok := i["ftps-client-cert-request"]; ok {
-			tmp["ftps_client_cert_request"] = flattenFirewallSslSshProfileSslServerFtpsClientCertRequest(i["ftps-client-cert-request"], d, pre_append, sv)
+		if cur_v, ok := i["ftps-client-cert-request"]; ok {
+			tmp["ftps_client_cert_request"] = flattenFirewallSslSshProfileSslServerFtpsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_cert_request"
-		if _, ok := i["ssl-other-client-cert-request"]; ok {
-			tmp["ssl_other_client_cert_request"] = flattenFirewallSslSshProfileSslServerSslOtherClientCertRequest(i["ssl-other-client-cert-request"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-other-client-cert-request"]; ok {
+			tmp["ssl_other_client_cert_request"] = flattenFirewallSslSshProfileSslServerSslOtherClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

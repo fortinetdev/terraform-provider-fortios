@@ -235,13 +235,13 @@ func flattenIcapServerGroupServerList(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenIcapServerGroupServerListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenIcapServerGroupServerListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenIcapServerGroupServerListWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenIcapServerGroupServerListWeight(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

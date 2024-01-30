@@ -332,18 +332,18 @@ func flattenLogSyslogd2OverrideSettingCustomFieldName(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogSyslogd2OverrideSettingCustomFieldNameId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogSyslogd2OverrideSettingCustomFieldNameId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenLogSyslogd2OverrideSettingCustomFieldNameName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenLogSyslogd2OverrideSettingCustomFieldNameName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
-		if _, ok := i["custom"]; ok {
-			tmp["custom"] = flattenLogSyslogd2OverrideSettingCustomFieldNameCustom(i["custom"], d, pre_append, sv)
+		if cur_v, ok := i["custom"]; ok {
+			tmp["custom"] = flattenLogSyslogd2OverrideSettingCustomFieldNameCustom(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

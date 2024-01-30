@@ -499,6 +499,11 @@ func resourceSystemHa() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"pingserver_flip_timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 						"pingserver_slave_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -639,6 +644,11 @@ func resourceSystemHa() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ipsec_phase2_proposal": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"inter_cluster_session_sync": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -777,7 +787,7 @@ func flattenSystemHaKey(v interface{}, d *schema.ResourceData, pre string, sv st
 }
 
 func flattenSystemHaHbdev(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return remove_quote(v)
 }
 
 func flattenSystemHaUnicastHb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -929,28 +939,28 @@ func flattenSystemHaHaMgmtInterfaces(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemHaHaMgmtInterfacesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemHaHaMgmtInterfacesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemHaHaMgmtInterfacesInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemHaHaMgmtInterfacesInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenSystemHaHaMgmtInterfacesDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenSystemHaHaMgmtInterfacesDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
-		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenSystemHaHaMgmtInterfacesGateway(i["gateway"], d, pre_append, sv)
+		if cur_v, ok := i["gateway"]; ok {
+			tmp["gateway"] = flattenSystemHaHaMgmtInterfacesGateway(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
-		if _, ok := i["gateway6"]; ok {
-			tmp["gateway6"] = flattenSystemHaHaMgmtInterfacesGateway6(i["gateway6"], d, pre_append, sv)
+		if cur_v, ok := i["gateway6"]; ok {
+			tmp["gateway6"] = flattenSystemHaHaMgmtInterfacesGateway6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1042,13 +1052,13 @@ func flattenSystemHaUnicastPeers(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemHaUnicastPeersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemHaUnicastPeersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
-		if _, ok := i["peer-ip"]; ok {
-			tmp["peer_ip"] = flattenSystemHaUnicastPeersPeerIp(i["peer-ip"], d, pre_append, sv)
+		if cur_v, ok := i["peer-ip"]; ok {
+			tmp["peer_ip"] = flattenSystemHaUnicastPeersPeerIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1185,53 +1195,58 @@ func flattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pre string, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vcluster_id"
-		if _, ok := i["vcluster-id"]; ok {
-			tmp["vcluster_id"] = flattenSystemHaVclusterVclusterId(i["vcluster-id"], d, pre_append, sv)
+		if cur_v, ok := i["vcluster-id"]; ok {
+			tmp["vcluster_id"] = flattenSystemHaVclusterVclusterId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override"
-		if _, ok := i["override"]; ok {
-			tmp["override"] = flattenSystemHaVclusterOverride(i["override"], d, pre_append, sv)
+		if cur_v, ok := i["override"]; ok {
+			tmp["override"] = flattenSystemHaVclusterOverride(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemHaVclusterPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenSystemHaVclusterPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
-		if _, ok := i["override-wait-time"]; ok {
-			tmp["override_wait_time"] = flattenSystemHaVclusterOverrideWaitTime(i["override-wait-time"], d, pre_append, sv)
+		if cur_v, ok := i["override-wait-time"]; ok {
+			tmp["override_wait_time"] = flattenSystemHaVclusterOverrideWaitTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
-		if _, ok := i["monitor"]; ok {
-			tmp["monitor"] = flattenSystemHaVclusterMonitor(i["monitor"], d, pre_append, sv)
+		if cur_v, ok := i["monitor"]; ok {
+			tmp["monitor"] = flattenSystemHaVclusterMonitor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
-		if _, ok := i["pingserver-monitor-interface"]; ok {
-			tmp["pingserver_monitor_interface"] = flattenSystemHaVclusterPingserverMonitorInterface(i["pingserver-monitor-interface"], d, pre_append, sv)
+		if cur_v, ok := i["pingserver-monitor-interface"]; ok {
+			tmp["pingserver_monitor_interface"] = flattenSystemHaVclusterPingserverMonitorInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
-		if _, ok := i["pingserver-failover-threshold"]; ok {
-			tmp["pingserver_failover_threshold"] = flattenSystemHaVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["pingserver-failover-threshold"]; ok {
+			tmp["pingserver_failover_threshold"] = flattenSystemHaVclusterPingserverFailoverThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
-		if _, ok := i["pingserver-secondary-force-reset"]; ok {
-			tmp["pingserver_secondary_force_reset"] = flattenSystemHaVclusterPingserverSecondaryForceReset(i["pingserver-secondary-force-reset"], d, pre_append, sv)
+		if cur_v, ok := i["pingserver-secondary-force-reset"]; ok {
+			tmp["pingserver_secondary_force_reset"] = flattenSystemHaVclusterPingserverSecondaryForceReset(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_flip_timeout"
+		if cur_v, ok := i["pingserver-flip-timeout"]; ok {
+			tmp["pingserver_flip_timeout"] = flattenSystemHaVclusterPingserverFlipTimeout(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
-		if _, ok := i["pingserver-slave-force-reset"]; ok {
-			tmp["pingserver_slave_force_reset"] = flattenSystemHaVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append, sv)
+		if cur_v, ok := i["pingserver-slave-force-reset"]; ok {
+			tmp["pingserver_slave_force_reset"] = flattenSystemHaVclusterPingserverSlaveForceReset(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
-		if _, ok := i["vdom"]; ok {
-			tmp["vdom"] = flattenSystemHaVclusterVdom(i["vdom"], d, pre_append, sv)
+		if cur_v, ok := i["vdom"]; ok {
+			tmp["vdom"] = flattenSystemHaVclusterVdom(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1275,6 +1290,10 @@ func flattenSystemHaVclusterPingserverSecondaryForceReset(v interface{}, d *sche
 	return v
 }
 
+func flattenSystemHaVclusterPingserverFlipTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemHaVclusterPingserverSlaveForceReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1304,8 +1323,8 @@ func flattenSystemHaVclusterVdom(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemHaVclusterVdomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemHaVclusterVdomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1461,6 +1480,10 @@ func flattenSystemHaMemoryFailoverFlipTimeout(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemHaFailoverHoldTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaIpsecPhase2Proposal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1997,6 +2020,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("ipsec_phase2_proposal", flattenSystemHaIpsecPhase2Proposal(o["ipsec-phase2-proposal"], d, "ipsec_phase2_proposal", sv)); err != nil {
+		if !fortiAPIPatch(o["ipsec-phase2-proposal"]) {
+			return fmt.Errorf("Error reading ipsec_phase2_proposal: %v", err)
+		}
+	}
+
 	if err = d.Set("inter_cluster_session_sync", flattenSystemHaInterClusterSessionSync(o["inter-cluster-session-sync"], d, "inter_cluster_session_sync", sv)); err != nil {
 		if !fortiAPIPatch(o["inter-cluster-session-sync"]) {
 			return fmt.Errorf("Error reading inter_cluster_session_sync: %v", err)
@@ -2445,6 +2474,11 @@ func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, s
 			tmp["pingserver-secondary-force-reset"], _ = expandSystemHaVclusterPingserverSecondaryForceReset(d, i["pingserver_secondary_force_reset"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_flip_timeout"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["pingserver-flip-timeout"], _ = expandSystemHaVclusterPingserverFlipTimeout(d, i["pingserver_flip_timeout"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pingserver-slave-force-reset"], _ = expandSystemHaVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append, sv)
@@ -2494,6 +2528,10 @@ func expandSystemHaVclusterPingserverFailoverThreshold(d *schema.ResourceData, v
 }
 
 func expandSystemHaVclusterPingserverSecondaryForceReset(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaVclusterPingserverFlipTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2700,6 +2738,10 @@ func expandSystemHaMemoryFailoverFlipTimeout(d *schema.ResourceData, v interface
 }
 
 func expandSystemHaFailoverHoldTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaIpsecPhase2Proposal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3768,6 +3810,19 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				return &obj, err
 			} else if t != nil {
 				obj["failover-hold-time"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ipsec_phase2_proposal"); ok {
+		if setArgNil {
+			obj["ipsec-phase2-proposal"] = nil
+		} else {
+			t, err := expandSystemHaIpsecPhase2Proposal(d, v, "ipsec_phase2_proposal", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-phase2-proposal"] = t
 			}
 		}
 	}

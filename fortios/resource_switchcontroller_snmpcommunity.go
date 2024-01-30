@@ -303,13 +303,13 @@ func flattenSwitchControllerSnmpCommunityHosts(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSwitchControllerSnmpCommunityHostsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSwitchControllerSnmpCommunityHostsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSwitchControllerSnmpCommunityHostsIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSwitchControllerSnmpCommunityHostsIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

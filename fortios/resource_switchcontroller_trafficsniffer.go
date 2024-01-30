@@ -272,13 +272,13 @@ func flattenSwitchControllerTrafficSnifferTargetMac(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenSwitchControllerTrafficSnifferTargetMacMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenSwitchControllerTrafficSnifferTargetMacMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetMacDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetMacDescription(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -323,13 +323,13 @@ func flattenSwitchControllerTrafficSnifferTargetIp(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSwitchControllerTrafficSnifferTargetIpIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSwitchControllerTrafficSnifferTargetIpIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetIpDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetIpDescription(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -374,23 +374,23 @@ func flattenSwitchControllerTrafficSnifferTargetPort(v interface{}, d *schema.Re
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
-		if _, ok := i["switch-id"]; ok {
-			tmp["switch_id"] = flattenSwitchControllerTrafficSnifferTargetPortSwitchId(i["switch-id"], d, pre_append, sv)
+		if cur_v, ok := i["switch-id"]; ok {
+			tmp["switch_id"] = flattenSwitchControllerTrafficSnifferTargetPortSwitchId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetPortDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSwitchControllerTrafficSnifferTargetPortDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "in_ports"
-		if _, ok := i["in-ports"]; ok {
-			tmp["in_ports"] = flattenSwitchControllerTrafficSnifferTargetPortInPorts(i["in-ports"], d, pre_append, sv)
+		if cur_v, ok := i["in-ports"]; ok {
+			tmp["in_ports"] = flattenSwitchControllerTrafficSnifferTargetPortInPorts(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "out_ports"
-		if _, ok := i["out-ports"]; ok {
-			tmp["out_ports"] = flattenSwitchControllerTrafficSnifferTargetPortOutPorts(i["out-ports"], d, pre_append, sv)
+		if cur_v, ok := i["out-ports"]; ok {
+			tmp["out_ports"] = flattenSwitchControllerTrafficSnifferTargetPortOutPorts(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -435,8 +435,8 @@ func flattenSwitchControllerTrafficSnifferTargetPortInPorts(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerTrafficSnifferTargetPortInPortsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerTrafficSnifferTargetPortInPortsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -477,8 +477,8 @@ func flattenSwitchControllerTrafficSnifferTargetPortOutPorts(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerTrafficSnifferTargetPortOutPortsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerTrafficSnifferTargetPortOutPortsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

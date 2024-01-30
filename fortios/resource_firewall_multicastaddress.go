@@ -320,18 +320,18 @@ func flattenFirewallMulticastAddressTagging(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallMulticastAddressTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallMulticastAddressTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenFirewallMulticastAddressTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenFirewallMulticastAddressTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenFirewallMulticastAddressTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenFirewallMulticastAddressTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -376,8 +376,8 @@ func flattenFirewallMulticastAddressTaggingTags(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallMulticastAddressTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallMulticastAddressTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

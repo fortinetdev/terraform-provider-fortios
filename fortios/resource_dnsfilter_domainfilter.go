@@ -256,28 +256,28 @@ func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDnsfilterDomainFilterEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDnsfilterDomainFilterEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenDnsfilterDomainFilterEntriesDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenDnsfilterDomainFilterEntriesDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenDnsfilterDomainFilterEntriesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenDnsfilterDomainFilterEntriesType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenDnsfilterDomainFilterEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenDnsfilterDomainFilterEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenDnsfilterDomainFilterEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenDnsfilterDomainFilterEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

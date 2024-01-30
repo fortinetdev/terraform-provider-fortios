@@ -63,6 +63,31 @@ func resourceSwitchController8021XSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mac_username_delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mac_password_delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mac_calling_station_delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mac_called_station_delimiter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mac_case": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -181,6 +206,26 @@ func flattenSwitchController8021XSettingsMabReauth(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSwitchController8021XSettingsMacUsernameDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchController8021XSettingsMacPasswordDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchController8021XSettingsMacCallingStationDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchController8021XSettingsMacCalledStationDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchController8021XSettingsMacCase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -214,6 +259,36 @@ func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("mac_username_delimiter", flattenSwitchController8021XSettingsMacUsernameDelimiter(o["mac-username-delimiter"], d, "mac_username_delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-username-delimiter"]) {
+			return fmt.Errorf("Error reading mac_username_delimiter: %v", err)
+		}
+	}
+
+	if err = d.Set("mac_password_delimiter", flattenSwitchController8021XSettingsMacPasswordDelimiter(o["mac-password-delimiter"], d, "mac_password_delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-password-delimiter"]) {
+			return fmt.Errorf("Error reading mac_password_delimiter: %v", err)
+		}
+	}
+
+	if err = d.Set("mac_calling_station_delimiter", flattenSwitchController8021XSettingsMacCallingStationDelimiter(o["mac-calling-station-delimiter"], d, "mac_calling_station_delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-calling-station-delimiter"]) {
+			return fmt.Errorf("Error reading mac_calling_station_delimiter: %v", err)
+		}
+	}
+
+	if err = d.Set("mac_called_station_delimiter", flattenSwitchController8021XSettingsMacCalledStationDelimiter(o["mac-called-station-delimiter"], d, "mac_called_station_delimiter", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-called-station-delimiter"]) {
+			return fmt.Errorf("Error reading mac_called_station_delimiter: %v", err)
+		}
+	}
+
+	if err = d.Set("mac_case", flattenSwitchController8021XSettingsMacCase(o["mac-case"], d, "mac_case", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-case"]) {
+			return fmt.Errorf("Error reading mac_case: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -240,6 +315,26 @@ func expandSwitchController8021XSettingsTxPeriod(d *schema.ResourceData, v inter
 }
 
 func expandSwitchController8021XSettingsMabReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsMacUsernameDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsMacPasswordDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsMacCallingStationDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsMacCalledStationDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsMacCase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -307,6 +402,71 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 				return &obj, err
 			} else if t != nil {
 				obj["mab-reauth"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mac_username_delimiter"); ok {
+		if setArgNil {
+			obj["mac-username-delimiter"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsMacUsernameDelimiter(d, v, "mac_username_delimiter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-username-delimiter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mac_password_delimiter"); ok {
+		if setArgNil {
+			obj["mac-password-delimiter"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsMacPasswordDelimiter(d, v, "mac_password_delimiter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-password-delimiter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mac_calling_station_delimiter"); ok {
+		if setArgNil {
+			obj["mac-calling-station-delimiter"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsMacCallingStationDelimiter(d, v, "mac_calling_station_delimiter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-calling-station-delimiter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mac_called_station_delimiter"); ok {
+		if setArgNil {
+			obj["mac-called-station-delimiter"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsMacCalledStationDelimiter(d, v, "mac_called_station_delimiter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-called-station-delimiter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mac_case"); ok {
+		if setArgNil {
+			obj["mac-case"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsMacCase(d, v, "mac_case", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mac-case"] = t
 			}
 		}
 	}

@@ -220,6 +220,7 @@ The following arguments are supported:
 * `eap` - Enable/disable IKEv2 EAP authentication. Valid values: `enable`, `disable`.
 * `eap_identity` - IKEv2 EAP peer identity type. Valid values: `use-id-payload`, `send-request`.
 * `eap_exclude_peergrp` - Peer group excluded from EAP authentication.
+* `eap_cert_auth` - Enable/disable peer certificate authentication in addition to EAP if peer is a FortiClient endpoint. Valid values: `enable`, `disable`.
 * `acct_verify` - Enable/disable verification of RADIUS accounting record. Valid values: `enable`, `disable`.
 * `ppk` - Enable/disable IKEv2 Postquantum Preshared Key (PPK). Valid values: `disable`, `allow`, `require`.
 * `ppk_secret` - IKEv2 Postquantum Preshared Key (ASCII string or hexadecimal encoded with a leading 0x).
@@ -256,6 +257,7 @@ The following arguments are supported:
 * `esn` - Extended sequence number (ESN) negotiation. Valid values: `require`, `allow`, `disable`.
 * `fragmentation_mtu` - IKE fragmentation MTU (500 - 16000).
 * `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023). Valid values: `enable`, `disable`.
+* `azure_ad_autoconnect` - Enable/disable Azure AD Auto-Connect for FortiClient. Valid values: `enable`, `disable`.
 * `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
 * `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
@@ -282,6 +284,12 @@ The following arguments are supported:
 * `kms` - Key Management Services server.
 * `exchange_fgt_device_id` - Enable/disable device identifier exchange with peer FortiGate units for use of VPN monitor data by FortiManager. Valid values: `enable`, `disable`.
 * `ems_sn_check` - Enable/disable verification of EMS serial number. Valid values: `enable`, `disable`.
+* `cert_trust_store` - CA certificate trust store. Valid values: `local`, `ems`.
+* `qkd` - Enable/disable use of Quantum Key Distribution (QKD) server. Valid values: `disable`, `allow`, `require`.
+* `qkd_profile` - Quantum Key Distribution (QKD) server profile.
+* `transport` - Set IKE transport protocol. Valid values: `udp`, `udp-fallback-tcp`, `tcp`.
+* `fortinet_esp` - Enable/disable Fortinet ESP encapsulaton. Valid values: `enable`, `disable`.
+* `fallback_tcp_threshold` - Timeout in seconds before falling back IKE/IPsec traffic to tcp.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

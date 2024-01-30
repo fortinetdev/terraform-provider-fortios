@@ -323,8 +323,8 @@ func flattenUserExchangeKdcIp(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4"
-		if _, ok := i["ipv4"]; ok {
-			tmp["ipv4"] = flattenUserExchangeKdcIpIpv4(i["ipv4"], d, pre_append, sv)
+		if cur_v, ok := i["ipv4"]; ok {
+			tmp["ipv4"] = flattenUserExchangeKdcIpIpv4(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -47,6 +47,12 @@ func resourceDpdkCpus() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"vnpsp_cpus": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 1022),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ips_cpus": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1022),
@@ -171,6 +177,10 @@ func flattenDpdkCpusVnpCpus(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenDpdkCpusVnpspCpus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenDpdkCpusIpsCpus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -195,6 +205,12 @@ func refreshObjectDpdkCpus(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("vnp_cpus", flattenDpdkCpusVnpCpus(o["vnp-cpus"], d, "vnp_cpus", sv)); err != nil {
 		if !fortiAPIPatch(o["vnp-cpus"]) {
 			return fmt.Errorf("Error reading vnp_cpus: %v", err)
+		}
+	}
+
+	if err = d.Set("vnpsp_cpus", flattenDpdkCpusVnpspCpus(o["vnpsp-cpus"], d, "vnpsp_cpus", sv)); err != nil {
+		if !fortiAPIPatch(o["vnpsp-cpus"]) {
+			return fmt.Errorf("Error reading vnpsp_cpus: %v", err)
 		}
 	}
 
@@ -230,6 +246,10 @@ func expandDpdkCpusRxCpus(d *schema.ResourceData, v interface{}, pre string, sv 
 }
 
 func expandDpdkCpusVnpCpus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDpdkCpusVnpspCpus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -270,6 +290,19 @@ func getObjectDpdkCpus(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				return &obj, err
 			} else if t != nil {
 				obj["vnp-cpus"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("vnpsp_cpus"); ok {
+		if setArgNil {
+			obj["vnpsp-cpus"] = nil
+		} else {
+			t, err := expandDpdkCpusVnpspCpus(d, v, "vnpsp_cpus", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vnpsp-cpus"] = t
 			}
 		}
 	}

@@ -327,8 +327,8 @@ func flattenRuleOtdtParameters(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRuleOtdtParametersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRuleOtdtParametersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -369,18 +369,18 @@ func flattenRuleOtdtMetadata(v interface{}, d *schema.ResourceData, pre string, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRuleOtdtMetadataId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRuleOtdtMetadataId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
-		if _, ok := i["metaid"]; ok {
-			tmp["metaid"] = flattenRuleOtdtMetadataMetaid(i["metaid"], d, pre_append, sv)
+		if cur_v, ok := i["metaid"]; ok {
+			tmp["metaid"] = flattenRuleOtdtMetadataMetaid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
-		if _, ok := i["valueid"]; ok {
-			tmp["valueid"] = flattenRuleOtdtMetadataValueid(i["valueid"], d, pre_append, sv)
+		if cur_v, ok := i["valueid"]; ok {
+			tmp["valueid"] = flattenRuleOtdtMetadataValueid(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

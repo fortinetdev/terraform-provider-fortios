@@ -70,6 +70,10 @@ func dataSourceSystemNtp() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"ip_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"interface_select_method": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -225,6 +229,11 @@ func dataSourceFlattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, 
 			tmp["key_id"] = dataSourceFlattenSystemNtpNtpserverKeyId(i["key-id"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_type"
+		if _, ok := i["ip-type"]; ok {
+			tmp["ip_type"] = dataSourceFlattenSystemNtpNtpserverIpType(i["ip-type"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if _, ok := i["interface-select-method"]; ok {
 			tmp["interface_select_method"] = dataSourceFlattenSystemNtpNtpserverInterfaceSelectMethod(i["interface-select-method"], d, pre_append)
@@ -264,6 +273,10 @@ func dataSourceFlattenSystemNtpNtpserverKey(v interface{}, d *schema.ResourceDat
 }
 
 func dataSourceFlattenSystemNtpNtpserverKeyId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNtpNtpserverIpType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

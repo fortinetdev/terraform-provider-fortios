@@ -243,23 +243,23 @@ func flattenSctpFilterProfilePpidFilters(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSctpFilterProfilePpidFiltersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSctpFilterProfilePpidFiltersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ppid"
-		if _, ok := i["ppid"]; ok {
-			tmp["ppid"] = flattenSctpFilterProfilePpidFiltersPpid(i["ppid"], d, pre_append, sv)
+		if cur_v, ok := i["ppid"]; ok {
+			tmp["ppid"] = flattenSctpFilterProfilePpidFiltersPpid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSctpFilterProfilePpidFiltersAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSctpFilterProfilePpidFiltersAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenSctpFilterProfilePpidFiltersComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenSctpFilterProfilePpidFiltersComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

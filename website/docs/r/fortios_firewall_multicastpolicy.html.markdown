@@ -45,7 +45,7 @@ The following arguments are supported:
 * `name` - Policy name.
 * `comments` - Comment.
 * `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
-* `logtraffic` - Enable/disable logging traffic accepted by this policy. Valid values: `enable`, `disable`.
+* `logtraffic` - Enable/disable logging traffic accepted by this policy.
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
 * `srcaddr` - (Required) Source address objects. The structure of `srcaddr` block is documented below.
@@ -57,6 +57,8 @@ The following arguments are supported:
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255, default = 0).
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `end_port` -  Integer value for ending TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
+* `utm_status` - Enable to add an IPS security profile to the policy. Valid values: `enable`, `disable`.
+* `ips_sensor` - Name of an existing IPS sensor.
 * `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration. Valid values: `enable`, `disable`.
 * `traffic_shaper` - Traffic shaper to apply to traffic forwarded by the multicast policy.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

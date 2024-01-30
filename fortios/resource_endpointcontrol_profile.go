@@ -986,8 +986,8 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntriesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntriesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1100,18 +1100,18 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingS
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_type"
-		if _, ok := i["os-type"]; ok {
-			tmp["os_type"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsType(i["os-type"], d, pre_append, sv)
+		if cur_v, ok := i["os-type"]; ok {
+			tmp["os_type"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_name"
-		if _, ok := i["os-name"]; ok {
-			tmp["os_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsName(i["os-name"], d, pre_append, sv)
+		if cur_v, ok := i["os-name"]; ok {
+			tmp["os_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1160,58 +1160,58 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_name"
-		if _, ok := i["app-name"]; ok {
-			tmp["app_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppName(i["app-name"], d, pre_append, sv)
+		if cur_v, ok := i["app-name"]; ok {
+			tmp["app_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application_check_rule"
-		if _, ok := i["application-check-rule"]; ok {
-			tmp["application_check_rule"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppApplicationCheckRule(i["application-check-rule"], d, pre_append, sv)
+		if cur_v, ok := i["application-check-rule"]; ok {
+			tmp["application_check_rule"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppApplicationCheckRule(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name"
-		if _, ok := i["process-name"]; ok {
-			tmp["process_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName(i["process-name"], d, pre_append, sv)
+		if cur_v, ok := i["process-name"]; ok {
+			tmp["process_name"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature"
-		if _, ok := i["app-sha256-signature"]; ok {
-			tmp["app_sha256_signature"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature(i["app-sha256-signature"], d, pre_append, sv)
+		if cur_v, ok := i["app-sha256-signature"]; ok {
+			tmp["app_sha256_signature"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name2"
-		if _, ok := i["process-name2"]; ok {
-			tmp["process_name2"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName2(i["process-name2"], d, pre_append, sv)
+		if cur_v, ok := i["process-name2"]; ok {
+			tmp["process_name2"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature2"
-		if _, ok := i["app-sha256-signature2"]; ok {
-			tmp["app_sha256_signature2"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature2(i["app-sha256-signature2"], d, pre_append, sv)
+		if cur_v, ok := i["app-sha256-signature2"]; ok {
+			tmp["app_sha256_signature2"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name3"
-		if _, ok := i["process-name3"]; ok {
-			tmp["process_name3"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName3(i["process-name3"], d, pre_append, sv)
+		if cur_v, ok := i["process-name3"]; ok {
+			tmp["process_name3"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName3(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature3"
-		if _, ok := i["app-sha256-signature3"]; ok {
-			tmp["app_sha256_signature3"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature3(i["app-sha256-signature3"], d, pre_append, sv)
+		if cur_v, ok := i["app-sha256-signature3"]; ok {
+			tmp["app_sha256_signature3"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature3(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name4"
-		if _, ok := i["process-name4"]; ok {
-			tmp["process_name4"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName4(i["process-name4"], d, pre_append, sv)
+		if cur_v, ok := i["process-name4"]; ok {
+			tmp["process_name4"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName4(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature4"
-		if _, ok := i["app-sha256-signature4"]; ok {
-			tmp["app_sha256_signature4"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature4(i["app-sha256-signature4"], d, pre_append, sv)
+		if cur_v, ok := i["app-sha256-signature4"]; ok {
+			tmp["app_sha256_signature4"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature4(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1292,13 +1292,13 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEn
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "registry_entry"
-		if _, ok := i["registry-entry"]; ok {
-			tmp["registry_entry"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryRegistryEntry(i["registry-entry"], d, pre_append, sv)
+		if cur_v, ok := i["registry-entry"]; ok {
+			tmp["registry_entry"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryRegistryEntry(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1343,13 +1343,13 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(v 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
-		if _, ok := i["file"]; ok {
-			tmp["file"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileFile(i["file"], d, pre_append, sv)
+		if cur_v, ok := i["file"]; ok {
+			tmp["file"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileFile(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1498,38 +1498,38 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
-		if _, ok := i["remote-gw"]; ok {
-			tmp["remote_gw"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsRemoteGw(i["remote-gw"], d, pre_append, sv)
+		if cur_v, ok := i["remote-gw"]; ok {
+			tmp["remote_gw"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsRemoteGw(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
-		if _, ok := i["sslvpn-access-port"]; ok {
-			tmp["sslvpn_access_port"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnAccessPort(i["sslvpn-access-port"], d, pre_append, sv)
+		if cur_v, ok := i["sslvpn-access-port"]; ok {
+			tmp["sslvpn_access_port"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnAccessPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
-		if _, ok := i["sslvpn-require-certificate"]; ok {
-			tmp["sslvpn_require_certificate"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnRequireCertificate(i["sslvpn-require-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["sslvpn-require-certificate"]; ok {
+			tmp["sslvpn_require_certificate"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnRequireCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
-		if _, ok := i["auth-method"]; ok {
-			tmp["auth_method"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsAuthMethod(i["auth-method"], d, pre_append, sv)
+		if cur_v, ok := i["auth-method"]; ok {
+			tmp["auth_method"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsAuthMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
-		if _, ok := i["preshared-key"]; ok {
-			tmp["preshared_key"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(i["preshared-key"], d, pre_append, sv)
+		if cur_v, ok := i["preshared-key"]; ok {
+			tmp["preshared_key"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["preshared_key"] = c
@@ -1667,48 +1667,48 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(v inte
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_name"
-		if _, ok := i["vpn-configuration-name"]; ok {
-			tmp["vpn_configuration_name"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationName(i["vpn-configuration-name"], d, pre_append, sv)
+		if cur_v, ok := i["vpn-configuration-name"]; ok {
+			tmp["vpn_configuration_name"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_content"
-		if _, ok := i["vpn-configuration-content"]; ok {
-			tmp["vpn_configuration_content"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationContent(i["vpn-configuration-content"], d, pre_append, sv)
+		if cur_v, ok := i["vpn-configuration-content"]; ok {
+			tmp["vpn_configuration_content"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationContent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
-		if _, ok := i["remote-gw"]; ok {
-			tmp["remote_gw"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsRemoteGw(i["remote-gw"], d, pre_append, sv)
+		if cur_v, ok := i["remote-gw"]; ok {
+			tmp["remote_gw"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsRemoteGw(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
-		if _, ok := i["sslvpn-access-port"]; ok {
-			tmp["sslvpn_access_port"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnAccessPort(i["sslvpn-access-port"], d, pre_append, sv)
+		if cur_v, ok := i["sslvpn-access-port"]; ok {
+			tmp["sslvpn_access_port"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnAccessPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
-		if _, ok := i["sslvpn-require-certificate"]; ok {
-			tmp["sslvpn_require_certificate"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnRequireCertificate(i["sslvpn-require-certificate"], d, pre_append, sv)
+		if cur_v, ok := i["sslvpn-require-certificate"]; ok {
+			tmp["sslvpn_require_certificate"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnRequireCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
-		if _, ok := i["auth-method"]; ok {
-			tmp["auth_method"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsAuthMethod(i["auth-method"], d, pre_append, sv)
+		if cur_v, ok := i["auth-method"]; ok {
+			tmp["auth_method"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsAuthMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
-		if _, ok := i["preshared-key"]; ok {
-			tmp["preshared_key"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(i["preshared-key"], d, pre_append, sv)
+		if cur_v, ok := i["preshared-key"]; ok {
+			tmp["preshared_key"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["preshared_key"] = c
@@ -1801,8 +1801,8 @@ func flattenEndpointControlProfileSrcAddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileSrcAddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileSrcAddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1843,8 +1843,8 @@ func flattenEndpointControlProfileDeviceGroups(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileDeviceGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileDeviceGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1885,8 +1885,8 @@ func flattenEndpointControlProfileUsers(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileUsersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileUsersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1927,8 +1927,8 @@ func flattenEndpointControlProfileUserGroups(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileUserGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileUserGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1969,8 +1969,8 @@ func flattenEndpointControlProfileOnNetAddr(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenEndpointControlProfileOnNetAddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenEndpointControlProfileOnNetAddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -32,10 +32,10 @@ resource "fortios_alertemail_setting" "trname" {
 
 The following arguments are supported:
 
-* `username` - Name that appears in the From: field of alert emails (max. 36 characters).
-* `mailto1` - Email address to send alert email to (usually a system administrator) (max. 64 characters).
-* `mailto2` - Optional second email address to send alert email to (max. 64 characters).
-* `mailto3` - Optional third email address to send alert email to (max. 64 characters).
+* `username` - Name that appears in the From: field of alert emails. On FortiOS versions 6.2.0-6.4.0: max. 36 characters. On FortiOS versions >= 6.4.1: max. 63 characters.
+* `mailto1` - Email address to send alert email to (usually a system administrator). On FortiOS versions 6.2.0-6.4.0: max. 64 characters. On FortiOS versions >= 6.4.1: max. 63 characters.
+* `mailto2` - Optional second email address to send alert email to. On FortiOS versions 6.2.0-6.4.0: max. 64 characters. On FortiOS versions >= 6.4.1: max. 63 characters.
+* `mailto3` - Optional third email address to send alert email to. On FortiOS versions 6.2.0-6.4.0: max. 64 characters. On FortiOS versions >= 6.4.1: max. 63 characters.
 * `filter_mode` - How to filter log messages that are sent to alert emails. Valid values: `category`, `threshold`.
 * `email_interval` - Interval between sending alert emails (1 - 99999 min, default = 5).
 * `ips_logs` - Enable/disable IPS logs in alert email. Valid values: `enable`, `disable`.
@@ -57,7 +57,7 @@ The following arguments are supported:
 * `fips_cc_errors` - Enable/disable FIPS and Common Criteria error logs in alert email. Valid values: `enable`, `disable`.
 * `fsso_disconnect_logs` - Enable/disable logging of FSSO collector agent disconnect. Valid values: `enable`, `disable`.
 * `ssh_logs` - Enable/disable SSH logs in alert email. Valid values: `enable`, `disable`.
-* `fds_license_expiring_days` - Number of days to send alert email prior to FortiGuard license expiration (1 - 100 days, default = 100).
+* `fds_license_expiring_days` - Number of days to send alert email prior to FortiGuard license expiration (1 - 100 days). On FortiOS versions 6.2.0-7.2.0: default = 100. On FortiOS versions 7.2.1-7.2.6: default = 15.
 * `local_disk_usage` - Disk usage percentage at which to send alert email (1 - 99 percent, default = 75).
 * `emergency_interval` - Emergency alert interval in minutes.
 * `alert_interval` - Alert alert interval in minutes.

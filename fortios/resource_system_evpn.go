@@ -254,8 +254,8 @@ func flattenSystemEvpnImportRt(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
-		if _, ok := i["route-target"]; ok {
-			tmp["route_target"] = flattenSystemEvpnImportRtRouteTarget(i["route-target"], d, pre_append, sv)
+		if cur_v, ok := i["route-target"]; ok {
+			tmp["route_target"] = flattenSystemEvpnImportRtRouteTarget(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -296,8 +296,8 @@ func flattenSystemEvpnExportRt(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
-		if _, ok := i["route-target"]; ok {
-			tmp["route_target"] = flattenSystemEvpnExportRtRouteTarget(i["route-target"], d, pre_append, sv)
+		if cur_v, ok := i["route-target"]; ok {
+			tmp["route_target"] = flattenSystemEvpnExportRtRouteTarget(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

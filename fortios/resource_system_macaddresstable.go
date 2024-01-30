@@ -176,6 +176,9 @@ func resourceSystemMacAddressTableRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenSystemMacAddressTableMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if strings.ToLower(v.(string)) == strings.ToLower(d.Get("mac").(string)) {
+		return d.Get("mac")
+	}
 	return v
 }
 
@@ -218,7 +221,7 @@ func flattenSystemMacAddressTableFortiTestDebug(d *schema.ResourceData, fosdebug
 }
 
 func expandSystemMacAddressTableMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return strings.ToLower(v.(string)), nil
 }
 
 func expandSystemMacAddressTableInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

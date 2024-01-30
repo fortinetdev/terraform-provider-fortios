@@ -13,7 +13,7 @@ Configure names for shaping classes. Applies to FortiOS Version `>= 6.2.4`.
 
 The following arguments are supported:
 
-* `class_id` - Class ID to be named.
+* `class_id` - (Required) Class ID to be named.
 * `class_name` - Define the name for this class-id.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

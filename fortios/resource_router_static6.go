@@ -352,8 +352,8 @@ func flattenRouterStatic6SdwanZone(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterStatic6SdwanZoneName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterStatic6SdwanZoneName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

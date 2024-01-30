@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_videofilter_youtubechannelfilter
-Configure YouTube channel filter. Applies to FortiOS Version `>= 7.0.1`.
+Configure YouTube channel filter. Applies to FortiOS Version `7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.0.12,7.0.13,7.2.0,7.2.1,7.2.2,7.2.3,7.2.4,7.2.6,7.4.0,7.4.1`.
 
 ## Argument Reference
 

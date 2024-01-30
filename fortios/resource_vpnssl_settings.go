@@ -847,8 +847,8 @@ func flattenVpnSslSettingsTunnelIpPools(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsTunnelIpPoolsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsTunnelIpPoolsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -889,8 +889,8 @@ func flattenVpnSslSettingsTunnelIpv6Pools(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsTunnelIpv6PoolsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsTunnelIpv6PoolsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1007,8 +1007,8 @@ func flattenVpnSslSettingsSourceInterface(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsSourceInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsSourceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1049,8 +1049,8 @@ func flattenVpnSslSettingsSourceAddress(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsSourceAddressName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsSourceAddressName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1095,8 +1095,8 @@ func flattenVpnSslSettingsSourceAddress6(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsSourceAddress6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsSourceAddress6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1145,73 +1145,73 @@ func flattenVpnSslSettingsAuthenticationRule(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnSslSettingsAuthenticationRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnSslSettingsAuthenticationRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_interface"
-		if _, ok := i["source-interface"]; ok {
-			tmp["source_interface"] = flattenVpnSslSettingsAuthenticationRuleSourceInterface(i["source-interface"], d, pre_append, sv)
+		if cur_v, ok := i["source-interface"]; ok {
+			tmp["source_interface"] = flattenVpnSslSettingsAuthenticationRuleSourceInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address"
-		if _, ok := i["source-address"]; ok {
-			tmp["source_address"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress(i["source-address"], d, pre_append, sv)
+		if cur_v, ok := i["source-address"]; ok {
+			tmp["source_address"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address_negate"
-		if _, ok := i["source-address-negate"]; ok {
-			tmp["source_address_negate"] = flattenVpnSslSettingsAuthenticationRuleSourceAddressNegate(i["source-address-negate"], d, pre_append, sv)
+		if cur_v, ok := i["source-address-negate"]; ok {
+			tmp["source_address_negate"] = flattenVpnSslSettingsAuthenticationRuleSourceAddressNegate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address6"
-		if _, ok := i["source-address6"]; ok {
-			tmp["source_address6"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6(i["source-address6"], d, pre_append, sv)
+		if cur_v, ok := i["source-address6"]; ok {
+			tmp["source_address6"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address6_negate"
-		if _, ok := i["source-address6-negate"]; ok {
-			tmp["source_address6_negate"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6Negate(i["source-address6-negate"], d, pre_append, sv)
+		if cur_v, ok := i["source-address6-negate"]; ok {
+			tmp["source_address6_negate"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6Negate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := i["users"]; ok {
-			tmp["users"] = flattenVpnSslSettingsAuthenticationRuleUsers(i["users"], d, pre_append, sv)
+		if cur_v, ok := i["users"]; ok {
+			tmp["users"] = flattenVpnSslSettingsAuthenticationRuleUsers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := i["groups"]; ok {
-			tmp["groups"] = flattenVpnSslSettingsAuthenticationRuleGroups(i["groups"], d, pre_append, sv)
+		if cur_v, ok := i["groups"]; ok {
+			tmp["groups"] = flattenVpnSslSettingsAuthenticationRuleGroups(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "portal"
-		if _, ok := i["portal"]; ok {
-			tmp["portal"] = flattenVpnSslSettingsAuthenticationRulePortal(i["portal"], d, pre_append, sv)
+		if cur_v, ok := i["portal"]; ok {
+			tmp["portal"] = flattenVpnSslSettingsAuthenticationRulePortal(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "realm"
-		if _, ok := i["realm"]; ok {
-			tmp["realm"] = flattenVpnSslSettingsAuthenticationRuleRealm(i["realm"], d, pre_append, sv)
+		if cur_v, ok := i["realm"]; ok {
+			tmp["realm"] = flattenVpnSslSettingsAuthenticationRuleRealm(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_cert"
-		if _, ok := i["client-cert"]; ok {
-			tmp["client_cert"] = flattenVpnSslSettingsAuthenticationRuleClientCert(i["client-cert"], d, pre_append, sv)
+		if cur_v, ok := i["client-cert"]; ok {
+			tmp["client_cert"] = flattenVpnSslSettingsAuthenticationRuleClientCert(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_peer"
-		if _, ok := i["user-peer"]; ok {
-			tmp["user_peer"] = flattenVpnSslSettingsAuthenticationRuleUserPeer(i["user-peer"], d, pre_append, sv)
+		if cur_v, ok := i["user-peer"]; ok {
+			tmp["user_peer"] = flattenVpnSslSettingsAuthenticationRuleUserPeer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
-		if _, ok := i["cipher"]; ok {
-			tmp["cipher"] = flattenVpnSslSettingsAuthenticationRuleCipher(i["cipher"], d, pre_append, sv)
+		if cur_v, ok := i["cipher"]; ok {
+			tmp["cipher"] = flattenVpnSslSettingsAuthenticationRuleCipher(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth"
-		if _, ok := i["auth"]; ok {
-			tmp["auth"] = flattenVpnSslSettingsAuthenticationRuleAuth(i["auth"], d, pre_append, sv)
+		if cur_v, ok := i["auth"]; ok {
+			tmp["auth"] = flattenVpnSslSettingsAuthenticationRuleAuth(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1252,8 +1252,8 @@ func flattenVpnSslSettingsAuthenticationRuleSourceInterface(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1294,8 +1294,8 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceAddressName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceAddressName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1340,8 +1340,8 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress6(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1386,8 +1386,8 @@ func flattenVpnSslSettingsAuthenticationRuleUsers(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleUsersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleUsersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1428,8 +1428,8 @@ func flattenVpnSslSettingsAuthenticationRuleGroups(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

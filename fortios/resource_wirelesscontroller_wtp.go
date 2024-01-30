@@ -864,6 +864,11 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"purdue_level": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"coordinate_latitude": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
@@ -1148,13 +1153,13 @@ func flattenWirelessControllerWtpSplitTunnelingAcl(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerWtpSplitTunnelingAclId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerWtpSplitTunnelingAclId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
-		if _, ok := i["dest-ip"]; ok {
-			tmp["dest_ip"] = flattenWirelessControllerWtpSplitTunnelingAclDestIp(i["dest-ip"], d, pre_append, sv)
+		if cur_v, ok := i["dest-ip"]; ok {
+			tmp["dest_ip"] = flattenWirelessControllerWtpSplitTunnelingAclDestIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1591,8 +1596,8 @@ func flattenWirelessControllerWtpRadio1Vaps(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerWtpRadio1VapsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerWtpRadio1VapsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1637,8 +1642,8 @@ func flattenWirelessControllerWtpRadio1Channel(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := i["chan"]; ok {
-			tmp["chan"] = flattenWirelessControllerWtpRadio1ChannelChan(i["chan"], d, pre_append, sv)
+		if cur_v, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWtpRadio1ChannelChan(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1851,8 +1856,8 @@ func flattenWirelessControllerWtpRadio2Vaps(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerWtpRadio2VapsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerWtpRadio2VapsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1897,8 +1902,8 @@ func flattenWirelessControllerWtpRadio2Channel(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := i["chan"]; ok {
-			tmp["chan"] = flattenWirelessControllerWtpRadio2ChannelChan(i["chan"], d, pre_append, sv)
+		if cur_v, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWtpRadio2ChannelChan(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2102,8 +2107,8 @@ func flattenWirelessControllerWtpRadio3Vaps(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerWtpRadio3VapsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerWtpRadio3VapsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2148,8 +2153,8 @@ func flattenWirelessControllerWtpRadio3Channel(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := i["chan"]; ok {
-			tmp["chan"] = flattenWirelessControllerWtpRadio3ChannelChan(i["chan"], d, pre_append, sv)
+		if cur_v, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWtpRadio3ChannelChan(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2353,8 +2358,8 @@ func flattenWirelessControllerWtpRadio4Vaps(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerWtpRadio4VapsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerWtpRadio4VapsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2399,8 +2404,8 @@ func flattenWirelessControllerWtpRadio4Channel(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := i["chan"]; ok {
-			tmp["chan"] = flattenWirelessControllerWtpRadio4ChannelChan(i["chan"], d, pre_append, sv)
+		if cur_v, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWtpRadio4ChannelChan(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2425,6 +2430,10 @@ func flattenWirelessControllerWtpImageDownload(v interface{}, d *schema.Resource
 }
 
 func flattenWirelessControllerWtpMeshBridgeEnable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpPurdueLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2748,6 +2757,12 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 	if err = d.Set("mesh_bridge_enable", flattenWirelessControllerWtpMeshBridgeEnable(o["mesh-bridge-enable"], d, "mesh_bridge_enable", sv)); err != nil {
 		if !fortiAPIPatch(o["mesh-bridge-enable"]) {
 			return fmt.Errorf("Error reading mesh_bridge_enable: %v", err)
+		}
+	}
+
+	if err = d.Set("purdue_level", flattenWirelessControllerWtpPurdueLevel(o["purdue-level"], d, "purdue_level", sv)); err != nil {
+		if !fortiAPIPatch(o["purdue-level"]) {
+			return fmt.Errorf("Error reading purdue_level: %v", err)
 		}
 	}
 
@@ -3986,6 +4001,10 @@ func expandWirelessControllerWtpMeshBridgeEnable(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandWirelessControllerWtpPurdueLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpCoordinateLatitude(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4372,6 +4391,15 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["mesh-bridge-enable"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("purdue_level"); ok {
+		t, err := expandWirelessControllerWtpPurdueLevel(d, v, "purdue_level", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["purdue-level"] = t
 		}
 	}
 

@@ -32,6 +32,38 @@ func dataSourceSystemVdomSflow() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"collectors": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"collector_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"collector_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"collector_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -94,6 +126,87 @@ func dataSourceFlattenSystemVdomSflowVdomSflow(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenSystemVdomSflowCollectors(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemVdomSflowCollectorsId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if _, ok := i["collector-ip"]; ok {
+			tmp["collector_ip"] = dataSourceFlattenSystemVdomSflowCollectorsCollectorIp(i["collector-ip"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if _, ok := i["collector-port"]; ok {
+			tmp["collector_port"] = dataSourceFlattenSystemVdomSflowCollectorsCollectorPort(i["collector-port"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = dataSourceFlattenSystemVdomSflowCollectorsSourceIp(i["source-ip"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = dataSourceFlattenSystemVdomSflowCollectorsInterfaceSelectMethod(i["interface-select-method"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenSystemVdomSflowCollectorsInterface(i["interface"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemVdomSflowCollectorsId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVdomSflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVdomSflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVdomSflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVdomSflowCollectorsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVdomSflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemVdomSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -120,6 +233,12 @@ func dataSourceRefreshObjectSystemVdomSflow(d *schema.ResourceData, o map[string
 	if err = d.Set("vdom_sflow", dataSourceFlattenSystemVdomSflowVdomSflow(o["vdom-sflow"], d, "vdom_sflow")); err != nil {
 		if !fortiAPIPatch(o["vdom-sflow"]) {
 			return fmt.Errorf("Error reading vdom_sflow: %v", err)
+		}
+	}
+
+	if err = d.Set("collectors", dataSourceFlattenSystemVdomSflowCollectors(o["collectors"], d, "collectors")); err != nil {
+		if !fortiAPIPatch(o["collectors"]) {
+			return fmt.Errorf("Error reading collectors: %v", err)
 		}
 	}
 

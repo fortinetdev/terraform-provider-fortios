@@ -981,6 +981,60 @@ func (c *FortiSDKClient) ReadCertificateCrl(mkey string, vdomparam string) (mapT
 	return
 }
 
+// CreateDiameterFilterProfile API operation for FortiOS creates a new Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the diameter-filter - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateDiameterFilterProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/diameter-filter/profile"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateDiameterFilterProfile API operation for FortiOS updates the specified Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the diameter-filter - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateDiameterFilterProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/diameter-filter/profile"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteDiameterFilterProfile API operation for FortiOS deletes the specified Profile.
+// Returns error for service API and SDK errors.
+// See the diameter-filter - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteDiameterFilterProfile(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/diameter-filter/profile"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadDiameterFilterProfile API operation for FortiOS gets the Profile
+// with the specified index value.
+// Returns the requested Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the diameter-filter - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadDiameterFilterProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/diameter-filter/profile"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
 // CreateCertificateLocal API operation for FortiOS creates a new Local.
 // Returns the index value of the Local and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -1245,6 +1299,60 @@ func (c *FortiSDKClient) DeleteCredentialStoreDomainController(mkey string, vdom
 func (c *FortiSDKClient) ReadCredentialStoreDomainController(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/credential-store/domain-controller"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
+// CreateDlpExactDataMatch API operation for FortiOS creates a new Exact Data Match.
+// Returns the index value of the Exact Data Match and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the dlp - exact-data-match chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateDlpExactDataMatch(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/dlp/exact-data-match"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateDlpExactDataMatch API operation for FortiOS updates the specified Exact Data Match.
+// Returns the index value of the Exact Data Match and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the dlp - exact-data-match chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateDlpExactDataMatch(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/dlp/exact-data-match"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteDlpExactDataMatch API operation for FortiOS deletes the specified Exact Data Match.
+// Returns error for service API and SDK errors.
+// See the dlp - exact-data-match chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteDlpExactDataMatch(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/dlp/exact-data-match"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadDlpExactDataMatch API operation for FortiOS gets the Exact Data Match
+// with the specified index value.
+// Returns the requested Exact Data Match value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the dlp - exact-data-match chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadDlpExactDataMatch(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/dlp/exact-data-match"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
@@ -12291,6 +12399,60 @@ func (c *FortiSDKClient) ReadRouterSetting(mkey string, vdomparam string) (mapTm
 	return
 }
 
+// CreateRuleFmwp API operation for FortiOS creates a new Fmwp.
+// Returns the index value of the Fmwp and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the rule - fmwp chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRuleFmwp(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/rule/fmwp"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateRuleFmwp API operation for FortiOS updates the specified Fmwp.
+// Returns the index value of the Fmwp and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the rule - fmwp chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRuleFmwp(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/rule/fmwp"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteRuleFmwp API operation for FortiOS deletes the specified Fmwp.
+// Returns error for service API and SDK errors.
+// See the rule - fmwp chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRuleFmwp(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/rule/fmwp"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadRuleFmwp API operation for FortiOS gets the Fmwp
+// with the specified index value.
+// Returns the requested Fmwp value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the rule - fmwp chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRuleFmwp(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/rule/fmwp"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
 // CreateRouterStatic API operation for FortiOS creates a new Static.
 // Returns the index value of the Static and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -22524,6 +22686,60 @@ func (c *FortiSDKClient) ReadUserDeviceGroup(mkey string, vdomparam string) (map
 	return
 }
 
+// CreateUserExternalIdentityProvider API operation for FortiOS creates a new External Identity Provider.
+// Returns the index value of the External Identity Provider and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - external-identity-provider chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateUserExternalIdentityProvider(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/user/external-identity-provider"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateUserExternalIdentityProvider API operation for FortiOS updates the specified External Identity Provider.
+// Returns the index value of the External Identity Provider and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - external-identity-provider chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateUserExternalIdentityProvider(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/user/external-identity-provider"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteUserExternalIdentityProvider API operation for FortiOS deletes the specified External Identity Provider.
+// Returns error for service API and SDK errors.
+// See the user - external-identity-provider chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteUserExternalIdentityProvider(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/user/external-identity-provider"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadUserExternalIdentityProvider API operation for FortiOS gets the External Identity Provider
+// with the specified index value.
+// Returns the requested External Identity Provider value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - external-identity-provider chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadUserExternalIdentityProvider(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/user/external-identity-provider"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
 // CreateUserDomainController API operation for FortiOS creates a new Domain Controller.
 // Returns the index value of the Domain Controller and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -23477,6 +23693,60 @@ func (c *FortiSDKClient) ReadUserSecurityExemptList(mkey string, vdomparam strin
 	return
 }
 
+// CreateVideofilterKeyword API operation for FortiOS creates a new Keyword.
+// Returns the index value of the Keyword and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the videofilter - keyword chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateVideofilterKeyword(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/videofilter/keyword"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateVideofilterKeyword API operation for FortiOS updates the specified Keyword.
+// Returns the index value of the Keyword and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the videofilter - keyword chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateVideofilterKeyword(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/videofilter/keyword"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteVideofilterKeyword API operation for FortiOS deletes the specified Keyword.
+// Returns error for service API and SDK errors.
+// See the videofilter - keyword chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteVideofilterKeyword(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/videofilter/keyword"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadVideofilterKeyword API operation for FortiOS gets the Keyword
+// with the specified index value.
+// Returns the requested Keyword value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the videofilter - keyword chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadVideofilterKeyword(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/videofilter/keyword"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
+	return
+}
+
 // UpdateUserSetting API operation for FortiOS updates the specified Setting.
 // Returns the index value of the Setting and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -23922,6 +24192,60 @@ func (c *FortiSDKClient) ReadVpnL2Tp(mkey string, vdomparam string) (mapTmp map[
 	path := "/api/v2/cmdb/vpn/l2tp"
 
 	mapTmp, err = read(c, HTTPMethod, path, true, vdomparam)
+	return
+}
+
+// CreateVpnQkd API operation for FortiOS creates a new Qkd.
+// Returns the index value of the Qkd and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the vpn - qkd chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateVpnQkd(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/vpn/qkd"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// UpdateVpnQkd API operation for FortiOS updates the specified Qkd.
+// Returns the index value of the Qkd and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the vpn - qkd chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateVpnQkd(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/vpn/qkd"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output, vdomparam)
+	return
+}
+
+// DeleteVpnQkd API operation for FortiOS deletes the specified Qkd.
+// Returns error for service API and SDK errors.
+// See the vpn - qkd chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteVpnQkd(mkey string, vdomparam string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/vpn/qkd"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path, vdomparam)
+	return
+}
+
+// ReadVpnQkd API operation for FortiOS gets the Qkd
+// with the specified index value.
+// Returns the requested Qkd value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the vpn - qkd chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadVpnQkd(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/vpn/qkd"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false, vdomparam)
 	return
 }
 

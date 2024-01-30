@@ -40,6 +40,8 @@ The following arguments are supported:
 * `acd_process_count` - Configure the number cw_acd daemons for multi-core CPU support (default = 0).
 * `wpad_process_count` - Wpad daemon process count for multi-core CPU support.
 * `image_download` - Enable/disable WTP image download at join time. Valid values: `enable`, `disable`.
+* `rolling_wtp_upgrade` - Enable/disable rolling WTP upgrade (default = disable). Valid values: `enable`, `disable`.
+* `rolling_wtp_upgrade_threshold` - Minimum signal level/threshold in dBm required for the managed WTP to be included in rolling WTP upgrade (-95 to -20, default = -80).
 * `max_retransmit` - Maximum number of tunnel packet retransmissions (0 - 64, default = 3).
 * `control_message_offload` - Configure CAPWAP control message data channel offload.
 * `data_ethernet_ii` - Configure the wireless controller to use Ethernet II or 802.3 frames with 802.3 data tunnel mode (default = disable). Valid values: `enable`, `disable`.

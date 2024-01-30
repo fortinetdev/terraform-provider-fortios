@@ -16,6 +16,7 @@ The following arguments are supported:
 * `status` - Enable/disable IP address management services. Valid values: `enable`, `disable`.
 * `server_type` - Configure the type of IPAM server to use.
 * `automatic_conflict_resolution` - Enable/disable automatic conflict resolution. Valid values: `disable`, `enable`.
+* `require_subnet_size_match` - Enable/disable reassignment of subnets to make requested and actual sizes match. Valid values: `disable`, `enable`.
 * `manage_lan_addresses` - Enable/disable default management of LAN interface addresses. Valid values: `disable`, `enable`.
 * `manage_lan_extension_addresses` - Enable/disable default management of FortiExtender LAN extension interface addresses. Valid values: `disable`, `enable`.
 * `manage_ssid_addresses` - Enable/disable default management of FortiAP SSID addresses. Valid values: `disable`, `enable`.

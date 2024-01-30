@@ -829,43 +829,43 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemDhcpServerIpRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemDhcpServerIpRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenSystemDhcpServerIpRangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenSystemDhcpServerIpRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenSystemDhcpServerIpRangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenSystemDhcpServerIpRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
-		if _, ok := i["vci-match"]; ok {
-			tmp["vci_match"] = flattenSystemDhcpServerIpRangeVciMatch(i["vci-match"], d, pre_append, sv)
+		if cur_v, ok := i["vci-match"]; ok {
+			tmp["vci_match"] = flattenSystemDhcpServerIpRangeVciMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciString(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
-		if _, ok := i["uci-match"]; ok {
-			tmp["uci_match"] = flattenSystemDhcpServerIpRangeUciMatch(i["uci-match"], d, pre_append, sv)
+		if cur_v, ok := i["uci-match"]; ok {
+			tmp["uci_match"] = flattenSystemDhcpServerIpRangeUciMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := i["uci-string"]; ok {
-			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciString(i["uci-string"], d, pre_append, sv)
+		if cur_v, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciString(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
-		if _, ok := i["lease-time"]; ok {
-			tmp["lease_time"] = flattenSystemDhcpServerIpRangeLeaseTime(i["lease-time"], d, pre_append, sv)
+		if cur_v, ok := i["lease-time"]; ok {
+			tmp["lease_time"] = flattenSystemDhcpServerIpRangeLeaseTime(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -918,8 +918,8 @@ func flattenSystemDhcpServerIpRangeVciString(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciStringVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -964,8 +964,8 @@ func flattenSystemDhcpServerIpRangeUciString(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := i["uci-string"]; ok {
-			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciStringUciString(i["uci-string"], d, pre_append, sv)
+		if cur_v, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciStringUciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1018,8 +1018,8 @@ func flattenSystemDhcpServerTftpServer(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tftp_server"
-		if _, ok := i["tftp-server"]; ok {
-			tmp["tftp_server"] = flattenSystemDhcpServerTftpServerTftpServer(i["tftp-server"], d, pre_append, sv)
+		if cur_v, ok := i["tftp-server"]; ok {
+			tmp["tftp_server"] = flattenSystemDhcpServerTftpServerTftpServer(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1064,48 +1064,48 @@ func flattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemDhcpServerOptionsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemDhcpServerOptionsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
-		if _, ok := i["code"]; ok {
-			tmp["code"] = flattenSystemDhcpServerOptionsCode(i["code"], d, pre_append, sv)
+		if cur_v, ok := i["code"]; ok {
+			tmp["code"] = flattenSystemDhcpServerOptionsCode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemDhcpServerOptionsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSystemDhcpServerOptionsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSystemDhcpServerOptionsValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSystemDhcpServerOptionsValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemDhcpServerOptionsIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemDhcpServerOptionsIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
-		if _, ok := i["vci-match"]; ok {
-			tmp["vci_match"] = flattenSystemDhcpServerOptionsVciMatch(i["vci-match"], d, pre_append, sv)
+		if cur_v, ok := i["vci-match"]; ok {
+			tmp["vci_match"] = flattenSystemDhcpServerOptionsVciMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciString(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
-		if _, ok := i["uci-match"]; ok {
-			tmp["uci_match"] = flattenSystemDhcpServerOptionsUciMatch(i["uci-match"], d, pre_append, sv)
+		if cur_v, ok := i["uci-match"]; ok {
+			tmp["uci_match"] = flattenSystemDhcpServerOptionsUciMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := i["uci-string"]; ok {
-			tmp["uci_string"] = flattenSystemDhcpServerOptionsUciString(i["uci-string"], d, pre_append, sv)
+		if cur_v, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = flattenSystemDhcpServerOptionsUciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1166,8 +1166,8 @@ func flattenSystemDhcpServerOptionsVciString(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciStringVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1212,8 +1212,8 @@ func flattenSystemDhcpServerOptionsUciString(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := i["uci-string"]; ok {
-			tmp["uci_string"] = flattenSystemDhcpServerOptionsUciStringUciString(i["uci-string"], d, pre_append, sv)
+		if cur_v, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = flattenSystemDhcpServerOptionsUciStringUciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1318,8 +1318,8 @@ func flattenSystemDhcpServerVciString(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerVciStringVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1360,43 +1360,43 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemDhcpServerExcludeRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemDhcpServerExcludeRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenSystemDhcpServerExcludeRangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenSystemDhcpServerExcludeRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenSystemDhcpServerExcludeRangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenSystemDhcpServerExcludeRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
-		if _, ok := i["vci-match"]; ok {
-			tmp["vci_match"] = flattenSystemDhcpServerExcludeRangeVciMatch(i["vci-match"], d, pre_append, sv)
+		if cur_v, ok := i["vci-match"]; ok {
+			tmp["vci_match"] = flattenSystemDhcpServerExcludeRangeVciMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciString(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
-		if _, ok := i["uci-match"]; ok {
-			tmp["uci_match"] = flattenSystemDhcpServerExcludeRangeUciMatch(i["uci-match"], d, pre_append, sv)
+		if cur_v, ok := i["uci-match"]; ok {
+			tmp["uci_match"] = flattenSystemDhcpServerExcludeRangeUciMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := i["uci-string"]; ok {
-			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciString(i["uci-string"], d, pre_append, sv)
+		if cur_v, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciString(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
-		if _, ok := i["lease-time"]; ok {
-			tmp["lease_time"] = flattenSystemDhcpServerExcludeRangeLeaseTime(i["lease-time"], d, pre_append, sv)
+		if cur_v, ok := i["lease-time"]; ok {
+			tmp["lease_time"] = flattenSystemDhcpServerExcludeRangeLeaseTime(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1449,8 +1449,8 @@ func flattenSystemDhcpServerExcludeRangeVciString(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := i["vci-string"]; ok {
-			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciStringVciString(i["vci-string"], d, pre_append, sv)
+		if cur_v, ok := i["vci-string"]; ok {
+			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1495,8 +1495,8 @@ func flattenSystemDhcpServerExcludeRangeUciString(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := i["uci-string"]; ok {
-			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciStringUciString(i["uci-string"], d, pre_append, sv)
+		if cur_v, ok := i["uci-string"]; ok {
+			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciStringUciString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1549,53 +1549,53 @@ func flattenSystemDhcpServerReservedAddress(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemDhcpServerReservedAddressId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemDhcpServerReservedAddressId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemDhcpServerReservedAddressType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSystemDhcpServerReservedAddressType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemDhcpServerReservedAddressIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemDhcpServerReservedAddressIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenSystemDhcpServerReservedAddressMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenSystemDhcpServerReservedAddressMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSystemDhcpServerReservedAddressAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSystemDhcpServerReservedAddressAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id_type"
-		if _, ok := i["circuit-id-type"]; ok {
-			tmp["circuit_id_type"] = flattenSystemDhcpServerReservedAddressCircuitIdType(i["circuit-id-type"], d, pre_append, sv)
+		if cur_v, ok := i["circuit-id-type"]; ok {
+			tmp["circuit_id_type"] = flattenSystemDhcpServerReservedAddressCircuitIdType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
-		if _, ok := i["circuit-id"]; ok {
-			tmp["circuit_id"] = flattenSystemDhcpServerReservedAddressCircuitId(i["circuit-id"], d, pre_append, sv)
+		if cur_v, ok := i["circuit-id"]; ok {
+			tmp["circuit_id"] = flattenSystemDhcpServerReservedAddressCircuitId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id_type"
-		if _, ok := i["remote-id-type"]; ok {
-			tmp["remote_id_type"] = flattenSystemDhcpServerReservedAddressRemoteIdType(i["remote-id-type"], d, pre_append, sv)
+		if cur_v, ok := i["remote-id-type"]; ok {
+			tmp["remote_id_type"] = flattenSystemDhcpServerReservedAddressRemoteIdType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
-		if _, ok := i["remote-id"]; ok {
-			tmp["remote_id"] = flattenSystemDhcpServerReservedAddressRemoteId(i["remote-id"], d, pre_append, sv)
+		if cur_v, ok := i["remote-id"]; ok {
+			tmp["remote_id"] = flattenSystemDhcpServerReservedAddressRemoteId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSystemDhcpServerReservedAddressDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSystemDhcpServerReservedAddressDescription(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

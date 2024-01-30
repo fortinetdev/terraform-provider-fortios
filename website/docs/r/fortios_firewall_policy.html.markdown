@@ -137,7 +137,7 @@ The following arguments are supported:
 * `rtp_nat` - Enable Real Time Protocol (RTP) NAT. Valid values: `disable`, `enable`.
 * `rtp_addr` - Address names if this is an RTP NAT policy. The structure of `rtp_addr` block is documented below.
 * `learning_mode` - Enable to allow everything, but log all of the meaningful data for security information gathering. A learning report will be generated. Valid values: `enable`, `disable`.
-* `action` - Policy action (allow/deny/ipsec). Valid values: `accept`, `deny`, `ipsec`.
+* `action` - Policy action. On FortiOS versions 6.2.0-6.4.0: allow/deny/ipsec. On FortiOS versions >= 6.4.1: accept/deny/ipsec. Valid values: `accept`, `deny`, `ipsec`.
 * `nat64` - Enable/disable NAT64. Valid values: `enable`, `disable`.
 * `nat46` - Enable/disable NAT46. Valid values: `enable`, `disable`.
 * `send_deny_packet` - Enable to send a reply when a session is denied or blocked by a firewall policy. Valid values: `disable`, `enable`.
@@ -176,9 +176,10 @@ The following arguments are supported:
 * `file_filter_profile` - Name of an existing file-filter profile.
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
-* `voip_profile` - Name of an existing VoIP profile.
+* `voip_profile` - Name of an existing VoIP (voipd) profile.
 * `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
+* `diameter_filter_profile` - Name of an existing Diameter filter profile.
 * `virtual_patch_profile` - Name of an existing virtual-patch profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.

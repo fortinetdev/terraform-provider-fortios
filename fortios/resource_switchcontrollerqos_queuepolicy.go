@@ -276,48 +276,48 @@ func flattenSwitchControllerQosQueuePolicyCosQueue(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerQosQueuePolicyCosQueueName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerQosQueuePolicyCosQueueName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerQosQueuePolicyCosQueueDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSwitchControllerQosQueuePolicyCosQueueDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate"
-		if _, ok := i["min-rate"]; ok {
-			tmp["min_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRate(i["min-rate"], d, pre_append, sv)
+		if cur_v, ok := i["min-rate"]; ok {
+			tmp["min_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate"
-		if _, ok := i["max-rate"]; ok {
-			tmp["max_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(i["max-rate"], d, pre_append, sv)
+		if cur_v, ok := i["max-rate"]; ok {
+			tmp["max_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate_percent"
-		if _, ok := i["min-rate-percent"]; ok {
-			tmp["min_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(i["min-rate-percent"], d, pre_append, sv)
+		if cur_v, ok := i["min-rate-percent"]; ok {
+			tmp["min_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate_percent"
-		if _, ok := i["max-rate-percent"]; ok {
-			tmp["max_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(i["max-rate-percent"], d, pre_append, sv)
+		if cur_v, ok := i["max-rate-percent"]; ok {
+			tmp["max_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop_policy"
-		if _, ok := i["drop-policy"]; ok {
-			tmp["drop_policy"] = flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(i["drop-policy"], d, pre_append, sv)
+		if cur_v, ok := i["drop-policy"]; ok {
+			tmp["drop_policy"] = flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ecn"
-		if _, ok := i["ecn"]; ok {
-			tmp["ecn"] = flattenSwitchControllerQosQueuePolicyCosQueueEcn(i["ecn"], d, pre_append, sv)
+		if cur_v, ok := i["ecn"]; ok {
+			tmp["ecn"] = flattenSwitchControllerQosQueuePolicyCosQueueEcn(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenSwitchControllerQosQueuePolicyCosQueueWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenSwitchControllerQosQueuePolicyCosQueueWeight(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

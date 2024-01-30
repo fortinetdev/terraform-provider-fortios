@@ -95,6 +95,11 @@ func resourceLogFortianalyzer3Filter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"forti_switch": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -301,6 +306,10 @@ func flattenLogFortianalyzer3FilterGtp(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenLogFortianalyzer3FilterFortiSwitch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzer3FilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -326,23 +335,23 @@ func flattenLogFortianalyzer3FilterFreeStyle(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogFortianalyzer3FilterFreeStyleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogFortianalyzer3FilterFreeStyleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenLogFortianalyzer3FilterFreeStyleCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenLogFortianalyzer3FilterFreeStyleCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
-		if _, ok := i["filter"]; ok {
-			tmp["filter"] = flattenLogFortianalyzer3FilterFreeStyleFilter(i["filter"], d, pre_append, sv)
+		if cur_v, ok := i["filter"]; ok {
+			tmp["filter"] = flattenLogFortianalyzer3FilterFreeStyleFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
-		if _, ok := i["filter-type"]; ok {
-			tmp["filter_type"] = flattenLogFortianalyzer3FilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
+		if cur_v, ok := i["filter-type"]; ok {
+			tmp["filter_type"] = flattenLogFortianalyzer3FilterFreeStyleFilterType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -467,6 +476,12 @@ func refreshObjectLogFortianalyzer3Filter(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("forti_switch", flattenLogFortianalyzer3FilterFortiSwitch(o["forti-switch"], d, "forti_switch", sv)); err != nil {
+		if !fortiAPIPatch(o["forti-switch"]) {
+			return fmt.Errorf("Error reading forti_switch: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogFortianalyzer3FilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -561,6 +576,10 @@ func expandLogFortianalyzer3FilterDlpArchive(d *schema.ResourceData, v interface
 }
 
 func expandLogFortianalyzer3FilterGtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer3FilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -793,6 +812,19 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["gtp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("forti_switch"); ok {
+		if setArgNil {
+			obj["forti-switch"] = nil
+		} else {
+			t, err := expandLogFortianalyzer3FilterFortiSwitch(d, v, "forti_switch", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forti-switch"] = t
 			}
 		}
 	}

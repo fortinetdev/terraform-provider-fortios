@@ -393,8 +393,8 @@ func flattenVpnOcvpnWanInterface(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnOcvpnWanInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnOcvpnWanInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -470,43 +470,43 @@ func flattenVpnOcvpnOverlays(v interface{}, d *schema.ResourceData, pre string, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
-		if _, ok := i["overlay-name"]; ok {
-			tmp["overlay_name"] = flattenVpnOcvpnOverlaysOverlayName(i["overlay-name"], d, pre_append, sv)
+		if cur_v, ok := i["overlay-name"]; ok {
+			tmp["overlay_name"] = flattenVpnOcvpnOverlaysOverlayName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "inter_overlay"
-		if _, ok := i["inter-overlay"]; ok {
-			tmp["inter_overlay"] = flattenVpnOcvpnOverlaysInterOverlay(i["inter-overlay"], d, pre_append, sv)
+		if cur_v, ok := i["inter-overlay"]; ok {
+			tmp["inter_overlay"] = flattenVpnOcvpnOverlaysInterOverlay(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnOcvpnOverlaysId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnOcvpnOverlaysId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnOcvpnOverlaysName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnOcvpnOverlaysName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_ip"
-		if _, ok := i["assign-ip"]; ok {
-			tmp["assign_ip"] = flattenVpnOcvpnOverlaysAssignIp(i["assign-ip"], d, pre_append, sv)
+		if cur_v, ok := i["assign-ip"]; ok {
+			tmp["assign_ip"] = flattenVpnOcvpnOverlaysAssignIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_start_ip"
-		if _, ok := i["ipv4-start-ip"]; ok {
-			tmp["ipv4_start_ip"] = flattenVpnOcvpnOverlaysIpv4StartIp(i["ipv4-start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["ipv4-start-ip"]; ok {
+			tmp["ipv4_start_ip"] = flattenVpnOcvpnOverlaysIpv4StartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_end_ip"
-		if _, ok := i["ipv4-end-ip"]; ok {
-			tmp["ipv4_end_ip"] = flattenVpnOcvpnOverlaysIpv4EndIp(i["ipv4-end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["ipv4-end-ip"]; ok {
+			tmp["ipv4_end_ip"] = flattenVpnOcvpnOverlaysIpv4EndIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
-		if _, ok := i["subnets"]; ok {
-			tmp["subnets"] = flattenVpnOcvpnOverlaysSubnets(i["subnets"], d, pre_append, sv)
+		if cur_v, ok := i["subnets"]; ok {
+			tmp["subnets"] = flattenVpnOcvpnOverlaysSubnets(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -571,23 +571,23 @@ func flattenVpnOcvpnOverlaysSubnets(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnOcvpnOverlaysSubnetsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnOcvpnOverlaysSubnetsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenVpnOcvpnOverlaysSubnetsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenVpnOcvpnOverlaysSubnetsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenVpnOcvpnOverlaysSubnetsSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenVpnOcvpnOverlaysSubnetsSubnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenVpnOcvpnOverlaysSubnetsInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenVpnOcvpnOverlaysSubnetsInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -687,18 +687,18 @@ func flattenVpnOcvpnForticlientAccessAuthGroups(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnOcvpnForticlientAccessAuthGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenVpnOcvpnForticlientAccessAuthGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_group"
-		if _, ok := i["auth-group"]; ok {
-			tmp["auth_group"] = flattenVpnOcvpnForticlientAccessAuthGroupsAuthGroup(i["auth-group"], d, pre_append, sv)
+		if cur_v, ok := i["auth-group"]; ok {
+			tmp["auth_group"] = flattenVpnOcvpnForticlientAccessAuthGroupsAuthGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
-		if _, ok := i["overlays"]; ok {
-			tmp["overlays"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(i["overlays"], d, pre_append, sv)
+		if cur_v, ok := i["overlays"]; ok {
+			tmp["overlays"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -743,8 +743,8 @@ func flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
-		if _, ok := i["overlay-name"]; ok {
-			tmp["overlay_name"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(i["overlay-name"], d, pre_append, sv)
+		if cur_v, ok := i["overlay-name"]; ok {
+			tmp["overlay_name"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

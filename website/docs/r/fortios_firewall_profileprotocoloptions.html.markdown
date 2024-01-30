@@ -150,8 +150,8 @@ The `http` block supports:
 * `inspect_all` - Enable/disable the inspection of all ports for the protocol. Valid values: `enable`, `disable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `clientcomfort`, `servercomfort`, `oversize`, `chunkedbypass`.
-* `comfort_interval` - Period of time between start, or last transmission, and the next client comfort transmission of data (1 - 900 sec, default = 10).
-* `comfort_amount` - Amount of data to send in a transmission for client comforting (1 - 10240 bytes, default = 1).
+* `comfort_interval` - Interval between successive transmissions of data for client comforting (seconds).
+* `comfort_amount` - Amount of data to send in a transmission for client comforting. On FortiOS versions 6.2.0: 1 - 10240 bytes, default = 1. On FortiOS versions 6.2.4-7.2.3: 1 - 65535 bytes, default = 1.
 * `range_block` - Enable/disable blocking of partial downloads. Valid values: `disable`, `enable`.
 * `http_policy` - Enable/disable HTTP policy check. Valid values: `disable`, `enable`.
 * `strip_x_forwarded_for` - Enable/disable stripping of HTTP X-Forwarded-For header. Valid values: `disable`, `enable`.
@@ -164,18 +164,18 @@ The `http` block supports:
 * `tunnel_non_http` - Configure how to process non-HTTP traffic when a profile configured for HTTP traffic accepts a non-HTTP session. Can occur if an application sends non-HTTP traffic using an HTTP destination port. Valid values: `enable`, `disable`.
 * `h2c` - Enable/disable h2c HTTP connection upgrade. Valid values: `enable`, `disable`.
 * `unknown_content_encoding` - Configure the action the FortiGate unit will take on unknown content-encoding. Valid values: `block`, `inspect`, `bypass`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB). On FortiOS versions 6.2.0-7.2.3: 1 - 383 MB, default = 10.
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
-* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned (MB, 0 = unlimited (default).  Stream-based uncompression used only under certain conditions.).
+* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned in megabytes. Stream-based uncompression used only under certain conditions (unlimited = 0, default = 0).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `verify_dns_for_policy_matching` - Enable/disable verification of DNS for policy matching. Valid values: `enable`, `disable`.
 * `block_page_status_code` - Code number returned for blocked HTTP pages (non-FortiGuard only) (100 - 599, default = 403).
 * `retry_count` - Number of attempts to retry HTTP connection (0 - 100, default = 0).
 * `tcp_window_type` - Specify type of TCP window to use for this protocol.
-* `tcp_window_minimum` - Minimum dynamic TCP window size (default = 128KB).
-* `tcp_window_maximum` - Maximum dynamic TCP window size (default = 8MB).
-* `tcp_window_size` - Set TCP static window size (default = 256KB).
+* `tcp_window_minimum` - Minimum dynamic TCP window size.
+* `tcp_window_maximum` - Maximum dynamic TCP window size.
+* `tcp_window_size` - Set TCP static window size.
 * `ssl_offloaded` - SSL decryption and encryption performed by an external device. Valid values: `no`, `yes`.
 * `address_ip_rating` - Enable/disable IP based URL rating. Valid values: `enable`, `disable`.
 
@@ -185,12 +185,12 @@ The `ftp` block supports:
 * `status` - Enable/disable the active status of scanning for this protocol. Valid values: `enable`, `disable`.
 * `inspect_all` - Enable/disable the inspection of all ports for the protocol. Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `clientcomfort`, `oversize`, `splice`, `bypass-rest-command`, `bypass-mode-command`.
-* `comfort_interval` - Period of time between start, or last transmission, and the next client comfort transmission of data (1 - 900 sec, default = 10).
-* `comfort_amount` - Amount of data to send in a transmission for client comforting (1 - 10240 bytes, default = 1).
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `comfort_interval` - Interval between successive transmissions of data for client comforting (seconds).
+* `comfort_amount` - Number of bytes to send in each transmission for client comforting (bytes). On FortiOS versions 6.2.0: 1 - 10240 bytes, default = 1. On FortiOS versions 6.2.4-7.2.3: 1 - 65535 bytes, default = 1.
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
-* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned (MB, 0 = unlimited (default).  Stream-based uncompression used only under certain conditions.).
+* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned in megabytes. Stream-based uncompression used only under certain conditions (unlimited = 0, default = 0).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `tcp_window_type` - TCP window type to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size.
@@ -206,8 +206,8 @@ The `imap` block supports:
 * `inspect_all` - Enable/disable the inspection of all ports for the protocol. Valid values: `enable`, `disable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `fragmail`, `oversize`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `ssl_offloaded` - SSL decryption and encryption performed by an external device. Valid values: `no`, `yes`.
@@ -217,8 +217,8 @@ The `mapi` block supports:
 * `ports` - Ports to scan for content (1 - 65535, default = 135).
 * `status` - Enable/disable the active status of scanning for this protocol. Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `fragmail`, `oversize`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 
@@ -229,8 +229,8 @@ The `pop3` block supports:
 * `inspect_all` - Enable/disable the inspection of all ports for the protocol. Valid values: `enable`, `disable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `fragmail`, `oversize`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `ssl_offloaded` - SSL decryption and encryption performed by an external device. Valid values: `no`, `yes`.
@@ -242,8 +242,8 @@ The `smtp` block supports:
 * `inspect_all` - Enable/disable the inspection of all ports for the protocol. Valid values: `enable`, `disable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `fragmail`, `oversize`, `splice`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `server_busy` - Enable/disable SMTP server busy when server not available. Valid values: `enable`, `disable`.
@@ -256,20 +256,20 @@ The `nntp` block supports:
 * `inspect_all` - Enable/disable the inspection of all ports for the protocol. Valid values: `enable`, `disable`.
 * `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before). Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `oversize`, `splice`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 
 The `ssh` block supports:
 
 * `options` - One or more options that can be applied to the session. Valid values: `oversize`, `clientcomfort`, `servercomfort`.
-* `comfort_interval` - Period of time between start, or last transmission, and the next client comfort transmission of data (1 - 900 sec, default = 10).
-* `comfort_amount` - Amount of data to send in a transmission for client comforting (1 - 65535 bytes, default = 1).
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `comfort_interval` - Interval between successive transmissions of data for client comforting (seconds).
+* `comfort_amount` - Number of bytes to send in each transmission for client comforting (bytes).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
-* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned (MB, 0 = unlimited (default).  Stream-based uncompression used only under certain conditions.).
+* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned in megabytes. Stream-based uncompression used only under certain conditions (unlimited = 0, default = 0).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `tcp_window_type` - TCP window type to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size.
@@ -287,14 +287,14 @@ The `cifs` block supports:
 * `ports` - Ports to scan for content (1 - 65535, default = 445).
 * `status` - Enable/disable the active status of scanning for this protocol. Valid values: `enable`, `disable`.
 * `options` - One or more options that can be applied to the session. Valid values: `oversize`.
-* `oversize_limit` - Maximum in-memory file size that can be scanned (1 - 383 MB, default = 10).
-* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (0 - 383 MB, 0 = unlimited, default = 10).
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
 * `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
 * `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
 * `tcp_window_type` - Specify type of TCP window to use for this protocol.
-* `tcp_window_minimum` - Minimum dynamic TCP window size (default = 128KB).
-* `tcp_window_maximum` - Maximum dynamic TCP window size (default = 8MB).
-* `tcp_window_size` - Set TCP static window size (default = 256KB).
+* `tcp_window_minimum` - Minimum dynamic TCP window size.
+* `tcp_window_maximum` - Maximum dynamic TCP window size.
+* `tcp_window_size` - Set TCP static window size.
 * `server_credential_type` - CIFS server credential type. Valid values: `none`, `credential-replication`, `credential-keytab`.
 * `domain_controller` - Domain for which to decrypt CIFS traffic.
 * `server_keytab` - Server keytab. The structure of `server_keytab` block is documented below.

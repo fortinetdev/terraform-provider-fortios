@@ -252,23 +252,23 @@ func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallIdentityBasedRouteRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallIdentityBasedRouteRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
-		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenFirewallIdentityBasedRouteRuleGateway(i["gateway"], d, pre_append, sv)
+		if cur_v, ok := i["gateway"]; ok {
+			tmp["gateway"] = flattenFirewallIdentityBasedRouteRuleGateway(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
-		if _, ok := i["device"]; ok {
-			tmp["device"] = flattenFirewallIdentityBasedRouteRuleDevice(i["device"], d, pre_append, sv)
+		if cur_v, ok := i["device"]; ok {
+			tmp["device"] = flattenFirewallIdentityBasedRouteRuleDevice(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := i["groups"]; ok {
-			tmp["groups"] = flattenFirewallIdentityBasedRouteRuleGroups(i["groups"], d, pre_append, sv)
+		if cur_v, ok := i["groups"]; ok {
+			tmp["groups"] = flattenFirewallIdentityBasedRouteRuleGroups(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -317,8 +317,8 @@ func flattenFirewallIdentityBasedRouteRuleGroups(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallIdentityBasedRouteRuleGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallIdentityBasedRouteRuleGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

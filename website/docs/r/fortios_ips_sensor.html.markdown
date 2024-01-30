@@ -69,8 +69,8 @@ The `vuln_type` block supports:
 The `exempt_ip` block supports:
 
 * `id` - Exempt IP ID.
-* `src_ip` - Source IP address and netmask.
-* `dst_ip` - Destination IP address and netmask.
+* `src_ip` - Source IP address and netmask (applies to packet matching the signature).
+* `dst_ip` - Destination IP address and netmask (applies to packet matching the signature).
 
 The `filter` block supports:
 

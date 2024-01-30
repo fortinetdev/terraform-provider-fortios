@@ -58,6 +58,11 @@ func resourceIpsSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"proxy_inline_ips": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -172,6 +177,10 @@ func flattenIpsSettingsIpsPacketQuota(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenIpsSettingsProxyInlineIps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -199,6 +208,12 @@ func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("proxy_inline_ips", flattenIpsSettingsProxyInlineIps(o["proxy-inline-ips"], d, "proxy_inline_ips", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-inline-ips"]) {
+			return fmt.Errorf("Error reading proxy_inline_ips: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -221,6 +236,10 @@ func expandIpsSettingsPacketLogMemory(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandIpsSettingsIpsPacketQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSettingsProxyInlineIps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -275,6 +294,19 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["ips-packet-quota"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_inline_ips"); ok {
+		if setArgNil {
+			obj["proxy-inline-ips"] = nil
+		} else {
+			t, err := expandIpsSettingsProxyInlineIps(d, v, "proxy_inline_ips", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-inline-ips"] = t
 			}
 		}
 	}

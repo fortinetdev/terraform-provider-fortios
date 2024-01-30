@@ -247,8 +247,8 @@ func flattenFirewallVipgrp6Member(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallVipgrp6MemberName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallVipgrp6MemberName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

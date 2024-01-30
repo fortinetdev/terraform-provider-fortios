@@ -451,8 +451,8 @@ func flattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenSystemLinkMonitorServerAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenSystemLinkMonitorServerAddress(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -509,8 +509,8 @@ func flattenSystemLinkMonitorRoute(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenSystemLinkMonitorRouteSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenSystemLinkMonitorRouteSubnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -639,28 +639,28 @@ func flattenSystemLinkMonitorServerList(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemLinkMonitorServerListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemLinkMonitorServerListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenSystemLinkMonitorServerListDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenSystemLinkMonitorServerListDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenSystemLinkMonitorServerListProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemLinkMonitorServerListProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenSystemLinkMonitorServerListPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenSystemLinkMonitorServerListPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenSystemLinkMonitorServerListWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenSystemLinkMonitorServerListWeight(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

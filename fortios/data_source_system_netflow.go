@@ -56,6 +56,38 @@ func dataSourceSystemNetflow() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"collectors": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"collector_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"collector_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -130,6 +162,87 @@ func dataSourceFlattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemNetflowCollectors(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemNetflowCollectorsId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if _, ok := i["collector-ip"]; ok {
+			tmp["collector_ip"] = dataSourceFlattenSystemNetflowCollectorsCollectorIp(i["collector-ip"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if _, ok := i["collector-port"]; ok {
+			tmp["collector_port"] = dataSourceFlattenSystemNetflowCollectorsCollectorPort(i["collector-port"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = dataSourceFlattenSystemNetflowCollectorsSourceIp(i["source-ip"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = dataSourceFlattenSystemNetflowCollectorsInterfaceSelectMethod(i["interface-select-method"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenSystemNetflowCollectorsInterface(i["interface"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemNetflowCollectorsId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemNetflowInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -180,6 +293,12 @@ func dataSourceRefreshObjectSystemNetflow(d *schema.ResourceData, o map[string]i
 	if err = d.Set("template_tx_counter", dataSourceFlattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter")); err != nil {
 		if !fortiAPIPatch(o["template-tx-counter"]) {
 			return fmt.Errorf("Error reading template_tx_counter: %v", err)
+		}
+	}
+
+	if err = d.Set("collectors", dataSourceFlattenSystemNetflowCollectors(o["collectors"], d, "collectors")); err != nil {
+		if !fortiAPIPatch(o["collectors"]) {
+			return fmt.Errorf("Error reading collectors: %v", err)
 		}
 	}
 

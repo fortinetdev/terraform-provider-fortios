@@ -343,18 +343,18 @@ func flattenSystemMobileTunnelNetwork(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemMobileTunnelNetworkId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemMobileTunnelNetworkId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemMobileTunnelNetworkInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemMobileTunnelNetworkInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenSystemMobileTunnelNetworkPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenSystemMobileTunnelNetworkPrefix(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -774,6 +774,12 @@ func resourceSystemSettings() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ike_tcp_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ike_natt_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1024, 65535),
@@ -1111,8 +1117,8 @@ func flattenSystemSettingsGuiDefaultPolicyColumns(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSettingsGuiDefaultPolicyColumnsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSettingsGuiDefaultPolicyColumnsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1541,6 +1547,10 @@ func flattenSystemSettingsIkePolicyRoute(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemSettingsIkePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsIkeTcpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2461,6 +2471,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("ike_tcp_port", flattenSystemSettingsIkeTcpPort(o["ike-tcp-port"], d, "ike_tcp_port", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-tcp-port"]) {
+			return fmt.Errorf("Error reading ike_tcp_port: %v", err)
+		}
+	}
+
 	if err = d.Set("ike_natt_port", flattenSystemSettingsIkeNattPort(o["ike-natt-port"], d, "ike_natt_port", sv)); err != nil {
 		if !fortiAPIPatch(o["ike-natt-port"]) {
 			return fmt.Errorf("Error reading ike_natt_port: %v", err)
@@ -3123,6 +3139,10 @@ func expandSystemSettingsIkePolicyRoute(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemSettingsIkePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsIkeTcpPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5024,6 +5044,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["ike-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ike_tcp_port"); ok {
+		if setArgNil {
+			obj["ike-tcp-port"] = nil
+		} else {
+			t, err := expandSystemSettingsIkeTcpPort(d, v, "ike_tcp_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-tcp-port"] = t
 			}
 		}
 	}

@@ -287,8 +287,8 @@ func flattenFirewallProxyAddrgrpMember(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallProxyAddrgrpMemberName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyAddrgrpMemberName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -333,18 +333,18 @@ func flattenFirewallProxyAddrgrpTagging(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallProxyAddrgrpTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyAddrgrpTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenFirewallProxyAddrgrpTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenFirewallProxyAddrgrpTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenFirewallProxyAddrgrpTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenFirewallProxyAddrgrpTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -389,8 +389,8 @@ func flattenFirewallProxyAddrgrpTaggingTags(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallProxyAddrgrpTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyAddrgrpTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -238,18 +238,18 @@ func flattenRouterMulticastFlowFlows(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterMulticastFlowFlowsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterMulticastFlowFlowsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_addr"
-		if _, ok := i["group-addr"]; ok {
-			tmp["group_addr"] = flattenRouterMulticastFlowFlowsGroupAddr(i["group-addr"], d, pre_append, sv)
+		if cur_v, ok := i["group-addr"]; ok {
+			tmp["group_addr"] = flattenRouterMulticastFlowFlowsGroupAddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_addr"
-		if _, ok := i["source-addr"]; ok {
-			tmp["source_addr"] = flattenRouterMulticastFlowFlowsSourceAddr(i["source-addr"], d, pre_append, sv)
+		if cur_v, ok := i["source-addr"]; ok {
+			tmp["source_addr"] = flattenRouterMulticastFlowFlowsSourceAddr(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

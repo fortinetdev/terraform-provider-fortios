@@ -265,33 +265,33 @@ func flattenFirewallInternetServiceDefinitionEntry(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
-		if _, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenFirewallInternetServiceDefinitionEntrySeqNum(i["seq-num"], d, pre_append, sv)
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenFirewallInternetServiceDefinitionEntrySeqNum(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category_id"
-		if _, ok := i["category-id"]; ok {
-			tmp["category_id"] = flattenFirewallInternetServiceDefinitionEntryCategoryId(i["category-id"], d, pre_append, sv)
+		if cur_v, ok := i["category-id"]; ok {
+			tmp["category_id"] = flattenFirewallInternetServiceDefinitionEntryCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInternetServiceDefinitionEntryName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallInternetServiceDefinitionEntryName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenFirewallInternetServiceDefinitionEntryProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenFirewallInternetServiceDefinitionEntryProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
-		if _, ok := i["port-range"]; ok {
-			tmp["port_range"] = flattenFirewallInternetServiceDefinitionEntryPortRange(i["port-range"], d, pre_append, sv)
+		if cur_v, ok := i["port-range"]; ok {
+			tmp["port_range"] = flattenFirewallInternetServiceDefinitionEntryPortRange(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenFirewallInternetServiceDefinitionEntryPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenFirewallInternetServiceDefinitionEntryPort(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -344,18 +344,18 @@ func flattenFirewallInternetServiceDefinitionEntryPortRange(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallInternetServiceDefinitionEntryPortRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallInternetServiceDefinitionEntryPortRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
-		if _, ok := i["start-port"]; ok {
-			tmp["start_port"] = flattenFirewallInternetServiceDefinitionEntryPortRangeStartPort(i["start-port"], d, pre_append, sv)
+		if cur_v, ok := i["start-port"]; ok {
+			tmp["start_port"] = flattenFirewallInternetServiceDefinitionEntryPortRangeStartPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
-		if _, ok := i["end-port"]; ok {
-			tmp["end_port"] = flattenFirewallInternetServiceDefinitionEntryPortRangeEndPort(i["end-port"], d, pre_append, sv)
+		if cur_v, ok := i["end-port"]; ok {
+			tmp["end_port"] = flattenFirewallInternetServiceDefinitionEntryPortRangeEndPort(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

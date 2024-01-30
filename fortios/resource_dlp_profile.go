@@ -363,78 +363,78 @@ func flattenDlpProfileRule(v interface{}, d *schema.ResourceData, pre string, sv
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDlpProfileRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDlpProfileRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDlpProfileRuleName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDlpProfileRuleName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
-		if _, ok := i["severity"]; ok {
-			tmp["severity"] = flattenDlpProfileRuleSeverity(i["severity"], d, pre_append, sv)
+		if cur_v, ok := i["severity"]; ok {
+			tmp["severity"] = flattenDlpProfileRuleSeverity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenDlpProfileRuleType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenDlpProfileRuleType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
-		if _, ok := i["proto"]; ok {
-			tmp["proto"] = flattenDlpProfileRuleProto(i["proto"], d, pre_append, sv)
+		if cur_v, ok := i["proto"]; ok {
+			tmp["proto"] = flattenDlpProfileRuleProto(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
-		if _, ok := i["filter-by"]; ok {
-			tmp["filter_by"] = flattenDlpProfileRuleFilterBy(i["filter-by"], d, pre_append, sv)
+		if cur_v, ok := i["filter-by"]; ok {
+			tmp["filter_by"] = flattenDlpProfileRuleFilterBy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
-		if _, ok := i["file-size"]; ok {
-			tmp["file_size"] = flattenDlpProfileRuleFileSize(i["file-size"], d, pre_append, sv)
+		if cur_v, ok := i["file-size"]; ok {
+			tmp["file_size"] = flattenDlpProfileRuleFileSize(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
-		if _, ok := i["sensitivity"]; ok {
-			tmp["sensitivity"] = flattenDlpProfileRuleSensitivity(i["sensitivity"], d, pre_append, sv)
+		if cur_v, ok := i["sensitivity"]; ok {
+			tmp["sensitivity"] = flattenDlpProfileRuleSensitivity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_percentage"
-		if _, ok := i["match-percentage"]; ok {
-			tmp["match_percentage"] = flattenDlpProfileRuleMatchPercentage(i["match-percentage"], d, pre_append, sv)
+		if cur_v, ok := i["match-percentage"]; ok {
+			tmp["match_percentage"] = flattenDlpProfileRuleMatchPercentage(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenDlpProfileRuleFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenDlpProfileRuleFileType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensor"
-		if _, ok := i["sensor"]; ok {
-			tmp["sensor"] = flattenDlpProfileRuleSensor(i["sensor"], d, pre_append, sv)
+		if cur_v, ok := i["sensor"]; ok {
+			tmp["sensor"] = flattenDlpProfileRuleSensor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "label"
-		if _, ok := i["label"]; ok {
-			tmp["label"] = flattenDlpProfileRuleLabel(i["label"], d, pre_append, sv)
+		if cur_v, ok := i["label"]; ok {
+			tmp["label"] = flattenDlpProfileRuleLabel(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
-		if _, ok := i["archive"]; ok {
-			tmp["archive"] = flattenDlpProfileRuleArchive(i["archive"], d, pre_append, sv)
+		if cur_v, ok := i["archive"]; ok {
+			tmp["archive"] = flattenDlpProfileRuleArchive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenDlpProfileRuleAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenDlpProfileRuleAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiry"
-		if _, ok := i["expiry"]; ok {
-			tmp["expiry"] = flattenDlpProfileRuleExpiry(i["expiry"], d, pre_append, sv)
+		if cur_v, ok := i["expiry"]; ok {
+			tmp["expiry"] = flattenDlpProfileRuleExpiry(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -499,8 +499,8 @@ func flattenDlpProfileRuleSensitivity(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDlpProfileRuleSensitivityName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDlpProfileRuleSensitivityName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -549,8 +549,8 @@ func flattenDlpProfileRuleSensor(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDlpProfileRuleSensorName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDlpProfileRuleSensorName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

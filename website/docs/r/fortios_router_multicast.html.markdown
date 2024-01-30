@@ -127,7 +127,7 @@ The `igmp` block supports:
 * `last_member_query_count` - Number of group specific queries before removing group (2 - 7, default = 2).
 * `query_max_response_time` - Maximum time to wait for a IGMP query response (1 - 25 sec, default = 10).
 * `query_interval` - Interval between queries to IGMP hosts (1 - 65535 sec, default = 125).
-* `query_timeout` - Timeout between queries before becoming querier for network (60 - 900, default = 255).
+* `query_timeout` - Timeout between queries before becoming querying unit for network (60 - 900, default = 255).
 * `router_alert_check` - Enable/disable require IGMP packets contain router alert option. Valid values: `enable`, `disable`.
 
 

@@ -258,43 +258,43 @@ func flattenVpnIpsecFecMappings(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seqno"
-		if _, ok := i["seqno"]; ok {
-			tmp["seqno"] = flattenVpnIpsecFecMappingsSeqno(i["seqno"], d, pre_append, sv)
+		if cur_v, ok := i["seqno"]; ok {
+			tmp["seqno"] = flattenVpnIpsecFecMappingsSeqno(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base"
-		if _, ok := i["base"]; ok {
-			tmp["base"] = flattenVpnIpsecFecMappingsBase(i["base"], d, pre_append, sv)
+		if cur_v, ok := i["base"]; ok {
+			tmp["base"] = flattenVpnIpsecFecMappingsBase(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "redundant"
-		if _, ok := i["redundant"]; ok {
-			tmp["redundant"] = flattenVpnIpsecFecMappingsRedundant(i["redundant"], d, pre_append, sv)
+		if cur_v, ok := i["redundant"]; ok {
+			tmp["redundant"] = flattenVpnIpsecFecMappingsRedundant(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_threshold"
-		if _, ok := i["packet-loss-threshold"]; ok {
-			tmp["packet_loss_threshold"] = flattenVpnIpsecFecMappingsPacketLossThreshold(i["packet-loss-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["packet-loss-threshold"]; ok {
+			tmp["packet_loss_threshold"] = flattenVpnIpsecFecMappingsPacketLossThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
-		if _, ok := i["latency-threshold"]; ok {
-			tmp["latency_threshold"] = flattenVpnIpsecFecMappingsLatencyThreshold(i["latency-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["latency-threshold"]; ok {
+			tmp["latency_threshold"] = flattenVpnIpsecFecMappingsLatencyThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_up_threshold"
-		if _, ok := i["bandwidth-up-threshold"]; ok {
-			tmp["bandwidth_up_threshold"] = flattenVpnIpsecFecMappingsBandwidthUpThreshold(i["bandwidth-up-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["bandwidth-up-threshold"]; ok {
+			tmp["bandwidth_up_threshold"] = flattenVpnIpsecFecMappingsBandwidthUpThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_down_threshold"
-		if _, ok := i["bandwidth-down-threshold"]; ok {
-			tmp["bandwidth_down_threshold"] = flattenVpnIpsecFecMappingsBandwidthDownThreshold(i["bandwidth-down-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["bandwidth-down-threshold"]; ok {
+			tmp["bandwidth_down_threshold"] = flattenVpnIpsecFecMappingsBandwidthDownThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_bi_threshold"
-		if _, ok := i["bandwidth-bi-threshold"]; ok {
-			tmp["bandwidth_bi_threshold"] = flattenVpnIpsecFecMappingsBandwidthBiThreshold(i["bandwidth-bi-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["bandwidth-bi-threshold"]; ok {
+			tmp["bandwidth_bi_threshold"] = flattenVpnIpsecFecMappingsBandwidthBiThreshold(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

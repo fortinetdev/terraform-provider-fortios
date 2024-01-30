@@ -252,18 +252,18 @@ func flattenUserQuarantineTargets(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry"
-		if _, ok := i["entry"]; ok {
-			tmp["entry"] = flattenUserQuarantineTargetsEntry(i["entry"], d, pre_append, sv)
+		if cur_v, ok := i["entry"]; ok {
+			tmp["entry"] = flattenUserQuarantineTargetsEntry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenUserQuarantineTargetsDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenUserQuarantineTargetsDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macs"
-		if _, ok := i["macs"]; ok {
-			tmp["macs"] = flattenUserQuarantineTargetsMacs(i["macs"], d, pre_append, sv)
+		if cur_v, ok := i["macs"]; ok {
+			tmp["macs"] = flattenUserQuarantineTargetsMacs(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -308,28 +308,28 @@ func flattenUserQuarantineTargetsMacs(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenUserQuarantineTargetsMacsMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenUserQuarantineTargetsMacsMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
-		if _, ok := i["entry-id"]; ok {
-			tmp["entry_id"] = flattenUserQuarantineTargetsMacsEntryId(i["entry-id"], d, pre_append, sv)
+		if cur_v, ok := i["entry-id"]; ok {
+			tmp["entry_id"] = flattenUserQuarantineTargetsMacsEntryId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenUserQuarantineTargetsMacsDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenUserQuarantineTargetsMacsDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop"
-		if _, ok := i["drop"]; ok {
-			tmp["drop"] = flattenUserQuarantineTargetsMacsDrop(i["drop"], d, pre_append, sv)
+		if cur_v, ok := i["drop"]; ok {
+			tmp["drop"] = flattenUserQuarantineTargetsMacsDrop(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parent"
-		if _, ok := i["parent"]; ok {
-			tmp["parent"] = flattenUserQuarantineTargetsMacsParent(i["parent"], d, pre_append, sv)
+		if cur_v, ok := i["parent"]; ok {
+			tmp["parent"] = flattenUserQuarantineTargetsMacsParent(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

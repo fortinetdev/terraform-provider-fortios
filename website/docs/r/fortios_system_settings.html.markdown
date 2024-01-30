@@ -168,6 +168,7 @@ The following arguments are supported:
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions. Valid values: `with-space`, `no-space`.
 * `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
 * `ike_port` - UDP port for IKE/IPsec traffic (default 500).
+* `ike_tcp_port` - TCP port for IKE/IPsec traffic (default 4500).
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks. Valid values: `disable`, `enable`.
 * `default_app_port_as_service` - Enable/disable policy service enforcement based on application default ports. Valid values: `enable`, `disable`.

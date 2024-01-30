@@ -383,6 +383,10 @@ func dataSourceSystemHa() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"pingserver_flip_timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 						"pingserver_slave_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -488,6 +492,10 @@ func dataSourceSystemHa() *schema.Resource {
 			},
 			"failover_hold_time": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"ipsec_phase2_proposal": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"inter_cluster_session_sync": &schema.Schema{
@@ -987,6 +995,11 @@ func dataSourceFlattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pr
 			tmp["pingserver_secondary_force_reset"] = dataSourceFlattenSystemHaVclusterPingserverSecondaryForceReset(i["pingserver-secondary-force-reset"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_flip_timeout"
+		if _, ok := i["pingserver-flip-timeout"]; ok {
+			tmp["pingserver_flip_timeout"] = dataSourceFlattenSystemHaVclusterPingserverFlipTimeout(i["pingserver-flip-timeout"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if _, ok := i["pingserver-slave-force-reset"]; ok {
 			tmp["pingserver_slave_force_reset"] = dataSourceFlattenSystemHaVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append)
@@ -1034,6 +1047,10 @@ func dataSourceFlattenSystemHaVclusterPingserverFailoverThreshold(v interface{},
 }
 
 func dataSourceFlattenSystemHaVclusterPingserverSecondaryForceReset(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterPingserverFlipTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1217,6 +1234,10 @@ func dataSourceFlattenSystemHaMemoryFailoverFlipTimeout(v interface{}, d *schema
 }
 
 func dataSourceFlattenSystemHaFailoverHoldTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaIpsecPhase2Proposal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1704,6 +1725,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("failover_hold_time", dataSourceFlattenSystemHaFailoverHoldTime(o["failover-hold-time"], d, "failover_hold_time")); err != nil {
 		if !fortiAPIPatch(o["failover-hold-time"]) {
 			return fmt.Errorf("Error reading failover_hold_time: %v", err)
+		}
+	}
+
+	if err = d.Set("ipsec_phase2_proposal", dataSourceFlattenSystemHaIpsecPhase2Proposal(o["ipsec-phase2-proposal"], d, "ipsec_phase2_proposal")); err != nil {
+		if !fortiAPIPatch(o["ipsec-phase2-proposal"]) {
+			return fmt.Errorf("Error reading ipsec_phase2_proposal: %v", err)
 		}
 	}
 

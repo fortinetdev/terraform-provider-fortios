@@ -22,7 +22,7 @@ resource "fortios_firewall_centralsnatmap_sort" "test" {
 
 The following arguments are supported:
 
-* `sortby` - (Required) Sort security policies by the value, it currently supports "policyid" and "name".
+* `sortby` - (Required) Sort security policies by the value, it currently supports "policyid".
 * `sortdirection` - (Required) Sort dirction, supports "ascending" and "descending".
 * `manual_order` - Manual order for resources you want to be sorted. Content must be the category of `sortby`. Available when `sortdirection` set to "manual".
 * `force_recreate` - The argument is optional, if it is set, when the value changes, the resource will be re-created. It is usually used when new policies are added, or old policies are deleted.
@@ -32,7 +32,7 @@ The following arguments are supported:
 The following attributes are exported:
 
 * `id` - an identifier for the resource.
-* `sortby` - Sort security policies by the value, it currently supports "policyid" and "name".
+* `sortby` - Sort security policies by the value, it currently supports "policyid".
 * `sortdirection` - Sort dirction, supports "ascending" and "descending".
 * `manual_order` - Manual order for resources you want to be sorted. Content must be the category of `sortby`. Available when `sortdirection` set to "manual".
 * `status` - The parameter is read-only, it is used to indicate whether the sorting of the policies on FGT matches the terraform configuration, if matched, the value is empty(that means ""), otherwise the value is "unsorted", usually the modification outside of the terrform will cause that the status value is "unsorted".

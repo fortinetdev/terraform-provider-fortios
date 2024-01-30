@@ -515,8 +515,8 @@ func flattenFirewallAddressMacaddr(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
-		if _, ok := i["macaddr"]; ok {
-			tmp["macaddr"] = flattenFirewallAddressMacaddrMacaddr(i["macaddr"], d, pre_append, sv)
+		if cur_v, ok := i["macaddr"]; ok {
+			tmp["macaddr"] = flattenFirewallAddressMacaddrMacaddr(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -604,8 +604,8 @@ func flattenFirewallAddressFssoGroup(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddressFssoGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddressFssoGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -738,8 +738,8 @@ func flattenFirewallAddressList(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallAddressListIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallAddressListIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -780,18 +780,18 @@ func flattenFirewallAddressTagging(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddressTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddressTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenFirewallAddressTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenFirewallAddressTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenFirewallAddressTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenFirewallAddressTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -836,8 +836,8 @@ func flattenFirewallAddressTaggingTags(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddressTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddressTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

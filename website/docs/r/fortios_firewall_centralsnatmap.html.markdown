@@ -55,8 +55,8 @@ The following arguments are supported:
 * `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools. The structure of `nat_ippool` block is documented below.
 * `nat_ippool6` - IPv6 pools to be used for source NAT. The structure of `nat_ippool6` block is documented below.
 * `protocol` - (Required) Integer value for the protocol type (0 - 255).
-* `orig_port` - (Required) Original TCP port (0 to 65535).
-* `nat_port` - Translated port or port range (0 to 65535).
+* `orig_port` - (Required) Original TCP port (1 to 65535, 0 means any port).
+* `nat_port` - Translated port or port range (0 to 65535, 0 means any port).
 * `dst_port` - Destination port or port range (1 to 65535, 0 means any port).
 * `nat` - (Required) Enable/disable source NAT. Valid values: `disable`, `enable`.
 * `nat46` - Enable/disable NAT46. Valid values: `enable`, `disable`.

@@ -314,38 +314,38 @@ func flattenFileFilterProfileRules(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFileFilterProfileRulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFileFilterProfileRulesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenFileFilterProfileRulesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenFileFilterProfileRulesComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenFileFilterProfileRulesProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenFileFilterProfileRulesProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenFileFilterProfileRulesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenFileFilterProfileRulesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenFileFilterProfileRulesDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenFileFilterProfileRulesDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
-		if _, ok := i["password-protected"]; ok {
-			tmp["password_protected"] = flattenFileFilterProfileRulesPasswordProtected(i["password-protected"], d, pre_append, sv)
+		if cur_v, ok := i["password-protected"]; ok {
+			tmp["password_protected"] = flattenFileFilterProfileRulesPasswordProtected(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenFileFilterProfileRulesFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenFileFilterProfileRulesFileType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -406,8 +406,8 @@ func flattenFileFilterProfileRulesFileType(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFileFilterProfileRulesFileTypeName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFileFilterProfileRulesFileTypeName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

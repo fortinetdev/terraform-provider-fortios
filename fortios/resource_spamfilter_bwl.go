@@ -276,48 +276,48 @@ func flattenSpamfilterBwlEntries(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSpamfilterBwlEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSpamfilterBwlEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSpamfilterBwlEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSpamfilterBwlEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSpamfilterBwlEntriesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSpamfilterBwlEntriesType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSpamfilterBwlEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSpamfilterBwlEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenSpamfilterBwlEntriesAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenSpamfilterBwlEntriesAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
-		if _, ok := i["ip4-subnet"]; ok {
-			tmp["ip4_subnet"] = flattenSpamfilterBwlEntriesIp4Subnet(i["ip4-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip4-subnet"]; ok {
+			tmp["ip4_subnet"] = flattenSpamfilterBwlEntriesIp4Subnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
-		if _, ok := i["ip6-subnet"]; ok {
-			tmp["ip6_subnet"] = flattenSpamfilterBwlEntriesIp6Subnet(i["ip6-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip6-subnet"]; ok {
+			tmp["ip6_subnet"] = flattenSpamfilterBwlEntriesIp6Subnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenSpamfilterBwlEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenSpamfilterBwlEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
-		if _, ok := i["email-pattern"]; ok {
-			tmp["email_pattern"] = flattenSpamfilterBwlEntriesEmailPattern(i["email-pattern"], d, pre_append, sv)
+		if cur_v, ok := i["email-pattern"]; ok {
+			tmp["email_pattern"] = flattenSpamfilterBwlEntriesEmailPattern(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -219,33 +219,33 @@ func flattenSystemSessionTtlPort(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSessionTtlPortId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSessionTtlPortId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenSystemSessionTtlPortProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemSessionTtlPortProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
-		if _, ok := i["start-port"]; ok {
-			tmp["start_port"] = flattenSystemSessionTtlPortStartPort(i["start-port"], d, pre_append, sv)
+		if cur_v, ok := i["start-port"]; ok {
+			tmp["start_port"] = flattenSystemSessionTtlPortStartPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
-		if _, ok := i["end-port"]; ok {
-			tmp["end_port"] = flattenSystemSessionTtlPortEndPort(i["end-port"], d, pre_append, sv)
+		if cur_v, ok := i["end-port"]; ok {
+			tmp["end_port"] = flattenSystemSessionTtlPortEndPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeout"
-		if _, ok := i["timeout"]; ok {
-			tmp["timeout"] = flattenSystemSessionTtlPortTimeout(i["timeout"], d, pre_append, sv)
+		if cur_v, ok := i["timeout"]; ok {
+			tmp["timeout"] = flattenSystemSessionTtlPortTimeout(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "refresh_direction"
-		if _, ok := i["refresh-direction"]; ok {
-			tmp["refresh_direction"] = flattenSystemSessionTtlPortRefreshDirection(i["refresh-direction"], d, pre_append, sv)
+		if cur_v, ok := i["refresh-direction"]; ok {
+			tmp["refresh_direction"] = flattenSystemSessionTtlPortRefreshDirection(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -347,18 +347,18 @@ func flattenIpsRuleMetadata(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenIpsRuleMetadataId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenIpsRuleMetadataId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
-		if _, ok := i["metaid"]; ok {
-			tmp["metaid"] = flattenIpsRuleMetadataMetaid(i["metaid"], d, pre_append, sv)
+		if cur_v, ok := i["metaid"]; ok {
+			tmp["metaid"] = flattenIpsRuleMetadataMetaid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
-		if _, ok := i["valueid"]; ok {
-			tmp["valueid"] = flattenIpsRuleMetadataValueid(i["valueid"], d, pre_append, sv)
+		if cur_v, ok := i["valueid"]; ok {
+			tmp["valueid"] = flattenIpsRuleMetadataValueid(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

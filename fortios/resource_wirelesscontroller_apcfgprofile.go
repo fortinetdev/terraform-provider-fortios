@@ -299,28 +299,28 @@ func flattenWirelessControllerApcfgProfileCommandList(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerApcfgProfileCommandListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerApcfgProfileCommandListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenWirelessControllerApcfgProfileCommandListType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenWirelessControllerApcfgProfileCommandListType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerApcfgProfileCommandListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerApcfgProfileCommandListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenWirelessControllerApcfgProfileCommandListValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenWirelessControllerApcfgProfileCommandListValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passwd_value"
-		if _, ok := i["passwd-value"]; ok {
-			tmp["passwd_value"] = flattenWirelessControllerApcfgProfileCommandListPasswdValue(i["passwd-value"], d, pre_append, sv)
+		if cur_v, ok := i["passwd-value"]; ok {
+			tmp["passwd_value"] = flattenWirelessControllerApcfgProfileCommandListPasswdValue(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["passwd_value"] = c

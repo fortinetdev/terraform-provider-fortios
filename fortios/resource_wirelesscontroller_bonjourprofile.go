@@ -253,28 +253,28 @@ func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy_id"
-		if _, ok := i["policy-id"]; ok {
-			tmp["policy_id"] = flattenWirelessControllerBonjourProfilePolicyListPolicyId(i["policy-id"], d, pre_append, sv)
+		if cur_v, ok := i["policy-id"]; ok {
+			tmp["policy_id"] = flattenWirelessControllerBonjourProfilePolicyListPolicyId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenWirelessControllerBonjourProfilePolicyListDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenWirelessControllerBonjourProfilePolicyListDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "from_vlan"
-		if _, ok := i["from-vlan"]; ok {
-			tmp["from_vlan"] = flattenWirelessControllerBonjourProfilePolicyListFromVlan(i["from-vlan"], d, pre_append, sv)
+		if cur_v, ok := i["from-vlan"]; ok {
+			tmp["from_vlan"] = flattenWirelessControllerBonjourProfilePolicyListFromVlan(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "to_vlan"
-		if _, ok := i["to-vlan"]; ok {
-			tmp["to_vlan"] = flattenWirelessControllerBonjourProfilePolicyListToVlan(i["to-vlan"], d, pre_append, sv)
+		if cur_v, ok := i["to-vlan"]; ok {
+			tmp["to_vlan"] = flattenWirelessControllerBonjourProfilePolicyListToVlan(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
-		if _, ok := i["services"]; ok {
-			tmp["services"] = flattenWirelessControllerBonjourProfilePolicyListServices(i["services"], d, pre_append, sv)
+		if cur_v, ok := i["services"]; ok {
+			tmp["services"] = flattenWirelessControllerBonjourProfilePolicyListServices(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

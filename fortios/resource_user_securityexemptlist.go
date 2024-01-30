@@ -285,28 +285,28 @@ func flattenUserSecurityExemptListRule(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserSecurityExemptListRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenUserSecurityExemptListRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenUserSecurityExemptListRuleSrcaddr(i["srcaddr"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr"]; ok {
+			tmp["srcaddr"] = flattenUserSecurityExemptListRuleSrcaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "devices"
-		if _, ok := i["devices"]; ok {
-			tmp["devices"] = flattenUserSecurityExemptListRuleDevices(i["devices"], d, pre_append, sv)
+		if cur_v, ok := i["devices"]; ok {
+			tmp["devices"] = flattenUserSecurityExemptListRuleDevices(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenUserSecurityExemptListRuleDstaddr(i["dstaddr"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr"]; ok {
+			tmp["dstaddr"] = flattenUserSecurityExemptListRuleDstaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := i["service"]; ok {
-			tmp["service"] = flattenUserSecurityExemptListRuleService(i["service"], d, pre_append, sv)
+		if cur_v, ok := i["service"]; ok {
+			tmp["service"] = flattenUserSecurityExemptListRuleService(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -347,8 +347,8 @@ func flattenUserSecurityExemptListRuleSrcaddr(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserSecurityExemptListRuleSrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserSecurityExemptListRuleSrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -389,8 +389,8 @@ func flattenUserSecurityExemptListRuleDevices(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserSecurityExemptListRuleDevicesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserSecurityExemptListRuleDevicesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -431,8 +431,8 @@ func flattenUserSecurityExemptListRuleDstaddr(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserSecurityExemptListRuleDstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserSecurityExemptListRuleDstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -473,8 +473,8 @@ func flattenUserSecurityExemptListRuleService(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserSecurityExemptListRuleServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserSecurityExemptListRuleServiceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

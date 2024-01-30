@@ -268,28 +268,28 @@ func flattenSystemSpeedTestServerHost(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSpeedTestServerHostId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSpeedTestServerHostId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemSpeedTestServerHostIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemSpeedTestServerHostIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenSystemSpeedTestServerHostPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenSystemSpeedTestServerHostPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
-		if _, ok := i["user"]; ok {
-			tmp["user"] = flattenSystemSpeedTestServerHostUser(i["user"], d, pre_append, sv)
+		if cur_v, ok := i["user"]; ok {
+			tmp["user"] = flattenSystemSpeedTestServerHostUser(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemSpeedTestServerHostPassword(i["password"], d, pre_append, sv)
+		if cur_v, ok := i["password"]; ok {
+			tmp["password"] = flattenSystemSpeedTestServerHostPassword(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -297,18 +297,18 @@ func flattenSystemSpeedTestServerHost(v interface{}, d *schema.ResourceData, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "longitude"
-		if _, ok := i["longitude"]; ok {
-			tmp["longitude"] = flattenSystemSpeedTestServerHostLongitude(i["longitude"], d, pre_append, sv)
+		if cur_v, ok := i["longitude"]; ok {
+			tmp["longitude"] = flattenSystemSpeedTestServerHostLongitude(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latitude"
-		if _, ok := i["latitude"]; ok {
-			tmp["latitude"] = flattenSystemSpeedTestServerHostLatitude(i["latitude"], d, pre_append, sv)
+		if cur_v, ok := i["latitude"]; ok {
+			tmp["latitude"] = flattenSystemSpeedTestServerHostLatitude(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
-		if _, ok := i["distance"]; ok {
-			tmp["distance"] = flattenSystemSpeedTestServerHostDistance(i["distance"], d, pre_append, sv)
+		if cur_v, ok := i["distance"]; ok {
+			tmp["distance"] = flattenSystemSpeedTestServerHostDistance(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

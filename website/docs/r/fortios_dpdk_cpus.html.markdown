@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `rx_cpus` - CPUs enabled to run DPDK RX engines.
 * `vnp_cpus` - CPUs enabled to run DPDK VNP engines.
+* `vnpsp_cpus` - CPUs enabled to run DPDK VNP slow path.
 * `ips_cpus` - CPUs enabled to run DPDK IPS engines.
 * `tx_cpus` - CPUs enabled to run DPDK TX engines.
 * `isolated_cpus` - CPUs isolated to run only the DPDK engines with the exception of processes that have affinity explicitly set by either a user configuration or by their implementation.

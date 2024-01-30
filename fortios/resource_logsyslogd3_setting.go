@@ -323,18 +323,18 @@ func flattenLogSyslogd3SettingCustomFieldName(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogSyslogd3SettingCustomFieldNameId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogSyslogd3SettingCustomFieldNameId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenLogSyslogd3SettingCustomFieldNameName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenLogSyslogd3SettingCustomFieldNameName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
-		if _, ok := i["custom"]; ok {
-			tmp["custom"] = flattenLogSyslogd3SettingCustomFieldNameCustom(i["custom"], d, pre_append, sv)
+		if cur_v, ok := i["custom"]; ok {
+			tmp["custom"] = flattenLogSyslogd3SettingCustomFieldNameCustom(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

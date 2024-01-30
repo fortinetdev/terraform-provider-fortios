@@ -124,6 +124,7 @@ The following arguments are supported:
 * `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `voip_profile` - Name of an existing VoIP profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
+* `diameter_filter_profile` - Name of an existing Diameter filter profile.
 * `virtual_patch_profile` - Name of an existing virtual-patch profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.

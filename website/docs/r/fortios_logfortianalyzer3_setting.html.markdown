@@ -42,6 +42,7 @@ The following arguments are supported:
 * `fallback_to_primary` - Enable/disable this FortiGate unit to fallback to the primary FortiAnalyzer when it is available. Valid values: `enable`, `disable`.
 * `certificate_verification` - Enable/disable identity verification of FortiAnalyzer by use of certificate. Valid values: `enable`, `disable`.
 * `serial` - Serial numbers of the FortiAnalyzer. The structure of `serial` block is documented below.
+* `server_cert_ca` - Mandatory CA on FortiGate in certificate chain of server.
 * `preshared_key` - Preshared-key used for auto-authorization on FortiAnalyzer.
 * `access_config` - Enable/disable FortiAnalyzer access to configuration and data. Valid values: `enable`, `disable`.
 * `hmac_algorithm` - FortiAnalyzer IPsec tunnel HMAC algorithm.

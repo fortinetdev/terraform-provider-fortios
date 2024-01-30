@@ -732,6 +732,41 @@ func resourceFirewallVip() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"one_click_gslb_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gslb_hostname": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"gslb_domain_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"gslb_public_ips": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"index": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -920,8 +955,8 @@ func flattenFirewallVipSrcFilter(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := i["range"]; ok {
-			tmp["range"] = flattenFirewallVipSrcFilterRange(i["range"], d, pre_append, sv)
+		if cur_v, ok := i["range"]; ok {
+			tmp["range"] = flattenFirewallVipSrcFilterRange(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -962,8 +997,8 @@ func flattenFirewallVipService(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallVipServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallVipServiceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1008,8 +1043,8 @@ func flattenFirewallVipExtaddr(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallVipExtaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallVipExtaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1155,8 +1190,8 @@ func flattenFirewallVipMappedip(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := i["range"]; ok {
-			tmp["range"] = flattenFirewallVipMappedipRange(i["range"], d, pre_append, sv)
+		if cur_v, ok := i["range"]; ok {
+			tmp["range"] = flattenFirewallVipMappedipRange(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1249,8 +1284,8 @@ func flattenFirewallVipSrcintfFilter(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenFirewallVipSrcintfFilterInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenFirewallVipSrcintfFilterInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1295,68 +1330,68 @@ func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallVipRealserversId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallVipRealserversId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenFirewallVipRealserversType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenFirewallVipRealserversType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenFirewallVipRealserversAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenFirewallVipRealserversAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallVipRealserversIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallVipRealserversIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenFirewallVipRealserversPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenFirewallVipRealserversPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenFirewallVipRealserversStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenFirewallVipRealserversStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenFirewallVipRealserversWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenFirewallVipRealserversWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
-		if _, ok := i["holddown-interval"]; ok {
-			tmp["holddown_interval"] = flattenFirewallVipRealserversHolddownInterval(i["holddown-interval"], d, pre_append, sv)
+		if cur_v, ok := i["holddown-interval"]; ok {
+			tmp["holddown_interval"] = flattenFirewallVipRealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "healthcheck"
-		if _, ok := i["healthcheck"]; ok {
-			tmp["healthcheck"] = flattenFirewallVipRealserversHealthcheck(i["healthcheck"], d, pre_append, sv)
+		if cur_v, ok := i["healthcheck"]; ok {
+			tmp["healthcheck"] = flattenFirewallVipRealserversHealthcheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
-		if _, ok := i["http-host"]; ok {
-			tmp["http_host"] = flattenFirewallVipRealserversHttpHost(i["http-host"], d, pre_append, sv)
+		if cur_v, ok := i["http-host"]; ok {
+			tmp["http_host"] = flattenFirewallVipRealserversHttpHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
-		if _, ok := i["translate-host"]; ok {
-			tmp["translate_host"] = flattenFirewallVipRealserversTranslateHost(i["translate-host"], d, pre_append, sv)
+		if cur_v, ok := i["translate-host"]; ok {
+			tmp["translate_host"] = flattenFirewallVipRealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
-		if _, ok := i["max-connections"]; ok {
-			tmp["max_connections"] = flattenFirewallVipRealserversMaxConnections(i["max-connections"], d, pre_append, sv)
+		if cur_v, ok := i["max-connections"]; ok {
+			tmp["max_connections"] = flattenFirewallVipRealserversMaxConnections(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
-		if _, ok := i["monitor"]; ok {
-			v := flattenFirewallVipRealserversMonitor(i["monitor"], d, pre_append, sv)
+		if cur_v, ok := i["monitor"]; ok {
+			v := flattenFirewallVipRealserversMonitor(cur_v, d, pre_append, sv)
 			vx := ""
 			bstring := false
 			new_version_map := map[string][]string{
@@ -1387,8 +1422,8 @@ func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
-		if _, ok := i["client-ip"]; ok {
-			tmp["client_ip"] = flattenFirewallVipRealserversClientIp(i["client-ip"], d, pre_append, sv)
+		if cur_v, ok := i["client-ip"]; ok {
+			tmp["client_ip"] = flattenFirewallVipRealserversClientIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1565,18 +1600,18 @@ func flattenFirewallVipSslCipherSuites(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenFirewallVipSslCipherSuitesPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenFirewallVipSslCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
-		if _, ok := i["cipher"]; ok {
-			tmp["cipher"] = flattenFirewallVipSslCipherSuitesCipher(i["cipher"], d, pre_append, sv)
+		if cur_v, ok := i["cipher"]; ok {
+			tmp["cipher"] = flattenFirewallVipSslCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
-		if _, ok := i["versions"]; ok {
-			tmp["versions"] = flattenFirewallVipSslCipherSuitesVersions(i["versions"], d, pre_append, sv)
+		if cur_v, ok := i["versions"]; ok {
+			tmp["versions"] = flattenFirewallVipSslCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1629,18 +1664,18 @@ func flattenFirewallVipSslServerCipherSuites(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenFirewallVipSslServerCipherSuitesPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenFirewallVipSslServerCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
-		if _, ok := i["cipher"]; ok {
-			tmp["cipher"] = flattenFirewallVipSslServerCipherSuitesCipher(i["cipher"], d, pre_append, sv)
+		if cur_v, ok := i["cipher"]; ok {
+			tmp["cipher"] = flattenFirewallVipSslServerCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
-		if _, ok := i["versions"]; ok {
-			tmp["versions"] = flattenFirewallVipSslServerCipherSuitesVersions(i["versions"], d, pre_append, sv)
+		if cur_v, ok := i["versions"]; ok {
+			tmp["versions"] = flattenFirewallVipSslServerCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1801,8 +1836,8 @@ func flattenFirewallVipMonitor(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallVipMonitorName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallVipMonitorName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1831,6 +1866,69 @@ func flattenFirewallVipIpv6Mappedip(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallVipIpv6Mappedport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipOneClickGslbServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipGslbHostname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipGslbDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipGslbPublicIps(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenFirewallVipGslbPublicIpsIndex(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallVipGslbPublicIpsIp(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "index", d)
+	return result
+}
+
+func flattenFirewallVipGslbPublicIpsIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipGslbPublicIpsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2225,9 +2323,42 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if err = d.Set("ssl_certificate", flattenFirewallVipSslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)); err != nil {
-		if !fortiAPIPatch(o["ssl-certificate"]) {
-			return fmt.Errorf("Error reading ssl_certificate: %v", err)
+	{
+		v := flattenFirewallVipSslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)
+		vx := ""
+		bstring := false
+		new_version_map := map[string][]string{
+			">=": []string{"7.4.2"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["name"]; ok {
+						if xv, ok := i["name"].(string); ok {
+							vx += xv
+							if k < len(l)-1 {
+								vx += ", "
+							}
+						}
+					}
+				}
+			}
+			bstring = true
+		}
+		if bstring == true {
+			if err = d.Set("ssl_certificate", vx); err != nil {
+				if !fortiAPIPatch(o["ssl-certificate"]) {
+					return fmt.Errorf("Error reading ssl_certificate: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("ssl_certificate", v); err != nil {
+				if !fortiAPIPatch(o["ssl-certificate"]) {
+					return fmt.Errorf("Error reading ssl_certificate: %v", err)
+				}
+			}
 		}
 	}
 
@@ -2486,6 +2617,40 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("ipv6_mappedport", flattenFirewallVipIpv6Mappedport(o["ipv6-mappedport"], d, "ipv6_mappedport", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv6-mappedport"]) {
 			return fmt.Errorf("Error reading ipv6_mappedport: %v", err)
+		}
+	}
+
+	if err = d.Set("one_click_gslb_server", flattenFirewallVipOneClickGslbServer(o["one-click-gslb-server"], d, "one_click_gslb_server", sv)); err != nil {
+		if !fortiAPIPatch(o["one-click-gslb-server"]) {
+			return fmt.Errorf("Error reading one_click_gslb_server: %v", err)
+		}
+	}
+
+	if err = d.Set("gslb_hostname", flattenFirewallVipGslbHostname(o["gslb-hostname"], d, "gslb_hostname", sv)); err != nil {
+		if !fortiAPIPatch(o["gslb-hostname"]) {
+			return fmt.Errorf("Error reading gslb_hostname: %v", err)
+		}
+	}
+
+	if err = d.Set("gslb_domain_name", flattenFirewallVipGslbDomainName(o["gslb-domain-name"], d, "gslb_domain_name", sv)); err != nil {
+		if !fortiAPIPatch(o["gslb-domain-name"]) {
+			return fmt.Errorf("Error reading gslb_domain_name: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("gslb_public_ips", flattenFirewallVipGslbPublicIps(o["gslb-public-ips"], d, "gslb_public_ips", sv)); err != nil {
+			if !fortiAPIPatch(o["gslb-public-ips"]) {
+				return fmt.Errorf("Error reading gslb_public_ips: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gslb_public_ips"); ok {
+			if err = d.Set("gslb_public_ips", flattenFirewallVipGslbPublicIps(o["gslb-public-ips"], d, "gslb_public_ips", sv)); err != nil {
+				if !fortiAPIPatch(o["gslb-public-ips"]) {
+					return fmt.Errorf("Error reading gslb_public_ips: %v", err)
+				}
+			}
 		}
 	}
 
@@ -3341,6 +3506,58 @@ func expandFirewallVipIpv6Mappedport(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandFirewallVipOneClickGslbServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipGslbHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipGslbDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipGslbPublicIps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["index"], _ = expandFirewallVipGslbPublicIpsIndex(d, i["index"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ip"], _ = expandFirewallVipGslbPublicIpsIp(d, i["ip"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallVipGslbPublicIpsIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipGslbPublicIpsIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -3817,7 +4034,25 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["ssl-certificate"] = t
+			new_version_map := map[string][]string{
+				">=": []string{"7.4.2"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				vx := fmt.Sprintf("%v", t)
+				vxx := strings.Split(vx, ", ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["name"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["ssl-certificate"] = tmps
+			} else {
+				obj["ssl-certificate"] = t
+			}
 		}
 	}
 
@@ -4160,6 +4395,42 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["ipv6-mappedport"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("one_click_gslb_server"); ok {
+		t, err := expandFirewallVipOneClickGslbServer(d, v, "one_click_gslb_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["one-click-gslb-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gslb_hostname"); ok {
+		t, err := expandFirewallVipGslbHostname(d, v, "gslb_hostname", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gslb-hostname"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gslb_domain_name"); ok {
+		t, err := expandFirewallVipGslbDomainName(d, v, "gslb_domain_name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gslb-domain-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gslb_public_ips"); ok || d.HasChange("gslb_public_ips") {
+		t, err := expandFirewallVipGslbPublicIps(d, v, "gslb_public_ips", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gslb-public-ips"] = t
 		}
 	}
 

@@ -40,6 +40,8 @@ The `fail_alert_interfaces` block supports:
 The `zone` block supports:
 
 * `name` - Zone name.
+* `advpn_select` - Enable/disable selection of ADVPN based on SDWAN information. Valid values: `enable`, `disable`.
+* `advpn_health_check` - Health check for ADVPN local overlay link quality.
 * `service_sla_tie_break` - Method of selecting member if more than one meets the SLA.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA when the neighbor is preferred.
 
@@ -61,6 +63,7 @@ The `members` block supports:
 * `ingress_spillover_threshold` - Ingress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
 * `volume_ratio` - Measured volume ratio (this value / sum of all values = percentage of link volume, 1 - 255).
 * `status` - Enable/disable this interface in the SD-WAN. Valid values: `disable`, `enable`.
+* `transport_group` - Measured transport group (0 - 255).
 * `comment` - Comments.
 
 The `health_check` block supports:
@@ -157,6 +160,7 @@ The `service` block supports:
 * `zone_mode` - Enable/disable zone mode. Valid values: `enable`, `disable`.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA.
 * `hash_mode` - Hash algorithm for selected priority members for load balance mode. Valid values: `round-robin`, `source-ip-based`, `source-dest-ip-based`, `inbandwidth`, `outbandwidth`, `bibandwidth`.
+* `shortcut_priority` - High priority of ADVPN shortcut for this service. Valid values: `enable`, `disable`, `auto`.
 * `role` - Service role to work with neighbor. Valid values: `standalone`, `primary`, `secondary`.
 * `standalone_action` - Enable/disable service when selected neighbor role is standalone while service role is not standalone. Valid values: `enable`, `disable`.
 * `quality_link` - Quality grade.

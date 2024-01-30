@@ -831,8 +831,8 @@ func flattenFirewallPolicy6Srcintf(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6SrcintfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6SrcintfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -873,8 +873,8 @@ func flattenFirewallPolicy6Dstintf(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6DstintfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6DstintfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -915,8 +915,8 @@ func flattenFirewallPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6SrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6SrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -957,8 +957,8 @@ func flattenFirewallPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6DstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6DstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1023,8 +1023,8 @@ func flattenFirewallPolicy6Service(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6ServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6ServiceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1209,8 +1209,8 @@ func flattenFirewallPolicy6Application(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallPolicy6ApplicationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallPolicy6ApplicationId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1251,8 +1251,8 @@ func flattenFirewallPolicy6AppCategory(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallPolicy6AppCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallPolicy6AppCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1293,8 +1293,8 @@ func flattenFirewallPolicy6UrlCategory(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallPolicy6UrlCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallPolicy6UrlCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1335,8 +1335,8 @@ func flattenFirewallPolicy6AppGroup(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6AppGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6AppGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1389,8 +1389,8 @@ func flattenFirewallPolicy6Poolname(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6PoolnameName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6PoolnameName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1499,8 +1499,8 @@ func flattenFirewallPolicy6CustomLogFields(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
-		if _, ok := i["field-id"]; ok {
-			tmp["field_id"] = flattenFirewallPolicy6CustomLogFieldsFieldId(i["field-id"], d, pre_append, sv)
+		if cur_v, ok := i["field-id"]; ok {
+			tmp["field_id"] = flattenFirewallPolicy6CustomLogFieldsFieldId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1557,8 +1557,8 @@ func flattenFirewallPolicy6Groups(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6GroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6GroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1599,8 +1599,8 @@ func flattenFirewallPolicy6Users(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6UsersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6UsersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1641,8 +1641,8 @@ func flattenFirewallPolicy6Devices(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6DevicesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6DevicesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1695,8 +1695,8 @@ func flattenFirewallPolicy6SslMirrorIntf(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6SslMirrorIntfName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6SslMirrorIntfName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1745,8 +1745,8 @@ func flattenFirewallPolicy6FssoGroups(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallPolicy6FssoGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicy6FssoGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -150,6 +150,11 @@ func resourceWebfilterProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"web_flow_log_encoding": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ovrd_perm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -955,38 +960,38 @@ func flattenWebfilterProfileFileFilterEntries(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
-		if _, ok := i["filter"]; ok {
-			tmp["filter"] = flattenWebfilterProfileFileFilterEntriesFilter(i["filter"], d, pre_append, sv)
+		if cur_v, ok := i["filter"]; ok {
+			tmp["filter"] = flattenWebfilterProfileFileFilterEntriesFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWebfilterProfileFileFilterEntriesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWebfilterProfileFileFilterEntriesComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenWebfilterProfileFileFilterEntriesProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenWebfilterProfileFileFilterEntriesProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebfilterProfileFileFilterEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebfilterProfileFileFilterEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenWebfilterProfileFileFilterEntriesDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenWebfilterProfileFileFilterEntriesDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
-		if _, ok := i["password-protected"]; ok {
-			tmp["password_protected"] = flattenWebfilterProfileFileFilterEntriesPasswordProtected(i["password-protected"], d, pre_append, sv)
+		if cur_v, ok := i["password-protected"]; ok {
+			tmp["password_protected"] = flattenWebfilterProfileFileFilterEntriesPasswordProtected(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenWebfilterProfileFileFilterEntriesFileType(i["file-type"], d, pre_append, sv)
+		if cur_v, ok := i["file-type"]; ok {
+			tmp["file_type"] = flattenWebfilterProfileFileFilterEntriesFileType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1047,8 +1052,8 @@ func flattenWebfilterProfileFileFilterEntriesFileType(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterProfileFileFilterEntriesFileTypeName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterProfileFileFilterEntriesFileTypeName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1065,6 +1070,10 @@ func flattenWebfilterProfileFileFilterEntriesFileTypeName(v interface{}, d *sche
 }
 
 func flattenWebfilterProfileHttpsReplacemsg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileWebFlowLogEncoding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1178,8 +1187,8 @@ func flattenWebfilterProfileOverrideOvrdUserGroup(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterProfileOverrideOvrdUserGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterProfileOverrideOvrdUserGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1220,8 +1229,8 @@ func flattenWebfilterProfileOverrideProfile(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterProfileOverrideProfileName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterProfileOverrideProfileName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1388,8 +1397,8 @@ func flattenWebfilterProfileWebKeywordMatch(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWebfilterProfileWebKeywordMatchPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWebfilterProfileWebKeywordMatchPattern(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1434,18 +1443,18 @@ func flattenWebfilterProfileYoutubeChannelFilter(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWebfilterProfileYoutubeChannelFilterId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWebfilterProfileYoutubeChannelFilterId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
-		if _, ok := i["channel-id"]; ok {
-			tmp["channel_id"] = flattenWebfilterProfileYoutubeChannelFilterChannelId(i["channel-id"], d, pre_append, sv)
+		if cur_v, ok := i["channel-id"]; ok {
+			tmp["channel_id"] = flattenWebfilterProfileYoutubeChannelFilterChannelId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWebfilterProfileYoutubeChannelFilterComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWebfilterProfileYoutubeChannelFilterComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1569,48 +1578,48 @@ func flattenWebfilterProfileFtgdWfFilters(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWebfilterProfileFtgdWfFiltersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWebfilterProfileFtgdWfFiltersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenWebfilterProfileFtgdWfFiltersCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenWebfilterProfileFtgdWfFiltersCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebfilterProfileFtgdWfFiltersAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebfilterProfileFtgdWfFiltersAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "warn_duration"
-		if _, ok := i["warn-duration"]; ok {
-			tmp["warn_duration"] = flattenWebfilterProfileFtgdWfFiltersWarnDuration(i["warn-duration"], d, pre_append, sv)
+		if cur_v, ok := i["warn-duration"]; ok {
+			tmp["warn_duration"] = flattenWebfilterProfileFtgdWfFiltersWarnDuration(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_usr_grp"
-		if _, ok := i["auth-usr-grp"]; ok {
-			tmp["auth_usr_grp"] = flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(i["auth-usr-grp"], d, pre_append, sv)
+		if cur_v, ok := i["auth-usr-grp"]; ok {
+			tmp["auth_usr_grp"] = flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenWebfilterProfileFtgdWfFiltersLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenWebfilterProfileFtgdWfFiltersLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_replacemsg"
-		if _, ok := i["override-replacemsg"]; ok {
-			tmp["override_replacemsg"] = flattenWebfilterProfileFtgdWfFiltersOverrideReplacemsg(i["override-replacemsg"], d, pre_append, sv)
+		if cur_v, ok := i["override-replacemsg"]; ok {
+			tmp["override_replacemsg"] = flattenWebfilterProfileFtgdWfFiltersOverrideReplacemsg(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "warning_prompt"
-		if _, ok := i["warning-prompt"]; ok {
-			tmp["warning_prompt"] = flattenWebfilterProfileFtgdWfFiltersWarningPrompt(i["warning-prompt"], d, pre_append, sv)
+		if cur_v, ok := i["warning-prompt"]; ok {
+			tmp["warning_prompt"] = flattenWebfilterProfileFtgdWfFiltersWarningPrompt(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "warning_duration_type"
-		if _, ok := i["warning-duration-type"]; ok {
-			tmp["warning_duration_type"] = flattenWebfilterProfileFtgdWfFiltersWarningDurationType(i["warning-duration-type"], d, pre_append, sv)
+		if cur_v, ok := i["warning-duration-type"]; ok {
+			tmp["warning_duration_type"] = flattenWebfilterProfileFtgdWfFiltersWarningDurationType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1663,8 +1672,8 @@ func flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterProfileFtgdWfFiltersAuthUsrGrpName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterProfileFtgdWfFiltersAuthUsrGrpName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1721,38 +1730,38 @@ func flattenWebfilterProfileFtgdWfQuota(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWebfilterProfileFtgdWfQuotaId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWebfilterProfileFtgdWfQuotaId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenWebfilterProfileFtgdWfQuotaCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenWebfilterProfileFtgdWfQuotaCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenWebfilterProfileFtgdWfQuotaType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenWebfilterProfileFtgdWfQuotaType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "unit"
-		if _, ok := i["unit"]; ok {
-			tmp["unit"] = flattenWebfilterProfileFtgdWfQuotaUnit(i["unit"], d, pre_append, sv)
+		if cur_v, ok := i["unit"]; ok {
+			tmp["unit"] = flattenWebfilterProfileFtgdWfQuotaUnit(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenWebfilterProfileFtgdWfQuotaValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenWebfilterProfileFtgdWfQuotaValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "duration"
-		if _, ok := i["duration"]; ok {
-			tmp["duration"] = flattenWebfilterProfileFtgdWfQuotaDuration(i["duration"], d, pre_append, sv)
+		if cur_v, ok := i["duration"]; ok {
+			tmp["duration"] = flattenWebfilterProfileFtgdWfQuotaDuration(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_replacemsg"
-		if _, ok := i["override-replacemsg"]; ok {
-			tmp["override_replacemsg"] = flattenWebfilterProfileFtgdWfQuotaOverrideReplacemsg(i["override-replacemsg"], d, pre_append, sv)
+		if cur_v, ok := i["override-replacemsg"]; ok {
+			tmp["override_replacemsg"] = flattenWebfilterProfileFtgdWfQuotaOverrideReplacemsg(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1937,18 +1946,18 @@ func flattenWebfilterProfileAntiphishInspectionEntries(v interface{}, d *schema.
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterProfileAntiphishInspectionEntriesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterProfileAntiphishInspectionEntriesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
-		if _, ok := i["fortiguard-category"]; ok {
-			tmp["fortiguard_category"] = flattenWebfilterProfileAntiphishInspectionEntriesFortiguardCategory(i["fortiguard-category"], d, pre_append, sv)
+		if cur_v, ok := i["fortiguard-category"]; ok {
+			tmp["fortiguard_category"] = flattenWebfilterProfileAntiphishInspectionEntriesFortiguardCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebfilterProfileAntiphishInspectionEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebfilterProfileAntiphishInspectionEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1997,18 +2006,18 @@ func flattenWebfilterProfileAntiphishCustomPatterns(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWebfilterProfileAntiphishCustomPatternsPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenWebfilterProfileAntiphishCustomPatternsPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenWebfilterProfileAntiphishCustomPatternsCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenWebfilterProfileAntiphishCustomPatternsCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenWebfilterProfileAntiphishCustomPatternsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenWebfilterProfileAntiphishCustomPatternsType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2065,8 +2074,8 @@ func flattenWebfilterProfileWispServers(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterProfileWispServersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterProfileWispServersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2226,6 +2235,12 @@ func refreshObjectWebfilterProfile(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("https_replacemsg", flattenWebfilterProfileHttpsReplacemsg(o["https-replacemsg"], d, "https_replacemsg", sv)); err != nil {
 		if !fortiAPIPatch(o["https-replacemsg"]) {
 			return fmt.Errorf("Error reading https_replacemsg: %v", err)
+		}
+	}
+
+	if err = d.Set("web_flow_log_encoding", flattenWebfilterProfileWebFlowLogEncoding(o["web-flow-log-encoding"], d, "web_flow_log_encoding", sv)); err != nil {
+		if !fortiAPIPatch(o["web-flow-log-encoding"]) {
+			return fmt.Errorf("Error reading web_flow_log_encoding: %v", err)
 		}
 	}
 
@@ -2658,6 +2673,10 @@ func expandWebfilterProfileFileFilterEntriesFileTypeName(d *schema.ResourceData,
 }
 
 func expandWebfilterProfileHttpsReplacemsg(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileWebFlowLogEncoding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3680,6 +3699,15 @@ func getObjectWebfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["https-replacemsg"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("web_flow_log_encoding"); ok {
+		t, err := expandWebfilterProfileWebFlowLogEncoding(d, v, "web_flow_log_encoding", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["web-flow-log-encoding"] = t
 		}
 	}
 

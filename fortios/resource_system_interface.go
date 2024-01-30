@@ -1926,6 +1926,11 @@ func resourceSystemInterface() *schema.Resource {
 										Optional: true,
 										Computed: true,
 									},
+									"ignore_default_route": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
@@ -2139,28 +2144,28 @@ func flattenSystemInterfaceClientOptions(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemInterfaceClientOptionsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemInterfaceClientOptionsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
-		if _, ok := i["code"]; ok {
-			tmp["code"] = flattenSystemInterfaceClientOptionsCode(i["code"], d, pre_append, sv)
+		if cur_v, ok := i["code"]; ok {
+			tmp["code"] = flattenSystemInterfaceClientOptionsCode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemInterfaceClientOptionsType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSystemInterfaceClientOptionsType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSystemInterfaceClientOptionsValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSystemInterfaceClientOptionsValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemInterfaceClientOptionsIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemInterfaceClientOptionsIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2338,8 +2343,8 @@ func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceFailAlertInterfacesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemInterfaceFailAlertInterfacesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2761,8 +2766,8 @@ func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemInterfaceMemberInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemInterfaceMemberInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2859,8 +2864,8 @@ func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceManagedDeviceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemInterfaceManagedDeviceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2961,8 +2966,8 @@ func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceSecurityGroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemInterfaceSecurityGroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3087,73 +3092,73 @@ func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
-		if _, ok := i["vrid"]; ok {
-			tmp["vrid"] = flattenSystemInterfaceVrrpVrid(i["vrid"], d, pre_append, sv)
+		if cur_v, ok := i["vrid"]; ok {
+			tmp["vrid"] = flattenSystemInterfaceVrrpVrid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
-		if _, ok := i["version"]; ok {
-			tmp["version"] = flattenSystemInterfaceVrrpVersion(i["version"], d, pre_append, sv)
+		if cur_v, ok := i["version"]; ok {
+			tmp["version"] = flattenSystemInterfaceVrrpVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrgrp"
-		if _, ok := i["vrgrp"]; ok {
-			tmp["vrgrp"] = flattenSystemInterfaceVrrpVrgrp(i["vrgrp"], d, pre_append, sv)
+		if cur_v, ok := i["vrgrp"]; ok {
+			tmp["vrgrp"] = flattenSystemInterfaceVrrpVrgrp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrip"
-		if _, ok := i["vrip"]; ok {
-			tmp["vrip"] = flattenSystemInterfaceVrrpVrip(i["vrip"], d, pre_append, sv)
+		if cur_v, ok := i["vrip"]; ok {
+			tmp["vrip"] = flattenSystemInterfaceVrrpVrip(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemInterfaceVrrpPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenSystemInterfaceVrrpPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_interval"
-		if _, ok := i["adv-interval"]; ok {
-			tmp["adv_interval"] = flattenSystemInterfaceVrrpAdvInterval(i["adv-interval"], d, pre_append, sv)
+		if cur_v, ok := i["adv-interval"]; ok {
+			tmp["adv_interval"] = flattenSystemInterfaceVrrpAdvInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_time"
-		if _, ok := i["start-time"]; ok {
-			tmp["start_time"] = flattenSystemInterfaceVrrpStartTime(i["start-time"], d, pre_append, sv)
+		if cur_v, ok := i["start-time"]; ok {
+			tmp["start_time"] = flattenSystemInterfaceVrrpStartTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preempt"
-		if _, ok := i["preempt"]; ok {
-			tmp["preempt"] = flattenSystemInterfaceVrrpPreempt(i["preempt"], d, pre_append, sv)
+		if cur_v, ok := i["preempt"]; ok {
+			tmp["preempt"] = flattenSystemInterfaceVrrpPreempt(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_mode"
-		if _, ok := i["accept-mode"]; ok {
-			tmp["accept_mode"] = flattenSystemInterfaceVrrpAcceptMode(i["accept-mode"], d, pre_append, sv)
+		if cur_v, ok := i["accept-mode"]; ok {
+			tmp["accept_mode"] = flattenSystemInterfaceVrrpAcceptMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst"
-		if _, ok := i["vrdst"]; ok {
-			tmp["vrdst"] = flattenSystemInterfaceVrrpVrdst(i["vrdst"], d, pre_append, sv)
+		if cur_v, ok := i["vrdst"]; ok {
+			tmp["vrdst"] = flattenSystemInterfaceVrrpVrdst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst_priority"
-		if _, ok := i["vrdst-priority"]; ok {
-			tmp["vrdst_priority"] = flattenSystemInterfaceVrrpVrdstPriority(i["vrdst-priority"], d, pre_append, sv)
+		if cur_v, ok := i["vrdst-priority"]; ok {
+			tmp["vrdst_priority"] = flattenSystemInterfaceVrrpVrdstPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
-		if _, ok := i["ignore-default-route"]; ok {
-			tmp["ignore_default_route"] = flattenSystemInterfaceVrrpIgnoreDefaultRoute(i["ignore-default-route"], d, pre_append, sv)
+		if cur_v, ok := i["ignore-default-route"]; ok {
+			tmp["ignore_default_route"] = flattenSystemInterfaceVrrpIgnoreDefaultRoute(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemInterfaceVrrpStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemInterfaceVrrpStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy_arp"
-		if _, ok := i["proxy-arp"]; ok {
-			tmp["proxy_arp"] = flattenSystemInterfaceVrrpProxyArp(i["proxy-arp"], d, pre_append, sv)
+		if cur_v, ok := i["proxy-arp"]; ok {
+			tmp["proxy_arp"] = flattenSystemInterfaceVrrpProxyArp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3242,13 +3247,13 @@ func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemInterfaceVrrpProxyArpId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemInterfaceVrrpProxyArpId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemInterfaceVrrpProxyArpIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemInterfaceVrrpProxyArpIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3305,48 +3310,48 @@ func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemInterfaceSecondaryipId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemInterfaceSecondaryipId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemInterfaceSecondaryipIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemInterfaceSecondaryipIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "secip_relay_ip"
-		if _, ok := i["secip-relay-ip"]; ok {
-			tmp["secip_relay_ip"] = flattenSystemInterfaceSecondaryipSecipRelayIp(i["secip-relay-ip"], d, pre_append, sv)
+		if cur_v, ok := i["secip-relay-ip"]; ok {
+			tmp["secip_relay_ip"] = flattenSystemInterfaceSecondaryipSecipRelayIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowaccess"
-		if _, ok := i["allowaccess"]; ok {
-			tmp["allowaccess"] = flattenSystemInterfaceSecondaryipAllowaccess(i["allowaccess"], d, pre_append, sv)
+		if cur_v, ok := i["allowaccess"]; ok {
+			tmp["allowaccess"] = flattenSystemInterfaceSecondaryipAllowaccess(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gwdetect"
-		if _, ok := i["gwdetect"]; ok {
-			tmp["gwdetect"] = flattenSystemInterfaceSecondaryipGwdetect(i["gwdetect"], d, pre_append, sv)
+		if cur_v, ok := i["gwdetect"]; ok {
+			tmp["gwdetect"] = flattenSystemInterfaceSecondaryipGwdetect(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ping_serv_status"
-		if _, ok := i["ping-serv-status"]; ok {
-			tmp["ping_serv_status"] = flattenSystemInterfaceSecondaryipPingServStatus(i["ping-serv-status"], d, pre_append, sv)
+		if cur_v, ok := i["ping-serv-status"]; ok {
+			tmp["ping_serv_status"] = flattenSystemInterfaceSecondaryipPingServStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detectserver"
-		if _, ok := i["detectserver"]; ok {
-			tmp["detectserver"] = flattenSystemInterfaceSecondaryipDetectserver(i["detectserver"], d, pre_append, sv)
+		if cur_v, ok := i["detectserver"]; ok {
+			tmp["detectserver"] = flattenSystemInterfaceSecondaryipDetectserver(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detectprotocol"
-		if _, ok := i["detectprotocol"]; ok {
-			tmp["detectprotocol"] = flattenSystemInterfaceSecondaryipDetectprotocol(i["detectprotocol"], d, pre_append, sv)
+		if cur_v, ok := i["detectprotocol"]; ok {
+			tmp["detectprotocol"] = flattenSystemInterfaceSecondaryipDetectprotocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
-		if _, ok := i["ha-priority"]; ok {
-			tmp["ha_priority"] = flattenSystemInterfaceSecondaryipHaPriority(i["ha-priority"], d, pre_append, sv)
+		if cur_v, ok := i["ha-priority"]; ok {
+			tmp["ha_priority"] = flattenSystemInterfaceSecondaryipHaPriority(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3503,13 +3508,13 @@ func flattenSystemInterfaceDhcpSnoopingServerList(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceDhcpSnoopingServerListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemInterfaceDhcpSnoopingServerListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_ip"
-		if _, ok := i["server-ip"]; ok {
-			tmp["server_ip"] = flattenSystemInterfaceDhcpSnoopingServerListServerIp(i["server-ip"], d, pre_append, sv)
+		if cur_v, ok := i["server-ip"]; ok {
+			tmp["server_ip"] = flattenSystemInterfaceDhcpSnoopingServerListServerIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3602,18 +3607,18 @@ func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemInterfaceTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenSystemInterfaceTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenSystemInterfaceTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenSystemInterfaceTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenSystemInterfaceTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3658,8 +3663,8 @@ func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemInterfaceTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4026,8 +4031,8 @@ func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4148,38 +4153,38 @@ func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6PrefixListPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6PrefixListPrefix(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
-		if _, ok := i["autonomous-flag"]; ok {
-			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append, sv)
+		if cur_v, ok := i["autonomous-flag"]; ok {
+			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "onlink_flag"
-		if _, ok := i["onlink-flag"]; ok {
-			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(i["onlink-flag"], d, pre_append, sv)
+		if cur_v, ok := i["onlink-flag"]; ok {
+			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valid_life_time"
-		if _, ok := i["valid-life-time"]; ok {
-			tmp["valid_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(i["valid-life-time"], d, pre_append, sv)
+		if cur_v, ok := i["valid-life-time"]; ok {
+			tmp["valid_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preferred_life_time"
-		if _, ok := i["preferred-life-time"]; ok {
-			tmp["preferred_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(i["preferred-life-time"], d, pre_append, sv)
+		if cur_v, ok := i["preferred-life-time"]; ok {
+			tmp["preferred_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
-		if _, ok := i["rdnss"]; ok {
-			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6PrefixListRdnss(i["rdnss"], d, pre_append, sv)
+		if cur_v, ok := i["rdnss"]; ok {
+			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6PrefixListRdnss(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dnssl"
-		if _, ok := i["dnssl"]; ok {
-			tmp["dnssl"] = flattenSystemInterfaceIpv6Ip6PrefixListDnssl(i["dnssl"], d, pre_append, sv)
+		if cur_v, ok := i["dnssl"]; ok {
+			tmp["dnssl"] = flattenSystemInterfaceIpv6Ip6PrefixListDnssl(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4240,8 +4245,8 @@ func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4282,43 +4287,43 @@ func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_id"
-		if _, ok := i["prefix-id"]; ok {
-			tmp["prefix_id"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(i["prefix-id"], d, pre_append, sv)
+		if cur_v, ok := i["prefix-id"]; ok {
+			tmp["prefix_id"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upstream_interface"
-		if _, ok := i["upstream-interface"]; ok {
-			tmp["upstream_interface"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(i["upstream-interface"], d, pre_append, sv)
+		if cur_v, ok := i["upstream-interface"]; ok {
+			tmp["upstream_interface"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "delegated_prefix_iaid"
-		if _, ok := i["delegated-prefix-iaid"]; ok {
-			tmp["delegated_prefix_iaid"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListDelegatedPrefixIaid(i["delegated-prefix-iaid"], d, pre_append, sv)
+		if cur_v, ok := i["delegated-prefix-iaid"]; ok {
+			tmp["delegated_prefix_iaid"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListDelegatedPrefixIaid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
-		if _, ok := i["autonomous-flag"]; ok {
-			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append, sv)
+		if cur_v, ok := i["autonomous-flag"]; ok {
+			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "onlink_flag"
-		if _, ok := i["onlink-flag"]; ok {
-			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(i["onlink-flag"], d, pre_append, sv)
+		if cur_v, ok := i["onlink-flag"]; ok {
+			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss_service"
-		if _, ok := i["rdnss-service"]; ok {
-			tmp["rdnss_service"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(i["rdnss-service"], d, pre_append, sv)
+		if cur_v, ok := i["rdnss-service"]; ok {
+			tmp["rdnss_service"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
-		if _, ok := i["rdnss"]; ok {
-			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(i["rdnss"], d, pre_append, sv)
+		if cur_v, ok := i["rdnss"]; ok {
+			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4423,23 +4428,23 @@ func flattenSystemInterfaceIpv6Dhcp6IapdList(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "iaid"
-		if _, ok := i["iaid"]; ok {
-			tmp["iaid"] = flattenSystemInterfaceIpv6Dhcp6IapdListIaid(i["iaid"], d, pre_append, sv)
+		if cur_v, ok := i["iaid"]; ok {
+			tmp["iaid"] = flattenSystemInterfaceIpv6Dhcp6IapdListIaid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_hint"
-		if _, ok := i["prefix-hint"]; ok {
-			tmp["prefix_hint"] = flattenSystemInterfaceIpv6Dhcp6IapdListPrefixHint(i["prefix-hint"], d, pre_append, sv)
+		if cur_v, ok := i["prefix-hint"]; ok {
+			tmp["prefix_hint"] = flattenSystemInterfaceIpv6Dhcp6IapdListPrefixHint(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_hint_plt"
-		if _, ok := i["prefix-hint-plt"]; ok {
-			tmp["prefix_hint_plt"] = flattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintPlt(i["prefix-hint-plt"], d, pre_append, sv)
+		if cur_v, ok := i["prefix-hint-plt"]; ok {
+			tmp["prefix_hint_plt"] = flattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintPlt(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_hint_vlt"
-		if _, ok := i["prefix-hint-vlt"]; ok {
-			tmp["prefix_hint_vlt"] = flattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintVlt(i["prefix-hint-vlt"], d, pre_append, sv)
+		if cur_v, ok := i["prefix-hint-vlt"]; ok {
+			tmp["prefix_hint_vlt"] = flattenSystemInterfaceIpv6Dhcp6IapdListPrefixHintVlt(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4516,53 +4521,58 @@ func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
-		if _, ok := i["vrid"]; ok {
-			tmp["vrid"] = flattenSystemInterfaceIpv6Vrrp6Vrid(i["vrid"], d, pre_append, sv)
+		if cur_v, ok := i["vrid"]; ok {
+			tmp["vrid"] = flattenSystemInterfaceIpv6Vrrp6Vrid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrgrp"
-		if _, ok := i["vrgrp"]; ok {
-			tmp["vrgrp"] = flattenSystemInterfaceIpv6Vrrp6Vrgrp(i["vrgrp"], d, pre_append, sv)
+		if cur_v, ok := i["vrgrp"]; ok {
+			tmp["vrgrp"] = flattenSystemInterfaceIpv6Vrrp6Vrgrp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrip6"
-		if _, ok := i["vrip6"]; ok {
-			tmp["vrip6"] = flattenSystemInterfaceIpv6Vrrp6Vrip6(i["vrip6"], d, pre_append, sv)
+		if cur_v, ok := i["vrip6"]; ok {
+			tmp["vrip6"] = flattenSystemInterfaceIpv6Vrrp6Vrip6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemInterfaceIpv6Vrrp6Priority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenSystemInterfaceIpv6Vrrp6Priority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_interval"
-		if _, ok := i["adv-interval"]; ok {
-			tmp["adv_interval"] = flattenSystemInterfaceIpv6Vrrp6AdvInterval(i["adv-interval"], d, pre_append, sv)
+		if cur_v, ok := i["adv-interval"]; ok {
+			tmp["adv_interval"] = flattenSystemInterfaceIpv6Vrrp6AdvInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_time"
-		if _, ok := i["start-time"]; ok {
-			tmp["start_time"] = flattenSystemInterfaceIpv6Vrrp6StartTime(i["start-time"], d, pre_append, sv)
+		if cur_v, ok := i["start-time"]; ok {
+			tmp["start_time"] = flattenSystemInterfaceIpv6Vrrp6StartTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preempt"
-		if _, ok := i["preempt"]; ok {
-			tmp["preempt"] = flattenSystemInterfaceIpv6Vrrp6Preempt(i["preempt"], d, pre_append, sv)
+		if cur_v, ok := i["preempt"]; ok {
+			tmp["preempt"] = flattenSystemInterfaceIpv6Vrrp6Preempt(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_mode"
-		if _, ok := i["accept-mode"]; ok {
-			tmp["accept_mode"] = flattenSystemInterfaceIpv6Vrrp6AcceptMode(i["accept-mode"], d, pre_append, sv)
+		if cur_v, ok := i["accept-mode"]; ok {
+			tmp["accept_mode"] = flattenSystemInterfaceIpv6Vrrp6AcceptMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst6"
-		if _, ok := i["vrdst6"]; ok {
-			tmp["vrdst6"] = flattenSystemInterfaceIpv6Vrrp6Vrdst6(i["vrdst6"], d, pre_append, sv)
+		if cur_v, ok := i["vrdst6"]; ok {
+			tmp["vrdst6"] = flattenSystemInterfaceIpv6Vrrp6Vrdst6(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
+		if cur_v, ok := i["ignore-default-route"]; ok {
+			tmp["ignore_default_route"] = flattenSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemInterfaceIpv6Vrrp6Status(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemInterfaceIpv6Vrrp6Status(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4607,6 +4617,10 @@ func flattenSystemInterfaceIpv6Vrrp6AcceptMode(v interface{}, d *schema.Resource
 }
 
 func flattenSystemInterfaceIpv6Vrrp6Vrdst6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -8289,6 +8303,11 @@ func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre s
 			tmp["vrdst6"], _ = expandSystemInterfaceIpv6Vrrp6Vrdst6(d, i["vrdst6"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ignore-default-route"], _ = expandSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(d, i["ignore_default_route"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSystemInterfaceIpv6Vrrp6Status(d, i["status"], pre_append, sv)
@@ -8335,6 +8354,10 @@ func expandSystemInterfaceIpv6Vrrp6AcceptMode(d *schema.ResourceData, v interfac
 }
 
 func expandSystemInterfaceIpv6Vrrp6Vrdst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

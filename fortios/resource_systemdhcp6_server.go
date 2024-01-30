@@ -429,23 +429,23 @@ func flattenSystemDhcp6ServerPrefixRange(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemDhcp6ServerPrefixRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemDhcp6ServerPrefixRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_prefix"
-		if _, ok := i["start-prefix"]; ok {
-			tmp["start_prefix"] = flattenSystemDhcp6ServerPrefixRangeStartPrefix(i["start-prefix"], d, pre_append, sv)
+		if cur_v, ok := i["start-prefix"]; ok {
+			tmp["start_prefix"] = flattenSystemDhcp6ServerPrefixRangeStartPrefix(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_prefix"
-		if _, ok := i["end-prefix"]; ok {
-			tmp["end_prefix"] = flattenSystemDhcp6ServerPrefixRangeEndPrefix(i["end-prefix"], d, pre_append, sv)
+		if cur_v, ok := i["end-prefix"]; ok {
+			tmp["end_prefix"] = flattenSystemDhcp6ServerPrefixRangeEndPrefix(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_length"
-		if _, ok := i["prefix-length"]; ok {
-			tmp["prefix_length"] = flattenSystemDhcp6ServerPrefixRangePrefixLength(i["prefix-length"], d, pre_append, sv)
+		if cur_v, ok := i["prefix-length"]; ok {
+			tmp["prefix_length"] = flattenSystemDhcp6ServerPrefixRangePrefixLength(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -498,18 +498,18 @@ func flattenSystemDhcp6ServerIpRange(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemDhcp6ServerIpRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemDhcp6ServerIpRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenSystemDhcp6ServerIpRangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenSystemDhcp6ServerIpRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenSystemDhcp6ServerIpRangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenSystemDhcp6ServerIpRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

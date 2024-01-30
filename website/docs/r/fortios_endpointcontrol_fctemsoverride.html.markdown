@@ -32,11 +32,13 @@ The following arguments are supported:
 * `capabilities` - List of EMS capabilities.
 * `call_timeout` - FortiClient EMS call timeout in seconds (1 - 180 seconds, default = 30).
 * `out_of_sync_threshold` - Outdated resource threshold in seconds (10 - 3600, default = 180).
+* `send_tags_to_all_vdoms` - Relax restrictions on tags to send all EMS tags to all VDOMs Valid values: `enable`, `disable`.
 * `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.
 * `preserve_ssl_session` - Enable/disable preservation of EMS SSL session connection. Warning, most users should not touch this setting. Valid values: `enable`, `disable`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `trust_ca_cn` - Enable/disable trust of the EMS certificate issuer(CA) and common name(CN) for certificate auto-renewal. Valid values: `enable`, `disable`.
+* `verifying_ca` - Lowest CA cert on Fortigate in verified EMS cert chain.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

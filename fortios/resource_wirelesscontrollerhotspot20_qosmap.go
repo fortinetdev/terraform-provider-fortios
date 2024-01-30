@@ -264,18 +264,18 @@ func flattenWirelessControllerHotspot20QosMapDscpExcept(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpExceptIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpExceptIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
-		if _, ok := i["dscp"]; ok {
-			tmp["dscp"] = flattenWirelessControllerHotspot20QosMapDscpExceptDscp(i["dscp"], d, pre_append, sv)
+		if cur_v, ok := i["dscp"]; ok {
+			tmp["dscp"] = flattenWirelessControllerHotspot20QosMapDscpExceptDscp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
-		if _, ok := i["up"]; ok {
-			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpExceptUp(i["up"], d, pre_append, sv)
+		if cur_v, ok := i["up"]; ok {
+			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpExceptUp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -324,23 +324,23 @@ func flattenWirelessControllerHotspot20QosMapDscpRange(v interface{}, d *schema.
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpRangeIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpRangeIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
-		if _, ok := i["up"]; ok {
-			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpRangeUp(i["up"], d, pre_append, sv)
+		if cur_v, ok := i["up"]; ok {
+			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpRangeUp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "low"
-		if _, ok := i["low"]; ok {
-			tmp["low"] = flattenWirelessControllerHotspot20QosMapDscpRangeLow(i["low"], d, pre_append, sv)
+		if cur_v, ok := i["low"]; ok {
+			tmp["low"] = flattenWirelessControllerHotspot20QosMapDscpRangeLow(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "high"
-		if _, ok := i["high"]; ok {
-			tmp["high"] = flattenWirelessControllerHotspot20QosMapDscpRangeHigh(i["high"], d, pre_append, sv)
+		if cur_v, ok := i["high"]; ok {
+			tmp["high"] = flattenWirelessControllerHotspot20QosMapDscpRangeHigh(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

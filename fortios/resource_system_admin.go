@@ -918,8 +918,8 @@ func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAdminVdomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAdminVdomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1000,33 +1000,33 @@ func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiDashboardId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAdminGuiDashboardId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAdminGuiDashboardName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAdminGuiDashboardName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "scope"
-		if _, ok := i["scope"]; ok {
-			tmp["scope"] = flattenSystemAdminGuiDashboardScope(i["scope"], d, pre_append, sv)
+		if cur_v, ok := i["scope"]; ok {
+			tmp["scope"] = flattenSystemAdminGuiDashboardScope(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "layout_type"
-		if _, ok := i["layout-type"]; ok {
-			tmp["layout_type"] = flattenSystemAdminGuiDashboardLayoutType(i["layout-type"], d, pre_append, sv)
+		if cur_v, ok := i["layout-type"]; ok {
+			tmp["layout_type"] = flattenSystemAdminGuiDashboardLayoutType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "columns"
-		if _, ok := i["columns"]; ok {
-			tmp["columns"] = flattenSystemAdminGuiDashboardColumns(i["columns"], d, pre_append, sv)
+		if cur_v, ok := i["columns"]; ok {
+			tmp["columns"] = flattenSystemAdminGuiDashboardColumns(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "widget"
-		if _, ok := i["widget"]; ok {
-			tmp["widget"] = flattenSystemAdminGuiDashboardWidget(i["widget"], d, pre_append, sv)
+		if cur_v, ok := i["widget"]; ok {
+			tmp["widget"] = flattenSystemAdminGuiDashboardWidget(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1083,83 +1083,83 @@ func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiDashboardWidgetId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAdminGuiDashboardWidgetId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemAdminGuiDashboardWidgetType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSystemAdminGuiDashboardWidgetType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "x_pos"
-		if _, ok := i["x-pos"]; ok {
-			tmp["x_pos"] = flattenSystemAdminGuiDashboardWidgetXPos(i["x-pos"], d, pre_append, sv)
+		if cur_v, ok := i["x-pos"]; ok {
+			tmp["x_pos"] = flattenSystemAdminGuiDashboardWidgetXPos(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "y_pos"
-		if _, ok := i["y-pos"]; ok {
-			tmp["y_pos"] = flattenSystemAdminGuiDashboardWidgetYPos(i["y-pos"], d, pre_append, sv)
+		if cur_v, ok := i["y-pos"]; ok {
+			tmp["y_pos"] = flattenSystemAdminGuiDashboardWidgetYPos(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
-		if _, ok := i["width"]; ok {
-			tmp["width"] = flattenSystemAdminGuiDashboardWidgetWidth(i["width"], d, pre_append, sv)
+		if cur_v, ok := i["width"]; ok {
+			tmp["width"] = flattenSystemAdminGuiDashboardWidgetWidth(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
-		if _, ok := i["height"]; ok {
-			tmp["height"] = flattenSystemAdminGuiDashboardWidgetHeight(i["height"], d, pre_append, sv)
+		if cur_v, ok := i["height"]; ok {
+			tmp["height"] = flattenSystemAdminGuiDashboardWidgetHeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemAdminGuiDashboardWidgetInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemAdminGuiDashboardWidgetInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
-		if _, ok := i["region"]; ok {
-			tmp["region"] = flattenSystemAdminGuiDashboardWidgetRegion(i["region"], d, pre_append, sv)
+		if cur_v, ok := i["region"]; ok {
+			tmp["region"] = flattenSystemAdminGuiDashboardWidgetRegion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "industry"
-		if _, ok := i["industry"]; ok {
-			tmp["industry"] = flattenSystemAdminGuiDashboardWidgetIndustry(i["industry"], d, pre_append, sv)
+		if cur_v, ok := i["industry"]; ok {
+			tmp["industry"] = flattenSystemAdminGuiDashboardWidgetIndustry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fabric_device"
-		if _, ok := i["fabric-device"]; ok {
-			tmp["fabric_device"] = flattenSystemAdminGuiDashboardWidgetFabricDevice(i["fabric-device"], d, pre_append, sv)
+		if cur_v, ok := i["fabric-device"]; ok {
+			tmp["fabric_device"] = flattenSystemAdminGuiDashboardWidgetFabricDevice(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
-		if _, ok := i["title"]; ok {
-			tmp["title"] = flattenSystemAdminGuiDashboardWidgetTitle(i["title"], d, pre_append, sv)
+		if cur_v, ok := i["title"]; ok {
+			tmp["title"] = flattenSystemAdminGuiDashboardWidgetTitle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "report_by"
-		if _, ok := i["report-by"]; ok {
-			tmp["report_by"] = flattenSystemAdminGuiDashboardWidgetReportBy(i["report-by"], d, pre_append, sv)
+		if cur_v, ok := i["report-by"]; ok {
+			tmp["report_by"] = flattenSystemAdminGuiDashboardWidgetReportBy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeframe"
-		if _, ok := i["timeframe"]; ok {
-			tmp["timeframe"] = flattenSystemAdminGuiDashboardWidgetTimeframe(i["timeframe"], d, pre_append, sv)
+		if cur_v, ok := i["timeframe"]; ok {
+			tmp["timeframe"] = flattenSystemAdminGuiDashboardWidgetTimeframe(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sort_by"
-		if _, ok := i["sort-by"]; ok {
-			tmp["sort_by"] = flattenSystemAdminGuiDashboardWidgetSortBy(i["sort-by"], d, pre_append, sv)
+		if cur_v, ok := i["sort-by"]; ok {
+			tmp["sort_by"] = flattenSystemAdminGuiDashboardWidgetSortBy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "visualization"
-		if _, ok := i["visualization"]; ok {
-			tmp["visualization"] = flattenSystemAdminGuiDashboardWidgetVisualization(i["visualization"], d, pre_append, sv)
+		if cur_v, ok := i["visualization"]; ok {
+			tmp["visualization"] = flattenSystemAdminGuiDashboardWidgetVisualization(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filters"
-		if _, ok := i["filters"]; ok {
-			tmp["filters"] = flattenSystemAdminGuiDashboardWidgetFilters(i["filters"], d, pre_append, sv)
+		if cur_v, ok := i["filters"]; ok {
+			tmp["filters"] = flattenSystemAdminGuiDashboardWidgetFilters(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1256,18 +1256,18 @@ func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiDashboardWidgetFiltersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAdminGuiDashboardWidgetFiltersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
-		if _, ok := i["key"]; ok {
-			tmp["key"] = flattenSystemAdminGuiDashboardWidgetFiltersKey(i["key"], d, pre_append, sv)
+		if cur_v, ok := i["key"]; ok {
+			tmp["key"] = flattenSystemAdminGuiDashboardWidgetFiltersKey(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSystemAdminGuiDashboardWidgetFiltersValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSystemAdminGuiDashboardWidgetFiltersValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1352,8 +1352,8 @@ func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAdminGuestUsergroupsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAdminGuestUsergroupsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1406,18 +1406,18 @@ func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "usr_name"
-		if _, ok := i["usr-name"]; ok {
-			tmp["usr_name"] = flattenSystemAdminLoginTimeUsrName(i["usr-name"], d, pre_append, sv)
+		if cur_v, ok := i["usr-name"]; ok {
+			tmp["usr_name"] = flattenSystemAdminLoginTimeUsrName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_login"
-		if _, ok := i["last-login"]; ok {
-			tmp["last_login"] = flattenSystemAdminLoginTimeLastLogin(i["last-login"], d, pre_append, sv)
+		if cur_v, ok := i["last-login"]; ok {
+			tmp["last_login"] = flattenSystemAdminLoginTimeLastLogin(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_failed_login"
-		if _, ok := i["last-failed-login"]; ok {
-			tmp["last_failed_login"] = flattenSystemAdminLoginTimeLastFailedLogin(i["last-failed-login"], d, pre_append, sv)
+		if cur_v, ok := i["last-failed-login"]; ok {
+			tmp["last_failed_login"] = flattenSystemAdminLoginTimeLastFailedLogin(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1466,8 +1466,8 @@ func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiGlobalMenuFavoritesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAdminGuiGlobalMenuFavoritesId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1508,8 +1508,8 @@ func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiVdomMenuFavoritesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAdminGuiVdomMenuFavoritesId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1550,8 +1550,8 @@ func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiNewFeatureAcknowledgeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAdminGuiNewFeatureAcknowledgeId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

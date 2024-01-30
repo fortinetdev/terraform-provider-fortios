@@ -240,8 +240,8 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			v := flattenRouterKeyChainKeyId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			v := flattenRouterKeyChainKeyId(cur_v, d, pre_append, sv)
 			vx := 0
 			bstring := false
 			new_version_map := map[string][]string{
@@ -264,18 +264,18 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
-		if _, ok := i["accept-lifetime"]; ok {
-			tmp["accept_lifetime"] = flattenRouterKeyChainKeyAcceptLifetime(i["accept-lifetime"], d, pre_append, sv)
+		if cur_v, ok := i["accept-lifetime"]; ok {
+			tmp["accept_lifetime"] = flattenRouterKeyChainKeyAcceptLifetime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_lifetime"
-		if _, ok := i["send-lifetime"]; ok {
-			tmp["send_lifetime"] = flattenRouterKeyChainKeySendLifetime(i["send-lifetime"], d, pre_append, sv)
+		if cur_v, ok := i["send-lifetime"]; ok {
+			tmp["send_lifetime"] = flattenRouterKeyChainKeySendLifetime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if _, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterKeyChainKeyKeyString(i["key-string"], d, pre_append, sv)
+		if cur_v, ok := i["key-string"]; ok {
+			tmp["key_string"] = flattenRouterKeyChainKeyKeyString(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["key_string"] = c
@@ -283,8 +283,8 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
-		if _, ok := i["algorithm"]; ok {
-			tmp["algorithm"] = flattenRouterKeyChainKeyAlgorithm(i["algorithm"], d, pre_append, sv)
+		if cur_v, ok := i["algorithm"]; ok {
+			tmp["algorithm"] = flattenRouterKeyChainKeyAlgorithm(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

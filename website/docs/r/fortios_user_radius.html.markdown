@@ -58,6 +58,7 @@ The following arguments are supported:
 * `status_ttl` - Time for which server reachability is cached so that when a server is unreachable, it will not be retried for at least this period of time (0 = cache disabled, default = 300).
 * `all_usergroup` - Enable/disable automatically including this RADIUS server in all user groups. Valid values: `disable`, `enable`.
 * `use_management_vdom` - Enable/disable using management VDOM to send requests. Valid values: `enable`, `disable`.
+* `switch_controller_nas_ip_dynamic` - Enable/Disable switch-controller nas-ip dynamic to dynamically set nas-ip. Valid values: `enable`, `disable`.
 * `nas_ip` - IP address used to communicate with the RADIUS server and used as NAS-IP-Address and Called-Station-ID attributes.
 * `nas_id_type` - NAS identifier type configuration (default = legacy). Valid values: `legacy`, `custom`, `hostname`.
 * `call_station_id_type` - Calling & Called station identifier type configuration (default = legacy), this option is not available for 802.1x authentication.  Valid values: `legacy`, `IP`, `MAC`.

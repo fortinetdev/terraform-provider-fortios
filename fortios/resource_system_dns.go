@@ -333,8 +333,8 @@ func flattenSystemDnsServerHostname(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
-		if _, ok := i["hostname"]; ok {
-			tmp["hostname"] = flattenSystemDnsServerHostnameHostname(i["hostname"], d, pre_append, sv)
+		if cur_v, ok := i["hostname"]; ok {
+			tmp["hostname"] = flattenSystemDnsServerHostnameHostname(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -375,8 +375,8 @@ func flattenSystemDnsDomain(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenSystemDnsDomainDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenSystemDnsDomainDomain(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

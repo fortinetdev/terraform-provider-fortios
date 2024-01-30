@@ -384,8 +384,8 @@ func flattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterPolicyInputDeviceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterPolicyInputDeviceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -430,8 +430,8 @@ func flattenRouterPolicySrc(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenRouterPolicySrcSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenRouterPolicySrcSubnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -472,8 +472,8 @@ func flattenRouterPolicySrcaddr(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterPolicySrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterPolicySrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -518,8 +518,8 @@ func flattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenRouterPolicyDstSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenRouterPolicyDstSubnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -560,8 +560,8 @@ func flattenRouterPolicyDstaddr(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterPolicyDstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterPolicyDstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -654,8 +654,8 @@ func flattenRouterPolicyInternetServiceId(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterPolicyInternetServiceIdId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterPolicyInternetServiceIdId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -696,8 +696,8 @@ func flattenRouterPolicyInternetServiceCustom(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterPolicyInternetServiceCustomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterPolicyInternetServiceCustomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

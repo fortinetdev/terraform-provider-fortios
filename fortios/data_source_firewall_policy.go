@@ -640,6 +640,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"diameter_filter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"virtual_patch_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -2603,6 +2607,10 @@ func dataSourceFlattenFirewallPolicySctpFilterProfile(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyDiameterFilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyVirtualPatchProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -4040,6 +4048,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("sctp_filter_profile", dataSourceFlattenFirewallPolicySctpFilterProfile(o["sctp-filter-profile"], d, "sctp_filter_profile")); err != nil {
 		if !fortiAPIPatch(o["sctp-filter-profile"]) {
 			return fmt.Errorf("Error reading sctp_filter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("diameter_filter_profile", dataSourceFlattenFirewallPolicyDiameterFilterProfile(o["diameter-filter-profile"], d, "diameter_filter_profile")); err != nil {
+		if !fortiAPIPatch(o["diameter-filter-profile"]) {
+			return fmt.Errorf("Error reading diameter_filter_profile: %v", err)
 		}
 	}
 

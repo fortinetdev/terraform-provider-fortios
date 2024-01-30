@@ -310,53 +310,53 @@ func flattenWebfilterUrlfilterEntries(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWebfilterUrlfilterEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWebfilterUrlfilterEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
-		if _, ok := i["url"]; ok {
-			tmp["url"] = flattenWebfilterUrlfilterEntriesUrl(i["url"], d, pre_append, sv)
+		if cur_v, ok := i["url"]; ok {
+			tmp["url"] = flattenWebfilterUrlfilterEntriesUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenWebfilterUrlfilterEntriesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenWebfilterUrlfilterEntriesType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebfilterUrlfilterEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebfilterUrlfilterEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "antiphish_action"
-		if _, ok := i["antiphish-action"]; ok {
-			tmp["antiphish_action"] = flattenWebfilterUrlfilterEntriesAntiphishAction(i["antiphish-action"], d, pre_append, sv)
+		if cur_v, ok := i["antiphish-action"]; ok {
+			tmp["antiphish_action"] = flattenWebfilterUrlfilterEntriesAntiphishAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenWebfilterUrlfilterEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenWebfilterUrlfilterEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exempt"
-		if _, ok := i["exempt"]; ok {
-			tmp["exempt"] = flattenWebfilterUrlfilterEntriesExempt(i["exempt"], d, pre_append, sv)
+		if cur_v, ok := i["exempt"]; ok {
+			tmp["exempt"] = flattenWebfilterUrlfilterEntriesExempt(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "web_proxy_profile"
-		if _, ok := i["web-proxy-profile"]; ok {
-			tmp["web_proxy_profile"] = flattenWebfilterUrlfilterEntriesWebProxyProfile(i["web-proxy-profile"], d, pre_append, sv)
+		if cur_v, ok := i["web-proxy-profile"]; ok {
+			tmp["web_proxy_profile"] = flattenWebfilterUrlfilterEntriesWebProxyProfile(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "referrer_host"
-		if _, ok := i["referrer-host"]; ok {
-			tmp["referrer_host"] = flattenWebfilterUrlfilterEntriesReferrerHost(i["referrer-host"], d, pre_append, sv)
+		if cur_v, ok := i["referrer-host"]; ok {
+			tmp["referrer_host"] = flattenWebfilterUrlfilterEntriesReferrerHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_address_family"
-		if _, ok := i["dns-address-family"]; ok {
-			tmp["dns_address_family"] = flattenWebfilterUrlfilterEntriesDnsAddressFamily(i["dns-address-family"], d, pre_append, sv)
+		if cur_v, ok := i["dns-address-family"]; ok {
+			tmp["dns_address_family"] = flattenWebfilterUrlfilterEntriesDnsAddressFamily(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

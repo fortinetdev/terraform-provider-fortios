@@ -361,8 +361,8 @@ func flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(v interface
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := i["vlan-name"]; ok {
-			tmp["vlan_name"] = flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlansVlanName(i["vlan-name"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-name"]; ok {
+			tmp["vlan_name"] = flattenSwitchControllerFortilinkSettingsNacPortsNacSegmentVlansVlanName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

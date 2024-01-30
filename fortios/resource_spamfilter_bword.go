@@ -272,43 +272,43 @@ func flattenSpamfilterBwordEntries(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSpamfilterBwordEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSpamfilterBwordEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSpamfilterBwordEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSpamfilterBwordEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenSpamfilterBwordEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenSpamfilterBwordEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenSpamfilterBwordEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenSpamfilterBwordEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSpamfilterBwordEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSpamfilterBwordEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
-		if _, ok := i["where"]; ok {
-			tmp["where"] = flattenSpamfilterBwordEntriesWhere(i["where"], d, pre_append, sv)
+		if cur_v, ok := i["where"]; ok {
+			tmp["where"] = flattenSpamfilterBwordEntriesWhere(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
-		if _, ok := i["language"]; ok {
-			tmp["language"] = flattenSpamfilterBwordEntriesLanguage(i["language"], d, pre_append, sv)
+		if cur_v, ok := i["language"]; ok {
+			tmp["language"] = flattenSpamfilterBwordEntriesLanguage(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
-		if _, ok := i["score"]; ok {
-			tmp["score"] = flattenSpamfilterBwordEntriesScore(i["score"], d, pre_append, sv)
+		if cur_v, ok := i["score"]; ok {
+			tmp["score"] = flattenSpamfilterBwordEntriesScore(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

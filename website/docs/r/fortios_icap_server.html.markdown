@@ -33,7 +33,7 @@ The following arguments are supported:
 * `ip6_address` - IPv6 address of the ICAP server.
 * `fqdn` - ICAP remote server Fully Qualified Domain Name (FQDN).
 * `port` - ICAP server port.
-* `max_connections` - Maximum number of concurrent connections to ICAP server.
+* `max_connections` - Maximum number of concurrent connections to ICAP server. Must not be less than wad-worker-count.
 * `secure` - Enable/disable secure connection to ICAP server. Valid values: `enable`, `disable`.
 * `ssl_cert` - CA certificate name.
 * `healthcheck` - Enable/disable ICAP remote server health checking. Attempts to connect to the remote ICAP server to verify that the server is operating normally. Valid values: `disable`, `enable`.

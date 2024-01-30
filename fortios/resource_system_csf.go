@@ -39,6 +39,12 @@ func resourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uid": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"upstream": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -409,6 +415,10 @@ func flattenSystemCsfStatus(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenSystemCsfUid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCsfUpstream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -506,43 +516,43 @@ func flattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemCsfTrustedListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemCsfTrustedListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authorization_type"
-		if _, ok := i["authorization-type"]; ok {
-			tmp["authorization_type"] = flattenSystemCsfTrustedListAuthorizationType(i["authorization-type"], d, pre_append, sv)
+		if cur_v, ok := i["authorization-type"]; ok {
+			tmp["authorization_type"] = flattenSystemCsfTrustedListAuthorizationType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
-		if _, ok := i["serial"]; ok {
-			tmp["serial"] = flattenSystemCsfTrustedListSerial(i["serial"], d, pre_append, sv)
+		if cur_v, ok := i["serial"]; ok {
+			tmp["serial"] = flattenSystemCsfTrustedListSerial(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "certificate"
-		if _, ok := i["certificate"]; ok {
-			tmp["certificate"] = flattenSystemCsfTrustedListCertificate(i["certificate"], d, pre_append, sv)
+		if cur_v, ok := i["certificate"]; ok {
+			tmp["certificate"] = flattenSystemCsfTrustedListCertificate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSystemCsfTrustedListAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSystemCsfTrustedListAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_members"
-		if _, ok := i["ha-members"]; ok {
-			tmp["ha_members"] = flattenSystemCsfTrustedListHaMembers(i["ha-members"], d, pre_append, sv)
+		if cur_v, ok := i["ha-members"]; ok {
+			tmp["ha_members"] = flattenSystemCsfTrustedListHaMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "downstream_authorization"
-		if _, ok := i["downstream-authorization"]; ok {
-			tmp["downstream_authorization"] = flattenSystemCsfTrustedListDownstreamAuthorization(i["downstream-authorization"], d, pre_append, sv)
+		if cur_v, ok := i["downstream-authorization"]; ok {
+			tmp["downstream_authorization"] = flattenSystemCsfTrustedListDownstreamAuthorization(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenSystemCsfTrustedListIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenSystemCsfTrustedListIndex(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -611,23 +621,23 @@ func flattenSystemCsfFabricConnector(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
-		if _, ok := i["serial"]; ok {
-			tmp["serial"] = flattenSystemCsfFabricConnectorSerial(i["serial"], d, pre_append, sv)
+		if cur_v, ok := i["serial"]; ok {
+			tmp["serial"] = flattenSystemCsfFabricConnectorSerial(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accprofile"
-		if _, ok := i["accprofile"]; ok {
-			tmp["accprofile"] = flattenSystemCsfFabricConnectorAccprofile(i["accprofile"], d, pre_append, sv)
+		if cur_v, ok := i["accprofile"]; ok {
+			tmp["accprofile"] = flattenSystemCsfFabricConnectorAccprofile(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "configuration_write_access"
-		if _, ok := i["configuration-write-access"]; ok {
-			tmp["configuration_write_access"] = flattenSystemCsfFabricConnectorConfigurationWriteAccess(i["configuration-write-access"], d, pre_append, sv)
+		if cur_v, ok := i["configuration-write-access"]; ok {
+			tmp["configuration_write_access"] = flattenSystemCsfFabricConnectorConfigurationWriteAccess(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
-		if _, ok := i["vdom"]; ok {
-			tmp["vdom"] = flattenSystemCsfFabricConnectorVdom(i["vdom"], d, pre_append, sv)
+		if cur_v, ok := i["vdom"]; ok {
+			tmp["vdom"] = flattenSystemCsfFabricConnectorVdom(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -676,8 +686,8 @@ func flattenSystemCsfFabricConnectorVdom(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemCsfFabricConnectorVdomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemCsfFabricConnectorVdomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -734,23 +744,23 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemCsfFabricDeviceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemCsfFabricDeviceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_ip"
-		if _, ok := i["device-ip"]; ok {
-			tmp["device_ip"] = flattenSystemCsfFabricDeviceDeviceIp(i["device-ip"], d, pre_append, sv)
+		if cur_v, ok := i["device-ip"]; ok {
+			tmp["device_ip"] = flattenSystemCsfFabricDeviceDeviceIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_port"
-		if _, ok := i["https-port"]; ok {
-			tmp["https_port"] = flattenSystemCsfFabricDeviceHttpsPort(i["https-port"], d, pre_append, sv)
+		if cur_v, ok := i["https-port"]; ok {
+			tmp["https_port"] = flattenSystemCsfFabricDeviceHttpsPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
-		if _, ok := i["access-token"]; ok {
-			tmp["access_token"] = flattenSystemCsfFabricDeviceAccessToken(i["access-token"], d, pre_append, sv)
+		if cur_v, ok := i["access-token"]; ok {
+			tmp["access_token"] = flattenSystemCsfFabricDeviceAccessToken(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["access_token"] = c
@@ -758,18 +768,18 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
-		if _, ok := i["device-type"]; ok {
-			tmp["device_type"] = flattenSystemCsfFabricDeviceDeviceType(i["device-type"], d, pre_append, sv)
+		if cur_v, ok := i["device-type"]; ok {
+			tmp["device_type"] = flattenSystemCsfFabricDeviceDeviceType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "login"
-		if _, ok := i["login"]; ok {
-			tmp["login"] = flattenSystemCsfFabricDeviceLogin(i["login"], d, pre_append, sv)
+		if cur_v, ok := i["login"]; ok {
+			tmp["login"] = flattenSystemCsfFabricDeviceLogin(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemCsfFabricDevicePassword(i["password"], d, pre_append, sv)
+		if cur_v, ok := i["password"]; ok {
+			tmp["password"] = flattenSystemCsfFabricDevicePassword(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -825,6 +835,12 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("status", flattenSystemCsfStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("uid", flattenSystemCsfUid(o["uid"], d, "uid", sv)); err != nil {
+		if !fortiAPIPatch(o["uid"]) {
+			return fmt.Errorf("Error reading uid: %v", err)
 		}
 	}
 
@@ -1006,6 +1022,10 @@ func flattenSystemCsfFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 }
 
 func expandSystemCsfStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfUid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1372,6 +1392,19 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["status"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("uid"); ok {
+		if setArgNil {
+			obj["uid"] = nil
+		} else {
+			t, err := expandSystemCsfUid(d, v, "uid", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["uid"] = t
 			}
 		}
 	}

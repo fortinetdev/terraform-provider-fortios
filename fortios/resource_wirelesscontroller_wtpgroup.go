@@ -239,8 +239,8 @@ func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_id"
-		if _, ok := i["wtp-id"]; ok {
-			tmp["wtp_id"] = flattenWirelessControllerWtpGroupWtpsWtpId(i["wtp-id"], d, pre_append, sv)
+		if cur_v, ok := i["wtp-id"]; ok {
+			tmp["wtp_id"] = flattenWirelessControllerWtpGroupWtpsWtpId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

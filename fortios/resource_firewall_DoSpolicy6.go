@@ -339,8 +339,8 @@ func flattenFirewallDosPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallDosPolicy6SrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallDosPolicy6SrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -381,8 +381,8 @@ func flattenFirewallDosPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallDosPolicy6DstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallDosPolicy6DstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -423,8 +423,8 @@ func flattenFirewallDosPolicy6Service(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallDosPolicy6ServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallDosPolicy6ServiceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -465,48 +465,48 @@ func flattenFirewallDosPolicy6Anomaly(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallDosPolicy6AnomalyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallDosPolicy6AnomalyName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenFirewallDosPolicy6AnomalyStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenFirewallDosPolicy6AnomalyStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenFirewallDosPolicy6AnomalyLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenFirewallDosPolicy6AnomalyLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenFirewallDosPolicy6AnomalyAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenFirewallDosPolicy6AnomalyAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
-		if _, ok := i["quarantine"]; ok {
-			tmp["quarantine"] = flattenFirewallDosPolicy6AnomalyQuarantine(i["quarantine"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine"]; ok {
+			tmp["quarantine"] = flattenFirewallDosPolicy6AnomalyQuarantine(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
-		if _, ok := i["quarantine-expiry"]; ok {
-			tmp["quarantine_expiry"] = flattenFirewallDosPolicy6AnomalyQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine-expiry"]; ok {
+			tmp["quarantine_expiry"] = flattenFirewallDosPolicy6AnomalyQuarantineExpiry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
-		if _, ok := i["quarantine-log"]; ok {
-			tmp["quarantine_log"] = flattenFirewallDosPolicy6AnomalyQuarantineLog(i["quarantine-log"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine-log"]; ok {
+			tmp["quarantine_log"] = flattenFirewallDosPolicy6AnomalyQuarantineLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
-		if _, ok := i["threshold"]; ok {
-			tmp["threshold"] = flattenFirewallDosPolicy6AnomalyThreshold(i["threshold"], d, pre_append, sv)
+		if cur_v, ok := i["threshold"]; ok {
+			tmp["threshold"] = flattenFirewallDosPolicy6AnomalyThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
-		if _, ok := i["threshold(default)"]; ok {
-			tmp["thresholddefault"] = flattenFirewallDosPolicy6AnomalyThresholdDefault(i["threshold(default)"], d, pre_append, sv)
+		if cur_v, ok := i["threshold(default)"]; ok {
+			tmp["thresholddefault"] = flattenFirewallDosPolicy6AnomalyThresholdDefault(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

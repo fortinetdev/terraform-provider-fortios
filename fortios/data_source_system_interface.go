@@ -1485,6 +1485,10 @@ func dataSourceSystemInterface() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"ignore_default_route": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -3915,6 +3919,11 @@ func dataSourceFlattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.Resource
 			tmp["vrdst6"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6Vrdst6(i["vrdst6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
+		if _, ok := i["ignore-default-route"]; ok {
+			tmp["ignore_default_route"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(i["ignore-default-route"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
 			tmp["status"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6Status(i["status"], d, pre_append)
@@ -3961,6 +3970,10 @@ func dataSourceFlattenSystemInterfaceIpv6Vrrp6AcceptMode(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Vrrp6Vrdst6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

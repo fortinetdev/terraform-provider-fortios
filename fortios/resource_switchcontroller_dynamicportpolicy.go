@@ -329,78 +329,78 @@ func flattenSwitchControllerDynamicPortPolicyPolicy(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerDynamicPortPolicyPolicyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerDynamicPortPolicyPolicyName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerDynamicPortPolicyPolicyDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSwitchControllerDynamicPortPolicyPolicyDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSwitchControllerDynamicPortPolicyPolicyStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSwitchControllerDynamicPortPolicyPolicyStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenSwitchControllerDynamicPortPolicyPolicyCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenSwitchControllerDynamicPortPolicyPolicyCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
-		if _, ok := i["interface-tags"]; ok {
-			tmp["interface_tags"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(i["interface-tags"], d, pre_append, sv)
+		if cur_v, ok := i["interface-tags"]; ok {
+			tmp["interface_tags"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenSwitchControllerDynamicPortPolicyPolicyMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenSwitchControllerDynamicPortPolicyPolicyMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hw_vendor"
-		if _, ok := i["hw-vendor"]; ok {
-			tmp["hw_vendor"] = flattenSwitchControllerDynamicPortPolicyPolicyHwVendor(i["hw-vendor"], d, pre_append, sv)
+		if cur_v, ok := i["hw-vendor"]; ok {
+			tmp["hw_vendor"] = flattenSwitchControllerDynamicPortPolicyPolicyHwVendor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSwitchControllerDynamicPortPolicyPolicyType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSwitchControllerDynamicPortPolicyPolicyType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "family"
-		if _, ok := i["family"]; ok {
-			tmp["family"] = flattenSwitchControllerDynamicPortPolicyPolicyFamily(i["family"], d, pre_append, sv)
+		if cur_v, ok := i["family"]; ok {
+			tmp["family"] = flattenSwitchControllerDynamicPortPolicyPolicyFamily(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
-		if _, ok := i["host"]; ok {
-			tmp["host"] = flattenSwitchControllerDynamicPortPolicyPolicyHost(i["host"], d, pre_append, sv)
+		if cur_v, ok := i["host"]; ok {
+			tmp["host"] = flattenSwitchControllerDynamicPortPolicyPolicyHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_profile"
-		if _, ok := i["lldp-profile"]; ok {
-			tmp["lldp_profile"] = flattenSwitchControllerDynamicPortPolicyPolicyLldpProfile(i["lldp-profile"], d, pre_append, sv)
+		if cur_v, ok := i["lldp-profile"]; ok {
+			tmp["lldp_profile"] = flattenSwitchControllerDynamicPortPolicyPolicyLldpProfile(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
-		if _, ok := i["qos-policy"]; ok {
-			tmp["qos_policy"] = flattenSwitchControllerDynamicPortPolicyPolicyQosPolicy(i["qos-policy"], d, pre_append, sv)
+		if cur_v, ok := i["qos-policy"]; ok {
+			tmp["qos_policy"] = flattenSwitchControllerDynamicPortPolicyPolicyQosPolicy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "n802_1x"
-		if _, ok := i["802-1x"]; ok {
-			tmp["n802_1x"] = flattenSwitchControllerDynamicPortPolicyPolicy8021X(i["802-1x"], d, pre_append, sv)
+		if cur_v, ok := i["802-1x"]; ok {
+			tmp["n802_1x"] = flattenSwitchControllerDynamicPortPolicyPolicy8021X(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_policy"
-		if _, ok := i["vlan-policy"]; ok {
-			tmp["vlan_policy"] = flattenSwitchControllerDynamicPortPolicyPolicyVlanPolicy(i["vlan-policy"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-policy"]; ok {
+			tmp["vlan_policy"] = flattenSwitchControllerDynamicPortPolicyPolicyVlanPolicy(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bounce_port_link"
-		if _, ok := i["bounce-port-link"]; ok {
-			tmp["bounce_port_link"] = flattenSwitchControllerDynamicPortPolicyPolicyBouncePortLink(i["bounce-port-link"], d, pre_append, sv)
+		if cur_v, ok := i["bounce-port-link"]; ok {
+			tmp["bounce_port_link"] = flattenSwitchControllerDynamicPortPolicyPolicyBouncePortLink(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -453,8 +453,8 @@ func flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag_name"
-		if _, ok := i["tag-name"]; ok {
-			tmp["tag_name"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTagsTagName(i["tag-name"], d, pre_append, sv)
+		if cur_v, ok := i["tag-name"]; ok {
+			tmp["tag_name"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTagsTagName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

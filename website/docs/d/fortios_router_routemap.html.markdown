@@ -62,6 +62,8 @@ The `rule` block contains:
 * `set_vpnv4_nexthop` - IP address of VPNv4 next-hop.
 * `set_ip6_nexthop` - IPv6 global address of next hop.
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
+* `set_vpnv6_nexthop` - IPv6 global address of VPNv6 next-hop.
+* `set_vpnv6_nexthop_local` - IPv6 link-local address of VPNv6 next-hop.
 * `set_local_preference` - BGP local preference path attribute.
 * `set_metric` - Metric value.
 * `set_metric_type` - Metric type.

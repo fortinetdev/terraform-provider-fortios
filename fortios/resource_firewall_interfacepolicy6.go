@@ -41,6 +41,11 @@ func resourceFirewallInterfacePolicy6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -362,6 +367,10 @@ func flattenFirewallInterfacePolicy6Policyid(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenFirewallInterfacePolicy6Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallInterfacePolicy6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -407,8 +416,8 @@ func flattenFirewallInterfacePolicy6Srcaddr6(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInterfacePolicy6Srcaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallInterfacePolicy6Srcaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -449,8 +458,8 @@ func flattenFirewallInterfacePolicy6Dstaddr6(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInterfacePolicy6Dstaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallInterfacePolicy6Dstaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -491,8 +500,8 @@ func flattenFirewallInterfacePolicy6Service6(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInterfacePolicy6Service6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallInterfacePolicy6Service6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -604,6 +613,12 @@ func refreshObjectFirewallInterfacePolicy6(d *schema.ResourceData, o map[string]
 	if err = d.Set("policyid", flattenFirewallInterfacePolicy6Policyid(o["policyid"], d, "policyid", sv)); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
 			return fmt.Errorf("Error reading policyid: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", flattenFirewallInterfacePolicy6Uuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
@@ -824,6 +839,10 @@ func expandFirewallInterfacePolicy6Policyid(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandFirewallInterfacePolicy6Uuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallInterfacePolicy6Status(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1021,6 +1040,15 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["policyid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandFirewallInterfacePolicy6Uuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
 		}
 	}
 

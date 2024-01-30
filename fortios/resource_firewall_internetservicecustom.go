@@ -301,33 +301,33 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallInternetServiceCustomEntryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallInternetServiceCustomEntryId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
-		if _, ok := i["addr-mode"]; ok {
-			tmp["addr_mode"] = flattenFirewallInternetServiceCustomEntryAddrMode(i["addr-mode"], d, pre_append, sv)
+		if cur_v, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = flattenFirewallInternetServiceCustomEntryAddrMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenFirewallInternetServiceCustomEntryProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenFirewallInternetServiceCustomEntryProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
-		if _, ok := i["port-range"]; ok {
-			tmp["port_range"] = flattenFirewallInternetServiceCustomEntryPortRange(i["port-range"], d, pre_append, sv)
+		if cur_v, ok := i["port-range"]; ok {
+			tmp["port_range"] = flattenFirewallInternetServiceCustomEntryPortRange(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenFirewallInternetServiceCustomEntryDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenFirewallInternetServiceCustomEntryDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := i["dst6"]; ok {
-			tmp["dst6"] = flattenFirewallInternetServiceCustomEntryDst6(i["dst6"], d, pre_append, sv)
+		if cur_v, ok := i["dst6"]; ok {
+			tmp["dst6"] = flattenFirewallInternetServiceCustomEntryDst6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -376,18 +376,18 @@ func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallInternetServiceCustomEntryPortRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallInternetServiceCustomEntryPortRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
-		if _, ok := i["start-port"]; ok {
-			tmp["start_port"] = flattenFirewallInternetServiceCustomEntryPortRangeStartPort(i["start-port"], d, pre_append, sv)
+		if cur_v, ok := i["start-port"]; ok {
+			tmp["start_port"] = flattenFirewallInternetServiceCustomEntryPortRangeStartPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
-		if _, ok := i["end-port"]; ok {
-			tmp["end_port"] = flattenFirewallInternetServiceCustomEntryPortRangeEndPort(i["end-port"], d, pre_append, sv)
+		if cur_v, ok := i["end-port"]; ok {
+			tmp["end_port"] = flattenFirewallInternetServiceCustomEntryPortRangeEndPort(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -436,8 +436,8 @@ func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInternetServiceCustomEntryDstName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallInternetServiceCustomEntryDstName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -478,8 +478,8 @@ func flattenFirewallInternetServiceCustomEntryDst6(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInternetServiceCustomEntryDst6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallInternetServiceCustomEntryDst6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

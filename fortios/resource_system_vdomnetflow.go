@@ -40,6 +40,49 @@ func resourceSystemVdomNetflow() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"collectors": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 6),
+							Optional:     true,
+							Computed:     true,
+						},
+						"collector_ip": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"collector_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"source_ip": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"collector_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -66,6 +109,16 @@ func resourceSystemVdomNetflow() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -169,6 +222,93 @@ func flattenSystemVdomNetflowVdomNetflow(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemVdomNetflowCollectors(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVdomNetflowCollectorsId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if cur_v, ok := i["collector-ip"]; ok {
+			tmp["collector_ip"] = flattenSystemVdomNetflowCollectorsCollectorIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if cur_v, ok := i["collector-port"]; ok {
+			tmp["collector_port"] = flattenSystemVdomNetflowCollectorsCollectorPort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if cur_v, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = flattenSystemVdomNetflowCollectorsSourceIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenSystemVdomNetflowCollectorsInterfaceSelectMethod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemVdomNetflowCollectorsInterface(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemVdomNetflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomNetflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomNetflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomNetflowCollectorsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomNetflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVdomNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -191,10 +331,32 @@ func flattenSystemVdomNetflowInterface(v interface{}, d *schema.ResourceData, pr
 
 func refreshObjectSystemVdomNetflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("vdom_netflow", flattenSystemVdomNetflowVdomNetflow(o["vdom-netflow"], d, "vdom_netflow", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom-netflow"]) {
 			return fmt.Errorf("Error reading vdom_netflow: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("collectors", flattenSystemVdomNetflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+			if !fortiAPIPatch(o["collectors"]) {
+				return fmt.Errorf("Error reading collectors: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("collectors"); ok {
+			if err = d.Set("collectors", flattenSystemVdomNetflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+				if !fortiAPIPatch(o["collectors"]) {
+					return fmt.Errorf("Error reading collectors: %v", err)
+				}
+			}
 		}
 	}
 
@@ -241,6 +403,82 @@ func expandSystemVdomNetflowVdomNetflow(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemVdomNetflowCollectors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemVdomNetflowCollectorsId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["collector-ip"], _ = expandSystemVdomNetflowCollectorsCollectorIp(d, i["collector_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["collector-port"], _ = expandSystemVdomNetflowCollectorsCollectorPort(d, i["collector_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip"], _ = expandSystemVdomNetflowCollectorsSourceIp(d, i["source_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface-select-method"], _ = expandSystemVdomNetflowCollectorsInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface"], _ = expandSystemVdomNetflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemVdomNetflowCollectorsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemVdomNetflowCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -273,6 +511,19 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData, setArgNil bool, sv strin
 				return &obj, err
 			} else if t != nil {
 				obj["vdom-netflow"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("collectors"); ok || d.HasChange("collectors") {
+		if setArgNil {
+			obj["collectors"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemVdomNetflowCollectors(d, v, "collectors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collectors"] = t
 			}
 		}
 	}

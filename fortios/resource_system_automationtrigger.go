@@ -369,8 +369,8 @@ func flattenSystemAutomationTriggerVdom(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationTriggerVdomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationTriggerVdomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -423,8 +423,8 @@ func flattenSystemAutomationTriggerLogid_Block(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAutomationTriggerLogid_BlockId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAutomationTriggerLogid_BlockId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -493,18 +493,18 @@ func flattenSystemAutomationTriggerFields(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAutomationTriggerFieldsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAutomationTriggerFieldsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationTriggerFieldsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationTriggerFieldsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSystemAutomationTriggerFieldsValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSystemAutomationTriggerFieldsValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

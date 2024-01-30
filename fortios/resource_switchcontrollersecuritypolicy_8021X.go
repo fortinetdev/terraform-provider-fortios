@@ -321,8 +321,8 @@ func flattenSwitchControllerSecurityPolicy8021XUserGroup(v interface{}, d *schem
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerSecurityPolicy8021XUserGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerSecurityPolicy8021XUserGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -226,13 +226,13 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "osu_nai"
-		if _, ok := i["osu-nai"]; ok {
-			tmp["osu_nai"] = flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListOsuNai(i["osu-nai"], d, pre_append, sv)
+		if cur_v, ok := i["osu-nai"]; ok {
+			tmp["osu_nai"] = flattenWirelessControllerHotspot20H2QpOsuProviderNaiNaiListOsuNai(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

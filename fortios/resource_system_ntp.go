@@ -88,6 +88,11 @@ func resourceSystemNtp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"ip_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"interface_select_method": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -297,28 +302,28 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemNtpNtpserverId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemNtpNtpserverId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
-		if _, ok := i["server"]; ok {
-			tmp["server"] = flattenSystemNtpNtpserverServer(i["server"], d, pre_append, sv)
+		if cur_v, ok := i["server"]; ok {
+			tmp["server"] = flattenSystemNtpNtpserverServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ntpv3"
-		if _, ok := i["ntpv3"]; ok {
-			tmp["ntpv3"] = flattenSystemNtpNtpserverNtpv3(i["ntpv3"], d, pre_append, sv)
+		if cur_v, ok := i["ntpv3"]; ok {
+			tmp["ntpv3"] = flattenSystemNtpNtpserverNtpv3(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
-		if _, ok := i["authentication"]; ok {
-			tmp["authentication"] = flattenSystemNtpNtpserverAuthentication(i["authentication"], d, pre_append, sv)
+		if cur_v, ok := i["authentication"]; ok {
+			tmp["authentication"] = flattenSystemNtpNtpserverAuthentication(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
-		if _, ok := i["key"]; ok {
-			tmp["key"] = flattenSystemNtpNtpserverKey(i["key"], d, pre_append, sv)
+		if cur_v, ok := i["key"]; ok {
+			tmp["key"] = flattenSystemNtpNtpserverKey(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["key"] = c
@@ -326,18 +331,23 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"
-		if _, ok := i["key-id"]; ok {
-			tmp["key_id"] = flattenSystemNtpNtpserverKeyId(i["key-id"], d, pre_append, sv)
+		if cur_v, ok := i["key-id"]; ok {
+			tmp["key_id"] = flattenSystemNtpNtpserverKeyId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_type"
+		if cur_v, ok := i["ip-type"]; ok {
+			tmp["ip_type"] = flattenSystemNtpNtpserverIpType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
-		if _, ok := i["interface-select-method"]; ok {
-			tmp["interface_select_method"] = flattenSystemNtpNtpserverInterfaceSelectMethod(i["interface-select-method"], d, pre_append, sv)
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenSystemNtpNtpserverInterfaceSelectMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemNtpNtpserverInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemNtpNtpserverInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -370,6 +380,10 @@ func flattenSystemNtpNtpserverKey(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemNtpNtpserverKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNtpNtpserverIpType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -434,8 +448,8 @@ func flattenSystemNtpInterface(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemNtpInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemNtpInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -611,6 +625,11 @@ func expandSystemNtpNtpserver(d *schema.ResourceData, v interface{}, pre string,
 			tmp["key-id"], _ = expandSystemNtpNtpserverKeyId(d, i["key_id"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ip-type"], _ = expandSystemNtpNtpserverIpType(d, i["ip_type"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface-select-method"], _ = expandSystemNtpNtpserverInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
@@ -650,6 +669,10 @@ func expandSystemNtpNtpserverKey(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemNtpNtpserverKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNtpNtpserverIpType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -225,8 +225,8 @@ func flattenSystemIpsecAggregateMember(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tunnel_name"
-		if _, ok := i["tunnel-name"]; ok {
-			tmp["tunnel_name"] = flattenSystemIpsecAggregateMemberTunnelName(i["tunnel-name"], d, pre_append, sv)
+		if cur_v, ok := i["tunnel-name"]; ok {
+			tmp["tunnel_name"] = flattenSystemIpsecAggregateMemberTunnelName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

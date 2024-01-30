@@ -197,6 +197,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"purdue_level": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"daily_restart": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -223,6 +228,18 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"radius_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"speedtestd_server_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"speedtestd_ctrl_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
@@ -454,6 +471,21 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"ssh_hostkey_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssh_hostkey_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssh_hostkey_password": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+			},
+			"ssh_hostkey": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1248,6 +1280,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"bfd_affinity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"cmdbsvr_affinity": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -1519,6 +1557,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fortigslb_integration": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1751,6 +1794,10 @@ func flattenSystemGlobalFailtime(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemGlobalPurdueLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalDailyRestart(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1772,6 +1819,14 @@ func flattenSystemGlobalWadRestartEndTime(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemGlobalRadiusPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSpeedtestdServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSpeedtestdCtrlPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1948,6 +2003,18 @@ func flattenSystemGlobalSshMacAlgo(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemGlobalSshHostkeyAlgo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSshHostkeyOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSshHostkeyPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalSshHostkey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2546,6 +2613,10 @@ func flattenSystemGlobalHaAffinity(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenSystemGlobalBfdAffinity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalCmdbsvrAffinity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2747,8 +2818,8 @@ func flattenSystemGlobalInternetServiceDownloadList(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemGlobalInternetServiceDownloadListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemGlobalInternetServiceDownloadListId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2773,6 +2844,10 @@ func flattenSystemGlobalInterfaceSubnetUsage(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemGlobalSflowdMaxChildrenNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalFortigslbIntegration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2971,6 +3046,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("purdue_level", flattenSystemGlobalPurdueLevel(o["purdue-level"], d, "purdue_level", sv)); err != nil {
+		if !fortiAPIPatch(o["purdue-level"]) {
+			return fmt.Errorf("Error reading purdue_level: %v", err)
+		}
+	}
+
 	if err = d.Set("daily_restart", flattenSystemGlobalDailyRestart(o["daily-restart"], d, "daily_restart", sv)); err != nil {
 		if !fortiAPIPatch(o["daily-restart"]) {
 			return fmt.Errorf("Error reading daily_restart: %v", err)
@@ -3004,6 +3085,18 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("radius_port", flattenSystemGlobalRadiusPort(o["radius-port"], d, "radius_port", sv)); err != nil {
 		if !fortiAPIPatch(o["radius-port"]) {
 			return fmt.Errorf("Error reading radius_port: %v", err)
+		}
+	}
+
+	if err = d.Set("speedtestd_server_port", flattenSystemGlobalSpeedtestdServerPort(o["speedtestd-server-port"], d, "speedtestd_server_port", sv)); err != nil {
+		if !fortiAPIPatch(o["speedtestd-server-port"]) {
+			return fmt.Errorf("Error reading speedtestd_server_port: %v", err)
+		}
+	}
+
+	if err = d.Set("speedtestd_ctrl_port", flattenSystemGlobalSpeedtestdCtrlPort(o["speedtestd-ctrl-port"], d, "speedtestd_ctrl_port", sv)); err != nil {
+		if !fortiAPIPatch(o["speedtestd-ctrl-port"]) {
+			return fmt.Errorf("Error reading speedtestd_ctrl_port: %v", err)
 		}
 	}
 
@@ -3268,6 +3361,24 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("ssh_hostkey_algo", flattenSystemGlobalSshHostkeyAlgo(o["ssh-hostkey-algo"], d, "ssh_hostkey_algo", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh-hostkey-algo"]) {
 			return fmt.Errorf("Error reading ssh_hostkey_algo: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_hostkey_override", flattenSystemGlobalSshHostkeyOverride(o["ssh-hostkey-override"], d, "ssh_hostkey_override", sv)); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey-override"]) {
+			return fmt.Errorf("Error reading ssh_hostkey_override: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_hostkey_password", flattenSystemGlobalSshHostkeyPassword(o["ssh-hostkey-password"], d, "ssh_hostkey_password", sv)); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey-password"]) {
+			return fmt.Errorf("Error reading ssh_hostkey_password: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_hostkey", flattenSystemGlobalSshHostkey(o["ssh-hostkey"], d, "ssh_hostkey", sv)); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey"]) {
+			return fmt.Errorf("Error reading ssh_hostkey: %v", err)
 		}
 	}
 
@@ -4153,6 +4264,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("bfd_affinity", flattenSystemGlobalBfdAffinity(o["bfd-affinity"], d, "bfd_affinity", sv)); err != nil {
+		if !fortiAPIPatch(o["bfd-affinity"]) {
+			return fmt.Errorf("Error reading bfd_affinity: %v", err)
+		}
+	}
+
 	if err = d.Set("cmdbsvr_affinity", flattenSystemGlobalCmdbsvrAffinity(o["cmdbsvr-affinity"], d, "cmdbsvr_affinity", sv)); err != nil {
 		if !fortiAPIPatch(o["cmdbsvr-affinity"]) {
 			return fmt.Errorf("Error reading cmdbsvr_affinity: %v", err)
@@ -4451,6 +4568,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("fortigslb_integration", flattenSystemGlobalFortigslbIntegration(o["fortigslb-integration"], d, "fortigslb_integration", sv)); err != nil {
+		if !fortiAPIPatch(o["fortigslb-integration"]) {
+			return fmt.Errorf("Error reading fortigslb_integration: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -4584,6 +4707,10 @@ func expandSystemGlobalFailtime(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemGlobalPurdueLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalDailyRestart(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4605,6 +4732,14 @@ func expandSystemGlobalWadRestartEndTime(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemGlobalRadiusPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSpeedtestdServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSpeedtestdCtrlPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4781,6 +4916,18 @@ func expandSystemGlobalSshMacAlgo(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandSystemGlobalSshHostkeyAlgo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSshHostkeyOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSshHostkeyPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalSshHostkey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5372,6 +5519,10 @@ func expandSystemGlobalHaAffinity(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandSystemGlobalBfdAffinity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalCmdbsvrAffinity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5585,6 +5736,10 @@ func expandSystemGlobalInterfaceSubnetUsage(d *schema.ResourceData, v interface{
 }
 
 func expandSystemGlobalSflowdMaxChildrenNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalFortigslbIntegration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5994,6 +6149,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("purdue_level"); ok {
+		if setArgNil {
+			obj["purdue-level"] = nil
+		} else {
+			t, err := expandSystemGlobalPurdueLevel(d, v, "purdue_level", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["purdue-level"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("daily_restart"); ok {
 		if setArgNil {
 			obj["daily-restart"] = nil
@@ -6068,6 +6236,32 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["radius-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("speedtestd_server_port"); ok {
+		if setArgNil {
+			obj["speedtestd-server-port"] = nil
+		} else {
+			t, err := expandSystemGlobalSpeedtestdServerPort(d, v, "speedtestd_server_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["speedtestd-server-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("speedtestd_ctrl_port"); ok {
+		if setArgNil {
+			obj["speedtestd-ctrl-port"] = nil
+		} else {
+			t, err := expandSystemGlobalSpeedtestdCtrlPort(d, v, "speedtestd_ctrl_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["speedtestd-ctrl-port"] = t
 			}
 		}
 	}
@@ -6640,6 +6834,45 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["ssh-hostkey-algo"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ssh_hostkey_override"); ok {
+		if setArgNil {
+			obj["ssh-hostkey-override"] = nil
+		} else {
+			t, err := expandSystemGlobalSshHostkeyOverride(d, v, "ssh_hostkey_override", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-hostkey-override"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ssh_hostkey_password"); ok {
+		if setArgNil {
+			obj["ssh-hostkey-password"] = nil
+		} else {
+			t, err := expandSystemGlobalSshHostkeyPassword(d, v, "ssh_hostkey_password", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-hostkey-password"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ssh_hostkey"); ok {
+		if setArgNil {
+			obj["ssh-hostkey"] = nil
+		} else {
+			t, err := expandSystemGlobalSshHostkey(d, v, "ssh_hostkey", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssh-hostkey"] = t
 			}
 		}
 	}
@@ -8555,6 +8788,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("bfd_affinity"); ok {
+		if setArgNil {
+			obj["bfd-affinity"] = nil
+		} else {
+			t, err := expandSystemGlobalBfdAffinity(d, v, "bfd_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bfd-affinity"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("cmdbsvr_affinity"); ok {
 		if setArgNil {
 			obj["cmdbsvr-affinity"] = nil
@@ -9175,6 +9421,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["sflowd-max-children-num"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("fortigslb_integration"); ok {
+		if setArgNil {
+			obj["fortigslb-integration"] = nil
+		} else {
+			t, err := expandSystemGlobalFortigslbIntegration(d, v, "fortigslb_integration", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortigslb-integration"] = t
 			}
 		}
 	}

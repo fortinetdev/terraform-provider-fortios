@@ -286,23 +286,23 @@ func flattenVirtualPatchProfileExemption(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVirtualPatchProfileExemptionId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVirtualPatchProfileExemptionId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenVirtualPatchProfileExemptionStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenVirtualPatchProfileExemptionStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
-		if _, ok := i["rule"]; ok {
-			tmp["rule"] = flattenVirtualPatchProfileExemptionRule(i["rule"], d, pre_append, sv)
+		if cur_v, ok := i["rule"]; ok {
+			tmp["rule"] = flattenVirtualPatchProfileExemptionRule(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
-		if _, ok := i["device"]; ok {
-			tmp["device"] = flattenVirtualPatchProfileExemptionDevice(i["device"], d, pre_append, sv)
+		if cur_v, ok := i["device"]; ok {
+			tmp["device"] = flattenVirtualPatchProfileExemptionDevice(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -347,8 +347,8 @@ func flattenVirtualPatchProfileExemptionRule(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVirtualPatchProfileExemptionRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVirtualPatchProfileExemptionRuleId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -389,8 +389,8 @@ func flattenVirtualPatchProfileExemptionDevice(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenVirtualPatchProfileExemptionDeviceMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenVirtualPatchProfileExemptionDeviceMac(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

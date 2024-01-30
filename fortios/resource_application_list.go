@@ -588,133 +588,133 @@ func flattenApplicationListEntries(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk"
-		if _, ok := i["risk"]; ok {
-			tmp["risk"] = flattenApplicationListEntriesRisk(i["risk"], d, pre_append, sv)
+		if cur_v, ok := i["risk"]; ok {
+			tmp["risk"] = flattenApplicationListEntriesRisk(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenApplicationListEntriesCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenApplicationListEntriesCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sub_category"
-		if _, ok := i["sub-category"]; ok {
-			tmp["sub_category"] = flattenApplicationListEntriesSubCategory(i["sub-category"], d, pre_append, sv)
+		if cur_v, ok := i["sub-category"]; ok {
+			tmp["sub_category"] = flattenApplicationListEntriesSubCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := i["application"]; ok {
-			tmp["application"] = flattenApplicationListEntriesApplication(i["application"], d, pre_append, sv)
+		if cur_v, ok := i["application"]; ok {
+			tmp["application"] = flattenApplicationListEntriesApplication(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocols"
-		if _, ok := i["protocols"]; ok {
-			tmp["protocols"] = flattenApplicationListEntriesProtocols(i["protocols"], d, pre_append, sv)
+		if cur_v, ok := i["protocols"]; ok {
+			tmp["protocols"] = flattenApplicationListEntriesProtocols(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vendor"
-		if _, ok := i["vendor"]; ok {
-			tmp["vendor"] = flattenApplicationListEntriesVendor(i["vendor"], d, pre_append, sv)
+		if cur_v, ok := i["vendor"]; ok {
+			tmp["vendor"] = flattenApplicationListEntriesVendor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "technology"
-		if _, ok := i["technology"]; ok {
-			tmp["technology"] = flattenApplicationListEntriesTechnology(i["technology"], d, pre_append, sv)
+		if cur_v, ok := i["technology"]; ok {
+			tmp["technology"] = flattenApplicationListEntriesTechnology(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "behavior"
-		if _, ok := i["behavior"]; ok {
-			tmp["behavior"] = flattenApplicationListEntriesBehavior(i["behavior"], d, pre_append, sv)
+		if cur_v, ok := i["behavior"]; ok {
+			tmp["behavior"] = flattenApplicationListEntriesBehavior(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "popularity"
-		if _, ok := i["popularity"]; ok {
-			tmp["popularity"] = flattenApplicationListEntriesPopularity(i["popularity"], d, pre_append, sv)
+		if cur_v, ok := i["popularity"]; ok {
+			tmp["popularity"] = flattenApplicationListEntriesPopularity(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusion"
-		if _, ok := i["exclusion"]; ok {
-			tmp["exclusion"] = flattenApplicationListEntriesExclusion(i["exclusion"], d, pre_append, sv)
+		if cur_v, ok := i["exclusion"]; ok {
+			tmp["exclusion"] = flattenApplicationListEntriesExclusion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
-		if _, ok := i["parameters"]; ok {
-			tmp["parameters"] = flattenApplicationListEntriesParameters(i["parameters"], d, pre_append, sv)
+		if cur_v, ok := i["parameters"]; ok {
+			tmp["parameters"] = flattenApplicationListEntriesParameters(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenApplicationListEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenApplicationListEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenApplicationListEntriesLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenApplicationListEntriesLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_packet"
-		if _, ok := i["log-packet"]; ok {
-			tmp["log_packet"] = flattenApplicationListEntriesLogPacket(i["log-packet"], d, pre_append, sv)
+		if cur_v, ok := i["log-packet"]; ok {
+			tmp["log_packet"] = flattenApplicationListEntriesLogPacket(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_count"
-		if _, ok := i["rate-count"]; ok {
-			tmp["rate_count"] = flattenApplicationListEntriesRateCount(i["rate-count"], d, pre_append, sv)
+		if cur_v, ok := i["rate-count"]; ok {
+			tmp["rate_count"] = flattenApplicationListEntriesRateCount(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_duration"
-		if _, ok := i["rate-duration"]; ok {
-			tmp["rate_duration"] = flattenApplicationListEntriesRateDuration(i["rate-duration"], d, pre_append, sv)
+		if cur_v, ok := i["rate-duration"]; ok {
+			tmp["rate_duration"] = flattenApplicationListEntriesRateDuration(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_mode"
-		if _, ok := i["rate-mode"]; ok {
-			tmp["rate_mode"] = flattenApplicationListEntriesRateMode(i["rate-mode"], d, pre_append, sv)
+		if cur_v, ok := i["rate-mode"]; ok {
+			tmp["rate_mode"] = flattenApplicationListEntriesRateMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_track"
-		if _, ok := i["rate-track"]; ok {
-			tmp["rate_track"] = flattenApplicationListEntriesRateTrack(i["rate-track"], d, pre_append, sv)
+		if cur_v, ok := i["rate-track"]; ok {
+			tmp["rate_track"] = flattenApplicationListEntriesRateTrack(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "session_ttl"
-		if _, ok := i["session-ttl"]; ok {
-			tmp["session_ttl"] = flattenApplicationListEntriesSessionTtl(i["session-ttl"], d, pre_append, sv)
+		if cur_v, ok := i["session-ttl"]; ok {
+			tmp["session_ttl"] = flattenApplicationListEntriesSessionTtl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shaper"
-		if _, ok := i["shaper"]; ok {
-			tmp["shaper"] = flattenApplicationListEntriesShaper(i["shaper"], d, pre_append, sv)
+		if cur_v, ok := i["shaper"]; ok {
+			tmp["shaper"] = flattenApplicationListEntriesShaper(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shaper_reverse"
-		if _, ok := i["shaper-reverse"]; ok {
-			tmp["shaper_reverse"] = flattenApplicationListEntriesShaperReverse(i["shaper-reverse"], d, pre_append, sv)
+		if cur_v, ok := i["shaper-reverse"]; ok {
+			tmp["shaper_reverse"] = flattenApplicationListEntriesShaperReverse(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "per_ip_shaper"
-		if _, ok := i["per-ip-shaper"]; ok {
-			tmp["per_ip_shaper"] = flattenApplicationListEntriesPerIpShaper(i["per-ip-shaper"], d, pre_append, sv)
+		if cur_v, ok := i["per-ip-shaper"]; ok {
+			tmp["per_ip_shaper"] = flattenApplicationListEntriesPerIpShaper(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
-		if _, ok := i["quarantine"]; ok {
-			tmp["quarantine"] = flattenApplicationListEntriesQuarantine(i["quarantine"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine"]; ok {
+			tmp["quarantine"] = flattenApplicationListEntriesQuarantine(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_expiry"
-		if _, ok := i["quarantine-expiry"]; ok {
-			tmp["quarantine_expiry"] = flattenApplicationListEntriesQuarantineExpiry(i["quarantine-expiry"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine-expiry"]; ok {
+			tmp["quarantine_expiry"] = flattenApplicationListEntriesQuarantineExpiry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine_log"
-		if _, ok := i["quarantine-log"]; ok {
-			tmp["quarantine_log"] = flattenApplicationListEntriesQuarantineLog(i["quarantine-log"], d, pre_append, sv)
+		if cur_v, ok := i["quarantine-log"]; ok {
+			tmp["quarantine_log"] = flattenApplicationListEntriesQuarantineLog(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -755,8 +755,8 @@ func flattenApplicationListEntriesRisk(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenApplicationListEntriesRiskLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenApplicationListEntriesRiskLevel(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -797,8 +797,8 @@ func flattenApplicationListEntriesCategory(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -839,8 +839,8 @@ func flattenApplicationListEntriesSubCategory(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesSubCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesSubCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -881,8 +881,8 @@ func flattenApplicationListEntriesApplication(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesApplicationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesApplicationId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -943,8 +943,8 @@ func flattenApplicationListEntriesExclusion(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesExclusionId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesExclusionId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -985,18 +985,18 @@ func flattenApplicationListEntriesParameters(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesParametersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesParametersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := i["members"]; ok {
-			tmp["members"] = flattenApplicationListEntriesParametersMembers(i["members"], d, pre_append, sv)
+		if cur_v, ok := i["members"]; ok {
+			tmp["members"] = flattenApplicationListEntriesParametersMembers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenApplicationListEntriesParametersValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenApplicationListEntriesParametersValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1037,18 +1037,18 @@ func flattenApplicationListEntriesParametersMembers(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListEntriesParametersMembersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListEntriesParametersMembersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenApplicationListEntriesParametersMembersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenApplicationListEntriesParametersMembersName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenApplicationListEntriesParametersMembersValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenApplicationListEntriesParametersMembersValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1161,23 +1161,23 @@ func flattenApplicationListDefaultNetworkServices(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationListDefaultNetworkServicesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationListDefaultNetworkServicesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenApplicationListDefaultNetworkServicesPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenApplicationListDefaultNetworkServicesPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
-		if _, ok := i["services"]; ok {
-			tmp["services"] = flattenApplicationListDefaultNetworkServicesServices(i["services"], d, pre_append, sv)
+		if cur_v, ok := i["services"]; ok {
+			tmp["services"] = flattenApplicationListDefaultNetworkServicesServices(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "violation_action"
-		if _, ok := i["violation-action"]; ok {
-			tmp["violation_action"] = flattenApplicationListDefaultNetworkServicesViolationAction(i["violation-action"], d, pre_append, sv)
+		if cur_v, ok := i["violation-action"]; ok {
+			tmp["violation_action"] = flattenApplicationListDefaultNetworkServicesViolationAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

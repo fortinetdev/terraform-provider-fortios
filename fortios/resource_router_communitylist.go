@@ -243,23 +243,23 @@ func flattenRouterCommunityListRule(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterCommunityListRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterCommunityListRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterCommunityListRuleAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenRouterCommunityListRuleAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
-		if _, ok := i["regexp"]; ok {
-			tmp["regexp"] = flattenRouterCommunityListRuleRegexp(i["regexp"], d, pre_append, sv)
+		if cur_v, ok := i["regexp"]; ok {
+			tmp["regexp"] = flattenRouterCommunityListRuleRegexp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match"
-		if _, ok := i["match"]; ok {
-			tmp["match"] = flattenRouterCommunityListRuleMatch(i["match"], d, pre_append, sv)
+		if cur_v, ok := i["match"]; ok {
+			tmp["match"] = flattenRouterCommunityListRuleMatch(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

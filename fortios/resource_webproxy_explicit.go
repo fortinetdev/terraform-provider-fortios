@@ -439,8 +439,8 @@ func flattenWebProxyExplicitSecureWebProxyCert(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitSecureWebProxyCertName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyExplicitSecureWebProxyCertName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -565,43 +565,43 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policyid"
-		if _, ok := i["policyid"]; ok {
-			tmp["policyid"] = flattenWebProxyExplicitPacPolicyPolicyid(i["policyid"], d, pre_append, sv)
+		if cur_v, ok := i["policyid"]; ok {
+			tmp["policyid"] = flattenWebProxyExplicitPacPolicyPolicyid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenWebProxyExplicitPacPolicyStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenWebProxyExplicitPacPolicyStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenWebProxyExplicitPacPolicySrcaddr(i["srcaddr"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr"]; ok {
+			tmp["srcaddr"] = flattenWebProxyExplicitPacPolicySrcaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
-		if _, ok := i["srcaddr6"]; ok {
-			tmp["srcaddr6"] = flattenWebProxyExplicitPacPolicySrcaddr6(i["srcaddr6"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr6"]; ok {
+			tmp["srcaddr6"] = flattenWebProxyExplicitPacPolicySrcaddr6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenWebProxyExplicitPacPolicyDstaddr(i["dstaddr"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr"]; ok {
+			tmp["dstaddr"] = flattenWebProxyExplicitPacPolicyDstaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_name"
-		if _, ok := i["pac-file-name"]; ok {
-			tmp["pac_file_name"] = flattenWebProxyExplicitPacPolicyPacFileName(i["pac-file-name"], d, pre_append, sv)
+		if cur_v, ok := i["pac-file-name"]; ok {
+			tmp["pac_file_name"] = flattenWebProxyExplicitPacPolicyPacFileName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_data"
-		if _, ok := i["pac-file-data"]; ok {
-			tmp["pac_file_data"] = flattenWebProxyExplicitPacPolicyPacFileData(i["pac-file-data"], d, pre_append, sv)
+		if cur_v, ok := i["pac-file-data"]; ok {
+			tmp["pac_file_data"] = flattenWebProxyExplicitPacPolicyPacFileData(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
-		if _, ok := i["comments"]; ok {
-			tmp["comments"] = flattenWebProxyExplicitPacPolicyComments(i["comments"], d, pre_append, sv)
+		if cur_v, ok := i["comments"]; ok {
+			tmp["comments"] = flattenWebProxyExplicitPacPolicyComments(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -646,8 +646,8 @@ func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -688,8 +688,8 @@ func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -730,8 +730,8 @@ func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitPacPolicyDstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyExplicitPacPolicyDstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

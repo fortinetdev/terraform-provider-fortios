@@ -225,13 +225,13 @@ func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
-		if _, ok := i["switch-id"]; ok {
-			tmp["switch_id"] = flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(i["switch-id"], d, pre_append, sv)
+		if cur_v, ok := i["switch-id"]; ok {
+			tmp["switch_id"] = flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy"
-		if _, ok := i["policy"]; ok {
-			tmp["policy"] = flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(i["policy"], d, pre_append, sv)
+		if cur_v, ok := i["policy"]; ok {
+			tmp["policy"] = flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -369,28 +369,28 @@ func flattenSystemSnmpCommunityHosts(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSnmpCommunityHostsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSnmpCommunityHostsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
-		if _, ok := i["source-ip"]; ok {
-			tmp["source_ip"] = flattenSystemSnmpCommunityHostsSourceIp(i["source-ip"], d, pre_append, sv)
+		if cur_v, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = flattenSystemSnmpCommunityHostsSourceIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemSnmpCommunityHostsIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemSnmpCommunityHostsIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
-		if _, ok := i["ha-direct"]; ok {
-			tmp["ha_direct"] = flattenSystemSnmpCommunityHostsHaDirect(i["ha-direct"], d, pre_append, sv)
+		if cur_v, ok := i["ha-direct"]; ok {
+			tmp["ha_direct"] = flattenSystemSnmpCommunityHostsHaDirect(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
-		if _, ok := i["host-type"]; ok {
-			tmp["host_type"] = flattenSystemSnmpCommunityHostsHostType(i["host-type"], d, pre_append, sv)
+		if cur_v, ok := i["host-type"]; ok {
+			tmp["host_type"] = flattenSystemSnmpCommunityHostsHostType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -447,28 +447,28 @@ func flattenSystemSnmpCommunityHosts6(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSnmpCommunityHosts6Id(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSnmpCommunityHosts6Id(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ipv6"
-		if _, ok := i["source-ipv6"]; ok {
-			tmp["source_ipv6"] = flattenSystemSnmpCommunityHosts6SourceIpv6(i["source-ipv6"], d, pre_append, sv)
+		if cur_v, ok := i["source-ipv6"]; ok {
+			tmp["source_ipv6"] = flattenSystemSnmpCommunityHosts6SourceIpv6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
-		if _, ok := i["ipv6"]; ok {
-			tmp["ipv6"] = flattenSystemSnmpCommunityHosts6Ipv6(i["ipv6"], d, pre_append, sv)
+		if cur_v, ok := i["ipv6"]; ok {
+			tmp["ipv6"] = flattenSystemSnmpCommunityHosts6Ipv6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
-		if _, ok := i["ha-direct"]; ok {
-			tmp["ha_direct"] = flattenSystemSnmpCommunityHosts6HaDirect(i["ha-direct"], d, pre_append, sv)
+		if cur_v, ok := i["ha-direct"]; ok {
+			tmp["ha_direct"] = flattenSystemSnmpCommunityHosts6HaDirect(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
-		if _, ok := i["host-type"]; ok {
-			tmp["host_type"] = flattenSystemSnmpCommunityHosts6HostType(i["host-type"], d, pre_append, sv)
+		if cur_v, ok := i["host-type"]; ok {
+			tmp["host_type"] = flattenSystemSnmpCommunityHosts6HostType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -573,8 +573,8 @@ func flattenSystemSnmpCommunityVdoms(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSnmpCommunityVdomsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSnmpCommunityVdomsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

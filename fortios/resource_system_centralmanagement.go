@@ -380,33 +380,33 @@ func flattenSystemCentralManagementServerList(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemCentralManagementServerListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemCentralManagementServerListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_type"
-		if _, ok := i["server-type"]; ok {
-			tmp["server_type"] = flattenSystemCentralManagementServerListServerType(i["server-type"], d, pre_append, sv)
+		if cur_v, ok := i["server-type"]; ok {
+			tmp["server_type"] = flattenSystemCentralManagementServerListServerType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenSystemCentralManagementServerListAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenSystemCentralManagementServerListAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_address"
-		if _, ok := i["server-address"]; ok {
-			tmp["server_address"] = flattenSystemCentralManagementServerListServerAddress(i["server-address"], d, pre_append, sv)
+		if cur_v, ok := i["server-address"]; ok {
+			tmp["server_address"] = flattenSystemCentralManagementServerListServerAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_address6"
-		if _, ok := i["server-address6"]; ok {
-			tmp["server_address6"] = flattenSystemCentralManagementServerListServerAddress6(i["server-address6"], d, pre_append, sv)
+		if cur_v, ok := i["server-address6"]; ok {
+			tmp["server_address6"] = flattenSystemCentralManagementServerListServerAddress6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fqdn"
-		if _, ok := i["fqdn"]; ok {
-			tmp["fqdn"] = flattenSystemCentralManagementServerListFqdn(i["fqdn"], d, pre_append, sv)
+		if cur_v, ok := i["fqdn"]; ok {
+			tmp["fqdn"] = flattenSystemCentralManagementServerListFqdn(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

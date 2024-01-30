@@ -257,28 +257,28 @@ func flattenEmailfilterIptrustEntries(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenEmailfilterIptrustEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenEmailfilterIptrustEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEmailfilterIptrustEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEmailfilterIptrustEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenEmailfilterIptrustEntriesAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenEmailfilterIptrustEntriesAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
-		if _, ok := i["ip4-subnet"]; ok {
-			tmp["ip4_subnet"] = flattenEmailfilterIptrustEntriesIp4Subnet(i["ip4-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip4-subnet"]; ok {
+			tmp["ip4_subnet"] = flattenEmailfilterIptrustEntriesIp4Subnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
-		if _, ok := i["ip6-subnet"]; ok {
-			tmp["ip6_subnet"] = flattenEmailfilterIptrustEntriesIp6Subnet(i["ip6-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip6-subnet"]; ok {
+			tmp["ip6_subnet"] = flattenEmailfilterIptrustEntriesIp6Subnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

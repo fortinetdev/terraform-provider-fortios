@@ -744,33 +744,33 @@ func flattenReportLayoutPageHeaderHeaderItem(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportLayoutPageHeaderHeaderItemId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportLayoutPageHeaderHeaderItemId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenReportLayoutPageHeaderHeaderItemDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenReportLayoutPageHeaderHeaderItemDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenReportLayoutPageHeaderHeaderItemType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenReportLayoutPageHeaderHeaderItemType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
-		if _, ok := i["style"]; ok {
-			tmp["style"] = flattenReportLayoutPageHeaderHeaderItemStyle(i["style"], d, pre_append, sv)
+		if cur_v, ok := i["style"]; ok {
+			tmp["style"] = flattenReportLayoutPageHeaderHeaderItemStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
-		if _, ok := i["content"]; ok {
-			tmp["content"] = flattenReportLayoutPageHeaderHeaderItemContent(i["content"], d, pre_append, sv)
+		if cur_v, ok := i["content"]; ok {
+			tmp["content"] = flattenReportLayoutPageHeaderHeaderItemContent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
-		if _, ok := i["img-src"]; ok {
-			tmp["img_src"] = flattenReportLayoutPageHeaderHeaderItemImgSrc(i["img-src"], d, pre_append, sv)
+		if cur_v, ok := i["img-src"]; ok {
+			tmp["img_src"] = flattenReportLayoutPageHeaderHeaderItemImgSrc(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -858,33 +858,33 @@ func flattenReportLayoutPageFooterFooterItem(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportLayoutPageFooterFooterItemId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportLayoutPageFooterFooterItemId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenReportLayoutPageFooterFooterItemDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenReportLayoutPageFooterFooterItemDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenReportLayoutPageFooterFooterItemType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenReportLayoutPageFooterFooterItemType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
-		if _, ok := i["style"]; ok {
-			tmp["style"] = flattenReportLayoutPageFooterFooterItemStyle(i["style"], d, pre_append, sv)
+		if cur_v, ok := i["style"]; ok {
+			tmp["style"] = flattenReportLayoutPageFooterFooterItemStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
-		if _, ok := i["content"]; ok {
-			tmp["content"] = flattenReportLayoutPageFooterFooterItemContent(i["content"], d, pre_append, sv)
+		if cur_v, ok := i["content"]; ok {
+			tmp["content"] = flattenReportLayoutPageFooterFooterItemContent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
-		if _, ok := i["img-src"]; ok {
-			tmp["img_src"] = flattenReportLayoutPageFooterFooterItemImgSrc(i["img-src"], d, pre_append, sv)
+		if cur_v, ok := i["img-src"]; ok {
+			tmp["img_src"] = flattenReportLayoutPageFooterFooterItemImgSrc(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -945,123 +945,123 @@ func flattenReportLayoutBodyItem(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportLayoutBodyItemId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportLayoutBodyItemId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenReportLayoutBodyItemDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenReportLayoutBodyItemDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenReportLayoutBodyItemType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenReportLayoutBodyItemType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
-		if _, ok := i["style"]; ok {
-			tmp["style"] = flattenReportLayoutBodyItemStyle(i["style"], d, pre_append, sv)
+		if cur_v, ok := i["style"]; ok {
+			tmp["style"] = flattenReportLayoutBodyItemStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "top_n"
-		if _, ok := i["top-n"]; ok {
-			tmp["top_n"] = flattenReportLayoutBodyItemTopN(i["top-n"], d, pre_append, sv)
+		if cur_v, ok := i["top-n"]; ok {
+			tmp["top_n"] = flattenReportLayoutBodyItemTopN(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hide"
-		if _, ok := i["hide"]; ok {
-			tmp["hide"] = flattenReportLayoutBodyItemHide(i["hide"], d, pre_append, sv)
+		if cur_v, ok := i["hide"]; ok {
+			tmp["hide"] = flattenReportLayoutBodyItemHide(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
-		if _, ok := i["parameters"]; ok {
-			tmp["parameters"] = flattenReportLayoutBodyItemParameters(i["parameters"], d, pre_append, sv)
+		if cur_v, ok := i["parameters"]; ok {
+			tmp["parameters"] = flattenReportLayoutBodyItemParameters(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "text_component"
-		if _, ok := i["text-component"]; ok {
-			tmp["text_component"] = flattenReportLayoutBodyItemTextComponent(i["text-component"], d, pre_append, sv)
+		if cur_v, ok := i["text-component"]; ok {
+			tmp["text_component"] = flattenReportLayoutBodyItemTextComponent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
-		if _, ok := i["content"]; ok {
-			tmp["content"] = flattenReportLayoutBodyItemContent(i["content"], d, pre_append, sv)
+		if cur_v, ok := i["content"]; ok {
+			tmp["content"] = flattenReportLayoutBodyItemContent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
-		if _, ok := i["img-src"]; ok {
-			tmp["img_src"] = flattenReportLayoutBodyItemImgSrc(i["img-src"], d, pre_append, sv)
+		if cur_v, ok := i["img-src"]; ok {
+			tmp["img_src"] = flattenReportLayoutBodyItemImgSrc(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "list_component"
-		if _, ok := i["list-component"]; ok {
-			tmp["list_component"] = flattenReportLayoutBodyItemListComponent(i["list-component"], d, pre_append, sv)
+		if cur_v, ok := i["list-component"]; ok {
+			tmp["list_component"] = flattenReportLayoutBodyItemListComponent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
-		if _, ok := i["list"]; ok {
-			tmp["list"] = flattenReportLayoutBodyItemList(i["list"], d, pre_append, sv)
+		if cur_v, ok := i["list"]; ok {
+			tmp["list"] = flattenReportLayoutBodyItemList(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart"
-		if _, ok := i["chart"]; ok {
-			tmp["chart"] = flattenReportLayoutBodyItemChart(i["chart"], d, pre_append, sv)
+		if cur_v, ok := i["chart"]; ok {
+			tmp["chart"] = flattenReportLayoutBodyItemChart(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_options"
-		if _, ok := i["chart-options"]; ok {
-			tmp["chart_options"] = flattenReportLayoutBodyItemChartOptions(i["chart-options"], d, pre_append, sv)
+		if cur_v, ok := i["chart-options"]; ok {
+			tmp["chart_options"] = flattenReportLayoutBodyItemChartOptions(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_items"
-		if _, ok := i["drill-down-items"]; ok {
-			tmp["drill_down_items"] = flattenReportLayoutBodyItemDrillDownItems(i["drill-down-items"], d, pre_append, sv)
+		if cur_v, ok := i["drill-down-items"]; ok {
+			tmp["drill_down_items"] = flattenReportLayoutBodyItemDrillDownItems(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_types"
-		if _, ok := i["drill-down-types"]; ok {
-			tmp["drill_down_types"] = flattenReportLayoutBodyItemDrillDownTypes(i["drill-down-types"], d, pre_append, sv)
+		if cur_v, ok := i["drill-down-types"]; ok {
+			tmp["drill_down_types"] = flattenReportLayoutBodyItemDrillDownTypes(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_column_widths"
-		if _, ok := i["table-column-widths"]; ok {
-			tmp["table_column_widths"] = flattenReportLayoutBodyItemTableColumnWidths(i["table-column-widths"], d, pre_append, sv)
+		if cur_v, ok := i["table-column-widths"]; ok {
+			tmp["table_column_widths"] = flattenReportLayoutBodyItemTableColumnWidths(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_caption_style"
-		if _, ok := i["table-caption-style"]; ok {
-			tmp["table_caption_style"] = flattenReportLayoutBodyItemTableCaptionStyle(i["table-caption-style"], d, pre_append, sv)
+		if cur_v, ok := i["table-caption-style"]; ok {
+			tmp["table_caption_style"] = flattenReportLayoutBodyItemTableCaptionStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_head_style"
-		if _, ok := i["table-head-style"]; ok {
-			tmp["table_head_style"] = flattenReportLayoutBodyItemTableHeadStyle(i["table-head-style"], d, pre_append, sv)
+		if cur_v, ok := i["table-head-style"]; ok {
+			tmp["table_head_style"] = flattenReportLayoutBodyItemTableHeadStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_odd_row_style"
-		if _, ok := i["table-odd-row-style"]; ok {
-			tmp["table_odd_row_style"] = flattenReportLayoutBodyItemTableOddRowStyle(i["table-odd-row-style"], d, pre_append, sv)
+		if cur_v, ok := i["table-odd-row-style"]; ok {
+			tmp["table_odd_row_style"] = flattenReportLayoutBodyItemTableOddRowStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_even_row_style"
-		if _, ok := i["table-even-row-style"]; ok {
-			tmp["table_even_row_style"] = flattenReportLayoutBodyItemTableEvenRowStyle(i["table-even-row-style"], d, pre_append, sv)
+		if cur_v, ok := i["table-even-row-style"]; ok {
+			tmp["table_even_row_style"] = flattenReportLayoutBodyItemTableEvenRowStyle(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "misc_component"
-		if _, ok := i["misc-component"]; ok {
-			tmp["misc_component"] = flattenReportLayoutBodyItemMiscComponent(i["misc-component"], d, pre_append, sv)
+		if cur_v, ok := i["misc-component"]; ok {
+			tmp["misc_component"] = flattenReportLayoutBodyItemMiscComponent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "column"
-		if _, ok := i["column"]; ok {
-			tmp["column"] = flattenReportLayoutBodyItemColumn(i["column"], d, pre_append, sv)
+		if cur_v, ok := i["column"]; ok {
+			tmp["column"] = flattenReportLayoutBodyItemColumn(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
-		if _, ok := i["title"]; ok {
-			tmp["title"] = flattenReportLayoutBodyItemTitle(i["title"], d, pre_append, sv)
+		if cur_v, ok := i["title"]; ok {
+			tmp["title"] = flattenReportLayoutBodyItemTitle(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1122,18 +1122,18 @@ func flattenReportLayoutBodyItemParameters(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportLayoutBodyItemParametersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportLayoutBodyItemParametersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenReportLayoutBodyItemParametersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenReportLayoutBodyItemParametersName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenReportLayoutBodyItemParametersValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenReportLayoutBodyItemParametersValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1198,13 +1198,13 @@ func flattenReportLayoutBodyItemList(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportLayoutBodyItemListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportLayoutBodyItemListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
-		if _, ok := i["content"]; ok {
-			tmp["content"] = flattenReportLayoutBodyItemListContent(i["content"], d, pre_append, sv)
+		if cur_v, ok := i["content"]; ok {
+			tmp["content"] = flattenReportLayoutBodyItemListContent(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -822,18 +822,18 @@ func flattenRouterMulticastPimSmGlobalRpAddress(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterMulticastPimSmGlobalRpAddressId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterMulticastPimSmGlobalRpAddressId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
-		if _, ok := i["ip-address"]; ok {
-			tmp["ip_address"] = flattenRouterMulticastPimSmGlobalRpAddressIpAddress(i["ip-address"], d, pre_append, sv)
+		if cur_v, ok := i["ip-address"]; ok {
+			tmp["ip_address"] = flattenRouterMulticastPimSmGlobalRpAddressIpAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group"
-		if _, ok := i["group"]; ok {
-			tmp["group"] = flattenRouterMulticastPimSmGlobalRpAddressGroup(i["group"], d, pre_append, sv)
+		if cur_v, ok := i["group"]; ok {
+			tmp["group"] = flattenRouterMulticastPimSmGlobalRpAddressGroup(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -882,113 +882,113 @@ func flattenRouterMulticastInterface(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterMulticastInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterMulticastInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl_threshold"
-		if _, ok := i["ttl-threshold"]; ok {
-			tmp["ttl_threshold"] = flattenRouterMulticastInterfaceTtlThreshold(i["ttl-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["ttl-threshold"]; ok {
+			tmp["ttl_threshold"] = flattenRouterMulticastInterfaceTtlThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pim_mode"
-		if _, ok := i["pim-mode"]; ok {
-			tmp["pim_mode"] = flattenRouterMulticastInterfacePimMode(i["pim-mode"], d, pre_append, sv)
+		if cur_v, ok := i["pim-mode"]; ok {
+			tmp["pim_mode"] = flattenRouterMulticastInterfacePimMode(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive"
-		if _, ok := i["passive"]; ok {
-			tmp["passive"] = flattenRouterMulticastInterfacePassive(i["passive"], d, pre_append, sv)
+		if cur_v, ok := i["passive"]; ok {
+			tmp["passive"] = flattenRouterMulticastInterfacePassive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
-		if _, ok := i["bfd"]; ok {
-			tmp["bfd"] = flattenRouterMulticastInterfaceBfd(i["bfd"], d, pre_append, sv)
+		if cur_v, ok := i["bfd"]; ok {
+			tmp["bfd"] = flattenRouterMulticastInterfaceBfd(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbour_filter"
-		if _, ok := i["neighbour-filter"]; ok {
-			tmp["neighbour_filter"] = flattenRouterMulticastInterfaceNeighbourFilter(i["neighbour-filter"], d, pre_append, sv)
+		if cur_v, ok := i["neighbour-filter"]; ok {
+			tmp["neighbour_filter"] = flattenRouterMulticastInterfaceNeighbourFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
-		if _, ok := i["hello-interval"]; ok {
-			tmp["hello_interval"] = flattenRouterMulticastInterfaceHelloInterval(i["hello-interval"], d, pre_append, sv)
+		if cur_v, ok := i["hello-interval"]; ok {
+			tmp["hello_interval"] = flattenRouterMulticastInterfaceHelloInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_holdtime"
-		if _, ok := i["hello-holdtime"]; ok {
-			tmp["hello_holdtime"] = flattenRouterMulticastInterfaceHelloHoldtime(i["hello-holdtime"], d, pre_append, sv)
+		if cur_v, ok := i["hello-holdtime"]; ok {
+			tmp["hello_holdtime"] = flattenRouterMulticastInterfaceHelloHoldtime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cisco_exclude_genid"
-		if _, ok := i["cisco-exclude-genid"]; ok {
-			tmp["cisco_exclude_genid"] = flattenRouterMulticastInterfaceCiscoExcludeGenid(i["cisco-exclude-genid"], d, pre_append, sv)
+		if cur_v, ok := i["cisco-exclude-genid"]; ok {
+			tmp["cisco_exclude_genid"] = flattenRouterMulticastInterfaceCiscoExcludeGenid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dr_priority"
-		if _, ok := i["dr-priority"]; ok {
-			tmp["dr_priority"] = flattenRouterMulticastInterfaceDrPriority(i["dr-priority"], d, pre_append, sv)
+		if cur_v, ok := i["dr-priority"]; ok {
+			tmp["dr_priority"] = flattenRouterMulticastInterfaceDrPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "propagation_delay"
-		if _, ok := i["propagation-delay"]; ok {
-			tmp["propagation_delay"] = flattenRouterMulticastInterfacePropagationDelay(i["propagation-delay"], d, pre_append, sv)
+		if cur_v, ok := i["propagation-delay"]; ok {
+			tmp["propagation_delay"] = flattenRouterMulticastInterfacePropagationDelay(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "state_refresh_interval"
-		if _, ok := i["state-refresh-interval"]; ok {
-			tmp["state_refresh_interval"] = flattenRouterMulticastInterfaceStateRefreshInterval(i["state-refresh-interval"], d, pre_append, sv)
+		if cur_v, ok := i["state-refresh-interval"]; ok {
+			tmp["state_refresh_interval"] = flattenRouterMulticastInterfaceStateRefreshInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_candidate"
-		if _, ok := i["rp-candidate"]; ok {
-			tmp["rp_candidate"] = flattenRouterMulticastInterfaceRpCandidate(i["rp-candidate"], d, pre_append, sv)
+		if cur_v, ok := i["rp-candidate"]; ok {
+			tmp["rp_candidate"] = flattenRouterMulticastInterfaceRpCandidate(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_candidate_group"
-		if _, ok := i["rp-candidate-group"]; ok {
-			tmp["rp_candidate_group"] = flattenRouterMulticastInterfaceRpCandidateGroup(i["rp-candidate-group"], d, pre_append, sv)
+		if cur_v, ok := i["rp-candidate-group"]; ok {
+			tmp["rp_candidate_group"] = flattenRouterMulticastInterfaceRpCandidateGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_candidate_priority"
-		if _, ok := i["rp-candidate-priority"]; ok {
-			tmp["rp_candidate_priority"] = flattenRouterMulticastInterfaceRpCandidatePriority(i["rp-candidate-priority"], d, pre_append, sv)
+		if cur_v, ok := i["rp-candidate-priority"]; ok {
+			tmp["rp_candidate_priority"] = flattenRouterMulticastInterfaceRpCandidatePriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_candidate_interval"
-		if _, ok := i["rp-candidate-interval"]; ok {
-			tmp["rp_candidate_interval"] = flattenRouterMulticastInterfaceRpCandidateInterval(i["rp-candidate-interval"], d, pre_append, sv)
+		if cur_v, ok := i["rp-candidate-interval"]; ok {
+			tmp["rp_candidate_interval"] = flattenRouterMulticastInterfaceRpCandidateInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "multicast_flow"
-		if _, ok := i["multicast-flow"]; ok {
-			tmp["multicast_flow"] = flattenRouterMulticastInterfaceMulticastFlow(i["multicast-flow"], d, pre_append, sv)
+		if cur_v, ok := i["multicast-flow"]; ok {
+			tmp["multicast_flow"] = flattenRouterMulticastInterfaceMulticastFlow(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "static_group"
-		if _, ok := i["static-group"]; ok {
-			tmp["static_group"] = flattenRouterMulticastInterfaceStaticGroup(i["static-group"], d, pre_append, sv)
+		if cur_v, ok := i["static-group"]; ok {
+			tmp["static_group"] = flattenRouterMulticastInterfaceStaticGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpf_nbr_fail_back"
-		if _, ok := i["rpf-nbr-fail-back"]; ok {
-			tmp["rpf_nbr_fail_back"] = flattenRouterMulticastInterfaceRpfNbrFailBack(i["rpf-nbr-fail-back"], d, pre_append, sv)
+		if cur_v, ok := i["rpf-nbr-fail-back"]; ok {
+			tmp["rpf_nbr_fail_back"] = flattenRouterMulticastInterfaceRpfNbrFailBack(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpf_nbr_fail_back_filter"
-		if _, ok := i["rpf-nbr-fail-back-filter"]; ok {
-			tmp["rpf_nbr_fail_back_filter"] = flattenRouterMulticastInterfaceRpfNbrFailBackFilter(i["rpf-nbr-fail-back-filter"], d, pre_append, sv)
+		if cur_v, ok := i["rpf-nbr-fail-back-filter"]; ok {
+			tmp["rpf_nbr_fail_back_filter"] = flattenRouterMulticastInterfaceRpfNbrFailBackFilter(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "join_group"
-		if _, ok := i["join-group"]; ok {
-			tmp["join_group"] = flattenRouterMulticastInterfaceJoinGroup(i["join-group"], d, pre_append, sv)
+		if cur_v, ok := i["join-group"]; ok {
+			tmp["join_group"] = flattenRouterMulticastInterfaceJoinGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp"
-		if _, ok := i["igmp"]; ok {
-			tmp["igmp"] = flattenRouterMulticastInterfaceIgmp(i["igmp"], d, pre_append, sv)
+		if cur_v, ok := i["igmp"]; ok {
+			tmp["igmp"] = flattenRouterMulticastInterfaceIgmp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1105,8 +1105,8 @@ func flattenRouterMulticastInterfaceJoinGroup(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenRouterMulticastInterfaceJoinGroupAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenRouterMulticastInterfaceJoinGroupAddress(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -30,7 +30,7 @@ The following arguments are supported:
 * `monthly_fee` - Monthly fee of dataplan (0 - 100000, in local currency).
 * `billing_date` - Billing day of the month (1 - 31).
 * `overage` - Enable/disable dataplan overage detection. Valid values: `disable`, `enable`.
-* `preferred_subnet` - Preferred subnet mask (8 - 32).
+* `preferred_subnet` - Preferred subnet mask. On FortiOS versions 6.4.2-7.0.1: 8 - 32. On FortiOS versions 7.0.2-7.2.0: 0 - 32.
 * `private_network` - Enable/disable dataplan private network support. Valid values: `disable`, `enable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

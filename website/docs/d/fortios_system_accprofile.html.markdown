@@ -40,6 +40,11 @@ The following attributes are exported:
 * `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
+* `cli_diagnose` - Enable/disable permission to run diagnostic commands.
+* `cli_get` - Enable/disable permission to run get commands.
+* `cli_show` - Enable/disable permission to run show commands.
+* `cli_exec` - Enable/disable permission to run execute commands.
+* `cli_config` - Enable/disable permission to run config commands.
 * `system_diagnostics` - Enable/disable permission to run system diagnostic commands.
 * `system_execute_ssh` - Enable/disable permission to execute SSH commands.
 * `system_execute_telnet` - Enable/disable permission to execute TELNET commands.

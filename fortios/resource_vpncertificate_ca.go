@@ -42,8 +42,9 @@ func resourceVpnCertificateCa() *schema.Resource {
 				Required:     true,
 			},
 			"ca": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -295,12 +296,6 @@ func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("name", flattenVpnCertificateCaName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
-		}
-	}
-
-	if err = d.Set("ca", flattenVpnCertificateCaCa(o["ca"], d, "ca", sv)); err != nil {
-		if !fortiAPIPatch(o["ca"]) {
-			return fmt.Errorf("Error reading ca: %v", err)
 		}
 	}
 

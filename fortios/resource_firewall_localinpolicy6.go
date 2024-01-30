@@ -305,8 +305,8 @@ func flattenFirewallLocalInPolicy6Srcaddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallLocalInPolicy6SrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallLocalInPolicy6SrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -351,8 +351,8 @@ func flattenFirewallLocalInPolicy6Dstaddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallLocalInPolicy6DstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallLocalInPolicy6DstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -401,8 +401,8 @@ func flattenFirewallLocalInPolicy6Service(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallLocalInPolicy6ServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallLocalInPolicy6ServiceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -459,9 +459,42 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if err = d.Set("intf", flattenFirewallLocalInPolicy6Intf(o["intf"], d, "intf", sv)); err != nil {
-		if !fortiAPIPatch(o["intf"]) {
-			return fmt.Errorf("Error reading intf: %v", err)
+	{
+		v := flattenFirewallLocalInPolicy6Intf(o["intf"], d, "intf", sv)
+		vx := ""
+		bstring := false
+		new_version_map := map[string][]string{
+			">=": []string{"7.4.2"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["name"]; ok {
+						if xv, ok := i["name"].(string); ok {
+							vx += xv
+							if k < len(l)-1 {
+								vx += ", "
+							}
+						}
+					}
+				}
+			}
+			bstring = true
+		}
+		if bstring == true {
+			if err = d.Set("intf", vx); err != nil {
+				if !fortiAPIPatch(o["intf"]) {
+					return fmt.Errorf("Error reading intf: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("intf", v); err != nil {
+				if !fortiAPIPatch(o["intf"]) {
+					return fmt.Errorf("Error reading intf: %v", err)
+				}
+			}
 		}
 	}
 
@@ -724,7 +757,25 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["intf"] = t
+			new_version_map := map[string][]string{
+				">=": []string{"7.4.2"},
+			}
+			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				vx := fmt.Sprintf("%v", t)
+				vxx := strings.Split(vx, ", ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["name"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["intf"] = tmps
+			} else {
+				obj["intf"] = t
+			}
 		}
 	}
 

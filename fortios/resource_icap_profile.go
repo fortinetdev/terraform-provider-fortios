@@ -559,23 +559,23 @@ func flattenIcapProfileIcapHeaders(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenIcapProfileIcapHeadersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenIcapProfileIcapHeadersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenIcapProfileIcapHeadersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenIcapProfileIcapHeadersName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
-		if _, ok := i["content"]; ok {
-			tmp["content"] = flattenIcapProfileIcapHeadersContent(i["content"], d, pre_append, sv)
+		if cur_v, ok := i["content"]; ok {
+			tmp["content"] = flattenIcapProfileIcapHeadersContent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
-		if _, ok := i["base64-encoding"]; ok {
-			tmp["base64_encoding"] = flattenIcapProfileIcapHeadersBase64Encoding(i["base64-encoding"], d, pre_append, sv)
+		if cur_v, ok := i["base64-encoding"]; ok {
+			tmp["base64_encoding"] = flattenIcapProfileIcapHeadersBase64Encoding(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -628,28 +628,28 @@ func flattenIcapProfileRespmodForwardRules(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenIcapProfileRespmodForwardRulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenIcapProfileRespmodForwardRulesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
-		if _, ok := i["host"]; ok {
-			tmp["host"] = flattenIcapProfileRespmodForwardRulesHost(i["host"], d, pre_append, sv)
+		if cur_v, ok := i["host"]; ok {
+			tmp["host"] = flattenIcapProfileRespmodForwardRulesHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_group"
-		if _, ok := i["header-group"]; ok {
-			tmp["header_group"] = flattenIcapProfileRespmodForwardRulesHeaderGroup(i["header-group"], d, pre_append, sv)
+		if cur_v, ok := i["header-group"]; ok {
+			tmp["header_group"] = flattenIcapProfileRespmodForwardRulesHeaderGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenIcapProfileRespmodForwardRulesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenIcapProfileRespmodForwardRulesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_resp_status_code"
-		if _, ok := i["http-resp-status-code"]; ok {
-			tmp["http_resp_status_code"] = flattenIcapProfileRespmodForwardRulesHttpRespStatusCode(i["http-resp-status-code"], d, pre_append, sv)
+		if cur_v, ok := i["http-resp-status-code"]; ok {
+			tmp["http_resp_status_code"] = flattenIcapProfileRespmodForwardRulesHttpRespStatusCode(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -694,23 +694,23 @@ func flattenIcapProfileRespmodForwardRulesHeaderGroup(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenIcapProfileRespmodForwardRulesHeaderGroupId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenIcapProfileRespmodForwardRulesHeaderGroupId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
-		if _, ok := i["header-name"]; ok {
-			tmp["header_name"] = flattenIcapProfileRespmodForwardRulesHeaderGroupHeaderName(i["header-name"], d, pre_append, sv)
+		if cur_v, ok := i["header-name"]; ok {
+			tmp["header_name"] = flattenIcapProfileRespmodForwardRulesHeaderGroupHeaderName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
-		if _, ok := i["header"]; ok {
-			tmp["header"] = flattenIcapProfileRespmodForwardRulesHeaderGroupHeader(i["header"], d, pre_append, sv)
+		if cur_v, ok := i["header"]; ok {
+			tmp["header"] = flattenIcapProfileRespmodForwardRulesHeaderGroupHeader(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
-		if _, ok := i["case-sensitivity"]; ok {
-			tmp["case_sensitivity"] = flattenIcapProfileRespmodForwardRulesHeaderGroupCaseSensitivity(i["case-sensitivity"], d, pre_append, sv)
+		if cur_v, ok := i["case-sensitivity"]; ok {
+			tmp["case_sensitivity"] = flattenIcapProfileRespmodForwardRulesHeaderGroupCaseSensitivity(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -767,8 +767,8 @@ func flattenIcapProfileRespmodForwardRulesHttpRespStatusCode(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
-		if _, ok := i["code"]; ok {
-			tmp["code"] = flattenIcapProfileRespmodForwardRulesHttpRespStatusCodeCode(i["code"], d, pre_append, sv)
+		if cur_v, ok := i["code"]; ok {
+			tmp["code"] = flattenIcapProfileRespmodForwardRulesHttpRespStatusCodeCode(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

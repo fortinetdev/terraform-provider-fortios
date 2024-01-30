@@ -36,7 +36,7 @@ resource "fortios_vpncertificate_setting" "trname" {
 
 The following arguments are supported:
 
-* `ocsp_status` - Enable/disable receiving certificates using the OCSP. Valid values: `enable`, `disable`.
+* `ocsp_status` - Enable/disable receiving certificates using the OCSP.
 * `ocsp_option` - Specify whether the OCSP URL is from certificate or configured OCSP server. Valid values: `certificate`, `server`.
 * `proxy` - Proxy server FQDN or IP for OCSP/CA queries during certificate verification.
 * `proxy_port` - Proxy server port (1 - 65535, default = 8080).

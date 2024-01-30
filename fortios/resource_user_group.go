@@ -445,8 +445,8 @@ func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserGroupMemberName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserGroupMemberName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -487,18 +487,18 @@ func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string, sv
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserGroupMatchId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenUserGroupMatchId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"
-		if _, ok := i["server-name"]; ok {
-			tmp["server_name"] = flattenUserGroupMatchServerName(i["server-name"], d, pre_append, sv)
+		if cur_v, ok := i["server-name"]; ok {
+			tmp["server_name"] = flattenUserGroupMatchServerName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_name"
-		if _, ok := i["group-name"]; ok {
-			tmp["group_name"] = flattenUserGroupMatchGroupName(i["group-name"], d, pre_append, sv)
+		if cur_v, ok := i["group-name"]; ok {
+			tmp["group_name"] = flattenUserGroupMatchGroupName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -599,23 +599,23 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserGroupGuestId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenUserGroupGuestId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
-		if _, ok := i["user-id"]; ok {
-			tmp["user_id"] = flattenUserGroupGuestUserId(i["user-id"], d, pre_append, sv)
+		if cur_v, ok := i["user-id"]; ok {
+			tmp["user_id"] = flattenUserGroupGuestUserId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserGroupGuestName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserGroupGuestName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = flattenUserGroupGuestPassword(i["password"], d, pre_append, sv)
+		if cur_v, ok := i["password"]; ok {
+			tmp["password"] = flattenUserGroupGuestPassword(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -623,33 +623,33 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"
-		if _, ok := i["mobile-phone"]; ok {
-			tmp["mobile_phone"] = flattenUserGroupGuestMobilePhone(i["mobile-phone"], d, pre_append, sv)
+		if cur_v, ok := i["mobile-phone"]; ok {
+			tmp["mobile_phone"] = flattenUserGroupGuestMobilePhone(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sponsor"
-		if _, ok := i["sponsor"]; ok {
-			tmp["sponsor"] = flattenUserGroupGuestSponsor(i["sponsor"], d, pre_append, sv)
+		if cur_v, ok := i["sponsor"]; ok {
+			tmp["sponsor"] = flattenUserGroupGuestSponsor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company"
-		if _, ok := i["company"]; ok {
-			tmp["company"] = flattenUserGroupGuestCompany(i["company"], d, pre_append, sv)
+		if cur_v, ok := i["company"]; ok {
+			tmp["company"] = flattenUserGroupGuestCompany(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
-		if _, ok := i["email"]; ok {
-			tmp["email"] = flattenUserGroupGuestEmail(i["email"], d, pre_append, sv)
+		if cur_v, ok := i["email"]; ok {
+			tmp["email"] = flattenUserGroupGuestEmail(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiration"
-		if _, ok := i["expiration"]; ok {
-			tmp["expiration"] = flattenUserGroupGuestExpiration(i["expiration"], d, pre_append, sv)
+		if cur_v, ok := i["expiration"]; ok {
+			tmp["expiration"] = flattenUserGroupGuestExpiration(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenUserGroupGuestComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenUserGroupGuestComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

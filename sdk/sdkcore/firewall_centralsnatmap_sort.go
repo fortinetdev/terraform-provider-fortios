@@ -12,15 +12,13 @@ import (
 // sortFirewallCentralsnatmapItem contains the parameters for each Policy item
 type sortFirewallCentralsnatmapItem struct {
 	policyid int
-	name     string
-	action   string
 }
 
 func getPolicyListFirewallCentralsnatmap(c *FortiSDKClient, vdomparam string) (itemList []sortFirewallCentralsnatmapItem, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/central-snat-map"
 
-	specialparams := "format=policyid|name|action"
+	specialparams := "format=policyid"
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.SendWithSpecialParams(specialparams, vdomparam)
@@ -62,8 +60,6 @@ func getPolicyListFirewallCentralsnatmap(c *FortiSDKClient, vdomparam string) (i
 			members = append(members,
 				sortFirewallCentralsnatmapItem{
 					policyid: int(c["policyid"].(float64)),
-					name:     c["name"].(string),
-					action:   c["action"].(string),
 				})
 		}
 
@@ -91,35 +87,6 @@ func bPolicyListSortedFirewallCentralsnatmap(itemList []sortFirewallCentralsnatm
 				curItemMap := make(map[string]int)
 				for index, item := range itemList {
 					curKeyValue := strconv.Itoa(item.policyid)
-					curItemMap[curKeyValue] = index
-				}
-				for j := 0; j < len(manual_order)-1; j++ {
-					indexL, okL := curItemMap[manual_order[j]]
-					indexR, okR := curItemMap[manual_order[j+1]]
-					if okL && okR && indexL > indexR {
-						bsorted = false
-						return
-					}
-				}
-			}
-		}
-	}
-	if sortby == "name" {
-		for i := 0; i < len(itemList)-1; i++ {
-			if sortdirection == "ascending" {
-				if itemList[i].name > itemList[i+1].name {
-					bsorted = false
-					return
-				}
-			} else if sortdirection == "descending" {
-				if itemList[i].name < itemList[i+1].name {
-					bsorted = false
-					return
-				}
-			} else if sortdirection == "manual" {
-				curItemMap := make(map[string]int)
-				for index, item := range itemList {
-					curKeyValue := item.name
 					curItemMap[curKeyValue] = index
 				}
 				for j := 0; j < len(manual_order)-1; j++ {
@@ -205,38 +172,6 @@ func sortPolicyListFirewallCentralsnatmap(itemList []sortFirewallCentralsnatmapI
 			return
 		}
 	}
-	if sortby == "name" {
-		if sortdirection == "ascending" {
-			sort.Slice(itemList, func(i, j int) bool {
-				return itemList[i].name < itemList[j].name
-			})
-			targetItemOrder = itemList
-		} else if sortdirection == "descending" {
-			sort.Slice(itemList, func(i, j int) bool {
-				return itemList[i].name > itemList[j].name
-			})
-			targetItemOrder = itemList
-		} else if sortdirection == "manual" {
-			curItemMap := make(map[string]sortFirewallCentralsnatmapItem)
-			for _, item := range itemList {
-				curIndex := item.name
-				curItemMap[curIndex] = item
-			}
-			for _, val := range manual_order {
-				if item, ok := curItemMap[val]; ok {
-					targetItemOrder = append(targetItemOrder, item)
-				}
-			}
-		}
-	}
-
-	for i := 0; i < len(targetItemOrder)-1; i++ {
-		err = moveAfterFirewallCentralsnatmap(targetItemOrder[i+1].policyid, targetItemOrder[i].policyid, c, vdomparam)
-		if err != nil {
-			err = fmt.Errorf("sort err %s", err)
-			return
-		}
-	}
 
 	return nil
 }
@@ -285,8 +220,6 @@ func (c *FortiSDKClient) ReadFirewallCentralsnatmapSort(sortby, sortdirection st
 	for _, item := range itemList {
 		curItemMap := make(map[string]interface{})
 		curItemMap["policyid"] = item.policyid
-		curItemMap["name"] = item.name
-		curItemMap["action"] = item.action
 		itemMapList = append(itemMapList, curItemMap)
 	}
 

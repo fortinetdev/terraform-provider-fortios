@@ -250,28 +250,28 @@ func flattenSwitchControllerQosIpDscpMapMap(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerQosIpDscpMapMapName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerQosIpDscpMapMapName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cos_queue"
-		if _, ok := i["cos-queue"]; ok {
-			tmp["cos_queue"] = flattenSwitchControllerQosIpDscpMapMapCosQueue(i["cos-queue"], d, pre_append, sv)
+		if cur_v, ok := i["cos-queue"]; ok {
+			tmp["cos_queue"] = flattenSwitchControllerQosIpDscpMapMapCosQueue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffserv"
-		if _, ok := i["diffserv"]; ok {
-			tmp["diffserv"] = flattenSwitchControllerQosIpDscpMapMapDiffserv(i["diffserv"], d, pre_append, sv)
+		if cur_v, ok := i["diffserv"]; ok {
+			tmp["diffserv"] = flattenSwitchControllerQosIpDscpMapMapDiffserv(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_precedence"
-		if _, ok := i["ip-precedence"]; ok {
-			tmp["ip_precedence"] = flattenSwitchControllerQosIpDscpMapMapIpPrecedence(i["ip-precedence"], d, pre_append, sv)
+		if cur_v, ok := i["ip-precedence"]; ok {
+			tmp["ip_precedence"] = flattenSwitchControllerQosIpDscpMapMapIpPrecedence(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSwitchControllerQosIpDscpMapMapValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSwitchControllerQosIpDscpMapMapValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

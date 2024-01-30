@@ -37,8 +37,8 @@ The following arguments are supported:
 The `interface` block supports:
 
 * `name` - Interface name.
-* `hello_interval` - Interval between sending PIM hello messages  (1 - 65535 sec, default = 30)..
-* `hello_holdtime` - Time before old neighbour information expires (1 - 65535 sec, default = 105).
+* `hello_interval` - Interval between sending PIM hello messages in seconds (1 - 65535, default = 30).
+* `hello_holdtime` - Time before old neighbor information expires in seconds (1 - 65535, default = 105).
 
 The `pim_sm_global` block supports:
 

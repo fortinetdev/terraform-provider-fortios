@@ -265,18 +265,18 @@ func flattenSystemZoneTagging(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemZoneTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemZoneTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenSystemZoneTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenSystemZoneTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenSystemZoneTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenSystemZoneTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -321,8 +321,8 @@ func flattenSystemZoneTaggingTags(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemZoneTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemZoneTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -371,8 +371,8 @@ func flattenSystemZoneInterface(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemZoneInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemZoneInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

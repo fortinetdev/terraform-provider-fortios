@@ -332,6 +332,31 @@ func resourceSystemAccprofile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"cli_diagnose": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cli_get": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cli_show": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cli_exec": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cli_config": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"system_diagnostics": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -903,6 +928,26 @@ func flattenSystemAccprofileAdmintimeout(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemAccprofileCliDiagnose(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileCliGet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileCliShow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileCliExec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileCliConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAccprofileSystemDiagnostics(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1097,6 +1142,36 @@ func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("admintimeout", flattenSystemAccprofileAdmintimeout(o["admintimeout"], d, "admintimeout", sv)); err != nil {
 		if !fortiAPIPatch(o["admintimeout"]) {
 			return fmt.Errorf("Error reading admintimeout: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_diagnose", flattenSystemAccprofileCliDiagnose(o["cli-diagnose"], d, "cli_diagnose", sv)); err != nil {
+		if !fortiAPIPatch(o["cli-diagnose"]) {
+			return fmt.Errorf("Error reading cli_diagnose: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_get", flattenSystemAccprofileCliGet(o["cli-get"], d, "cli_get", sv)); err != nil {
+		if !fortiAPIPatch(o["cli-get"]) {
+			return fmt.Errorf("Error reading cli_get: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_show", flattenSystemAccprofileCliShow(o["cli-show"], d, "cli_show", sv)); err != nil {
+		if !fortiAPIPatch(o["cli-show"]) {
+			return fmt.Errorf("Error reading cli_show: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_exec", flattenSystemAccprofileCliExec(o["cli-exec"], d, "cli_exec", sv)); err != nil {
+		if !fortiAPIPatch(o["cli-exec"]) {
+			return fmt.Errorf("Error reading cli_exec: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_config", flattenSystemAccprofileCliConfig(o["cli-config"], d, "cli_config", sv)); err != nil {
+		if !fortiAPIPatch(o["cli-config"]) {
+			return fmt.Errorf("Error reading cli_config: %v", err)
 		}
 	}
 
@@ -1525,6 +1600,26 @@ func expandSystemAccprofileAdmintimeout(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemAccprofileCliDiagnose(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileCliGet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileCliShow(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileCliExec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileCliConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAccprofileSystemDiagnostics(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1726,6 +1821,51 @@ func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["admintimeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cli_diagnose"); ok {
+		t, err := expandSystemAccprofileCliDiagnose(d, v, "cli_diagnose", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cli-diagnose"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cli_get"); ok {
+		t, err := expandSystemAccprofileCliGet(d, v, "cli_get", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cli-get"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cli_show"); ok {
+		t, err := expandSystemAccprofileCliShow(d, v, "cli_show", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cli-show"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cli_exec"); ok {
+		t, err := expandSystemAccprofileCliExec(d, v, "cli_exec", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cli-exec"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cli_config"); ok {
+		t, err := expandSystemAccprofileCliConfig(d, v, "cli_config", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cli-config"] = t
 		}
 	}
 

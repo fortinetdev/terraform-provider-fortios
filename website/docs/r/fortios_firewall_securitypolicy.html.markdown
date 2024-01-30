@@ -111,9 +111,10 @@ The following arguments are supported:
 * `file_filter_profile` - Name of an existing file-filter profile.
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
-* `voip_profile` - Name of an existing VoIP profile.
+* `voip_profile` - Name of an existing VoIP (voipd) profile.
 * `ips_voip_filter` - Name of an existing VoIP (ips) profile.
 * `sctp_filter_profile` - Name of an existing SCTP filter profile.
+* `diameter_filter_profile` - Name of an existing Diameter filter profile.
 * `virtual_patch_profile` - Name of an existing virtual-patch profile.
 * `icap_profile` - Name of an existing ICAP profile.
 * `cifs_profile` - Name of an existing CIFS profile.

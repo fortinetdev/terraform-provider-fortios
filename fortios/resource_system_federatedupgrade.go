@@ -68,6 +68,20 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"known_ha_members": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"serial": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"node_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -251,6 +265,48 @@ func flattenSystemFederatedUpgradeHaRebootController(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenSystemFederatedUpgradeKnownHaMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+		if cur_v, ok := i["serial"]; ok {
+			tmp["serial"] = flattenSystemFederatedUpgradeKnownHaMembersSerial(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "serial", d)
+	return result
+}
+
+func flattenSystemFederatedUpgradeKnownHaMembersSerial(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -276,43 +332,43 @@ func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
-		if _, ok := i["serial"]; ok {
-			tmp["serial"] = flattenSystemFederatedUpgradeNodeListSerial(i["serial"], d, pre_append, sv)
+		if cur_v, ok := i["serial"]; ok {
+			tmp["serial"] = flattenSystemFederatedUpgradeNodeListSerial(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timing"
-		if _, ok := i["timing"]; ok {
-			tmp["timing"] = flattenSystemFederatedUpgradeNodeListTiming(i["timing"], d, pre_append, sv)
+		if cur_v, ok := i["timing"]; ok {
+			tmp["timing"] = flattenSystemFederatedUpgradeNodeListTiming(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_minutes"
-		if _, ok := i["maximum-minutes"]; ok {
-			tmp["maximum_minutes"] = flattenSystemFederatedUpgradeNodeListMaximumMinutes(i["maximum-minutes"], d, pre_append, sv)
+		if cur_v, ok := i["maximum-minutes"]; ok {
+			tmp["maximum_minutes"] = flattenSystemFederatedUpgradeNodeListMaximumMinutes(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
-		if _, ok := i["time"]; ok {
-			tmp["time"] = flattenSystemFederatedUpgradeNodeListTime(i["time"], d, pre_append, sv)
+		if cur_v, ok := i["time"]; ok {
+			tmp["time"] = flattenSystemFederatedUpgradeNodeListTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "setup_time"
-		if _, ok := i["setup-time"]; ok {
-			tmp["setup_time"] = flattenSystemFederatedUpgradeNodeListSetupTime(i["setup-time"], d, pre_append, sv)
+		if cur_v, ok := i["setup-time"]; ok {
+			tmp["setup_time"] = flattenSystemFederatedUpgradeNodeListSetupTime(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upgrade_path"
-		if _, ok := i["upgrade-path"]; ok {
-			tmp["upgrade_path"] = flattenSystemFederatedUpgradeNodeListUpgradePath(i["upgrade-path"], d, pre_append, sv)
+		if cur_v, ok := i["upgrade-path"]; ok {
+			tmp["upgrade_path"] = flattenSystemFederatedUpgradeNodeListUpgradePath(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
-		if _, ok := i["device-type"]; ok {
-			tmp["device_type"] = flattenSystemFederatedUpgradeNodeListDeviceType(i["device-type"], d, pre_append, sv)
+		if cur_v, ok := i["device-type"]; ok {
+			tmp["device_type"] = flattenSystemFederatedUpgradeNodeListDeviceType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
-		if _, ok := i["coordinating-fortigate"]; ok {
-			tmp["coordinating_fortigate"] = flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(i["coordinating-fortigate"], d, pre_append, sv)
+		if cur_v, ok := i["coordinating-fortigate"]; ok {
+			tmp["coordinating_fortigate"] = flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -402,6 +458,22 @@ func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]in
 	}
 
 	if b_get_all_tables {
+		if err = d.Set("known_ha_members", flattenSystemFederatedUpgradeKnownHaMembers(o["known-ha-members"], d, "known_ha_members", sv)); err != nil {
+			if !fortiAPIPatch(o["known-ha-members"]) {
+				return fmt.Errorf("Error reading known_ha_members: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("known_ha_members"); ok {
+			if err = d.Set("known_ha_members", flattenSystemFederatedUpgradeKnownHaMembers(o["known-ha-members"], d, "known_ha_members", sv)); err != nil {
+				if !fortiAPIPatch(o["known-ha-members"]) {
+					return fmt.Errorf("Error reading known_ha_members: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("node_list", flattenSystemFederatedUpgradeNodeList(o["node-list"], d, "node_list", sv)); err != nil {
 			if !fortiAPIPatch(o["node-list"]) {
 				return fmt.Errorf("Error reading node_list: %v", err)
@@ -447,6 +519,37 @@ func expandSystemFederatedUpgradeNextPathIndex(d *schema.ResourceData, v interfa
 }
 
 func expandSystemFederatedUpgradeHaRebootController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeKnownHaMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["serial"], _ = expandSystemFederatedUpgradeKnownHaMembersSerial(d, i["serial"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemFederatedUpgradeKnownHaMembersSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -621,6 +724,19 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["ha-reboot-controller"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("known_ha_members"); ok || d.HasChange("known_ha_members") {
+		if setArgNil {
+			obj["known-ha-members"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemFederatedUpgradeKnownHaMembers(d, v, "known_ha_members", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["known-ha-members"] = t
 			}
 		}
 	}

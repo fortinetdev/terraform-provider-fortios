@@ -269,9 +269,42 @@ func refreshObjectFtpProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if err = d.Set("ssl_cert", flattenFtpProxyExplicitSslCert(o["ssl-cert"], d, "ssl_cert", sv)); err != nil {
-		if !fortiAPIPatch(o["ssl-cert"]) {
-			return fmt.Errorf("Error reading ssl_cert: %v", err)
+	{
+		v := flattenFtpProxyExplicitSslCert(o["ssl-cert"], d, "ssl_cert", sv)
+		vx := ""
+		bstring := false
+		new_version_map := map[string][]string{
+			">=": []string{"7.4.2"},
+		}
+		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["name"]; ok {
+						if xv, ok := i["name"].(string); ok {
+							vx += xv
+							if k < len(l)-1 {
+								vx += ", "
+							}
+						}
+					}
+				}
+			}
+			bstring = true
+		}
+		if bstring == true {
+			if err = d.Set("ssl_cert", vx); err != nil {
+				if !fortiAPIPatch(o["ssl-cert"]) {
+					return fmt.Errorf("Error reading ssl_cert: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("ssl_cert", v); err != nil {
+				if !fortiAPIPatch(o["ssl-cert"]) {
+					return fmt.Errorf("Error reading ssl_cert: %v", err)
+				}
+			}
 		}
 	}
 
@@ -438,7 +471,25 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
-				obj["ssl-cert"] = t
+				new_version_map := map[string][]string{
+					">=": []string{"7.4.2"},
+				}
+				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+					vx := fmt.Sprintf("%v", t)
+					vxx := strings.Split(vx, ", ")
+
+					tmps := make([]map[string]interface{}, 0, len(vxx))
+
+					for _, xv := range vxx {
+						xtmp := make(map[string]interface{})
+						xtmp["name"] = xv
+
+						tmps = append(tmps, xtmp)
+					}
+					obj["ssl-cert"] = tmps
+				} else {
+					obj["ssl-cert"] = t
+				}
 			}
 		}
 	}

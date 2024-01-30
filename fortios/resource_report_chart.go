@@ -591,18 +591,18 @@ func flattenReportChartDrillDownCharts(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportChartDrillDownChartsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportChartDrillDownChartsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_name"
-		if _, ok := i["chart-name"]; ok {
-			tmp["chart_name"] = flattenReportChartDrillDownChartsChartName(i["chart-name"], d, pre_append, sv)
+		if cur_v, ok := i["chart-name"]; ok {
+			tmp["chart_name"] = flattenReportChartDrillDownChartsChartName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenReportChartDrillDownChartsStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenReportChartDrillDownChartsStatus(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -980,38 +980,38 @@ func flattenReportChartColumn(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportChartColumnId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportChartColumnId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_value"
-		if _, ok := i["header-value"]; ok {
-			tmp["header_value"] = flattenReportChartColumnHeaderValue(i["header-value"], d, pre_append, sv)
+		if cur_v, ok := i["header-value"]; ok {
+			tmp["header_value"] = flattenReportChartColumnHeaderValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_value"
-		if _, ok := i["detail-value"]; ok {
-			tmp["detail_value"] = flattenReportChartColumnDetailValue(i["detail-value"], d, pre_append, sv)
+		if cur_v, ok := i["detail-value"]; ok {
+			tmp["detail_value"] = flattenReportChartColumnDetailValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_value"
-		if _, ok := i["footer-value"]; ok {
-			tmp["footer_value"] = flattenReportChartColumnFooterValue(i["footer-value"], d, pre_append, sv)
+		if cur_v, ok := i["footer-value"]; ok {
+			tmp["footer_value"] = flattenReportChartColumnFooterValue(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_unit"
-		if _, ok := i["detail-unit"]; ok {
-			tmp["detail_unit"] = flattenReportChartColumnDetailUnit(i["detail-unit"], d, pre_append, sv)
+		if cur_v, ok := i["detail-unit"]; ok {
+			tmp["detail_unit"] = flattenReportChartColumnDetailUnit(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_unit"
-		if _, ok := i["footer-unit"]; ok {
-			tmp["footer_unit"] = flattenReportChartColumnFooterUnit(i["footer-unit"], d, pre_append, sv)
+		if cur_v, ok := i["footer-unit"]; ok {
+			tmp["footer_unit"] = flattenReportChartColumnFooterUnit(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping"
-		if _, ok := i["mapping"]; ok {
-			tmp["mapping"] = flattenReportChartColumnMapping(i["mapping"], d, pre_append, sv)
+		if cur_v, ok := i["mapping"]; ok {
+			tmp["mapping"] = flattenReportChartColumnMapping(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1072,33 +1072,33 @@ func flattenReportChartColumnMapping(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportChartColumnMappingId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportChartColumnMappingId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "op"
-		if _, ok := i["op"]; ok {
-			tmp["op"] = flattenReportChartColumnMappingOp(i["op"], d, pre_append, sv)
+		if cur_v, ok := i["op"]; ok {
+			tmp["op"] = flattenReportChartColumnMappingOp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value_type"
-		if _, ok := i["value-type"]; ok {
-			tmp["value_type"] = flattenReportChartColumnMappingValueType(i["value-type"], d, pre_append, sv)
+		if cur_v, ok := i["value-type"]; ok {
+			tmp["value_type"] = flattenReportChartColumnMappingValueType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value1"
-		if _, ok := i["value1"]; ok {
-			tmp["value1"] = flattenReportChartColumnMappingValue1(i["value1"], d, pre_append, sv)
+		if cur_v, ok := i["value1"]; ok {
+			tmp["value1"] = flattenReportChartColumnMappingValue1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value2"
-		if _, ok := i["value2"]; ok {
-			tmp["value2"] = flattenReportChartColumnMappingValue2(i["value2"], d, pre_append, sv)
+		if cur_v, ok := i["value2"]; ok {
+			tmp["value2"] = flattenReportChartColumnMappingValue2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
-		if _, ok := i["displayname"]; ok {
-			tmp["displayname"] = flattenReportChartColumnMappingDisplayname(i["displayname"], d, pre_append, sv)
+		if cur_v, ok := i["displayname"]; ok {
+			tmp["displayname"] = flattenReportChartColumnMappingDisplayname(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -217,8 +217,8 @@ func flattenFirewallInternetServiceSubappSubApp(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallInternetServiceSubappSubAppId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallInternetServiceSubappSubAppId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

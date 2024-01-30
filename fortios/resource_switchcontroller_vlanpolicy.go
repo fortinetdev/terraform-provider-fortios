@@ -274,8 +274,8 @@ func flattenSwitchControllerVlanPolicyAllowedVlans(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := i["vlan-name"]; ok {
-			tmp["vlan_name"] = flattenSwitchControllerVlanPolicyAllowedVlansVlanName(i["vlan-name"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-name"]; ok {
+			tmp["vlan_name"] = flattenSwitchControllerVlanPolicyAllowedVlansVlanName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -316,8 +316,8 @@ func flattenSwitchControllerVlanPolicyUntaggedVlans(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
-		if _, ok := i["vlan-name"]; ok {
-			tmp["vlan_name"] = flattenSwitchControllerVlanPolicyUntaggedVlansVlanName(i["vlan-name"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-name"]; ok {
+			tmp["vlan_name"] = flattenSwitchControllerVlanPolicyUntaggedVlansVlanName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

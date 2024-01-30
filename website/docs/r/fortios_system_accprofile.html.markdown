@@ -96,6 +96,11 @@ The following arguments are supported:
 * `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout. Valid values: `enable`, `disable`.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
+* `cli_diagnose` - Enable/disable permission to run diagnostic commands. Valid values: `enable`, `disable`.
+* `cli_get` - Enable/disable permission to run get commands. Valid values: `enable`, `disable`.
+* `cli_show` - Enable/disable permission to run show commands. Valid values: `enable`, `disable`.
+* `cli_exec` - Enable/disable permission to run execute commands. Valid values: `enable`, `disable`.
+* `cli_config` - Enable/disable permission to run config commands. Valid values: `enable`, `disable`.
 * `system_diagnostics` - Enable/disable permission to run system diagnostic commands. Valid values: `enable`, `disable`.
 * `system_execute_ssh` - Enable/disable permission to execute SSH commands. Valid values: `enable`, `disable`.
 * `system_execute_telnet` - Enable/disable permission to execute TELNET commands. Valid values: `enable`, `disable`.

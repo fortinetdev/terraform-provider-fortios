@@ -20,7 +20,17 @@ Use this data source to get information on fortios system vdomnetflow
 The following attributes are exported:
 
 * `vdom_netflow` - Enable/disable NetFlow per VDOM.
+* `collectors` - Netflow collectors. The structure of `collectors` block is documented below.
 * `collector_ip` - NetFlow collector IP address.
+* `collector_port` - NetFlow collector port number.
+* `source_ip` - Source IP address for communication with the NetFlow agent.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
+
+The `collectors` block contains:
+
+* `id` - ID.
+* `collector_ip` - Collector IP.
 * `collector_port` - NetFlow collector port number.
 * `source_ip` - Source IP address for communication with the NetFlow agent.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.

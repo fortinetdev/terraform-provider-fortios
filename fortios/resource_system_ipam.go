@@ -50,6 +50,11 @@ func resourceSystemIpam() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"require_subnet_size_match": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"manage_lan_addresses": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -287,6 +292,10 @@ func flattenSystemIpamAutomaticConflictResolution(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenSystemIpamRequireSubnetSizeMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemIpamManageLanAddresses(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -324,18 +333,18 @@ func flattenSystemIpamPools(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemIpamPoolsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemIpamPoolsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSystemIpamPoolsDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSystemIpamPoolsDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
-		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenSystemIpamPoolsSubnet(i["subnet"], d, pre_append, sv)
+		if cur_v, ok := i["subnet"]; ok {
+			tmp["subnet"] = flattenSystemIpamPoolsSubnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -391,38 +400,38 @@ func flattenSystemIpamRules(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemIpamRulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemIpamRulesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSystemIpamRulesDescription(i["description"], d, pre_append, sv)
+		if cur_v, ok := i["description"]; ok {
+			tmp["description"] = flattenSystemIpamRulesDescription(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
-		if _, ok := i["device"]; ok {
-			tmp["device"] = flattenSystemIpamRulesDevice(i["device"], d, pre_append, sv)
+		if cur_v, ok := i["device"]; ok {
+			tmp["device"] = flattenSystemIpamRulesDevice(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemIpamRulesInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemIpamRulesInterface(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
-		if _, ok := i["role"]; ok {
-			tmp["role"] = flattenSystemIpamRulesRole(i["role"], d, pre_append, sv)
+		if cur_v, ok := i["role"]; ok {
+			tmp["role"] = flattenSystemIpamRulesRole(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pool"
-		if _, ok := i["pool"]; ok {
-			tmp["pool"] = flattenSystemIpamRulesPool(i["pool"], d, pre_append, sv)
+		if cur_v, ok := i["pool"]; ok {
+			tmp["pool"] = flattenSystemIpamRulesPool(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp"
-		if _, ok := i["dhcp"]; ok {
-			tmp["dhcp"] = flattenSystemIpamRulesDhcp(i["dhcp"], d, pre_append, sv)
+		if cur_v, ok := i["dhcp"]; ok {
+			tmp["dhcp"] = flattenSystemIpamRulesDhcp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -467,8 +476,8 @@ func flattenSystemIpamRulesDevice(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemIpamRulesDeviceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemIpamRulesDeviceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -509,8 +518,8 @@ func flattenSystemIpamRulesInterface(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemIpamRulesInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemIpamRulesInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -555,8 +564,8 @@ func flattenSystemIpamRulesPool(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemIpamRulesPoolName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemIpamRulesPoolName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -611,6 +620,12 @@ func refreshObjectSystemIpam(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("automatic_conflict_resolution", flattenSystemIpamAutomaticConflictResolution(o["automatic-conflict-resolution"], d, "automatic_conflict_resolution", sv)); err != nil {
 		if !fortiAPIPatch(o["automatic-conflict-resolution"]) {
 			return fmt.Errorf("Error reading automatic_conflict_resolution: %v", err)
+		}
+	}
+
+	if err = d.Set("require_subnet_size_match", flattenSystemIpamRequireSubnetSizeMatch(o["require-subnet-size-match"], d, "require_subnet_size_match", sv)); err != nil {
+		if !fortiAPIPatch(o["require-subnet-size-match"]) {
+			return fmt.Errorf("Error reading require_subnet_size_match: %v", err)
 		}
 	}
 
@@ -688,6 +703,10 @@ func expandSystemIpamServerType(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemIpamAutomaticConflictResolution(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamRequireSubnetSizeMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -957,6 +976,19 @@ func getObjectSystemIpam(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["automatic-conflict-resolution"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("require_subnet_size_match"); ok {
+		if setArgNil {
+			obj["require-subnet-size-match"] = nil
+		} else {
+			t, err := expandSystemIpamRequireSubnetSizeMatch(d, v, "require_subnet_size_match", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["require-subnet-size-match"] = t
 			}
 		}
 	}

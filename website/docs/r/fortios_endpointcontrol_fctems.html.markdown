@@ -13,7 +13,7 @@ Configure FortiClient Enterprise Management Server (EMS) entries. Applies to For
 
 The following arguments are supported:
 
-* `ems_id` - EMS ID in order (1 - 5)
+* `ems_id` - EMS ID in order. On FortiOS versions 7.0.8-7.0.13, 7.2.1-7.2.3: 1 - 5. On FortiOS versions >= 7.2.4: 1 - 7.
 * `status` - Enable or disable this EMS configuration. Valid values: `enable`, `disable`.
 * `name` - FortiClient Enterprise Management Server (EMS) name.
 * `dirty_reason` - Dirty Reason for FortiClient EMS. Valid values: `none`, `mismatched-ems-sn`.
@@ -32,13 +32,15 @@ The following arguments are supported:
 * `pull_malware_hash` - Enable/disable pulling FortiClient malware hash from EMS. Valid values: `enable`, `disable`.
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
 * `capabilities` - List of EMS capabilities.
-* `call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
+* `call_timeout` - FortiClient EMS call timeout. On FortiOS versions 6.2.4-6.2.6: 500 - 30000 milliseconds, default = 5000. On FortiOS versions 6.4.0: 500 - 50000 milliseconds, default = 5000. On FortiOS versions >= 6.4.2: 1 - 180 seconds, default = 30. On FortiOS versions 6.4.1: 500 - 180000 milliseconds, default = 30000.
 * `out_of_sync_threshold` - Outdated resource threshold in seconds (10 - 3600, default = 180).
+* `send_tags_to_all_vdoms` - Relax restrictions on tags to send all EMS tags to all VDOMs Valid values: `enable`, `disable`.
 * `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.
 * `preserve_ssl_session` - Enable/disable preservation of EMS SSL session connection. WARNING: Most users should not touch this setting! Valid values: `enable`, `disable`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `trust_ca_cn` - Enable/disable trust of the EMS certificate issuer(CA) and common name(CN) for certificate auto-renewal. Valid values: `enable`, `disable`.
+* `verifying_ca` - Lowest CA cert on Fortigate in verified EMS cert chain.
 * `status_check_interval` - FortiClient EMS call timeout in seconds (1 - 120 seconds, default = 5).
 * `certificate` - FortiClient EMS certificate.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

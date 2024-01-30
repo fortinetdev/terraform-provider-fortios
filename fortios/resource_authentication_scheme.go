@@ -320,8 +320,8 @@ func flattenAuthenticationSchemeUserDatabase(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenAuthenticationSchemeUserDatabaseName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenAuthenticationSchemeUserDatabaseName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -232,18 +232,18 @@ func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiList(v interface{}
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "oi"
-		if _, ok := i["oi"]; ok {
-			tmp["oi"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListOi(i["oi"], d, pre_append, sv)
+		if cur_v, ok := i["oi"]; ok {
+			tmp["oi"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListOi(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

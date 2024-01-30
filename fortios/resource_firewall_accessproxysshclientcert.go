@@ -295,23 +295,23 @@ func flattenFirewallAccessProxySshClientCertCertExtension(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAccessProxySshClientCertCertExtensionName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAccessProxySshClientCertCertExtensionName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "critical"
-		if _, ok := i["critical"]; ok {
-			tmp["critical"] = flattenFirewallAccessProxySshClientCertCertExtensionCritical(i["critical"], d, pre_append, sv)
+		if cur_v, ok := i["critical"]; ok {
+			tmp["critical"] = flattenFirewallAccessProxySshClientCertCertExtensionCritical(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenFirewallAccessProxySshClientCertCertExtensionType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenFirewallAccessProxySshClientCertCertExtensionType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data"
-		if _, ok := i["data"]; ok {
-			tmp["data"] = flattenFirewallAccessProxySshClientCertCertExtensionData(i["data"], d, pre_append, sv)
+		if cur_v, ok := i["data"]; ok {
+			tmp["data"] = flattenFirewallAccessProxySshClientCertCertExtensionData(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

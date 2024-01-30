@@ -81,6 +81,12 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 					},
 				},
 			},
+			"server_cert_ca": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"preshared_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -358,8 +364,8 @@ func flattenLogFortianalyzerSettingSerial(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenLogFortianalyzerSettingSerialName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenLogFortianalyzerSettingSerialName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -372,6 +378,10 @@ func flattenLogFortianalyzerSettingSerial(v interface{}, d *schema.ResourceData,
 }
 
 func flattenLogFortianalyzerSettingSerialName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzerSettingServerCertCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -521,6 +531,12 @@ func refreshObjectLogFortianalyzerSetting(d *schema.ResourceData, o map[string]i
 					return fmt.Errorf("Error reading serial: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("server_cert_ca", flattenLogFortianalyzerSettingServerCertCa(o["server-cert-ca"], d, "server_cert_ca", sv)); err != nil {
+		if !fortiAPIPatch(o["server-cert-ca"]) {
+			return fmt.Errorf("Error reading server_cert_ca: %v", err)
 		}
 	}
 
@@ -717,6 +733,10 @@ func expandLogFortianalyzerSettingSerialName(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandLogFortianalyzerSettingServerCertCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzerSettingPresharedKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -895,6 +915,19 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["serial"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("server_cert_ca"); ok {
+		if setArgNil {
+			obj["server-cert-ca"] = nil
+		} else {
+			t, err := expandLogFortianalyzerSettingServerCertCa(d, v, "server_cert_ca", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-cert-ca"] = t
 			}
 		}
 	}

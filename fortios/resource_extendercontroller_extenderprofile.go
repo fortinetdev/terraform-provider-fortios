@@ -753,8 +753,8 @@ func flattenExtenderControllerExtenderProfileCellularDataplan(v interface{}, d *
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenExtenderControllerExtenderProfileCellularDataplanName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenExtenderControllerExtenderProfileCellularDataplanName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -943,23 +943,23 @@ func flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiver(v i
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "phone_number"
-		if _, ok := i["phone-number"]; ok {
-			tmp["phone_number"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverPhoneNumber(i["phone-number"], d, pre_append, sv)
+		if cur_v, ok := i["phone-number"]; ok {
+			tmp["phone_number"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverPhoneNumber(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
-		if _, ok := i["alert"]; ok {
-			tmp["alert"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverAlert(i["alert"], d, pre_append, sv)
+		if cur_v, ok := i["alert"]; ok {
+			tmp["alert"] = flattenExtenderControllerExtenderProfileCellularSmsNotificationReceiverAlert(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1452,23 +1452,23 @@ func flattenExtenderControllerExtenderProfileLanExtensionBackhaul(v interface{},
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
-		if _, ok := i["role"]; ok {
-			tmp["role"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulRole(i["role"], d, pre_append, sv)
+		if cur_v, ok := i["role"]; ok {
+			tmp["role"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulRole(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenExtenderControllerExtenderProfileLanExtensionBackhaulWeight(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

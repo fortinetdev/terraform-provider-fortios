@@ -28,7 +28,7 @@ The following arguments are supported:
 
 * `hop_opt` - Enable/disable blocking packets with the Hop-by-Hop Options header (default = disable). Valid values: `enable`, `disable`.
 * `dest_opt` - Enable/disable blocking packets with Destination Options headers (default = disable). Valid values: `enable`, `disable`.
-* `hdopt_type` - Block specific Hop-by-Hop and/or Destination Option types (max. 7 types, each between 0 and 255, default = 0).
+* `hdopt_type` - Block specific Hop-by-Hop and/or Destination Option types (max. 7 types, each between 0 and 255).
 * `routing` - Enable/disable blocking packets with Routing headers (default = enable). Valid values: `enable`, `disable`.
 * `routing_type` - Block specific Routing header types (max. 7 types, each between 0 and 255, default =  0).
 * `fragment` - Enable/disable blocking packets with the Fragment header (default = disable). Valid values: `enable`, `disable`.

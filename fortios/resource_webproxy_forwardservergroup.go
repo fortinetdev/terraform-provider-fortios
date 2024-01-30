@@ -253,13 +253,13 @@ func flattenWebProxyForwardServerGroupServerList(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyForwardServerGroupServerListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyForwardServerGroupServerListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenWebProxyForwardServerGroupServerListWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenWebProxyForwardServerGroupServerListWeight(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

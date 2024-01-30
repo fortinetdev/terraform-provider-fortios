@@ -274,43 +274,43 @@ func flattenEmailfilterBwordEntries(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenEmailfilterBwordEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenEmailfilterBwordEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEmailfilterBwordEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEmailfilterBwordEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenEmailfilterBwordEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenEmailfilterBwordEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenEmailfilterBwordEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenEmailfilterBwordEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenEmailfilterBwordEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenEmailfilterBwordEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
-		if _, ok := i["where"]; ok {
-			tmp["where"] = flattenEmailfilterBwordEntriesWhere(i["where"], d, pre_append, sv)
+		if cur_v, ok := i["where"]; ok {
+			tmp["where"] = flattenEmailfilterBwordEntriesWhere(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
-		if _, ok := i["language"]; ok {
-			tmp["language"] = flattenEmailfilterBwordEntriesLanguage(i["language"], d, pre_append, sv)
+		if cur_v, ok := i["language"]; ok {
+			tmp["language"] = flattenEmailfilterBwordEntriesLanguage(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
-		if _, ok := i["score"]; ok {
-			tmp["score"] = flattenEmailfilterBwordEntriesScore(i["score"], d, pre_append, sv)
+		if cur_v, ok := i["score"]; ok {
+			tmp["score"] = flattenEmailfilterBwordEntriesScore(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -232,18 +232,18 @@ func flattenWirelessControllerHotspot20AnqpVenueUrlValueList(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20AnqpVenueUrlValueListIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20AnqpVenueUrlValueListIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "number"
-		if _, ok := i["number"]; ok {
-			tmp["number"] = flattenWirelessControllerHotspot20AnqpVenueUrlValueListNumber(i["number"], d, pre_append, sv)
+		if cur_v, ok := i["number"]; ok {
+			tmp["number"] = flattenWirelessControllerHotspot20AnqpVenueUrlValueListNumber(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenWirelessControllerHotspot20AnqpVenueUrlValueListValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenWirelessControllerHotspot20AnqpVenueUrlValueListValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -53,6 +53,11 @@ func resourceCasbProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"safe_search": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -348,53 +353,58 @@ func flattenCasbProfileSaasApplication(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationName(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenCasbProfileSaasApplicationStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "safe_search"
-		if _, ok := i["safe-search"]; ok {
-			tmp["safe_search"] = flattenCasbProfileSaasApplicationSafeSearch(i["safe-search"], d, pre_append, sv)
+		if cur_v, ok := i["safe-search"]; ok {
+			tmp["safe_search"] = flattenCasbProfileSaasApplicationSafeSearch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "safe_search_control"
-		if _, ok := i["safe-search-control"]; ok {
-			tmp["safe_search_control"] = flattenCasbProfileSaasApplicationSafeSearchControl(i["safe-search-control"], d, pre_append, sv)
+		if cur_v, ok := i["safe-search-control"]; ok {
+			tmp["safe_search_control"] = flattenCasbProfileSaasApplicationSafeSearchControl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tenant_control"
-		if _, ok := i["tenant-control"]; ok {
-			tmp["tenant_control"] = flattenCasbProfileSaasApplicationTenantControl(i["tenant-control"], d, pre_append, sv)
+		if cur_v, ok := i["tenant-control"]; ok {
+			tmp["tenant_control"] = flattenCasbProfileSaasApplicationTenantControl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tenant_control_tenants"
-		if _, ok := i["tenant-control-tenants"]; ok {
-			tmp["tenant_control_tenants"] = flattenCasbProfileSaasApplicationTenantControlTenants(i["tenant-control-tenants"], d, pre_append, sv)
+		if cur_v, ok := i["tenant-control-tenants"]; ok {
+			tmp["tenant_control_tenants"] = flattenCasbProfileSaasApplicationTenantControlTenants(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_control"
-		if _, ok := i["domain-control"]; ok {
-			tmp["domain_control"] = flattenCasbProfileSaasApplicationDomainControl(i["domain-control"], d, pre_append, sv)
+		if cur_v, ok := i["domain-control"]; ok {
+			tmp["domain_control"] = flattenCasbProfileSaasApplicationDomainControl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_control_domains"
-		if _, ok := i["domain-control-domains"]; ok {
-			tmp["domain_control_domains"] = flattenCasbProfileSaasApplicationDomainControlDomains(i["domain-control-domains"], d, pre_append, sv)
+		if cur_v, ok := i["domain-control-domains"]; ok {
+			tmp["domain_control_domains"] = flattenCasbProfileSaasApplicationDomainControlDomains(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenCasbProfileSaasApplicationLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenCasbProfileSaasApplicationLog(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_rule"
-		if _, ok := i["access-rule"]; ok {
-			tmp["access_rule"] = flattenCasbProfileSaasApplicationAccessRule(i["access-rule"], d, pre_append, sv)
+		if cur_v, ok := i["access-rule"]; ok {
+			tmp["access_rule"] = flattenCasbProfileSaasApplicationAccessRule(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom_control"
-		if _, ok := i["custom-control"]; ok {
-			tmp["custom_control"] = flattenCasbProfileSaasApplicationCustomControl(i["custom-control"], d, pre_append, sv)
+		if cur_v, ok := i["custom-control"]; ok {
+			tmp["custom_control"] = flattenCasbProfileSaasApplicationCustomControl(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -407,6 +417,10 @@ func flattenCasbProfileSaasApplication(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenCasbProfileSaasApplicationName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbProfileSaasApplicationStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -439,8 +453,8 @@ func flattenCasbProfileSaasApplicationSafeSearchControl(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationSafeSearchControlName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationSafeSearchControlName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -485,8 +499,8 @@ func flattenCasbProfileSaasApplicationTenantControlTenants(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationTenantControlTenantsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationTenantControlTenantsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -531,8 +545,8 @@ func flattenCasbProfileSaasApplicationDomainControlDomains(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationDomainControlDomainsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationDomainControlDomainsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -577,18 +591,18 @@ func flattenCasbProfileSaasApplicationAccessRule(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationAccessRuleName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationAccessRuleName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenCasbProfileSaasApplicationAccessRuleAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenCasbProfileSaasApplicationAccessRuleAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bypass"
-		if _, ok := i["bypass"]; ok {
-			tmp["bypass"] = flattenCasbProfileSaasApplicationAccessRuleBypass(i["bypass"], d, pre_append, sv)
+		if cur_v, ok := i["bypass"]; ok {
+			tmp["bypass"] = flattenCasbProfileSaasApplicationAccessRuleBypass(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -637,13 +651,13 @@ func flattenCasbProfileSaasApplicationCustomControl(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationCustomControlName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationCustomControlName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "option"
-		if _, ok := i["option"]; ok {
-			tmp["option"] = flattenCasbProfileSaasApplicationCustomControlOption(i["option"], d, pre_append, sv)
+		if cur_v, ok := i["option"]; ok {
+			tmp["option"] = flattenCasbProfileSaasApplicationCustomControlOption(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -684,13 +698,13 @@ func flattenCasbProfileSaasApplicationCustomControlOption(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenCasbProfileSaasApplicationCustomControlOptionName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenCasbProfileSaasApplicationCustomControlOptionName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_input"
-		if _, ok := i["user-input"]; ok {
-			tmp["user_input"] = flattenCasbProfileSaasApplicationCustomControlOptionUserInput(i["user-input"], d, pre_append, sv)
+		if cur_v, ok := i["user-input"]; ok {
+			tmp["user_input"] = flattenCasbProfileSaasApplicationCustomControlOptionUserInput(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -731,8 +745,8 @@ func flattenCasbProfileSaasApplicationCustomControlOptionUserInput(v interface{}
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenCasbProfileSaasApplicationCustomControlOptionUserInputValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenCasbProfileSaasApplicationCustomControlOptionUserInputValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -811,6 +825,11 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 			tmp["name"], _ = expandCasbProfileSaasApplicationName(d, i["name"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["status"], _ = expandCasbProfileSaasApplicationStatus(d, i["status"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "safe_search"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["safe-search"], _ = expandCasbProfileSaasApplicationSafeSearch(d, i["safe_search"], pre_append, sv)
@@ -875,6 +894,10 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandCasbProfileSaasApplicationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbProfileSaasApplicationStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

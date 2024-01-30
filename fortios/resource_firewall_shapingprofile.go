@@ -301,58 +301,58 @@ func flattenFirewallShapingProfileShapingEntries(v interface{}, d *schema.Resour
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallShapingProfileShapingEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallShapingProfileShapingEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
-		if _, ok := i["class-id"]; ok {
-			tmp["class_id"] = flattenFirewallShapingProfileShapingEntriesClassId(i["class-id"], d, pre_append, sv)
+		if cur_v, ok := i["class-id"]; ok {
+			tmp["class_id"] = flattenFirewallShapingProfileShapingEntriesClassId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenFirewallShapingProfileShapingEntriesPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenFirewallShapingProfileShapingEntriesPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "guaranteed_bandwidth_percentage"
-		if _, ok := i["guaranteed-bandwidth-percentage"]; ok {
-			tmp["guaranteed_bandwidth_percentage"] = flattenFirewallShapingProfileShapingEntriesGuaranteedBandwidthPercentage(i["guaranteed-bandwidth-percentage"], d, pre_append, sv)
+		if cur_v, ok := i["guaranteed-bandwidth-percentage"]; ok {
+			tmp["guaranteed_bandwidth_percentage"] = flattenFirewallShapingProfileShapingEntriesGuaranteedBandwidthPercentage(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_bandwidth_percentage"
-		if _, ok := i["maximum-bandwidth-percentage"]; ok {
-			tmp["maximum_bandwidth_percentage"] = flattenFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(i["maximum-bandwidth-percentage"], d, pre_append, sv)
+		if cur_v, ok := i["maximum-bandwidth-percentage"]; ok {
+			tmp["maximum_bandwidth_percentage"] = flattenFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "limit"
-		if _, ok := i["limit"]; ok {
-			tmp["limit"] = flattenFirewallShapingProfileShapingEntriesLimit(i["limit"], d, pre_append, sv)
+		if cur_v, ok := i["limit"]; ok {
+			tmp["limit"] = flattenFirewallShapingProfileShapingEntriesLimit(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "burst_in_msec"
-		if _, ok := i["burst-in-msec"]; ok {
-			tmp["burst_in_msec"] = flattenFirewallShapingProfileShapingEntriesBurstInMsec(i["burst-in-msec"], d, pre_append, sv)
+		if cur_v, ok := i["burst-in-msec"]; ok {
+			tmp["burst_in_msec"] = flattenFirewallShapingProfileShapingEntriesBurstInMsec(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cburst_in_msec"
-		if _, ok := i["cburst-in-msec"]; ok {
-			tmp["cburst_in_msec"] = flattenFirewallShapingProfileShapingEntriesCburstInMsec(i["cburst-in-msec"], d, pre_append, sv)
+		if cur_v, ok := i["cburst-in-msec"]; ok {
+			tmp["cburst_in_msec"] = flattenFirewallShapingProfileShapingEntriesCburstInMsec(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "red_probability"
-		if _, ok := i["red-probability"]; ok {
-			tmp["red_probability"] = flattenFirewallShapingProfileShapingEntriesRedProbability(i["red-probability"], d, pre_append, sv)
+		if cur_v, ok := i["red-probability"]; ok {
+			tmp["red_probability"] = flattenFirewallShapingProfileShapingEntriesRedProbability(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min"
-		if _, ok := i["min"]; ok {
-			tmp["min"] = flattenFirewallShapingProfileShapingEntriesMin(i["min"], d, pre_append, sv)
+		if cur_v, ok := i["min"]; ok {
+			tmp["min"] = flattenFirewallShapingProfileShapingEntriesMin(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max"
-		if _, ok := i["max"]; ok {
-			tmp["max"] = flattenFirewallShapingProfileShapingEntriesMax(i["max"], d, pre_append, sv)
+		if cur_v, ok := i["max"]; ok {
+			tmp["max"] = flattenFirewallShapingProfileShapingEntriesMax(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -55,7 +55,7 @@ The following arguments are supported:
 * `diskfull` - Action to take when disk is full. The system can overwrite the oldest log messages or stop logging when the disk is full (default = overwrite). Valid values: `overwrite`, `nolog`.
 * `log_quota` - Disk log quota (MB).
 * `dlp_archive_quota` - DLP archive quota (MB).
-* `report_quota` - Report quota (MB).
+* `report_quota` - Report db quota (MB).
 * `maximum_log_age` - Delete log files older than (days).
 * `upload` - Enable/disable uploading log files when they are rolled. Valid values: `enable`, `disable`.
 * `upload_destination` - The type of server to upload log files to. Only FTP is currently supported. Valid values: `ftp-server`.

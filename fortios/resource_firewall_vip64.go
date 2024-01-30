@@ -381,8 +381,8 @@ func flattenFirewallVip64SrcFilter(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := i["range"]; ok {
-			tmp["range"] = flattenFirewallVip64SrcFilterRange(i["range"], d, pre_append, sv)
+		if cur_v, ok := i["range"]; ok {
+			tmp["range"] = flattenFirewallVip64SrcFilterRange(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -463,48 +463,48 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallVip64RealserversId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallVip64RealserversId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallVip64RealserversIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallVip64RealserversIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenFirewallVip64RealserversPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenFirewallVip64RealserversPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenFirewallVip64RealserversStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenFirewallVip64RealserversStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenFirewallVip64RealserversWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenFirewallVip64RealserversWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
-		if _, ok := i["holddown-interval"]; ok {
-			tmp["holddown_interval"] = flattenFirewallVip64RealserversHolddownInterval(i["holddown-interval"], d, pre_append, sv)
+		if cur_v, ok := i["holddown-interval"]; ok {
+			tmp["holddown_interval"] = flattenFirewallVip64RealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "healthcheck"
-		if _, ok := i["healthcheck"]; ok {
-			tmp["healthcheck"] = flattenFirewallVip64RealserversHealthcheck(i["healthcheck"], d, pre_append, sv)
+		if cur_v, ok := i["healthcheck"]; ok {
+			tmp["healthcheck"] = flattenFirewallVip64RealserversHealthcheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
-		if _, ok := i["max-connections"]; ok {
-			tmp["max_connections"] = flattenFirewallVip64RealserversMaxConnections(i["max-connections"], d, pre_append, sv)
+		if cur_v, ok := i["max-connections"]; ok {
+			tmp["max_connections"] = flattenFirewallVip64RealserversMaxConnections(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
-		if _, ok := i["monitor"]; ok {
-			v := flattenFirewallVip64RealserversMonitor(i["monitor"], d, pre_append, sv)
+		if cur_v, ok := i["monitor"]; ok {
+			v := flattenFirewallVip64RealserversMonitor(cur_v, d, pre_append, sv)
 			vx := ""
 			bstring := false
 			new_version_map := map[string][]string{
@@ -535,8 +535,8 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
-		if _, ok := i["client-ip"]; ok {
-			tmp["client_ip"] = flattenFirewallVip64RealserversClientIp(i["client-ip"], d, pre_append, sv)
+		if cur_v, ok := i["client-ip"]; ok {
+			tmp["client_ip"] = flattenFirewallVip64RealserversClientIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -613,8 +613,8 @@ func flattenFirewallVip64Monitor(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallVip64MonitorName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallVip64MonitorName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

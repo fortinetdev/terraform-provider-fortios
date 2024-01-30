@@ -428,8 +428,8 @@ func flattenFirewallAddress6Macaddr(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
-		if _, ok := i["macaddr"]; ok {
-			tmp["macaddr"] = flattenFirewallAddress6MacaddrMacaddr(i["macaddr"], d, pre_append, sv)
+		if cur_v, ok := i["macaddr"]; ok {
+			tmp["macaddr"] = flattenFirewallAddress6MacaddrMacaddr(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -518,8 +518,8 @@ func flattenFirewallAddress6List(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallAddress6ListIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallAddress6ListIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -560,18 +560,18 @@ func flattenFirewallAddress6Tagging(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddress6TaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddress6TaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenFirewallAddress6TaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenFirewallAddress6TaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenFirewallAddress6TaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenFirewallAddress6TaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -616,8 +616,8 @@ func flattenFirewallAddress6TaggingTags(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddress6TaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddress6TaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -666,18 +666,18 @@ func flattenFirewallAddress6SubnetSegment(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddress6SubnetSegmentName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddress6SubnetSegmentName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenFirewallAddress6SubnetSegmentType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenFirewallAddress6SubnetSegmentType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenFirewallAddress6SubnetSegmentValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenFirewallAddress6SubnetSegmentValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

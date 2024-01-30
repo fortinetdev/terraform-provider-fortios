@@ -255,33 +255,33 @@ func flattenRouterPrefixList6Rule(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterPrefixList6RuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterPrefixList6RuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterPrefixList6RuleAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenRouterPrefixList6RuleAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
-		if _, ok := i["prefix6"]; ok {
-			tmp["prefix6"] = flattenRouterPrefixList6RulePrefix6(i["prefix6"], d, pre_append, sv)
+		if cur_v, ok := i["prefix6"]; ok {
+			tmp["prefix6"] = flattenRouterPrefixList6RulePrefix6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
-		if _, ok := i["ge"]; ok {
-			tmp["ge"] = flattenRouterPrefixList6RuleGe(i["ge"], d, pre_append, sv)
+		if cur_v, ok := i["ge"]; ok {
+			tmp["ge"] = flattenRouterPrefixList6RuleGe(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
-		if _, ok := i["le"]; ok {
-			tmp["le"] = flattenRouterPrefixList6RuleLe(i["le"], d, pre_append, sv)
+		if cur_v, ok := i["le"]; ok {
+			tmp["le"] = flattenRouterPrefixList6RuleLe(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
-		if _, ok := i["flags"]; ok {
-			tmp["flags"] = flattenRouterPrefixList6RuleFlags(i["flags"], d, pre_append, sv)
+		if cur_v, ok := i["flags"]; ok {
+			tmp["flags"] = flattenRouterPrefixList6RuleFlags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

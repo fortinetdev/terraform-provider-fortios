@@ -290,23 +290,23 @@ func flattenSystemAutomationStitchActions(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAutomationStitchActionsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAutomationStitchActionsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSystemAutomationStitchActionsAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSystemAutomationStitchActionsAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "delay"
-		if _, ok := i["delay"]; ok {
-			tmp["delay"] = flattenSystemAutomationStitchActionsDelay(i["delay"], d, pre_append, sv)
+		if cur_v, ok := i["delay"]; ok {
+			tmp["delay"] = flattenSystemAutomationStitchActionsDelay(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "required"
-		if _, ok := i["required"]; ok {
-			tmp["required"] = flattenSystemAutomationStitchActionsRequired(i["required"], d, pre_append, sv)
+		if cur_v, ok := i["required"]; ok {
+			tmp["required"] = flattenSystemAutomationStitchActionsRequired(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -359,8 +359,8 @@ func flattenSystemAutomationStitchAction(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationStitchActionName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationStitchActionName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -401,8 +401,8 @@ func flattenSystemAutomationStitchDestination(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationStitchDestinationName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationStitchDestinationName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

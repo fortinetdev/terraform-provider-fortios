@@ -450,23 +450,23 @@ func flattenDnsfilterProfileFtgdDnsFilters(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDnsfilterProfileFtgdDnsFiltersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDnsfilterProfileFtgdDnsFiltersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenDnsfilterProfileFtgdDnsFiltersCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenDnsfilterProfileFtgdDnsFiltersCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenDnsfilterProfileFtgdDnsFiltersAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenDnsfilterProfileFtgdDnsFiltersAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenDnsfilterProfileFtgdDnsFiltersLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenDnsfilterProfileFtgdDnsFiltersLog(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -555,8 +555,8 @@ func flattenDnsfilterProfileExternalIpBlocklist(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDnsfilterProfileExternalIpBlocklistName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDnsfilterProfileExternalIpBlocklistName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -597,48 +597,48 @@ func flattenDnsfilterProfileDnsTranslation(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDnsfilterProfileDnsTranslationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDnsfilterProfileDnsTranslationId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenDnsfilterProfileDnsTranslationAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenDnsfilterProfileDnsTranslationAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := i["src"]; ok {
-			tmp["src"] = flattenDnsfilterProfileDnsTranslationSrc(i["src"], d, pre_append, sv)
+		if cur_v, ok := i["src"]; ok {
+			tmp["src"] = flattenDnsfilterProfileDnsTranslationSrc(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenDnsfilterProfileDnsTranslationDst(i["dst"], d, pre_append, sv)
+		if cur_v, ok := i["dst"]; ok {
+			tmp["dst"] = flattenDnsfilterProfileDnsTranslationDst(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "netmask"
-		if _, ok := i["netmask"]; ok {
-			tmp["netmask"] = flattenDnsfilterProfileDnsTranslationNetmask(i["netmask"], d, pre_append, sv)
+		if cur_v, ok := i["netmask"]; ok {
+			tmp["netmask"] = flattenDnsfilterProfileDnsTranslationNetmask(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenDnsfilterProfileDnsTranslationStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenDnsfilterProfileDnsTranslationStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := i["src6"]; ok {
-			tmp["src6"] = flattenDnsfilterProfileDnsTranslationSrc6(i["src6"], d, pre_append, sv)
+		if cur_v, ok := i["src6"]; ok {
+			tmp["src6"] = flattenDnsfilterProfileDnsTranslationSrc6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := i["dst6"]; ok {
-			tmp["dst6"] = flattenDnsfilterProfileDnsTranslationDst6(i["dst6"], d, pre_append, sv)
+		if cur_v, ok := i["dst6"]; ok {
+			tmp["dst6"] = flattenDnsfilterProfileDnsTranslationDst6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenDnsfilterProfileDnsTranslationPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenDnsfilterProfileDnsTranslationPrefix(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -711,8 +711,8 @@ func flattenDnsfilterProfileTransparentDnsDatabase(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenDnsfilterProfileTransparentDnsDatabaseName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenDnsfilterProfileTransparentDnsDatabaseName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

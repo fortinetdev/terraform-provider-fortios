@@ -418,8 +418,8 @@ func flattenFirewallProxyAddressCategory(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallProxyAddressCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallProxyAddressCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -488,23 +488,23 @@ func flattenFirewallProxyAddressHeaderGroup(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallProxyAddressHeaderGroupId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallProxyAddressHeaderGroupId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
-		if _, ok := i["header-name"]; ok {
-			tmp["header_name"] = flattenFirewallProxyAddressHeaderGroupHeaderName(i["header-name"], d, pre_append, sv)
+		if cur_v, ok := i["header-name"]; ok {
+			tmp["header_name"] = flattenFirewallProxyAddressHeaderGroupHeaderName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
-		if _, ok := i["header"]; ok {
-			tmp["header"] = flattenFirewallProxyAddressHeaderGroupHeader(i["header"], d, pre_append, sv)
+		if cur_v, ok := i["header"]; ok {
+			tmp["header"] = flattenFirewallProxyAddressHeaderGroupHeader(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
-		if _, ok := i["case-sensitivity"]; ok {
-			tmp["case_sensitivity"] = flattenFirewallProxyAddressHeaderGroupCaseSensitivity(i["case-sensitivity"], d, pre_append, sv)
+		if cur_v, ok := i["case-sensitivity"]; ok {
+			tmp["case_sensitivity"] = flattenFirewallProxyAddressHeaderGroupCaseSensitivity(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -561,18 +561,18 @@ func flattenFirewallProxyAddressTagging(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallProxyAddressTaggingName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyAddressTaggingName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenFirewallProxyAddressTaggingCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenFirewallProxyAddressTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenFirewallProxyAddressTaggingTags(i["tags"], d, pre_append, sv)
+		if cur_v, ok := i["tags"]; ok {
+			tmp["tags"] = flattenFirewallProxyAddressTaggingTags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -617,8 +617,8 @@ func flattenFirewallProxyAddressTaggingTags(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallProxyAddressTaggingTagsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyAddressTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -663,8 +663,8 @@ func flattenFirewallProxyAddressApplication(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallProxyAddressApplicationName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyAddressApplicationName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

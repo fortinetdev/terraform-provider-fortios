@@ -273,18 +273,18 @@ func flattenSystemGeoipOverrideIpRange(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemGeoipOverrideIpRangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemGeoipOverrideIpRangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenSystemGeoipOverrideIpRangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenSystemGeoipOverrideIpRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenSystemGeoipOverrideIpRangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenSystemGeoipOverrideIpRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -333,18 +333,18 @@ func flattenSystemGeoipOverrideIp6Range(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemGeoipOverrideIp6RangeId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemGeoipOverrideIp6RangeId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
-		if _, ok := i["start-ip"]; ok {
-			tmp["start_ip"] = flattenSystemGeoipOverrideIp6RangeStartIp(i["start-ip"], d, pre_append, sv)
+		if cur_v, ok := i["start-ip"]; ok {
+			tmp["start_ip"] = flattenSystemGeoipOverrideIp6RangeStartIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
-		if _, ok := i["end-ip"]; ok {
-			tmp["end_ip"] = flattenSystemGeoipOverrideIp6RangeEndIp(i["end-ip"], d, pre_append, sv)
+		if cur_v, ok := i["end-ip"]; ok {
+			tmp["end_ip"] = flattenSystemGeoipOverrideIp6RangeEndIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `name` - SaaS application name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `status` - Enable/disable setting. Valid values: `enable`, `disable`.
 * `type` - SaaS application type. Valid values: `built-in`, `customized`.
 * `casb_name` - SaaS application signature name.
 * `description` - SaaS application description.

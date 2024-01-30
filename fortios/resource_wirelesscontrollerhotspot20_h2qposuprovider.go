@@ -280,18 +280,18 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyName(v interface{}
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
-		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameLang(i["lang"], d, pre_append, sv)
+		if cur_v, ok := i["lang"]; ok {
+			tmp["lang"] = flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameLang(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "friendly_name"
-		if _, ok := i["friendly-name"]; ok {
-			tmp["friendly_name"] = flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameFriendlyName(i["friendly-name"], d, pre_append, sv)
+		if cur_v, ok := i["friendly-name"]; ok {
+			tmp["friendly_name"] = flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameFriendlyName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -352,18 +352,18 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescription(v inter
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
-		if _, ok := i["service-id"]; ok {
-			tmp["service_id"] = flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceId(i["service-id"], d, pre_append, sv)
+		if cur_v, ok := i["service-id"]; ok {
+			tmp["service_id"] = flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
-		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionLang(i["lang"], d, pre_append, sv)
+		if cur_v, ok := i["lang"]; ok {
+			tmp["lang"] = flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionLang(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_description"
-		if _, ok := i["service-description"]; ok {
-			tmp["service_description"] = flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceDescription(i["service-description"], d, pre_append, sv)
+		if cur_v, ok := i["service-description"]; ok {
+			tmp["service_description"] = flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceDescription(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

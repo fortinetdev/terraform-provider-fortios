@@ -283,8 +283,8 @@ func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemVxlanRemoteIpIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemVxlanRemoteIpIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -325,8 +325,8 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
-		if _, ok := i["ip6"]; ok {
-			tmp["ip6"] = flattenSystemVxlanRemoteIp6Ip6(i["ip6"], d, pre_append, sv)
+		if cur_v, ok := i["ip6"]; ok {
+			tmp["ip6"] = flattenSystemVxlanRemoteIp6Ip6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

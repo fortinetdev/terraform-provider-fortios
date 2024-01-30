@@ -369,48 +369,48 @@ func flattenWebProxyProfileHeaders(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWebProxyProfileHeadersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWebProxyProfileHeadersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyProfileHeadersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyProfileHeadersName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenWebProxyProfileHeadersDstaddr(i["dstaddr"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr"]; ok {
+			tmp["dstaddr"] = flattenWebProxyProfileHeadersDstaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
-		if _, ok := i["dstaddr6"]; ok {
-			tmp["dstaddr6"] = flattenWebProxyProfileHeadersDstaddr6(i["dstaddr6"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr6"]; ok {
+			tmp["dstaddr6"] = flattenWebProxyProfileHeadersDstaddr6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebProxyProfileHeadersAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebProxyProfileHeadersAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
-		if _, ok := i["content"]; ok {
-			tmp["content"] = flattenWebProxyProfileHeadersContent(i["content"], d, pre_append, sv)
+		if cur_v, ok := i["content"]; ok {
+			tmp["content"] = flattenWebProxyProfileHeadersContent(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
-		if _, ok := i["base64-encoding"]; ok {
-			tmp["base64_encoding"] = flattenWebProxyProfileHeadersBase64Encoding(i["base64-encoding"], d, pre_append, sv)
+		if cur_v, ok := i["base64-encoding"]; ok {
+			tmp["base64_encoding"] = flattenWebProxyProfileHeadersBase64Encoding(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "add_option"
-		if _, ok := i["add-option"]; ok {
-			tmp["add_option"] = flattenWebProxyProfileHeadersAddOption(i["add-option"], d, pre_append, sv)
+		if cur_v, ok := i["add-option"]; ok {
+			tmp["add_option"] = flattenWebProxyProfileHeadersAddOption(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenWebProxyProfileHeadersProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenWebProxyProfileHeadersProtocol(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -455,8 +455,8 @@ func flattenWebProxyProfileHeadersDstaddr(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyProfileHeadersDstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyProfileHeadersDstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -497,8 +497,8 @@ func flattenWebProxyProfileHeadersDstaddr6(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyProfileHeadersDstaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyProfileHeadersDstaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

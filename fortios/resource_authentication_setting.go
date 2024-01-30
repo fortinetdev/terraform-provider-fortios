@@ -377,8 +377,8 @@ func flattenAuthenticationSettingUserCertCa(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenAuthenticationSettingUserCertCaName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenAuthenticationSettingUserCertCaName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -419,8 +419,8 @@ func flattenAuthenticationSettingDevRange(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenAuthenticationSettingDevRangeName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenAuthenticationSettingDevRangeName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

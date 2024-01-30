@@ -736,8 +736,8 @@ func flattenSystemSdnConnectorServerList(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemSdnConnectorServerListIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemSdnConnectorServerListIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -822,18 +822,18 @@ func flattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role_arn"
-		if _, ok := i["role-arn"]; ok {
-			tmp["role_arn"] = flattenSystemSdnConnectorExternalAccountListRoleArn(i["role-arn"], d, pre_append, sv)
+		if cur_v, ok := i["role-arn"]; ok {
+			tmp["role_arn"] = flattenSystemSdnConnectorExternalAccountListRoleArn(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_id"
-		if _, ok := i["external-id"]; ok {
-			tmp["external_id"] = flattenSystemSdnConnectorExternalAccountListExternalId(i["external-id"], d, pre_append, sv)
+		if cur_v, ok := i["external-id"]; ok {
+			tmp["external_id"] = flattenSystemSdnConnectorExternalAccountListExternalId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
-		if _, ok := i["region-list"]; ok {
-			tmp["region_list"] = flattenSystemSdnConnectorExternalAccountListRegionList(i["region-list"], d, pre_append, sv)
+		if cur_v, ok := i["region-list"]; ok {
+			tmp["region_list"] = flattenSystemSdnConnectorExternalAccountListRegionList(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -878,8 +878,8 @@ func flattenSystemSdnConnectorExternalAccountListRegionList(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
-		if _, ok := i["region"]; ok {
-			tmp["region"] = flattenSystemSdnConnectorExternalAccountListRegionListRegion(i["region"], d, pre_append, sv)
+		if cur_v, ok := i["region"]; ok {
+			tmp["region"] = flattenSystemSdnConnectorExternalAccountListRegionListRegion(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -952,13 +952,13 @@ func flattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorNicName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorNicName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemSdnConnectorNicIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSystemSdnConnectorNicIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -999,18 +999,18 @@ func flattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorNicIpName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorNicIpName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "public_ip"
-		if _, ok := i["public-ip"]; ok {
-			tmp["public_ip"] = flattenSystemSdnConnectorNicIpPublicIp(i["public-ip"], d, pre_append, sv)
+		if cur_v, ok := i["public-ip"]; ok {
+			tmp["public_ip"] = flattenSystemSdnConnectorNicIpPublicIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "resource_group"
-		if _, ok := i["resource-group"]; ok {
-			tmp["resource_group"] = flattenSystemSdnConnectorNicIpResourceGroup(i["resource-group"], d, pre_append, sv)
+		if cur_v, ok := i["resource-group"]; ok {
+			tmp["resource_group"] = flattenSystemSdnConnectorNicIpResourceGroup(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1059,23 +1059,23 @@ func flattenSystemSdnConnectorRouteTable(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorRouteTableName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorRouteTableName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subscription_id"
-		if _, ok := i["subscription-id"]; ok {
-			tmp["subscription_id"] = flattenSystemSdnConnectorRouteTableSubscriptionId(i["subscription-id"], d, pre_append, sv)
+		if cur_v, ok := i["subscription-id"]; ok {
+			tmp["subscription_id"] = flattenSystemSdnConnectorRouteTableSubscriptionId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "resource_group"
-		if _, ok := i["resource-group"]; ok {
-			tmp["resource_group"] = flattenSystemSdnConnectorRouteTableResourceGroup(i["resource-group"], d, pre_append, sv)
+		if cur_v, ok := i["resource-group"]; ok {
+			tmp["resource_group"] = flattenSystemSdnConnectorRouteTableResourceGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route"
-		if _, ok := i["route"]; ok {
-			tmp["route"] = flattenSystemSdnConnectorRouteTableRoute(i["route"], d, pre_append, sv)
+		if cur_v, ok := i["route"]; ok {
+			tmp["route"] = flattenSystemSdnConnectorRouteTableRoute(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1124,13 +1124,13 @@ func flattenSystemSdnConnectorRouteTableRoute(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorRouteTableRouteName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorRouteTableRouteName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop"
-		if _, ok := i["next-hop"]; ok {
-			tmp["next_hop"] = flattenSystemSdnConnectorRouteTableRouteNextHop(i["next-hop"], d, pre_append, sv)
+		if cur_v, ok := i["next-hop"]; ok {
+			tmp["next_hop"] = flattenSystemSdnConnectorRouteTableRouteNextHop(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1179,8 +1179,8 @@ func flattenSystemSdnConnectorCompartmentList(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "compartment_id"
-		if _, ok := i["compartment-id"]; ok {
-			tmp["compartment_id"] = flattenSystemSdnConnectorCompartmentListCompartmentId(i["compartment-id"], d, pre_append, sv)
+		if cur_v, ok := i["compartment-id"]; ok {
+			tmp["compartment_id"] = flattenSystemSdnConnectorCompartmentListCompartmentId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1221,8 +1221,8 @@ func flattenSystemSdnConnectorOciRegionList(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
-		if _, ok := i["region"]; ok {
-			tmp["region"] = flattenSystemSdnConnectorOciRegionListRegion(i["region"], d, pre_append, sv)
+		if cur_v, ok := i["region"]; ok {
+			tmp["region"] = flattenSystemSdnConnectorOciRegionListRegion(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1283,8 +1283,8 @@ func flattenSystemSdnConnectorExternalIp(v interface{}, d *schema.ResourceData, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorExternalIpName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorExternalIpName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1325,8 +1325,8 @@ func flattenSystemSdnConnectorRoute(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorRouteName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorRouteName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1367,13 +1367,13 @@ func flattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
-		if _, ok := i["rule-name"]; ok {
-			tmp["rule_name"] = flattenSystemSdnConnectorForwardingRuleRuleName(i["rule-name"], d, pre_append, sv)
+		if cur_v, ok := i["rule-name"]; ok {
+			tmp["rule_name"] = flattenSystemSdnConnectorForwardingRuleRuleName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenSystemSdnConnectorForwardingRuleTarget(i["target"], d, pre_append, sv)
+		if cur_v, ok := i["target"]; ok {
+			tmp["target"] = flattenSystemSdnConnectorForwardingRuleTarget(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1418,13 +1418,13 @@ func flattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceDa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemSdnConnectorGcpProjectListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdnConnectorGcpProjectListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gcp_zone_list"
-		if _, ok := i["gcp-zone-list"]; ok {
-			tmp["gcp_zone_list"] = flattenSystemSdnConnectorGcpProjectListGcpZoneList(i["gcp-zone-list"], d, pre_append, sv)
+		if cur_v, ok := i["gcp-zone-list"]; ok {
+			tmp["gcp_zone_list"] = flattenSystemSdnConnectorGcpProjectListGcpZoneList(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1465,8 +1465,8 @@ func flattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSdnConnectorGcpProjectListGcpZoneListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSdnConnectorGcpProjectListGcpZoneListName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

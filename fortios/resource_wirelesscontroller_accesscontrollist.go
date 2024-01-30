@@ -322,43 +322,43 @@ func flattenWirelessControllerAccessControlListLayer3Ipv4Rules(v interface{}, d 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
-		if _, ok := i["rule-id"]; ok {
-			tmp["rule_id"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesRuleId(i["rule-id"], d, pre_append, sv)
+		if cur_v, ok := i["rule-id"]; ok {
+			tmp["rule_id"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcaddr(i["srcaddr"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr"]; ok {
+			tmp["srcaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
-		if _, ok := i["srcport"]; ok {
-			tmp["srcport"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcport(i["srcport"], d, pre_append, sv)
+		if cur_v, ok := i["srcport"]; ok {
+			tmp["srcport"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(i["dstaddr"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr"]; ok {
+			tmp["dstaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
-		if _, ok := i["dstport"]; ok {
-			tmp["dstport"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstport(i["dstport"], d, pre_append, sv)
+		if cur_v, ok := i["dstport"]; ok {
+			tmp["dstport"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWirelessControllerAccessControlListLayer3Ipv4RulesAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -427,43 +427,43 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6Rules(v interface{}, d 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
-		if _, ok := i["rule-id"]; ok {
-			tmp["rule_id"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesRuleId(i["rule-id"], d, pre_append, sv)
+		if cur_v, ok := i["rule-id"]; ok {
+			tmp["rule_id"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcaddr(i["srcaddr"], d, pre_append, sv)
+		if cur_v, ok := i["srcaddr"]; ok {
+			tmp["srcaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
-		if _, ok := i["srcport"]; ok {
-			tmp["srcport"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcport(i["srcport"], d, pre_append, sv)
+		if cur_v, ok := i["srcport"]; ok {
+			tmp["srcport"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(i["dstaddr"], d, pre_append, sv)
+		if cur_v, ok := i["dstaddr"]; ok {
+			tmp["dstaddr"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
-		if _, ok := i["dstport"]; ok {
-			tmp["dstport"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstport(i["dstport"], d, pre_append, sv)
+		if cur_v, ok := i["dstport"]; ok {
+			tmp["dstport"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWirelessControllerAccessControlListLayer3Ipv6RulesAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

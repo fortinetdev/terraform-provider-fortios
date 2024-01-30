@@ -767,18 +767,18 @@ func flattenLogThreatWeightWeb(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogThreatWeightWebId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogThreatWeightWebId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenLogThreatWeightWebCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenLogThreatWeightWebCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenLogThreatWeightWebLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenLogThreatWeightWebLevel(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -827,18 +827,18 @@ func flattenLogThreatWeightGeolocation(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogThreatWeightGeolocationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogThreatWeightGeolocationId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "country"
-		if _, ok := i["country"]; ok {
-			tmp["country"] = flattenLogThreatWeightGeolocationCountry(i["country"], d, pre_append, sv)
+		if cur_v, ok := i["country"]; ok {
+			tmp["country"] = flattenLogThreatWeightGeolocationCountry(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenLogThreatWeightGeolocationLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenLogThreatWeightGeolocationLevel(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -887,18 +887,18 @@ func flattenLogThreatWeightApplication(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogThreatWeightApplicationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenLogThreatWeightApplicationId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenLogThreatWeightApplicationCategory(i["category"], d, pre_append, sv)
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenLogThreatWeightApplicationCategory(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenLogThreatWeightApplicationLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenLogThreatWeightApplicationLevel(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

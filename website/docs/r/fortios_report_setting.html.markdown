@@ -29,7 +29,7 @@ The following arguments are supported:
 * `fortiview` - Enable/disable historical FortiView. Valid values: `enable`, `disable`.
 * `report_source` - Report log source. Valid values: `forward-traffic`, `sniffer-traffic`, `local-deny-traffic`.
 * `web_browsing_threshold` - Web browsing time calculation threshold (3 - 15 min).
-* `top_n` - Number of items to populate (100 - 4000).
+* `top_n` - Number of items to populate. On FortiOS versions 6.2.0: 100 - 4000. On FortiOS versions >= 6.2.4: 1000 - 20000.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

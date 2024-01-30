@@ -342,8 +342,8 @@ func flattenApplicationNameParameters(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenApplicationNameParametersName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenApplicationNameParametersName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -388,18 +388,18 @@ func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationNameMetadataId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationNameMetadataId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
-		if _, ok := i["metaid"]; ok {
-			tmp["metaid"] = flattenApplicationNameMetadataMetaid(i["metaid"], d, pre_append, sv)
+		if cur_v, ok := i["metaid"]; ok {
+			tmp["metaid"] = flattenApplicationNameMetadataMetaid(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
-		if _, ok := i["valueid"]; ok {
-			tmp["valueid"] = flattenApplicationNameMetadataValueid(i["valueid"], d, pre_append, sv)
+		if cur_v, ok := i["valueid"]; ok {
+			tmp["valueid"] = flattenApplicationNameMetadataValueid(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

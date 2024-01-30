@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `name` - CASB user activity name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `status` - CASB user activity status. Valid values: `enable`, `disable`.
 * `description` - CASB user activity description.
 * `type` - CASB user activity type. Valid values: `built-in`, `customized`.
 * `casb_name` - CASB user activity signature name.
@@ -56,6 +57,7 @@ The `methods` block supports:
 The `control_options` block supports:
 
 * `name` - CASB control option name.
+* `status` - CASB control option status. Valid values: `enable`, `disable`.
 * `operations` - CASB control option operations. The structure of `operations` block is documented below.
 
 The `operations` block supports:

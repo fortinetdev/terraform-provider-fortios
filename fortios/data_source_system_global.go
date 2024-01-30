@@ -152,6 +152,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"purdue_level": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"daily_restart": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -173,6 +177,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"radius_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"speedtestd_server_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"speedtestd_ctrl_port": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -349,6 +361,19 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"ssh_hostkey_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ssh_hostkey_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ssh_hostkey_password": &schema.Schema{
+				Type:      schema.TypeString,
+				Sensitive: true,
+				Computed:  true,
+			},
+			"ssh_hostkey": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -940,6 +965,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"bfd_affinity": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"cmdbsvr_affinity": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1140,6 +1169,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"fortigslb_integration": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -1302,6 +1335,10 @@ func dataSourceFlattenSystemGlobalFailtime(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemGlobalPurdueLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalDailyRestart(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1323,6 +1360,14 @@ func dataSourceFlattenSystemGlobalWadRestartEndTime(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemGlobalRadiusPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSpeedtestdServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSpeedtestdCtrlPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1499,6 +1544,18 @@ func dataSourceFlattenSystemGlobalSshMacAlgo(v interface{}, d *schema.ResourceDa
 }
 
 func dataSourceFlattenSystemGlobalSshHostkeyAlgo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSshHostkeyOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSshHostkeyPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSshHostkey(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2097,6 +2154,10 @@ func dataSourceFlattenSystemGlobalHaAffinity(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenSystemGlobalBfdAffinity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalCmdbsvrAffinity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2321,6 +2382,10 @@ func dataSourceFlattenSystemGlobalSflowdMaxChildrenNum(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemGlobalFortigslbIntegration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -2510,6 +2575,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("purdue_level", dataSourceFlattenSystemGlobalPurdueLevel(o["purdue-level"], d, "purdue_level")); err != nil {
+		if !fortiAPIPatch(o["purdue-level"]) {
+			return fmt.Errorf("Error reading purdue_level: %v", err)
+		}
+	}
+
 	if err = d.Set("daily_restart", dataSourceFlattenSystemGlobalDailyRestart(o["daily-restart"], d, "daily_restart")); err != nil {
 		if !fortiAPIPatch(o["daily-restart"]) {
 			return fmt.Errorf("Error reading daily_restart: %v", err)
@@ -2543,6 +2614,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("radius_port", dataSourceFlattenSystemGlobalRadiusPort(o["radius-port"], d, "radius_port")); err != nil {
 		if !fortiAPIPatch(o["radius-port"]) {
 			return fmt.Errorf("Error reading radius_port: %v", err)
+		}
+	}
+
+	if err = d.Set("speedtestd_server_port", dataSourceFlattenSystemGlobalSpeedtestdServerPort(o["speedtestd-server-port"], d, "speedtestd_server_port")); err != nil {
+		if !fortiAPIPatch(o["speedtestd-server-port"]) {
+			return fmt.Errorf("Error reading speedtestd_server_port: %v", err)
+		}
+	}
+
+	if err = d.Set("speedtestd_ctrl_port", dataSourceFlattenSystemGlobalSpeedtestdCtrlPort(o["speedtestd-ctrl-port"], d, "speedtestd_ctrl_port")); err != nil {
+		if !fortiAPIPatch(o["speedtestd-ctrl-port"]) {
+			return fmt.Errorf("Error reading speedtestd_ctrl_port: %v", err)
 		}
 	}
 
@@ -2807,6 +2890,24 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("ssh_hostkey_algo", dataSourceFlattenSystemGlobalSshHostkeyAlgo(o["ssh-hostkey-algo"], d, "ssh_hostkey_algo")); err != nil {
 		if !fortiAPIPatch(o["ssh-hostkey-algo"]) {
 			return fmt.Errorf("Error reading ssh_hostkey_algo: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_hostkey_override", dataSourceFlattenSystemGlobalSshHostkeyOverride(o["ssh-hostkey-override"], d, "ssh_hostkey_override")); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey-override"]) {
+			return fmt.Errorf("Error reading ssh_hostkey_override: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_hostkey_password", dataSourceFlattenSystemGlobalSshHostkeyPassword(o["ssh-hostkey-password"], d, "ssh_hostkey_password")); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey-password"]) {
+			return fmt.Errorf("Error reading ssh_hostkey_password: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_hostkey", dataSourceFlattenSystemGlobalSshHostkey(o["ssh-hostkey"], d, "ssh_hostkey")); err != nil {
+		if !fortiAPIPatch(o["ssh-hostkey"]) {
+			return fmt.Errorf("Error reading ssh_hostkey: %v", err)
 		}
 	}
 
@@ -3692,6 +3793,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("bfd_affinity", dataSourceFlattenSystemGlobalBfdAffinity(o["bfd-affinity"], d, "bfd_affinity")); err != nil {
+		if !fortiAPIPatch(o["bfd-affinity"]) {
+			return fmt.Errorf("Error reading bfd_affinity: %v", err)
+		}
+	}
+
 	if err = d.Set("cmdbsvr_affinity", dataSourceFlattenSystemGlobalCmdbsvrAffinity(o["cmdbsvr-affinity"], d, "cmdbsvr_affinity")); err != nil {
 		if !fortiAPIPatch(o["cmdbsvr-affinity"]) {
 			return fmt.Errorf("Error reading cmdbsvr_affinity: %v", err)
@@ -3977,6 +4084,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("sflowd_max_children_num", dataSourceFlattenSystemGlobalSflowdMaxChildrenNum(o["sflowd-max-children-num"], d, "sflowd_max_children_num")); err != nil {
 		if !fortiAPIPatch(o["sflowd-max-children-num"]) {
 			return fmt.Errorf("Error reading sflowd_max_children_num: %v", err)
+		}
+	}
+
+	if err = d.Set("fortigslb_integration", dataSourceFlattenSystemGlobalFortigslbIntegration(o["fortigslb-integration"], d, "fortigslb_integration")); err != nil {
+		if !fortiAPIPatch(o["fortigslb-integration"]) {
+			return fmt.Errorf("Error reading fortigslb_integration: %v", err)
 		}
 	}
 

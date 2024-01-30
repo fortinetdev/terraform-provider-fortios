@@ -151,6 +151,11 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"send_tags_to_all_vdoms": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"websocket_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -176,6 +181,12 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"verifying_ca": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
 			},
 			"status_check_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -398,6 +409,10 @@ func flattenEndpointControlFctemsOutOfSyncThreshold(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenEndpointControlFctemsSendTagsToAllVdoms(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsWebsocketOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -415,6 +430,10 @@ func flattenEndpointControlFctemsInterface(v interface{}, d *schema.ResourceData
 }
 
 func flattenEndpointControlFctemsTrustCaCn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenEndpointControlFctemsVerifyingCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -549,6 +568,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("send_tags_to_all_vdoms", flattenEndpointControlFctemsSendTagsToAllVdoms(o["send-tags-to-all-vdoms"], d, "send_tags_to_all_vdoms", sv)); err != nil {
+		if !fortiAPIPatch(o["send-tags-to-all-vdoms"]) {
+			return fmt.Errorf("Error reading send_tags_to_all_vdoms: %v", err)
+		}
+	}
+
 	if err = d.Set("websocket_override", flattenEndpointControlFctemsWebsocketOverride(o["websocket-override"], d, "websocket_override", sv)); err != nil {
 		if !fortiAPIPatch(o["websocket-override"]) {
 			return fmt.Errorf("Error reading websocket_override: %v", err)
@@ -576,6 +601,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 	if err = d.Set("trust_ca_cn", flattenEndpointControlFctemsTrustCaCn(o["trust-ca-cn"], d, "trust_ca_cn", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ca-cn"]) {
 			return fmt.Errorf("Error reading trust_ca_cn: %v", err)
+		}
+	}
+
+	if err = d.Set("verifying_ca", flattenEndpointControlFctemsVerifyingCa(o["verifying-ca"], d, "verifying_ca", sv)); err != nil {
+		if !fortiAPIPatch(o["verifying-ca"]) {
+			return fmt.Errorf("Error reading verifying_ca: %v", err)
 		}
 	}
 
@@ -684,6 +715,10 @@ func expandEndpointControlFctemsOutOfSyncThreshold(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandEndpointControlFctemsSendTagsToAllVdoms(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsWebsocketOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -701,6 +736,10 @@ func expandEndpointControlFctemsInterface(d *schema.ResourceData, v interface{},
 }
 
 func expandEndpointControlFctemsTrustCaCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandEndpointControlFctemsVerifyingCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -904,6 +943,15 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("send_tags_to_all_vdoms"); ok {
+		t, err := expandEndpointControlFctemsSendTagsToAllVdoms(d, v, "send_tags_to_all_vdoms", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["send-tags-to-all-vdoms"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("websocket_override"); ok {
 		t, err := expandEndpointControlFctemsWebsocketOverride(d, v, "websocket_override", sv)
 		if err != nil {
@@ -946,6 +994,15 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["trust-ca-cn"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("verifying_ca"); ok {
+		t, err := expandEndpointControlFctemsVerifyingCa(d, v, "verifying_ca", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["verifying-ca"] = t
 		}
 	}
 

@@ -261,33 +261,33 @@ func flattenWebfilterContentEntries(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebfilterContentEntriesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebfilterContentEntriesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenWebfilterContentEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenWebfilterContentEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenWebfilterContentEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenWebfilterContentEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
-		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWebfilterContentEntriesLang(i["lang"], d, pre_append, sv)
+		if cur_v, ok := i["lang"]; ok {
+			tmp["lang"] = flattenWebfilterContentEntriesLang(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
-		if _, ok := i["score"]; ok {
-			tmp["score"] = flattenWebfilterContentEntriesScore(i["score"], d, pre_append, sv)
+		if cur_v, ok := i["score"]; ok {
+			tmp["score"] = flattenWebfilterContentEntriesScore(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebfilterContentEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebfilterContentEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

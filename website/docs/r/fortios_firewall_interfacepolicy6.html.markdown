@@ -46,6 +46,7 @@ resource "fortios_firewall_interfacepolicy6" "trname" {
 The following arguments are supported:
 
 * `policyid` - Policy ID.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
 * `comments` - Comments.
 * `logtraffic` - Logging type to be used in this policy (Options: all | utm | disable, Default: utm). Valid values: `all`, `utm`, `disable`.

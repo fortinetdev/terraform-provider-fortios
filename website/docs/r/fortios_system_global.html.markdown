@@ -55,12 +55,15 @@ The following arguments are supported:
 * `refresh` - Statistics refresh interval in GUI.
 * `interval` - Dead gateway detection interval.
 * `failtime` - Fail-time for server lost.
+* `purdue_level` - Purdue Level of this FortiGate. Valid values: `1`, `1.5`, `2`, `2.5`, `3`, `3.5`, `4`, `5`, `5.5`.
 * `daily_restart` - Enable/disable daily restart of FortiGate unit. Use the restart-time option to set the time of day for the restart. Valid values: `enable`, `disable`.
 * `restart_time` - Daily restart time (hh:mm).
 * `wad_restart_mode` - WAD worker restart mode (default = none). Valid values: `none`, `time`, `memory`.
 * `wad_restart_start_time` - WAD workers daily restart time (hh:mm).
 * `wad_restart_end_time` - WAD workers daily restart end time (hh:mm).
 * `radius_port` - RADIUS service port number.
+* `speedtestd_server_port` - Speedtest server port number.
+* `speedtestd_ctrl_port` - Speedtest server controller port number.
 * `admin_login_max` - Maximum number of administrators who can be logged in at the same time (1 - 100, default = 100)
 * `remoteauthtimeout` - Number of seconds that the FortiGate waits for responses from remote RADIUS, LDAP, or TACACS+ authentication servers. (0-300 sec, default = 5, 0 means no timeout).
 * `ldapconntimeout` - Global timeout for connections with remote LDAP servers in milliseconds (1 - 300000, default 500).
@@ -70,7 +73,7 @@ The following arguments are supported:
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default = TLSv1.2).
 * `autorun_log_fsck` - Enable/disable automatic log partition check after ungraceful shutdown. Valid values: `enable`, `disable`.
 * `dst` - Enable/disable daylight saving time. Valid values: `enable`, `disable`.
-* `timezone` - Number corresponding to your time zone from 00 to 86. Enter set timezone ? to view the list of time zones and the numbers that represent them. Valid values: `01`, `02`, `03`, `04`, `05`, `81`, `06`, `07`, `08`, `09`, `10`, `11`, `12`, `13`, `74`, `14`, `77`, `15`, `87`, `16`, `17`, `18`, `19`, `20`, `75`, `21`, `22`, `23`, `24`, `80`, `79`, `25`, `26`, `27`, `28`, `78`, `29`, `30`, `31`, `32`, `33`, `34`, `35`, `36`, `37`, `38`, `83`, `84`, `40`, `85`, `41`, `42`, `43`, `39`, `44`, `46`, `47`, `51`, `48`, `45`, `49`, `50`, `52`, `53`, `54`, `55`, `56`, `57`, `58`, `59`, `60`, `62`, `63`, `61`, `64`, `65`, `66`, `67`, `68`, `69`, `70`, `71`, `72`, `00`, `82`, `73`, `86`, `76`.
+* `timezone` - Number corresponding to your time zone from 00 to 86. Enter set timezone ? to view the list of time zones and the numbers that represent them.
 * `traffic_priority` - Choose Type of Service (ToS) or Differentiated Services Code Point (DSCP) for traffic prioritization in traffic shaping. Valid values: `tos`, `dscp`.
 * `traffic_priority_level` - Default system-wide level of priority for traffic prioritization. Valid values: `low`, `medium`, `high`.
 * `quic_congestion_control_algo` - QUIC congestion control algorithm (default = cubic). Valid values: `cubic`, `bbr`, `bbr2`, `reno`.
@@ -104,7 +107,10 @@ The following arguments are supported:
 * `ssh_kex_algo` - Select one or more SSH kex algorithms.
 * `ssh_enc_algo` - Select one or more SSH ciphers. Valid values: `chacha20-poly1305@openssh.com`, `aes128-ctr`, `aes192-ctr`, `aes256-ctr`, `arcfour256`, `arcfour128`, `aes128-cbc`, `3des-cbc`, `blowfish-cbc`, `cast128-cbc`, `aes192-cbc`, `aes256-cbc`, `arcfour`, `rijndael-cbc@lysator.liu.se`, `aes128-gcm@openssh.com`, `aes256-gcm@openssh.com`.
 * `ssh_mac_algo` - Select one or more SSH MAC algorithms. Valid values: `hmac-md5`, `hmac-md5-etm@openssh.com`, `hmac-md5-96`, `hmac-md5-96-etm@openssh.com`, `hmac-sha1`, `hmac-sha1-etm@openssh.com`, `hmac-sha2-256`, `hmac-sha2-256-etm@openssh.com`, `hmac-sha2-512`, `hmac-sha2-512-etm@openssh.com`, `hmac-ripemd160`, `hmac-ripemd160@openssh.com`, `hmac-ripemd160-etm@openssh.com`, `umac-64@openssh.com`, `umac-128@openssh.com`, `umac-64-etm@openssh.com`, `umac-128-etm@openssh.com`.
-* `ssh_hostkey_algo` - Select one or more SSH hostkey algorithms. Valid values: `ssh-rsa`, `ecdsa-sha2-nistp521`, `rsa-sha2-256`, `rsa-sha2-512`, `ssh-ed25519`.
+* `ssh_hostkey_algo` - Select one or more SSH hostkey algorithms.
+* `ssh_hostkey_override` - Enable/disable SSH host key override in SSH daemon. Valid values: `disable`, `enable`.
+* `ssh_hostkey_password` - Password for ssh-hostkey.
+* `ssh_hostkey` - Config SSH host key.
 * `snat_route_change` - Enable/disable the ability to change the static NAT route. Valid values: `enable`, `disable`.
 * `speedtest_server` - Enable/disable speed test server. Valid values: `enable`, `disable`.
 * `cli_audit_log` - Enable/disable CLI audit log. Valid values: `enable`, `disable`.
@@ -252,6 +258,7 @@ The following arguments are supported:
 * `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments. Valid values: `enable`, `disable`.
 * `arp_max_entry` - Maximum number of dynamically learned MAC addresses that can be added to the ARP table (131072 - 2147483647, default = 131072).
 * `ha_affinity` - Affinity setting for HA daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
+* `bfd_affinity` - Affinity setting for BFD daemon (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `cmdbsvr_affinity` - Affinity setting for cmdbsvr (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `av_affinity` - Affinity setting for AV scanning (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `wad_affinity` - Affinity setting for wad (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
@@ -300,6 +307,7 @@ The following arguments are supported:
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session. Valid values: `enable`, `disable`.
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable). Valid values: `disable`, `enable`.
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
+* `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

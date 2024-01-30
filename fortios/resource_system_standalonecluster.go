@@ -67,6 +67,11 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 				Optional:  true,
 				Sensitive: true,
 			},
+			"asymmetric_traffic_control": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cluster_peer": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -338,6 +343,10 @@ func flattenSystemStandaloneClusterPsksecret(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemStandaloneClusterAsymmetricTrafficControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemStandaloneClusterClusterPeer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -363,53 +372,53 @@ func flattenSystemStandaloneClusterClusterPeer(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sync_id"
-		if _, ok := i["sync-id"]; ok {
-			tmp["sync_id"] = flattenSystemStandaloneClusterClusterPeerSyncId(i["sync-id"], d, pre_append, sv)
+		if cur_v, ok := i["sync-id"]; ok {
+			tmp["sync_id"] = flattenSystemStandaloneClusterClusterPeerSyncId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peervd"
-		if _, ok := i["peervd"]; ok {
-			tmp["peervd"] = flattenSystemStandaloneClusterClusterPeerPeervd(i["peervd"], d, pre_append, sv)
+		if cur_v, ok := i["peervd"]; ok {
+			tmp["peervd"] = flattenSystemStandaloneClusterClusterPeerPeervd(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peerip"
-		if _, ok := i["peerip"]; ok {
-			tmp["peerip"] = flattenSystemStandaloneClusterClusterPeerPeerip(i["peerip"], d, pre_append, sv)
+		if cur_v, ok := i["peerip"]; ok {
+			tmp["peerip"] = flattenSystemStandaloneClusterClusterPeerPeerip(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "syncvd"
-		if _, ok := i["syncvd"]; ok {
-			tmp["syncvd"] = flattenSystemStandaloneClusterClusterPeerSyncvd(i["syncvd"], d, pre_append, sv)
+		if cur_v, ok := i["syncvd"]; ok {
+			tmp["syncvd"] = flattenSystemStandaloneClusterClusterPeerSyncvd(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "down_intfs_before_sess_sync"
-		if _, ok := i["down-intfs-before-sess-sync"]; ok {
-			tmp["down_intfs_before_sess_sync"] = flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSync(i["down-intfs-before-sess-sync"], d, pre_append, sv)
+		if cur_v, ok := i["down-intfs-before-sess-sync"]; ok {
+			tmp["down_intfs_before_sess_sync"] = flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSync(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hb_interval"
-		if _, ok := i["hb-interval"]; ok {
-			tmp["hb_interval"] = flattenSystemStandaloneClusterClusterPeerHbInterval(i["hb-interval"], d, pre_append, sv)
+		if cur_v, ok := i["hb-interval"]; ok {
+			tmp["hb_interval"] = flattenSystemStandaloneClusterClusterPeerHbInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hb_lost_threshold"
-		if _, ok := i["hb-lost-threshold"]; ok {
-			tmp["hb_lost_threshold"] = flattenSystemStandaloneClusterClusterPeerHbLostThreshold(i["hb-lost-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["hb-lost-threshold"]; ok {
+			tmp["hb_lost_threshold"] = flattenSystemStandaloneClusterClusterPeerHbLostThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_tunnel_sync"
-		if _, ok := i["ipsec-tunnel-sync"]; ok {
-			tmp["ipsec_tunnel_sync"] = flattenSystemStandaloneClusterClusterPeerIpsecTunnelSync(i["ipsec-tunnel-sync"], d, pre_append, sv)
+		if cur_v, ok := i["ipsec-tunnel-sync"]; ok {
+			tmp["ipsec_tunnel_sync"] = flattenSystemStandaloneClusterClusterPeerIpsecTunnelSync(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "secondary_add_ipsec_routes"
-		if _, ok := i["secondary-add-ipsec-routes"]; ok {
-			tmp["secondary_add_ipsec_routes"] = flattenSystemStandaloneClusterClusterPeerSecondaryAddIpsecRoutes(i["secondary-add-ipsec-routes"], d, pre_append, sv)
+		if cur_v, ok := i["secondary-add-ipsec-routes"]; ok {
+			tmp["secondary_add_ipsec_routes"] = flattenSystemStandaloneClusterClusterPeerSecondaryAddIpsecRoutes(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "session_sync_filter"
-		if _, ok := i["session-sync-filter"]; ok {
-			tmp["session_sync_filter"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilter(i["session-sync-filter"], d, pre_append, sv)
+		if cur_v, ok := i["session-sync-filter"]; ok {
+			tmp["session_sync_filter"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilter(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -458,8 +467,8 @@ func flattenSystemStandaloneClusterClusterPeerSyncvd(v interface{}, d *schema.Re
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemStandaloneClusterClusterPeerSyncvdName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemStandaloneClusterClusterPeerSyncvdName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -500,8 +509,8 @@ func flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSync(v interfac
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSyncName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSyncName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -644,18 +653,18 @@ func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomService(v i
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
-		if _, ok := i["src-port-range"]; ok {
-			tmp["src_port_range"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceSrcPortRange(i["src-port-range"], d, pre_append, sv)
+		if cur_v, ok := i["src-port-range"]; ok {
+			tmp["src_port_range"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceSrcPortRange(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
-		if _, ok := i["dst-port-range"]; ok {
-			tmp["dst_port_range"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceDstPortRange(i["dst-port-range"], d, pre_append, sv)
+		if cur_v, ok := i["dst-port-range"]; ok {
+			tmp["dst_port_range"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceDstPortRange(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -718,6 +727,12 @@ func refreshObjectSystemStandaloneCluster(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("asymmetric_traffic_control", flattenSystemStandaloneClusterAsymmetricTrafficControl(o["asymmetric-traffic-control"], d, "asymmetric_traffic_control", sv)); err != nil {
+		if !fortiAPIPatch(o["asymmetric-traffic-control"]) {
+			return fmt.Errorf("Error reading asymmetric_traffic_control: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("cluster_peer", flattenSystemStandaloneClusterClusterPeer(o["cluster-peer"], d, "cluster_peer", sv)); err != nil {
 			if !fortiAPIPatch(o["cluster-peer"]) {
@@ -764,6 +779,10 @@ func expandSystemStandaloneClusterEncryption(d *schema.ResourceData, v interface
 }
 
 func expandSystemStandaloneClusterPsksecret(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemStandaloneClusterAsymmetricTrafficControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1123,6 +1142,19 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["psksecret"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("asymmetric_traffic_control"); ok {
+		if setArgNil {
+			obj["asymmetric-traffic-control"] = nil
+		} else {
+			t, err := expandSystemStandaloneClusterAsymmetricTrafficControl(d, v, "asymmetric_traffic_control", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["asymmetric-traffic-control"] = t
 			}
 		}
 	}

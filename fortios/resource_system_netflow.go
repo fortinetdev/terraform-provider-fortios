@@ -75,6 +75,49 @@ func resourceSystemNetflow() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"collectors": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 6),
+							Optional:     true,
+							Computed:     true,
+						},
+						"collector_ip": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"collector_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"source_ip": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -85,6 +128,16 @@ func resourceSystemNetflow() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -212,6 +265,93 @@ func flattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSystemNetflowCollectors(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemNetflowCollectorsId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if cur_v, ok := i["collector-ip"]; ok {
+			tmp["collector_ip"] = flattenSystemNetflowCollectorsCollectorIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if cur_v, ok := i["collector-port"]; ok {
+			tmp["collector_port"] = flattenSystemNetflowCollectorsCollectorPort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if cur_v, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = flattenSystemNetflowCollectorsSourceIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenSystemNetflowCollectorsInterfaceSelectMethod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemNetflowCollectorsInterface(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemNetflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowCollectorsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemNetflowInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -222,6 +362,12 @@ func flattenSystemNetflowInterface(v interface{}, d *schema.ResourceData, pre st
 
 func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("collector_ip", flattenSystemNetflowCollectorIp(o["collector-ip"], d, "collector_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
@@ -262,6 +408,22 @@ func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("template_tx_counter", flattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter", sv)); err != nil {
 		if !fortiAPIPatch(o["template-tx-counter"]) {
 			return fmt.Errorf("Error reading template_tx_counter: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("collectors", flattenSystemNetflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+			if !fortiAPIPatch(o["collectors"]) {
+				return fmt.Errorf("Error reading collectors: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("collectors"); ok {
+			if err = d.Set("collectors", flattenSystemNetflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+				if !fortiAPIPatch(o["collectors"]) {
+					return fmt.Errorf("Error reading collectors: %v", err)
+				}
+			}
 		}
 	}
 
@@ -311,6 +473,82 @@ func expandSystemNetflowTemplateTxTimeout(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemNetflowTemplateTxCounter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemNetflowCollectorsId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["collector-ip"], _ = expandSystemNetflowCollectorsCollectorIp(d, i["collector_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["collector-port"], _ = expandSystemNetflowCollectorsCollectorPort(d, i["collector_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip"], _ = expandSystemNetflowCollectorsSourceIp(d, i["source_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface-select-method"], _ = expandSystemNetflowCollectorsInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface"], _ = expandSystemNetflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemNetflowCollectorsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectorsCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectorsCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectorsSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectorsInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectorsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -412,6 +650,19 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 				return &obj, err
 			} else if t != nil {
 				obj["template-tx-counter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("collectors"); ok || d.HasChange("collectors") {
+		if setArgNil {
+			obj["collectors"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemNetflowCollectors(d, v, "collectors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collectors"] = t
 			}
 		}
 	}

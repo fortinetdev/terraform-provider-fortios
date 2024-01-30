@@ -191,8 +191,8 @@ func flattenSystemNdProxyMember(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemNdProxyMemberInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemNdProxyMemberInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

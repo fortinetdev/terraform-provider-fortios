@@ -274,23 +274,23 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiList(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encoding"
-		if _, ok := i["encoding"]; ok {
-			tmp["encoding"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEncoding(i["encoding"], d, pre_append, sv)
+		if cur_v, ok := i["encoding"]; ok {
+			tmp["encoding"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEncoding(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
-		if _, ok := i["nai-realm"]; ok {
-			tmp["nai_realm"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListNaiRealm(i["nai-realm"], d, pre_append, sv)
+		if cur_v, ok := i["nai-realm"]; ok {
+			tmp["nai_realm"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListNaiRealm(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "eap_method"
-		if _, ok := i["eap-method"]; ok {
-			tmp["eap_method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(i["eap-method"], d, pre_append, sv)
+		if cur_v, ok := i["eap-method"]; ok {
+			tmp["eap_method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -339,18 +339,18 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(v interface{
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
-		if _, ok := i["method"]; ok {
-			tmp["method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(i["method"], d, pre_append, sv)
+		if cur_v, ok := i["method"]; ok {
+			tmp["method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_param"
-		if _, ok := i["auth-param"]; ok {
-			tmp["auth_param"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(i["auth-param"], d, pre_append, sv)
+		if cur_v, ok := i["auth-param"]; ok {
+			tmp["auth_param"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -395,18 +395,18 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(v i
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
-		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamIndex(i["index"], d, pre_append, sv)
+		if cur_v, ok := i["index"]; ok {
+			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamIndex(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "val"
-		if _, ok := i["val"]; ok {
-			tmp["val"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamVal(i["val"], d, pre_append, sv)
+		if cur_v, ok := i["val"]; ok {
+			tmp["val"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamVal(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

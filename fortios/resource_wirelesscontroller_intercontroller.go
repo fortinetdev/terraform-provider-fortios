@@ -254,23 +254,23 @@ func flattenWirelessControllerInterControllerInterControllerPeer(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerInterControllerInterControllerPeerId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerInterControllerInterControllerPeerId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
-		if _, ok := i["peer-ip"]; ok {
-			tmp["peer_ip"] = flattenWirelessControllerInterControllerInterControllerPeerPeerIp(i["peer-ip"], d, pre_append, sv)
+		if cur_v, ok := i["peer-ip"]; ok {
+			tmp["peer_ip"] = flattenWirelessControllerInterControllerInterControllerPeerPeerIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_port"
-		if _, ok := i["peer-port"]; ok {
-			tmp["peer_port"] = flattenWirelessControllerInterControllerInterControllerPeerPeerPort(i["peer-port"], d, pre_append, sv)
+		if cur_v, ok := i["peer-port"]; ok {
+			tmp["peer_port"] = flattenWirelessControllerInterControllerInterControllerPeerPeerPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_priority"
-		if _, ok := i["peer-priority"]; ok {
-			tmp["peer_priority"] = flattenWirelessControllerInterControllerInterControllerPeerPeerPriority(i["peer-priority"], d, pre_append, sv)
+		if cur_v, ok := i["peer-priority"]; ok {
+			tmp["peer_priority"] = flattenWirelessControllerInterControllerInterControllerPeerPeerPriority(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -284,23 +284,23 @@ func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportDatasetFieldId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportDatasetFieldId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenReportDatasetFieldType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenReportDatasetFieldType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenReportDatasetFieldName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenReportDatasetFieldName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
-		if _, ok := i["displayname"]; ok {
-			tmp["displayname"] = flattenReportDatasetFieldDisplayname(i["displayname"], d, pre_append, sv)
+		if cur_v, ok := i["displayname"]; ok {
+			tmp["displayname"] = flattenReportDatasetFieldDisplayname(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -353,23 +353,23 @@ func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportDatasetParametersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenReportDatasetParametersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "display_name"
-		if _, ok := i["display-name"]; ok {
-			tmp["display_name"] = flattenReportDatasetParametersDisplayName(i["display-name"], d, pre_append, sv)
+		if cur_v, ok := i["display-name"]; ok {
+			tmp["display_name"] = flattenReportDatasetParametersDisplayName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field"
-		if _, ok := i["field"]; ok {
-			tmp["field"] = flattenReportDatasetParametersField(i["field"], d, pre_append, sv)
+		if cur_v, ok := i["field"]; ok {
+			tmp["field"] = flattenReportDatasetParametersField(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data_type"
-		if _, ok := i["data-type"]; ok {
-			tmp["data_type"] = flattenReportDatasetParametersDataType(i["data-type"], d, pre_append, sv)
+		if cur_v, ok := i["data-type"]; ok {
+			tmp["data_type"] = flattenReportDatasetParametersDataType(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

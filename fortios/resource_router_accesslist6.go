@@ -248,28 +248,28 @@ func flattenRouterAccessList6Rule(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterAccessList6RuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterAccessList6RuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterAccessList6RuleAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenRouterAccessList6RuleAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
-		if _, ok := i["prefix6"]; ok {
-			tmp["prefix6"] = flattenRouterAccessList6RulePrefix6(i["prefix6"], d, pre_append, sv)
+		if cur_v, ok := i["prefix6"]; ok {
+			tmp["prefix6"] = flattenRouterAccessList6RulePrefix6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
-		if _, ok := i["exact-match"]; ok {
-			tmp["exact_match"] = flattenRouterAccessList6RuleExactMatch(i["exact-match"], d, pre_append, sv)
+		if cur_v, ok := i["exact-match"]; ok {
+			tmp["exact_match"] = flattenRouterAccessList6RuleExactMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
-		if _, ok := i["flags"]; ok {
-			tmp["flags"] = flattenRouterAccessList6RuleFlags(i["flags"], d, pre_append, sv)
+		if cur_v, ok := i["flags"]; ok {
+			tmp["flags"] = flattenRouterAccessList6RuleFlags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

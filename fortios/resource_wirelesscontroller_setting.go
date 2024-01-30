@@ -119,6 +119,11 @@ func resourceWirelessControllerSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rolling_wtp_upgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"darrp_optimize": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
@@ -300,18 +305,18 @@ func flattenWirelessControllerSettingOffendingSsid(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerSettingOffendingSsidId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWirelessControllerSettingOffendingSsidId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssid_pattern"
-		if _, ok := i["ssid-pattern"]; ok {
-			tmp["ssid_pattern"] = flattenWirelessControllerSettingOffendingSsidSsidPattern(i["ssid-pattern"], d, pre_append, sv)
+		if cur_v, ok := i["ssid-pattern"]; ok {
+			tmp["ssid_pattern"] = flattenWirelessControllerSettingOffendingSsidSsidPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWirelessControllerSettingOffendingSsidAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWirelessControllerSettingOffendingSsidAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -351,6 +356,10 @@ func flattenWirelessControllerSettingFirmwareProvisionOnAuthorization(v interfac
 	return v
 }
 
+func flattenWirelessControllerSettingRollingWtpUpgrade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerSettingDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -380,8 +389,8 @@ func flattenWirelessControllerSettingDarrpOptimizeSchedules(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerSettingDarrpOptimizeSchedulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerSettingDarrpOptimizeSchedulesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -485,6 +494,12 @@ func refreshObjectWirelessControllerSetting(d *schema.ResourceData, o map[string
 	if err = d.Set("firmware_provision_on_authorization", flattenWirelessControllerSettingFirmwareProvisionOnAuthorization(o["firmware-provision-on-authorization"], d, "firmware_provision_on_authorization", sv)); err != nil {
 		if !fortiAPIPatch(o["firmware-provision-on-authorization"]) {
 			return fmt.Errorf("Error reading firmware_provision_on_authorization: %v", err)
+		}
+	}
+
+	if err = d.Set("rolling_wtp_upgrade", flattenWirelessControllerSettingRollingWtpUpgrade(o["rolling-wtp-upgrade"], d, "rolling_wtp_upgrade", sv)); err != nil {
+		if !fortiAPIPatch(o["rolling-wtp-upgrade"]) {
+			return fmt.Errorf("Error reading rolling_wtp_upgrade: %v", err)
 		}
 	}
 
@@ -609,6 +624,10 @@ func expandWirelessControllerSettingDeviceIdle(d *schema.ResourceData, v interfa
 }
 
 func expandWirelessControllerSettingFirmwareProvisionOnAuthorization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerSettingRollingWtpUpgrade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -799,6 +818,19 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 				return &obj, err
 			} else if t != nil {
 				obj["firmware-provision-on-authorization"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("rolling_wtp_upgrade"); ok {
+		if setArgNil {
+			obj["rolling-wtp-upgrade"] = nil
+		} else {
+			t, err := expandWirelessControllerSettingRollingWtpUpgrade(d, v, "rolling_wtp_upgrade", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rolling-wtp-upgrade"] = t
 			}
 		}
 	}

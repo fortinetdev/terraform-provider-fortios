@@ -310,73 +310,73 @@ func flattenSystemAlarmGroups(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAlarmGroupsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAlarmGroupsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "period"
-		if _, ok := i["period"]; ok {
-			tmp["period"] = flattenSystemAlarmGroupsPeriod(i["period"], d, pre_append, sv)
+		if cur_v, ok := i["period"]; ok {
+			tmp["period"] = flattenSystemAlarmGroupsPeriod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_failure_threshold"
-		if _, ok := i["admin-auth-failure-threshold"]; ok {
-			tmp["admin_auth_failure_threshold"] = flattenSystemAlarmGroupsAdminAuthFailureThreshold(i["admin-auth-failure-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["admin-auth-failure-threshold"]; ok {
+			tmp["admin_auth_failure_threshold"] = flattenSystemAlarmGroupsAdminAuthFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_lockout_threshold"
-		if _, ok := i["admin-auth-lockout-threshold"]; ok {
-			tmp["admin_auth_lockout_threshold"] = flattenSystemAlarmGroupsAdminAuthLockoutThreshold(i["admin-auth-lockout-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["admin-auth-lockout-threshold"]; ok {
+			tmp["admin_auth_lockout_threshold"] = flattenSystemAlarmGroupsAdminAuthLockoutThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_failure_threshold"
-		if _, ok := i["user-auth-failure-threshold"]; ok {
-			tmp["user_auth_failure_threshold"] = flattenSystemAlarmGroupsUserAuthFailureThreshold(i["user-auth-failure-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["user-auth-failure-threshold"]; ok {
+			tmp["user_auth_failure_threshold"] = flattenSystemAlarmGroupsUserAuthFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_lockout_threshold"
-		if _, ok := i["user-auth-lockout-threshold"]; ok {
-			tmp["user_auth_lockout_threshold"] = flattenSystemAlarmGroupsUserAuthLockoutThreshold(i["user-auth-lockout-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["user-auth-lockout-threshold"]; ok {
+			tmp["user_auth_lockout_threshold"] = flattenSystemAlarmGroupsUserAuthLockoutThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "replay_attempt_threshold"
-		if _, ok := i["replay-attempt-threshold"]; ok {
-			tmp["replay_attempt_threshold"] = flattenSystemAlarmGroupsReplayAttemptThreshold(i["replay-attempt-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["replay-attempt-threshold"]; ok {
+			tmp["replay_attempt_threshold"] = flattenSystemAlarmGroupsReplayAttemptThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "self_test_failure_threshold"
-		if _, ok := i["self-test-failure-threshold"]; ok {
-			tmp["self_test_failure_threshold"] = flattenSystemAlarmGroupsSelfTestFailureThreshold(i["self-test-failure-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["self-test-failure-threshold"]; ok {
+			tmp["self_test_failure_threshold"] = flattenSystemAlarmGroupsSelfTestFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_full_warning_threshold"
-		if _, ok := i["log-full-warning-threshold"]; ok {
-			tmp["log_full_warning_threshold"] = flattenSystemAlarmGroupsLogFullWarningThreshold(i["log-full-warning-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["log-full-warning-threshold"]; ok {
+			tmp["log_full_warning_threshold"] = flattenSystemAlarmGroupsLogFullWarningThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encryption_failure_threshold"
-		if _, ok := i["encryption-failure-threshold"]; ok {
-			tmp["encryption_failure_threshold"] = flattenSystemAlarmGroupsEncryptionFailureThreshold(i["encryption-failure-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["encryption-failure-threshold"]; ok {
+			tmp["encryption_failure_threshold"] = flattenSystemAlarmGroupsEncryptionFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "decryption_failure_threshold"
-		if _, ok := i["decryption-failure-threshold"]; ok {
-			tmp["decryption_failure_threshold"] = flattenSystemAlarmGroupsDecryptionFailureThreshold(i["decryption-failure-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["decryption-failure-threshold"]; ok {
+			tmp["decryption_failure_threshold"] = flattenSystemAlarmGroupsDecryptionFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_violations"
-		if _, ok := i["fw-policy-violations"]; ok {
-			tmp["fw_policy_violations"] = flattenSystemAlarmGroupsFwPolicyViolations(i["fw-policy-violations"], d, pre_append, sv)
+		if cur_v, ok := i["fw-policy-violations"]; ok {
+			tmp["fw_policy_violations"] = flattenSystemAlarmGroupsFwPolicyViolations(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id"
-		if _, ok := i["fw-policy-id"]; ok {
-			tmp["fw_policy_id"] = flattenSystemAlarmGroupsFwPolicyId(i["fw-policy-id"], d, pre_append, sv)
+		if cur_v, ok := i["fw-policy-id"]; ok {
+			tmp["fw_policy_id"] = flattenSystemAlarmGroupsFwPolicyId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id_threshold"
-		if _, ok := i["fw-policy-id-threshold"]; ok {
-			tmp["fw_policy_id_threshold"] = flattenSystemAlarmGroupsFwPolicyIdThreshold(i["fw-policy-id-threshold"], d, pre_append, sv)
+		if cur_v, ok := i["fw-policy-id-threshold"]; ok {
+			tmp["fw_policy_id_threshold"] = flattenSystemAlarmGroupsFwPolicyIdThreshold(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -457,33 +457,33 @@ func flattenSystemAlarmGroupsFwPolicyViolations(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAlarmGroupsFwPolicyViolationsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAlarmGroupsFwPolicyViolationsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
-		if _, ok := i["threshold"]; ok {
-			tmp["threshold"] = flattenSystemAlarmGroupsFwPolicyViolationsThreshold(i["threshold"], d, pre_append, sv)
+		if cur_v, ok := i["threshold"]; ok {
+			tmp["threshold"] = flattenSystemAlarmGroupsFwPolicyViolationsThreshold(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
-		if _, ok := i["src-ip"]; ok {
-			tmp["src_ip"] = flattenSystemAlarmGroupsFwPolicyViolationsSrcIp(i["src-ip"], d, pre_append, sv)
+		if cur_v, ok := i["src-ip"]; ok {
+			tmp["src_ip"] = flattenSystemAlarmGroupsFwPolicyViolationsSrcIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
-		if _, ok := i["dst-ip"]; ok {
-			tmp["dst_ip"] = flattenSystemAlarmGroupsFwPolicyViolationsDstIp(i["dst-ip"], d, pre_append, sv)
+		if cur_v, ok := i["dst-ip"]; ok {
+			tmp["dst_ip"] = flattenSystemAlarmGroupsFwPolicyViolationsDstIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port"
-		if _, ok := i["src-port"]; ok {
-			tmp["src_port"] = flattenSystemAlarmGroupsFwPolicyViolationsSrcPort(i["src-port"], d, pre_append, sv)
+		if cur_v, ok := i["src-port"]; ok {
+			tmp["src_port"] = flattenSystemAlarmGroupsFwPolicyViolationsSrcPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port"
-		if _, ok := i["dst-port"]; ok {
-			tmp["dst_port"] = flattenSystemAlarmGroupsFwPolicyViolationsDstPort(i["dst-port"], d, pre_append, sv)
+		if cur_v, ok := i["dst-port"]; ok {
+			tmp["dst_port"] = flattenSystemAlarmGroupsFwPolicyViolationsDstPort(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

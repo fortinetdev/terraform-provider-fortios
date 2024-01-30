@@ -1036,143 +1036,143 @@ func flattenFirewallAccessProxy6ApiGateway(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallAccessProxy6ApiGatewayId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallAccessProxy6ApiGatewayId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
-		if _, ok := i["url-map"]; ok {
-			tmp["url_map"] = flattenFirewallAccessProxy6ApiGatewayUrlMap(i["url-map"], d, pre_append, sv)
+		if cur_v, ok := i["url-map"]; ok {
+			tmp["url_map"] = flattenFirewallAccessProxy6ApiGatewayUrlMap(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := i["service"]; ok {
-			tmp["service"] = flattenFirewallAccessProxy6ApiGatewayService(i["service"], d, pre_append, sv)
+		if cur_v, ok := i["service"]; ok {
+			tmp["service"] = flattenFirewallAccessProxy6ApiGatewayService(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ldb_method"
-		if _, ok := i["ldb-method"]; ok {
-			tmp["ldb_method"] = flattenFirewallAccessProxy6ApiGatewayLdbMethod(i["ldb-method"], d, pre_append, sv)
+		if cur_v, ok := i["ldb-method"]; ok {
+			tmp["ldb_method"] = flattenFirewallAccessProxy6ApiGatewayLdbMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_host"
-		if _, ok := i["virtual-host"]; ok {
-			tmp["virtual_host"] = flattenFirewallAccessProxy6ApiGatewayVirtualHost(i["virtual-host"], d, pre_append, sv)
+		if cur_v, ok := i["virtual-host"]; ok {
+			tmp["virtual_host"] = flattenFirewallAccessProxy6ApiGatewayVirtualHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
-		if _, ok := i["url-map-type"]; ok {
-			tmp["url_map_type"] = flattenFirewallAccessProxy6ApiGatewayUrlMapType(i["url-map-type"], d, pre_append, sv)
+		if cur_v, ok := i["url-map-type"]; ok {
+			tmp["url_map_type"] = flattenFirewallAccessProxy6ApiGatewayUrlMapType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "h2_support"
-		if _, ok := i["h2-support"]; ok {
-			tmp["h2_support"] = flattenFirewallAccessProxy6ApiGatewayH2Support(i["h2-support"], d, pre_append, sv)
+		if cur_v, ok := i["h2-support"]; ok {
+			tmp["h2_support"] = flattenFirewallAccessProxy6ApiGatewayH2Support(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "h3_support"
-		if _, ok := i["h3-support"]; ok {
-			tmp["h3_support"] = flattenFirewallAccessProxy6ApiGatewayH3Support(i["h3-support"], d, pre_append, sv)
+		if cur_v, ok := i["h3-support"]; ok {
+			tmp["h3_support"] = flattenFirewallAccessProxy6ApiGatewayH3Support(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
-		if _, ok := i["quic"]; ok {
-			tmp["quic"] = flattenFirewallAccessProxy6ApiGatewayQuic(i["quic"], d, pre_append, sv)
+		if cur_v, ok := i["quic"]; ok {
+			tmp["quic"] = flattenFirewallAccessProxy6ApiGatewayQuic(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
-		if _, ok := i["realservers"]; ok {
-			tmp["realservers"] = flattenFirewallAccessProxy6ApiGatewayRealservers(i["realservers"], d, pre_append, sv)
+		if cur_v, ok := i["realservers"]; ok {
+			tmp["realservers"] = flattenFirewallAccessProxy6ApiGatewayRealservers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := i["application"]; ok {
-			tmp["application"] = flattenFirewallAccessProxy6ApiGatewayApplication(i["application"], d, pre_append, sv)
+		if cur_v, ok := i["application"]; ok {
+			tmp["application"] = flattenFirewallAccessProxy6ApiGatewayApplication(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
-		if _, ok := i["persistence"]; ok {
-			tmp["persistence"] = flattenFirewallAccessProxy6ApiGatewayPersistence(i["persistence"], d, pre_append, sv)
+		if cur_v, ok := i["persistence"]; ok {
+			tmp["persistence"] = flattenFirewallAccessProxy6ApiGatewayPersistence(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain_from_host"
-		if _, ok := i["http-cookie-domain-from-host"]; ok {
-			tmp["http_cookie_domain_from_host"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieDomainFromHost(i["http-cookie-domain-from-host"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-domain-from-host"]; ok {
+			tmp["http_cookie_domain_from_host"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieDomainFromHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
-		if _, ok := i["http-cookie-domain"]; ok {
-			tmp["http_cookie_domain"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieDomain(i["http-cookie-domain"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-domain"]; ok {
+			tmp["http_cookie_domain"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
-		if _, ok := i["http-cookie-path"]; ok {
-			tmp["http_cookie_path"] = flattenFirewallAccessProxy6ApiGatewayHttpCookiePath(i["http-cookie-path"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-path"]; ok {
+			tmp["http_cookie_path"] = flattenFirewallAccessProxy6ApiGatewayHttpCookiePath(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
-		if _, ok := i["http-cookie-generation"]; ok {
-			tmp["http_cookie_generation"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieGeneration(i["http-cookie-generation"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-generation"]; ok {
+			tmp["http_cookie_generation"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieGeneration(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
-		if _, ok := i["http-cookie-age"]; ok {
-			tmp["http_cookie_age"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieAge(i["http-cookie-age"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-age"]; ok {
+			tmp["http_cookie_age"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieAge(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_share"
-		if _, ok := i["http-cookie-share"]; ok {
-			tmp["http_cookie_share"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieShare(i["http-cookie-share"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-share"]; ok {
+			tmp["http_cookie_share"] = flattenFirewallAccessProxy6ApiGatewayHttpCookieShare(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_cookie_secure"
-		if _, ok := i["https-cookie-secure"]; ok {
-			tmp["https_cookie_secure"] = flattenFirewallAccessProxy6ApiGatewayHttpsCookieSecure(i["https-cookie-secure"], d, pre_append, sv)
+		if cur_v, ok := i["https-cookie-secure"]; ok {
+			tmp["https_cookie_secure"] = flattenFirewallAccessProxy6ApiGatewayHttpsCookieSecure(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_server"
-		if _, ok := i["saml-server"]; ok {
-			tmp["saml_server"] = flattenFirewallAccessProxy6ApiGatewaySamlServer(i["saml-server"], d, pre_append, sv)
+		if cur_v, ok := i["saml-server"]; ok {
+			tmp["saml_server"] = flattenFirewallAccessProxy6ApiGatewaySamlServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_redirect"
-		if _, ok := i["saml-redirect"]; ok {
-			tmp["saml_redirect"] = flattenFirewallAccessProxy6ApiGatewaySamlRedirect(i["saml-redirect"], d, pre_append, sv)
+		if cur_v, ok := i["saml-redirect"]; ok {
+			tmp["saml_redirect"] = flattenFirewallAccessProxy6ApiGatewaySamlRedirect(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_dh_bits"
-		if _, ok := i["ssl-dh-bits"]; ok {
-			tmp["ssl_dh_bits"] = flattenFirewallAccessProxy6ApiGatewaySslDhBits(i["ssl-dh-bits"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-dh-bits"]; ok {
+			tmp["ssl_dh_bits"] = flattenFirewallAccessProxy6ApiGatewaySslDhBits(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_algorithm"
-		if _, ok := i["ssl-algorithm"]; ok {
-			tmp["ssl_algorithm"] = flattenFirewallAccessProxy6ApiGatewaySslAlgorithm(i["ssl-algorithm"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-algorithm"]; ok {
+			tmp["ssl_algorithm"] = flattenFirewallAccessProxy6ApiGatewaySslAlgorithm(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
-		if _, ok := i["ssl-cipher-suites"]; ok {
-			tmp["ssl_cipher_suites"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuites(i["ssl-cipher-suites"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-cipher-suites"]; ok {
+			tmp["ssl_cipher_suites"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuites(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_min_version"
-		if _, ok := i["ssl-min-version"]; ok {
-			tmp["ssl_min_version"] = flattenFirewallAccessProxy6ApiGatewaySslMinVersion(i["ssl-min-version"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-min-version"]; ok {
+			tmp["ssl_min_version"] = flattenFirewallAccessProxy6ApiGatewaySslMinVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_max_version"
-		if _, ok := i["ssl-max-version"]; ok {
-			tmp["ssl_max_version"] = flattenFirewallAccessProxy6ApiGatewaySslMaxVersion(i["ssl-max-version"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-max-version"]; ok {
+			tmp["ssl_max_version"] = flattenFirewallAccessProxy6ApiGatewaySslMaxVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_renegotiation"
-		if _, ok := i["ssl-renegotiation"]; ok {
-			tmp["ssl_renegotiation"] = flattenFirewallAccessProxy6ApiGatewaySslRenegotiation(i["ssl-renegotiation"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-renegotiation"]; ok {
+			tmp["ssl_renegotiation"] = flattenFirewallAccessProxy6ApiGatewaySslRenegotiation(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_vpn_web_portal"
-		if _, ok := i["ssl-vpn-web-portal"]; ok {
-			tmp["ssl_vpn_web_portal"] = flattenFirewallAccessProxy6ApiGatewaySslVpnWebPortal(i["ssl-vpn-web-portal"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-vpn-web-portal"]; ok {
+			tmp["ssl_vpn_web_portal"] = flattenFirewallAccessProxy6ApiGatewaySslVpnWebPortal(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1326,103 +1326,103 @@ func flattenFirewallAccessProxy6ApiGatewayRealservers(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallAccessProxy6ApiGatewayRealserversId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallAccessProxy6ApiGatewayRealserversId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenFirewallAccessProxy6ApiGatewayRealserversAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenFirewallAccessProxy6ApiGatewayRealserversAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenFirewallAccessProxy6ApiGatewayRealserversAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenFirewallAccessProxy6ApiGatewayRealserversAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallAccessProxy6ApiGatewayRealserversIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallAccessProxy6ApiGatewayRealserversIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenFirewallAccessProxy6ApiGatewayRealserversDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenFirewallAccessProxy6ApiGatewayRealserversDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenFirewallAccessProxy6ApiGatewayRealserversPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenFirewallAccessProxy6ApiGatewayRealserversPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mappedport"
-		if _, ok := i["mappedport"]; ok {
-			tmp["mappedport"] = flattenFirewallAccessProxy6ApiGatewayRealserversMappedport(i["mappedport"], d, pre_append, sv)
+		if cur_v, ok := i["mappedport"]; ok {
+			tmp["mappedport"] = flattenFirewallAccessProxy6ApiGatewayRealserversMappedport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenFirewallAccessProxy6ApiGatewayRealserversStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenFirewallAccessProxy6ApiGatewayRealserversStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenFirewallAccessProxy6ApiGatewayRealserversType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenFirewallAccessProxy6ApiGatewayRealserversType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_auth"
-		if _, ok := i["external-auth"]; ok {
-			tmp["external_auth"] = flattenFirewallAccessProxy6ApiGatewayRealserversExternalAuth(i["external-auth"], d, pre_append, sv)
+		if cur_v, ok := i["external-auth"]; ok {
+			tmp["external_auth"] = flattenFirewallAccessProxy6ApiGatewayRealserversExternalAuth(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tunnel_encryption"
-		if _, ok := i["tunnel-encryption"]; ok {
-			tmp["tunnel_encryption"] = flattenFirewallAccessProxy6ApiGatewayRealserversTunnelEncryption(i["tunnel-encryption"], d, pre_append, sv)
+		if cur_v, ok := i["tunnel-encryption"]; ok {
+			tmp["tunnel_encryption"] = flattenFirewallAccessProxy6ApiGatewayRealserversTunnelEncryption(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenFirewallAccessProxy6ApiGatewayRealserversWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenFirewallAccessProxy6ApiGatewayRealserversWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
-		if _, ok := i["http-host"]; ok {
-			tmp["http_host"] = flattenFirewallAccessProxy6ApiGatewayRealserversHttpHost(i["http-host"], d, pre_append, sv)
+		if cur_v, ok := i["http-host"]; ok {
+			tmp["http_host"] = flattenFirewallAccessProxy6ApiGatewayRealserversHttpHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenFirewallAccessProxy6ApiGatewayRealserversHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenFirewallAccessProxy6ApiGatewayRealserversHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_proto"
-		if _, ok := i["health-check-proto"]; ok {
-			tmp["health_check_proto"] = flattenFirewallAccessProxy6ApiGatewayRealserversHealthCheckProto(i["health-check-proto"], d, pre_append, sv)
+		if cur_v, ok := i["health-check-proto"]; ok {
+			tmp["health_check_proto"] = flattenFirewallAccessProxy6ApiGatewayRealserversHealthCheckProto(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
-		if _, ok := i["holddown-interval"]; ok {
-			tmp["holddown_interval"] = flattenFirewallAccessProxy6ApiGatewayRealserversHolddownInterval(i["holddown-interval"], d, pre_append, sv)
+		if cur_v, ok := i["holddown-interval"]; ok {
+			tmp["holddown_interval"] = flattenFirewallAccessProxy6ApiGatewayRealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
-		if _, ok := i["translate-host"]; ok {
-			tmp["translate_host"] = flattenFirewallAccessProxy6ApiGatewayRealserversTranslateHost(i["translate-host"], d, pre_append, sv)
+		if cur_v, ok := i["translate-host"]; ok {
+			tmp["translate_host"] = flattenFirewallAccessProxy6ApiGatewayRealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_client_cert"
-		if _, ok := i["ssh-client-cert"]; ok {
-			tmp["ssh_client_cert"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshClientCert(i["ssh-client-cert"], d, pre_append, sv)
+		if cur_v, ok := i["ssh-client-cert"]; ok {
+			tmp["ssh_client_cert"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshClientCert(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key_validation"
-		if _, ok := i["ssh-host-key-validation"]; ok {
-			tmp["ssh_host_key_validation"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKeyValidation(i["ssh-host-key-validation"], d, pre_append, sv)
+		if cur_v, ok := i["ssh-host-key-validation"]; ok {
+			tmp["ssh_host_key_validation"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKeyValidation(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key"
-		if _, ok := i["ssh-host-key"]; ok {
-			tmp["ssh_host_key"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKey(i["ssh-host-key"], d, pre_append, sv)
+		if cur_v, ok := i["ssh-host-key"]; ok {
+			tmp["ssh_host_key"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKey(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1535,8 +1535,8 @@ func flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKey(v interface{}, d
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKeyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAccessProxy6ApiGatewayRealserversSshHostKeyName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1577,8 +1577,8 @@ func flattenFirewallAccessProxy6ApiGatewayApplication(v interface{}, d *schema.R
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAccessProxy6ApiGatewayApplicationName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAccessProxy6ApiGatewayApplicationName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1667,18 +1667,18 @@ func flattenFirewallAccessProxy6ApiGatewaySslCipherSuites(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuitesPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
-		if _, ok := i["cipher"]; ok {
-			tmp["cipher"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuitesCipher(i["cipher"], d, pre_append, sv)
+		if cur_v, ok := i["cipher"]; ok {
+			tmp["cipher"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
-		if _, ok := i["versions"]; ok {
-			tmp["versions"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuitesVersions(i["versions"], d, pre_append, sv)
+		if cur_v, ok := i["versions"]; ok {
+			tmp["versions"] = flattenFirewallAccessProxy6ApiGatewaySslCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1743,143 +1743,143 @@ func flattenFirewallAccessProxy6ApiGateway6(v interface{}, d *schema.ResourceDat
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallAccessProxy6ApiGateway6Id(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallAccessProxy6ApiGateway6Id(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
-		if _, ok := i["url-map"]; ok {
-			tmp["url_map"] = flattenFirewallAccessProxy6ApiGateway6UrlMap(i["url-map"], d, pre_append, sv)
+		if cur_v, ok := i["url-map"]; ok {
+			tmp["url_map"] = flattenFirewallAccessProxy6ApiGateway6UrlMap(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := i["service"]; ok {
-			tmp["service"] = flattenFirewallAccessProxy6ApiGateway6Service(i["service"], d, pre_append, sv)
+		if cur_v, ok := i["service"]; ok {
+			tmp["service"] = flattenFirewallAccessProxy6ApiGateway6Service(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ldb_method"
-		if _, ok := i["ldb-method"]; ok {
-			tmp["ldb_method"] = flattenFirewallAccessProxy6ApiGateway6LdbMethod(i["ldb-method"], d, pre_append, sv)
+		if cur_v, ok := i["ldb-method"]; ok {
+			tmp["ldb_method"] = flattenFirewallAccessProxy6ApiGateway6LdbMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_host"
-		if _, ok := i["virtual-host"]; ok {
-			tmp["virtual_host"] = flattenFirewallAccessProxy6ApiGateway6VirtualHost(i["virtual-host"], d, pre_append, sv)
+		if cur_v, ok := i["virtual-host"]; ok {
+			tmp["virtual_host"] = flattenFirewallAccessProxy6ApiGateway6VirtualHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
-		if _, ok := i["url-map-type"]; ok {
-			tmp["url_map_type"] = flattenFirewallAccessProxy6ApiGateway6UrlMapType(i["url-map-type"], d, pre_append, sv)
+		if cur_v, ok := i["url-map-type"]; ok {
+			tmp["url_map_type"] = flattenFirewallAccessProxy6ApiGateway6UrlMapType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "h2_support"
-		if _, ok := i["h2-support"]; ok {
-			tmp["h2_support"] = flattenFirewallAccessProxy6ApiGateway6H2Support(i["h2-support"], d, pre_append, sv)
+		if cur_v, ok := i["h2-support"]; ok {
+			tmp["h2_support"] = flattenFirewallAccessProxy6ApiGateway6H2Support(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "h3_support"
-		if _, ok := i["h3-support"]; ok {
-			tmp["h3_support"] = flattenFirewallAccessProxy6ApiGateway6H3Support(i["h3-support"], d, pre_append, sv)
+		if cur_v, ok := i["h3-support"]; ok {
+			tmp["h3_support"] = flattenFirewallAccessProxy6ApiGateway6H3Support(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
-		if _, ok := i["quic"]; ok {
-			tmp["quic"] = flattenFirewallAccessProxy6ApiGateway6Quic(i["quic"], d, pre_append, sv)
+		if cur_v, ok := i["quic"]; ok {
+			tmp["quic"] = flattenFirewallAccessProxy6ApiGateway6Quic(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
-		if _, ok := i["realservers"]; ok {
-			tmp["realservers"] = flattenFirewallAccessProxy6ApiGateway6Realservers(i["realservers"], d, pre_append, sv)
+		if cur_v, ok := i["realservers"]; ok {
+			tmp["realservers"] = flattenFirewallAccessProxy6ApiGateway6Realservers(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := i["application"]; ok {
-			tmp["application"] = flattenFirewallAccessProxy6ApiGateway6Application(i["application"], d, pre_append, sv)
+		if cur_v, ok := i["application"]; ok {
+			tmp["application"] = flattenFirewallAccessProxy6ApiGateway6Application(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
-		if _, ok := i["persistence"]; ok {
-			tmp["persistence"] = flattenFirewallAccessProxy6ApiGateway6Persistence(i["persistence"], d, pre_append, sv)
+		if cur_v, ok := i["persistence"]; ok {
+			tmp["persistence"] = flattenFirewallAccessProxy6ApiGateway6Persistence(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain_from_host"
-		if _, ok := i["http-cookie-domain-from-host"]; ok {
-			tmp["http_cookie_domain_from_host"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieDomainFromHost(i["http-cookie-domain-from-host"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-domain-from-host"]; ok {
+			tmp["http_cookie_domain_from_host"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieDomainFromHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
-		if _, ok := i["http-cookie-domain"]; ok {
-			tmp["http_cookie_domain"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieDomain(i["http-cookie-domain"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-domain"]; ok {
+			tmp["http_cookie_domain"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
-		if _, ok := i["http-cookie-path"]; ok {
-			tmp["http_cookie_path"] = flattenFirewallAccessProxy6ApiGateway6HttpCookiePath(i["http-cookie-path"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-path"]; ok {
+			tmp["http_cookie_path"] = flattenFirewallAccessProxy6ApiGateway6HttpCookiePath(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
-		if _, ok := i["http-cookie-generation"]; ok {
-			tmp["http_cookie_generation"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieGeneration(i["http-cookie-generation"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-generation"]; ok {
+			tmp["http_cookie_generation"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieGeneration(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
-		if _, ok := i["http-cookie-age"]; ok {
-			tmp["http_cookie_age"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieAge(i["http-cookie-age"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-age"]; ok {
+			tmp["http_cookie_age"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieAge(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_share"
-		if _, ok := i["http-cookie-share"]; ok {
-			tmp["http_cookie_share"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieShare(i["http-cookie-share"], d, pre_append, sv)
+		if cur_v, ok := i["http-cookie-share"]; ok {
+			tmp["http_cookie_share"] = flattenFirewallAccessProxy6ApiGateway6HttpCookieShare(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_cookie_secure"
-		if _, ok := i["https-cookie-secure"]; ok {
-			tmp["https_cookie_secure"] = flattenFirewallAccessProxy6ApiGateway6HttpsCookieSecure(i["https-cookie-secure"], d, pre_append, sv)
+		if cur_v, ok := i["https-cookie-secure"]; ok {
+			tmp["https_cookie_secure"] = flattenFirewallAccessProxy6ApiGateway6HttpsCookieSecure(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_server"
-		if _, ok := i["saml-server"]; ok {
-			tmp["saml_server"] = flattenFirewallAccessProxy6ApiGateway6SamlServer(i["saml-server"], d, pre_append, sv)
+		if cur_v, ok := i["saml-server"]; ok {
+			tmp["saml_server"] = flattenFirewallAccessProxy6ApiGateway6SamlServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_redirect"
-		if _, ok := i["saml-redirect"]; ok {
-			tmp["saml_redirect"] = flattenFirewallAccessProxy6ApiGateway6SamlRedirect(i["saml-redirect"], d, pre_append, sv)
+		if cur_v, ok := i["saml-redirect"]; ok {
+			tmp["saml_redirect"] = flattenFirewallAccessProxy6ApiGateway6SamlRedirect(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_dh_bits"
-		if _, ok := i["ssl-dh-bits"]; ok {
-			tmp["ssl_dh_bits"] = flattenFirewallAccessProxy6ApiGateway6SslDhBits(i["ssl-dh-bits"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-dh-bits"]; ok {
+			tmp["ssl_dh_bits"] = flattenFirewallAccessProxy6ApiGateway6SslDhBits(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_algorithm"
-		if _, ok := i["ssl-algorithm"]; ok {
-			tmp["ssl_algorithm"] = flattenFirewallAccessProxy6ApiGateway6SslAlgorithm(i["ssl-algorithm"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-algorithm"]; ok {
+			tmp["ssl_algorithm"] = flattenFirewallAccessProxy6ApiGateway6SslAlgorithm(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
-		if _, ok := i["ssl-cipher-suites"]; ok {
-			tmp["ssl_cipher_suites"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuites(i["ssl-cipher-suites"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-cipher-suites"]; ok {
+			tmp["ssl_cipher_suites"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuites(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_min_version"
-		if _, ok := i["ssl-min-version"]; ok {
-			tmp["ssl_min_version"] = flattenFirewallAccessProxy6ApiGateway6SslMinVersion(i["ssl-min-version"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-min-version"]; ok {
+			tmp["ssl_min_version"] = flattenFirewallAccessProxy6ApiGateway6SslMinVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_max_version"
-		if _, ok := i["ssl-max-version"]; ok {
-			tmp["ssl_max_version"] = flattenFirewallAccessProxy6ApiGateway6SslMaxVersion(i["ssl-max-version"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-max-version"]; ok {
+			tmp["ssl_max_version"] = flattenFirewallAccessProxy6ApiGateway6SslMaxVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_renegotiation"
-		if _, ok := i["ssl-renegotiation"]; ok {
-			tmp["ssl_renegotiation"] = flattenFirewallAccessProxy6ApiGateway6SslRenegotiation(i["ssl-renegotiation"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-renegotiation"]; ok {
+			tmp["ssl_renegotiation"] = flattenFirewallAccessProxy6ApiGateway6SslRenegotiation(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_vpn_web_portal"
-		if _, ok := i["ssl-vpn-web-portal"]; ok {
-			tmp["ssl_vpn_web_portal"] = flattenFirewallAccessProxy6ApiGateway6SslVpnWebPortal(i["ssl-vpn-web-portal"], d, pre_append, sv)
+		if cur_v, ok := i["ssl-vpn-web-portal"]; ok {
+			tmp["ssl_vpn_web_portal"] = flattenFirewallAccessProxy6ApiGateway6SslVpnWebPortal(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2033,103 +2033,103 @@ func flattenFirewallAccessProxy6ApiGateway6Realservers(v interface{}, d *schema.
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallAccessProxy6ApiGateway6RealserversId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallAccessProxy6ApiGateway6RealserversId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenFirewallAccessProxy6ApiGateway6RealserversAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenFirewallAccessProxy6ApiGateway6RealserversAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
-		if _, ok := i["address"]; ok {
-			tmp["address"] = flattenFirewallAccessProxy6ApiGateway6RealserversAddress(i["address"], d, pre_append, sv)
+		if cur_v, ok := i["address"]; ok {
+			tmp["address"] = flattenFirewallAccessProxy6ApiGateway6RealserversAddress(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenFirewallAccessProxy6ApiGateway6RealserversIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenFirewallAccessProxy6ApiGateway6RealserversIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
-		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenFirewallAccessProxy6ApiGateway6RealserversDomain(i["domain"], d, pre_append, sv)
+		if cur_v, ok := i["domain"]; ok {
+			tmp["domain"] = flattenFirewallAccessProxy6ApiGateway6RealserversDomain(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenFirewallAccessProxy6ApiGateway6RealserversPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenFirewallAccessProxy6ApiGateway6RealserversPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mappedport"
-		if _, ok := i["mappedport"]; ok {
-			tmp["mappedport"] = flattenFirewallAccessProxy6ApiGateway6RealserversMappedport(i["mappedport"], d, pre_append, sv)
+		if cur_v, ok := i["mappedport"]; ok {
+			tmp["mappedport"] = flattenFirewallAccessProxy6ApiGateway6RealserversMappedport(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenFirewallAccessProxy6ApiGateway6RealserversStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenFirewallAccessProxy6ApiGateway6RealserversStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenFirewallAccessProxy6ApiGateway6RealserversType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenFirewallAccessProxy6ApiGateway6RealserversType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_auth"
-		if _, ok := i["external-auth"]; ok {
-			tmp["external_auth"] = flattenFirewallAccessProxy6ApiGateway6RealserversExternalAuth(i["external-auth"], d, pre_append, sv)
+		if cur_v, ok := i["external-auth"]; ok {
+			tmp["external_auth"] = flattenFirewallAccessProxy6ApiGateway6RealserversExternalAuth(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tunnel_encryption"
-		if _, ok := i["tunnel-encryption"]; ok {
-			tmp["tunnel_encryption"] = flattenFirewallAccessProxy6ApiGateway6RealserversTunnelEncryption(i["tunnel-encryption"], d, pre_append, sv)
+		if cur_v, ok := i["tunnel-encryption"]; ok {
+			tmp["tunnel_encryption"] = flattenFirewallAccessProxy6ApiGateway6RealserversTunnelEncryption(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
-		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenFirewallAccessProxy6ApiGateway6RealserversWeight(i["weight"], d, pre_append, sv)
+		if cur_v, ok := i["weight"]; ok {
+			tmp["weight"] = flattenFirewallAccessProxy6ApiGateway6RealserversWeight(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
-		if _, ok := i["http-host"]; ok {
-			tmp["http_host"] = flattenFirewallAccessProxy6ApiGateway6RealserversHttpHost(i["http-host"], d, pre_append, sv)
+		if cur_v, ok := i["http-host"]; ok {
+			tmp["http_host"] = flattenFirewallAccessProxy6ApiGateway6RealserversHttpHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := i["health-check"]; ok {
-			tmp["health_check"] = flattenFirewallAccessProxy6ApiGateway6RealserversHealthCheck(i["health-check"], d, pre_append, sv)
+		if cur_v, ok := i["health-check"]; ok {
+			tmp["health_check"] = flattenFirewallAccessProxy6ApiGateway6RealserversHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_proto"
-		if _, ok := i["health-check-proto"]; ok {
-			tmp["health_check_proto"] = flattenFirewallAccessProxy6ApiGateway6RealserversHealthCheckProto(i["health-check-proto"], d, pre_append, sv)
+		if cur_v, ok := i["health-check-proto"]; ok {
+			tmp["health_check_proto"] = flattenFirewallAccessProxy6ApiGateway6RealserversHealthCheckProto(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
-		if _, ok := i["holddown-interval"]; ok {
-			tmp["holddown_interval"] = flattenFirewallAccessProxy6ApiGateway6RealserversHolddownInterval(i["holddown-interval"], d, pre_append, sv)
+		if cur_v, ok := i["holddown-interval"]; ok {
+			tmp["holddown_interval"] = flattenFirewallAccessProxy6ApiGateway6RealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
-		if _, ok := i["translate-host"]; ok {
-			tmp["translate_host"] = flattenFirewallAccessProxy6ApiGateway6RealserversTranslateHost(i["translate-host"], d, pre_append, sv)
+		if cur_v, ok := i["translate-host"]; ok {
+			tmp["translate_host"] = flattenFirewallAccessProxy6ApiGateway6RealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_client_cert"
-		if _, ok := i["ssh-client-cert"]; ok {
-			tmp["ssh_client_cert"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshClientCert(i["ssh-client-cert"], d, pre_append, sv)
+		if cur_v, ok := i["ssh-client-cert"]; ok {
+			tmp["ssh_client_cert"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshClientCert(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key_validation"
-		if _, ok := i["ssh-host-key-validation"]; ok {
-			tmp["ssh_host_key_validation"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKeyValidation(i["ssh-host-key-validation"], d, pre_append, sv)
+		if cur_v, ok := i["ssh-host-key-validation"]; ok {
+			tmp["ssh_host_key_validation"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKeyValidation(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key"
-		if _, ok := i["ssh-host-key"]; ok {
-			tmp["ssh_host_key"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKey(i["ssh-host-key"], d, pre_append, sv)
+		if cur_v, ok := i["ssh-host-key"]; ok {
+			tmp["ssh_host_key"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKey(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2242,8 +2242,8 @@ func flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKey(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKeyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAccessProxy6ApiGateway6RealserversSshHostKeyName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2284,8 +2284,8 @@ func flattenFirewallAccessProxy6ApiGateway6Application(v interface{}, d *schema.
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAccessProxy6ApiGateway6ApplicationName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAccessProxy6ApiGateway6ApplicationName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2374,18 +2374,18 @@ func flattenFirewallAccessProxy6ApiGateway6SslCipherSuites(v interface{}, d *sch
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuitesPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
-		if _, ok := i["cipher"]; ok {
-			tmp["cipher"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuitesCipher(i["cipher"], d, pre_append, sv)
+		if cur_v, ok := i["cipher"]; ok {
+			tmp["cipher"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
-		if _, ok := i["versions"]; ok {
-			tmp["versions"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuitesVersions(i["versions"], d, pre_append, sv)
+		if cur_v, ok := i["versions"]; ok {
+			tmp["versions"] = flattenFirewallAccessProxy6ApiGateway6SslCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

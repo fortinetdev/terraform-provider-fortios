@@ -47,6 +47,56 @@ func resourceVideofilterProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"filters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"comment": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
+						"type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"keyword": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"category": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
+						"channel": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"action": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"log": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"default_action": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -120,6 +170,11 @@ func resourceVideofilterProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
@@ -259,6 +314,111 @@ func flattenVideofilterProfileComment(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenVideofilterProfileFilters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVideofilterProfileFiltersId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenVideofilterProfileFiltersComment(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenVideofilterProfileFiltersType(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyword"
+		if cur_v, ok := i["keyword"]; ok {
+			tmp["keyword"] = flattenVideofilterProfileFiltersKeyword(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+		if cur_v, ok := i["category"]; ok {
+			tmp["category"] = flattenVideofilterProfileFiltersCategory(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel"
+		if cur_v, ok := i["channel"]; ok {
+			tmp["channel"] = flattenVideofilterProfileFiltersChannel(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenVideofilterProfileFiltersAction(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenVideofilterProfileFiltersLog(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenVideofilterProfileFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersKeyword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVideofilterProfileFiltersLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVideofilterProfileDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -314,23 +474,23 @@ func flattenVideofilterProfileFortiguardCategoryFilters(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVideofilterProfileFortiguardCategoryFiltersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVideofilterProfileFortiguardCategoryFiltersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenVideofilterProfileFortiguardCategoryFiltersAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenVideofilterProfileFortiguardCategoryFiltersAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category_id"
-		if _, ok := i["category-id"]; ok {
-			tmp["category_id"] = flattenVideofilterProfileFortiguardCategoryFiltersCategoryId(i["category-id"], d, pre_append, sv)
+		if cur_v, ok := i["category-id"]; ok {
+			tmp["category_id"] = flattenVideofilterProfileFortiguardCategoryFiltersCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
-		if _, ok := i["log"]; ok {
-			tmp["log"] = flattenVideofilterProfileFortiguardCategoryFiltersLog(i["log"], d, pre_append, sv)
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenVideofilterProfileFortiguardCategoryFiltersLog(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -392,6 +552,22 @@ func refreshObjectVideofilterProfile(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("comment", flattenVideofilterProfileComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("filters", flattenVideofilterProfileFilters(o["filters"], d, "filters", sv)); err != nil {
+			if !fortiAPIPatch(o["filters"]) {
+				return fmt.Errorf("Error reading filters: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("filters"); ok {
+			if err = d.Set("filters", flattenVideofilterProfileFilters(o["filters"], d, "filters", sv)); err != nil {
+				if !fortiAPIPatch(o["filters"]) {
+					return fmt.Errorf("Error reading filters: %v", err)
+				}
+			}
 		}
 	}
 
@@ -467,6 +643,100 @@ func expandVideofilterProfileName(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandVideofilterProfileComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandVideofilterProfileFiltersId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["comment"], _ = expandVideofilterProfileFiltersComment(d, i["comment"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["type"], _ = expandVideofilterProfileFiltersType(d, i["type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyword"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["keyword"], _ = expandVideofilterProfileFiltersKeyword(d, i["keyword"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["category"], _ = expandVideofilterProfileFiltersCategory(d, i["category"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["channel"], _ = expandVideofilterProfileFiltersChannel(d, i["channel"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["action"], _ = expandVideofilterProfileFiltersAction(d, i["action"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["log"], _ = expandVideofilterProfileFiltersLog(d, i["log"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandVideofilterProfileFiltersId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersKeyword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersChannel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVideofilterProfileFiltersLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -594,6 +864,15 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["comment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("filters"); ok || d.HasChange("filters") {
+		t, err := expandVideofilterProfileFilters(d, v, "filters", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["filters"] = t
 		}
 	}
 

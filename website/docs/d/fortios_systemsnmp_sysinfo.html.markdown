@@ -28,4 +28,6 @@ The following attributes are exported:
 * `trap_high_cpu_threshold` - CPU usage when trap is sent.
 * `trap_low_memory_threshold` - Memory usage when trap is sent.
 * `trap_log_full_threshold` - Log disk usage when trap is sent.
+* `trap_free_memory_threshold` - Free memory usage when trap is sent.
+* `trap_freeable_memory_threshold` - Freeable memory usage when trap is sent.
 

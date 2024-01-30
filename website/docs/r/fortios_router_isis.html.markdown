@@ -94,7 +94,7 @@ The following arguments are supported:
 The `isis_net` block supports:
 
 * `id` - isis-net ID.
-* `net` - IS-IS net xx.xxxx. ... .xxxx.xx.
+* `net` - IS-IS networks (format = xx.xxxx.  .xxxx.xx.).
 
 The `isis_interface` block supports:
 

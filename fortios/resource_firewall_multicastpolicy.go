@@ -143,6 +143,17 @@ func resourceFirewallMulticastPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"utm_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ips_sensor": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"auto_asic_offload": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -346,8 +357,8 @@ func flattenFirewallMulticastPolicySrcaddr(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallMulticastPolicySrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallMulticastPolicySrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -388,8 +399,8 @@ func flattenFirewallMulticastPolicyDstaddr(v interface{}, d *schema.ResourceData
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallMulticastPolicyDstaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallMulticastPolicyDstaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -430,6 +441,14 @@ func flattenFirewallMulticastPolicyStartPort(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallMulticastPolicyEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallMulticastPolicyUtmStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallMulticastPolicyIpsSensor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -572,6 +591,18 @@ func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("utm_status", flattenFirewallMulticastPolicyUtmStatus(o["utm-status"], d, "utm_status", sv)); err != nil {
+		if !fortiAPIPatch(o["utm-status"]) {
+			return fmt.Errorf("Error reading utm_status: %v", err)
+		}
+	}
+
+	if err = d.Set("ips_sensor", flattenFirewallMulticastPolicyIpsSensor(o["ips-sensor"], d, "ips_sensor", sv)); err != nil {
+		if !fortiAPIPatch(o["ips-sensor"]) {
+			return fmt.Errorf("Error reading ips_sensor: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_asic_offload", flattenFirewallMulticastPolicyAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-asic-offload"]) {
 			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
@@ -706,6 +737,14 @@ func expandFirewallMulticastPolicyStartPort(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallMulticastPolicyEndPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallMulticastPolicyUtmStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallMulticastPolicyIpsSensor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -870,6 +909,24 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["end-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("utm_status"); ok {
+		t, err := expandFirewallMulticastPolicyUtmStatus(d, v, "utm_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["utm-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ips_sensor"); ok {
+		t, err := expandFirewallMulticastPolicyIpsSensor(d, v, "ips_sensor", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ips-sensor"] = t
 		}
 	}
 

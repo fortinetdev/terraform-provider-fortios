@@ -17,6 +17,7 @@ The following arguments are supported:
 * `comment` - Comment.
 * `platform` - WTP, FortiAP, or AP platform. The structure of `platform` block is documented below.
 * `control_message_offload` - Enable/disable CAPWAP control message data channel offload.
+* `bonjour_profile` - Bonjour profile name.
 * `apcfg_profile` - AP local configuration profile name.
 * `ble_profile` - Bluetooth Low Energy profile name.
 * `syslog_profile` - System log server configuration profile name.
@@ -59,6 +60,7 @@ The following arguments are supported:
 * `wan_port_auth_usrname` - Set WAN port 802.1x supplicant user name.
 * `wan_port_auth_password` - Set WAN port 802.1x supplicant password.
 * `wan_port_auth_methods` - WAN port 802.1x supplicant EAP methods (default = all). Valid values: `all`, `EAP-FAST`, `EAP-TLS`, `EAP-PEAP`.
+* `wan_port_auth_macsec` - Enable/disable WAN port 802.1x supplicant MACsec policy (default = disable). Valid values: `enable`, `disable`.
 * `unii_4_5ghz_band` - Enable/disable UNII-4 5Ghz band channels (default = disable). Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -127,7 +129,8 @@ The `radio_1` block supports:
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
-* `optional_antenna` - Optional antenna used on FAP (default = none). Valid values: `none`, `FANT-04ABGN-0606-O-N`, `FANT-04ABGN-1414-P-N`, `FANT-04ABGN-8065-P-N`, `FANT-04ABGN-0606-O-R`, `FANT-04ABGN-0606-P-R`, `FANT-10ACAX-1213-D-N`, `FANT-08ABGN-1213-D-R`.
+* `optional_antenna` - Optional antenna used on FAP (default = none).
+* `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable). Valid values: `enable`, `disable`.
 * `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
@@ -150,7 +153,7 @@ The `radio_1` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -158,6 +161,11 @@ The `radio_1` block supports:
 * `sam_cwp_match_string` - Identification string from the captive portal login form.
 * `sam_cwp_success_string` - Success identification on the page after a successful login.
 * `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_eap_method` - Select WPA2/WPA3-ENTERPRISE EAP Method (default = PEAP). Valid values: `both`, `tls`, `peap`.
+* `sam_client_certificate` - Client certificate for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key` - Private key for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key_password` - Password for private key file for WPA2/WPA3-ENTERPRISE.
+* `sam_ca_certificate` - CA certificate for WPA2/WPA3-ENTERPRISE.
 * `sam_username` - Username for WiFi network connection.
 * `sam_password` - Passphrase for WiFi network connection.
 * `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
@@ -212,7 +220,8 @@ The `radio_2` block supports:
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
-* `optional_antenna` - Optional antenna used on FAP (default = none). Valid values: `none`, `FANT-04ABGN-0606-O-N`, `FANT-04ABGN-1414-P-N`, `FANT-04ABGN-8065-P-N`, `FANT-04ABGN-0606-O-R`, `FANT-04ABGN-0606-P-R`, `FANT-10ACAX-1213-D-N`, `FANT-08ABGN-1213-D-R`.
+* `optional_antenna` - Optional antenna used on FAP (default = none).
+* `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable). Valid values: `enable`, `disable`.
 * `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
@@ -235,7 +244,7 @@ The `radio_2` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -243,6 +252,11 @@ The `radio_2` block supports:
 * `sam_cwp_match_string` - Identification string from the captive portal login form.
 * `sam_cwp_success_string` - Success identification on the page after a successful login.
 * `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_eap_method` - Select WPA2/WPA3-ENTERPRISE EAP Method (default = PEAP). Valid values: `both`, `tls`, `peap`.
+* `sam_client_certificate` - Client certificate for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key` - Private key for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key_password` - Password for private key file for WPA2/WPA3-ENTERPRISE.
+* `sam_ca_certificate` - CA certificate for WPA2/WPA3-ENTERPRISE.
 * `sam_username` - Username for WiFi network connection.
 * `sam_password` - Passphrase for WiFi network connection.
 * `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
@@ -296,7 +310,8 @@ The `radio_3` block supports:
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence. Valid values: `160MHz`, `80MHz`, `40MHz`, `20MHz`.
-* `optional_antenna` - Optional antenna used on FAP (default = none). Valid values: `none`, `FANT-04ABGN-0606-O-N`, `FANT-04ABGN-1414-P-N`, `FANT-04ABGN-8065-P-N`, `FANT-04ABGN-0606-O-R`, `FANT-04ABGN-0606-P-R`, `FANT-10ACAX-1213-D-N`, `FANT-08ABGN-1213-D-R`.
+* `optional_antenna` - Optional antenna used on FAP (default = none).
+* `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
@@ -319,7 +334,7 @@ The `radio_3` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -327,6 +342,11 @@ The `radio_3` block supports:
 * `sam_cwp_match_string` - Identification string from the captive portal login form.
 * `sam_cwp_success_string` - Success identification on the page after a successful login.
 * `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_eap_method` - Select WPA2/WPA3-ENTERPRISE EAP Method (default = PEAP). Valid values: `both`, `tls`, `peap`.
+* `sam_client_certificate` - Client certificate for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key` - Private key for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key_password` - Password for private key file for WPA2/WPA3-ENTERPRISE.
+* `sam_ca_certificate` - CA certificate for WPA2/WPA3-ENTERPRISE.
 * `sam_username` - Username for WiFi network connection.
 * `sam_password` - Passphrase for WiFi network connection.
 * `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.
@@ -380,7 +400,8 @@ The `radio_4` block supports:
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence. Valid values: `160MHz`, `80MHz`, `40MHz`, `20MHz`.
-* `optional_antenna` - Optional antenna used on FAP (default = none). Valid values: `none`, `FANT-04ABGN-0606-O-N`, `FANT-04ABGN-1414-P-N`, `FANT-04ABGN-8065-P-N`, `FANT-04ABGN-0606-O-R`, `FANT-04ABGN-0606-P-R`, `FANT-10ACAX-1213-D-N`, `FANT-08ABGN-1213-D-R`.
+* `optional_antenna` - Optional antenna used on FAP (default = none).
+* `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
@@ -403,7 +424,7 @@ The `radio_4` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal"). Valid values: `open`, `wpa-personal`, `wpa-enterprise`.
+* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -411,6 +432,11 @@ The `radio_4` block supports:
 * `sam_cwp_match_string` - Identification string from the captive portal login form.
 * `sam_cwp_success_string` - Success identification on the page after a successful login.
 * `sam_cwp_failure_string` - Failure identification on the page after an incorrect login.
+* `sam_eap_method` - Select WPA2/WPA3-ENTERPRISE EAP Method (default = PEAP). Valid values: `both`, `tls`, `peap`.
+* `sam_client_certificate` - Client certificate for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key` - Private key for WPA2/WPA3-ENTERPRISE.
+* `sam_private_key_password` - Password for private key file for WPA2/WPA3-ENTERPRISE.
+* `sam_ca_certificate` - CA certificate for WPA2/WPA3-ENTERPRISE.
 * `sam_username` - Username for WiFi network connection.
 * `sam_password` - Passphrase for WiFi network connection.
 * `sam_test` - Select SAM test type (default = "PING"). Valid values: `ping`, `iperf`.

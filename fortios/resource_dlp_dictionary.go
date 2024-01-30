@@ -287,38 +287,38 @@ func flattenDlpDictionaryEntries(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDlpDictionaryEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenDlpDictionaryEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenDlpDictionaryEntriesType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenDlpDictionaryEntriesType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
-		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenDlpDictionaryEntriesPattern(i["pattern"], d, pre_append, sv)
+		if cur_v, ok := i["pattern"]; ok {
+			tmp["pattern"] = flattenDlpDictionaryEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_case"
-		if _, ok := i["ignore-case"]; ok {
-			tmp["ignore_case"] = flattenDlpDictionaryEntriesIgnoreCase(i["ignore-case"], d, pre_append, sv)
+		if cur_v, ok := i["ignore-case"]; ok {
+			tmp["ignore_case"] = flattenDlpDictionaryEntriesIgnoreCase(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "repeat"
-		if _, ok := i["repeat"]; ok {
-			tmp["repeat"] = flattenDlpDictionaryEntriesRepeat(i["repeat"], d, pre_append, sv)
+		if cur_v, ok := i["repeat"]; ok {
+			tmp["repeat"] = flattenDlpDictionaryEntriesRepeat(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenDlpDictionaryEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenDlpDictionaryEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenDlpDictionaryEntriesComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenDlpDictionaryEntriesComment(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

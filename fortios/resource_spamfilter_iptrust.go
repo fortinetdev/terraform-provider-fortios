@@ -255,28 +255,28 @@ func flattenSpamfilterIptrustEntries(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSpamfilterIptrustEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSpamfilterIptrustEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSpamfilterIptrustEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSpamfilterIptrustEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
-		if _, ok := i["addr-type"]; ok {
-			tmp["addr_type"] = flattenSpamfilterIptrustEntriesAddrType(i["addr-type"], d, pre_append, sv)
+		if cur_v, ok := i["addr-type"]; ok {
+			tmp["addr_type"] = flattenSpamfilterIptrustEntriesAddrType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
-		if _, ok := i["ip4-subnet"]; ok {
-			tmp["ip4_subnet"] = flattenSpamfilterIptrustEntriesIp4Subnet(i["ip4-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip4-subnet"]; ok {
+			tmp["ip4_subnet"] = flattenSpamfilterIptrustEntriesIp4Subnet(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
-		if _, ok := i["ip6-subnet"]; ok {
-			tmp["ip6_subnet"] = flattenSpamfilterIptrustEntriesIp6Subnet(i["ip6-subnet"], d, pre_append, sv)
+		if cur_v, ok := i["ip6-subnet"]; ok {
+			tmp["ip6_subnet"] = flattenSpamfilterIptrustEntriesIp6Subnet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

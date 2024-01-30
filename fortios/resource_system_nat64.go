@@ -228,13 +228,13 @@ func flattenSystemNat64SecondaryPrefix(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemNat64SecondaryPrefixName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemNat64SecondaryPrefixName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat64_prefix"
-		if _, ok := i["nat64-prefix"]; ok {
-			tmp["nat64_prefix"] = flattenSystemNat64SecondaryPrefixNat64Prefix(i["nat64-prefix"], d, pre_append, sv)
+		if cur_v, ok := i["nat64-prefix"]; ok {
+			tmp["nat64_prefix"] = flattenSystemNat64SecondaryPrefixNat64Prefix(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

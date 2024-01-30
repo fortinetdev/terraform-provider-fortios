@@ -160,7 +160,22 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"policy_category_deep_inspect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"log_policy_pending": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"log_forward_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"log_app_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -362,8 +377,8 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddrName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddrName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -404,8 +419,8 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr6(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddr6Name(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddr6Name(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -429,7 +444,19 @@ func flattenWebProxyGlobalSrcAffinityExemptAddr6(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenWebProxyGlobalPolicyCategoryDeepInspect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyGlobalLogPolicyPending(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyGlobalLogForwardServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyGlobalLogAppId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -582,9 +609,27 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("policy_category_deep_inspect", flattenWebProxyGlobalPolicyCategoryDeepInspect(o["policy-category-deep-inspect"], d, "policy_category_deep_inspect", sv)); err != nil {
+		if !fortiAPIPatch(o["policy-category-deep-inspect"]) {
+			return fmt.Errorf("Error reading policy_category_deep_inspect: %v", err)
+		}
+	}
+
+	if err = d.Set("log_policy_pending", flattenWebProxyGlobalLogPolicyPending(o["log-policy-pending"], d, "log_policy_pending", sv)); err != nil {
+		if !fortiAPIPatch(o["log-policy-pending"]) {
+			return fmt.Errorf("Error reading log_policy_pending: %v", err)
+		}
+	}
+
 	if err = d.Set("log_forward_server", flattenWebProxyGlobalLogForwardServer(o["log-forward-server"], d, "log_forward_server", sv)); err != nil {
 		if !fortiAPIPatch(o["log-forward-server"]) {
 			return fmt.Errorf("Error reading log_forward_server: %v", err)
+		}
+	}
+
+	if err = d.Set("log_app_id", flattenWebProxyGlobalLogAppId(o["log-app-id"], d, "log_app_id", sv)); err != nil {
+		if !fortiAPIPatch(o["log-app-id"]) {
+			return fmt.Errorf("Error reading log_app_id: %v", err)
 		}
 	}
 
@@ -725,7 +770,19 @@ func expandWebProxyGlobalSrcAffinityExemptAddr6(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandWebProxyGlobalPolicyCategoryDeepInspect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalLogPolicyPending(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebProxyGlobalLogForwardServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalLogAppId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -992,6 +1049,32 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("policy_category_deep_inspect"); ok {
+		if setArgNil {
+			obj["policy-category-deep-inspect"] = nil
+		} else {
+			t, err := expandWebProxyGlobalPolicyCategoryDeepInspect(d, v, "policy_category_deep_inspect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["policy-category-deep-inspect"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("log_policy_pending"); ok {
+		if setArgNil {
+			obj["log-policy-pending"] = nil
+		} else {
+			t, err := expandWebProxyGlobalLogPolicyPending(d, v, "log_policy_pending", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-policy-pending"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("log_forward_server"); ok {
 		if setArgNil {
 			obj["log-forward-server"] = nil
@@ -1001,6 +1084,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["log-forward-server"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("log_app_id"); ok {
+		if setArgNil {
+			obj["log-app-id"] = nil
+		} else {
+			t, err := expandWebProxyGlobalLogAppId(d, v, "log_app_id", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-app-id"] = t
 			}
 		}
 	}

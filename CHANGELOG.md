@@ -1,5 +1,29 @@
-## 1.19.0 (Unreleased)
+## 1.20.0 (Unreleased)
 
+
+## 1.19.0 (Jan 29, 2024)
+BUG FIXES:
+
+* Fix issue of remove BGP redistribute route map;
+* Set argument of ca to sensitive;
+* Fix wrong required arguments on resource firewall_shapingpolicy;
+* Fix crash issue of resource firewall_centralsnatmap_sort;
+* Fix extra double quotes issue;
+* Change doc of resource fortios_system_ha to use its own resource;
+
+IMPROVEMENTS:
+
+* Support FortiOS v7.4.2;
+* Update doc for the different description in different FOS versions;
+
+FEATURES:
+
+* **New Data source:** `fortios_diameterfilter_profile`
+* **New Data source:** `fortios_dlp_exactdatamatch`
+* **New Data source:** `fortios_rule_fmwp`
+* **New Data source:** `fortios_user_externalidentityprovider`
+* **New Data source:** `fortios_videofilter_keyword`
+* **New Data source:** `fortios_vpn_qkd`
 
 ## 1.18.1 (Nov 14, 2023)
 BUG FIXES:

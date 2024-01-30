@@ -32,6 +32,10 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"proxy": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -200,6 +204,10 @@ func dataSourceFirewallServiceCustomRead(d *schema.ResourceData, m interface{}) 
 }
 
 func dataSourceFlattenFirewallServiceCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallServiceCustomUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -377,6 +385,12 @@ func dataSourceRefreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[
 	if err = d.Set("name", dataSourceFlattenFirewallServiceCustomName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallServiceCustomUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 

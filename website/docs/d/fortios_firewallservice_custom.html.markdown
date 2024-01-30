@@ -20,6 +20,7 @@ Use this data source to get information on an fortios firewallservice custom
 The following attributes are exported:
 
 * `name` - Custom service name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `proxy` - Enable/disable web proxy service.
 * `category` - Service category.
 * `protocol` - Protocol type based on IANA numbers.

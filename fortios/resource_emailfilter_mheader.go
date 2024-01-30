@@ -264,33 +264,33 @@ func flattenEmailfilterMheaderEntries(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenEmailfilterMheaderEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenEmailfilterMheaderEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenEmailfilterMheaderEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenEmailfilterMheaderEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldname"
-		if _, ok := i["fieldname"]; ok {
-			tmp["fieldname"] = flattenEmailfilterMheaderEntriesFieldname(i["fieldname"], d, pre_append, sv)
+		if cur_v, ok := i["fieldname"]; ok {
+			tmp["fieldname"] = flattenEmailfilterMheaderEntriesFieldname(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldbody"
-		if _, ok := i["fieldbody"]; ok {
-			tmp["fieldbody"] = flattenEmailfilterMheaderEntriesFieldbody(i["fieldbody"], d, pre_append, sv)
+		if cur_v, ok := i["fieldbody"]; ok {
+			tmp["fieldbody"] = flattenEmailfilterMheaderEntriesFieldbody(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenEmailfilterMheaderEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenEmailfilterMheaderEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenEmailfilterMheaderEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenEmailfilterMheaderEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

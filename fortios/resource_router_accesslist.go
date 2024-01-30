@@ -253,33 +253,33 @@ func flattenRouterAccessListRule(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterAccessListRuleId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterAccessListRuleId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterAccessListRuleAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenRouterAccessListRuleAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenRouterAccessListRulePrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenRouterAccessListRulePrefix(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard"
-		if _, ok := i["wildcard"]; ok {
-			tmp["wildcard"] = flattenRouterAccessListRuleWildcard(i["wildcard"], d, pre_append, sv)
+		if cur_v, ok := i["wildcard"]; ok {
+			tmp["wildcard"] = flattenRouterAccessListRuleWildcard(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
-		if _, ok := i["exact-match"]; ok {
-			tmp["exact_match"] = flattenRouterAccessListRuleExactMatch(i["exact-match"], d, pre_append, sv)
+		if cur_v, ok := i["exact-match"]; ok {
+			tmp["exact_match"] = flattenRouterAccessListRuleExactMatch(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
-		if _, ok := i["flags"]; ok {
-			tmp["flags"] = flattenRouterAccessListRuleFlags(i["flags"], d, pre_append, sv)
+		if cur_v, ok := i["flags"]; ok {
+			tmp["flags"] = flattenRouterAccessListRuleFlags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

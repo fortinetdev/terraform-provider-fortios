@@ -235,8 +235,8 @@ func flattenSystemSsoAdminVdom(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSsoAdminVdomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemSsoAdminVdomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

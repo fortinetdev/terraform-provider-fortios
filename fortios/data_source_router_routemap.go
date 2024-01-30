@@ -221,6 +221,14 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"set_vpnv6_nexthop": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"set_vpnv6_nexthop_local": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"set_local_preference": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -525,6 +533,16 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_local"
 		if _, ok := i["set-ip6-nexthop-local"]; ok {
 			tmp["set_ip6_nexthop_local"] = dataSourceFlattenRouterRouteMapRuleSetIp6NexthopLocal(i["set-ip6-nexthop-local"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop"
+		if _, ok := i["set-vpnv6-nexthop"]; ok {
+			tmp["set_vpnv6_nexthop"] = dataSourceFlattenRouterRouteMapRuleSetVpnv6Nexthop(i["set-vpnv6-nexthop"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop_local"
+		if _, ok := i["set-vpnv6-nexthop-local"]; ok {
+			tmp["set_vpnv6_nexthop_local"] = dataSourceFlattenRouterRouteMapRuleSetVpnv6NexthopLocal(i["set-vpnv6-nexthop-local"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_local_preference"
@@ -863,6 +881,14 @@ func dataSourceFlattenRouterRouteMapRuleSetIp6Nexthop(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenRouterRouteMapRuleSetIp6NexthopLocal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleSetVpnv6Nexthop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleSetVpnv6NexthopLocal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

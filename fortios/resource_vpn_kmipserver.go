@@ -280,28 +280,28 @@ func flattenVpnKmipServerServerList(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnKmipServerServerListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnKmipServerServerListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenVpnKmipServerServerListStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenVpnKmipServerServerListStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
-		if _, ok := i["server"]; ok {
-			tmp["server"] = flattenVpnKmipServerServerListServer(i["server"], d, pre_append, sv)
+		if cur_v, ok := i["server"]; ok {
+			tmp["server"] = flattenVpnKmipServerServerListServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenVpnKmipServerServerListPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenVpnKmipServerServerListPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cert"
-		if _, ok := i["cert"]; ok {
-			tmp["cert"] = flattenVpnKmipServerServerListCert(i["cert"], d, pre_append, sv)
+		if cur_v, ok := i["cert"]; ok {
+			tmp["cert"] = flattenVpnKmipServerServerListCert(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

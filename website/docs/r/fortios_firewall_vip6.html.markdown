@@ -90,6 +90,9 @@ The following arguments are supported:
 * `server_type` - Protocol to be load balanced by the virtual server (also called the server load balance virtual IP). Valid values: `http`, `https`, `imaps`, `pop3s`, `smtps`, `ssl`, `tcp`, `udp`, `ip`.
 * `http_redirect` - Enable/disable redirection of HTTP to HTTPS Valid values: `enable`, `disable`.
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session. Valid values: `none`, `http-cookie`, `ssl-session-id`.
+* `h2_support` - Enable/disable HTTP2 support (default = enable). Valid values: `enable`, `disable`.
+* `h3_support` - Enable/disable HTTP3/QUIC support (default = disable). Valid values: `enable`, `disable`.
+* `quic` - QUIC setting. The structure of `quic` block is documented below.
 * `nat66` - Enable/disable DNAT66. Valid values: `disable`, `enable`.
 * `nat64` - Enable/disable DNAT64. Valid values: `disable`, `enable`.
 * `add_nat64_route` - Enable/disable adding NAT64 route. Valid values: `disable`, `enable`.
@@ -154,6 +157,17 @@ The following arguments are supported:
 The `src_filter` block supports:
 
 * `range` - Source-filter range.
+
+The `quic` block supports:
+
+* `max_idle_timeout` - Maximum idle timeout milliseconds (1 - 60000, default = 30000).
+* `max_udp_payload_size` - Maximum UDP payload size in bytes (1200 - 1500, default = 1500).
+* `active_connection_id_limit` - Active connection ID limit (1 - 8, default = 2).
+* `ack_delay_exponent` - ACK delay exponent (1 - 20, default = 3).
+* `max_ack_delay` - Maximum ACK delay in milliseconds (1 - 16383, default = 25).
+* `max_datagram_frame_size` - Maximum datagram frame size in bytes (1 - 1500, default = 1500).
+* `active_migration` - Enable/disable active migration (default = disable). Valid values: `enable`, `disable`.
+* `grease_quic_bit` - Enable/disable grease QUIC bit (default = enable). Valid values: `enable`, `disable`.
 
 The `realservers` block supports:
 

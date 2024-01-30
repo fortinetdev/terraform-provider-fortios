@@ -319,23 +319,23 @@ func flattenSwitchControllerFlowTrackingCollectors(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerFlowTrackingCollectorsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerFlowTrackingCollectorsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSwitchControllerFlowTrackingCollectorsIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSwitchControllerFlowTrackingCollectorsIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenSwitchControllerFlowTrackingCollectorsPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenSwitchControllerFlowTrackingCollectorsPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport"
-		if _, ok := i["transport"]; ok {
-			tmp["transport"] = flattenSwitchControllerFlowTrackingCollectorsTransport(i["transport"], d, pre_append, sv)
+		if cur_v, ok := i["transport"]; ok {
+			tmp["transport"] = flattenSwitchControllerFlowTrackingCollectorsTransport(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -440,13 +440,13 @@ func flattenSwitchControllerFlowTrackingAggregates(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSwitchControllerFlowTrackingAggregatesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSwitchControllerFlowTrackingAggregatesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSwitchControllerFlowTrackingAggregatesIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenSwitchControllerFlowTrackingAggregatesIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

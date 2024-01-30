@@ -40,6 +40,46 @@ func resourceSystemVdomSflow() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"collectors": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"collector_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"collector_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"collector_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -66,6 +106,16 @@ func resourceSystemVdomSflow() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -169,6 +219,93 @@ func flattenSystemVdomSflowVdomSflow(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenSystemVdomSflowCollectors(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemVdomSflowCollectorsId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if cur_v, ok := i["collector-ip"]; ok {
+			tmp["collector_ip"] = flattenSystemVdomSflowCollectorsCollectorIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if cur_v, ok := i["collector-port"]; ok {
+			tmp["collector_port"] = flattenSystemVdomSflowCollectorsCollectorPort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if cur_v, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = flattenSystemVdomSflowCollectorsSourceIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenSystemVdomSflowCollectorsInterfaceSelectMethod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemVdomSflowCollectorsInterface(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemVdomSflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomSflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomSflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomSflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomSflowCollectorsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomSflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVdomSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -191,10 +328,32 @@ func flattenSystemVdomSflowInterface(v interface{}, d *schema.ResourceData, pre 
 
 func refreshObjectSystemVdomSflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("vdom_sflow", flattenSystemVdomSflowVdomSflow(o["vdom-sflow"], d, "vdom_sflow", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom-sflow"]) {
 			return fmt.Errorf("Error reading vdom_sflow: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("collectors", flattenSystemVdomSflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+			if !fortiAPIPatch(o["collectors"]) {
+				return fmt.Errorf("Error reading collectors: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("collectors"); ok {
+			if err = d.Set("collectors", flattenSystemVdomSflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
+				if !fortiAPIPatch(o["collectors"]) {
+					return fmt.Errorf("Error reading collectors: %v", err)
+				}
+			}
 		}
 	}
 
@@ -241,6 +400,82 @@ func expandSystemVdomSflowVdomSflow(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandSystemVdomSflowCollectors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemVdomSflowCollectorsId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["collector-ip"], _ = expandSystemVdomSflowCollectorsCollectorIp(d, i["collector_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["collector-port"], _ = expandSystemVdomSflowCollectorsCollectorPort(d, i["collector_port"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip"], _ = expandSystemVdomSflowCollectorsSourceIp(d, i["source_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface-select-method"], _ = expandSystemVdomSflowCollectorsInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface"], _ = expandSystemVdomSflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemVdomSflowCollectorsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowCollectorsCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowCollectorsCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowCollectorsSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowCollectorsInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomSflowCollectorsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemVdomSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -273,6 +508,19 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 				return &obj, err
 			} else if t != nil {
 				obj["vdom-sflow"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("collectors"); ok || d.HasChange("collectors") {
+		if setArgNil {
+			obj["collectors"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemVdomSflowCollectors(d, v, "collectors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["collectors"] = t
 			}
 		}
 	}

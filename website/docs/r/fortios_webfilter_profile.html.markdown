@@ -100,6 +100,7 @@ The following arguments are supported:
 * `options` - Options.
 * `file_filter` - File filter. The structure of `file_filter` block is documented below.
 * `https_replacemsg` - Enable replacement messages for HTTPS. Valid values: `enable`, `disable`.
+* `web_flow_log_encoding` - Log encoding in flow mode. Valid values: `utf-8`, `punycode`.
 * `ovrd_perm` - Permitted override types. Valid values: `bannedword-override`, `urlfilter-override`, `fortiguard-wf-override`, `contenttype-check-override`.
 * `post_action` - Action taken for HTTP POST traffic. Valid values: `normal`, `block`.
 * `override` - Web Filter override settings. The structure of `override` block is documented below.

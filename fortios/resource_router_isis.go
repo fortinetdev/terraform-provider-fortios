@@ -816,13 +816,13 @@ func flattenRouterIsisIsisNet(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterIsisIsisNetId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterIsisIsisNetId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "net"
-		if _, ok := i["net"]; ok {
-			tmp["net"] = flattenRouterIsisIsisNetNet(i["net"], d, pre_append, sv)
+		if cur_v, ok := i["net"]; ok {
+			tmp["net"] = flattenRouterIsisIsisNetNet(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -867,98 +867,98 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterIsisIsisInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterIsisIsisInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenRouterIsisIsisInterfaceStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenRouterIsisIsisInterfaceStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status6"
-		if _, ok := i["status6"]; ok {
-			tmp["status6"] = flattenRouterIsisIsisInterfaceStatus6(i["status6"], d, pre_append, sv)
+		if cur_v, ok := i["status6"]; ok {
+			tmp["status6"] = flattenRouterIsisIsisInterfaceStatus6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
-		if _, ok := i["network-type"]; ok {
-			tmp["network_type"] = flattenRouterIsisIsisInterfaceNetworkType(i["network-type"], d, pre_append, sv)
+		if cur_v, ok := i["network-type"]; ok {
+			tmp["network_type"] = flattenRouterIsisIsisInterfaceNetworkType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_type"
-		if _, ok := i["circuit-type"]; ok {
-			tmp["circuit_type"] = flattenRouterIsisIsisInterfaceCircuitType(i["circuit-type"], d, pre_append, sv)
+		if cur_v, ok := i["circuit-type"]; ok {
+			tmp["circuit_type"] = flattenRouterIsisIsisInterfaceCircuitType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "csnp_interval_l1"
-		if _, ok := i["csnp-interval-l1"]; ok {
-			tmp["csnp_interval_l1"] = flattenRouterIsisIsisInterfaceCsnpIntervalL1(i["csnp-interval-l1"], d, pre_append, sv)
+		if cur_v, ok := i["csnp-interval-l1"]; ok {
+			tmp["csnp_interval_l1"] = flattenRouterIsisIsisInterfaceCsnpIntervalL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "csnp_interval_l2"
-		if _, ok := i["csnp-interval-l2"]; ok {
-			tmp["csnp_interval_l2"] = flattenRouterIsisIsisInterfaceCsnpIntervalL2(i["csnp-interval-l2"], d, pre_append, sv)
+		if cur_v, ok := i["csnp-interval-l2"]; ok {
+			tmp["csnp_interval_l2"] = flattenRouterIsisIsisInterfaceCsnpIntervalL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval_l1"
-		if _, ok := i["hello-interval-l1"]; ok {
-			tmp["hello_interval_l1"] = flattenRouterIsisIsisInterfaceHelloIntervalL1(i["hello-interval-l1"], d, pre_append, sv)
+		if cur_v, ok := i["hello-interval-l1"]; ok {
+			tmp["hello_interval_l1"] = flattenRouterIsisIsisInterfaceHelloIntervalL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval_l2"
-		if _, ok := i["hello-interval-l2"]; ok {
-			tmp["hello_interval_l2"] = flattenRouterIsisIsisInterfaceHelloIntervalL2(i["hello-interval-l2"], d, pre_append, sv)
+		if cur_v, ok := i["hello-interval-l2"]; ok {
+			tmp["hello_interval_l2"] = flattenRouterIsisIsisInterfaceHelloIntervalL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier_l1"
-		if _, ok := i["hello-multiplier-l1"]; ok {
-			tmp["hello_multiplier_l1"] = flattenRouterIsisIsisInterfaceHelloMultiplierL1(i["hello-multiplier-l1"], d, pre_append, sv)
+		if cur_v, ok := i["hello-multiplier-l1"]; ok {
+			tmp["hello_multiplier_l1"] = flattenRouterIsisIsisInterfaceHelloMultiplierL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier_l2"
-		if _, ok := i["hello-multiplier-l2"]; ok {
-			tmp["hello_multiplier_l2"] = flattenRouterIsisIsisInterfaceHelloMultiplierL2(i["hello-multiplier-l2"], d, pre_append, sv)
+		if cur_v, ok := i["hello-multiplier-l2"]; ok {
+			tmp["hello_multiplier_l2"] = flattenRouterIsisIsisInterfaceHelloMultiplierL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_padding"
-		if _, ok := i["hello-padding"]; ok {
-			tmp["hello_padding"] = flattenRouterIsisIsisInterfaceHelloPadding(i["hello-padding"], d, pre_append, sv)
+		if cur_v, ok := i["hello-padding"]; ok {
+			tmp["hello_padding"] = flattenRouterIsisIsisInterfaceHelloPadding(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lsp_interval"
-		if _, ok := i["lsp-interval"]; ok {
-			tmp["lsp_interval"] = flattenRouterIsisIsisInterfaceLspInterval(i["lsp-interval"], d, pre_append, sv)
+		if cur_v, ok := i["lsp-interval"]; ok {
+			tmp["lsp_interval"] = flattenRouterIsisIsisInterfaceLspInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lsp_retransmit_interval"
-		if _, ok := i["lsp-retransmit-interval"]; ok {
-			tmp["lsp_retransmit_interval"] = flattenRouterIsisIsisInterfaceLspRetransmitInterval(i["lsp-retransmit-interval"], d, pre_append, sv)
+		if cur_v, ok := i["lsp-retransmit-interval"]; ok {
+			tmp["lsp_retransmit_interval"] = flattenRouterIsisIsisInterfaceLspRetransmitInterval(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_l1"
-		if _, ok := i["metric-l1"]; ok {
-			tmp["metric_l1"] = flattenRouterIsisIsisInterfaceMetricL1(i["metric-l1"], d, pre_append, sv)
+		if cur_v, ok := i["metric-l1"]; ok {
+			tmp["metric_l1"] = flattenRouterIsisIsisInterfaceMetricL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_l2"
-		if _, ok := i["metric-l2"]; ok {
-			tmp["metric_l2"] = flattenRouterIsisIsisInterfaceMetricL2(i["metric-l2"], d, pre_append, sv)
+		if cur_v, ok := i["metric-l2"]; ok {
+			tmp["metric_l2"] = flattenRouterIsisIsisInterfaceMetricL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wide_metric_l1"
-		if _, ok := i["wide-metric-l1"]; ok {
-			tmp["wide_metric_l1"] = flattenRouterIsisIsisInterfaceWideMetricL1(i["wide-metric-l1"], d, pre_append, sv)
+		if cur_v, ok := i["wide-metric-l1"]; ok {
+			tmp["wide_metric_l1"] = flattenRouterIsisIsisInterfaceWideMetricL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wide_metric_l2"
-		if _, ok := i["wide-metric-l2"]; ok {
-			tmp["wide_metric_l2"] = flattenRouterIsisIsisInterfaceWideMetricL2(i["wide-metric-l2"], d, pre_append, sv)
+		if cur_v, ok := i["wide-metric-l2"]; ok {
+			tmp["wide_metric_l2"] = flattenRouterIsisIsisInterfaceWideMetricL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
-		if _, ok := i["auth-password-l1"]; ok {
-			tmp["auth_password_l1"] = flattenRouterIsisIsisInterfaceAuthPasswordL1(i["auth-password-l1"], d, pre_append, sv)
+		if cur_v, ok := i["auth-password-l1"]; ok {
+			tmp["auth_password_l1"] = flattenRouterIsisIsisInterfaceAuthPasswordL1(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_password_l1"] = c
@@ -966,8 +966,8 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
-		if _, ok := i["auth-password-l2"]; ok {
-			tmp["auth_password_l2"] = flattenRouterIsisIsisInterfaceAuthPasswordL2(i["auth-password-l2"], d, pre_append, sv)
+		if cur_v, ok := i["auth-password-l2"]; ok {
+			tmp["auth_password_l2"] = flattenRouterIsisIsisInterfaceAuthPasswordL2(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_password_l2"] = c
@@ -975,53 +975,53 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l1"
-		if _, ok := i["auth-keychain-l1"]; ok {
-			tmp["auth_keychain_l1"] = flattenRouterIsisIsisInterfaceAuthKeychainL1(i["auth-keychain-l1"], d, pre_append, sv)
+		if cur_v, ok := i["auth-keychain-l1"]; ok {
+			tmp["auth_keychain_l1"] = flattenRouterIsisIsisInterfaceAuthKeychainL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l2"
-		if _, ok := i["auth-keychain-l2"]; ok {
-			tmp["auth_keychain_l2"] = flattenRouterIsisIsisInterfaceAuthKeychainL2(i["auth-keychain-l2"], d, pre_append, sv)
+		if cur_v, ok := i["auth-keychain-l2"]; ok {
+			tmp["auth_keychain_l2"] = flattenRouterIsisIsisInterfaceAuthKeychainL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l1"
-		if _, ok := i["auth-send-only-l1"]; ok {
-			tmp["auth_send_only_l1"] = flattenRouterIsisIsisInterfaceAuthSendOnlyL1(i["auth-send-only-l1"], d, pre_append, sv)
+		if cur_v, ok := i["auth-send-only-l1"]; ok {
+			tmp["auth_send_only_l1"] = flattenRouterIsisIsisInterfaceAuthSendOnlyL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l2"
-		if _, ok := i["auth-send-only-l2"]; ok {
-			tmp["auth_send_only_l2"] = flattenRouterIsisIsisInterfaceAuthSendOnlyL2(i["auth-send-only-l2"], d, pre_append, sv)
+		if cur_v, ok := i["auth-send-only-l2"]; ok {
+			tmp["auth_send_only_l2"] = flattenRouterIsisIsisInterfaceAuthSendOnlyL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode_l1"
-		if _, ok := i["auth-mode-l1"]; ok {
-			tmp["auth_mode_l1"] = flattenRouterIsisIsisInterfaceAuthModeL1(i["auth-mode-l1"], d, pre_append, sv)
+		if cur_v, ok := i["auth-mode-l1"]; ok {
+			tmp["auth_mode_l1"] = flattenRouterIsisIsisInterfaceAuthModeL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode_l2"
-		if _, ok := i["auth-mode-l2"]; ok {
-			tmp["auth_mode_l2"] = flattenRouterIsisIsisInterfaceAuthModeL2(i["auth-mode-l2"], d, pre_append, sv)
+		if cur_v, ok := i["auth-mode-l2"]; ok {
+			tmp["auth_mode_l2"] = flattenRouterIsisIsisInterfaceAuthModeL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_l1"
-		if _, ok := i["priority-l1"]; ok {
-			tmp["priority_l1"] = flattenRouterIsisIsisInterfacePriorityL1(i["priority-l1"], d, pre_append, sv)
+		if cur_v, ok := i["priority-l1"]; ok {
+			tmp["priority_l1"] = flattenRouterIsisIsisInterfacePriorityL1(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_l2"
-		if _, ok := i["priority-l2"]; ok {
-			tmp["priority_l2"] = flattenRouterIsisIsisInterfacePriorityL2(i["priority-l2"], d, pre_append, sv)
+		if cur_v, ok := i["priority-l2"]; ok {
+			tmp["priority_l2"] = flattenRouterIsisIsisInterfacePriorityL2(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group"
-		if _, ok := i["mesh-group"]; ok {
-			tmp["mesh_group"] = flattenRouterIsisIsisInterfaceMeshGroup(i["mesh-group"], d, pre_append, sv)
+		if cur_v, ok := i["mesh-group"]; ok {
+			tmp["mesh_group"] = flattenRouterIsisIsisInterfaceMeshGroup(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group_id"
-		if _, ok := i["mesh-group-id"]; ok {
-			tmp["mesh_group_id"] = flattenRouterIsisIsisInterfaceMeshGroupId(i["mesh-group-id"], d, pre_append, sv)
+		if cur_v, ok := i["mesh-group-id"]; ok {
+			tmp["mesh_group_id"] = flattenRouterIsisIsisInterfaceMeshGroupId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1178,18 +1178,18 @@ func flattenRouterIsisSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterIsisSummaryAddressId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterIsisSummaryAddressId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenRouterIsisSummaryAddressPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenRouterIsisSummaryAddressPrefix(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenRouterIsisSummaryAddressLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenRouterIsisSummaryAddressLevel(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1245,18 +1245,18 @@ func flattenRouterIsisSummaryAddress6(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterIsisSummaryAddress6Id(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterIsisSummaryAddress6Id(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
-		if _, ok := i["prefix6"]; ok {
-			tmp["prefix6"] = flattenRouterIsisSummaryAddress6Prefix6(i["prefix6"], d, pre_append, sv)
+		if cur_v, ok := i["prefix6"]; ok {
+			tmp["prefix6"] = flattenRouterIsisSummaryAddress6Prefix6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenRouterIsisSummaryAddress6Level(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenRouterIsisSummaryAddress6Level(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1305,33 +1305,33 @@ func flattenRouterIsisRedistribute(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenRouterIsisRedistributeProtocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenRouterIsisRedistributeProtocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenRouterIsisRedistributeStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenRouterIsisRedistributeStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := i["metric"]; ok {
-			tmp["metric"] = flattenRouterIsisRedistributeMetric(i["metric"], d, pre_append, sv)
+		if cur_v, ok := i["metric"]; ok {
+			tmp["metric"] = flattenRouterIsisRedistributeMetric(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
-		if _, ok := i["metric-type"]; ok {
-			tmp["metric_type"] = flattenRouterIsisRedistributeMetricType(i["metric-type"], d, pre_append, sv)
+		if cur_v, ok := i["metric-type"]; ok {
+			tmp["metric_type"] = flattenRouterIsisRedistributeMetricType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenRouterIsisRedistributeLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenRouterIsisRedistributeLevel(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := i["routemap"]; ok {
-			tmp["routemap"] = flattenRouterIsisRedistributeRoutemap(i["routemap"], d, pre_append, sv)
+		if cur_v, ok := i["routemap"]; ok {
+			tmp["routemap"] = flattenRouterIsisRedistributeRoutemap(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1392,33 +1392,33 @@ func flattenRouterIsisRedistribute6(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
-		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenRouterIsisRedistribute6Protocol(i["protocol"], d, pre_append, sv)
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenRouterIsisRedistribute6Protocol(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenRouterIsisRedistribute6Status(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenRouterIsisRedistribute6Status(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := i["metric"]; ok {
-			tmp["metric"] = flattenRouterIsisRedistribute6Metric(i["metric"], d, pre_append, sv)
+		if cur_v, ok := i["metric"]; ok {
+			tmp["metric"] = flattenRouterIsisRedistribute6Metric(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
-		if _, ok := i["metric-type"]; ok {
-			tmp["metric_type"] = flattenRouterIsisRedistribute6MetricType(i["metric-type"], d, pre_append, sv)
+		if cur_v, ok := i["metric-type"]; ok {
+			tmp["metric_type"] = flattenRouterIsisRedistribute6MetricType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenRouterIsisRedistribute6Level(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenRouterIsisRedistribute6Level(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := i["routemap"]; ok {
-			tmp["routemap"] = flattenRouterIsisRedistribute6Routemap(i["routemap"], d, pre_append, sv)
+		if cur_v, ok := i["routemap"]; ok {
+			tmp["routemap"] = flattenRouterIsisRedistribute6Routemap(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

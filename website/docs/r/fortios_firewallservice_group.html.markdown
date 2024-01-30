@@ -47,6 +47,7 @@ resource "fortios_firewallservice_group" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Address group name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - Service objects contained within the group. The structure of `member` block is documented below.
 * `proxy` - Enable/disable web proxy service group. Valid values: `enable`, `disable`.
 * `comment` - Comment.

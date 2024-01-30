@@ -241,8 +241,8 @@ func flattenSystemAcmeInterface(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemAcmeInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemAcmeInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -295,33 +295,33 @@ func flattenSystemAcmeAccounts(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAcmeAccountsId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAcmeAccountsId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemAcmeAccountsStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSystemAcmeAccountsStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
-		if _, ok := i["url"]; ok {
-			tmp["url"] = flattenSystemAcmeAccountsUrl(i["url"], d, pre_append, sv)
+		if cur_v, ok := i["url"]; ok {
+			tmp["url"] = flattenSystemAcmeAccountsUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_url"
-		if _, ok := i["ca_url"]; ok {
-			tmp["ca_url"] = flattenSystemAcmeAccountsCa_Url(i["ca_url"], d, pre_append, sv)
+		if cur_v, ok := i["ca_url"]; ok {
+			tmp["ca_url"] = flattenSystemAcmeAccountsCa_Url(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
-		if _, ok := i["email"]; ok {
-			tmp["email"] = flattenSystemAcmeAccountsEmail(i["email"], d, pre_append, sv)
+		if cur_v, ok := i["email"]; ok {
+			tmp["email"] = flattenSystemAcmeAccountsEmail(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "privatekey"
-		if _, ok := i["privatekey"]; ok {
-			tmp["privatekey"] = flattenSystemAcmeAccountsPrivatekey(i["privatekey"], d, pre_append, sv)
+		if cur_v, ok := i["privatekey"]; ok {
+			tmp["privatekey"] = flattenSystemAcmeAccountsPrivatekey(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

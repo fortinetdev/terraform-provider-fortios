@@ -100,6 +100,11 @@ func resourceUserRadius() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"switch_controller_nas_ip_dynamic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"nas_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -583,6 +588,10 @@ func flattenUserRadiusUseManagementVdom(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenUserRadiusSwitchControllerNasIpDynamic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserRadiusNasIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -656,8 +665,8 @@ func flattenUserRadiusClass(v interface{}, d *schema.ResourceData, pre string, s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserRadiusClassName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserRadiusClassName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -830,23 +839,23 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserRadiusAccountingServerId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenUserRadiusAccountingServerId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenUserRadiusAccountingServerStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenUserRadiusAccountingServerStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
-		if _, ok := i["server"]; ok {
-			tmp["server"] = flattenUserRadiusAccountingServerServer(i["server"], d, pre_append, sv)
+		if cur_v, ok := i["server"]; ok {
+			tmp["server"] = flattenUserRadiusAccountingServerServer(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "secret"
-		if _, ok := i["secret"]; ok {
-			tmp["secret"] = flattenUserRadiusAccountingServerSecret(i["secret"], d, pre_append, sv)
+		if cur_v, ok := i["secret"]; ok {
+			tmp["secret"] = flattenUserRadiusAccountingServerSecret(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["secret"] = c
@@ -854,23 +863,23 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
-		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenUserRadiusAccountingServerPort(i["port"], d, pre_append, sv)
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenUserRadiusAccountingServerPort(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
-		if _, ok := i["source-ip"]; ok {
-			tmp["source_ip"] = flattenUserRadiusAccountingServerSourceIp(i["source-ip"], d, pre_append, sv)
+		if cur_v, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = flattenUserRadiusAccountingServerSourceIp(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
-		if _, ok := i["interface-select-method"]; ok {
-			tmp["interface_select_method"] = flattenUserRadiusAccountingServerInterfaceSelectMethod(i["interface-select-method"], d, pre_append, sv)
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenUserRadiusAccountingServerInterfaceSelectMethod(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenUserRadiusAccountingServerInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenUserRadiusAccountingServerInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -968,6 +977,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("use_management_vdom", flattenUserRadiusUseManagementVdom(o["use-management-vdom"], d, "use_management_vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["use-management-vdom"]) {
 			return fmt.Errorf("Error reading use_management_vdom: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_nas_ip_dynamic", flattenUserRadiusSwitchControllerNasIpDynamic(o["switch-controller-nas-ip-dynamic"], d, "switch_controller_nas_ip_dynamic", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-nas-ip-dynamic"]) {
+			return fmt.Errorf("Error reading switch_controller_nas_ip_dynamic: %v", err)
 		}
 	}
 
@@ -1311,6 +1326,10 @@ func expandUserRadiusAllUsergroup(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserRadiusUseManagementVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusSwitchControllerNasIpDynamic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1715,6 +1734,15 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["use-management-vdom"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_nas_ip_dynamic"); ok {
+		t, err := expandUserRadiusSwitchControllerNasIpDynamic(d, v, "switch_controller_nas_ip_dynamic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-nas-ip-dynamic"] = t
 		}
 	}
 

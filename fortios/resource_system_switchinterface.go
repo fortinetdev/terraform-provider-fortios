@@ -279,8 +279,8 @@ func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.Resourc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemSwitchInterfaceSpanSourcePortInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemSwitchInterfaceSpanSourcePortInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -321,8 +321,8 @@ func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemSwitchInterfaceMemberInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemSwitchInterfaceMemberInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

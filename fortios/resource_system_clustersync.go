@@ -361,8 +361,8 @@ func flattenSystemClusterSyncSyncvd(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemClusterSyncSyncvdName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemClusterSyncSyncvdName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -403,8 +403,8 @@ func flattenSystemClusterSyncDownIntfsBeforeSessSync(v interface{}, d *schema.Re
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemClusterSyncDownIntfsBeforeSessSyncName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemClusterSyncDownIntfsBeforeSessSyncName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -563,18 +563,18 @@ func flattenSystemClusterSyncSessionSyncFilterCustomService(v interface{}, d *sc
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
-		if _, ok := i["src-port-range"]; ok {
-			tmp["src_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceSrcPortRange(i["src-port-range"], d, pre_append, sv)
+		if cur_v, ok := i["src-port-range"]; ok {
+			tmp["src_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceSrcPortRange(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
-		if _, ok := i["dst-port-range"]; ok {
-			tmp["dst_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(i["dst-port-range"], d, pre_append, sv)
+		if cur_v, ok := i["dst-port-range"]; ok {
+			tmp["dst_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -288,8 +288,8 @@ func flattenApplicationGroupApplication(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationGroupApplicationId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationGroupApplicationId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -330,8 +330,8 @@ func flattenApplicationGroupCategory(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationGroupCategoryId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenApplicationGroupCategoryId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -372,8 +372,8 @@ func flattenApplicationGroupRisk(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := i["level"]; ok {
-			tmp["level"] = flattenApplicationGroupRiskLevel(i["level"], d, pre_append, sv)
+		if cur_v, ok := i["level"]; ok {
+			tmp["level"] = flattenApplicationGroupRiskLevel(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

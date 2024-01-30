@@ -579,8 +579,8 @@ func flattenSystemAutomationActionEmailTo(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationActionEmailToName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationActionEmailToName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -777,18 +777,18 @@ func flattenSystemAutomationActionHttpHeaders(v interface{}, d *schema.ResourceD
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAutomationActionHttpHeadersId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAutomationActionHttpHeadersId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
-		if _, ok := i["key"]; ok {
-			tmp["key"] = flattenSystemAutomationActionHttpHeadersKey(i["key"], d, pre_append, sv)
+		if cur_v, ok := i["key"]; ok {
+			tmp["key"] = flattenSystemAutomationActionHttpHeadersKey(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSystemAutomationActionHttpHeadersValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSystemAutomationActionHttpHeadersValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -837,8 +837,8 @@ func flattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
-		if _, ok := i["header"]; ok {
-			tmp["header"] = flattenSystemAutomationActionHeadersHeader(i["header"], d, pre_append, sv)
+		if cur_v, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemAutomationActionHeadersHeader(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -907,8 +907,8 @@ func flattenSystemAutomationActionSdnConnector(v interface{}, d *schema.Resource
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationActionSdnConnectorName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationActionSdnConnectorName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

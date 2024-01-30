@@ -83,6 +83,36 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ha_reboot_controller": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"known_ha_members": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"serial": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -244,8 +274,60 @@ func flattenSystemDeviceUpgradeFailureReason(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemDeviceUpgradeHaRebootController(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDeviceUpgradeKnownHaMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+		if cur_v, ok := i["serial"]; ok {
+			tmp["serial"] = flattenSystemDeviceUpgradeKnownHaMembersSerial(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "serial", d)
+	return result
+}
+
+func flattenSystemDeviceUpgradeKnownHaMembersSerial(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("serial", flattenSystemDeviceUpgradeSerial(o["serial"], d, "serial", sv)); err != nil {
 		if !fortiAPIPatch(o["serial"]) {
@@ -301,6 +383,28 @@ func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("ha_reboot_controller", flattenSystemDeviceUpgradeHaRebootController(o["ha-reboot-controller"], d, "ha_reboot_controller", sv)); err != nil {
+		if !fortiAPIPatch(o["ha-reboot-controller"]) {
+			return fmt.Errorf("Error reading ha_reboot_controller: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("known_ha_members", flattenSystemDeviceUpgradeKnownHaMembers(o["known-ha-members"], d, "known_ha_members", sv)); err != nil {
+			if !fortiAPIPatch(o["known-ha-members"]) {
+				return fmt.Errorf("Error reading known_ha_members: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("known_ha_members"); ok {
+			if err = d.Set("known_ha_members", flattenSystemDeviceUpgradeKnownHaMembers(o["known-ha-members"], d, "known_ha_members", sv)); err != nil {
+				if !fortiAPIPatch(o["known-ha-members"]) {
+					return fmt.Errorf("Error reading known_ha_members: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -343,6 +447,41 @@ func expandSystemDeviceUpgradeStatus(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSystemDeviceUpgradeFailureReason(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDeviceUpgradeHaRebootController(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDeviceUpgradeKnownHaMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["serial"], _ = expandSystemDeviceUpgradeKnownHaMembersSerial(d, i["serial"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemDeviceUpgradeKnownHaMembersSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -427,6 +566,24 @@ func getObjectSystemDeviceUpgrade(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["failure-reason"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ha_reboot_controller"); ok {
+		t, err := expandSystemDeviceUpgradeHaRebootController(d, v, "ha_reboot_controller", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ha-reboot-controller"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("known_ha_members"); ok || d.HasChange("known_ha_members") {
+		t, err := expandSystemDeviceUpgradeKnownHaMembers(d, v, "known_ha_members", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["known-ha-members"] = t
 		}
 	}
 

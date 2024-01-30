@@ -32,6 +32,10 @@ func dataSourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"uid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"upstream": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -271,6 +275,10 @@ func dataSourceSystemCsfRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func dataSourceFlattenSystemCsfStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfUid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -660,6 +668,12 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("status", dataSourceFlattenSystemCsfStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("uid", dataSourceFlattenSystemCsfUid(o["uid"], d, "uid")); err != nil {
+		if !fortiAPIPatch(o["uid"]) {
+			return fmt.Errorf("Error reading uid: %v", err)
 		}
 	}
 

@@ -442,38 +442,38 @@ func flattenSwitchControllerLldpProfileMedNetworkPolicy(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerLldpProfileMedNetworkPolicyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerLldpProfileMedNetworkPolicyName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSwitchControllerLldpProfileMedNetworkPolicyStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSwitchControllerLldpProfileMedNetworkPolicyStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_intf"
-		if _, ok := i["vlan-intf"]; ok {
-			tmp["vlan_intf"] = flattenSwitchControllerLldpProfileMedNetworkPolicyVlanIntf(i["vlan-intf"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-intf"]; ok {
+			tmp["vlan_intf"] = flattenSwitchControllerLldpProfileMedNetworkPolicyVlanIntf(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_vlan"
-		if _, ok := i["assign-vlan"]; ok {
-			tmp["assign_vlan"] = flattenSwitchControllerLldpProfileMedNetworkPolicyAssignVlan(i["assign-vlan"], d, pre_append, sv)
+		if cur_v, ok := i["assign-vlan"]; ok {
+			tmp["assign_vlan"] = flattenSwitchControllerLldpProfileMedNetworkPolicyAssignVlan(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
-		if _, ok := i["vlan"]; ok {
-			tmp["vlan"] = flattenSwitchControllerLldpProfileMedNetworkPolicyVlan(i["vlan"], d, pre_append, sv)
+		if cur_v, ok := i["vlan"]; ok {
+			tmp["vlan"] = flattenSwitchControllerLldpProfileMedNetworkPolicyVlan(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSwitchControllerLldpProfileMedNetworkPolicyPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenSwitchControllerLldpProfileMedNetworkPolicyPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
-		if _, ok := i["dscp"]; ok {
-			tmp["dscp"] = flattenSwitchControllerLldpProfileMedNetworkPolicyDscp(i["dscp"], d, pre_append, sv)
+		if cur_v, ok := i["dscp"]; ok {
+			tmp["dscp"] = flattenSwitchControllerLldpProfileMedNetworkPolicyDscp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -538,18 +538,18 @@ func flattenSwitchControllerLldpProfileMedLocationService(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerLldpProfileMedLocationServiceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerLldpProfileMedLocationServiceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSwitchControllerLldpProfileMedLocationServiceStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSwitchControllerLldpProfileMedLocationServiceStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sys_location_id"
-		if _, ok := i["sys-location-id"]; ok {
-			tmp["sys_location_id"] = flattenSwitchControllerLldpProfileMedLocationServiceSysLocationId(i["sys-location-id"], d, pre_append, sv)
+		if cur_v, ok := i["sys-location-id"]; ok {
+			tmp["sys_location_id"] = flattenSwitchControllerLldpProfileMedLocationServiceSysLocationId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -598,23 +598,23 @@ func flattenSwitchControllerLldpProfileCustomTlvs(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerLldpProfileCustomTlvsName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSwitchControllerLldpProfileCustomTlvsName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "oui"
-		if _, ok := i["oui"]; ok {
-			tmp["oui"] = flattenSwitchControllerLldpProfileCustomTlvsOui(i["oui"], d, pre_append, sv)
+		if cur_v, ok := i["oui"]; ok {
+			tmp["oui"] = flattenSwitchControllerLldpProfileCustomTlvsOui(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subtype"
-		if _, ok := i["subtype"]; ok {
-			tmp["subtype"] = flattenSwitchControllerLldpProfileCustomTlvsSubtype(i["subtype"], d, pre_append, sv)
+		if cur_v, ok := i["subtype"]; ok {
+			tmp["subtype"] = flattenSwitchControllerLldpProfileCustomTlvsSubtype(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "information_string"
-		if _, ok := i["information-string"]; ok {
-			tmp["information_string"] = flattenSwitchControllerLldpProfileCustomTlvsInformationString(i["information-string"], d, pre_append, sv)
+		if cur_v, ok := i["information-string"]; ok {
+			tmp["information_string"] = flattenSwitchControllerLldpProfileCustomTlvsInformationString(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

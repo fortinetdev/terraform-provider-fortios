@@ -293,33 +293,33 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemList(v interface{}, d *schema.Res
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnSslWebHostCheckSoftwareCheckItemListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnSslWebHostCheckSoftwareCheckItemListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenVpnSslWebHostCheckSoftwareCheckItemListAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenVpnSslWebHostCheckSoftwareCheckItemListAction(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenVpnSslWebHostCheckSoftwareCheckItemListType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenVpnSslWebHostCheckSoftwareCheckItemListType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
-		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenVpnSslWebHostCheckSoftwareCheckItemListTarget(i["target"], d, pre_append, sv)
+		if cur_v, ok := i["target"]; ok {
+			tmp["target"] = flattenVpnSslWebHostCheckSoftwareCheckItemListTarget(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
-		if _, ok := i["version"]; ok {
-			tmp["version"] = flattenVpnSslWebHostCheckSoftwareCheckItemListVersion(i["version"], d, pre_append, sv)
+		if cur_v, ok := i["version"]; ok {
+			tmp["version"] = flattenVpnSslWebHostCheckSoftwareCheckItemListVersion(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5s"
-		if _, ok := i["md5s"]; ok {
-			tmp["md5s"] = flattenVpnSslWebHostCheckSoftwareCheckItemListMd5S(i["md5s"], d, pre_append, sv)
+		if cur_v, ok := i["md5s"]; ok {
+			tmp["md5s"] = flattenVpnSslWebHostCheckSoftwareCheckItemListMd5S(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -376,8 +376,8 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemListMd5S(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenVpnSslWebHostCheckSoftwareCheckItemListMd5SId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenVpnSslWebHostCheckSoftwareCheckItemListMd5SId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

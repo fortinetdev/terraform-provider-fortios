@@ -531,8 +531,8 @@ func flattenWirelessControllerWidsProfileApScanChannelList2G5G(v interface{}, d 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := i["chan"]; ok {
-			tmp["chan"] = flattenWirelessControllerWidsProfileApScanChannelList2G5GChan(i["chan"], d, pre_append, sv)
+		if cur_v, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWidsProfileApScanChannelList2G5GChan(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -573,8 +573,8 @@ func flattenWirelessControllerWidsProfileApScanChannelList6G(v interface{}, d *s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
-		if _, ok := i["chan"]; ok {
-			tmp["chan"] = flattenWirelessControllerWidsProfileApScanChannelList6GChan(i["chan"], d, pre_append, sv)
+		if cur_v, ok := i["chan"]; ok {
+			tmp["chan"] = flattenWirelessControllerWidsProfileApScanChannelList6GChan(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -635,8 +635,8 @@ func flattenWirelessControllerWidsProfileApBgscanDisableSchedules(v interface{},
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerWidsProfileApBgscanDisableSchedulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerWidsProfileApBgscanDisableSchedulesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

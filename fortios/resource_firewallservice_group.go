@@ -40,6 +40,11 @@ func resourceFirewallServiceGroup() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Required:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"member": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -214,6 +219,10 @@ func flattenFirewallServiceGroupName(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenFirewallServiceGroupUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -239,8 +248,8 @@ func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallServiceGroupMemberName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallServiceGroupMemberName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -284,6 +293,12 @@ func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("name", flattenFirewallServiceGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", flattenFirewallServiceGroupUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
@@ -340,6 +355,10 @@ func expandFirewallServiceGroupName(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandFirewallServiceGroupUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallServiceGroupMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
@@ -393,6 +412,15 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandFirewallServiceGroupUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
 		}
 	}
 

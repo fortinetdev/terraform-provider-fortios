@@ -28,6 +28,7 @@ resource "fortios_system_csf" "trname" {
 The following arguments are supported:
 
 * `status` - (Required) Enable/disable Security Fabric. Valid values: `enable`, `disable`.
+* `uid` - Unique ID of the current CSF node
 * `upstream` - IP/FQDN of the FortiGate upstream from this FortiGate in the Security Fabric.
 * `upstream_ip` - IP address of the FortiGate upstream from this FortiGate in the Security Fabric.
 * `upstream_port` - The port number to use to communicate with the FortiGate upstream from this FortiGate in the Security Fabric (default = 8013).

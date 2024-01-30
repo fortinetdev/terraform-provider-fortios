@@ -150,6 +150,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"long_live_session_stat": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"custom_log_fields": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -370,6 +375,10 @@ func flattenLogSettingRestApiGet(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenLogSettingLongLiveSessionStat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -395,8 +404,8 @@ func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
-		if _, ok := i["field-id"]; ok {
-			tmp["field_id"] = flattenLogSettingCustomLogFieldsFieldId(i["field-id"], d, pre_append, sv)
+		if cur_v, ok := i["field-id"]; ok {
+			tmp["field_id"] = flattenLogSettingCustomLogFieldsFieldId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -563,6 +572,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("long_live_session_stat", flattenLogSettingLongLiveSessionStat(o["long-live-session-stat"], d, "long_live_session_stat", sv)); err != nil {
+		if !fortiAPIPatch(o["long-live-session-stat"]) {
+			return fmt.Errorf("Error reading long_live_session_stat: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-log-fields"]) {
@@ -683,6 +698,10 @@ func expandLogSettingRestApiSet(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandLogSettingRestApiGet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingLongLiveSessionStat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1016,6 +1035,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["rest-api-get"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("long_live_session_stat"); ok {
+		if setArgNil {
+			obj["long-live-session-stat"] = nil
+		} else {
+			t, err := expandLogSettingLongLiveSessionStat(d, v, "long_live_session_stat", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["long-live-session-stat"] = t
 			}
 		}
 	}

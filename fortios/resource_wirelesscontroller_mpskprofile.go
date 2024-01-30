@@ -296,23 +296,23 @@ func flattenWirelessControllerMpskProfileMpskGroup(v interface{}, d *schema.Reso
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_type"
-		if _, ok := i["vlan-type"]; ok {
-			tmp["vlan_type"] = flattenWirelessControllerMpskProfileMpskGroupVlanType(i["vlan-type"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-type"]; ok {
+			tmp["vlan_type"] = flattenWirelessControllerMpskProfileMpskGroupVlanType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
-		if _, ok := i["vlan-id"]; ok {
-			tmp["vlan_id"] = flattenWirelessControllerMpskProfileMpskGroupVlanId(i["vlan-id"], d, pre_append, sv)
+		if cur_v, ok := i["vlan-id"]; ok {
+			tmp["vlan_id"] = flattenWirelessControllerMpskProfileMpskGroupVlanId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_key"
-		if _, ok := i["mpsk-key"]; ok {
-			tmp["mpsk_key"] = flattenWirelessControllerMpskProfileMpskGroupMpskKey(i["mpsk-key"], d, pre_append, sv)
+		if cur_v, ok := i["mpsk-key"]; ok {
+			tmp["mpsk_key"] = flattenWirelessControllerMpskProfileMpskGroupMpskKey(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -361,18 +361,18 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMac(i["mac"], d, pre_append, sv)
+		if cur_v, ok := i["mac"]; ok {
+			tmp["mac"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMac(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
-		if _, ok := i["passphrase"]; ok {
-			tmp["passphrase"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(i["passphrase"], d, pre_append, sv)
+		if cur_v, ok := i["passphrase"]; ok {
+			tmp["passphrase"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(cur_v, d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["passphrase"] = c
@@ -380,23 +380,23 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_client_limit_type"
-		if _, ok := i["concurrent-client-limit-type"]; ok {
-			tmp["concurrent_client_limit_type"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClientLimitType(i["concurrent-client-limit-type"], d, pre_append, sv)
+		if cur_v, ok := i["concurrent-client-limit-type"]; ok {
+			tmp["concurrent_client_limit_type"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClientLimitType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
-		if _, ok := i["concurrent-clients"]; ok {
-			tmp["concurrent_clients"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClients(i["concurrent-clients"], d, pre_append, sv)
+		if cur_v, ok := i["concurrent-clients"]; ok {
+			tmp["concurrent_clients"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClients(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
-		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyComment(i["comment"], d, pre_append, sv)
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyComment(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
-		if _, ok := i["mpsk-schedules"]; ok {
-			tmp["mpsk_schedules"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(i["mpsk-schedules"], d, pre_append, sv)
+		if cur_v, ok := i["mpsk-schedules"]; ok {
+			tmp["mpsk_schedules"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -457,8 +457,8 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(v interfa
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedulesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedulesName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

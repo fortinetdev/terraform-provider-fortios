@@ -279,28 +279,28 @@ func flattenWanoptCacheServiceDstPeer(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
-		if _, ok := i["device-id"]; ok {
-			tmp["device_id"] = flattenWanoptCacheServiceDstPeerDeviceId(i["device-id"], d, pre_append, sv)
+		if cur_v, ok := i["device-id"]; ok {
+			tmp["device_id"] = flattenWanoptCacheServiceDstPeerDeviceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
-		if _, ok := i["auth-type"]; ok {
-			tmp["auth_type"] = flattenWanoptCacheServiceDstPeerAuthType(i["auth-type"], d, pre_append, sv)
+		if cur_v, ok := i["auth-type"]; ok {
+			tmp["auth_type"] = flattenWanoptCacheServiceDstPeerAuthType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
-		if _, ok := i["encode-type"]; ok {
-			tmp["encode_type"] = flattenWanoptCacheServiceDstPeerEncodeType(i["encode-type"], d, pre_append, sv)
+		if cur_v, ok := i["encode-type"]; ok {
+			tmp["encode_type"] = flattenWanoptCacheServiceDstPeerEncodeType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenWanoptCacheServiceDstPeerPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenWanoptCacheServiceDstPeerPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenWanoptCacheServiceDstPeerIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenWanoptCacheServiceDstPeerIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -357,28 +357,28 @@ func flattenWanoptCacheServiceSrcPeer(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
-		if _, ok := i["device-id"]; ok {
-			tmp["device_id"] = flattenWanoptCacheServiceSrcPeerDeviceId(i["device-id"], d, pre_append, sv)
+		if cur_v, ok := i["device-id"]; ok {
+			tmp["device_id"] = flattenWanoptCacheServiceSrcPeerDeviceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
-		if _, ok := i["auth-type"]; ok {
-			tmp["auth_type"] = flattenWanoptCacheServiceSrcPeerAuthType(i["auth-type"], d, pre_append, sv)
+		if cur_v, ok := i["auth-type"]; ok {
+			tmp["auth_type"] = flattenWanoptCacheServiceSrcPeerAuthType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
-		if _, ok := i["encode-type"]; ok {
-			tmp["encode_type"] = flattenWanoptCacheServiceSrcPeerEncodeType(i["encode-type"], d, pre_append, sv)
+		if cur_v, ok := i["encode-type"]; ok {
+			tmp["encode_type"] = flattenWanoptCacheServiceSrcPeerEncodeType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
-		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenWanoptCacheServiceSrcPeerPriority(i["priority"], d, pre_append, sv)
+		if cur_v, ok := i["priority"]; ok {
+			tmp["priority"] = flattenWanoptCacheServiceSrcPeerPriority(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenWanoptCacheServiceSrcPeerIp(i["ip"], d, pre_append, sv)
+		if cur_v, ok := i["ip"]; ok {
+			tmp["ip"] = flattenWanoptCacheServiceSrcPeerIp(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

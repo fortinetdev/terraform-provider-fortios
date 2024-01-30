@@ -44,7 +44,7 @@ The following arguments are supported:
 * `preferred_source` - Preferred source IP for this route.
 * `distance` - Administrative distance (1 - 255).
 * `weight` - Administrative weight (0 - 255).
-* `priority` - Administrative priority (0 - 4294967295).
+* `priority` - Administrative priority. On FortiOS versions 6.2.0-6.4.1: 0 - 4294967295. On FortiOS versions 6.4.2-7.0.3: 0 - 65535. On FortiOS versions >= 7.0.4: 1 - 65535.
 * `device` - Gateway out interface or tunnel.
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole. Valid values: `enable`, `disable`.

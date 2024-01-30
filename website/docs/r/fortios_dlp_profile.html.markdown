@@ -35,7 +35,7 @@ The `rule` block supports:
 * `type` - Select whether to check the content of messages (an email message) or files (downloaded files or email attachments). Valid values: `file`, `message`.
 * `proto` - Check messages or files over one or more of these protocols. Valid values: `smtp`, `pop3`, `imap`, `http-get`, `http-post`, `ftp`, `nntp`, `mapi`, `ssh`, `cifs`.
 * `filter_by` - Select the type of content to match. Valid values: `sensor`, `mip`, `fingerprint`, `encrypted`, `none`.
-* `file_size` - Match files this size or larger (0 - 4294967295 kbytes).
+* `file_size` - Match files greater than or equal to this size (KB).
 * `sensitivity` - Select a DLP file pattern sensitivity to match. The structure of `sensitivity` block is documented below.
 * `match_percentage` - Percentage of fingerprints in the fingerprint databases designated with the selected sensitivity to match.
 * `file_type` - Select the number of a DLP file pattern table to match.

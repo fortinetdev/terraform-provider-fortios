@@ -276,28 +276,28 @@ func flattenFirewallAddress6TemplateSubnetSegment(v interface{}, d *schema.Resou
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallAddress6TemplateSubnetSegmentId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenFirewallAddress6TemplateSubnetSegmentId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddress6TemplateSubnetSegmentName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddress6TemplateSubnetSegmentName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bits"
-		if _, ok := i["bits"]; ok {
-			tmp["bits"] = flattenFirewallAddress6TemplateSubnetSegmentBits(i["bits"], d, pre_append, sv)
+		if cur_v, ok := i["bits"]; ok {
+			tmp["bits"] = flattenFirewallAddress6TemplateSubnetSegmentBits(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusive"
-		if _, ok := i["exclusive"]; ok {
-			tmp["exclusive"] = flattenFirewallAddress6TemplateSubnetSegmentExclusive(i["exclusive"], d, pre_append, sv)
+		if cur_v, ok := i["exclusive"]; ok {
+			tmp["exclusive"] = flattenFirewallAddress6TemplateSubnetSegmentExclusive(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
-		if _, ok := i["values"]; ok {
-			tmp["values"] = flattenFirewallAddress6TemplateSubnetSegmentValues(i["values"], d, pre_append, sv)
+		if cur_v, ok := i["values"]; ok {
+			tmp["values"] = flattenFirewallAddress6TemplateSubnetSegmentValues(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -350,13 +350,13 @@ func flattenFirewallAddress6TemplateSubnetSegmentValues(v interface{}, d *schema
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAddress6TemplateSubnetSegmentValuesName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddress6TemplateSubnetSegmentValuesName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
-		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenFirewallAddress6TemplateSubnetSegmentValuesValue(i["value"], d, pre_append, sv)
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenFirewallAddress6TemplateSubnetSegmentValuesValue(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

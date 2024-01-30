@@ -40,6 +40,7 @@ The `ntpserver` block contains:
 * `authentication` - Enable/disable MD5/SHA1 authentication.
 * `key` - Key for MD5/SHA1 authentication.
 * `key_id` - Key ID for authentication.
+* `ip_type` - Choose to connect to IPv4 or/and IPv6 NTP server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
 

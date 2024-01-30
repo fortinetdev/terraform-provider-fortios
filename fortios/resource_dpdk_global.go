@@ -69,6 +69,12 @@ func resourceDpdkGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"protects": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 2047),
+				Optional:     true,
+				Computed:     true,
+			},
 			"per_session_accounting": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -228,8 +234,8 @@ func flattenDpdkGlobalInterface(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenDpdkGlobalInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenDpdkGlobalInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -254,6 +260,10 @@ func flattenDpdkGlobalSleepOnIdle(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenDpdkGlobalElasticbuffer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDpdkGlobalProtects(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -319,6 +329,12 @@ func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("elasticbuffer", flattenDpdkGlobalElasticbuffer(o["elasticbuffer"], d, "elasticbuffer", sv)); err != nil {
 		if !fortiAPIPatch(o["elasticbuffer"]) {
 			return fmt.Errorf("Error reading elasticbuffer: %v", err)
+		}
+	}
+
+	if err = d.Set("protects", flattenDpdkGlobalProtects(o["protects"], d, "protects", sv)); err != nil {
+		if !fortiAPIPatch(o["protects"]) {
+			return fmt.Errorf("Error reading protects: %v", err)
 		}
 	}
 
@@ -396,6 +412,10 @@ func expandDpdkGlobalSleepOnIdle(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandDpdkGlobalElasticbuffer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDpdkGlobalProtects(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -479,6 +499,19 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["elasticbuffer"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("protects"); ok {
+		if setArgNil {
+			obj["protects"] = nil
+		} else {
+			t, err := expandDpdkGlobalProtects(d, v, "protects", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["protects"] = t
 			}
 		}
 	}

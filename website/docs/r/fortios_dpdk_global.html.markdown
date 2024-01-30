@@ -18,6 +18,7 @@ The following arguments are supported:
 * `multiqueue` - Enable/disable multi-queue RX/TX support for all DPDK ports. Valid values: `disable`, `enable`.
 * `sleep_on_idle` - Enable/disable sleep-on-idle support for all FDH engines. Valid values: `disable`, `enable`.
 * `elasticbuffer` - Enable/disable elasticbuffer support for all DPDK ports. Valid values: `disable`, `enable`.
+* `protects` - Special arguments for device
 * `per_session_accounting` - Enable/disable per-session accounting. Valid values: `disable`, `traffic-log-only`, `enable`.
 * `ipsec_offload` - Enable/disable DPDK IPsec phase 2 offloading. Valid values: `disable`, `enable`.
 * `hugepage_percentage` - Percentage of main memory allocated to hugepages, which are available for DPDK operation.

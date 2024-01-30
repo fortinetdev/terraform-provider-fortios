@@ -299,8 +299,8 @@ func flattenSystemApiUserVdom(v interface{}, d *schema.ResourceData, pre string,
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemApiUserVdomName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemApiUserVdomName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -357,23 +357,23 @@ func flattenSystemApiUserTrusthost(v interface{}, d *schema.ResourceData, pre st
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemApiUserTrusthostId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemApiUserTrusthostId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemApiUserTrusthostType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenSystemApiUserTrusthostType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_trusthost"
-		if _, ok := i["ipv4-trusthost"]; ok {
-			tmp["ipv4_trusthost"] = flattenSystemApiUserTrusthostIpv4Trusthost(i["ipv4-trusthost"], d, pre_append, sv)
+		if cur_v, ok := i["ipv4-trusthost"]; ok {
+			tmp["ipv4_trusthost"] = flattenSystemApiUserTrusthostIpv4Trusthost(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_trusthost"
-		if _, ok := i["ipv6-trusthost"]; ok {
-			tmp["ipv6_trusthost"] = flattenSystemApiUserTrusthostIpv6Trusthost(i["ipv6-trusthost"], d, pre_append, sv)
+		if cur_v, ok := i["ipv6-trusthost"]; ok {
+			tmp["ipv6_trusthost"] = flattenSystemApiUserTrusthostIpv6Trusthost(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

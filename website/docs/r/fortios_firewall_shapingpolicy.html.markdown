@@ -58,7 +58,7 @@ The following arguments are supported:
 * `ip_version` - Apply this traffic shaping policy to IPv4 or IPv6 traffic. Valid values: `4`, `6`.
 * `traffic_type` - Traffic type. Valid values: `forwarding`, `local-in`, `local-out`.
 * `srcaddr` - (Required) IPv4 source address and address group names. The structure of `srcaddr` block is documented below.
-* `dstaddr` - (Required) IPv4 destination address and address group names. The structure of `dstaddr` block is documented below.
+* `dstaddr` - IPv4 destination address and address group names. The structure of `dstaddr` block is documented below.
 * `srcaddr6` - IPv6 source address and address group names. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - IPv6 destination address and address group names. The structure of `dstaddr6` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.  Valid values: `enable`, `disable`.
@@ -73,7 +73,7 @@ The following arguments are supported:
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
 * `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
 * `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
-* `service` - (Required) Service and service group names. The structure of `service` block is documented below.
+* `service` - Service and service group names. The structure of `service` block is documented below.
 * `schedule` - Schedule name.
 * `users` - Apply this traffic shaping policy to individual users that have authenticated with the FortiGate. The structure of `users` block is documented below.
 * `groups` - Apply this traffic shaping policy to user groups that have authenticated with the FortiGate. The structure of `groups` block is documented below.

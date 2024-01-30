@@ -103,6 +103,11 @@ func resourceWebProxyForwardServer() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"masquerade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -276,6 +281,10 @@ func flattenWebProxyForwardServerComment(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenWebProxyForwardServerMasquerade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyForwardServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -345,6 +354,12 @@ func refreshObjectWebProxyForwardServer(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("masquerade", flattenWebProxyForwardServerMasquerade(o["masquerade"], d, "masquerade", sv)); err != nil {
+		if !fortiAPIPatch(o["masquerade"]) {
+			return fmt.Errorf("Error reading masquerade: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -399,6 +414,10 @@ func expandWebProxyForwardServerPassword(d *schema.ResourceData, v interface{}, 
 }
 
 func expandWebProxyForwardServerComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyForwardServerMasquerade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -510,6 +529,15 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["comment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("masquerade"); ok {
+		t, err := expandWebProxyForwardServerMasquerade(d, v, "masquerade", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["masquerade"] = t
 		}
 	}
 

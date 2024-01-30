@@ -20,6 +20,9 @@ The following arguments are supported:
 * `mode` - Protocol Auto(default), TCP or UDP used for speed test. Valid values: `UDP`, `TCP`, `Auto`.
 * `schedules` - Schedules for the interface. The structure of `schedules` block is documented below.
 * `dynamic_server` - Enable/disable dynamic server option. Valid values: `disable`, `enable`.
+* `ctrl_port` - Port of the controller to get access token.
+* `server_port` - Port of the server to run speed test.
+* `update_shaper` - Set egress shaper based on the test result. Valid values: `disable`, `local`, `remote`, `both`.
 * `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_outbandwidth` - Enable/disable bypassing interface's outbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_inbandwidth_maximum` - Maximum downloading bandwidth (kbps) to be used in a speed test.

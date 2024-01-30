@@ -269,28 +269,28 @@ func flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocList(v interface{}, 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListType(i["type"], d, pre_append, sv)
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm_encoding"
-		if _, ok := i["nai-realm-encoding"]; ok {
-			tmp["nai_realm_encoding"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealmEncoding(i["nai-realm-encoding"], d, pre_append, sv)
+		if cur_v, ok := i["nai-realm-encoding"]; ok {
+			tmp["nai_realm_encoding"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealmEncoding(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
-		if _, ok := i["nai-realm"]; ok {
-			tmp["nai_realm"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealm(i["nai-realm"], d, pre_append, sv)
+		if cur_v, ok := i["nai-realm"]; ok {
+			tmp["nai_realm"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealm(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "plan_info"
-		if _, ok := i["plan-info"]; ok {
-			tmp["plan_info"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(i["plan-info"], d, pre_append, sv)
+		if cur_v, ok := i["plan-info"]; ok {
+			tmp["plan_info"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -343,23 +343,23 @@ func flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(v inter
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
-		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoLang(i["lang"], d, pre_append, sv)
+		if cur_v, ok := i["lang"]; ok {
+			tmp["lang"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoLang(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "currency"
-		if _, ok := i["currency"]; ok {
-			tmp["currency"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoCurrency(i["currency"], d, pre_append, sv)
+		if cur_v, ok := i["currency"]; ok {
+			tmp["currency"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoCurrency(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "info_file"
-		if _, ok := i["info-file"]; ok {
-			tmp["info_file"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoInfoFile(i["info-file"], d, pre_append, sv)
+		if cur_v, ok := i["info-file"]; ok {
+			tmp["info_file"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoInfoFile(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

@@ -453,23 +453,23 @@ func flattenRouterRipngDistance(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterRipngDistanceId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterRipngDistanceId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
-		if _, ok := i["distance"]; ok {
-			tmp["distance"] = flattenRouterRipngDistanceDistance(i["distance"], d, pre_append, sv)
+		if cur_v, ok := i["distance"]; ok {
+			tmp["distance"] = flattenRouterRipngDistanceDistance(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
-		if _, ok := i["prefix6"]; ok {
-			tmp["prefix6"] = flattenRouterRipngDistancePrefix6(i["prefix6"], d, pre_append, sv)
+		if cur_v, ok := i["prefix6"]; ok {
+			tmp["prefix6"] = flattenRouterRipngDistancePrefix6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list6"
-		if _, ok := i["access-list6"]; ok {
-			tmp["access_list6"] = flattenRouterRipngDistanceAccessList6(i["access-list6"], d, pre_append, sv)
+		if cur_v, ok := i["access-list6"]; ok {
+			tmp["access_list6"] = flattenRouterRipngDistanceAccessList6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -522,28 +522,28 @@ func flattenRouterRipngDistributeList(v interface{}, d *schema.ResourceData, pre
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterRipngDistributeListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterRipngDistributeListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenRouterRipngDistributeListStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenRouterRipngDistributeListStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenRouterRipngDistributeListDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenRouterRipngDistributeListDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "listname"
-		if _, ok := i["listname"]; ok {
-			tmp["listname"] = flattenRouterRipngDistributeListListname(i["listname"], d, pre_append, sv)
+		if cur_v, ok := i["listname"]; ok {
+			tmp["listname"] = flattenRouterRipngDistributeListListname(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenRouterRipngDistributeListInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenRouterRipngDistributeListInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -600,18 +600,18 @@ func flattenRouterRipngNeighbor(v interface{}, d *schema.ResourceData, pre strin
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterRipngNeighborId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterRipngNeighborId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
-		if _, ok := i["ip6"]; ok {
-			tmp["ip6"] = flattenRouterRipngNeighborIp6(i["ip6"], d, pre_append, sv)
+		if cur_v, ok := i["ip6"]; ok {
+			tmp["ip6"] = flattenRouterRipngNeighborIp6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenRouterRipngNeighborInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenRouterRipngNeighborInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -660,13 +660,13 @@ func flattenRouterRipngNetwork(v interface{}, d *schema.ResourceData, pre string
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterRipngNetworkId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterRipngNetworkId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
-		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenRouterRipngNetworkPrefix(i["prefix"], d, pre_append, sv)
+		if cur_v, ok := i["prefix"]; ok {
+			tmp["prefix"] = flattenRouterRipngNetworkPrefix(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -711,13 +711,13 @@ func flattenRouterRipngAggregateAddress(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterRipngAggregateAddressId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterRipngAggregateAddressId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
-		if _, ok := i["prefix6"]; ok {
-			tmp["prefix6"] = flattenRouterRipngAggregateAddressPrefix6(i["prefix6"], d, pre_append, sv)
+		if cur_v, ok := i["prefix6"]; ok {
+			tmp["prefix6"] = flattenRouterRipngAggregateAddressPrefix6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -762,33 +762,33 @@ func flattenRouterRipngOffsetList(v interface{}, d *schema.ResourceData, pre str
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterRipngOffsetListId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenRouterRipngOffsetListId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenRouterRipngOffsetListStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenRouterRipngOffsetListStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
-		if _, ok := i["direction"]; ok {
-			tmp["direction"] = flattenRouterRipngOffsetListDirection(i["direction"], d, pre_append, sv)
+		if cur_v, ok := i["direction"]; ok {
+			tmp["direction"] = flattenRouterRipngOffsetListDirection(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list6"
-		if _, ok := i["access-list6"]; ok {
-			tmp["access_list6"] = flattenRouterRipngOffsetListAccessList6(i["access-list6"], d, pre_append, sv)
+		if cur_v, ok := i["access-list6"]; ok {
+			tmp["access_list6"] = flattenRouterRipngOffsetListAccessList6(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "offset"
-		if _, ok := i["offset"]; ok {
-			tmp["offset"] = flattenRouterRipngOffsetListOffset(i["offset"], d, pre_append, sv)
+		if cur_v, ok := i["offset"]; ok {
+			tmp["offset"] = flattenRouterRipngOffsetListOffset(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenRouterRipngOffsetListInterface(i["interface"], d, pre_append, sv)
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenRouterRipngOffsetListInterface(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -849,8 +849,8 @@ func flattenRouterRipngPassiveInterface(v interface{}, d *schema.ResourceData, p
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterRipngPassiveInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterRipngPassiveInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -891,23 +891,23 @@ func flattenRouterRipngRedistribute(v interface{}, d *schema.ResourceData, pre s
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterRipngRedistributeName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterRipngRedistributeName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenRouterRipngRedistributeStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenRouterRipngRedistributeStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := i["metric"]; ok {
-			tmp["metric"] = flattenRouterRipngRedistributeMetric(i["metric"], d, pre_append, sv)
+		if cur_v, ok := i["metric"]; ok {
+			tmp["metric"] = flattenRouterRipngRedistributeMetric(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := i["routemap"]; ok {
-			tmp["routemap"] = flattenRouterRipngRedistributeRoutemap(i["routemap"], d, pre_append, sv)
+		if cur_v, ok := i["routemap"]; ok {
+			tmp["routemap"] = flattenRouterRipngRedistributeRoutemap(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -972,23 +972,23 @@ func flattenRouterRipngInterface(v interface{}, d *schema.ResourceData, pre stri
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenRouterRipngInterfaceName(i["name"], d, pre_append, sv)
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenRouterRipngInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "split_horizon_status"
-		if _, ok := i["split-horizon-status"]; ok {
-			tmp["split_horizon_status"] = flattenRouterRipngInterfaceSplitHorizonStatus(i["split-horizon-status"], d, pre_append, sv)
+		if cur_v, ok := i["split-horizon-status"]; ok {
+			tmp["split_horizon_status"] = flattenRouterRipngInterfaceSplitHorizonStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "split_horizon"
-		if _, ok := i["split-horizon"]; ok {
-			tmp["split_horizon"] = flattenRouterRipngInterfaceSplitHorizon(i["split-horizon"], d, pre_append, sv)
+		if cur_v, ok := i["split-horizon"]; ok {
+			tmp["split_horizon"] = flattenRouterRipngInterfaceSplitHorizon(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
-		if _, ok := i["flags"]; ok {
-			tmp["flags"] = flattenRouterRipngInterfaceFlags(i["flags"], d, pre_append, sv)
+		if cur_v, ok := i["flags"]; ok {
+			tmp["flags"] = flattenRouterRipngInterfaceFlags(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

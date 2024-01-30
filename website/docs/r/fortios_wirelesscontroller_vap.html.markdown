@@ -32,6 +32,8 @@ The following arguments are supported:
 * `gas_comeback_delay` - GAS comeback delay (0 or 100 - 10000 milliseconds, default = 500).
 * `gas_fragmentation_limit` - GAS fragmentation limit (512 - 4096, default = 1024).
 * `mbo_cell_data_conn_pref` - MBO cell data connection preference (0, 1, or 255, default = 1). Valid values: `excluded`, `prefer-not`, `prefer-use`.
+* `n80211k` - Enable/disable 802.11k assisted roaming (default = enable). Valid values: `disable`, `enable`.
+* `n80211v` - Enable/disable 802.11v assisted roaming (default = enable). Valid values: `disable`, `enable`.
 * `voice_enterprise` - Enable/disable 802.11k and 802.11v assisted Voice-Enterprise roaming (default = disable). Valid values: `disable`, `enable`.
 * `neighbor_report_dual_band` - Enable/disable dual-band neighbor report (default = disable). Valid values: `disable`, `enable`.
 * `fast_bss_transition` - Enable/disable 802.11r Fast BSS Transition (FT) (default = disable). Valid values: `disable`, `enable`.
@@ -67,6 +69,7 @@ The following arguments are supported:
 * `passphrase` - WPA pre-shard key (PSK) to be used to authenticate WiFi users.
 * `sae_password` - WPA3 SAE password to be used to authenticate WiFi users.
 * `sae_h2e_only` - Use hash-to-element-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
+* `sae_hnp_only` - Use hunting-and-pecking-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
 * `sae_pk` - Enable/disable WPA3 SAE-PK (default = disable). Valid values: `enable`, `disable`.
 * `sae_private_key` - Private key used for WPA3 SAE-PK authentication.
 * `radius_server` - RADIUS server to be used to authenticate WiFi users.
@@ -144,6 +147,7 @@ The following arguments are supported:
 * `gtk_rekey_intv` - GTK rekey interval (1800 - 864000 sec, default = 86400).
 * `eap_reauth` - Enable/disable EAP re-authentication for WPA-Enterprise security. Valid values: `enable`, `disable`.
 * `eap_reauth_intv` - EAP re-authentication interval (1800 - 864000 sec, default = 86400).
+* `roaming_acct_interim_update` - Enable/disable using accounting interim update instead of accounting start/stop on roaming for WPA-Enterprise security. Valid values: `enable`, `disable`.
 * `qos_profile` - Quality of service profile name.
 * `hotspot20_profile` - Hotspot 2.0 profile name.
 * `access_control_list` - access-control-list profile name.

@@ -40,8 +40,8 @@ The following arguments are supported:
 * `fortisandbox_max_upload` - Maximum size of files that can be uploaded to FortiSandbox.
 * `inspection_mode` - Inspection mode. Valid values: `proxy`, `flow-based`.
 * `ftgd_analytics` - Settings to control which files are uploaded to FortiSandbox. Valid values: `disable`, `suspicious`, `everything`.
-* `analytics_max_upload` - Maximum size of files that can be uploaded to FortiSandbox (1 - 395 MBytes, default = 10).
-* `analytics_ignore_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox.
+* `analytics_max_upload` - Maximum size of files that can be uploaded to FortiSandbox.
+* `analytics_ignore_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox (post-transfer scan only).
 * `analytics_accept_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_wl_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_bl_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
@@ -73,7 +73,7 @@ The following arguments are supported:
 * `av_virus_log` - Enable/disable AntiVirus logging. Valid values: `enable`, `disable`.
 * `av_block_log` - Enable/disable logging for AntiVirus file blocking. Valid values: `enable`, `disable`.
 * `extended_log` - Enable/disable extended logging for antivirus. Valid values: `enable`, `disable`.
-* `scan_mode` - Choose between full scan mode and quick scan mode.
+* `scan_mode` - Configure scan mode (default or legacy).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

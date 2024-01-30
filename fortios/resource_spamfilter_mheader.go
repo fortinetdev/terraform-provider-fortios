@@ -262,33 +262,33 @@ func flattenSpamfilterMheaderEntries(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSpamfilterMheaderEntriesStatus(i["status"], d, pre_append, sv)
+		if cur_v, ok := i["status"]; ok {
+			tmp["status"] = flattenSpamfilterMheaderEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSpamfilterMheaderEntriesId(i["id"], d, pre_append, sv)
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSpamfilterMheaderEntriesId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldname"
-		if _, ok := i["fieldname"]; ok {
-			tmp["fieldname"] = flattenSpamfilterMheaderEntriesFieldname(i["fieldname"], d, pre_append, sv)
+		if cur_v, ok := i["fieldname"]; ok {
+			tmp["fieldname"] = flattenSpamfilterMheaderEntriesFieldname(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldbody"
-		if _, ok := i["fieldbody"]; ok {
-			tmp["fieldbody"] = flattenSpamfilterMheaderEntriesFieldbody(i["fieldbody"], d, pre_append, sv)
+		if cur_v, ok := i["fieldbody"]; ok {
+			tmp["fieldbody"] = flattenSpamfilterMheaderEntriesFieldbody(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
-		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenSpamfilterMheaderEntriesPatternType(i["pattern-type"], d, pre_append, sv)
+		if cur_v, ok := i["pattern-type"]; ok {
+			tmp["pattern_type"] = flattenSpamfilterMheaderEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSpamfilterMheaderEntriesAction(i["action"], d, pre_append, sv)
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenSpamfilterMheaderEntriesAction(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

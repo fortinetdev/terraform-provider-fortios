@@ -168,6 +168,12 @@ func resourceUserLocal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"qkd_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"username_sensitivity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -404,6 +410,10 @@ func flattenUserLocalPpkIdentity(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenUserLocalQkdProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLocalUsernameSensitivity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -551,6 +561,12 @@ func refreshObjectUserLocal(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("qkd_profile", flattenUserLocalQkdProfile(o["qkd-profile"], d, "qkd_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["qkd-profile"]) {
+			return fmt.Errorf("Error reading qkd_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("username_sensitivity", flattenUserLocalUsernameSensitivity(o["username-sensitivity"], d, "username_sensitivity", sv)); err != nil {
 		if !fortiAPIPatch(o["username-sensitivity"]) {
 			return fmt.Errorf("Error reading username_sensitivity: %v", err)
@@ -671,6 +687,10 @@ func expandUserLocalPpkSecret(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandUserLocalPpkIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLocalQkdProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -902,6 +922,15 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["ppk-identity"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("qkd_profile"); ok {
+		t, err := expandUserLocalQkdProfile(d, v, "qkd_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["qkd-profile"] = t
 		}
 	}
 

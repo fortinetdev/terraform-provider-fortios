@@ -340,8 +340,8 @@ func flattenSystemDdnsDdnsServerAddr(v interface{}, d *schema.ResourceData, pre 
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
-		if _, ok := i["addr"]; ok {
-			tmp["addr"] = flattenSystemDdnsDdnsServerAddrAddr(i["addr"], d, pre_append, sv)
+		if cur_v, ok := i["addr"]; ok {
+			tmp["addr"] = flattenSystemDdnsDdnsServerAddrAddr(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -446,8 +446,8 @@ func flattenSystemDdnsMonitorInterface(v interface{}, d *schema.ResourceData, pr
 		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
-		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemDdnsMonitorInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemDdnsMonitorInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)

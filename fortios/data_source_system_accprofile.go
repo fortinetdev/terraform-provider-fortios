@@ -264,6 +264,26 @@ func dataSourceSystemAccprofile() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"cli_diagnose": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cli_get": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cli_show": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cli_exec": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cli_config": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"system_diagnostics": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -749,6 +769,26 @@ func dataSourceFlattenSystemAccprofileAdmintimeout(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemAccprofileCliDiagnose(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileCliGet(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileCliShow(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileCliExec(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileCliConfig(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAccprofileSystemDiagnostics(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -887,6 +927,36 @@ func dataSourceRefreshObjectSystemAccprofile(d *schema.ResourceData, o map[strin
 	if err = d.Set("admintimeout", dataSourceFlattenSystemAccprofileAdmintimeout(o["admintimeout"], d, "admintimeout")); err != nil {
 		if !fortiAPIPatch(o["admintimeout"]) {
 			return fmt.Errorf("Error reading admintimeout: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_diagnose", dataSourceFlattenSystemAccprofileCliDiagnose(o["cli-diagnose"], d, "cli_diagnose")); err != nil {
+		if !fortiAPIPatch(o["cli-diagnose"]) {
+			return fmt.Errorf("Error reading cli_diagnose: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_get", dataSourceFlattenSystemAccprofileCliGet(o["cli-get"], d, "cli_get")); err != nil {
+		if !fortiAPIPatch(o["cli-get"]) {
+			return fmt.Errorf("Error reading cli_get: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_show", dataSourceFlattenSystemAccprofileCliShow(o["cli-show"], d, "cli_show")); err != nil {
+		if !fortiAPIPatch(o["cli-show"]) {
+			return fmt.Errorf("Error reading cli_show: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_exec", dataSourceFlattenSystemAccprofileCliExec(o["cli-exec"], d, "cli_exec")); err != nil {
+		if !fortiAPIPatch(o["cli-exec"]) {
+			return fmt.Errorf("Error reading cli_exec: %v", err)
+		}
+	}
+
+	if err = d.Set("cli_config", dataSourceFlattenSystemAccprofileCliConfig(o["cli-config"], d, "cli_config")); err != nil {
+		if !fortiAPIPatch(o["cli-config"]) {
+			return fmt.Errorf("Error reading cli_config: %v", err)
 		}
 	}
 

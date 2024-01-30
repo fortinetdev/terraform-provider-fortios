@@ -101,6 +101,7 @@ The following attributes are exported:
 * `memory_failover_sample_rate` - Rate at which memory usage is sampled in order to measure memory usage in seconds (1 - 60, default = 1).
 * `memory_failover_flip_timeout` - Time to wait between subsequent memory based failovers in minutes (6 - 2147483647, default = 6).
 * `failover_hold_time` - Time to wait before failover (0 - 300 sec, default = 0), to avoid flip.
+* `ipsec_phase2_proposal` - IPsec phase2 proposal.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters.
 
 The `ha_mgmt_interfaces` block contains:
@@ -126,6 +127,7 @@ The `vcluster` block contains:
 * `pingserver_monitor_interface` - Interfaces to check for remote IP monitoring.
 * `pingserver_failover_threshold` - Remote IP monitoring failover threshold (0 - 50).
 * `pingserver_secondary_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
+* `pingserver_flip_timeout` - Time to wait in minutes before renegotiating after a remote IP monitoring failover.
 * `pingserver_slave_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
 * `vdom` - Virtual domain(s) in the virtual cluster. The structure of `vdom` block is documented below.
 
