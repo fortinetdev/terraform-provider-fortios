@@ -82,7 +82,7 @@ The following arguments are supported:
 * `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings. The structure of `igmp_snooping` block is documented below.
 * `n802_1x_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1x_settings` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `route_offload_router` block supports:
@@ -170,7 +170,7 @@ The `ports` block supports:
 * `packet_sample_rate` - Packet sampling rate (0 - 99999 p/sec).
 * `sflow_sampler` - Enable/disable sFlow protocol on this interface. Valid values: `enabled`, `disabled`.
 * `sflow_sample_rate` - sFlow sampler sample rate (0 - 99999 p/sec).
-* `sflow_counter_interval` - sFlow sampler counter polling interval (1 - 255 sec).
+* `sflow_counter_interval` - sFlow sampling counter polling interval in seconds (0 - 255).
 * `sample_direction` - sFlow sample direction. Valid values: `tx`, `rx`, `both`.
 * `fec_capable` - FEC capable.
 * `fec_state` - State of forward error correction.
@@ -338,7 +338,7 @@ The `remote_log` block supports:
 The `storm_control` block supports:
 
 * `local_override` - Enable to override global FortiSwitch storm control settings for this FortiSwitch. Valid values: `enable`, `disable`.
-* `rate` - Rate in packets per second at which storm traffic is controlled (1 - 10000000, default = 500). Storm control drops excess traffic data rates beyond this threshold.
+* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.8: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
 * `unknown_unicast` - Enable/disable storm control to drop unknown unicast traffic. Valid values: `enable`, `disable`.
 * `unknown_multicast` - Enable/disable storm control to drop unknown multicast traffic. Valid values: `enable`, `disable`.
 * `broadcast` - Enable/disable storm control to drop broadcast traffic. Valid values: `enable`, `disable`.

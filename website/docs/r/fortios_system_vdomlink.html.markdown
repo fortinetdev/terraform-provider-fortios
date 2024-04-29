@@ -13,7 +13,7 @@ Configure VDOM links.
 
 The following arguments are supported:
 
-* `name` - VDOM link name (maximum = 8 characters).
+* `name` - VDOM link name. On FortiOS versions 6.2.0-6.4.0: maximum = 8 characters. On FortiOS versions >= 6.4.1: maximum = 11 characters.
 * `vcluster` - Virtual cluster. Valid values: `vcluster1`, `vcluster2`.
 * `type` - VDOM link type: PPP or Ethernet.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

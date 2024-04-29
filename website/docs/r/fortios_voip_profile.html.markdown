@@ -81,12 +81,12 @@ resource "fortios_voip_profile" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
-* `feature_set` - Flow or proxy inspection feature set.
+* `feature_set` - IPS or voipd (SIP-ALG) inspection feature set.
 * `comment` - Comment.
 * `sip` - SIP. The structure of `sip` block is documented below.
 * `sccp` - SCCP. The structure of `sccp` block is documented below.
 * `msrp` - MSRP. The structure of `msrp` block is documented below.
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `sip` block supports:
@@ -193,7 +193,7 @@ The `sip` block supports:
 * `malformed_header_sdp_t` - Action for malformed SDP t line. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_sdp_r` - Action for malformed SDP r line. Valid values: `discard`, `pass`, `respond`.
 * `malformed_header_sdp_m` - Action for malformed SDP m line. Valid values: `discard`, `pass`, `respond`.
-* `provisional_invite_expiry_time` - Expiry time for provisional INVITE (10 - 3600 sec).
+* `provisional_invite_expiry_time` - Expiry time (10-3600, in seconds) for provisional INVITE.
 * `ips_rtp` - Enable/disable allow IPS on RTP. Valid values: `disable`, `enable`.
 * `ssl_mode` - SSL/TLS mode for encryption & decryption of traffic. Valid values: `off`, `full`.
 * `ssl_send_empty_frags` - Send empty fragments to avoid attack on CBC IV (SSL 3.0 & TLS 1.0 only). Valid values: `enable`, `disable`.

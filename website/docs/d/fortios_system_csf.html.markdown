@@ -22,6 +22,9 @@ The following attributes are exported:
 * `status` - Enable/disable Security Fabric.
 * `uid` - Unique ID of the current CSF node
 * `upstream` - IP/FQDN of the FortiGate upstream from this FortiGate in the Security Fabric.
+* `source_ip` - Source IP address for communication with the upstream FortiGate.
+* `upstream_interface_select_method` - Specify how to select outgoing interface to reach server.
+* `upstream_interface` - Specify outgoing interface to reach server.
 * `upstream_ip` - IP address of the FortiGate upstream from this FortiGate in the Security Fabric.
 * `upstream_port` - The port number to use to communicate with the FortiGate upstream from this FortiGate in the Security Fabric (default = 8013).
 * `group_name` - Security Fabric group name. All FortiGates in a Security Fabric must have the same group name.

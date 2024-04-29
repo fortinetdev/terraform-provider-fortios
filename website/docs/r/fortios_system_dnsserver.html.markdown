@@ -26,7 +26,7 @@ The following arguments are supported:
 * `name` - DNS server name.
 * `mode` - DNS server mode. Valid values: `recursive`, `non-recursive`, `forward-only`.
 * `dnsfilter_profile` - DNS filter profile.
-* `doh` - DNS over HTTPS. Valid values: `enable`, `disable`.
+* `doh` - Enable/disable DNS over HTTPS/443 (default = disable). Valid values: `enable`, `disable`.
 * `doh3` - Enable/disable DNS over QUIC/HTTP3/443 (default = disable). Valid values: `enable`, `disable`.
 * `doq` - Enable/disable DNS over QUIC/853 (default = disable). Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

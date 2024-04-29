@@ -34,6 +34,7 @@ func resourceSystemSdwan() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1305,12 +1306,22 @@ func resourceSystemSdwanUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemSdwan(d, false, c.Fv)
@@ -1368,12 +1379,22 @@ func resourceSystemSdwanRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemSdwan(mkey, vdomparam)
@@ -2367,7 +2388,7 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 		if _, ok := i["member"].([]interface{}); ok {
 			pre_append = pre + "." + strconv.Itoa(con) + "." + "member_block"
 			if cur_v, ok := i["member"]; ok {
-				tmp["member_block"] = flattenSystemSdwanNeighborMember_Block(cur_v, d, pre_append, sv)
+				tmp["member_block"] = flattenSystemSdwanNeighborMemberBlock(cur_v, d, pre_append, sv)
 			}
 		}
 
@@ -2421,7 +2442,7 @@ func flattenSystemSdwanNeighborIp(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemSdwanNeighborMember_Block(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+func flattenSystemSdwanNeighborMemberBlock(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2447,7 +2468,7 @@ func flattenSystemSdwanNeighborMember_Block(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
 		if cur_v, ok := i["seq-num"]; ok {
-			tmp["seq_num"] = flattenSystemSdwanNeighborMember_BlockSeqNum(cur_v, d, pre_append, sv)
+			tmp["seq_num"] = flattenSystemSdwanNeighborMemberBlockSeqNum(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2459,7 +2480,7 @@ func flattenSystemSdwanNeighborMember_Block(v interface{}, d *schema.ResourceDat
 	return result
 }
 
-func flattenSystemSdwanNeighborMember_BlockSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemSdwanNeighborMemberBlockSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5359,7 +5380,17 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_block"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
-			tmp["member"], _ = expandSystemSdwanNeighborMember_Block(d, i["member_block"], pre_append, sv)
+			new_version_map := map[string][]string{
+				">=": []string{"7.2.0"},
+			}
+			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+				if _, ok := d.GetOk("member"); !ok && !d.HasChange("member") {
+					err := fmt.Errorf("Argument 'member_block' %s.", err)
+					return nil, err
+				}
+			} else {
+				tmp["member"], _ = expandSystemSdwanNeighborMemberBlock(d, i["member_block"], pre_append, sv)
+			}
 		} else {
 			tmp["member"] = make([]string, 0)
 		}
@@ -5371,7 +5402,17 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["member"], _ = expandSystemSdwanNeighborMember(d, i["member"], pre_append, sv)
+			new_version_map := map[string][]string{
+				"=": []string{"6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15"},
+			}
+			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+				if _, ok := d.GetOk("member_block"); !ok && !d.HasChange("member_block") {
+					err := fmt.Errorf("Argument 'member' %s.", err)
+					return nil, err
+				}
+			} else {
+				tmp["member"], _ = expandSystemSdwanNeighborMember(d, i["member"], pre_append, sv)
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
@@ -5411,7 +5452,7 @@ func expandSystemSdwanNeighborIp(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func expandSystemSdwanNeighborMember_Block(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemSdwanNeighborMemberBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -5425,7 +5466,7 @@ func expandSystemSdwanNeighborMember_Block(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		tmp["seq-num"], _ = expandSystemSdwanNeighborMember_BlockSeqNum(d, i["seq_num"], pre_append, sv)
+		tmp["seq-num"], _ = expandSystemSdwanNeighborMemberBlockSeqNum(d, i["seq_num"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -5435,7 +5476,7 @@ func expandSystemSdwanNeighborMember_Block(d *schema.ResourceData, v interface{}
 	return result, nil
 }
 
-func expandSystemSdwanNeighborMember_BlockSeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemSdwanNeighborMemberBlockSeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

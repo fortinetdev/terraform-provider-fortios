@@ -34,6 +34,7 @@ func resourceFirewallVip() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -373,10 +374,9 @@ func resourceFirewallVip() *schema.Resource {
 							Computed: true,
 						},
 						"monitor": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 79),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"client_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -481,10 +481,9 @@ func resourceFirewallVip() *schema.Resource {
 				Computed: true,
 			},
 			"ssl_certificate": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
@@ -785,12 +784,22 @@ func resourceFirewallVipCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallVip(d, c.Fv)
@@ -818,12 +827,22 @@ func resourceFirewallVipUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallVip(d, c.Fv)
@@ -876,12 +895,22 @@ func resourceFirewallVipRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadFirewallVip(mkey, vdomparam)
@@ -1397,7 +1426,7 @@ func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre st
 			new_version_map := map[string][]string{
 				">=": []string{"6.4.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -2330,7 +2359,7 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		new_version_map := map[string][]string{
 			">=": []string{"7.4.2"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -3071,7 +3100,7 @@ func expandFirewallVipRealservers(d *schema.ResourceData, v interface{}, pre str
 				new_version_map := map[string][]string{
 					">=": []string{"6.4.1"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -4037,7 +4066,7 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 			new_version_map := map[string][]string{
 				">=": []string{"7.4.2"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				vx := fmt.Sprintf("%v", t)
 				vxx := strings.Split(vx, ", ")
 

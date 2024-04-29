@@ -34,6 +34,7 @@ func resourceRouterKeyChain() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -94,12 +95,22 @@ func resourceRouterKeyChainCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterKeyChain(d, c.Fv)
@@ -127,12 +138,22 @@ func resourceRouterKeyChainUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterKeyChain(d, c.Fv)
@@ -185,12 +206,22 @@ func resourceRouterKeyChainRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadRouterKeyChain(mkey, vdomparam)
@@ -247,7 +278,7 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 			new_version_map := map[string][]string{
 				">=": []string{"6.2.4"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				if vi, ok := v.(string); ok {
 					var err error
 					vx, err = strconv.Atoi(vi)
@@ -383,7 +414,7 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string, 
 				new_version_map := map[string][]string{
 					">=": []string{"6.2.4"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}

@@ -34,6 +34,7 @@ func resourceLogGuiDisplay() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"resolve_hosts": &schema.Schema{
 				Type:     schema.TypeString,
@@ -59,12 +60,22 @@ func resourceLogGuiDisplayUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectLogGuiDisplay(d, false, c.Fv)
@@ -122,12 +133,22 @@ func resourceLogGuiDisplayRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadLogGuiDisplay(mkey, vdomparam)

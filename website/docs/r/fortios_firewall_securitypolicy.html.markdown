@@ -123,14 +123,14 @@ The following arguments are supported:
 * `casb_profile` - Name of an existing CASB profile.
 * `application` - Application ID list. The structure of `application` block is documented below.
 * `app_category` - Application category ID list. The structure of `app_category` block is documented below.
-* `url_category_unitary` - URL categories or groups.
-* `url_category` - URL category ID list. The structure of `url_category` block is documented below.
+* `url_category_unitary` - URL categories or groups. *Due to the data type change of API, for other versions of FortiOS, please check variable `url-category`.*
+* `url_category` - URL category ID list. *Due to the data type change of API, for other versions of FortiOS, please check variable `url-category_unitary`.* The structure of `url_category` block is documented below.
 * `app_group` - Application group names. The structure of `app_group` block is documented below.
 * `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `srcintf` block supports:

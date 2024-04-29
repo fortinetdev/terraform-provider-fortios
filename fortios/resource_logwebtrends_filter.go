@@ -34,6 +34,7 @@ func resourceLogWebtrendsFilter() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
@@ -164,12 +165,22 @@ func resourceLogWebtrendsFilterUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectLogWebtrendsFilter(d, false, c.Fv)
@@ -227,12 +238,22 @@ func resourceLogWebtrendsFilterRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadLogWebtrendsFilter(mkey, vdomparam)

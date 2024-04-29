@@ -46,8 +46,8 @@ The following arguments are supported:
 * `padt_retry_timeout` - PPPoE terminate timeout value in (0-4294967295 sec).
 * `service_name` - PPPoE service name.
 * `ac_name` - PPPoE AC name.
-* `lcp_echo_interval` - PPPoE LCP echo interval in (0-4294967295 sec, default = 5).
-* `lcp_max_echo_fails` - Maximum missed LCP echo messages before disconnect (0-4294967295, default = 3).
+* `lcp_echo_interval` - Time in seconds between PPPoE Link Control Protocol (LCP) echo requests.
+* `lcp_max_echo_fails` - Maximum missed LCP echo messages before disconnect.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

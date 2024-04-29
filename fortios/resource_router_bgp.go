@@ -34,6 +34,7 @@ func resourceRouterBgp() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"as_string": &schema.Schema{
 				Type:     schema.TypeString,
@@ -42,7 +43,8 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"as": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"router_id": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1251,10 +1253,9 @@ func resourceRouterBgp() *schema.Resource {
 										Computed:     true,
 									},
 									"condition_routemap": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"condition_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1276,10 +1277,9 @@ func resourceRouterBgp() *schema.Resource {
 										Computed:     true,
 									},
 									"condition_routemap": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 									"condition_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -2621,12 +2621,22 @@ func resourceRouterBgpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterBgp(d, false, c.Fv)
@@ -2684,12 +2694,22 @@ func resourceRouterBgpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadRouterBgp(mkey, vdomparam)
@@ -2710,7 +2730,7 @@ func resourceRouterBgpRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func flattenRouterBgpAs_String(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenRouterBgpAsString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3706,7 +3726,7 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				if vi, ok := v.(string); ok {
 					var err error
 					vx, err = strconv.Atoi(vi)
@@ -3730,7 +3750,7 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				if vi, ok := v.(string); ok {
 					var err error
 					vx, err = strconv.Atoi(vi)
@@ -4626,7 +4646,7 @@ func flattenRouterBgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 			new_version_map := map[string][]string{
 				">=": []string{"7.0.4"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -4713,7 +4733,7 @@ func flattenRouterBgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 			new_version_map := map[string][]string{
 				">=": []string{"7.0.4"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -5360,7 +5380,7 @@ func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre st
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				if vi, ok := v.(string); ok {
 					var err error
 					vx, err = strconv.Atoi(vi)
@@ -5384,7 +5404,7 @@ func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre st
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				if vi, ok := v.(string); ok {
 					var err error
 					vx, err = strconv.Atoi(vi)
@@ -7437,7 +7457,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}, sv
 	}
 
 	if _, ok := o["as"].(string); ok {
-		if err = d.Set("as_string", flattenRouterBgpAs_String(o["as"], d, "as_string", sv)); err != nil {
+		if err = d.Set("as_string", flattenRouterBgpAsString(o["as"], d, "as_string", sv)); err != nil {
 			if !fortiAPIPatch(o["as"]) {
 				return fmt.Errorf("Error reading as_string: %v", err)
 			}
@@ -8023,7 +8043,7 @@ func flattenRouterBgpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterBgpAs_String(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterBgpAsString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8967,7 +8987,7 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 				new_version_map := map[string][]string{
 					">=": []string{"7.2.1"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -8988,7 +9008,7 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 				new_version_map := map[string][]string{
 					">=": []string{"7.2.1"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -9869,7 +9889,7 @@ func expandRouterBgpNeighborConditionalAdvertise(d *schema.ResourceData, v inter
 				new_version_map := map[string][]string{
 					">=": []string{"7.0.4"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -9945,7 +9965,7 @@ func expandRouterBgpNeighborConditionalAdvertise6(d *schema.ResourceData, v inte
 				new_version_map := map[string][]string{
 					">=": []string{"7.0.4"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -10582,7 +10602,7 @@ func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre str
 				new_version_map := map[string][]string{
 					">=": []string{"7.2.1"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -10603,7 +10623,7 @@ func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre str
 				new_version_map := map[string][]string{
 					">=": []string{"7.2.1"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -12398,11 +12418,21 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["as"] = nil
 		} else {
-			t, err := expandRouterBgpAs_String(d, v, "as_string", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["as"] = t
+			new_version_map := map[string][]string{
+				">=": []string{"7.2.1"},
+			}
+			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+				if _, ok := d.GetOk("as"); !ok && !d.HasChange("as") {
+					err := fmt.Errorf("Argument 'as_string' %s.", err)
+					return nil, err
+				}
+			} else {
+				t, err := expandRouterBgpAsString(d, v, "as_string", sv)
+				if err != nil {
+					return &obj, err
+				} else if t != nil {
+					obj["as"] = t
+				}
 			}
 		}
 	}
@@ -12411,11 +12441,21 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		if setArgNil {
 			obj["as"] = nil
 		} else {
-			t, err := expandRouterBgpAs(d, v, "as", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["as"] = t
+			new_version_map := map[string][]string{
+				"<=": []string{"7.2.0"},
+			}
+			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+				if _, ok := d.GetOk("as_string"); !ok && !d.HasChange("as_string") {
+					err := fmt.Errorf("Argument 'as' %s.", err)
+					return nil, err
+				}
+			} else {
+				t, err := expandRouterBgpAs(d, v, "as", sv)
+				if err != nil {
+					return &obj, err
+				} else if t != nil {
+					obj["as"] = t
+				}
 			}
 		}
 	}

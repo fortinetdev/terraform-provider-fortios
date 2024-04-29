@@ -44,7 +44,7 @@ The following arguments are supported:
 * `rolling_wtp_upgrade_threshold` - Minimum signal level/threshold in dBm required for the managed WTP to be included in rolling WTP upgrade (-95 to -20, default = -80).
 * `max_retransmit` - Maximum number of tunnel packet retransmissions (0 - 64, default = 3).
 * `control_message_offload` - Configure CAPWAP control message data channel offload.
-* `data_ethernet_ii` - Configure the wireless controller to use Ethernet II or 802.3 frames with 802.3 data tunnel mode (default = disable). Valid values: `enable`, `disable`.
+* `data_ethernet_ii` - Configure the wireless controller to use Ethernet II or 802.3 frames with 802.3 data tunnel mode (default = enable). Valid values: `enable`, `disable`.
 * `link_aggregation` - Enable/disable calculating the CAPWAP transmit hash to load balance sessions to link aggregation nodes (default = disable). Valid values: `enable`, `disable`.
 * `mesh_eth_type` - Mesh Ethernet identifier included in backhaul packets (0 - 65535, default = 8755).
 * `fiapp_eth_type` - Ethernet type for Fortinet Inter-Access Point Protocol (IAPP), or IEEE 802.11f, packets (0 - 65535, default = 5252).
@@ -55,7 +55,7 @@ The following arguments are supported:
 * `wtp_share` - Enable/disable sharing of WTPs between VDOMs. Valid values: `enable`, `disable`.
 * `tunnel_mode` - Compatible/strict tunnel mode. Valid values: `compatible`, `strict`.
 * `nac_interval` - Interval in seconds between two WiFi network access control (NAC) checks (10 - 600, default = 120).
-* `ap_log_server` - Enable/disable configuring APs or FortiAPs to send log messages to a syslog server (default = disable). Valid values: `enable`, `disable`.
+* `ap_log_server` - Enable/disable configuring FortiGate to redirect wireless event log messages or FortiAPs to send UTM log messages to a syslog server (default = disable). Valid values: `enable`, `disable`.
 * `ap_log_server_ip` - IP address that APs or FortiAPs send log messages to.
 * `ap_log_server_port` - Port that APs or FortiAPs send log messages to.
 * `dfs_lab_test` - Enable/disable DFS certificate lab test mode. Valid values: `enable`, `disable`.

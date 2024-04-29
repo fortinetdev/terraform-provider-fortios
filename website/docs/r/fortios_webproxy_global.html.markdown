@@ -38,7 +38,7 @@ The following arguments are supported:
 * `fast_policy_match` - Enable/disable fast matching algorithm for explicit and transparent proxy policy. Valid values: `enable`, `disable`.
 * `ldap_user_cache` - Enable/disable LDAP user cache for explicit and transparent proxy user. Valid values: `enable`, `disable`.
 * `proxy_fqdn` - (Required) Fully Qualified Domain Name (FQDN) that clients connect to (default = default.fqdn) to connect to the explicit web proxy.
-* `max_request_length` - Maximum length of HTTP request line (2 - 64 Kbytes, default = 4).
+* `max_request_length` - Maximum length of HTTP request line (2 - 64 Kbytes). On FortiOS versions 6.2.0: default = 4. On FortiOS versions >= 6.2.4: default = 8.
 * `max_message_length` - Maximum length of HTTP message, not including body (16 - 256 Kbytes, default = 32).
 * `strict_web_check` - Enable/disable strict web checking to block web sites that send incorrect headers that don't conform to HTTP 1.1. Valid values: `enable`, `disable`.
 * `forward_proxy_auth` - Enable/disable forwarding proxy authentication headers. Valid values: `enable`, `disable`.
@@ -58,7 +58,7 @@ The following arguments are supported:
 * `log_forward_server` - Enable/disable forward server name logging in forward traffic log. Valid values: `enable`, `disable`.
 * `log_app_id` - Enable/disable always log application type in traffic log. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `learn_client_ip_srcaddr` block supports:

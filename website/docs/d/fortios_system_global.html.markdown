@@ -228,6 +228,7 @@ The following attributes are exported:
 * `ipv6_accept_dad` - Enable/disable acceptance of IPv6 Duplicate Address Detection (DAD).
 * `ipv6_allow_anycast_probe` - Enable/disable IPv6 address probe through Anycast.
 * `ipv6_allow_multicast_probe` - Enable/disable IPv6 address probe through Multicast.
+* `ipv6_allow_local_in_silent_drop` - Enable/disable silent drop of IPv6 local-in traffic.
 * `ipv6_allow_local_in_slient_drop` - Enable/disable silent drop of IPv6 local-in traffic.
 * `csr_ca_attribute` - Enable/disable the CA attribute in certificates. Some CA servers reject CSRs that have the CA attribute.
 * `wimax_4g_usb` - Enable/disable comparability with WiMAX 4G USB devices.
@@ -275,6 +276,7 @@ The following attributes are exported:
 * `ndp_max_entry` - Maximum number of NDP table entries (set to 65,536 or higher; if set to 0, kernel holds 65,536 entries).
 * `br_fdb_max_entry` - Maximum number of bridge forwarding database (FDB) entries.
 * `max_route_cache_size` - Maximum number of IP route cache entries (0 - 2147483647).
+* `ipsec_qat_offload` - Enable/disable QAT offloading (Intel QuickAssist) for IPsec VPN traffic. QuickAssist can accelerate IPsec encryption and decryption.
 * `ipsec_round_robin` - Enable/disable round-robin redistribution to multiple CPUs for IPsec VPN traffic.
 * `ipsec_asic_offload` - Enable/disable ASIC offloading (hardware acceleration) for IPsec VPN traffic. Hardware acceleration can offload IPsec VPN sessions and accelerate encryption and decryption.
 * `ipsec_soft_dec_async` - Enable/disable software decryption asynchronization (using multiple CPUs to do decryption) for IPsec VPN traffic.
@@ -311,6 +313,7 @@ The following attributes are exported:
 * `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use.
 * `internet_service_download_list` - Configure which on-demand Internet Service IDs are to be downloaded. The structure of `internet_service_download_list` block is documented below.
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session.
+* `npu_neighbor_update` - Enable/disable sending of probing packets to update neighbors for offloaded sessions.
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable).
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
 * `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service.

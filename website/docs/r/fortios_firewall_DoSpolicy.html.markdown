@@ -23,7 +23,7 @@ The following arguments are supported:
 * `service` - Service object from available options. The structure of `service` block is documented below.
 * `anomaly` - Anomaly name. The structure of `anomaly` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `srcaddr` block supports:
@@ -47,8 +47,8 @@ The `anomaly` block supports:
 * `quarantine` - Quarantine method. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine. (Format ###d##h##m, minimum 1m, maximum 364d23h59m, default = 5m). Requires quarantine set to attacker.
 * `quarantine_log` - Enable/disable quarantine logging. Valid values: `disable`, `enable`.
-* `threshold` - Anomaly threshold. Number of detected instances that triggers the anomaly action. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.14, 7.0.6-7.0.13, >= 7.2.1: packets per second or concurrent session number.
-* `thresholddefault` - Number of detected instances which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.14, 7.0.6-7.0.13, >= 7.2.1: packets per second or concurrent session number.
+* `threshold` - Anomaly threshold. Number of detected instances that triggers the anomaly action. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15, >= 7.2.1: packets per second or concurrent session number.
+* `thresholddefault` - Number of detected instances which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15, >= 7.2.1: packets per second or concurrent session number.
 
 
 ## Attribute Reference

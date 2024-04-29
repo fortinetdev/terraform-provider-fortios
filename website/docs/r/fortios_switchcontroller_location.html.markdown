@@ -17,7 +17,7 @@ The following arguments are supported:
 * `address_civic` - Configure location civic address. The structure of `address_civic` block is documented below.
 * `coordinates` - Configure location GPS coordinates. The structure of `coordinates` block is documented below.
 * `elin_number` - Configure location ELIN number. The structure of `elin_number` block is documented below.
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `address_civic` block supports:
@@ -40,7 +40,7 @@ The `address_civic` block supports:
 * `number` - House number.
 * `number_suffix` - House number suffix.
 * `place_type` - Placetype.
-* `post_office_box` - Post office box (P.O. box).
+* `post_office_box` - Post office box.
 * `postal_community` - Postal community name.
 * `primary_road` - Primary road name.
 * `road_section` - Road section.
@@ -60,10 +60,10 @@ The `address_civic` block supports:
 The `coordinates` block supports:
 
 * `altitude` - +/- Floating point no. eg. 117.47.
-* `altitude_unit` - m ( meters), f ( floors). Valid values: `m`, `f`.
+* `altitude_unit` - Configure the unit for which the altitude is to (m = meters, f = floors of a building). Valid values: `m`, `f`.
 * `datum` - WGS84, NAD83, NAD83/MLLW. Valid values: `WGS84`, `NAD83`, `NAD83/MLLW`.
-* `latitude` - Floating point start with ( +/- )  or end with ( N or S ) eg. +/-16.67 or 16.67N.
-* `longitude` - Floating point start with ( +/- )  or end with ( E or W ) eg. +/-26.789 or 26.789E.
+* `latitude` - Floating point starting with +/- or ending with (N or S). For example, +/-16.67 or 16.67N.
+* `longitude` - Floating point starting with +/- or ending with (N or S). For example, +/-26.789 or 26.789E.
 * `parent_key` - Parent key name.
 
 The `elin_number` block supports:

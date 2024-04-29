@@ -31,8 +31,8 @@ The following arguments are supported:
 * `peerip` - IP address of the interface on the peer unit that is used for the session synchronization link.
 * `syncvd` - Sessions from these VDOMs are synchronized using this session synchronization configuration. The structure of `syncvd` block is documented below.
 * `down_intfs_before_sess_sync` - List of interfaces to be turned down before session synchronization is complete. The structure of `down_intfs_before_sess_sync` block is documented below.
-* `hb_interval` - Heartbeat interval (1 - 10 sec).
-* `hb_lost_threshold` - Lost heartbeat threshold (1 - 10).
+* `hb_interval` - Heartbeat interval. Increase to reduce false positives. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 1 - 10 sec. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15: 1 - 20 (100*ms).
+* `hb_lost_threshold` - Lost heartbeat threshold. Increase to reduce false positives. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 1 - 10. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15: 1 - 60.
 * `ipsec_tunnel_sync` - Enable/disable IPsec tunnel synchronization. Valid values: `enable`, `disable`.
 * `ike_monitor` - Enable/disable IKE HA monitor. Valid values: `enable`, `disable`.
 * `ike_monitor_interval` - IKE HA monitor interval (10 - 300 secs).
@@ -41,7 +41,7 @@ The following arguments are supported:
 * `slave_add_ike_routes` - Enable/disable IKE route announcement on the backup unit. Valid values: `enable`, `disable`.
 * `session_sync_filter` - Add one or more filters if you only want to synchronize some sessions. Use the filter to configure the types of sessions to synchronize. The structure of `session_sync_filter` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `syncvd` block supports:

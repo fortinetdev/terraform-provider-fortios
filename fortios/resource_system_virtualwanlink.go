@@ -34,6 +34,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -769,10 +770,9 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							},
 						},
 						"health_check": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"link_cost_factor": &schema.Schema{
 							Type:     schema.TypeString,
@@ -909,12 +909,22 @@ func resourceSystemVirtualWanLinkUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemVirtualWanLink(d, false, c.Fv)
@@ -972,12 +982,22 @@ func resourceSystemVirtualWanLinkRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemVirtualWanLink(mkey, vdomparam)
@@ -1991,7 +2011,7 @@ func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, p
 			new_version_map := map[string][]string{
 				"=": []string{"6.4.0"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -4092,7 +4112,7 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 				new_version_map := map[string][]string{
 					"=": []string{"6.4.0"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}

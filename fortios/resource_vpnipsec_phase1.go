@@ -34,6 +34,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -847,12 +848,22 @@ func resourceVpnIpsecPhase1Create(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectVpnIpsecPhase1(d, c.Fv)
@@ -880,12 +891,22 @@ func resourceVpnIpsecPhase1Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectVpnIpsecPhase1(d, c.Fv)
@@ -938,12 +959,22 @@ func resourceVpnIpsecPhase1Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadVpnIpsecPhase1(mkey, vdomparam)
@@ -1654,7 +1685,7 @@ func flattenVpnIpsecPhase1FecBase(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenVpnIpsecPhase1FecCodec_String(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenVpnIpsecPhase1FecCodecString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2468,7 +2499,7 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 	}
 
 	if _, ok := o["fec-codec"].(string); ok {
-		if err = d.Set("fec_codec_string", flattenVpnIpsecPhase1FecCodec_String(o["fec-codec"], d, "fec_codec_string", sv)); err != nil {
+		if err = d.Set("fec_codec_string", flattenVpnIpsecPhase1FecCodecString(o["fec-codec"], d, "fec_codec_string", sv)); err != nil {
 			if !fortiAPIPatch(o["fec-codec"]) {
 				return fmt.Errorf("Error reading fec_codec_string: %v", err)
 			}
@@ -3238,7 +3269,7 @@ func expandVpnIpsecPhase1FecBase(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func expandVpnIpsecPhase1FecCodec_String(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandVpnIpsecPhase1FecCodecString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4374,20 +4405,40 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("fec_codec_string"); ok {
-		t, err := expandVpnIpsecPhase1FecCodec_String(d, v, "fec_codec_string", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fec-codec"] = t
+		new_version_map := map[string][]string{
+			">=": []string{"7.0.2"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("fec_codec"); !ok && !d.HasChange("fec_codec") {
+				err := fmt.Errorf("Argument 'fec_codec_string' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandVpnIpsecPhase1FecCodecString(d, v, "fec_codec_string", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fec-codec"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("fec_codec"); ok {
-		t, err := expandVpnIpsecPhase1FecCodec(d, v, "fec_codec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fec-codec"] = t
+		new_version_map := map[string][]string{
+			"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("fec_codec_string"); !ok && !d.HasChange("fec_codec_string") {
+				err := fmt.Errorf("Argument 'fec_codec' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandVpnIpsecPhase1FecCodec(d, v, "fec_codec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fec-codec"] = t
+			}
 		}
 	}
 

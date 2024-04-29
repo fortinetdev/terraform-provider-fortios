@@ -34,6 +34,7 @@ func resourceFtpProxyExplicit() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -71,10 +72,9 @@ func resourceFtpProxyExplicit() *schema.Resource {
 				Computed: true,
 			},
 			"ssl_cert": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
@@ -95,12 +95,22 @@ func resourceFtpProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFtpProxyExplicit(d, false, c.Fv)
@@ -158,12 +168,22 @@ func resourceFtpProxyExplicitRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadFtpProxyExplicit(mkey, vdomparam)
@@ -276,7 +296,7 @@ func refreshObjectFtpProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		new_version_map := map[string][]string{
 			">=": []string{"7.4.2"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -474,7 +494,7 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				new_version_map := map[string][]string{
 					">=": []string{"7.4.2"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					vx := fmt.Sprintf("%v", t)
 					vxx := strings.Split(vx, ", ")
 

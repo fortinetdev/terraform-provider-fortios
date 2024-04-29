@@ -59,14 +59,14 @@ The following arguments are supported:
 * `http_get` - If you are monitoring an HTML server you can send an HTTP-GET request with a custom string. Use this option to define the string.
 * `http_agent` - String in the http-agent field in the HTTP header.
 * `http_match` - String that you expect to see in the HTTP-GET requests of the traffic to be monitored.
-* `interval` - Detection interval (1 - 3600 sec, default = 5).
-* `probe_timeout` - Time to wait before a probe packet is considered lost (500 - 5000 msec, default = 500).
-* `failtime` - Number of retry attempts before the server is considered down (1 - 10, default = 5)
-* `recoverytime` - Number of successful responses received before server is considered recovered (1 - 10, default = 5).
+* `interval` - Detection interval. On FortiOS versions 6.2.0: 1 - 3600 sec, default = 5. On FortiOS versions 6.2.4-7.0.10, 7.2.0-7.2.4: 500 - 3600 * 1000 msec, default = 500. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 3600 * 1000 msec, default = 500.
+* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.2.4-7.0.10, 7.2.0-7.2.4: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 5000 msec.
+* `failtime` - Number of retry attempts before the server is considered down (default = 5). On FortiOS versions 6.2.0-7.0.5: 1 - 10. On FortiOS versions >= 7.0.6: 1 - 3600.
+* `recoverytime` - Number of successful responses received before server is considered recovered (default = 5). On FortiOS versions 6.2.0-7.0.5: 1 - 10. On FortiOS versions >= 7.0.6: 1 - 3600.
 * `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
 * `security_mode` - Twamp controller security mode. Valid values: `none`, `authentication`.
 * `password` - Twamp controller password in authentication mode
-* `packet_size` - Packet size of a twamp test session,
+* `packet_size` - Packet size of a TWAMP test session.
 * `ha_priority` - HA election priority (1 - 50).
 * `fail_weight` - Threshold weight to trigger link failure alert.
 * `update_cascade_interface` - Enable/disable update cascade interface. Valid values: `enable`, `disable`.
@@ -78,7 +78,7 @@ The following arguments are supported:
 * `service_detection` - Only use monitor to read quality values. If enabled, static routes and cascade interfaces will not be updated. Valid values: `enable`, `disable`.
 * `server_list` - Servers for link-monitor to monitor. The structure of `server_list` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `server` block supports:

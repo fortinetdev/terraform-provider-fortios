@@ -34,6 +34,7 @@ func resourceSystemAcme() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -127,12 +128,22 @@ func resourceSystemAcmeUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemAcme(d, false, c.Fv)
@@ -190,12 +201,22 @@ func resourceSystemAcmeRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemAcme(mkey, vdomparam)
@@ -311,7 +332,7 @@ func flattenSystemAcmeAccounts(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_url"
 		if cur_v, ok := i["ca_url"]; ok {
-			tmp["ca_url"] = flattenSystemAcmeAccountsCa_Url(cur_v, d, pre_append, sv)
+			tmp["ca_url"] = flattenSystemAcmeAccountsCaUrl(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
@@ -345,7 +366,7 @@ func flattenSystemAcmeAccountsUrl(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAcmeAccountsCa_Url(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemAcmeAccountsCaUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -496,7 +517,7 @@ func expandSystemAcmeAccounts(d *schema.ResourceData, v interface{}, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_url"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ca_url"], _ = expandSystemAcmeAccountsCa_Url(d, i["ca_url"], pre_append, sv)
+			tmp["ca_url"], _ = expandSystemAcmeAccountsCaUrl(d, i["ca_url"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
@@ -529,7 +550,7 @@ func expandSystemAcmeAccountsUrl(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func expandSystemAcmeAccountsCa_Url(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemAcmeAccountsCaUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -263,7 +263,7 @@ func dataSourceFlattenSystemAutomationTriggerReportType(v interface{}, d *schema
 	return v
 }
 
-func dataSourceFlattenSystemAutomationTriggerLogid_Block(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func dataSourceFlattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -284,7 +284,7 @@ func dataSourceFlattenSystemAutomationTriggerLogid_Block(v interface{}, d *schem
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = dataSourceFlattenSystemAutomationTriggerLogid_BlockId(i["id"], d, pre_append)
+			tmp["id"] = dataSourceFlattenSystemAutomationTriggerLogidBlockId(i["id"], d, pre_append)
 		}
 
 		result = append(result, tmp)
@@ -295,7 +295,7 @@ func dataSourceFlattenSystemAutomationTriggerLogid_Block(v interface{}, d *schem
 	return result
 }
 
-func dataSourceFlattenSystemAutomationTriggerLogid_BlockId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenSystemAutomationTriggerLogidBlockId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -456,7 +456,7 @@ func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o ma
 		}
 	}
 
-	if err = d.Set("logid_block", dataSourceFlattenSystemAutomationTriggerLogid_Block(o["logid"], d, "logid_block")); err != nil {
+	if err = d.Set("logid_block", dataSourceFlattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block")); err != nil {
 		if !fortiAPIPatch(o["logid"]) {
 			return fmt.Errorf("Error reading logid_block: %v", err)
 		}

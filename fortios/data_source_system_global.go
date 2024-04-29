@@ -821,6 +821,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ipv6_allow_local_in_silent_drop": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ipv6_allow_local_in_slient_drop": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1009,6 +1013,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"ipsec_qat_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ipsec_round_robin": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1158,6 +1166,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				},
 			},
 			"early_tcp_npu_session": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"npu_neighbor_update": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -2010,6 +2022,10 @@ func dataSourceFlattenSystemGlobalIpv6AllowMulticastProbe(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemGlobalIpv6AllowLocalInSilentDrop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalIpv6AllowLocalInSlientDrop(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2198,6 +2214,10 @@ func dataSourceFlattenSystemGlobalMaxRouteCacheSize(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemGlobalIpsecQatOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalIpsecRoundRobin(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2371,6 +2391,10 @@ func dataSourceFlattenSystemGlobalInternetServiceDownloadListId(v interface{}, d
 }
 
 func dataSourceFlattenSystemGlobalEarlyTcpNpuSession(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalNpuNeighborUpdate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3577,6 +3601,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("ipv6_allow_local_in_silent_drop", dataSourceFlattenSystemGlobalIpv6AllowLocalInSilentDrop(o["ipv6-allow-local-in-silent-drop"], d, "ipv6_allow_local_in_silent_drop")); err != nil {
+		if !fortiAPIPatch(o["ipv6-allow-local-in-silent-drop"]) {
+			return fmt.Errorf("Error reading ipv6_allow_local_in_silent_drop: %v", err)
+		}
+	}
+
 	if err = d.Set("ipv6_allow_local_in_slient_drop", dataSourceFlattenSystemGlobalIpv6AllowLocalInSlientDrop(o["ipv6-allow-local-in-slient-drop"], d, "ipv6_allow_local_in_slient_drop")); err != nil {
 		if !fortiAPIPatch(o["ipv6-allow-local-in-slient-drop"]) {
 			return fmt.Errorf("Error reading ipv6_allow_local_in_slient_drop: %v", err)
@@ -3859,6 +3889,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("ipsec_qat_offload", dataSourceFlattenSystemGlobalIpsecQatOffload(o["ipsec-qat-offload"], d, "ipsec_qat_offload")); err != nil {
+		if !fortiAPIPatch(o["ipsec-qat-offload"]) {
+			return fmt.Errorf("Error reading ipsec_qat_offload: %v", err)
+		}
+	}
+
 	if err = d.Set("ipsec_round_robin", dataSourceFlattenSystemGlobalIpsecRoundRobin(o["ipsec-round-robin"], d, "ipsec_round_robin")); err != nil {
 		if !fortiAPIPatch(o["ipsec-round-robin"]) {
 			return fmt.Errorf("Error reading ipsec_round_robin: %v", err)
@@ -4072,6 +4108,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("early_tcp_npu_session", dataSourceFlattenSystemGlobalEarlyTcpNpuSession(o["early-tcp-npu-session"], d, "early_tcp_npu_session")); err != nil {
 		if !fortiAPIPatch(o["early-tcp-npu-session"]) {
 			return fmt.Errorf("Error reading early_tcp_npu_session: %v", err)
+		}
+	}
+
+	if err = d.Set("npu_neighbor_update", dataSourceFlattenSystemGlobalNpuNeighborUpdate(o["npu-neighbor-update"], d, "npu_neighbor_update")); err != nil {
+		if !fortiAPIPatch(o["npu-neighbor-update"]) {
+			return fmt.Errorf("Error reading npu_neighbor_update: %v", err)
 		}
 	}
 

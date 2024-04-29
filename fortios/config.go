@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/url"
 	"os"
+	"reflect"
 	"regexp"
 	"sort"
 	"strconv"
@@ -179,17 +180,17 @@ func convintflist2str(v interface{}) interface{} {
 	return res
 }
 
-func i2ss2arrFortiAPIUpgrade(v string, new_version_map map[string][]string) bool {
+func checkVersionMatch(v string, new_version_map map[string][]string) (bool, error) {
 	v1, err := version.NewVersion(v)
 	if err != nil {
-		return false
+		return false, err
 	}
 
 	for operator, version_list := range new_version_map {
 		if operator == "=" {
 			for _, cur_version := range version_list {
 				if cur_version == v {
-					return true
+					return true, nil
 				}
 			}
 		} else if operator == ">=" {
@@ -198,7 +199,7 @@ func i2ss2arrFortiAPIUpgrade(v string, new_version_map map[string][]string) bool
 				continue
 			}
 			if v1.GreaterThanOrEqual(min_version) {
-				return true
+				return true, nil
 			}
 		} else if operator == "<=" {
 			max_version, err := version.NewVersion(version_list[0])
@@ -206,12 +207,16 @@ func i2ss2arrFortiAPIUpgrade(v string, new_version_map map[string][]string) bool
 				continue
 			}
 			if v1.LessThanOrEqual(max_version) {
-				return true
+				return true, nil
 			}
 		}
 	}
-
-	return false
+	var supported_version_list []string
+	for operator, version_list := range new_version_map {
+		supported_version_list = append(supported_version_list, operator+strings.Join(version_list, ","))
+	}
+	err = fmt.Errorf("requires FortiOS version: %s, your device version is: %s.", strings.Join(supported_version_list, ""), v)
+	return false, err
 }
 
 func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
@@ -249,4 +254,8 @@ func remove_quote(v interface{}) interface{} {
 		return t
 	}
 	return v
+}
+
+func bZero(v interface{}) bool {
+	return reflect.ValueOf(v).IsZero()
 }

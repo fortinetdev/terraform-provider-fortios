@@ -34,6 +34,7 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -84,6 +85,11 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"append_index": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"trap_free_memory_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100),
@@ -105,12 +111,22 @@ func resourceSystemSnmpSysinfoUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemSnmpSysinfo(d, false, c.Fv)
@@ -168,12 +184,22 @@ func resourceSystemSnmpSysinfoRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemSnmpSysinfo(mkey, vdomparam)
@@ -227,6 +253,10 @@ func flattenSystemSnmpSysinfoTrapLowMemoryThreshold(v interface{}, d *schema.Res
 }
 
 func flattenSystemSnmpSysinfoTrapLogFullThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpSysinfoAppendIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -295,6 +325,12 @@ func refreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("append_index", flattenSystemSnmpSysinfoAppendIndex(o["append-index"], d, "append_index", sv)); err != nil {
+		if !fortiAPIPatch(o["append-index"]) {
+			return fmt.Errorf("Error reading append_index: %v", err)
+		}
+	}
+
 	if err = d.Set("trap_free_memory_threshold", flattenSystemSnmpSysinfoTrapFreeMemoryThreshold(o["trap-free-memory-threshold"], d, "trap_free_memory_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["trap-free-memory-threshold"]) {
 			return fmt.Errorf("Error reading trap_free_memory_threshold: %v", err)
@@ -349,6 +385,10 @@ func expandSystemSnmpSysinfoTrapLowMemoryThreshold(d *schema.ResourceData, v int
 }
 
 func expandSystemSnmpSysinfoTrapLogFullThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpSysinfoAppendIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -476,6 +516,19 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 				return &obj, err
 			} else if t != nil {
 				obj["trap-log-full-threshold"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("append_index"); ok {
+		if setArgNil {
+			obj["append-index"] = nil
+		} else {
+			t, err := expandSystemSnmpSysinfoAppendIndex(d, v, "append_index", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["append-index"] = t
 			}
 		}
 	}

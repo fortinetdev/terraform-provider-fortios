@@ -64,6 +64,10 @@ func dataSourceSystemSnmpSysinfo() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"append_index": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"trap_free_memory_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -146,6 +150,10 @@ func dataSourceFlattenSystemSnmpSysinfoTrapLogFullThreshold(v interface{}, d *sc
 	return v
 }
 
+func dataSourceFlattenSystemSnmpSysinfoAppendIndex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSnmpSysinfoTrapFreeMemoryThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -208,6 +216,12 @@ func dataSourceRefreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[stri
 	if err = d.Set("trap_log_full_threshold", dataSourceFlattenSystemSnmpSysinfoTrapLogFullThreshold(o["trap-log-full-threshold"], d, "trap_log_full_threshold")); err != nil {
 		if !fortiAPIPatch(o["trap-log-full-threshold"]) {
 			return fmt.Errorf("Error reading trap_log_full_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("append_index", dataSourceFlattenSystemSnmpSysinfoAppendIndex(o["append-index"], d, "append_index")); err != nil {
+		if !fortiAPIPatch(o["append-index"]) {
+			return fmt.Errorf("Error reading append_index: %v", err)
 		}
 	}
 

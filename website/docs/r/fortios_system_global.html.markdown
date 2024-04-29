@@ -42,17 +42,17 @@ The following arguments are supported:
 * `admin_https_ssl_versions` - Allowed TLS versions for web administration.
 * `admin_https_ssl_ciphersuites` - Select one or more TLS 1.3 ciphersuites to enable. Does not affect ciphers in TLS 1.2 and below. At least one must be enabled. To disable all, remove TLS1.3 from admin-https-ssl-versions. Valid values: `TLS-AES-128-GCM-SHA256`, `TLS-AES-256-GCM-SHA384`, `TLS-CHACHA20-POLY1305-SHA256`, `TLS-AES-128-CCM-SHA256`, `TLS-AES-128-CCM-8-SHA256`.
 * `admin_https_ssl_banned_ciphers` - Select one or more cipher technologies that cannot be used in GUI HTTPS negotiations. Only applies to TLS 1.2 and below. Valid values: `RSA`, `DHE`, `ECDHE`, `DSS`, `ECDSA`, `AES`, `AESGCM`, `CAMELLIA`, `3DES`, `SHA1`, `SHA256`, `SHA384`, `STATIC`, `CHACHA20`, `ARIA`, `AESCCM`.
-* `admintimeout` - Number of minutes before an idle administrator session times out (5 - 480 minutes (8 hours), default = 5). A shorter idle timeout is more secure.
-* `admin_console_timeout` - Console login timeout that overrides the admintimeout value. (15 - 300 seconds) (15 seconds to 5 minutes). 0 the default, disables this timeout.
+* `admintimeout` - Number of minutes before an idle administrator session times out (default = 5). A shorter idle timeout is more secure. On FortiOS versions 6.2.0-6.2.6: 5 - 480 minutes (8 hours). On FortiOS versions >= 6.4.0: 1 - 480 minutes (8 hours).
+* `admin_console_timeout` - Console login timeout that overrides the admin timeout value (15 - 300 seconds, default = 0, which disables the timeout).
 * `ssd_trim_freq` - How often to run SSD Trim (default = weekly). SSD Trim prevents SSD drive data loss by finding and isolating errors. Valid values: `never`, `hourly`, `daily`, `weekly`, `monthly`.
 * `ssd_trim_hour` - Hour of the day on which to run SSD Trim (0 - 23, default = 1).
 * `ssd_trim_min` - Minute of the hour on which to run SSD Trim (0 - 59, 60 for random).
 * `ssd_trim_weekday` - Day of week to run SSD Trim. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `ssd_trim_date` - Date within a month to run ssd trim.
-* `admin_concurrent` - Enable/disable concurrent administrator logins. (Use policy-auth-concurrent for firewall authenticated users.) Valid values: `enable`, `disable`.
+* `admin_concurrent` - Enable/disable concurrent administrator logins. Use policy-auth-concurrent for firewall authenticated users. Valid values: `enable`, `disable`.
 * `admin_lockout_threshold` - Number of failed login attempts before an administrator account is locked out for the admin-lockout-duration.
 * `admin_lockout_duration` - Amount of time in seconds that an administrator account is locked out after reaching the admin-lockout-threshold for repeated failed login attempts.
-* `refresh` - Statistics refresh interval in GUI.
+* `refresh` - Statistics refresh interval second(s) in GUI.
 * `interval` - Dead gateway detection interval.
 * `failtime` - Fail-time for server lost.
 * `purdue_level` - Purdue Level of this FortiGate. Valid values: `1`, `1.5`, `2`, `2.5`, `3`, `3.5`, `4`, `5`, `5.5`.
@@ -65,7 +65,7 @@ The following arguments are supported:
 * `speedtestd_server_port` - Speedtest server port number.
 * `speedtestd_ctrl_port` - Speedtest server controller port number.
 * `admin_login_max` - Maximum number of administrators who can be logged in at the same time (1 - 100, default = 100)
-* `remoteauthtimeout` - Number of seconds that the FortiGate waits for responses from remote RADIUS, LDAP, or TACACS+ authentication servers. (0-300 sec, default = 5, 0 means no timeout).
+* `remoteauthtimeout` - Number of seconds that the FortiGate waits for responses from remote RADIUS, LDAP, or TACACS+ authentication servers. (default = 5). On FortiOS versions 6.2.0-6.2.6: 0-300 sec, 0 means no timeout. On FortiOS versions >= 6.4.0: 1-300 sec.
 * `ldapconntimeout` - Global timeout for connections with remote LDAP servers in milliseconds (1 - 300000, default 500).
 * `batch_cmdb` - Enable/disable batch mode, allowing you to enter a series of CLI commands that will execute as a group once they are loaded. Valid values: `enable`, `disable`.
 * `max_dlpstat_memory` - Maximum DLP stat memory (0 - 4294967295).
@@ -98,7 +98,7 @@ The following arguments are supported:
 * `gui_workflow_management` - Enable/disable Workflow management features on the GUI. Valid values: `enable`, `disable`.
 * `gui_cdn_usage` - Enable/disable Load GUI static files from a CDN. Valid values: `enable`, `disable`.
 * `alias` - Alias for your FortiGate unit.
-* `strong_crypto` - Enable to use strong encryption and only allow strong ciphers (AES, 3DES) and digest (SHA1) for HTTPS/SSH/TLS/SSL functions. Valid values: `enable`, `disable`.
+* `strong_crypto` - Enable to use strong encryption and only allow strong ciphers and digest for HTTPS/SSH/TLS/SSL functions. Valid values: `enable`, `disable`.
 * `ssh_cbc_cipher` - Enable/disable CBC cipher for SSH access. Valid values: `enable`, `disable`.
 * `ssh_hmac_md5` - Enable/disable HMAC-MD5 for SSH access. Valid values: `enable`, `disable`.
 * `ssh_kex_sha1` - Enable/disable SHA1 key exchange for SSH access. Valid values: `enable`, `disable`.
@@ -140,7 +140,7 @@ The following arguments are supported:
 * `strict_dirty_session_check` - Enable to check the session against the original policy when revalidating. This can prevent dropping of redirected sessions when web-filtering and authentication are enabled together. If this option is enabled, the FortiGate unit deletes a session if a routing or policy change causes the session to no longer match the policy that originally allowed the session. Valid values: `enable`, `disable`.
 * `tcp_halfclose_timer` - Number of seconds the FortiGate unit should wait to close a session after one peer has sent a FIN packet but the other has not responded (1 - 86400 sec (1 day), default = 120).
 * `tcp_halfopen_timer` - Number of seconds the FortiGate unit should wait to close a session after one peer has sent an open session packet but the other has not responded (1 - 86400 sec (1 day), default = 10).
-* `tcp_timewait_timer` - Length of the TCP TIME-WAIT state in seconds.
+* `tcp_timewait_timer` - Length of the TCP TIME-WAIT state in seconds (1 - 300 sec, default = 1).
 * `tcp_rst_timer` - Length of the TCP CLOSE state in seconds (5 - 300 sec, default = 5).
 * `udp_idle_timer` - UDP connection session timeout. This command can be useful in managing CPU and memory resources (1 - 86400 seconds (1 day), default = 60).
 * `block_session_timer` - Duration in seconds for blocked sessions (1 - 300 sec  (5 minutes), default = 30).
@@ -182,8 +182,8 @@ The following arguments are supported:
 * `admin_https_pki_required` - Enable/disable admin login method. Enable to force administrators to provide a valid certificate to log in if PKI is enabled. Disable to allow administrators to log in with a certificate or password. Valid values: `enable`, `disable`.
 * `wifi_certificate` - Certificate to use for WiFi authentication.
 * `wifi_ca_certificate` - CA certificate that verifies the WiFi certificate.
-* `auth_http_port` - User authentication HTTP port. (1 - 65535, default = 80).
-* `auth_https_port` - User authentication HTTPS port. (1 - 65535, default = 443).
+* `auth_http_port` - User authentication HTTP port. (1 - 65535). On FortiOS versions 6.2.0-6.2.6: default = 80. On FortiOS versions >= 6.4.0: default = 1000.
+* `auth_https_port` - User authentication HTTPS port. (1 - 65535). On FortiOS versions 6.2.0-6.2.6: default = 443. On FortiOS versions >= 6.4.0: default = 1003.
 * `auth_ike_saml_port` - User IKE SAML authentication port (0 - 65535, default = 1001).
 * `auth_keepalive` - Enable to prevent user authentication sessions from timing out when idle. Valid values: `enable`, `disable`.
 * `policy_auth_concurrent` - Number of concurrent firewall use logins from the same user (1 - 100, default = 0 means no limit).
@@ -195,7 +195,7 @@ The following arguments are supported:
 * `endpoint_control_fds_access` - Enable/disable access to the FortiGuard network for non-compliant endpoints. Valid values: `enable`, `disable`.
 * `tp_mc_skip_policy` - Enable/disable skip policy check and allow multicast through. Valid values: `enable`, `disable`.
 * `cfg_save` - Configuration file save mode for CLI changes. Valid values: `automatic`, `manual`, `revert`.
-* `cfg_revert_timeout` - Time-out for reverting to the last saved configuration.
+* `cfg_revert_timeout` - Time-out for reverting to the last saved configuration. (10 - 4294967295 seconds, default = 600).
 * `reboot_upon_config_restore` - Enable/disable reboot of system upon restoring configuration. Valid values: `enable`, `disable`.
 * `admin_scp` - Enable/disable using SCP to download the system configuration. You can use SCP as an alternative method for backing up the configuration. Valid values: `enable`, `disable`.
 * `security_rating_result_submission` - Enable/disable the submission of Security Rating results to FortiGuard. Valid values: `enable`, `disable`.
@@ -222,6 +222,7 @@ The following arguments are supported:
 * `ipv6_accept_dad` - Enable/disable acceptance of IPv6 Duplicate Address Detection (DAD).
 * `ipv6_allow_anycast_probe` - Enable/disable IPv6 address probe through Anycast. Valid values: `enable`, `disable`.
 * `ipv6_allow_multicast_probe` - Enable/disable IPv6 address probe through Multicast. Valid values: `enable`, `disable`.
+* `ipv6_allow_local_in_silent_drop` - Enable/disable silent drop of IPv6 local-in traffic. Valid values: `enable`, `disable`.
 * `ipv6_allow_local_in_slient_drop` - Enable/disable silent drop of IPv6 local-in traffic. Valid values: `enable`, `disable`.
 * `csr_ca_attribute` - Enable/disable the CA attribute in certificates. Some CA servers reject CSRs that have the CA attribute. Valid values: `enable`, `disable`.
 * `wimax_4g_usb` - Enable/disable comparability with WiMAX 4G USB devices. Valid values: `enable`, `disable`.
@@ -248,7 +249,7 @@ The following arguments are supported:
 * `wad_source_affinity` - Enable/disable dispatching traffic to WAD workers based on source affinity. Valid values: `disable`, `enable`.
 * `wad_memory_change_granularity` - Minimum percentage change in system memory usage detected by the wad daemon prior to adjusting TCP window size for any active connection.
 * `login_timestamp` - Enable/disable login time recording. Valid values: `enable`, `disable`.
-* `miglogd_children` - Number of logging (miglogd) processes to be allowed to run. Higher number can reduce performance; lower number can slow log processing time. No logs will be dropped or lost if the number is changed.
+* `miglogd_children` - Number of logging (miglogd) processes to be allowed to run. Higher number can reduce performance; lower number can slow log processing time.
 * `special_file_23_support` - Enable/disable IPS detection of HIBUN format files when using Data Leak Protection. Valid values: `disable`, `enable`.
 * `log_uuid_policy` - Enable/disable insertion of policy UUIDs to traffic logs. Valid values: `enable`, `disable`.
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs. Valid values: `enable`, `disable`.
@@ -263,12 +264,13 @@ The following arguments are supported:
 * `av_affinity` - Affinity setting for AV scanning (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `wad_affinity` - Affinity setting for wad (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `ips_affinity` - Affinity setting for IPS (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx; allowed CPUs must be less than total number of IPS engine daemons).
-* `miglog_affinity` - Affinity setting for logging (64-bit hexadecimal value in the format of xxxxxxxxxxxxxxxx).
+* `miglog_affinity` - Affinity setting for logging. On FortiOS versions 6.2.0-7.2.3: 64-bit hexadecimal value in the format of xxxxxxxxxxxxxxxx. On FortiOS versions >= 7.2.4: hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx.
 * `syslog_affinity` - Affinity setting for syslog (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `url_filter_affinity` - URL filter CPU affinity.
 * `ndp_max_entry` - Maximum number of NDP table entries (set to 65,536 or higher; if set to 0, kernel holds 65,536 entries).
 * `br_fdb_max_entry` - Maximum number of bridge forwarding database (FDB) entries.
 * `max_route_cache_size` - Maximum number of IP route cache entries (0 - 2147483647).
+* `ipsec_qat_offload` - Enable/disable QAT offloading (Intel QuickAssist) for IPsec VPN traffic. QuickAssist can accelerate IPsec encryption and decryption. Valid values: `enable`, `disable`.
 * `ipsec_round_robin` - Enable/disable round-robin redistribution to multiple CPUs for IPsec VPN traffic. Valid values: `enable`, `disable`.
 * `ipsec_asic_offload` - Enable/disable ASIC offloading (hardware acceleration) for IPsec VPN traffic. Hardware acceleration can offload IPsec VPN sessions and accelerate encryption and decryption. Valid values: `enable`, `disable`.
 * `ipsec_soft_dec_async` - Enable/disable software decryption asynchronization (using multiple CPUs to do decryption) for IPsec VPN traffic. Valid values: `enable`, `disable`.
@@ -305,11 +307,12 @@ The following arguments are supported:
 * `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use.
 * `internet_service_download_list` - Configure which on-demand Internet Service IDs are to be downloaded. The structure of `internet_service_download_list` block is documented below.
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session. Valid values: `enable`, `disable`.
+* `npu_neighbor_update` - Enable/disable sending of probing packets to update neighbors for offloaded sessions. Valid values: `enable`, `disable`.
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable). Valid values: `disable`, `enable`.
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
 * `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `internet_service_download_list` block supports:

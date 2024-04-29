@@ -36,7 +36,7 @@ The following arguments are supported:
 * `neighbor` - Create SD-WAN neighbor from BGP neighbor table to control route advertisements according to SLA status. The structure of `neighbor` block is documented below.
 * `service` - Create SD-WAN rules or priority rules (also called services) to control how sessions are distributed to physical interfaces in the SD-WAN. The structure of `service` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `fail_alert_interfaces` block supports:
@@ -56,11 +56,11 @@ The `members` block supports:
 * `gateway6` - IPv6 gateway.
 * `source6` - Source IPv6 address used in the health-check packet to the server.
 * `cost` - Cost of this interface for services in SLA mode (0 - 4294967295, default = 0).
-* `weight` - Weight of this interface for weighted load balancing. (0 - 255) More traffic is directed to interfaces with higher weights.
+* `weight` - Weight of this interface for weighted load balancing. More traffic is directed to interfaces with higher weights. On FortiOS versions 6.2.0: 0 - 255. On FortiOS versions 6.2.4-6.4.0: 1 - 255.
 * `priority` - Priority of the interface (0 - 4294967295). Used for SD-WAN rules or priority rules.
 * `spillover_threshold` - Egress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
 * `ingress_spillover_threshold` - Ingress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
-* `volume_ratio` - Measured volume ratio (this value / sum of all values = percentage of link volume, 0 - 255).
+* `volume_ratio` - Measured volume ratio (this value / sum of all values = percentage of link volume). On FortiOS versions 6.2.0: 0 - 255. On FortiOS versions 6.2.4-6.4.0: 1 - 255.
 * `status` - Enable/disable this interface in the SD-WAN. Valid values: `disable`, `enable`.
 * `comment` - Comments.
 
@@ -81,7 +81,7 @@ The `health_check` block supports:
 * `http_agent` - String in the http-agent field in the HTTP header.
 * `http_match` - Response string expected from the server if the protocol is HTTP.
 * `dns_request_domain` - Fully qualified domain name to resolve for the DNS probe.
-* `interval` - Status check interval, or the time between attempting to connect to the server (1 - 3600 sec, default = 5).
+* `interval` - Status check interval, or the time between attempting to connect to the server. On FortiOS versions 6.2.0: 1 - 3600 sec, default = 5. On FortiOS versions 6.2.4-6.4.0: 500 - 3600*1000 msec, default = 500.
 * `probe_timeout` - Time to wait before a probe packet is considered lost (500 - 5000 msec, default = 500).
 * `failtime` - Number of failures before server is considered lost (1 - 3600, default = 5).
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 3600, default = 5).

@@ -29,10 +29,10 @@ The following arguments are supported:
 
 * `name` - Monitor name.
 * `type` - (Required) Select the Monitor type used by the health check monitor to check the health of the server. On FortiOS versions 6.2.0: PING | TCP | HTTP. On FortiOS versions 6.2.4-7.0.0: PING | TCP | HTTP | HTTPS. On FortiOS versions >= 7.0.1: PING | TCP | HTTP | HTTPS | DNS.
-* `interval` - Time between health checks (default = 10). On FortiOS versions 6.2.0-7.0.13: 5 - 65635 sec. On FortiOS versions >= 7.2.0: 5 - 65535 sec.
+* `interval` - Time between health checks (default = 10). On FortiOS versions 6.2.0-7.0.15: 5 - 65635 sec. On FortiOS versions >= 7.2.0: 5 - 65535 sec.
 * `timeout` - Time to wait to receive response to a health check from a server. Reaching the timeout means the health check failed (1 - 255 sec, default = 2).
 * `retry` - Number health check attempts before the server is considered down (1 - 255, default = 3).
-* `port` - Service port used to perform the health check. If 0, health check monitor inherits port configured for the server (default = 0). On FortiOS versions 6.2.0-7.0.13: 0 - 65635. On FortiOS versions >= 7.2.0: 0 - 65535.
+* `port` - Service port used to perform the health check. If 0, health check monitor inherits port configured for the server (default = 0). On FortiOS versions 6.2.0-7.0.15: 0 - 65635. On FortiOS versions >= 7.2.0: 0 - 65535.
 * `src_ip` - Source IP for ldb-monitor.
 * `http_get` - URL used to send a GET request to check the health of an HTTP server.
 * `http_match` - String to match the value expected in response to an HTTP-GET request.

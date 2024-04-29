@@ -1,6 +1,23 @@
 ## 1.20.0 (Unreleased)
 
 
+## 1.19.1 (Apr 29, 2024)
+BUG FIXES:
+
+* Fix issue of merged argument element contains comma;
+* Fix length limitation issue of merged argument;
+* Fix issue of vdomparam cause force replacement even using the same vdom value;
+* Fix data type error of API return empty string for integer data type;
+
+IMPROVEMENTS:
+
+* Support FortiOS version 6.4.15, 7.0.14, 7.0.15, 7.2.7, 7.2.8, 7.4.3;
+* Update version check functionality;
+
+FEATURES:
+
+* **New Data source:** `fortios_system_license_fortiflex`
+
 ## 1.19.0 (Jan 29, 2024)
 BUG FIXES:
 

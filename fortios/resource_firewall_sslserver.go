@@ -34,6 +34,7 @@ func resourceFirewallSslServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,9 +68,8 @@ func resourceFirewallSslServer() *schema.Resource {
 				Computed:     true,
 			},
 			"ssl_cert": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Type:     schema.TypeString,
+				Required: true,
 			},
 			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
@@ -114,12 +114,22 @@ func resourceFirewallSslServerCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallSslServer(d, c.Fv)
@@ -147,12 +157,22 @@ func resourceFirewallSslServerUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallSslServer(d, c.Fv)
@@ -205,12 +225,22 @@ func resourceFirewallSslServerRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadFirewallSslServer(mkey, vdomparam)
@@ -333,7 +363,7 @@ func refreshObjectFirewallSslServer(d *schema.ResourceData, o map[string]interfa
 		new_version_map := map[string][]string{
 			">=": []string{"7.4.2"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -537,7 +567,7 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 			new_version_map := map[string][]string{
 				">=": []string{"7.4.2"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				vx := fmt.Sprintf("%v", t)
 				vxx := strings.Split(vx, ", ")
 

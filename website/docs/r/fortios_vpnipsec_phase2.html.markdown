@@ -148,7 +148,7 @@ The following arguments are supported:
 * `add_route` - Enable/disable automatic route addition. Valid values: `phase1`, `enable`, `disable`.
 * `inbound_dscp_copy` - Enable/disable copying of the DSCP field in the ESP header to the inner IP header. Valid values: `phase1`, `enable`, `disable`.
 * `keylifeseconds` - Phase2 key life in time in seconds (120 - 172800).
-* `keylifekbs` - Phase2 key life in number of bytes of traffic (5120 - 4294967295).
+* `keylifekbs` - Phase2 key life in number of kilobytes of traffic (5120 - 4294967295).
 * `keylife_type` - Keylife type. Valid values: `seconds`, `kbs`, `both`.
 * `single_source` - Enable/disable single source IP restriction. Valid values: `enable`, `disable`.
 * `route_overlap` - Action for overlapping routes. Valid values: `use-old`, `use-new`, `allow`.

@@ -34,7 +34,7 @@ The following arguments are supported:
 * `last_updated` - Time at which certificate was last updated.
 * `enroll_protocol` - Certificate enrollment protocol.
 * `private_key_retain` - Enable/disable retention of private key during SCEP renewal (default = disable). Valid values: `enable`, `disable`.
-* `cmp_server` - 'ADDRESS:PORT' for CMP server.
+* `cmp_server` - Address and port for CMP server (format = address:port).
 * `cmp_path` - Path location inside CMP server.
 * `cmp_server_cert` - CMP server certificate.
 * `cmp_regeneration_method` - CMP auto-regeneration method. Valid values: `keyupate`, `renewal`.

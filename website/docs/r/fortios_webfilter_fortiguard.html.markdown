@@ -34,7 +34,7 @@ The following arguments are supported:
 * `cache_mode` - Cache entry expiration mode. Valid values: `ttl`, `db-ver`.
 * `cache_prefix_match` - Enable/disable prefix matching in the cache. Valid values: `enable`, `disable`.
 * `cache_mem_permille` - Maximum permille of available memory allocated to caching (1 - 150).
-* `cache_mem_percent` - Maximum percentage of available memory allocated to caching (1 - 15%).
+* `cache_mem_percent` - Maximum percentage of available memory allocated to caching (1 - 15).
 * `ovrd_auth_port_http` - Port to use for FortiGuard Web Filter HTTP override authentication
 * `ovrd_auth_port_https` - Port to use for FortiGuard Web Filter HTTPS override authentication in proxy mode.
 * `ovrd_auth_port_https_flow` - Port to use for FortiGuard Web Filter HTTPS override authentication in flow mode.

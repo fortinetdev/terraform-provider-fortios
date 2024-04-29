@@ -29,7 +29,7 @@ The following arguments are supported:
 * `anqp_domain_id` - ANQP Domain ID (0-65535).
 * `domain_name` - Domain name.
 * `osu_ssid` - Online sign up (OSU) SSID.
-* `gas_comeback_delay` - GAS comeback delay (0 or 100 - 4000 milliseconds, default = 500).
+* `gas_comeback_delay` - GAS comeback delay (default = 500). On FortiOS versions 6.2.0-7.0.0: 0 or 100 - 4000 milliseconds. On FortiOS versions >= 7.0.1: 0 or 100 - 10000 milliseconds.
 * `gas_fragmentation_limit` - GAS fragmentation limit (512 - 4096, default = 1024).
 * `dgaf` - Enable/disable downstream group-addressed forwarding (DGAF). Valid values: `enable`, `disable`.
 * `deauth_request_timeout` - Deauthentication request timeout (in seconds).
@@ -52,7 +52,7 @@ The following arguments are supported:
 * `qos_map` - QoS MAP set ID.
 * `ip_addr_type` - IP address type name.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `osu_provider` block supports:

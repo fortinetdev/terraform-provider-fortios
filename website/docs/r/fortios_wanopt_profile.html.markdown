@@ -87,7 +87,7 @@ The following arguments are supported:
 * `mapi` - Enable/disable MAPI email WAN Optimization and configure MAPI WAN Optimization features. The structure of `mapi` block is documented below.
 * `ftp` - Enable/disable FTP WAN Optimization and configure FTP WAN Optimization features. The structure of `ftp` block is documented below.
 * `tcp` - Enable/disable TCP WAN Optimization and configure TCP WAN Optimization features. The structure of `tcp` block is documented below.
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `http` block supports:
@@ -100,7 +100,7 @@ The `http` block supports:
 * `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
 * `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for HTTP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
-* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for HTTPS traffic in this tunnel. Valid values: `enable`, `disable`.
+* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for traffic in this tunnel. Valid values: `enable`, `disable`.
 * `ssl_port` - Port on which to expect HTTPS traffic for SSL/TLS offloading.
 * `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1. Valid values: `reject`, `tunnel`, `best-effort`.
 * `tunnel_non_http` - Configure how to process non-HTTP traffic when a profile configured for HTTP traffic accepts a non-HTTP session. Can occur if an application sends non-HTTP traffic using an HTTP destination port. Valid values: `enable`, `disable`.
@@ -146,7 +146,7 @@ The `tcp` block supports:
 * `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
 * `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for TCP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
-* `ssl` - Enable/disable SSL/TLS offloading. Valid values: `enable`, `disable`.
+* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for traffic in this tunnel. Valid values: `enable`, `disable`.
 * `ssl_port` - Port on which to expect HTTPS traffic for SSL/TLS offloading.
 
 

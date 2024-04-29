@@ -35,9 +35,9 @@ The following arguments are supported:
 * `override_wan_port_mode` - Enable/disable overriding the wan-port-mode in the WTP profile. Valid values: `enable`, `disable`.
 * `wan_port_mode` - Enable/disable using the FortiAP WAN port as a LAN port. Valid values: `wan-lan`, `wan-only`.
 * `override_ip_fragment` - Enable/disable overriding the WTP profile IP fragment prevention setting. Valid values: `enable`, `disable`.
-* `ip_fragment_preventing` - Method by which IP fragmentation is prevented for CAPWAP tunneled control and data packets (default = tcp-mss-adjust). Valid values: `tcp-mss-adjust`, `icmp-unreachable`.
-* `tun_mtu_uplink` - Uplink tunnel maximum transmission unit (MTU) in octets (eight-bit bytes). Set the value to either 0 (by default), 576, or 1500.
-* `tun_mtu_downlink` - Downlink tunnel MTU in octets. Set the value to either 0 (by default), 576, or 1500.
+* `ip_fragment_preventing` - Method(s) by which IP fragmentation is prevented for control and data packets through CAPWAP tunnel (default = tcp-mss-adjust). Valid values: `tcp-mss-adjust`, `icmp-unreachable`.
+* `tun_mtu_uplink` - The maximum transmission unit (MTU) of uplink CAPWAP tunnel (576 - 1500 bytes or 0; 0 means the local MTU of FortiAP; default = 0).
+* `tun_mtu_downlink` - The MTU of downlink CAPWAP tunnel (576 - 1500 bytes or 0; 0 means the local MTU of FortiAP; default = 0).
 * `override_split_tunnel` - Enable/disable overriding the WTP profile split tunneling setting. Valid values: `enable`, `disable`.
 * `split_tunneling_acl_path` - Split tunneling ACL path is local/tunnel. Valid values: `tunnel`, `local`.
 * `split_tunneling_acl_local_ap_subnet` - Enable/disable automatically adding local subnetwork of FortiAP to split-tunneling ACL (default = disable). Valid values: `enable`, `disable`.
@@ -59,7 +59,7 @@ The following arguments are supported:
 * `coordinate_latitude` - WTP latitude coordinate.
 * `coordinate_longitude` - WTP longitude coordinate.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `split_tunneling_acl` block supports:
@@ -99,14 +99,14 @@ The `radio_1` block supports:
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `override_txpower` - Enable to override the WTP profile power level configuration. Valid values: `enable`, `disable`.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
-* `auto_power_high` - Automatic transmission power high limit in decibels (dB) of the measured power referenced to one milliwatt (mW), or dBm (10 - 17 dBm, default = 17).
-* `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
@@ -129,14 +129,14 @@ The `radio_2` block supports:
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `override_txpower` - Enable to override the WTP profile power level configuration. Valid values: `enable`, `disable`.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
-* `auto_power_high` - Automatic transmission power high limit in decibels (dB) of the measured power referenced to one milliwatt (mW), or dBm (10 - 17 dBm, default = 17).
-* `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
@@ -160,12 +160,12 @@ The `radio_3` block supports:
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
@@ -189,12 +189,12 @@ The `radio_4` block supports:
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.

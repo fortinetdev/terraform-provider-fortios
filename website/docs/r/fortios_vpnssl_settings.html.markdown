@@ -98,12 +98,12 @@ The following arguments are supported:
 * `client_sigalgs` - Set signature algorithms related to client authentication. Affects TLS version <= 1.2 only. Valid values: `no-rsa-pss`, `all`.
 * `dual_stack_mode` - Tunnel mode: enable parallel IPv4 and IPv6 tunnel. Web mode: support IPv4 and IPv6 bookmarks in the portal. Valid values: `enable`, `disable`.
 * `tunnel_addr_assigned_method` - Method used for assigning address for tunnel. Valid values: `first-available`, `round-robin`.
-* `saml_redirect_port` - SAML local redirect port in the machine running FCT (0 - 65535). 0 is to disable redirection on FGT side.
+* `saml_redirect_port` - SAML local redirect port in the machine running FortiClient (0 - 65535). 0 is to disable redirection on FGT side.
 * `web_mode_snat` - Enable/disable use of IP pools defined in firewall policy while using web-mode. Valid values: `enable`, `disable`.
 * `ztna_trusted_client` - Enable/disable verification of device certificate for SSLVPN ZTNA session. Valid values: `enable`, `disable`.
 * `server_hostname` - Server hostname for HTTPS. When set, will be used for SSL VPN web proxy host header for any redirection.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `tunnel_ip_pools` block supports:

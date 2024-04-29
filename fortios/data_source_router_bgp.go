@@ -2004,7 +2004,7 @@ func dataSourceRouterBgpRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func dataSourceFlattenRouterBgpAs_String(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterBgpAsString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -6418,7 +6418,7 @@ func dataSourceFlattenRouterBgpVrfLeak6TargetInterface(v interface{}, d *schema.
 func dataSourceRefreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
-	if err = d.Set("as_string", dataSourceFlattenRouterBgpAs_String(o["as"], d, "as_string")); err != nil {
+	if err = d.Set("as_string", dataSourceFlattenRouterBgpAsString(o["as"], d, "as_string")); err != nil {
 		if !fortiAPIPatch(o["as"]) {
 			return fmt.Errorf("Error reading as_string: %v", err)
 		}

@@ -39,7 +39,7 @@ The following arguments are supported:
 * `key_id` - Key ID for authentication.
 * `interface` - FortiGate interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services. The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `ntpserver` block supports:
@@ -47,8 +47,8 @@ The `ntpserver` block supports:
 * `id` - NTP server ID.
 * `server` - IP address or hostname of the NTP Server.
 * `ntpv3` - Enable to use NTPv3 instead of NTPv4. Valid values: `enable`, `disable`.
-* `authentication` - Enable/disable MD5/SHA1 authentication. Valid values: `enable`, `disable`.
-* `key` - Key for MD5/SHA1 authentication.
+* `authentication` - Enable/disable MD5(NTPv3)/SHA1(NTPv4) authentication. Valid values: `enable`, `disable`.
+* `key` - Key for MD5(NTPv3)/SHA1(NTPv4) authentication.
 * `key_id` - Key ID for authentication.
 * `ip_type` - Choose to connect to IPv4 or/and IPv6 NTP server. Valid values: `IPv6`, `IPv4`, `Both`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

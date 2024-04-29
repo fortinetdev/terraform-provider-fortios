@@ -34,6 +34,7 @@ func resourceFirewallLocalInPolicy6() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -46,10 +47,25 @@ func resourceFirewallLocalInPolicy6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"intf_block": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"intf": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"srcaddr": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -151,12 +167,22 @@ func resourceFirewallLocalInPolicy6Create(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallLocalInPolicy6(d, c.Fv)
@@ -184,12 +210,22 @@ func resourceFirewallLocalInPolicy6Update(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallLocalInPolicy6(d, c.Fv)
@@ -242,12 +278,22 @@ func resourceFirewallLocalInPolicy6Read(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadFirewallLocalInPolicy6(mkey, vdomparam)
@@ -273,6 +319,48 @@ func flattenFirewallLocalInPolicy6Policyid(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallLocalInPolicy6Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallLocalInPolicy6IntfBlock(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallLocalInPolicy6IntfBlockName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallLocalInPolicy6IntfBlockName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -459,41 +547,28 @@ func refreshObjectFirewallLocalInPolicy6(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	{
-		v := flattenFirewallLocalInPolicy6Intf(o["intf"], d, "intf", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.4.2"},
-		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("intf", vx); err != nil {
+	if _, ok := o["intf"].([]interface{}); ok {
+		if b_get_all_tables {
+			if err = d.Set("intf_block", flattenFirewallLocalInPolicy6IntfBlock(o["intf"], d, "intf_block", sv)); err != nil {
 				if !fortiAPIPatch(o["intf"]) {
-					return fmt.Errorf("Error reading intf: %v", err)
+					return fmt.Errorf("Error reading intf_block: %v", err)
 				}
 			}
 		} else {
-			if err = d.Set("intf", v); err != nil {
-				if !fortiAPIPatch(o["intf"]) {
-					return fmt.Errorf("Error reading intf: %v", err)
+			if _, ok := d.GetOk("intf_block"); ok {
+				if err = d.Set("intf_block", flattenFirewallLocalInPolicy6IntfBlock(o["intf"], d, "intf_block", sv)); err != nil {
+					if !fortiAPIPatch(o["intf"]) {
+						return fmt.Errorf("Error reading intf_block: %v", err)
+					}
 				}
+			}
+		}
+	}
+
+	if _, ok := o["intf"].(string); ok {
+		if err = d.Set("intf", flattenFirewallLocalInPolicy6Intf(o["intf"], d, "intf", sv)); err != nil {
+			if !fortiAPIPatch(o["intf"]) {
+				return fmt.Errorf("Error reading intf: %v", err)
 			}
 		}
 	}
@@ -608,6 +683,34 @@ func expandFirewallLocalInPolicy6Policyid(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallLocalInPolicy6Uuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallLocalInPolicy6IntfBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallLocalInPolicy6IntfBlockName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallLocalInPolicy6IntfBlockName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -752,28 +855,39 @@ func getObjectFirewallLocalInPolicy6(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("intf"); ok {
-		t, err := expandFirewallLocalInPolicy6Intf(d, v, "intf", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.4.2"},
+	if v, ok := d.GetOk("intf_block"); ok || d.HasChange("intf_block") {
+		new_version_map := map[string][]string{
+			">=": []string{"7.4.2"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("intf"); !ok && !d.HasChange("intf") {
+				err := fmt.Errorf("Argument 'intf_block' %s.", err)
+				return nil, err
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
+		} else {
+			t, err := expandFirewallLocalInPolicy6IntfBlock(d, v, "intf_block", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["intf"] = t
+			}
+		}
+	}
 
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["intf"] = tmps
-			} else {
+	if v, ok := d.GetOk("intf"); ok {
+		new_version_map := map[string][]string{
+			"<=": []string{"7.4.1"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("intf_block"); !ok && !d.HasChange("intf_block") {
+				err := fmt.Errorf("Argument 'intf' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandFirewallLocalInPolicy6Intf(d, v, "intf", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
 				obj["intf"] = t
 			}
 		}

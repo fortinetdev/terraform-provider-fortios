@@ -34,6 +34,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -520,10 +521,9 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed: true,
 			},
 			"schedule": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ldpc": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1163,12 +1163,22 @@ func resourceWirelessControllerVapCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectWirelessControllerVap(d, c.Fv)
@@ -1196,12 +1206,22 @@ func resourceWirelessControllerVapUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectWirelessControllerVap(d, c.Fv)
@@ -1254,12 +1274,22 @@ func resourceWirelessControllerVapRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadWirelessControllerVap(mkey, vdomparam)
@@ -2939,7 +2969,7 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		new_version_map := map[string][]string{
 			">=": []string{"6.2.4"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -5363,7 +5393,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			new_version_map := map[string][]string{
 				">=": []string{"6.2.4"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				vx := fmt.Sprintf("%v", t)
 				vxx := strings.Split(vx, ", ")
 

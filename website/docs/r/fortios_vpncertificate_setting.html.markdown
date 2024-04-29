@@ -49,15 +49,15 @@ The following arguments are supported:
 * `interface` - Specify outgoing interface to reach server.
 * `check_ca_cert` - Enable/disable verification of the user certificate and pass authentication if any CA in the chain is trusted (default = enable). Valid values: `enable`, `disable`.
 * `check_ca_chain` - Enable/disable verification of the entire certificate chain and pass authentication only if the chain is complete and all of the CAs in the chain are trusted (default = disable). Valid values: `enable`, `disable`.
-* `subject_match` - When searching for a matching certificate, control how to find matches in the certificate subject name. Valid values: `substring`, `value`.
+* `subject_match` - When searching for a matching certificate, control how to do RDN value matching with certificate subject name (default = substring). Valid values: `substring`, `value`.
 * `subject_set` - When searching for a matching certificate, control how to do RDN set matching with certificate subject name (default = subset). Valid values: `subset`, `superset`.
-* `cn_match` - When searching for a matching certificate, control how to find matches in the cn attribute of the certificate subject name. Valid values: `substring`, `value`.
-* `cn_allow_multi` - When searching for a matching certificate, allow mutliple CN fields in certificate subject name (default = enable). Valid values: `disable`, `enable`.
+* `cn_match` - When searching for a matching certificate, control how to do CN value matching with certificate subject name (default = substring). Valid values: `substring`, `value`.
+* `cn_allow_multi` - When searching for a matching certificate, allow multiple CN fields in certificate subject name (default = enable). Valid values: `disable`, `enable`.
 * `crl_verification` - CRL verification options. The structure of `crl_verification` block is documented below.
 * `strict_crl_check` - Enable/disable strict mode CRL checking. Valid values: `enable`, `disable`.
 * `strict_ocsp_check` - Enable/disable strict mode OCSP checking. Valid values: `enable`, `disable`.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
-* `cmp_save_extra_certs` - Enable/disable saving extra certificates in CMP mode. Valid values: `enable`, `disable`.
+* `cmp_save_extra_certs` - Enable/disable saving extra certificates in CMP mode (default = disable). Valid values: `enable`, `disable`.
 * `cmp_key_usage_checking` - Enable/disable server certificate key usage checking in CMP mode (default = enable). Valid values: `enable`, `disable`.
 * `cert_expire_warning` - Number of days before a certificate expires to send a warning. Set to 0 to disable sending of the warning (0 - 100, default = 14).
 * `certname_rsa1024` - (Required) 1024 bit RSA key certificate for re-signing server certificates for SSL inspection.
@@ -70,7 +70,7 @@ The following arguments are supported:
 * `certname_ecdsa521` - 521 bit ECDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ed25519` - 253 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ed448` - 456 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `crl_verification` block supports:

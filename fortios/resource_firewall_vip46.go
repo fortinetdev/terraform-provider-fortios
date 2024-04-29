@@ -34,6 +34,7 @@ func resourceFirewallVip46() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -188,10 +189,9 @@ func resourceFirewallVip46() *schema.Resource {
 							Computed: true,
 						},
 						"monitor": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 79),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"client_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -233,12 +233,22 @@ func resourceFirewallVip46Create(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallVip46(d, c.Fv)
@@ -266,12 +276,22 @@ func resourceFirewallVip46Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallVip46(d, c.Fv)
@@ -324,12 +344,22 @@ func resourceFirewallVip46Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadFirewallVip46(mkey, vdomparam)
@@ -564,9 +594,9 @@ func flattenFirewallVip46Realservers(v interface{}, d *schema.ResourceData, pre 
 			vx := ""
 			bstring := false
 			new_version_map := map[string][]string{
-				"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "7.0.0"},
+				"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -1034,9 +1064,9 @@ func expandFirewallVip46Realservers(d *schema.ResourceData, v interface{}, pre s
 			t, _ := expandFirewallVip46RealserversMonitor(d, i["monitor"], pre_append, sv)
 			if t != nil {
 				new_version_map := map[string][]string{
-					"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "7.0.0"},
+					"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}

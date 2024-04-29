@@ -25,7 +25,7 @@ The following arguments are supported:
 * `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 1800).
 * `darrp_day` - Weekday on which to run DARRP optimization. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `darrp_time` - Time at which DARRP optimizations run (you can add up to 8 times). The structure of `darrp_time` block is documented below.
-* `sta_stats_interval` - Time between running client (station) reports (1 - 255 sec, default = 1).
+* `sta_stats_interval` - Time between running client (station) reports (1 - 255 sec). On FortiOS versions 6.2.0-7.4.1: default = 1. On FortiOS versions >= 7.4.2: default = 10.
 * `vap_stats_interval` - Time between running Virtual Access Point (VAP) reports (1 - 255 sec, default = 15).
 * `radio_stats_interval` - Time between running radio reports (1 - 255 sec, default = 15).
 * `sta_capability_interval` - Time between running station capability reports (1 - 255 sec, default = 30).
@@ -37,7 +37,7 @@ The following arguments are supported:
 * `ap_reboot_wait_time` - Time to reboot the AP when there is no controller detected and standalone SSIDs are pushed to the AP in the previous session, format hh:mm.
 * `ap_reboot_wait_interval2` - Time in minutes to wait before AP reboots when there is no controller detected and standalone SSIDs are pushed to the AP in the previous session (5 - 65535, default = 0, 0 for no reboot).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `darrp_time` block supports:

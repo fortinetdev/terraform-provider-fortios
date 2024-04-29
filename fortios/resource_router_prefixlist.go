@@ -34,6 +34,7 @@ func resourceRouterPrefixList() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -105,12 +106,22 @@ func resourceRouterPrefixListCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterPrefixList(d, c.Fv)
@@ -138,12 +149,22 @@ func resourceRouterPrefixListUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterPrefixList(d, c.Fv)
@@ -196,12 +217,22 @@ func resourceRouterPrefixListRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadRouterPrefixList(mkey, vdomparam)
@@ -270,12 +301,12 @@ func flattenRouterPrefixListRule(v interface{}, d *schema.ResourceData, pre stri
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
-		if cur_v, ok := i["ge"]; ok {
+		if cur_v, ok := i["ge"]; ok && !bZero(cur_v) {
 			tmp["ge"] = flattenRouterPrefixListRuleGe(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
-		if cur_v, ok := i["le"]; ok {
+		if cur_v, ok := i["le"]; ok && !bZero(cur_v) {
 			tmp["le"] = flattenRouterPrefixListRuleLe(cur_v, d, pre_append, sv)
 		}
 

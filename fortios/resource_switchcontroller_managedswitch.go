@@ -34,6 +34,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"switch_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -1779,12 +1780,22 @@ func resourceSwitchControllerManagedSwitchCreate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSwitchControllerManagedSwitch(d, c.Fv)
@@ -1812,12 +1823,22 @@ func resourceSwitchControllerManagedSwitchUpdate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSwitchControllerManagedSwitch(d, c.Fv)
@@ -1870,12 +1891,22 @@ func resourceSwitchControllerManagedSwitchRead(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSwitchControllerManagedSwitch(mkey, vdomparam)
@@ -1996,7 +2027,7 @@ func flattenSwitchControllerManagedSwitchSwitchDeviceTag(v interface{}, d *schem
 	return v
 }
 
-func flattenSwitchControllerManagedSwitchSwitchDhcp_Opt43_Key(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSwitchControllerManagedSwitchSwitchDhcpOpt43Key(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2637,7 +2668,7 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool_flag"
 		if cur_v, ok := i["export-to-pool_flag"]; ok {
-			tmp["export_to_pool_flag"] = flattenSwitchControllerManagedSwitchPortsExportToPool_Flag(cur_v, d, pre_append, sv)
+			tmp["export_to_pool_flag"] = flattenSwitchControllerManagedSwitchPortsExportToPoolFlag(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "learning_limit"
@@ -3369,7 +3400,7 @@ func flattenSwitchControllerManagedSwitchPortsExportTagsTagName(v interface{}, d
 	return v
 }
 
-func flattenSwitchControllerManagedSwitchPortsExportToPool_Flag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSwitchControllerManagedSwitchPortsExportToPoolFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5168,7 +5199,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		new_version_map := map[string][]string{
 			">=": []string{"6.4.2"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			if vx, ok := v.(string); ok {
 				vxx, err := strconv.Atoi(vx)
 				if err == nil {
@@ -5190,7 +5221,7 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	if err = d.Set("switch_dhcp_opt43_key", flattenSwitchControllerManagedSwitchSwitchDhcp_Opt43_Key(o["switch-dhcp_opt43_key"], d, "switch_dhcp_opt43_key", sv)); err != nil {
+	if err = d.Set("switch_dhcp_opt43_key", flattenSwitchControllerManagedSwitchSwitchDhcpOpt43Key(o["switch-dhcp_opt43_key"], d, "switch_dhcp_opt43_key", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-dhcp_opt43_key"]) {
 			return fmt.Errorf("Error reading switch_dhcp_opt43_key: %v", err)
 		}
@@ -5757,7 +5788,7 @@ func expandSwitchControllerManagedSwitchSwitchDeviceTag(d *schema.ResourceData, 
 	return v, nil
 }
 
-func expandSwitchControllerManagedSwitchSwitchDhcp_Opt43_Key(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSwitchControllerManagedSwitchSwitchDhcpOpt43Key(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6380,7 +6411,7 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool_flag"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["export-to-pool_flag"], _ = expandSwitchControllerManagedSwitchPortsExportToPool_Flag(d, i["export_to_pool_flag"], pre_append, sv)
+			tmp["export-to-pool_flag"], _ = expandSwitchControllerManagedSwitchPortsExportToPoolFlag(d, i["export_to_pool_flag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "learning_limit"
@@ -7018,7 +7049,7 @@ func expandSwitchControllerManagedSwitchPortsExportTagsTagName(d *schema.Resourc
 	return v, nil
 }
 
-func expandSwitchControllerManagedSwitchPortsExportToPool_Flag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSwitchControllerManagedSwitchPortsExportToPoolFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8678,7 +8709,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 			new_version_map := map[string][]string{
 				">=": []string{"6.4.2"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				obj["dynamic-capability"] = fmt.Sprintf("%v", t)
 			} else {
 				obj["dynamic-capability"] = t
@@ -8696,7 +8727,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 	}
 
 	if v, ok := d.GetOk("switch_dhcp_opt43_key"); ok {
-		t, err := expandSwitchControllerManagedSwitchSwitchDhcp_Opt43_Key(d, v, "switch_dhcp_opt43_key", sv)
+		t, err := expandSwitchControllerManagedSwitchSwitchDhcpOpt43Key(d, v, "switch_dhcp_opt43_key", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {

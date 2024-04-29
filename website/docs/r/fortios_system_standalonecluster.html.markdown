@@ -14,7 +14,7 @@ Configure FortiGate Session Life Support Protocol (FGSP) cluster attributes. App
 The following arguments are supported:
 
 * `standalone_group_id` - Cluster group ID (0 - 255). Must be the same for all members.
-* `group_member_id` - Cluster member ID (0 - 3).
+* `group_member_id` - Cluster member ID. On FortiOS versions 6.4.0: 0 - 3. On FortiOS versions >= 6.4.1: 0 - 15.
 * `layer2_connection` - Indicate whether layer 2 connections are present among FGSP members. Valid values: `available`, `unavailable`.
 * `session_sync_dev` - Offload session-sync process to kernel and sync sessions using connected interface(s) directly.
 * `encryption` - Enable/disable encryption when synchronizing sessions. Valid values: `enable`, `disable`.
@@ -22,7 +22,7 @@ The following arguments are supported:
 * `asymmetric_traffic_control` - Asymmetric traffic control mode. Valid values: `cps-preferred`, `strict-anti-replay`.
 * `cluster_peer` - Configure FortiGate Session Life Support Protocol (FGSP) session synchronization. The structure of `cluster_peer` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `cluster_peer` block supports:

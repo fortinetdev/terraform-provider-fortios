@@ -34,6 +34,7 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -211,12 +212,22 @@ func resourceSystemAutomationTriggerCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemAutomationTrigger(d, c.Fv)
@@ -244,12 +255,22 @@ func resourceSystemAutomationTriggerUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemAutomationTrigger(d, c.Fv)
@@ -302,12 +323,22 @@ func resourceSystemAutomationTriggerRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemAutomationTrigger(mkey, vdomparam)
@@ -398,7 +429,7 @@ func flattenSystemAutomationTriggerReportType(v interface{}, d *schema.ResourceD
 	return v
 }
 
-func flattenSystemAutomationTriggerLogid_Block(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+func flattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -424,7 +455,7 @@ func flattenSystemAutomationTriggerLogid_Block(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAutomationTriggerLogid_BlockId(cur_v, d, pre_append, sv)
+			tmp["id"] = flattenSystemAutomationTriggerLogidBlockId(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -436,7 +467,7 @@ func flattenSystemAutomationTriggerLogid_Block(v interface{}, d *schema.Resource
 	return result
 }
 
-func flattenSystemAutomationTriggerLogid_BlockId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemAutomationTriggerLogidBlockId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -621,14 +652,14 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 
 	if _, ok := o["logid"].([]interface{}); ok {
 		if b_get_all_tables {
-			if err = d.Set("logid_block", flattenSystemAutomationTriggerLogid_Block(o["logid"], d, "logid_block", sv)); err != nil {
+			if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
 				if !fortiAPIPatch(o["logid"]) {
 					return fmt.Errorf("Error reading logid_block: %v", err)
 				}
 			}
 		} else {
 			if _, ok := d.GetOk("logid_block"); ok {
-				if err = d.Set("logid_block", flattenSystemAutomationTriggerLogid_Block(o["logid"], d, "logid_block", sv)); err != nil {
+				if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
 					if !fortiAPIPatch(o["logid"]) {
 						return fmt.Errorf("Error reading logid_block: %v", err)
 					}
@@ -798,7 +829,7 @@ func expandSystemAutomationTriggerReportType(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func expandSystemAutomationTriggerLogid_Block(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemAutomationTriggerLogidBlock(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -812,7 +843,7 @@ func expandSystemAutomationTriggerLogid_Block(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		tmp["id"], _ = expandSystemAutomationTriggerLogid_BlockId(d, i["id"], pre_append, sv)
+		tmp["id"], _ = expandSystemAutomationTriggerLogidBlockId(d, i["id"], pre_append, sv)
 
 		result = append(result, tmp)
 
@@ -822,7 +853,7 @@ func expandSystemAutomationTriggerLogid_Block(d *schema.ResourceData, v interfac
 	return result, nil
 }
 
-func expandSystemAutomationTriggerLogid_BlockId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandSystemAutomationTriggerLogidBlockId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1003,20 +1034,40 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("logid_block"); ok || d.HasChange("logid_block") {
-		t, err := expandSystemAutomationTriggerLogid_Block(d, v, "logid_block", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["logid"] = t
+		new_version_map := map[string][]string{
+			">=": []string{"7.0.1"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("logid"); !ok && !d.HasChange("logid") {
+				err := fmt.Errorf("Argument 'logid_block' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandSystemAutomationTriggerLogidBlock(d, v, "logid_block", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["logid"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("logid"); ok {
-		t, err := expandSystemAutomationTriggerLogid(d, v, "logid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["logid"] = t
+		new_version_map := map[string][]string{
+			"<=": []string{"7.0.0"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("logid_block"); !ok && !d.HasChange("logid_block") {
+				err := fmt.Errorf("Argument 'logid' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandSystemAutomationTriggerLogid(d, v, "logid", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["logid"] = t
+			}
 		}
 	}
 

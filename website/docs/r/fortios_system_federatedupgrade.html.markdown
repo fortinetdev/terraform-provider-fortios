@@ -22,7 +22,7 @@ The following arguments are supported:
 * `known_ha_members` - Known members of the HA cluster. If a member is missing at upgrade time, the upgrade will be cancelled. The structure of `known_ha_members` block is documented below.
 * `node_list` - Nodes which will be included in the upgrade. The structure of `node_list` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `known_ha_members` block supports:
@@ -34,8 +34,8 @@ The `node_list` block supports:
 * `serial` - Serial number of the node to include.
 * `timing` - Whether the upgrade should be run immediately, or at a scheduled time. Valid values: `immediate`, `scheduled`.
 * `maximum_minutes` - Maximum number of minutes to allow for immediate upgrade preparation.
-* `time` - Scheduled time for the upgrade. Format hh:mm yyyy/mm/dd UTC.
-* `setup_time` - When the upgrade was configured. Format hh:mm yyyy/mm/dd UTC.
+* `time` - Scheduled upgrade execution time in UTC (hh:mm yyyy/mm/dd UTC).
+* `setup_time` - Upgrade preparation start time in UTC (hh:mm yyyy/mm/dd UTC).
 * `upgrade_path` - Image IDs to upgrade through.
 * `device_type` - What type of device this node represents.
 * `coordinating_fortigate` - The serial of the FortiGate that controls this device

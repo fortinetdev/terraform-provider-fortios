@@ -98,7 +98,7 @@ The following arguments are supported:
 * `ike_version` - IKE protocol version. Valid values: `1`, `2`.
 * `remote_gw` - Remote VPN gateway.
 * `local_gw` - Local VPN gateway.
-* `remotegw_ddns` - Domain name of remote gateway (eg. name.DDNS.com).
+* `remotegw_ddns` - Domain name of remote gateway. For example, name.ddns.com.
 * `keylife` - Time to wait in seconds before phase 1 encryption key expires.
 * `certificate` - Names of up to 4 signed personal certificates. The structure of `certificate` block is documented below.
 * `authmethod` - Authentication method. Valid values: `psk`, `signature`.
@@ -156,7 +156,7 @@ The following arguments are supported:
 * `psksecret_remote` - Pre-shared secret for remote side PSK authentication (ASCII string or hexadecimal encoded with a leading 0x).
 * `keepalive` - NAT-T keep alive interval.
 * `distance` - Distance for routes added by IKE (1 - 255).
-* `priority` - Priority for routes added by IKE (0 - 4294967295).
+* `priority` - Priority for routes added by IKE. On FortiOS versions 6.2.0-7.0.3: 0 - 4294967295. On FortiOS versions >= 7.0.4: 1 - 65535.
 * `localid` - Local ID.
 * `localid_type` - Local ID type. Valid values: `auto`, `fqdn`, `user-fqdn`, `keyid`, `address`, `asn1dn`.
 * `auto_negotiate` - Enable/disable automatic initiation of IKE SA negotiation. Valid values: `enable`, `disable`.
@@ -185,7 +185,7 @@ The following arguments are supported:
 * `authusr` - XAuth user name.
 * `authpasswd` - XAuth password (max 35 characters).
 * `group_authentication` - Enable/disable IKEv2 IDi group authentication. Valid values: `enable`, `disable`.
-* `group_authentication_secret` - Password for IKEv2 IDi group authentication.  (ASCII string or hexadecimal indicated by a leading 0x.)
+* `group_authentication_secret` - Password for IKEv2 ID group authentication. ASCII string or hexadecimal indicated by a leading 0x.
 * `authusrgrp` - Authentication user group.
 * `mesh_selector_type` - Add selectors containing subsets of the configuration depending on traffic. Valid values: `disable`, `subnet`, `host`.
 * `idle_timeout` - Enable/disable IPsec tunnel idle timeout. Valid values: `enable`, `disable`.
@@ -207,12 +207,12 @@ The following arguments are supported:
 * `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945. Valid values: `enable`, `disable`.
 * `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic. Valid values: `enable`, `disable`.
 * `fec_send_timeout` - Timeout in milliseconds before sending Forward Error Correction packets (1 - 1000).
-* `fec_base` - Number of base Forward Error Correction packets (1 - 100).
-* `fec_codec_string` - Forward Error Correction encoding/decoding algorithm. Valid values: `rs`, `xor`.
-* `fec_codec` - ipsec fec encoding/decoding algorithm (0: reed-solomon, 1: xor).
-* `fec_redundant` - Number of redundant Forward Error Correction packets (1 - 100).
+* `fec_base` - Number of base Forward Error Correction packets. On FortiOS versions 6.2.4-7.0.1: 1 - 100. On FortiOS versions >= 7.0.2: 1 - 20.
+* `fec_codec_string` - Forward Error Correction encoding/decoding algorithm. *Due to the data type change of API, for other versions of FortiOS, please check variable `fec-codec`.* Valid values: `rs`, `xor`.
+* `fec_codec` - ipsec fec encoding/decoding algorithm (0: reed-solomon, 1: xor). *Due to the data type change of API, for other versions of FortiOS, please check variable `fec-codec_string`.*
+* `fec_redundant` - Number of redundant Forward Error Correction packets. On FortiOS versions 6.2.4-6.2.6: 0 - 100,  when fec-codec is reed-solomon  or 1 when fec-codec is xor. On FortiOS versions >= 7.0.2: 1 - 5 for reed-solomon, 1 for xor.
 * `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic. Valid values: `enable`, `disable`.
-* `fec_receive_timeout` - Timeout in milliseconds before dropping Forward Error Correction packets (1 - 10000).
+* `fec_receive_timeout` - Timeout in milliseconds before dropping Forward Error Correction packets. On FortiOS versions 6.2.4-7.0.1: 1 - 10000. On FortiOS versions >= 7.0.2: 1 - 1000.
 * `fec_health_check` - SD-WAN health check.
 * `fec_mapping_profile` - Forward Error Correction (FEC) mapping profile.
 * `network_overlay` - Enable/disable network overlays. Valid values: `disable`, `enable`.
@@ -231,7 +231,7 @@ The following arguments are supported:
 * `fortinet_esp` - Enable/disable Fortinet ESP encapsulaton. Valid values: `enable`, `disable`.
 * `fallback_tcp_threshold` - Timeout in seconds before falling back IKE/IPsec traffic to tcp.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `certificate` block supports:

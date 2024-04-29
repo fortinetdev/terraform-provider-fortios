@@ -74,7 +74,8 @@ func (c *FortiSDKClient) NewRequest(method string, path string, params interface
 func (c *FortiSDKClient) CheckUP() error {
 	var err error
 
-	_, err = read(c, "GET", "/api/v2/monitor/system/status", true, "")
+	req := c.NewRequest("GET", "/api/v2/monitor/system/status", nil, nil)
+	err = req.CheckValid()
 	if err != nil {
 		if c.Config.Auth.Token == "" {
 			err = fmt.Errorf("Error using Username/Password to login: %v", err)

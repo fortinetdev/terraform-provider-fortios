@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_switchcontroller_nacsettings
-Configure integrated NAC settings for FortiSwitch. Applies to FortiOS Version `6.4.0,6.4.1,6.4.2,6.4.10,6.4.11,6.4.12,6.4.13,6.4.14,7.0.0`.
+Configure integrated NAC settings for FortiSwitch. Applies to FortiOS Version `6.4.0,6.4.1,6.4.2,6.4.10,6.4.11,6.4.12,6.4.13,6.4.14,6.4.15,7.0.0`.
 
 ## Argument Reference
 
@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - NAC settings name.
 * `mode` - Set NAC mode to be used on the FortiSwitch ports. Valid values: `local`, `global`.
-* `inactive_timer` - Time interval after which inactive NAC devices will be expired (in minutes, 0 means no expiry).
+* `inactive_timer` - Time interval(minutes, 0 = no expiry) to be included in the inactive NAC devices expiry calculation (mac age-out + inactive-time + periodic scan interval).
 * `onboarding_vlan` - Default NAC Onboarding VLAN when NAC devices are discovered.
 * `auto_auth` - Enable/disable NAC device auto authorization when discovered and nac-policy matched. Valid values: `disable`, `enable`.
 * `bounce_nac_port` - Enable/disable bouncing (administratively bring the link down, up) of a switch port when NAC mode is configured on the port. Helps to re-initiate the DHCP process for a device. Valid values: `disable`, `enable`.

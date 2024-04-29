@@ -34,6 +34,7 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -804,12 +805,22 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallSecurityPolicy(d, c.Fv)
@@ -837,12 +848,22 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectFirewallSecurityPolicy(d, c.Fv)
@@ -895,12 +916,22 @@ func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadFirewallSecurityPolicy(mkey, vdomparam)
@@ -2339,7 +2370,7 @@ func flattenFirewallSecurityPolicyAppCategoryIdSp(v interface{}, d *schema.Resou
 	return v
 }
 
-func flattenFirewallSecurityPolicyUrlCategory_UnitarySp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenFirewallSecurityPolicyUrlCategoryUnitarySp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3327,7 +3358,7 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 	}
 
 	if _, ok := o["url-category"].(string); ok {
-		if err = d.Set("url_category_unitary", flattenFirewallSecurityPolicyUrlCategory_UnitarySp(o["url-category"], d, "url_category_unitary", sv)); err != nil {
+		if err = d.Set("url_category_unitary", flattenFirewallSecurityPolicyUrlCategoryUnitarySp(o["url-category"], d, "url_category_unitary", sv)); err != nil {
 			if !fortiAPIPatch(o["url-category"]) {
 				return fmt.Errorf("Error reading url_category_unitary: %v", err)
 			}
@@ -4437,7 +4468,7 @@ func expandFirewallSecurityPolicyAppCategoryIdSp(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func expandFirewallSecurityPolicyUrlCategory_UnitarySp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandFirewallSecurityPolicyUrlCategoryUnitarySp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5296,20 +5327,40 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("url_category_unitary"); ok {
-		t, err := expandFirewallSecurityPolicyUrlCategory_UnitarySp(d, v, "url_category_unitary", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url-category"] = t
+		new_version_map := map[string][]string{
+			">=": []string{"7.2.0"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("url_category"); !ok && !d.HasChange("url_category") {
+				err := fmt.Errorf("Argument 'url_category_unitary' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandFirewallSecurityPolicyUrlCategoryUnitarySp(d, v, "url_category_unitary", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["url-category"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("url_category"); ok || d.HasChange("url_category") {
-		t, err := expandFirewallSecurityPolicyUrlCategorySp(d, v, "url_category", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url-category"] = t
+		new_version_map := map[string][]string{
+			"=": []string{"6.2.4", "6.2.6", "6.4.0", "6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("url_category_unitary"); !ok && !d.HasChange("url_category_unitary") {
+				err := fmt.Errorf("Argument 'url_category' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandFirewallSecurityPolicyUrlCategorySp(d, v, "url_category", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["url-category"] = t
+			}
 		}
 	}
 

@@ -34,6 +34,7 @@ func resourceUserDomainController() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -150,9 +151,8 @@ func resourceUserDomainController() *schema.Resource {
 				Computed:     true,
 			},
 			"ldap_server": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Type:     schema.TypeString,
+				Required: true,
 			},
 			"change_detection": &schema.Schema{
 				Type:     schema.TypeString,
@@ -215,12 +215,22 @@ func resourceUserDomainControllerCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectUserDomainController(d, c.Fv)
@@ -248,12 +258,22 @@ func resourceUserDomainControllerUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectUserDomainController(d, c.Fv)
@@ -306,12 +326,22 @@ func resourceUserDomainControllerRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadUserDomainController(mkey, vdomparam)
@@ -618,7 +648,7 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		new_version_map := map[string][]string{
 			">=": []string{"6.4.10"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -1012,7 +1042,7 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 			new_version_map := map[string][]string{
 				">=": []string{"6.4.10"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				vx := fmt.Sprintf("%v", t)
 				vxx := strings.Split(vx, ", ")
 

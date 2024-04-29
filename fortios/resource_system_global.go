@@ -34,6 +34,7 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"language": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1086,6 +1087,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipv6_allow_local_in_silent_drop": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ipv6_allow_local_in_slient_drop": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1343,6 +1349,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipsec_qat_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ipsec_round_robin": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1546,6 +1557,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"npu_neighbor_update": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"interface_subnet_usage": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1581,12 +1597,22 @@ func resourceSystemGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemGlobal(d, false, c.Fv)
@@ -1644,12 +1670,22 @@ func resourceSystemGlobalRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemGlobal(mkey, vdomparam)
@@ -2469,6 +2505,10 @@ func flattenSystemGlobalIpv6AllowMulticastProbe(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemGlobalIpv6AllowLocalInSilentDrop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalIpv6AllowLocalInSlientDrop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2657,6 +2697,10 @@ func flattenSystemGlobalMaxRouteCacheSize(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemGlobalIpsecQatOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalIpsecRoundRobin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2836,6 +2880,10 @@ func flattenSystemGlobalInternetServiceDownloadListId(v interface{}, d *schema.R
 }
 
 func flattenSystemGlobalEarlyTcpNpuSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalNpuNeighborUpdate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4048,6 +4096,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ipv6_allow_local_in_silent_drop", flattenSystemGlobalIpv6AllowLocalInSilentDrop(o["ipv6-allow-local-in-silent-drop"], d, "ipv6_allow_local_in_silent_drop", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-allow-local-in-silent-drop"]) {
+			return fmt.Errorf("Error reading ipv6_allow_local_in_silent_drop: %v", err)
+		}
+	}
+
 	if err = d.Set("ipv6_allow_local_in_slient_drop", flattenSystemGlobalIpv6AllowLocalInSlientDrop(o["ipv6-allow-local-in-slient-drop"], d, "ipv6_allow_local_in_slient_drop", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv6-allow-local-in-slient-drop"]) {
 			return fmt.Errorf("Error reading ipv6_allow_local_in_slient_drop: %v", err)
@@ -4330,6 +4384,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ipsec_qat_offload", flattenSystemGlobalIpsecQatOffload(o["ipsec-qat-offload"], d, "ipsec_qat_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["ipsec-qat-offload"]) {
+			return fmt.Errorf("Error reading ipsec_qat_offload: %v", err)
+		}
+	}
+
 	if err = d.Set("ipsec_round_robin", flattenSystemGlobalIpsecRoundRobin(o["ipsec-round-robin"], d, "ipsec_round_robin", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-round-robin"]) {
 			return fmt.Errorf("Error reading ipsec_round_robin: %v", err)
@@ -4553,6 +4613,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("early_tcp_npu_session", flattenSystemGlobalEarlyTcpNpuSession(o["early-tcp-npu-session"], d, "early_tcp_npu_session", sv)); err != nil {
 		if !fortiAPIPatch(o["early-tcp-npu-session"]) {
 			return fmt.Errorf("Error reading early_tcp_npu_session: %v", err)
+		}
+	}
+
+	if err = d.Set("npu_neighbor_update", flattenSystemGlobalNpuNeighborUpdate(o["npu-neighbor-update"], d, "npu_neighbor_update", sv)); err != nil {
+		if !fortiAPIPatch(o["npu-neighbor-update"]) {
+			return fmt.Errorf("Error reading npu_neighbor_update: %v", err)
 		}
 	}
 
@@ -5375,6 +5441,10 @@ func expandSystemGlobalIpv6AllowMulticastProbe(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemGlobalIpv6AllowLocalInSilentDrop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalIpv6AllowLocalInSlientDrop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5563,6 +5633,10 @@ func expandSystemGlobalMaxRouteCacheSize(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSystemGlobalIpsecQatOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalIpsecRoundRobin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5728,6 +5802,10 @@ func expandSystemGlobalInternetServiceDownloadListId(d *schema.ResourceData, v i
 }
 
 func expandSystemGlobalEarlyTcpNpuSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalNpuNeighborUpdate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8320,6 +8398,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("ipv6_allow_local_in_silent_drop"); ok {
+		if setArgNil {
+			obj["ipv6-allow-local-in-silent-drop"] = nil
+		} else {
+			t, err := expandSystemGlobalIpv6AllowLocalInSilentDrop(d, v, "ipv6_allow_local_in_silent_drop", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-allow-local-in-silent-drop"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ipv6_allow_local_in_slient_drop"); ok {
 		if setArgNil {
 			obj["ipv6-allow-local-in-slient-drop"] = nil
@@ -8931,6 +9022,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("ipsec_qat_offload"); ok {
+		if setArgNil {
+			obj["ipsec-qat-offload"] = nil
+		} else {
+			t, err := expandSystemGlobalIpsecQatOffload(d, v, "ipsec_qat_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipsec-qat-offload"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ipsec_round_robin"); ok {
 		if setArgNil {
 			obj["ipsec-round-robin"] = nil
@@ -9395,6 +9499,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["early-tcp-npu-session"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("npu_neighbor_update"); ok {
+		if setArgNil {
+			obj["npu-neighbor-update"] = nil
+		} else {
+			t, err := expandSystemGlobalNpuNeighborUpdate(d, v, "npu_neighbor_update", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["npu-neighbor-update"] = t
 			}
 		}
 	}

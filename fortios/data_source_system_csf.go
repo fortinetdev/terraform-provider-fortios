@@ -40,6 +40,18 @@ func dataSourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"upstream_interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"upstream_interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"upstream_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -283,6 +295,18 @@ func dataSourceFlattenSystemCsfUid(v interface{}, d *schema.ResourceData, pre st
 }
 
 func dataSourceFlattenSystemCsfUpstream(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfUpstreamInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfUpstreamInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -680,6 +704,24 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("upstream", dataSourceFlattenSystemCsfUpstream(o["upstream"], d, "upstream")); err != nil {
 		if !fortiAPIPatch(o["upstream"]) {
 			return fmt.Errorf("Error reading upstream: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip", dataSourceFlattenSystemCsfSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("upstream_interface_select_method", dataSourceFlattenSystemCsfUpstreamInterfaceSelectMethod(o["upstream-interface-select-method"], d, "upstream_interface_select_method")); err != nil {
+		if !fortiAPIPatch(o["upstream-interface-select-method"]) {
+			return fmt.Errorf("Error reading upstream_interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("upstream_interface", dataSourceFlattenSystemCsfUpstreamInterface(o["upstream-interface"], d, "upstream_interface")); err != nil {
+		if !fortiAPIPatch(o["upstream-interface"]) {
+			return fmt.Errorf("Error reading upstream_interface: %v", err)
 		}
 	}
 

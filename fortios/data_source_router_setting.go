@@ -178,99 +178,99 @@ func dataSourceFlattenRouterSettingHostname(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Lsa_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugLsaFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Nfsm_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugNfsmFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Packet_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugPacketFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Events_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugEventsFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Route_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugRouteFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Ifsm_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugIfsmFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf_Debug_Nsm_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspfDebugNsmFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingRip_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingRipDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingBgp_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingBgpDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingIgmp_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingIgmpDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingPimdm_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingPimdmDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingPimsm_Debug_Simple_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingPimsmDebugSimpleFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingPimsm_Debug_Timer_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingPimsmDebugTimerFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingPimsm_Debug_Joinprune_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingPimsmDebugJoinpruneFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingImi_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingImiDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingIsis_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingIsisDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Lsa_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugLsaFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Nfsm_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugNfsmFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Packet_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugPacketFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Events_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugEventsFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Route_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugRouteFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Ifsm_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugIfsmFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingOspf6_Debug_Nsm_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingOspf6DebugNsmFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-func dataSourceFlattenRouterSettingRipng_Debug_Flags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenRouterSettingRipngDebugFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -289,145 +289,145 @@ func dataSourceRefreshObjectRouterSetting(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if err = d.Set("ospf_debug_lsa_flags", dataSourceFlattenRouterSettingOspf_Debug_Lsa_Flags(o["ospf_debug_lsa_flags"], d, "ospf_debug_lsa_flags")); err != nil {
+	if err = d.Set("ospf_debug_lsa_flags", dataSourceFlattenRouterSettingOspfDebugLsaFlags(o["ospf_debug_lsa_flags"], d, "ospf_debug_lsa_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_lsa_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_lsa_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf_debug_nfsm_flags", dataSourceFlattenRouterSettingOspf_Debug_Nfsm_Flags(o["ospf_debug_nfsm_flags"], d, "ospf_debug_nfsm_flags")); err != nil {
+	if err = d.Set("ospf_debug_nfsm_flags", dataSourceFlattenRouterSettingOspfDebugNfsmFlags(o["ospf_debug_nfsm_flags"], d, "ospf_debug_nfsm_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_nfsm_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_nfsm_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf_debug_packet_flags", dataSourceFlattenRouterSettingOspf_Debug_Packet_Flags(o["ospf_debug_packet_flags"], d, "ospf_debug_packet_flags")); err != nil {
+	if err = d.Set("ospf_debug_packet_flags", dataSourceFlattenRouterSettingOspfDebugPacketFlags(o["ospf_debug_packet_flags"], d, "ospf_debug_packet_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_packet_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_packet_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf_debug_events_flags", dataSourceFlattenRouterSettingOspf_Debug_Events_Flags(o["ospf_debug_events_flags"], d, "ospf_debug_events_flags")); err != nil {
+	if err = d.Set("ospf_debug_events_flags", dataSourceFlattenRouterSettingOspfDebugEventsFlags(o["ospf_debug_events_flags"], d, "ospf_debug_events_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_events_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_events_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf_debug_route_flags", dataSourceFlattenRouterSettingOspf_Debug_Route_Flags(o["ospf_debug_route_flags"], d, "ospf_debug_route_flags")); err != nil {
+	if err = d.Set("ospf_debug_route_flags", dataSourceFlattenRouterSettingOspfDebugRouteFlags(o["ospf_debug_route_flags"], d, "ospf_debug_route_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_route_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_route_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf_debug_ifsm_flags", dataSourceFlattenRouterSettingOspf_Debug_Ifsm_Flags(o["ospf_debug_ifsm_flags"], d, "ospf_debug_ifsm_flags")); err != nil {
+	if err = d.Set("ospf_debug_ifsm_flags", dataSourceFlattenRouterSettingOspfDebugIfsmFlags(o["ospf_debug_ifsm_flags"], d, "ospf_debug_ifsm_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_ifsm_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_ifsm_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf_debug_nsm_flags", dataSourceFlattenRouterSettingOspf_Debug_Nsm_Flags(o["ospf_debug_nsm_flags"], d, "ospf_debug_nsm_flags")); err != nil {
+	if err = d.Set("ospf_debug_nsm_flags", dataSourceFlattenRouterSettingOspfDebugNsmFlags(o["ospf_debug_nsm_flags"], d, "ospf_debug_nsm_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf_debug_nsm_flags"]) {
 			return fmt.Errorf("Error reading ospf_debug_nsm_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("rip_debug_flags", dataSourceFlattenRouterSettingRip_Debug_Flags(o["rip_debug_flags"], d, "rip_debug_flags")); err != nil {
+	if err = d.Set("rip_debug_flags", dataSourceFlattenRouterSettingRipDebugFlags(o["rip_debug_flags"], d, "rip_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["rip_debug_flags"]) {
 			return fmt.Errorf("Error reading rip_debug_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("bgp_debug_flags", dataSourceFlattenRouterSettingBgp_Debug_Flags(o["bgp_debug_flags"], d, "bgp_debug_flags")); err != nil {
+	if err = d.Set("bgp_debug_flags", dataSourceFlattenRouterSettingBgpDebugFlags(o["bgp_debug_flags"], d, "bgp_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["bgp_debug_flags"]) {
 			return fmt.Errorf("Error reading bgp_debug_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("igmp_debug_flags", dataSourceFlattenRouterSettingIgmp_Debug_Flags(o["igmp_debug_flags"], d, "igmp_debug_flags")); err != nil {
+	if err = d.Set("igmp_debug_flags", dataSourceFlattenRouterSettingIgmpDebugFlags(o["igmp_debug_flags"], d, "igmp_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["igmp_debug_flags"]) {
 			return fmt.Errorf("Error reading igmp_debug_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("pimdm_debug_flags", dataSourceFlattenRouterSettingPimdm_Debug_Flags(o["pimdm_debug_flags"], d, "pimdm_debug_flags")); err != nil {
+	if err = d.Set("pimdm_debug_flags", dataSourceFlattenRouterSettingPimdmDebugFlags(o["pimdm_debug_flags"], d, "pimdm_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["pimdm_debug_flags"]) {
 			return fmt.Errorf("Error reading pimdm_debug_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("pimsm_debug_simple_flags", dataSourceFlattenRouterSettingPimsm_Debug_Simple_Flags(o["pimsm_debug_simple_flags"], d, "pimsm_debug_simple_flags")); err != nil {
+	if err = d.Set("pimsm_debug_simple_flags", dataSourceFlattenRouterSettingPimsmDebugSimpleFlags(o["pimsm_debug_simple_flags"], d, "pimsm_debug_simple_flags")); err != nil {
 		if !fortiAPIPatch(o["pimsm_debug_simple_flags"]) {
 			return fmt.Errorf("Error reading pimsm_debug_simple_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("pimsm_debug_timer_flags", dataSourceFlattenRouterSettingPimsm_Debug_Timer_Flags(o["pimsm_debug_timer_flags"], d, "pimsm_debug_timer_flags")); err != nil {
+	if err = d.Set("pimsm_debug_timer_flags", dataSourceFlattenRouterSettingPimsmDebugTimerFlags(o["pimsm_debug_timer_flags"], d, "pimsm_debug_timer_flags")); err != nil {
 		if !fortiAPIPatch(o["pimsm_debug_timer_flags"]) {
 			return fmt.Errorf("Error reading pimsm_debug_timer_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("pimsm_debug_joinprune_flags", dataSourceFlattenRouterSettingPimsm_Debug_Joinprune_Flags(o["pimsm_debug_joinprune_flags"], d, "pimsm_debug_joinprune_flags")); err != nil {
+	if err = d.Set("pimsm_debug_joinprune_flags", dataSourceFlattenRouterSettingPimsmDebugJoinpruneFlags(o["pimsm_debug_joinprune_flags"], d, "pimsm_debug_joinprune_flags")); err != nil {
 		if !fortiAPIPatch(o["pimsm_debug_joinprune_flags"]) {
 			return fmt.Errorf("Error reading pimsm_debug_joinprune_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("imi_debug_flags", dataSourceFlattenRouterSettingImi_Debug_Flags(o["imi_debug_flags"], d, "imi_debug_flags")); err != nil {
+	if err = d.Set("imi_debug_flags", dataSourceFlattenRouterSettingImiDebugFlags(o["imi_debug_flags"], d, "imi_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["imi_debug_flags"]) {
 			return fmt.Errorf("Error reading imi_debug_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("isis_debug_flags", dataSourceFlattenRouterSettingIsis_Debug_Flags(o["isis_debug_flags"], d, "isis_debug_flags")); err != nil {
+	if err = d.Set("isis_debug_flags", dataSourceFlattenRouterSettingIsisDebugFlags(o["isis_debug_flags"], d, "isis_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["isis_debug_flags"]) {
 			return fmt.Errorf("Error reading isis_debug_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_lsa_flags", dataSourceFlattenRouterSettingOspf6_Debug_Lsa_Flags(o["ospf6_debug_lsa_flags"], d, "ospf6_debug_lsa_flags")); err != nil {
+	if err = d.Set("ospf6_debug_lsa_flags", dataSourceFlattenRouterSettingOspf6DebugLsaFlags(o["ospf6_debug_lsa_flags"], d, "ospf6_debug_lsa_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_lsa_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_lsa_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_nfsm_flags", dataSourceFlattenRouterSettingOspf6_Debug_Nfsm_Flags(o["ospf6_debug_nfsm_flags"], d, "ospf6_debug_nfsm_flags")); err != nil {
+	if err = d.Set("ospf6_debug_nfsm_flags", dataSourceFlattenRouterSettingOspf6DebugNfsmFlags(o["ospf6_debug_nfsm_flags"], d, "ospf6_debug_nfsm_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_nfsm_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_nfsm_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_packet_flags", dataSourceFlattenRouterSettingOspf6_Debug_Packet_Flags(o["ospf6_debug_packet_flags"], d, "ospf6_debug_packet_flags")); err != nil {
+	if err = d.Set("ospf6_debug_packet_flags", dataSourceFlattenRouterSettingOspf6DebugPacketFlags(o["ospf6_debug_packet_flags"], d, "ospf6_debug_packet_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_packet_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_packet_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_events_flags", dataSourceFlattenRouterSettingOspf6_Debug_Events_Flags(o["ospf6_debug_events_flags"], d, "ospf6_debug_events_flags")); err != nil {
+	if err = d.Set("ospf6_debug_events_flags", dataSourceFlattenRouterSettingOspf6DebugEventsFlags(o["ospf6_debug_events_flags"], d, "ospf6_debug_events_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_events_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_events_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_route_flags", dataSourceFlattenRouterSettingOspf6_Debug_Route_Flags(o["ospf6_debug_route_flags"], d, "ospf6_debug_route_flags")); err != nil {
+	if err = d.Set("ospf6_debug_route_flags", dataSourceFlattenRouterSettingOspf6DebugRouteFlags(o["ospf6_debug_route_flags"], d, "ospf6_debug_route_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_route_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_route_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_ifsm_flags", dataSourceFlattenRouterSettingOspf6_Debug_Ifsm_Flags(o["ospf6_debug_ifsm_flags"], d, "ospf6_debug_ifsm_flags")); err != nil {
+	if err = d.Set("ospf6_debug_ifsm_flags", dataSourceFlattenRouterSettingOspf6DebugIfsmFlags(o["ospf6_debug_ifsm_flags"], d, "ospf6_debug_ifsm_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_ifsm_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_ifsm_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ospf6_debug_nsm_flags", dataSourceFlattenRouterSettingOspf6_Debug_Nsm_Flags(o["ospf6_debug_nsm_flags"], d, "ospf6_debug_nsm_flags")); err != nil {
+	if err = d.Set("ospf6_debug_nsm_flags", dataSourceFlattenRouterSettingOspf6DebugNsmFlags(o["ospf6_debug_nsm_flags"], d, "ospf6_debug_nsm_flags")); err != nil {
 		if !fortiAPIPatch(o["ospf6_debug_nsm_flags"]) {
 			return fmt.Errorf("Error reading ospf6_debug_nsm_flags: %v", err)
 		}
 	}
 
-	if err = d.Set("ripng_debug_flags", dataSourceFlattenRouterSettingRipng_Debug_Flags(o["ripng_debug_flags"], d, "ripng_debug_flags")); err != nil {
+	if err = d.Set("ripng_debug_flags", dataSourceFlattenRouterSettingRipngDebugFlags(o["ripng_debug_flags"], d, "ripng_debug_flags")); err != nil {
 		if !fortiAPIPatch(o["ripng_debug_flags"]) {
 			return fmt.Errorf("Error reading ripng_debug_flags: %v", err)
 		}

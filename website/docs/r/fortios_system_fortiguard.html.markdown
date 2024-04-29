@@ -66,7 +66,7 @@ The following arguments are supported:
 * `persistent_connection` - Enable/disable use of persistent connection to receive update notification from FortiGuard. Valid values: `enable`, `disable`.
 * `vdom` - FortiGuard Service virtual domain name.
 * `auto_firmware_upgrade` - Enable/disable automatic patch-level firmware upgrade from FortiGuard. The FortiGate unit searches for new patches only in the same major and minor version. Valid values: `enable`, `disable`.
-* `auto_firmware_upgrade_day` - Allowed day(s) of the week to start automatic patch-level firmware upgrade from FortiGuard. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
+* `auto_firmware_upgrade_day` - Allowed day(s) of the week to install an automatic patch-level firmware upgrade from FortiGuard (default is none). Disallow any day of the week to use auto-firmware-upgrade-delay instead, which waits for designated days before installing an automatic patch-level firmware upgrade. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `auto_firmware_upgrade_delay` - Delay of day(s) before installing an automatic patch-level firmware upgrade from FortiGuard (default = 3). Set it 0 to use auto-firmware-upgrade-day instead, which selects allowed day(s) of the week for installing an automatic patch-level firmware upgrade.
 * `auto_firmware_upgrade_start_hour` - Start time in the designated time window for automatic patch-level firmware upgrade from FortiGuard in 24 hour time (0 ~ 23, default = 2). The actual upgrade time is selected randomly within the time window.
 * `auto_firmware_upgrade_end_hour` - End time in the designated time window for automatic patch-level firmware upgrade from FortiGuard in 24 hour time (0 ~ 23, default = 4). When the end time is smaller than the start time, the end time is interpreted as the next day. The actual upgrade time is selected randomly within the time window.
@@ -78,7 +78,7 @@ The following arguments are supported:
 * `antispam_cache` - Enable/disable FortiGuard antispam request caching. Uses a small amount of memory but improves performance. Valid values: `enable`, `disable`.
 * `antispam_cache_ttl` - Time-to-live for antispam cache entries in seconds (300 - 86400). Lower times reduce the cache size. Higher times may improve performance since the cache will have more entries.
 * `antispam_cache_mpermille` - Maximum permille of FortiGate memory the antispam cache is allowed to use (1 - 150).
-* `antispam_cache_mpercent` - Maximum percent of FortiGate memory the antispam cache is allowed to use (1 - 15%).
+* `antispam_cache_mpercent` - Maximum percentage of FortiGate memory the antispam cache is allowed to use (1 - 15).
 * `antispam_license` - Interval of time between license checks for the FortiGuard antispam contract.
 * `antispam_expiration` - Expiration date of the FortiGuard antispam contract.
 * `antispam_timeout` - (Required) Antispam query time out (1 - 30 sec, default = 7).
@@ -95,7 +95,7 @@ The following arguments are supported:
 * `webfilter_cache_ttl` - Time-to-live for web filter cache entries in seconds (300 - 86400).
 * `webfilter_license` - Interval of time between license checks for the FortiGuard web filter contract.
 * `webfilter_expiration` - Expiration date of the FortiGuard web filter contract.
-* `webfilter_timeout` - (Required) Web filter query time out (1 - 30 sec, default = 7).
+* `webfilter_timeout` - (Required) Web filter query time out, 1 - 30 sec. On FortiOS versions 6.2.0-7.4.0: default = 7. On FortiOS versions >= 7.4.1: default = 15.
 * `sdns_server_ip` - IP address of the FortiDNS server.
 * `sdns_server_port` - Port used to communicate with FortiDNS servers.
 * `anycast_sdns_server_ip` - IP address of the FortiGuard anycast DNS rating server.

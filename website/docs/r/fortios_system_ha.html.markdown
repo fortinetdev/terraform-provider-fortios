@@ -55,7 +55,7 @@ resource "fortios_system_ha" "trname" {
 
 The following arguments are supported:
 
-* `group_id` - Cluster group ID  (0 - 255). Must be the same for all members.
+* `group_id` - HA group ID. Must be the same for all members. On FortiOS versions 6.2.0-6.2.6: 0 - 255. On FortiOS versions 7.0.2-7.0.15: 0 - 1023. On FortiOS versions 7.2.0: 0 - 1023;  or 0 - 7 when there are more than 2 vclusters.
 * `group_name` - Cluster group name. Must be the same for all members.
 * `mode` - HA mode. Must be the same for all members. FGSP requires standalone. Valid values: `standalone`, `a-a`, `a-p`.
 * `sync_packet_balance` - Enable/disable HA packet distribution to multiple CPUs. Valid values: `enable`, `disable`.
@@ -69,13 +69,13 @@ The following arguments are supported:
 * `route_ttl` - TTL for primary unit routes (5 - 3600 sec). Increase to maintain active routes during failover.
 * `route_wait` - Time to wait before sending new routes to the cluster (0 - 3600 sec).
 * `route_hold` - Time to wait between routing table updates to the cluster (0 - 3600 sec).
-* `multicast_ttl` - HA multicast TTL on master (5 - 3600 sec).
+* `multicast_ttl` - HA multicast TTL on primary (5 - 3600 sec).
 * `evpn_ttl` - HA EVPN FDB TTL on primary box (5 - 3600 sec).
 * `load_balance_all` - Enable to load balance TCP sessions. Disable to load balance proxy sessions only. Valid values: `enable`, `disable`.
 * `sync_config` - Enable/disable configuration synchronization. Valid values: `enable`, `disable`.
 * `encryption` - Enable/disable heartbeat message encryption. Valid values: `enable`, `disable`.
 * `authentication` - Enable/disable heartbeat message authentication. Valid values: `enable`, `disable`.
-* `hb_interval` - Time between sending heartbeat packets (1 - 20 (100*ms)). Increase to reduce false positives.
+* `hb_interval` - Time between sending heartbeat packets (1 - 20). Increase to reduce false positives.
 * `hb_interval_in_milliseconds` - Number of milliseconds for each heartbeat interval: 100ms or 10ms. Valid values: `100ms`, `10ms`.
 * `hb_lost_threshold` - Number of lost heartbeats to signal a failure (1 - 60). Increase to reduce false positives.
 * `hello_holddown` - Time to wait before changing from hello to work state (5 - 300 sec).
@@ -90,7 +90,7 @@ The following arguments are supported:
 * `link_failed_signal` - Enable to shut down all interfaces for 1 sec after a failover. Use if gratuitous ARPs do not update network. Valid values: `enable`, `disable`.
 * `upgrade_mode` - The mode to upgrade a cluster. Valid values: `simultaneous`, `uninterruptible`, `local-only`, `secondary-only`.
 * `uninterruptible_upgrade` - Enable to upgrade a cluster without blocking network traffic. Valid values: `enable`, `disable`.
-* `uninterruptible_primary_wait` - Number of minutes the primary HA unit waits before the secondary HA unit is considered upgraded and the system is started before starting its own upgrade (1 - 300, default = 30).
+* `uninterruptible_primary_wait` - Number of minutes the primary HA unit waits before the secondary HA unit is considered upgraded and the system is started before starting its own upgrade (default = 30). On FortiOS versions 6.4.10-6.4.15, 7.0.2-7.0.5: 1 - 300. On FortiOS versions >= 7.0.6: 15 - 300.
 * `standalone_mgmt_vdom` - Enable/disable standalone management VDOM. Valid values: `enable`, `disable`.
 * `ha_mgmt_status` - Enable to reserve interfaces to manage individual cluster units. Valid values: `enable`, `disable`.
 * `ha_mgmt_interfaces` - Reserve interfaces to manage individual cluster units. The structure of `ha_mgmt_interfaces` block is documented below.
@@ -128,7 +128,7 @@ The following arguments are supported:
 * `vcluster` - Virtual cluster table. The structure of `vcluster` block is documented below.
 * `vdom` - VDOMs in virtual cluster 1.
 * `secondary_vcluster` - Configure virtual cluster 2. The structure of `secondary_vcluster` block is documented below.
-* `ha_direct` - Enable/disable using ha-mgmt interface for syslog, SNMP, remote authentication (RADIUS), FortiAnalyzer, and FortiSandbox. Valid values: `enable`, `disable`.
+* `ha_direct` - Enable/disable using ha-mgmt interface for syslog, SNMP, remote authentication (RADIUS), FortiAnalyzer, FortiSandbox, sFlow, and Netflow. Valid values: `enable`, `disable`.
 * `ssd_failover` - Enable/disable automatic HA failover on SSD disk failure. Valid values: `enable`, `disable`.
 * `memory_compatible_mode` - Enable/disable memory compatible mode. Valid values: `enable`, `disable`.
 * `memory_based_failover` - Enable/disable memory based failover. Valid values: `enable`, `disable`.
@@ -140,7 +140,7 @@ The following arguments are supported:
 * `ipsec_phase2_proposal` - IPsec phase2 proposal. Valid values: `aes128-sha1`, `aes128-sha256`, `aes128-sha384`, `aes128-sha512`, `aes192-sha1`, `aes192-sha256`, `aes192-sha384`, `aes192-sha512`, `aes256-sha1`, `aes256-sha256`, `aes256-sha384`, `aes256-sha512`, `aes128gcm`, `aes256gcm`, `chacha20poly1305`.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `ha_mgmt_interfaces` block supports:
@@ -177,7 +177,7 @@ The `vdom` block supports:
 The `secondary_vcluster` block supports:
 
 * `vcluster_id` - Cluster ID.
-* `override` - Enable and increase the priority of the unit that should always be primary (master). Valid values: `enable`, `disable`.
+* `override` - Enable and increase the priority of the unit that should always be primary. Valid values: `enable`, `disable`.
 * `priority` - Increase the priority to select the primary unit (0 - 255).
 * `override_wait_time` - Delay negotiating if override is enabled (0 - 3600 sec). Reduces how often the cluster negotiates.
 * `monitor` - Interfaces to check for port monitoring (or link failure).

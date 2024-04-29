@@ -34,6 +34,7 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"ip": &schema.Schema{
 				Type:         schema.TypeString,
@@ -892,10 +893,9 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 							Computed:     true,
 						},
 						"condition_routemap": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"condition_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -917,10 +917,9 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 							Computed:     true,
 						},
 						"condition_routemap": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"condition_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -948,12 +947,22 @@ func resourceRouterbgpNeighborCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterbgpNeighbor(d, c.Fv)
@@ -981,12 +990,22 @@ func resourceRouterbgpNeighborUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectRouterbgpNeighbor(d, c.Fv)
@@ -1039,12 +1058,22 @@ func resourceRouterbgpNeighborRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadRouterbgpNeighbor(mkey, vdomparam)
@@ -1722,7 +1751,7 @@ func flattenRouterbgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 			new_version_map := map[string][]string{
 				">=": []string{"7.0.4"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -1809,7 +1838,7 @@ func flattenRouterbgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 			new_version_map := map[string][]string{
 				">=": []string{"7.0.4"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -2551,7 +2580,7 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		new_version_map := map[string][]string{
 			">=": []string{"7.2.1"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			if vx, ok := v.(string); ok {
 				vxx, err := strconv.Atoi(vx)
 				if err == nil {
@@ -2572,7 +2601,7 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		new_version_map := map[string][]string{
 			">=": []string{"7.2.1"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			if vx, ok := v.(string); ok {
 				vxx, err := strconv.Atoi(vx)
 				if err == nil {
@@ -3510,7 +3539,7 @@ func expandRouterbgpNeighborConditionalAdvertise(d *schema.ResourceData, v inter
 				new_version_map := map[string][]string{
 					">=": []string{"7.0.4"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -3586,7 +3615,7 @@ func expandRouterbgpNeighborConditionalAdvertise6(d *schema.ResourceData, v inte
 				new_version_map := map[string][]string{
 					">=": []string{"7.0.4"},
 				}
-				if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 					bstring = true
 				}
 			}
@@ -4663,7 +4692,7 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				obj["remote-as"] = fmt.Sprintf("%v", t)
 			} else {
 				obj["remote-as"] = t
@@ -4679,7 +4708,7 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				obj["local-as"] = fmt.Sprintf("%v", t)
 			} else {
 				obj["local-as"] = t

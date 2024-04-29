@@ -36,7 +36,7 @@ The following arguments are supported:
 * `password` - HTTP basic authentication password.
 * `comments` - Comment.
 * `resource` - (Required) URI of external resource.
-* `user_agent` - Override HTTP User-Agent header used when retrieving this external resource.
+* `user_agent` - HTTP User-Agent header (default = 'curl/7.58.0').
 * `server_identity_check` - Certificate verification option. Valid values: `none`, `basic`, `full`.
 * `refresh_rate` - (Required) Time interval to refresh external resource (1 - 43200 min, default = 5 min).
 * `source_ip` - Source IPv4 address used to communicate with server.

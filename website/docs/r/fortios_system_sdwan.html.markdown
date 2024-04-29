@@ -30,7 +30,7 @@ The following arguments are supported:
 * `service` - Create SD-WAN rules (also called services) to control how sessions are distributed to interfaces in the SD-WAN. The structure of `service` block is documented below.
 * `duplication` - Create SD-WAN duplication rule. The structure of `duplication` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `fail_alert_interfaces` block supports:
@@ -47,7 +47,7 @@ The `zone` block supports:
 
 The `members` block supports:
 
-* `seq_num` - Sequence number(1-512).
+* `seq_num` - Sequence number On FortiOS versions >= 6.4.2: 1-512. On FortiOS versions 6.4.1: 1-255.
 * `interface` - Interface name.
 * `zone` - Zone name.
 * `gateway` - The default gateway for this interface. Usually the default gateway of the Internet service provider that this interface is connected to.
@@ -57,7 +57,7 @@ The `members` block supports:
 * `source6` - Source IPv6 address used in the health-check packet to the server.
 * `cost` - Cost of this interface for services in SLA mode (0 - 4294967295, default = 0).
 * `weight` - Weight of this interface for weighted load balancing. (1 - 255) More traffic is directed to interfaces with higher weights.
-* `priority` - Priority of the interface (0 - 65535). Used for SD-WAN rules or priority rules.
+* `priority` - Priority of the interface for IPv4 . Used for SD-WAN rules or priority rules. On FortiOS versions 6.4.1: 0 - 65535. On FortiOS versions >= 7.0.4: 1 - 65535, default = 1.
 * `priority6` - Priority of the interface for IPv6 (1 - 65535, default = 1024). Used for SD-WAN rules or priority rules.
 * `spillover_threshold` - Egress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
 * `ingress_spillover_threshold` - Ingress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
@@ -75,12 +75,12 @@ The `health_check` block supports:
 * `server` - IP address or FQDN name of the server.
 * `detect_mode` - The mode determining how to detect the server.
 * `protocol` - Protocol used to determine if the FortiGate can communicate with the server.
-* `port` - Port number used to communicate with the server over the selected protocol (0-65535, default = 0, auto select. http, twamp: 80, udp-echo, tcp-echo: 7, dns: 53, ftp: 21).
+* `port` - Port number used to communicate with the server over the selected protocol (0 - 65535, default = 0, auto select. http, tcp-connect: 80, udp-echo, tcp-echo: 7, dns: 53, ftp: 21, twamp: 862).
 * `quality_measured_method` - Method to measure the quality of tcp-connect. Valid values: `half-open`, `half-close`.
 * `security_mode` - Twamp controller security mode. Valid values: `none`, `authentication`.
 * `user` - The user name to access probe server.
 * `password` - Twamp controller password in authentication mode
-* `packet_size` - Packet size of a twamp test session,
+* `packet_size` - Packet size of a TWAMP test session. (124/158 - 1024)
 * `ha_priority` - HA election priority (1 - 50).
 * `ftp_mode` - FTP mode. Valid values: `passive`, `port`.
 * `ftp_file` - Full path and file name on the FTP server to download for FTP health-check to probe.
@@ -89,8 +89,8 @@ The `health_check` block supports:
 * `http_match` - Response string expected from the server if the protocol is HTTP.
 * `dns_request_domain` - Fully qualified domain name to resolve for the DNS probe.
 * `dns_match_ip` - Response IP expected from DNS server if the protocol is DNS.
-* `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (500 - 3600*1000 msec, default = 500).
-* `probe_timeout` - Time to wait before a probe packet is considered lost (500 - 3600*1000 msec, default = 500).
+* `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (default = 500). On FortiOS versions 6.4.1-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 3600*1000 msec.
+* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.4.2-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 6.4.1: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 3600*1000 msec.
 * `failtime` - Number of failures before server is considered lost (1 - 3600, default = 5).
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 3600, default = 5).
 * `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
@@ -133,9 +133,9 @@ The `sla` block supports:
 The `neighbor` block supports:
 
 * `ip` - IP/IPv6 address of neighbor.
-* `member_block` - Member sequence number list. The structure of `member_block` block is documented below.
+* `member_block` - Member sequence number list. *Due to the data type change of API, for other versions of FortiOS, please check variable `member`.* The structure of `member_block` block is documented below.
 * `minimum_sla_meet_members` - Minimum number of members which meet SLA when the neighbor is preferred.
-* `member` - Member sequence number.
+* `member` - Member sequence number. *Due to the data type change of API, for other versions of FortiOS, please check variable `member_block`.*
 * `service_id` - SD-WAN service ID to work with the neighbor.
 * `mode` - What metric to select the neighbor. Valid values: `sla`, `speedtest`.
 * `role` - Role of neighbor. Valid values: `standalone`, `primary`, `secondary`.

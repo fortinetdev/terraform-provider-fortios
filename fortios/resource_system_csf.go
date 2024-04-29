@@ -34,6 +34,7 @@ func resourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -48,6 +49,22 @@ func resourceSystemCsf() *schema.Resource {
 			"upstream": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"upstream_interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"upstream_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -322,12 +339,22 @@ func resourceSystemCsfUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectSystemCsf(d, false, c.Fv)
@@ -385,12 +412,22 @@ func resourceSystemCsfRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadSystemCsf(mkey, vdomparam)
@@ -420,6 +457,18 @@ func flattenSystemCsfUid(v interface{}, d *schema.ResourceData, pre string, sv s
 }
 
 func flattenSystemCsfUpstream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemCsfSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemCsfUpstreamInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemCsfUpstreamInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -850,6 +899,24 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("source_ip", flattenSystemCsfSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("upstream_interface_select_method", flattenSystemCsfUpstreamInterfaceSelectMethod(o["upstream-interface-select-method"], d, "upstream_interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["upstream-interface-select-method"]) {
+			return fmt.Errorf("Error reading upstream_interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("upstream_interface", flattenSystemCsfUpstreamInterface(o["upstream-interface"], d, "upstream_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["upstream-interface"]) {
+			return fmt.Errorf("Error reading upstream_interface: %v", err)
+		}
+	}
+
 	if err = d.Set("upstream_ip", flattenSystemCsfUpstreamIp(o["upstream-ip"], d, "upstream_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["upstream-ip"]) {
 			return fmt.Errorf("Error reading upstream_ip: %v", err)
@@ -1030,6 +1097,18 @@ func expandSystemCsfUid(d *schema.ResourceData, v interface{}, pre string, sv st
 }
 
 func expandSystemCsfUpstream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfUpstreamInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCsfUpstreamInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1418,6 +1497,45 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["upstream"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
+			t, err := expandSystemCsfSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("upstream_interface_select_method"); ok {
+		if setArgNil {
+			obj["upstream-interface-select-method"] = nil
+		} else {
+			t, err := expandSystemCsfUpstreamInterfaceSelectMethod(d, v, "upstream_interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upstream-interface-select-method"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("upstream_interface"); ok {
+		if setArgNil {
+			obj["upstream-interface"] = nil
+		} else {
+			t, err := expandSystemCsfUpstreamInterface(d, v, "upstream_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upstream-interface"] = t
 			}
 		}
 	}

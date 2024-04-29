@@ -26,7 +26,7 @@ resource "fortios_system_settings" "trname" {
 The following arguments are supported:
 
 * `comments` - VDOM comments.
-* `vdom_type` - VDOM type (traffic or admin).
+* `vdom_type` - VDOM type. On FortiOS versions 7.2.0: traffic or admin. On FortiOS versions >= 7.2.1: traffic, lan-extension or admin.
 * `lan_extension_controller_addr` - Controller IP address or FQDN to connect.
 * `opmode` - Firewall operation mode (NAT or Transparent). Valid values: `nat`, `transparent`.
 * `inspection_mode` - Inspection mode (proxy-based or flow-based). Valid values: `proxy`, `flow`.
@@ -44,8 +44,8 @@ The following arguments are supported:
 * `ip6` - IPv6 address prefix for NAT mode.
 * `device` - Interface to use for management access for NAT mode.
 * `bfd` - Enable/disable Bi-directional Forwarding Detection (BFD) on all interfaces. Valid values: `enable`, `disable`.
-* `bfd_desired_min_tx` - BFD desired minimal transmit interval (1 - 100000 ms, default = 50).
-* `bfd_required_min_rx` - BFD required minimal receive interval (1 - 100000 ms, default = 50).
+* `bfd_desired_min_tx` - BFD desired minimal transmit interval (1 - 100000 ms). On FortiOS versions 6.2.0-6.4.15: default = 50. On FortiOS versions >= 7.0.0: default = 250.
+* `bfd_required_min_rx` - BFD required minimal receive interval (1 - 100000 ms). On FortiOS versions 6.2.0-6.4.15: default = 50. On FortiOS versions >= 7.0.0: default = 250.
 * `bfd_detect_mult` - BFD detection multiplier (1 - 50, default = 3).
 * `bfd_dont_enforce_src_port` - Enable to not enforce verifying the source port of BFD Packets. Valid values: `enable`, `disable`.
 * `utf8_spam_tagging` - Enable/disable converting antispam tags to UTF-8 for better non-ASCII character support. Valid values: `enable`, `disable`.
@@ -95,7 +95,7 @@ The following arguments are supported:
 * `multicast_skip_policy` - Enable/disable allowing multicast traffic through the FortiGate without a policy check. Valid values: `enable`, `disable`.
 * `allow_subnet_overlap` - Enable/disable allowing interface subnets to use overlapping IP addresses. Valid values: `enable`, `disable`.
 * `deny_tcp_with_icmp` - Enable/disable denying TCP by sending an ICMP communication prohibited packet. Valid values: `enable`, `disable`.
-* `ecmp_max_paths` - Maximum number of Equal Cost Multi-Path (ECMP) next-hops. Set to 1 to disable ECMP routing (1 - 100, default = 10).
+* `ecmp_max_paths` - Maximum number of Equal Cost Multi-Path (ECMP) next-hops. Set to 1 to disable ECMP routing. On FortiOS versions 6.2.0: 1 - 100, default = 10. On FortiOS versions >= 6.2.4: 1 - 255, default = 255.
 * `discovered_device_timeout` - Timeout for discovered devices (1 - 365 days, default = 28).
 * `email_portal_check_dns` - Enable/disable using DNS to validate email addresses collected by a captive portal. Valid values: `disable`, `enable`.
 * `default_voip_alg_mode` - Configure how the FortiGate handles VoIP traffic when a policy that accepts the traffic doesn't include a VoIP profile. Valid values: `proxy-based`, `kernel-helper-based`.
@@ -180,7 +180,7 @@ The following arguments are supported:
 * `gui_enforce_change_summary` - Enforce change summaries for select tables in the GUI. Valid values: `disable`, `require`, `optional`.
 * `internet_service_database_cache` - Enable/disable Internet Service database caching. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `gui_default_policy_columns` block supports:

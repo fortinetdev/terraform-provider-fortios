@@ -53,12 +53,12 @@ The following arguments are supported:
 * `sms_server` - Send SMS through FortiGuard or other external server. Valid values: `fortiguard`, `custom`.
 * `sms_custom_server` - SMS server.
 * `expire_type` - Determine when the expiration countdown begins. Valid values: `immediately`, `first-successful-login`.
-* `expire` - Time in seconds before guest user accounts expire. (1 - 31536000 sec)
+* `expire` - Time in seconds before guest user accounts expire (1 - 31536000).
 * `max_accounts` - Maximum number of guest accounts that can be created for this group (0 means unlimited).
 * `multiple_guest_add` - Enable/disable addition of multiple guests. Valid values: `disable`, `enable`.
 * `guest` - Guest User. The structure of `guest` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `member` block supports:

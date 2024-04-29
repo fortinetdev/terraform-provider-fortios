@@ -116,7 +116,7 @@ The following arguments are supported:
 * `display_history` - Enable to display the web portal user login history widget. Valid values: `enable`, `disable`.
 * `focus_bookmark` - Enable to prioritize the placement of the bookmark section over the quick-connection section in the SSL-VPN application. Valid values: `enable`, `disable`.
 * `display_status` - Enable to display the web portal status widget. Valid values: `enable`, `disable`.
-* `rewrite_ip_uri_ui` - Rewrite contents for URI contains IP and "/ui/". (default = disable) Valid values: `enable`, `disable`.
+* `rewrite_ip_uri_ui` - Rewrite contents for URI contains IP and /ui/ (default = disable). Valid values: `enable`, `disable`.
 * `heading` - Web portal heading message.
 * `redir_url` - Client login redirect URL.
 * `theme` - Web portal color scheme.
@@ -151,7 +151,7 @@ The following arguments are supported:
 * `split_dns` - Split DNS for SSL VPN. The structure of `split_dns` block is documented below.
 * `landing_page` - Landing page options. The structure of `landing_page` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `ip_pools` block supports:
@@ -190,9 +190,9 @@ The `bookmarks` block supports:
 * `description` - Description.
 * `keyboard_layout` - Keyboard layout.
 * `server_layout` - Server side keyboard layout.
-* `security` - Security mode for RDP connection. Valid values: `rdp`, `nla`, `tls`, `any`.
+* `security` - Security mode for RDP connection (default = any). Valid values: `rdp`, `nla`, `tls`, `any`.
 * `send_preconnection_id` - Enable/disable sending of preconnection ID. Valid values: `enable`, `disable`.
-* `preconnection_id` - The numeric ID of the RDP source (0-2147483648).
+* `preconnection_id` - The numeric ID of the RDP source. On FortiOS versions 6.2.0-6.4.2, 7.0.0: 0-2147483648. On FortiOS versions 6.4.10-6.4.15, >= 7.0.1: 0-4294967295.
 * `preconnection_blob` - An arbitrary string which identifies the RDP source.
 * `load_balancing_info` - The load balancing information or cookie which should be provided to the connection broker.
 * `restricted_admin` - Enable/disable restricted admin mode for RDP. Valid values: `enable`, `disable`.
@@ -206,8 +206,8 @@ The `bookmarks` block supports:
 * `sso_username` - SSO user name.
 * `sso_password` - SSO password.
 * `sso_credential_sent_once` - Single sign-on credentials are only sent once to remote server. Valid values: `enable`, `disable`.
-* `width` - Screen width (range from 640 - 65535, default = 1024).
-* `height` - Screen height (range from 480 - 65535, default = 768).
+* `width` - Screen width. On FortiOS versions 7.0.4-7.0.5: range from 640 - 65535, default = 1024. On FortiOS versions >= 7.0.6: range from 0 - 65535, default = 0.
+* `height` - Screen height. On FortiOS versions 7.0.4-7.0.5: range from 480 - 65535, default = 768. On FortiOS versions >= 7.0.6: range from 0 - 65535, default = 0.
 * `vnc_keyboard_layout` - Keyboard layout. Valid values: `default`, `da`, `nl`, `en-uk`, `en-uk-ext`, `fi`, `fr`, `fr-be`, `fr-ca-mul`, `de`, `de-ch`, `it`, `it-142`, `pt`, `pt-br-abnt2`, `no`, `gd`, `es`, `sv`, `us-intl`.
 
 The `form_data` block supports:
@@ -239,7 +239,7 @@ The `os_check_list` block supports:
 The `split_dns` block supports:
 
 * `id` - ID.
-* `domains` - Split DNS domains used for SSL-VPN clients separated by comma(,).
+* `domains` - Split DNS domains used for SSL-VPN clients separated by comma.
 * `dns_server1` - DNS server 1.
 * `dns_server2` - DNS server 2.
 * `ipv6_dns_server1` - IPv6 DNS server 1.

@@ -218,6 +218,75 @@ func (r *Request) Send3(vdomparam string) error {
 	return err
 }
 
+// checkValid check whether given credential is valid.
+// If errors are encountered, it returns the error.
+func (r *Request) CheckValid() error {
+	retries := 15
+
+	var err error
+	var cookies *Cookies
+	token := r.Config.Auth.Token
+
+	if r.Config.Auth.Token == "" {
+		token, err = r.LoginToken()
+		if err != nil {
+			cookies, err = r.LoginSession()
+			if err != nil {
+				log.Printf("[ERROR] Failed to login: %v", err)
+				return err
+			}
+			r.HTTPRequest.Header.Set("X-CSRFTOKEN", cookies.CSRFToken)
+			r.HTTPRequest.Header.Set("Cookie", cookies.Cookie)
+			// logout session
+			errLogout := r.LogoutSession(cookies)
+			if errLogout != nil {
+				log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
+			}
+			return nil
+		}
+		log.Printf("token: %v", token)
+		// logout token
+		errLogout := r.LogoutToken(token)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
+		}
+		return nil
+	}
+	r.HTTPRequest.Header.Set("Content-Type", "application/json")
+	u := r.buildURL("", "")
+	r.HTTPRequest.URL, err = url.Parse(u)
+	if err != nil {
+		return err
+	}
+
+	retry := 0
+	for {
+		//Send
+		rsp, errdo := r.Config.HTTPCon.Do(r.HTTPRequest)
+		r.HTTPResponse = rsp
+		if errdo != nil {
+			if strings.Contains(errdo.Error(), "x509: ") {
+				err = fmt.Errorf("Error found: %v", filterapikey(errdo.Error()))
+				break
+			}
+
+			if retry > retries {
+				err = fmt.Errorf("lost connection to firewall with error: %v", filterapikey(errdo.Error()))
+				break
+			}
+			time.Sleep(time.Second)
+			log.Printf("Error found: %v, will resend again %s, %d", filterapikey(errdo.Error()), u, retry)
+
+			retry++
+
+		} else {
+			break
+		}
+	}
+
+	return err
+}
+
 func filterapikey(v string) string {
 	re, _ := regexp.Compile("access_token=.*?\"")
 	res := re.ReplaceAllString(v, "access_token=***************\"")
@@ -441,7 +510,7 @@ func (r *Request) LoginSession() (*Cookies, error) {
 	cookie := ""
 	if setCookie, ok := rsp.Header["Set-Cookie"]; ok {
 		for _, item := range setCookie {
-			reg := regexp.MustCompile(`ccsrftoken="(.*)".*`)
+			reg := regexp.MustCompile(`ccsrftoken.*?="(.*)".*`)
 			match := reg.FindStringSubmatch(item)
 			if match != nil {
 				csrfToken = match[1]

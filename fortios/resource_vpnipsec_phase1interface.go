@@ -34,6 +34,7 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -162,10 +163,9 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Computed:     true,
 			},
 			"monitor": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"monitor_min": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -977,6 +977,58 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"remote_gw_match": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw_subnet": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw_start_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw_end_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw_country": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 2),
+				Optional:     true,
+				Computed:     true,
+			},
+			"remote_gw6_match": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw6_subnet": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw6_start_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw6_end_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"remote_gw6_country": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 2),
+				Optional:     true,
+				Computed:     true,
+			},
 			"cert_trust_store": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1027,12 +1079,22 @@ func resourceVpnIpsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectVpnIpsecPhase1Interface(d, c.Fv)
@@ -1060,12 +1122,22 @@ func resourceVpnIpsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectVpnIpsecPhase1Interface(d, c.Fv)
@@ -1118,12 +1190,22 @@ func resourceVpnIpsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadVpnIpsecPhase1Interface(mkey, vdomparam)
@@ -1974,7 +2056,7 @@ func flattenVpnIpsecPhase1InterfaceFecBase(v interface{}, d *schema.ResourceData
 	return v
 }
 
-func flattenVpnIpsecPhase1InterfaceFecCodec_String(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenVpnIpsecPhase1InterfaceFecCodecString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2035,6 +2117,53 @@ func flattenVpnIpsecPhase1InterfaceExchangeFgtDeviceId(v interface{}, d *schema.
 }
 
 func flattenVpnIpsecPhase1InterfaceEmsSnCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGwMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGwSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGwStartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGwEndIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGwCountry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGw6Match(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGw6Subnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGw6StartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGw6EndIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceRemoteGw6Country(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2220,7 +2349,7 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		new_version_map := map[string][]string{
 			">=": []string{"7.4.1"},
 		}
-		if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -3031,7 +3160,7 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	}
 
 	if _, ok := o["fec-codec"].(string); ok {
-		if err = d.Set("fec_codec_string", flattenVpnIpsecPhase1InterfaceFecCodec_String(o["fec-codec"], d, "fec_codec_string", sv)); err != nil {
+		if err = d.Set("fec_codec_string", flattenVpnIpsecPhase1InterfaceFecCodecString(o["fec-codec"], d, "fec_codec_string", sv)); err != nil {
 			if !fortiAPIPatch(o["fec-codec"]) {
 				return fmt.Errorf("Error reading fec_codec_string: %v", err)
 			}
@@ -3127,6 +3256,66 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 	if err = d.Set("ems_sn_check", flattenVpnIpsecPhase1InterfaceEmsSnCheck(o["ems-sn-check"], d, "ems_sn_check", sv)); err != nil {
 		if !fortiAPIPatch(o["ems-sn-check"]) {
 			return fmt.Errorf("Error reading ems_sn_check: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw_match", flattenVpnIpsecPhase1InterfaceRemoteGwMatch(o["remote-gw-match"], d, "remote_gw_match", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw-match"]) {
+			return fmt.Errorf("Error reading remote_gw_match: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw_subnet", flattenVpnIpsecPhase1InterfaceRemoteGwSubnet(o["remote-gw-subnet"], d, "remote_gw_subnet", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw-subnet"]) {
+			return fmt.Errorf("Error reading remote_gw_subnet: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw_start_ip", flattenVpnIpsecPhase1InterfaceRemoteGwStartIp(o["remote-gw-start-ip"], d, "remote_gw_start_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw-start-ip"]) {
+			return fmt.Errorf("Error reading remote_gw_start_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw_end_ip", flattenVpnIpsecPhase1InterfaceRemoteGwEndIp(o["remote-gw-end-ip"], d, "remote_gw_end_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw-end-ip"]) {
+			return fmt.Errorf("Error reading remote_gw_end_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw_country", flattenVpnIpsecPhase1InterfaceRemoteGwCountry(o["remote-gw-country"], d, "remote_gw_country", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw-country"]) {
+			return fmt.Errorf("Error reading remote_gw_country: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw6_match", flattenVpnIpsecPhase1InterfaceRemoteGw6Match(o["remote-gw6-match"], d, "remote_gw6_match", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw6-match"]) {
+			return fmt.Errorf("Error reading remote_gw6_match: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw6_subnet", flattenVpnIpsecPhase1InterfaceRemoteGw6Subnet(o["remote-gw6-subnet"], d, "remote_gw6_subnet", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw6-subnet"]) {
+			return fmt.Errorf("Error reading remote_gw6_subnet: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw6_start_ip", flattenVpnIpsecPhase1InterfaceRemoteGw6StartIp(o["remote-gw6-start-ip"], d, "remote_gw6_start_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw6-start-ip"]) {
+			return fmt.Errorf("Error reading remote_gw6_start_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw6_end_ip", flattenVpnIpsecPhase1InterfaceRemoteGw6EndIp(o["remote-gw6-end-ip"], d, "remote_gw6_end_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw6-end-ip"]) {
+			return fmt.Errorf("Error reading remote_gw6_end_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_gw6_country", flattenVpnIpsecPhase1InterfaceRemoteGw6Country(o["remote-gw6-country"], d, "remote_gw6_country", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-gw6-country"]) {
+			return fmt.Errorf("Error reading remote_gw6_country: %v", err)
 		}
 	}
 
@@ -3941,7 +4130,7 @@ func expandVpnIpsecPhase1InterfaceFecBase(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandVpnIpsecPhase1InterfaceFecCodec_String(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandVpnIpsecPhase1InterfaceFecCodecString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4002,6 +4191,46 @@ func expandVpnIpsecPhase1InterfaceExchangeFgtDeviceId(d *schema.ResourceData, v 
 }
 
 func expandVpnIpsecPhase1InterfaceEmsSnCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGwMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGwSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGwStartIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGwEndIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGwCountry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGw6Match(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGw6Subnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGw6StartIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGw6EndIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceRemoteGw6Country(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4238,7 +4467,7 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			new_version_map := map[string][]string{
 				">=": []string{"7.4.1"},
 			}
-			if i2ss2arrFortiAPIUpgrade(sv, new_version_map) == true {
+			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
 				vx := fmt.Sprintf("%v", t)
 				vxx := strings.Split(vx, ", ")
 
@@ -5410,20 +5639,40 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	if v, ok := d.GetOk("fec_codec_string"); ok {
-		t, err := expandVpnIpsecPhase1InterfaceFecCodec_String(d, v, "fec_codec_string", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fec-codec"] = t
+		new_version_map := map[string][]string{
+			">=": []string{"7.0.2"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("fec_codec"); !ok && !d.HasChange("fec_codec") {
+				err := fmt.Errorf("Argument 'fec_codec_string' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandVpnIpsecPhase1InterfaceFecCodecString(d, v, "fec_codec_string", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fec-codec"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOkExists("fec_codec"); ok {
-		t, err := expandVpnIpsecPhase1InterfaceFecCodec(d, v, "fec_codec", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["fec-codec"] = t
+		new_version_map := map[string][]string{
+			"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("fec_codec_string"); !ok && !d.HasChange("fec_codec_string") {
+				err := fmt.Errorf("Argument 'fec_codec' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandVpnIpsecPhase1InterfaceFecCodec(d, v, "fec_codec", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fec-codec"] = t
+			}
 		}
 	}
 
@@ -5550,6 +5799,96 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["ems-sn-check"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw_match"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGwMatch(d, v, "remote_gw_match", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw-match"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw_subnet"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGwSubnet(d, v, "remote_gw_subnet", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw-subnet"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw_start_ip"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGwStartIp(d, v, "remote_gw_start_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw-start-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw_end_ip"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGwEndIp(d, v, "remote_gw_end_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw-end-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw_country"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGwCountry(d, v, "remote_gw_country", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw-country"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw6_match"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGw6Match(d, v, "remote_gw6_match", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw6-match"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw6_subnet"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGw6Subnet(d, v, "remote_gw6_subnet", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw6-subnet"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw6_start_ip"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGw6StartIp(d, v, "remote_gw6_start_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw6-start-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw6_end_ip"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGw6EndIp(d, v, "remote_gw6_end_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw6-end-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("remote_gw6_country"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceRemoteGw6Country(d, v, "remote_gw6_country", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["remote-gw6-country"] = t
 		}
 	}
 

@@ -34,16 +34,16 @@ The following arguments are supported:
 * `handoff_roaming` - Enable/disable client load balancing during roaming to avoid roaming delay (default = disable). Valid values: `enable`, `disable`.
 * `deny_mac_list` - List of MAC addresses that are denied access to this WTP, FortiAP, or AP. The structure of `deny_mac_list` block is documented below.
 * `ap_country` - Country in which this WTP, FortiAP or AP will operate (default = NA, automatically use the country configured for the current VDOM).
-* `ip_fragment_preventing` - Select how to prevent IP fragmentation for CAPWAP tunneled control and data packets (default = tcp-mss-adjust). Valid values: `tcp-mss-adjust`, `icmp-unreachable`.
-* `tun_mtu_uplink` - Uplink CAPWAP tunnel MTU (0, 576, or 1500 bytes, default = 0).
-* `tun_mtu_downlink` - Downlink CAPWAP tunnel MTU (0, 576, or 1500 bytes, default = 0).
+* `ip_fragment_preventing` - Method(s) by which IP fragmentation is prevented for control and data packets through CAPWAP tunnel (default = tcp-mss-adjust). Valid values: `tcp-mss-adjust`, `icmp-unreachable`.
+* `tun_mtu_uplink` - The maximum transmission unit (MTU) of uplink CAPWAP tunnel (576 - 1500 bytes or 0; 0 means the local MTU of FortiAP; default = 0).
+* `tun_mtu_downlink` - The MTU of downlink CAPWAP tunnel (576 - 1500 bytes or 0; 0 means the local MTU of FortiAP; default = 0).
 * `split_tunneling_acl_path` - Split tunneling ACL path is local/tunnel. Valid values: `tunnel`, `local`.
 * `split_tunneling_acl_local_ap_subnet` - Enable/disable automatically adding local subnetwork of FortiAP to split-tunneling ACL (default = disable). Valid values: `enable`, `disable`.
 * `split_tunneling_acl` - Split tunneling ACL filter list. The structure of `split_tunneling_acl` block is documented below.
 * `allowaccess` - Control management access to the managed WTP, FortiAP, or AP. Separate entries with a space.
 * `login_passwd_change` - Change or reset the administrator password of a managed WTP, FortiAP or AP (yes, default, or no, default = no). Valid values: `yes`, `default`, `no`.
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
-* `lldp` - Enable/disable Link Layer Discovery Protocol (LLDP) for the WTP, FortiAP, or AP (default = disable). Valid values: `enable`, `disable`.
+* `lldp` - Enable/disable Link Layer Discovery Protocol (LLDP) for the WTP, FortiAP, or AP. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
 * `poe_mode` - Set the WTP, FortiAP, or AP's PoE mode.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
@@ -55,7 +55,7 @@ The following arguments are supported:
 * `ext_info_enable` - Enable/disable station/VAP/radio extension information. Valid values: `enable`, `disable`.
 * `indoor_outdoor_deployment` - Set to allow indoor/outdoor-only channels under regulatory rules (default = platform-determined). Valid values: `platform-determined`, `outdoor`, `indoor`.
 * `esl_ses_dongle` - ESL SES-imagotag dongle configuration. The structure of `esl_ses_dongle` block is documented below.
-* `console_login` - Enable/disable FAP console login access (default = enable). Valid values: `enable`, `disable`.
+* `console_login` - Enable/disable FortiAP console login access (default = enable). Valid values: `enable`, `disable`.
 * `wan_port_auth` - Set WAN port authentication mode (default = none). Valid values: `none`, `802.1x`.
 * `wan_port_auth_usrname` - Set WAN port 802.1x supplicant user name.
 * `wan_port_auth_password` - Set WAN port 802.1x supplicant password.
@@ -63,7 +63,7 @@ The following arguments are supported:
 * `wan_port_auth_macsec` - Enable/disable WAN port 802.1x supplicant MACsec policy (default = disable). Valid values: `enable`, `disable`.
 * `unii_4_5ghz_band` - Enable/disable UNII-4 5Ghz band channels (default = disable). Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `platform` block supports:
@@ -124,22 +124,22 @@ The `radio_1` block supports:
 * `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable). Valid values: `enable`, `disable`.
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
-* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, disable = 0, default = 0).
 * `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable). Valid values: `enable`, `disable`.
-* `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
+* `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
-* `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
-* `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
+* `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
@@ -184,7 +184,7 @@ The `radio_1` block supports:
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 * `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them. Valid values: `enable`, `disable`.
@@ -215,22 +215,22 @@ The `radio_2` block supports:
 * `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable). Valid values: `enable`, `disable`.
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
-* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, disable = 0, default = 0).
 * `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable). Valid values: `enable`, `disable`.
-* `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
+* `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
-* `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
-* `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
+* `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
@@ -275,7 +275,7 @@ The `radio_2` block supports:
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 * `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them. Valid values: `enable`, `disable`.
@@ -305,7 +305,7 @@ The `radio_3` block supports:
 * `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable). Valid values: `enable`, `disable`.
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
-* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, disable = 0, default = 0).
 * `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
@@ -315,12 +315,12 @@ The `radio_3` block supports:
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
-* `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
@@ -365,7 +365,7 @@ The `radio_3` block supports:
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 * `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them. Valid values: `enable`, `disable`.
@@ -395,7 +395,7 @@ The `radio_4` block supports:
 * `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable). Valid values: `enable`, `disable`.
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable). Valid values: `enable`, `disable`.
 * `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable). Valid values: `enable`, `disable`.
-* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, disable = 0, default = 0).
 * `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
@@ -405,12 +405,12 @@ The `radio_4` block supports:
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
-* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
-* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
-* `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
@@ -455,7 +455,7 @@ The `radio_4` block supports:
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
-* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 * `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them. Valid values: `enable`, `disable`.
@@ -473,23 +473,23 @@ The `channel` block supports:
 
 The `lbs` block supports:
 
-* `ekahau_blink_mode` - Enable/disable Ekahua blink mode (also called AiRISTA Flow Blink Mode) to find the location of devices connected to a wireless LAN (default = disable). Valid values: `enable`, `disable`.
+* `ekahau_blink_mode` - Enable/disable Ekahau blink mode (now known as AiRISTA Flow) to track and locate WiFi tags (default = disable). Valid values: `enable`, `disable`.
 * `ekahau_tag` - WiFi frame MAC address or WiFi Tag.
-* `erc_server_ip` - IP address of Ekahua RTLS Controller (ERC).
-* `erc_server_port` - Ekahua RTLS Controller (ERC) UDP listening port.
+* `erc_server_ip` - IP address of Ekahau RTLS Controller (ERC).
+* `erc_server_port` - Ekahau RTLS Controller (ERC) UDP listening port.
 * `aeroscout` - Enable/disable AeroScout Real Time Location Service (RTLS) support. Valid values: `enable`, `disable`.
 * `aeroscout_server_ip` - IP address of AeroScout server.
 * `aeroscout_server_port` - AeroScout server UDP listening port.
-* `aeroscout_mu` - Enable/disable AeroScout support. Valid values: `enable`, `disable`.
-* `aeroscout_ap_mac` - Use BSSID or board MAC address as AP MAC address in the Aeroscout AP message. Valid values: `bssid`, `board-mac`.
-* `aeroscout_mmu_report` - Enable/disable MU compounded report. Valid values: `enable`, `disable`.
-* `aeroscout_mu_factor` - AeroScout Mobile Unit (MU) mode dilution factor (default = 20).
+* `aeroscout_mu` - Enable/disable AeroScout Mobile Unit (MU) support (default = disable). Valid values: `enable`, `disable`.
+* `aeroscout_ap_mac` - Use BSSID or board MAC address as AP MAC address in AeroScout AP messages (default = bssid). Valid values: `bssid`, `board-mac`.
+* `aeroscout_mmu_report` - Enable/disable compounded AeroScout tag and MU report (default = enable). Valid values: `enable`, `disable`.
+* `aeroscout_mu_factor` - eroScout MU mode dilution factor (default = 20).
 * `aeroscout_mu_timeout` - AeroScout MU mode timeout (0 - 65535 sec, default = 5).
 * `fortipresence` - Enable/disable FortiPresence to monitor the location and activity of WiFi clients even if they don't connect to this WiFi network (default = disable). Valid values: `foreign`, `both`, `disable`.
 * `fortipresence_server_addr_type` - FortiPresence server address type (default = ipv4). Valid values: `ipv4`, `fqdn`.
 * `fortipresence_server` - FortiPresence server IP address.
 * `fortipresence_server_fqdn` - FQDN of FortiPresence server.
-* `fortipresence_port` - FortiPresence server UDP listening port (default = 3000).
+* `fortipresence_port` - UDP listening port of FortiPresence server (default = 3000).
 * `fortipresence_secret` - FortiPresence secret password (max. 16 characters).
 * `fortipresence_project` - FortiPresence project name (max. 16 characters, default = fortipresence).
 * `fortipresence_frequency` - FortiPresence report transmit frequency (5 - 65535 sec, default = 30).

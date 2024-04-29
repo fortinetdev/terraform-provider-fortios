@@ -34,6 +34,7 @@ func resourceLogFortianalyzerOverrideSetting() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
+				Computed: true,
 			},
 			"override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -236,12 +237,22 @@ func resourceLogFortianalyzerOverrideSettingUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	obj, err := getObjectLogFortianalyzerOverrideSetting(d, false, c.Fv)
@@ -299,12 +310,22 @@ func resourceLogFortianalyzerOverrideSettingRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	if c.Fv == "" {
+		err := c.UpdateDeviceVersion()
+		if err != nil {
+			return fmt.Errorf("[Warning] Can not update device version: %v", err)
+		}
+	}
+
 	vdomparam := ""
 
 	if v, ok := d.GetOk("vdomparam"); ok {
 		if s, ok := v.(string); ok {
 			vdomparam = s
 		}
+	} else if c.Config.Auth.Vdom != "" {
+		d.Set("vdomparam", c.Config.Auth.Vdom)
+		vdomparam = c.Config.Auth.Vdom
 	}
 
 	o, err := c.ReadLogFortianalyzerOverrideSetting(mkey, vdomparam)
@@ -451,7 +472,7 @@ func flattenLogFortianalyzerOverrideSettingSourceIp(v interface{}, d *schema.Res
 	return v
 }
 
-func flattenLogFortianalyzerOverrideSetting__Change_Ip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenLogFortianalyzerOverrideSettingChangeIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -642,7 +663,7 @@ func refreshObjectLogFortianalyzerOverrideSetting(d *schema.ResourceData, o map[
 		}
 	}
 
-	if err = d.Set("__change_ip", flattenLogFortianalyzerOverrideSetting__Change_Ip(o["__change_ip"], d, "__change_ip", sv)); err != nil {
+	if err = d.Set("__change_ip", flattenLogFortianalyzerOverrideSettingChangeIp(o["__change_ip"], d, "__change_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["__change_ip"]) {
 			return fmt.Errorf("Error reading __change_ip: %v", err)
 		}
@@ -823,7 +844,7 @@ func expandLogFortianalyzerOverrideSettingSourceIp(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func expandLogFortianalyzerOverrideSetting__Change_Ip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandLogFortianalyzerOverrideSettingChangeIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1156,7 +1177,7 @@ func getObjectLogFortianalyzerOverrideSetting(d *schema.ResourceData, setArgNil 
 		if setArgNil {
 			obj["__change_ip"] = nil
 		} else {
-			t, err := expandLogFortianalyzerOverrideSetting__Change_Ip(d, v, "__change_ip", sv)
+			t, err := expandLogFortianalyzerOverrideSettingChangeIp(d, v, "__change_ip", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {

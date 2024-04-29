@@ -39,7 +39,8 @@ The following arguments are supported:
 
 * `policyid` - User defined local in policy ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `intf` - (Required) Incoming interface name from available options.
+* `intf_block` - Incoming interface name from available options. *Due to the data type change of API, for other versions of FortiOS, please check variable `intf`.* The structure of `intf_block` block is documented below.
+* `intf` - Incoming interface name from available options. *Due to the data type change of API, for other versions of FortiOS, please check variable `intf_block`.*
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
 * `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
@@ -52,8 +53,12 @@ The following arguments are supported:
 * `virtual_patch` - Enable/disable the virtual patching feature. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `intf_block` block supports:
+
+* `name` - Address name.
 
 The `srcaddr` block supports:
 

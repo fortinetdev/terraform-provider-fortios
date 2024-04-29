@@ -40,7 +40,7 @@ The following arguments are supported:
 * `ssl_mode` - SSL/TLS mode for encryption and decryption of traffic. Valid values: `half`, `full`.
 * `add_header_x_forwarded_proto` - Enable/disable adding an X-Forwarded-Proto header to forwarded requests. Valid values: `enable`, `disable`.
 * `mapped_port` - Mapped server service port (1 - 65535, default = 80).
-* `ssl_cert` - (Required) Name of certificate for SSL connections to this server. On FortiOS versions 6.2.0-7.2.6: default = "Fortinet_CA_SSL". On FortiOS versions 7.4.0-7.4.1: default = "Fortinet_SSL".
+* `ssl_cert` - (Required) Name of certificate for SSL connections to this server. On FortiOS versions 6.2.0-7.2.8: default = "Fortinet_CA_SSL". On FortiOS versions 7.4.0-7.4.1: default = "Fortinet_SSL".
 * `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048). Valid values: `768`, `1024`, `1536`, `2048`.
 * `ssl_algorithm` - Relative strength of encryption algorithms accepted in negotiation. Valid values: `high`, `medium`, `low`.
 * `ssl_client_renegotiation` - Allow or block client renegotiation by server. Valid values: `allow`, `deny`, `secure`.

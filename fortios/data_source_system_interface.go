@@ -3347,7 +3347,7 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 
 	pre_append = pre + ".0." + "vrip6_link_local"
 	if _, ok := i["vrip6_link_local"]; ok {
-		result["vrip6_link_local"] = dataSourceFlattenSystemInterfaceIpv6Vrip6_Link_Local(i["vrip6_link_local"], d, pre_append)
+		result["vrip6_link_local"] = dataSourceFlattenSystemInterfaceIpv6Vrip6LinkLocal(i["vrip6_link_local"], d, pre_append)
 	}
 
 	pre_append = pre + ".0." + "vrrp6"
@@ -3851,7 +3851,7 @@ func dataSourceFlattenSystemInterfaceIpv6VrrpVirtualMac6(v interface{}, d *schem
 	return v
 }
 
-func dataSourceFlattenSystemInterfaceIpv6Vrip6_Link_Local(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func dataSourceFlattenSystemInterfaceIpv6Vrip6LinkLocal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

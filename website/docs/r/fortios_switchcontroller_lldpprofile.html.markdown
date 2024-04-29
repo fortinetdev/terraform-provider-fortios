@@ -27,7 +27,7 @@ resource "fortios_switchcontroller_lldpprofile" "trname" {
 The following arguments are supported:
 
 * `name` - Profile name.
-* `med_tlvs` - Transmitted LLDP-MED TLVs (type-length-value descriptions): inventory management TLV and/or network policy TLV.
+* `med_tlvs` - Transmitted LLDP-MED TLVs (type-length-value descriptions).
 * `n8021_tlvs` - Transmitted IEEE 802.1 TLVs. Valid values: `port-vlan-id`.
 * `n8023_tlvs` - Transmitted IEEE 802.3 TLVs.
 * `auto_isl` - Enable/disable auto inter-switch LAG. Valid values: `disable`, `enable`.
@@ -45,7 +45,7 @@ The following arguments are supported:
 * `med_location_service` - Configuration method to edit Media Endpoint Discovery (MED) location service type-length-value (TLV) categories. The structure of `med_location_service` block is documented below.
 * `custom_tlvs` - Configuration method to edit custom TLV entries. The structure of `custom_tlvs` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
-* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwish conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `med_network_policy` block supports:

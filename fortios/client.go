@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -274,7 +275,7 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 
 	err = fc.UpdateDeviceVersion()
 	if err != nil {
-		return fmt.Errorf("Can not update device version: %v", err)
+		log.Printf("[Warning] Can not update device version: %v", err)
 	}
 
 	fClient.Client = fc
