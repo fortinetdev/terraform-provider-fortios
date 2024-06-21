@@ -48,6 +48,7 @@ The following arguments are supported:
 * `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) (10 - 1024 Kbytes, default = 32).
 * `webproxy_profile` - Name of the web proxy profile to apply when explicit proxy traffic is allowed by default and traffic is accepted that does not match an explicit proxy policy.
 * `learn_client_ip` - Enable/disable learning the client's IP address from headers. Valid values: `enable`, `disable`.
+* `always_learn_client_ip` - Enable/disable learning the client's IP address from headers for every request. Valid values: `enable`, `disable`.
 * `learn_client_ip_from_header` - Learn client IP address from the specified headers. Valid values: `true-client-ip`, `x-real-ip`, `x-forwarded-for`.
 * `learn_client_ip_srcaddr` - Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr` block is documented below.
 * `learn_client_ip_srcaddr6` - IPv6 Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr6` block is documented below.
@@ -57,6 +58,7 @@ The following arguments are supported:
 * `log_policy_pending` - Enable/disable logging sessions that are pending on policy matching. Valid values: `enable`, `disable`.
 * `log_forward_server` - Enable/disable forward server name logging in forward traffic log. Valid values: `enable`, `disable`.
 * `log_app_id` - Enable/disable always log application type in traffic log. Valid values: `enable`, `disable`.
+* `proxy_transparent_cert_inspection` - Enable/disable transparent proxy certificate inspection. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

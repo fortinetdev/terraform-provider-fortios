@@ -193,6 +193,7 @@ The `ports` block supports:
 * `lldp_profile` - LLDP port TLV profile.
 * `export_to` - Export managed-switch port to a tenant VDOM.
 * `mac_addr` - Port/Trunk MAC.
+* `allow_arp_monitor` - Enable/Disable allow ARP monitor. Valid values: `disable`, `enable`.
 * `port_selection_criteria` - Algorithm for aggregate port selection. Valid values: `src-mac`, `dst-mac`, `src-dst-mac`, `src-ip`, `dst-ip`, `src-dst-ip`.
 * `description` - Description for port.
 * `lacp_speed` - end Link Aggregation Control Protocol (LACP) messages every 30 seconds (slow) or every second (fast). Valid values: `slow`, `fast`.
@@ -203,6 +204,7 @@ The `ports` block supports:
 * `min_bundle` - Minimum size of LAG bundle (1 - 24, default = 1)
 * `max_bundle` - Maximum size of LAG bundle (1 - 24, default = 24)
 * `members` - Aggregated LAG bundle interfaces. The structure of `members` block is documented below.
+* `fallback_port` - LACP fallback port.
 
 The `allowed_vlans` block supports:
 

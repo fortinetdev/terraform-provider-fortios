@@ -406,6 +406,7 @@ The `neighbor_group` block contains:
 * `prefix_list_out_vpnv4` - Outbound filter for VPNv4 updates to this neighbor.
 * `prefix_list_out_vpnv6` - Outbound filter for VPNv6 updates to this neighbor.
 * `remote_as` - AS number of neighbor.
+* `remote_as_filter` - BGP filter for remote AS.
 * `local_as` - Local AS number of neighbor.
 * `local_as_no_prepend` - Do not prepend local-as to incoming updates.
 * `local_as_replace_as` - Replace real AS with local-as in outgoing updates.

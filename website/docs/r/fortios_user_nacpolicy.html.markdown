@@ -17,6 +17,8 @@ The following arguments are supported:
 * `description` - Description for the NAC policy matching pattern.
 * `category` - Category of NAC policy.
 * `status` - Enable/disable NAC policy. Valid values: `enable`, `disable`.
+* `match_type` - Match and retain the devices based on the type. Valid values: `dynamic`, `override`.
+* `match_period` - Number of days the matched devices will be retained (0 - always retain)
 * `mac` - NAC policy matching MAC address.
 * `hw_vendor` - NAC policy matching hardware vendor.
 * `type` - NAC policy matching type.
@@ -29,6 +31,7 @@ The following arguments are supported:
 * `src` - NAC policy matching source.
 * `user_group` - NAC policy matching user group.
 * `ems_tag` - NAC policy matching EMS tag.
+* `fortivoice_tag` - NAC policy matching FortiVoice tag.
 * `severity` - NAC policy matching devices vulnerability severity lists. The structure of `severity` block is documented below.
 * `switch_fortilink` - FortiLink interface for which this NAC policy belongs to.
 * `switch_group` - List of managed FortiSwitch groups on which NAC policy can be applied. The structure of `switch_group` block is documented below.

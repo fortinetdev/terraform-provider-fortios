@@ -21,7 +21,10 @@ The following arguments are supported:
 * `auth_timeout` - Time after which a client is considered failed in RADIUS authentication and times out (5 - 30 sec, default = 5).
 * `rogue_ap_log` - Time between logging rogue AP messages if periodic rogue AP logging is configured (0 - 1440 min, default = 0).
 * `fake_ap_log` - Time between recording logs about fake APs if periodic fake AP logging is configured (0 - 1440 min, default = 1).
+* `sta_cap_cleanup` - Time period in minutes to keep station capability data after it is gone (default = 0).
 * `rogue_ap_cleanup` - Time period in minutes to keep rogue AP after it is gone (default = 0).
+* `rogue_sta_cleanup` - Time period in minutes to keep rogue station after it is gone (default = 0).
+* `ble_device_cleanup` - Time period in minutes to keep BLE device after it is gone (default = 60).
 * `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 1800).
 * `darrp_day` - Weekday on which to run DARRP optimization. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `darrp_time` - Time at which DARRP optimizations run (you can add up to 8 times). The structure of `darrp_time` block is documented below.

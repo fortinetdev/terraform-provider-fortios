@@ -100,6 +100,12 @@ func resourceFirewallIppool() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"pba_interim_log": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(600, 86400),
+				Optional:     true,
+				Computed:     true,
+			},
 			"permit_any_host": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -345,6 +351,10 @@ func flattenFirewallIppoolPbaTimeout(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenFirewallIppoolPbaInterimLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallIppoolPermitAnyHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -452,6 +462,12 @@ func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("pba_interim_log", flattenFirewallIppoolPbaInterimLog(o["pba-interim-log"], d, "pba_interim_log", sv)); err != nil {
+		if !fortiAPIPatch(o["pba-interim-log"]) {
+			return fmt.Errorf("Error reading pba_interim_log: %v", err)
+		}
+	}
+
 	if err = d.Set("permit_any_host", flattenFirewallIppoolPermitAnyHost(o["permit-any-host"], d, "permit_any_host", sv)); err != nil {
 		if !fortiAPIPatch(o["permit-any-host"]) {
 			return fmt.Errorf("Error reading permit_any_host: %v", err)
@@ -554,6 +570,10 @@ func expandFirewallIppoolNumBlocksPerUser(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallIppoolPbaTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolPbaInterimLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -697,6 +717,15 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["pba-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("pba_interim_log"); ok {
+		t, err := expandFirewallIppoolPbaInterimLog(d, v, "pba_interim_log", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pba-interim-log"] = t
 		}
 	}
 

@@ -21,6 +21,7 @@ The following arguments are supported:
 * `serial_number` - FortiClient EMS Serial Number.
 * `tenant_id` - EMS Tenant ID.
 * `fortinetone_cloud_authentication` - Enable/disable authentication of FortiClient EMS Cloud through FortiCloud account. Valid values: `enable`, `disable`.
+* `cloud_authentication_access_key` - FortiClient EMS Cloud multitenancy access key
 * `https_port` - FortiClient EMS HTTPS access port number. (1 - 65535, default: 443).
 * `admin_username` - FortiClient EMS admin username.
 * `admin_password` - FortiClient EMS admin password.

@@ -43,6 +43,11 @@ func resourceCasbProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"comment": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"saas_application": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -356,6 +361,10 @@ func resourceCasbProfileRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenCasbProfileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -808,6 +817,12 @@ func refreshObjectCasbProfile(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("comment", flattenCasbProfileComment(o["comment"], d, "comment", sv)); err != nil {
+		if !fortiAPIPatch(o["comment"]) {
+			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("saas_application", flattenCasbProfileSaasApplication(o["saas-application"], d, "saas_application", sv)); err != nil {
 			if !fortiAPIPatch(o["saas-application"]) {
@@ -834,6 +849,10 @@ func flattenCasbProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 }
 
 func expandCasbProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbProfileComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1194,6 +1213,15 @@ func getObjectCasbProfile(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("comment"); ok {
+		t, err := expandCasbProfileComment(d, v, "comment", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["comment"] = t
 		}
 	}
 

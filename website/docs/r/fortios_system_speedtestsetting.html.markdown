@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_speedtestsetting
-Configure speed test setting. Applies to FortiOS Version `7.2.6,7.2.7,7.2.8,7.4.1,7.4.2,7.4.3`.
+Configure speed test setting. Applies to FortiOS Version `7.2.6,7.2.7,7.2.8,7.4.1,7.4.2,7.4.3,7.4.4`.
 
 ## Argument Reference
 

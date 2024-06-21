@@ -258,6 +258,8 @@ The following arguments are supported:
 * `fragmentation_mtu` - IKE fragmentation MTU (500 - 16000).
 * `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023). Valid values: `enable`, `disable`.
 * `azure_ad_autoconnect` - Enable/disable Azure AD Auto-Connect for FortiClient. Valid values: `enable`, `disable`.
+* `client_resume` - Enable/disable resumption of offline FortiClient sessions.  When a FortiClient enabled laptop is closed or enters sleep/hibernate mode, enabling this feature allows FortiClient to keep the tunnel during this period, and allows users to immediately resume using the IPsec tunnel when the device wakes up. Valid values: `enable`, `disable`.
+* `client_resume_interval` - Maximum time in seconds during which a VPN client may resume using a tunnel after a client PC has entered sleep mode or temporarily lost its network connection (120 - 172800, default = 1800).
 * `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
 * `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
@@ -294,6 +296,8 @@ The following arguments are supported:
 * `remote_gw6_start_ip` - First IPv6 address in the range.
 * `remote_gw6_end_ip` - Last IPv6 address in the range.
 * `remote_gw6_country` - IPv6 addresses associated to a specific country.
+* `cert_peer_username_validation` - Enable/disable cross validation of peer username and the identity in the peer's certificate. Valid values: `none`, `othername`, `rfc822name`, `cn`.
+* `cert_peer_username_strip` - Enable/disable domain stripping on certificate identity. Valid values: `disable`, `enable`.
 * `cert_trust_store` - CA certificate trust store. Valid values: `local`, `ems`.
 * `qkd` - Enable/disable use of Quantum Key Distribution (QKD) server. Valid values: `disable`, `allow`, `require`.
 * `qkd_profile` - Quantum Key Distribution (QKD) server profile.

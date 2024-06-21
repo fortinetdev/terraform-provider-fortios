@@ -201,6 +201,10 @@ func dataSourceSystemAccprofile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"dlp": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"data_leak_prevention": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -624,6 +628,11 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.
 		result["emailfilter"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionEmailfilter(i["emailfilter"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "dlp"
+	if _, ok := i["dlp"]; ok {
+		result["dlp"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionDlp(i["dlp"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "data_leak_prevention"
 	if _, ok := i["data-leak-prevention"]; ok {
 		result["data_leak_prevention"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionDataLeakPrevention(i["data-leak-prevention"], d, pre_append)
@@ -706,6 +715,10 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermissionWebfilter(v interface{}, d
 }
 
 func dataSourceFlattenSystemAccprofileUtmgrpPermissionEmailfilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileUtmgrpPermissionDlp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

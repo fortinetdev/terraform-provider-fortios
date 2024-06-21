@@ -83,6 +83,7 @@ The `utmgrp_permission` block contains:
 * `ips` - IPS profiles and settings.
 * `webfilter` - Web Filter profiles and settings.
 * `emailfilter` - AntiSpam filter and settings.
+* `dlp` - DLP profiles and settings.
 * `data_leak_prevention` - DLP profiles and settings.
 * `spamfilter` - AntiSpam filter and settings.
 * `data_loss_prevention` - DLP profiles and settings.

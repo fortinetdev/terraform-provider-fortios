@@ -32,6 +32,12 @@ The `pools` block supports:
 * `name` - IPAM pool name.
 * `description` - Description.
 * `subnet` - Configure IPAM pool subnet, Class A - Class B subnet.
+* `exclude` - Configure pool exclude subnets. The structure of `exclude` block is documented below.
+
+The `exclude` block supports:
+
+* `id` - Exclude ID.
+* `exclude_subnet` - Configure subnet to exclude from the IPAM pool.
 
 The `rules` block supports:
 

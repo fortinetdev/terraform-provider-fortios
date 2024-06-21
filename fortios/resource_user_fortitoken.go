@@ -50,7 +50,7 @@ func resourceUserFortitoken() *schema.Resource {
 			},
 			"seed": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 200),
+				ValidateFunc: validation.StringLenBetween(0, 208),
 				Optional:     true,
 				Computed:     true,
 			},

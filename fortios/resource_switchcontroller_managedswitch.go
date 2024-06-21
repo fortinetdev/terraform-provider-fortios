@@ -916,6 +916,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"allow_arp_monitor": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"port_selection_criteria": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -977,6 +982,12 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 									},
 								},
 							},
+						},
+						"fallback_port": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -2701,6 +2712,11 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 			tmp["mac_addr"] = flattenSwitchControllerManagedSwitchPortsMacAddr(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_arp_monitor"
+		if cur_v, ok := i["allow-arp-monitor"]; ok {
+			tmp["allow_arp_monitor"] = flattenSwitchControllerManagedSwitchPortsAllowArpMonitor(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_selection_criteria"
 		if cur_v, ok := i["port-selection-criteria"]; ok {
 			tmp["port_selection_criteria"] = flattenSwitchControllerManagedSwitchPortsPortSelectionCriteria(cur_v, d, pre_append, sv)
@@ -2749,6 +2765,11 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
 		if cur_v, ok := i["members"]; ok {
 			tmp["members"] = flattenSwitchControllerManagedSwitchPortsMembers(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fallback_port"
+		if cur_v, ok := i["fallback-port"]; ok {
+			tmp["fallback_port"] = flattenSwitchControllerManagedSwitchPortsFallbackPort(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3428,6 +3449,10 @@ func flattenSwitchControllerManagedSwitchPortsMacAddr(v interface{}, d *schema.R
 	return v
 }
 
+func flattenSwitchControllerManagedSwitchPortsAllowArpMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerManagedSwitchPortsPortSelectionCriteria(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3503,6 +3528,10 @@ func flattenSwitchControllerManagedSwitchPortsMembers(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerManagedSwitchPortsMembersMemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsFallbackPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -6444,6 +6473,11 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["mac-addr"], _ = expandSwitchControllerManagedSwitchPortsMacAddr(d, i["mac_addr"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_arp_monitor"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["allow-arp-monitor"], _ = expandSwitchControllerManagedSwitchPortsAllowArpMonitor(d, i["allow_arp_monitor"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_selection_criteria"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-selection-criteria"], _ = expandSwitchControllerManagedSwitchPortsPortSelectionCriteria(d, i["port_selection_criteria"], pre_append, sv)
@@ -6494,6 +6528,11 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["members"], _ = expandSwitchControllerManagedSwitchPortsMembers(d, i["members"], pre_append, sv)
 		} else {
 			tmp["members"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fallback_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["fallback-port"], _ = expandSwitchControllerManagedSwitchPortsFallbackPort(d, i["fallback_port"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -7077,6 +7116,10 @@ func expandSwitchControllerManagedSwitchPortsMacAddr(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsAllowArpMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsPortSelectionCriteria(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7138,6 +7181,10 @@ func expandSwitchControllerManagedSwitchPortsMembers(d *schema.ResourceData, v i
 }
 
 func expandSwitchControllerManagedSwitchPortsMembersMemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsFallbackPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -15,6 +15,9 @@ The following arguments are supported:
 
 * `name` - MPSK profile name.
 * `mpsk_concurrent_clients` - Maximum number of concurrent clients that connect using the same passphrase in multiple PSK authentication (0 - 65535, default = 0, meaning no limitation).
+* `mpsk_external_server_auth` - Enable/Disable MPSK external server authentication (default = disable). Valid values: `enable`, `disable`.
+* `mpsk_external_server` - RADIUS server to be used to authenticate MPSK users.
+* `mpsk_type` - Select the security type of keys for this profile. Valid values: `wpa2-personal`, `wpa3-sae`, `wpa3-sae-transition`.
 * `mpsk_group` - List of multiple PSK groups. The structure of `mpsk_group` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -30,8 +33,12 @@ The `mpsk_group` block supports:
 The `mpsk_key` block supports:
 
 * `name` - Pre-shared key name.
+* `key_type` - Select the type of the key. Valid values: `wpa2-personal`, `wpa3-sae`.
 * `mac` - MAC address.
 * `passphrase` - WPA Pre-shared key.
+* `sae_password` - WPA3 SAE password.
+* `sae_pk` - Enable/disable WPA3 SAE-PK (default = disable). Valid values: `enable`, `disable`.
+* `sae_private_key` - Private key used for WPA3 SAE-PK authentication.
 * `concurrent_client_limit_type` - MPSK client limit type options. Valid values: `default`, `unlimited`, `specified`.
 * `concurrent_clients` - Number of clients that can connect using this pre-shared key (1 - 65535, default is 256).
 * `comment` - Comment.

@@ -90,7 +90,7 @@ The following arguments are supported:
 * `http_request_body_timeout` - SSL-VPN session is disconnected if an HTTP request body is not received within this time (1 - 60 sec, default = 20).
 * `auth_session_check_source_ip` - Enable/disable checking of source IP for authentication session. Valid values: `enable`, `disable`.
 * `tunnel_connect_without_reauth` - Enable/disable tunnel connection without re-authorization if previous connection dropped. Valid values: `enable`, `disable`.
-* `tunnel_user_session_timeout` - Time out value to clean up user session after tunnel connection is dropped (1 - 255 sec, default=30).
+* `tunnel_user_session_timeout` - Number of seconds after which user sessions are cleaned up after tunnel connection is dropped (default = 30). On FortiOS versions 6.2.0-7.4.3: 1 - 255 sec. On FortiOS versions >= 7.4.4: 1 - 86400 sec.
 * `hsts_include_subdomains` - Add HSTS includeSubDomains response header. Valid values: `enable`, `disable`.
 * `transform_backward_slashes` - Transform backward slashes to forward slashes in URLs. Valid values: `enable`, `disable`.
 * `encode_2f_sequence` - Encode \2F sequence to forward slash in URLs. Valid values: `enable`, `disable`.
@@ -98,7 +98,7 @@ The following arguments are supported:
 * `client_sigalgs` - Set signature algorithms related to client authentication. Affects TLS version <= 1.2 only. Valid values: `no-rsa-pss`, `all`.
 * `dual_stack_mode` - Tunnel mode: enable parallel IPv4 and IPv6 tunnel. Web mode: support IPv4 and IPv6 bookmarks in the portal. Valid values: `enable`, `disable`.
 * `tunnel_addr_assigned_method` - Method used for assigning address for tunnel. Valid values: `first-available`, `round-robin`.
-* `saml_redirect_port` - SAML local redirect port in the machine running FortiClient (0 - 65535). 0 is to disable redirection on FGT side.
+* `saml_redirect_port` - SAML local redirect port in the machine running FCT (0 - 65535). 0 is to disable redirection on FGT side.
 * `web_mode_snat` - Enable/disable use of IP pools defined in firewall policy while using web-mode. Valid values: `enable`, `disable`.
 * `ztna_trusted_client` - Enable/disable verification of device certificate for SSLVPN ZTNA session. Valid values: `enable`, `disable`.
 * `server_hostname` - Server hostname for HTTPS. When set, will be used for SSL VPN web proxy host header for any redirection.

@@ -145,6 +145,7 @@ The following attributes are exported:
 * `permit_any_host` - Accept UDP packets from any host.
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port.
+* `port_preserve` - Enable/disable preservation of the original source port from source NAT if it has not been used.
 * `ippool` - Enable to use IP Pools for source NAT.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `poolname6` - IPv6 pool names. The structure of `poolname6` block is documented below.

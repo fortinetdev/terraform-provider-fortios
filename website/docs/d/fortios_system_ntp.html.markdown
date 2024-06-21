@@ -38,6 +38,7 @@ The `ntpserver` block contains:
 * `server` - IP address or hostname of the NTP Server.
 * `ntpv3` - Enable to use NTPv3 instead of NTPv4.
 * `authentication` - Enable/disable MD5/SHA1 authentication.
+* `key_type` - Select NTP authentication type.
 * `key` - Key for MD5/SHA1 authentication.
 * `key_id` - Key ID for authentication.
 * `ip_type` - Choose to connect to IPv4 or/and IPv6 NTP server.

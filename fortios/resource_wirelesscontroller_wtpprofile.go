@@ -376,6 +376,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"usb_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"frequency_handoff": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -481,6 +486,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Computed: true,
 						},
 						"channel_bonding": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"channel_bonding_ext": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -684,7 +694,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						},
 						"sam_ca_certificate": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -942,6 +952,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"channel_bonding_ext": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"optional_antenna": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1141,7 +1156,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						},
 						"sam_ca_certificate": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1393,6 +1408,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"channel_bonding_ext": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"optional_antenna": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1592,7 +1612,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						},
 						"sam_ca_certificate": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -1844,6 +1864,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"channel_bonding_ext": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"optional_antenna": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -2043,7 +2068,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						},
 						"sam_ca_certificate": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 35),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -3186,6 +3211,10 @@ func flattenWirelessControllerWtpProfilePoeMode(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenWirelessControllerWtpProfileUsbPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileFrequencyHandoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3291,6 +3320,11 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 	pre_append = pre + ".0." + "channel_bonding"
 	if _, ok := i["channel-bonding"]; ok {
 		result["channel_bonding"] = flattenWirelessControllerWtpProfileRadio1ChannelBonding(i["channel-bonding"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := i["channel-bonding-ext"]; ok {
+		result["channel_bonding_ext"] = flattenWirelessControllerWtpProfileRadio1ChannelBondingExt(i["channel-bonding-ext"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "optional_antenna"
@@ -3676,6 +3710,10 @@ func flattenWirelessControllerWtpProfileRadio1MimoMode(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerWtpProfileRadio1ChannelBonding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio1ChannelBondingExt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4102,6 +4140,11 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["channel_bonding"] = flattenWirelessControllerWtpProfileRadio2ChannelBonding(i["channel-bonding"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := i["channel-bonding-ext"]; ok {
+		result["channel_bonding_ext"] = flattenWirelessControllerWtpProfileRadio2ChannelBondingExt(i["channel-bonding-ext"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := i["optional-antenna"]; ok {
 		result["optional_antenna"] = flattenWirelessControllerWtpProfileRadio2OptionalAntenna(i["optional-antenna"], d, pre_append, sv)
@@ -4485,6 +4528,10 @@ func flattenWirelessControllerWtpProfileRadio2MimoMode(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerWtpProfileRadio2ChannelBonding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio2ChannelBondingExt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4906,6 +4953,11 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["channel_bonding"] = flattenWirelessControllerWtpProfileRadio3ChannelBonding(i["channel-bonding"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := i["channel-bonding-ext"]; ok {
+		result["channel_bonding_ext"] = flattenWirelessControllerWtpProfileRadio3ChannelBondingExt(i["channel-bonding-ext"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := i["optional-antenna"]; ok {
 		result["optional_antenna"] = flattenWirelessControllerWtpProfileRadio3OptionalAntenna(i["optional-antenna"], d, pre_append, sv)
@@ -5285,6 +5337,10 @@ func flattenWirelessControllerWtpProfileRadio3MimoMode(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerWtpProfileRadio3ChannelBonding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio3ChannelBondingExt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5706,6 +5762,11 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["channel_bonding"] = flattenWirelessControllerWtpProfileRadio4ChannelBonding(i["channel-bonding"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := i["channel-bonding-ext"]; ok {
+		result["channel_bonding_ext"] = flattenWirelessControllerWtpProfileRadio4ChannelBondingExt(i["channel-bonding-ext"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := i["optional-antenna"]; ok {
 		result["optional_antenna"] = flattenWirelessControllerWtpProfileRadio4OptionalAntenna(i["optional-antenna"], d, pre_append, sv)
@@ -6085,6 +6146,10 @@ func flattenWirelessControllerWtpProfileRadio4MimoMode(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerWtpProfileRadio4ChannelBonding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileRadio4ChannelBondingExt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -7155,6 +7220,12 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("usb_port", flattenWirelessControllerWtpProfileUsbPort(o["usb-port"], d, "usb_port", sv)); err != nil {
+		if !fortiAPIPatch(o["usb-port"]) {
+			return fmt.Errorf("Error reading usb_port: %v", err)
+		}
+	}
+
 	if err = d.Set("frequency_handoff", flattenWirelessControllerWtpProfileFrequencyHandoff(o["frequency-handoff"], d, "frequency_handoff", sv)); err != nil {
 		if !fortiAPIPatch(o["frequency-handoff"]) {
 			return fmt.Errorf("Error reading frequency_handoff: %v", err)
@@ -7754,6 +7825,10 @@ func expandWirelessControllerWtpProfilePoeMode(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileUsbPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileFrequencyHandoff(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7843,6 +7918,10 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "channel_bonding"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["channel-bonding"], _ = expandWirelessControllerWtpProfileRadio1ChannelBonding(d, i["channel_bonding"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["channel-bonding-ext"], _ = expandWirelessControllerWtpProfileRadio1ChannelBondingExt(d, i["channel_bonding_ext"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -8169,6 +8248,10 @@ func expandWirelessControllerWtpProfileRadio1MimoMode(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio1ChannelBonding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1ChannelBondingExt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8550,6 +8633,10 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["channel-bonding"], _ = expandWirelessControllerWtpProfileRadio2ChannelBonding(d, i["channel_bonding"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["channel-bonding-ext"], _ = expandWirelessControllerWtpProfileRadio2ChannelBondingExt(d, i["channel_bonding_ext"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["optional-antenna"], _ = expandWirelessControllerWtpProfileRadio2OptionalAntenna(d, i["optional_antenna"], pre_append, sv)
@@ -8875,6 +8962,10 @@ func expandWirelessControllerWtpProfileRadio2MimoMode(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio2ChannelBonding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2ChannelBondingExt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9252,6 +9343,10 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["channel-bonding"], _ = expandWirelessControllerWtpProfileRadio3ChannelBonding(d, i["channel_bonding"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["channel-bonding-ext"], _ = expandWirelessControllerWtpProfileRadio3ChannelBondingExt(d, i["channel_bonding_ext"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["optional-antenna"], _ = expandWirelessControllerWtpProfileRadio3OptionalAntenna(d, i["optional_antenna"], pre_append, sv)
@@ -9573,6 +9668,10 @@ func expandWirelessControllerWtpProfileRadio3MimoMode(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio3ChannelBonding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3ChannelBondingExt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9950,6 +10049,10 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["channel-bonding"], _ = expandWirelessControllerWtpProfileRadio4ChannelBonding(d, i["channel_bonding"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "channel_bonding_ext"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["channel-bonding-ext"], _ = expandWirelessControllerWtpProfileRadio4ChannelBondingExt(d, i["channel_bonding_ext"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "optional_antenna"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["optional-antenna"], _ = expandWirelessControllerWtpProfileRadio4OptionalAntenna(d, i["optional_antenna"], pre_append, sv)
@@ -10271,6 +10374,10 @@ func expandWirelessControllerWtpProfileRadio4MimoMode(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileRadio4ChannelBonding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4ChannelBondingExt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -11306,6 +11413,15 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["poe-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("usb_port"); ok {
+		t, err := expandWirelessControllerWtpProfileUsbPort(d, v, "usb_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["usb-port"] = t
 		}
 	}
 

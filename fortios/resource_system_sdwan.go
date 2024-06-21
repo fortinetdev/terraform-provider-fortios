@@ -2050,6 +2050,11 @@ func flattenSystemSdwanHealthCheckSystemDns(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemSdwanHealthCheckServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if temp_v, ok := v.(string); ok {
+		temp_v = strings.ReplaceAll(temp_v, "\"", "")
+		var rst_v interface{} = temp_v
+		return rst_v
+	}
 	return v
 }
 

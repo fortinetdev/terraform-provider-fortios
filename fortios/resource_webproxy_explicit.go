@@ -85,6 +85,21 @@ func resourceWebProxyExplicit() *schema.Resource {
 					},
 				},
 			},
+			"client_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"user_agent_detect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"empty_cert_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -477,6 +492,18 @@ func flattenWebProxyExplicitSecureWebProxyCertName(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenWebProxyExplicitClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitUserAgentDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitEmptyCertAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyExplicitSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -855,6 +882,24 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("client_cert", flattenWebProxyExplicitClientCert(o["client-cert"], d, "client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["client-cert"]) {
+			return fmt.Errorf("Error reading client_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("user_agent_detect", flattenWebProxyExplicitUserAgentDetect(o["user-agent-detect"], d, "user_agent_detect", sv)); err != nil {
+		if !fortiAPIPatch(o["user-agent-detect"]) {
+			return fmt.Errorf("Error reading user_agent_detect: %v", err)
+		}
+	}
+
+	if err = d.Set("empty_cert_action", flattenWebProxyExplicitEmptyCertAction(o["empty-cert-action"], d, "empty_cert_action", sv)); err != nil {
+		if !fortiAPIPatch(o["empty-cert-action"]) {
+			return fmt.Errorf("Error reading empty_cert_action: %v", err)
+		}
+	}
+
 	if err = d.Set("ssl_dh_bits", flattenWebProxyExplicitSslDhBits(o["ssl-dh-bits"], d, "ssl_dh_bits", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-dh-bits"]) {
 			return fmt.Errorf("Error reading ssl_dh_bits: %v", err)
@@ -1071,6 +1116,18 @@ func expandWebProxyExplicitSecureWebProxyCert(d *schema.ResourceData, v interfac
 }
 
 func expandWebProxyExplicitSecureWebProxyCertName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitUserAgentDetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitEmptyCertAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1441,6 +1498,45 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["secure-web-proxy-cert"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("client_cert"); ok {
+		if setArgNil {
+			obj["client-cert"] = nil
+		} else {
+			t, err := expandWebProxyExplicitClientCert(d, v, "client_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["client-cert"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("user_agent_detect"); ok {
+		if setArgNil {
+			obj["user-agent-detect"] = nil
+		} else {
+			t, err := expandWebProxyExplicitUserAgentDetect(d, v, "user_agent_detect", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-agent-detect"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("empty_cert_action"); ok {
+		if setArgNil {
+			obj["empty-cert-action"] = nil
+		} else {
+			t, err := expandWebProxyExplicitEmptyCertAction(d, v, "empty_cert_action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["empty-cert-action"] = t
 			}
 		}
 	}

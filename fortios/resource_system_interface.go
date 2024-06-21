@@ -171,6 +171,11 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_relay_allow_no_end_option": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dhcp_relay_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -2275,6 +2280,10 @@ func flattenSystemInterfaceDhcpRelayLinkSelection(v interface{}, d *schema.Resou
 }
 
 func flattenSystemInterfaceDhcpRelayRequestAllServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceDhcpRelayAllowNoEndOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4792,6 +4801,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("dhcp_relay_allow_no_end_option", flattenSystemInterfaceDhcpRelayAllowNoEndOption(o["dhcp-relay-allow-no-end-option"], d, "dhcp_relay_allow_no_end_option", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-allow-no-end-option"]) {
+			return fmt.Errorf("Error reading dhcp_relay_allow_no_end_option: %v", err)
+		}
+	}
+
 	if err = d.Set("dhcp_relay_type", flattenSystemInterfaceDhcpRelayType(o["dhcp-relay-type"], d, "dhcp_relay_type", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-type"]) {
 			return fmt.Errorf("Error reading dhcp_relay_type: %v", err)
@@ -6263,6 +6278,10 @@ func expandSystemInterfaceDhcpRelayLinkSelection(d *schema.ResourceData, v inter
 }
 
 func expandSystemInterfaceDhcpRelayRequestAllServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceDhcpRelayAllowNoEndOption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8567,6 +8586,15 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["dhcp-relay-request-all-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_relay_allow_no_end_option"); ok {
+		t, err := expandSystemInterfaceDhcpRelayAllowNoEndOption(d, v, "dhcp_relay_allow_no_end_option", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-relay-allow-no-end-option"] = t
 		}
 	}
 

@@ -216,6 +216,7 @@ The following arguments are supported:
 * `permit_any_host` - Accept UDP packets from any host. Valid values: `enable`, `disable`.
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host. Valid values: `enable`, `disable`.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port. Valid values: `enable`, `disable`.
+* `port_preserve` - Enable/disable preservation of the original source port from source NAT if it has not been used. Valid values: `enable`, `disable`.
 * `ippool` - Enable to use IP Pools for source NAT. Valid values: `enable`, `disable`.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `poolname6` - IPv6 pool names. The structure of `poolname6` block is documented below.

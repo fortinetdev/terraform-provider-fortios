@@ -44,10 +44,16 @@ The following arguments are supported:
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
 * `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
+* `internet_service6_src` - Enable/disable use of IPv6 Internet Services in source for this local-in policy.If enabled, source address is not used. Valid values: `enable`, `disable`.
+* `internet_service6_src_name` - IPv6 Internet Service source name. The structure of `internet_service6_src_name` block is documented below.
+* `internet_service6_src_group` - Internet Service6 source group name. The structure of `internet_service6_src_group` block is documented below.
+* `internet_service6_src_custom` - Custom IPv6 Internet Service source name. The structure of `internet_service6_src_custom` block is documented below.
+* `internet_service6_src_custom_group` - Custom Internet Service6 source group name. The structure of `internet_service6_src_custom_group` block is documented below.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - (Required) Service object from available options. Separate names with a space. The structure of `service` block is documented below.
 * `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
+* `internet_service6_src_negate` - When enabled internet-service6-src specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy. Valid values: `enable`, `disable`.
 * `virtual_patch` - Enable/disable the virtual patching feature. Valid values: `enable`, `disable`.
@@ -67,6 +73,22 @@ The `srcaddr` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address name.
+
+The `internet_service6_src_name` block supports:
+
+* `name` - Internet Service name.
+
+The `internet_service6_src_group` block supports:
+
+* `name` - Internet Service group name.
+
+The `internet_service6_src_custom` block supports:
+
+* `name` - Custom Internet Service name.
+
+The `internet_service6_src_custom_group` block supports:
+
+* `name` - Custom Internet Service6 group name.
 
 The `service` block supports:
 

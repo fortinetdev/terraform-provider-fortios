@@ -78,6 +78,11 @@ func resourceSystemNtp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"key_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"key": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 59),
@@ -342,6 +347,11 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 			tmp["authentication"] = flattenSystemNtpNtpserverAuthentication(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+		if cur_v, ok := i["key-type"]; ok {
+			tmp["key_type"] = flattenSystemNtpNtpserverKeyType(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if cur_v, ok := i["key"]; ok {
 			tmp["key"] = flattenSystemNtpNtpserverKey(cur_v, d, pre_append, sv)
@@ -393,6 +403,10 @@ func flattenSystemNtpNtpserverNtpv3(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemNtpNtpserverAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNtpNtpserverKeyType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -636,6 +650,11 @@ func expandSystemNtpNtpserver(d *schema.ResourceData, v interface{}, pre string,
 			tmp["authentication"], _ = expandSystemNtpNtpserverAuthentication(d, i["authentication"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["key-type"], _ = expandSystemNtpNtpserverKeyType(d, i["key_type"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key"], _ = expandSystemNtpNtpserverKey(d, i["key"], pre_append, sv)
@@ -682,6 +701,10 @@ func expandSystemNtpNtpserverNtpv3(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemNtpNtpserverAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNtpNtpserverKeyType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

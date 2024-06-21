@@ -54,6 +54,7 @@ The following arguments are supported:
 * `dhcp_relay_circuit_id` - DHCP relay circuit ID.
 * `dhcp_relay_link_selection` - DHCP relay link selection.
 * `dhcp_relay_request_all_server` - Enable/disable sending DHCP request to all servers. Valid values: `disable`, `enable`.
+* `dhcp_relay_allow_no_end_option` - Enable/disable relaying DHCP messages with no end option. Valid values: `disable`, `enable`.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec). Valid values: `regular`, `ipsec`.
 * `dhcp_smart_relay` - Enable/disable DHCP smart relay. Valid values: `disable`, `enable`.
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option. Valid values: `enable`, `disable`.
@@ -241,7 +242,7 @@ The following arguments are supported:
 * `switch_controller_dhcp_snooping_verify_mac` - Switch controller DHCP snooping verify MAC. Valid values: `enable`, `disable`.
 * `switch_controller_dhcp_snooping_option82` - Switch controller DHCP snooping option82. Valid values: `enable`, `disable`.
 * `dhcp_snooping_server_list` - Configure DHCP server access list. The structure of `dhcp_snooping_server_list` block is documented below.
-* `switch_controller_arp_inspection` - Enable/disable FortiSwitch ARP inspection. Valid values: `enable`, `disable`.
+* `switch_controller_arp_inspection` - Enable/disable FortiSwitch ARP inspection.
 * `switch_controller_learning_limit` - Limit the number of dynamic MAC addresses on this VLAN (1 - 128, 0 = no limit, default).
 * `switch_controller_nac` - Integrated NAC settings for managed FortiSwitch.
 * `switch_controller_dynamic` - Integrated FortiLink settings for managed FortiSwitch.

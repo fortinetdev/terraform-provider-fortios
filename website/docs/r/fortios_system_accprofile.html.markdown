@@ -141,6 +141,7 @@ The `utmgrp_permission` block supports:
 * `ips` - IPS profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `webfilter` - Web Filter profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `emailfilter` - AntiSpam filter and settings. Valid values: `none`, `read`, `read-write`.
+* `dlp` - DLP profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `data_leak_prevention` - DLP profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `spamfilter` - AntiSpam filter and settings. Valid values: `none`, `read`, `read-write`.
 * `data_loss_prevention` - DLP profiles and settings. Valid values: `none`, `read`, `read-write`.

@@ -181,6 +181,7 @@ The following arguments are supported:
 * `user_server_cert` - Certificate to use for https user authentication.
 * `admin_https_pki_required` - Enable/disable admin login method. Enable to force administrators to provide a valid certificate to log in if PKI is enabled. Disable to allow administrators to log in with a certificate or password. Valid values: `enable`, `disable`.
 * `wifi_certificate` - Certificate to use for WiFi authentication.
+* `dhcp_lease_backup_interval` - DHCP leases backup interval in seconds (10 - 3600, default = 60).
 * `wifi_ca_certificate` - CA certificate that verifies the WiFi certificate.
 * `auth_http_port` - User authentication HTTP port. (1 - 65535). On FortiOS versions 6.2.0-6.2.6: default = 80. On FortiOS versions >= 6.4.0: default = 1000.
 * `auth_https_port` - User authentication HTTPS port. (1 - 65535). On FortiOS versions 6.2.0-6.2.6: default = 443. On FortiOS versions >= 6.4.0: default = 1003.

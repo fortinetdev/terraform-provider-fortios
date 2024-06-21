@@ -45,6 +45,7 @@ The following arguments are supported:
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
 * `lldp` - Enable/disable Link Layer Discovery Protocol (LLDP) for the WTP, FortiAP, or AP. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
 * `poe_mode` - Set the WTP, FortiAP, or AP's PoE mode.
+* `usb_port` - Enable/disable USB port of the WTP (default = enable). Valid values: `enable`, `disable`.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
 * `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
@@ -129,6 +130,7 @@ The `radio_1` block supports:
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
+* `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
@@ -220,6 +222,7 @@ The `radio_2` block supports:
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
+* `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
@@ -309,7 +312,8 @@ The `radio_3` block supports:
 * `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
-* `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence. Valid values: `160MHz`, `80MHz`, `40MHz`, `20MHz`.
+* `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
+* `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
@@ -399,7 +403,8 @@ The `radio_4` block supports:
 * `bss_color_mode` - BSS color mode for this 11ax radio (default = auto). Valid values: `auto`, `static`.
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns. Valid values: `enable`, `disable`.
 * `mimo_mode` - Configure radio MIMO mode (default = default). Valid values: `default`, `1x1`, `2x2`, `3x3`, `4x4`, `8x8`.
-* `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence. Valid values: `160MHz`, `80MHz`, `40MHz`, `20MHz`.
+* `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
+* `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.

@@ -19,7 +19,7 @@ The following arguments are supported:
 * `mesh_backhaul` - Enable/disable using this VAP as a WiFi mesh backhaul (default = disable). This entry is only available when security is set to a WPA type or open. Valid values: `enable`, `disable`.
 * `atf_weight` - Airtime weight in percentage (default = 20).
 * `max_clients` - Maximum number of clients that can connect simultaneously to the VAP (default = 0, meaning no limitation).
-* `max_clients_ap` - Maximum number of clients that can connect simultaneously to the VAP per AP radio (default = 0, meaning no limitation).
+* `max_clients_ap` - Maximum number of clients that can connect simultaneously to each radio (default = 0, meaning no limitation).
 * `ssid` - IEEE 802.11 service set identifier (SSID) for the wireless interface. Users who wish to use the wireless network must configure their computers to access this SSID name.
 * `broadcast_ssid` - Enable/disable broadcasting the SSID (default = enable). Valid values: `enable`, `disable`.
 * `security_obsolete_option` - Enable/disable obsolete security options. Valid values: `enable`, `disable`.
@@ -27,6 +27,7 @@ The following arguments are supported:
 * `pmf` - Protected Management Frames (PMF) support (default = disable). Valid values: `disable`, `enable`, `optional`.
 * `pmf_assoc_comeback_timeout` - Protected Management Frames (PMF) comeback maximum timeout (1-20 sec).
 * `pmf_sa_query_retry_timeout` - Protected Management Frames (PMF) SA query retry timeout interval (1 - 5 100s of msec).
+* `beacon_protection` - Enable/disable beacon protection support (default = disable). Valid values: `disable`, `enable`.
 * `okc` - Enable/disable Opportunistic Key Caching (OKC) (default = enable). Valid values: `disable`, `enable`.
 * `mbo` - Enable/disable Multiband Operation (default = disable). Valid values: `disable`, `enable`.
 * `gas_comeback_delay` - GAS comeback delay (0 or 100 - 10000 milliseconds, default = 500).
@@ -44,7 +45,7 @@ The following arguments are supported:
 * `owe_groups` - OWE-Groups. Valid values: `19`, `20`, `21`.
 * `owe_transition` - Enable/disable OWE transition mode support. Valid values: `disable`, `enable`.
 * `owe_transition_ssid` - OWE transition mode peer SSID.
-* `additional_akms` - Additional AKMs. Valid values: `akm6`.
+* `additional_akms` - Additional AKMs.
 * `eapol_key_retries` - Enable/disable retransmission of EAPOL-Key frames (message 3/4 and group message 1/2) (default = enable). Valid values: `disable`, `enable`.
 * `tkip_counter_measure` - Enable/disable TKIP counter measure. Valid values: `enable`, `disable`.
 * `external_web` - URL of external authentication web server.
@@ -60,19 +61,21 @@ The following arguments are supported:
 * `radius_mac_auth_server` - RADIUS-based MAC authentication server.
 * `radius_mac_auth_block_interval` - Don't send RADIUS MAC auth request again if the client has been rejected within specific interval (0 or 30 - 864000 seconds, default = 0, 0 to disable blocking).
 * `radius_mac_mpsk_auth` - Enable/disable RADIUS-based MAC authentication of clients for MPSK authentication (default = disable). Valid values: `enable`, `disable`.
-* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (default = 86400, 0 to disable caching). On FortiOS versions 7.0.2-7.0.8, 7.2.0: 1800 - 864000. On FortiOS versions 7.0.9-7.0.15, >= 7.2.1: 0 or 300 - 864000.
+* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (1800 - 864000, default = 86400).
 * `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication. The structure of `radius_mac_auth_usergroups` block is documented below.
 * `auth` - Authentication protocol.
 * `encrypt` - Encryption protocol to use (only available when security is set to a WPA type). Valid values: `TKIP`, `AES`, `TKIP-AES`.
 * `keyindex` - WEP key index (1 - 4).
 * `key` - WEP Key.
-* `passphrase` - WPA pre-shared key (PSK) to be used to authenticate WiFi users.
+* `passphrase` - WPA pre-shard key (PSK) to be used to authenticate WiFi users.
 * `sae_password` - WPA3 SAE password to be used to authenticate WiFi users.
 * `sae_h2e_only` - Use hash-to-element-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
 * `sae_hnp_only` - Use hunting-and-pecking-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
 * `sae_pk` - Enable/disable WPA3 SAE-PK (default = disable). Valid values: `enable`, `disable`.
 * `sae_private_key` - Private key used for WPA3 SAE-PK authentication.
+* `akm24_only` - WPA3 SAE using group-dependent hash only (default = disable). Valid values: `disable`, `enable`.
 * `radius_server` - RADIUS server to be used to authenticate WiFi users.
+* `nas_filter_rule` - Enable/disable NAS filter rule support (default = disable). Valid values: `enable`, `disable`.
 * `acct_interim_interval` - WiFi RADIUS accounting interim interval (60 - 86400 sec, default = 0).
 * `local_standalone` - Enable/disable AP local standalone (default = disable). Valid values: `enable`, `disable`.
 * `local_standalone_nat` - Enable/disable AP local standalone NAT mode. Valid values: `enable`, `disable`.
@@ -102,8 +105,8 @@ The following arguments are supported:
 * `port_macauth_reauth_timeout` - LAN port MAC authentication re-authentication timeout value (default = 7200 sec).
 * `bss_color_partial` - Enable/disable 802.11ax partial BSS color (default = enable). Valid values: `enable`, `disable`.
 * `mpsk_profile` - MPSK profile name.
-* `mpsk` - Enable/disable multiple PSK authentication. Valid values: `enable`, `disable`.
-* `mpsk_concurrent_clients` - Maximum number of concurrent clients that connect using the same passphrase in multiple PSK authentication (0 - 65535, default = 0, meaning no limitation).
+* `mpsk` - Enable/disable multiple pre-shared keys (PSKs.) Valid values: `enable`, `disable`.
+* `mpsk_concurrent_clients` - Number of pre-shared keys (PSKs) to allow if multiple pre-shared keys are enabled.
 * `mpsk_key` - Pre-shared keys that can be used to connect to this virtual access point. The structure of `mpsk_key` block is documented below.
 * `split_tunneling` - Enable/disable split tunneling (default = disable). Valid values: `enable`, `disable`.
 * `nac` - Enable/disable network access control. Valid values: `enable`, `disable`.
@@ -111,6 +114,7 @@ The following arguments are supported:
 * `vlanid` - Optional VLAN ID.
 * `vlan_auto` - Enable/disable automatic management of SSID VLAN interface. Valid values: `enable`, `disable`.
 * `dynamic_vlan` - Enable/disable dynamic VLAN assignment. Valid values: `enable`, `disable`.
+* `captive_portal` - Enable/disable captive portal. Valid values: `enable`, `disable`.
 * `captive_portal_fw_accounting` - Enable/disable RADIUS accounting for captive portal firewall authentication session. Valid values: `enable`, `disable`.
 * `captive_portal_radius_server` - Captive portal RADIUS server domain name or IP address.
 * `captive_portal_radius_secret` - Secret key to access the RADIUS server.
@@ -142,9 +146,9 @@ The following arguments are supported:
 * `dhcp_option82_circuit_id_insertion` - Enable/disable DHCP option 82 circuit-id insert (default = disable).
 * `dhcp_option82_remote_id_insertion` - Enable/disable DHCP option 82 remote-id insert (default = disable). Valid values: `style-1`, `disable`.
 * `ptk_rekey` - Enable/disable PTK rekey for WPA-Enterprise security. Valid values: `enable`, `disable`.
-* `ptk_rekey_intv` - PTK rekey interval (1800 - 864000 sec, default = 86400).
+* `ptk_rekey_intv` - PTK rekey interval (default = 86400). On FortiOS versions 6.2.0-7.4.3: 1800 - 864000 sec. On FortiOS versions >= 7.4.4: 600 - 864000 sec.
 * `gtk_rekey` - Enable/disable GTK rekey for WPA security. Valid values: `enable`, `disable`.
-* `gtk_rekey_intv` - GTK rekey interval (1800 - 864000 sec, default = 86400).
+* `gtk_rekey_intv` - GTK rekey interval (default = 86400). On FortiOS versions 6.2.0-7.4.3: 1800 - 864000 sec. On FortiOS versions >= 7.4.4: 600 - 864000 sec.
 * `eap_reauth` - Enable/disable EAP re-authentication for WPA-Enterprise security. Valid values: `enable`, `disable`.
 * `eap_reauth_intv` - EAP re-authentication interval (1800 - 864000 sec, default = 86400).
 * `roaming_acct_interim_update` - Enable/disable using accounting interim update instead of accounting start/stop on roaming for WPA-Enterprise security. Valid values: `enable`, `disable`.
@@ -161,6 +165,9 @@ The following arguments are supported:
 * `rates_11n_ss34` - Allowed data rates for 802.11n with 3 or 4 spatial streams. Valid values: `mcs16/3`, `mcs17/3`, `mcs18/3`, `mcs19/3`, `mcs20/3`, `mcs21/3`, `mcs22/3`, `mcs23/3`, `mcs24/4`, `mcs25/4`, `mcs26/4`, `mcs27/4`, `mcs28/4`, `mcs29/4`, `mcs30/4`, `mcs31/4`.
 * `rates_11ac_mcs_map` - Comma separated list of max supported VHT MCS for spatial streams 1 through 8.
 * `rates_11ax_mcs_map` - Comma separated list of max supported HE MCS for spatial streams 1 through 8.
+* `rates_11be_mcs_map` - Comma separated list of max nss that supports EHT-MCS 0-9, 10-11, 12-13 for 20MHz/40MHz/80MHz bandwidth.
+* `rates_11be_mcs_map_160` - Comma separated list of max nss that supports EHT-MCS 0-9, 10-11, 12-13 for 160MHz bandwidth.
+* `rates_11be_mcs_map_320` - Comma separated list of max nss that supports EHT-MCS 0-9, 10-11, 12-13 for 320MHz bandwidth.
 * `rates_11ac_ss12` - Allowed data rates for 802.11ac with 1 or 2 spatial streams. Valid values: `mcs0/1`, `mcs1/1`, `mcs2/1`, `mcs3/1`, `mcs4/1`, `mcs5/1`, `mcs6/1`, `mcs7/1`, `mcs8/1`, `mcs9/1`, `mcs10/1`, `mcs11/1`, `mcs0/2`, `mcs1/2`, `mcs2/2`, `mcs3/2`, `mcs4/2`, `mcs5/2`, `mcs6/2`, `mcs7/2`, `mcs8/2`, `mcs9/2`, `mcs10/2`, `mcs11/2`.
 * `rates_11ac_ss34` - Allowed data rates for 802.11ac with 3 or 4 spatial streams. Valid values: `mcs0/3`, `mcs1/3`, `mcs2/3`, `mcs3/3`, `mcs4/3`, `mcs5/3`, `mcs6/3`, `mcs7/3`, `mcs8/3`, `mcs9/3`, `mcs10/3`, `mcs11/3`, `mcs0/4`, `mcs1/4`, `mcs2/4`, `mcs3/4`, `mcs4/4`, `mcs5/4`, `mcs6/4`, `mcs7/4`, `mcs8/4`, `mcs9/4`, `mcs10/4`, `mcs11/4`.
 * `rates_11ax_ss12` - Allowed data rates for 802.11ax with 1 or 2 spatial streams. Valid values: `mcs0/1`, `mcs1/1`, `mcs2/1`, `mcs3/1`, `mcs4/1`, `mcs5/1`, `mcs6/1`, `mcs7/1`, `mcs8/1`, `mcs9/1`, `mcs10/1`, `mcs11/1`, `mcs0/2`, `mcs1/2`, `mcs2/2`, `mcs3/2`, `mcs4/2`, `mcs5/2`, `mcs6/2`, `mcs7/2`, `mcs8/2`, `mcs9/2`, `mcs10/2`, `mcs11/2`.
@@ -230,7 +237,7 @@ The `mpsk_schedules` block supports:
 The `vlan_name` block supports:
 
 * `name` - VLAN name.
-* `vlan_id` - VLAN IDs. On FortiOS versions >= 7.4.1: maximum 8 VLAN IDs.
+* `vlan_id` - VLAN ID.
 
 The `vlan_pool` block supports:
 

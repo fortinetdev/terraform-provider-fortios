@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - FortiExtender profile name.
 * `fosid` - ID.
-* `model` - Model. Valid values: `FX201E`, `FX211E`, `FX200F`, `FXA11F`, `FXE11F`, `FXA21F`, `FXE21F`, `FXA22F`, `FXE22F`, `FX212F`, `FX311F`, `FX312F`, `FX511F`, `FVG21F`, `FVA21F`, `FVG22F`, `FVA22F`, `FX04DA`.
+* `model` - Model.
 * `extension` - Extension option. Valid values: `wan-extension`, `lan-extension`.
 * `allowaccess` - Control management access to the managed extender. Separate entries with a space. Valid values: `ping`, `telnet`, `http`, `https`, `ssh`, `snmp`.
 * `login_password_change` - Change or reset the administrator password of a managed extender (yes, default, or no, default = no). Valid values: `yes`, `default`, `no`.
@@ -24,6 +24,7 @@ The following arguments are supported:
 * `bandwidth_limit` - FortiExtender LAN extension bandwidth limit (Mbps).
 * `cellular` - FortiExtender cellular configuration. The structure of `cellular` block is documented below.
 * `lan_extension` - FortiExtender lan extension configuration. The structure of `lan_extension` block is documented below.
+* `wifi` - FortiExtender wifi configuration. The structure of `wifi` block is documented below.
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -132,6 +133,58 @@ The `backhaul` block supports:
 * `port` - FortiExtender uplink port. Valid values: `wan`, `lte1`, `lte2`, `port1`, `port2`, `port3`, `port4`, `port5`, `sfp`.
 * `role` - FortiExtender uplink port. Valid values: `primary`, `secondary`.
 * `weight` - WRR weight parameter.
+
+The `wifi` block supports:
+
+* `country` - Country in which this FEX will operate (default = NA). Valid values: `--`, `AF`, `AL`, `DZ`, `AS`, `AO`, `AR`, `AM`, `AU`, `AT`, `AZ`, `BS`, `BH`, `BD`, `BB`, `BY`, `BE`, `BZ`, `BJ`, `BM`, `BT`, `BO`, `BA`, `BW`, `BR`, `BN`, `BG`, `BF`, `KH`, `CM`, `KY`, `CF`, `TD`, `CL`, `CN`, `CX`, `CO`, `CG`, `CD`, `CR`, `HR`, `CY`, `CZ`, `DK`, `DJ`, `DM`, `DO`, `EC`, `EG`, `SV`, `ET`, `EE`, `GF`, `PF`, `FO`, `FJ`, `FI`, `FR`, `GA`, `GE`, `GM`, `DE`, `GH`, `GI`, `GR`, `GL`, `GD`, `GP`, `GU`, `GT`, `GY`, `HT`, `HN`, `HK`, `HU`, `IS`, `IN`, `ID`, `IQ`, `IE`, `IM`, `IL`, `IT`, `CI`, `JM`, `JO`, `KZ`, `KE`, `KR`, `KW`, `LA`, `LV`, `LB`, `LS`, `LR`, `LY`, `LI`, `LT`, `LU`, `MO`, `MK`, `MG`, `MW`, `MY`, `MV`, `ML`, `MT`, `MH`, `MQ`, `MR`, `MU`, `YT`, `MX`, `FM`, `MD`, `MC`, `MN`, `MA`, `MZ`, `MM`, `NA`, `NP`, `NL`, `AN`, `AW`, `NZ`, `NI`, `NE`, `NG`, `NO`, `MP`, `OM`, `PK`, `PW`, `PA`, `PG`, `PY`, `PE`, `PH`, `PL`, `PT`, `PR`, `QA`, `RE`, `RO`, `RU`, `RW`, `BL`, `KN`, `LC`, `MF`, `PM`, `VC`, `SA`, `SN`, `RS`, `ME`, `SL`, `SG`, `SK`, `SI`, `SO`, `ZA`, `ES`, `LK`, `SR`, `SZ`, `SE`, `CH`, `TW`, `TZ`, `TH`, `TG`, `TT`, `TN`, `TR`, `TM`, `AE`, `TC`, `UG`, `UA`, `GB`, `US`, `PS`, `UY`, `UZ`, `VU`, `VE`, `VN`, `VI`, `WF`, `YE`, `ZM`, `ZW`, `JP`, `CA`.
+* `radio_1` - Radio-1 config for Wi-Fi 2.4GHz The structure of `radio_1` block is documented below.
+* `radio_2` - Radio-2 config for Wi-Fi 5GHz The structure of `radio_2` block is documented below.
+
+The `radio_1` block supports:
+
+* `mode` - Wi-Fi radio mode AP(LAN mode) / Client(WAN mode). Valid values: `AP`, `Client`.
+* `band` - Wi-Fi band selection 2.4GHz / 5GHz. Valid values: `2.4GHz`.
+* `status` - Enable/disable Wi-Fi radio. Valid values: `disable`, `enable`.
+* `operating_standard` - Wi-Fi operating standard. Valid values: `auto`, `11A-N-AC-AX`, `11A-N-AC`, `11A-N`, `11A`, `11N-AC-AX`, `11AC-AX`, `11AC`, `11N-AC`, `11B-G-N-AX`, `11B-G-N`, `11B-G`, `11B`, `11G-N-AX`, `11N-AX`, `11AX`, `11G-N`, `11N`, `11G`.
+* `guard_interval` - Wi-Fi guard interval. Valid values: `auto`, `400ns`, `800ns`.
+* `channel` - Wi-Fi channels. Valid values: `CH1`, `CH2`, `CH3`, `CH4`, `CH5`, `CH6`, `CH7`, `CH8`, `CH9`, `CH10`, `CH11`.
+* `bandwidth` - Wi-Fi channel bandwidth. Valid values: `auto`, `20MHz`, `40MHz`, `80MHz`.
+* `power_level` - Wi-Fi power level in percent (0 - 100, 0 = auto, default = 100).
+* `beacon_interval` - Wi-Fi beacon interval in miliseconds (100 - 3500, default = 100).
+* `n80211d` - Enable/disable Wi-Fi 802.11d. Valid values: `disable`, `enable`.
+* `max_clients` - Maximum number of Wi-Fi radio clients (0 - 512, 0 = unlimited, default = 0).
+* `extension_channel` - Wi-Fi extension channel. Valid values: `auto`, `higher`, `lower`.
+* `bss_color_mode` - Wi-Fi 802.11AX BSS color mode. Valid values: `auto`, `static`.
+* `bss_color` - Wi-Fi 802.11AX BSS color value (0 - 63, 0 = disable, default = 0).
+* `lan_ext_vap` - Wi-Fi LAN-Extention VAP. Select only one VAP.
+* `local_vaps` - Wi-Fi local VAP. Select up to three VAPs. The structure of `local_vaps` block is documented below.
+
+The `local_vaps` block supports:
+
+* `name` - Wi-Fi local VAP name.
+
+The `radio_2` block supports:
+
+* `mode` - Wi-Fi radio mode AP(LAN mode) / Client(WAN mode). Valid values: `AP`, `Client`.
+* `band` - Wi-Fi band selection 2.4GHz / 5GHz. Valid values: `5GHz`.
+* `status` - Enable/disable Wi-Fi radio. Valid values: `disable`, `enable`.
+* `operating_standard` - Wi-Fi operating standard. Valid values: `auto`, `11A-N-AC-AX`, `11A-N-AC`, `11A-N`, `11A`, `11N-AC-AX`, `11AC-AX`, `11AC`, `11N-AC`, `11B-G-N-AX`, `11B-G-N`, `11B-G`, `11B`, `11G-N-AX`, `11N-AX`, `11AX`, `11G-N`, `11N`, `11G`.
+* `guard_interval` - Wi-Fi guard interval. Valid values: `auto`, `400ns`, `800ns`.
+* `channel` - Wi-Fi channels. Valid values: `CH36`, `CH40`, `CH44`, `CH48`, `CH52`, `CH56`, `CH60`, `CH64`, `CH100`, `CH104`, `CH108`, `CH112`, `CH116`, `CH120`, `CH124`, `CH128`, `CH132`, `CH136`, `CH140`, `CH144`, `CH149`, `CH153`, `CH157`, `CH161`, `CH165`.
+* `bandwidth` - Wi-Fi channel bandwidth. Valid values: `auto`, `20MHz`, `40MHz`, `80MHz`.
+* `power_level` - Wi-Fi power level in percent (0 - 100, 0 = auto, default = 100).
+* `beacon_interval` - Wi-Fi beacon interval in miliseconds (100 - 3500, default = 100).
+* `n80211d` - Enable/disable Wi-Fi 802.11d. Valid values: `disable`, `enable`.
+* `max_clients` - Maximum number of Wi-Fi radio clients (0 - 512, 0 = unlimited, default = 0).
+* `extension_channel` - Wi-Fi extension channel. Valid values: `auto`, `higher`, `lower`.
+* `bss_color_mode` - Wi-Fi 802.11AX BSS color mode. Valid values: `auto`, `static`.
+* `bss_color` - Wi-Fi 802.11AX BSS color value (0 - 63, 0 = disable, default = 0).
+* `lan_ext_vap` - Wi-Fi LAN-Extention VAP. Select only one VAP.
+* `local_vaps` - Wi-Fi local VAP. Select up to three VAPs. The structure of `local_vaps` block is documented below.
+
+The `local_vaps` block supports:
+
+* `name` - Wi-Fi local VAP name.
 
 
 ## Attribute Reference

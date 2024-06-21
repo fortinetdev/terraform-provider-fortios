@@ -93,6 +93,24 @@ func resourceSystemIpam() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"exclude": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"exclude_subnet": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -368,6 +386,11 @@ func flattenSystemIpamPools(v interface{}, d *schema.ResourceData, pre string, s
 			tmp["subnet"] = flattenSystemIpamPoolsSubnet(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude"
+		if cur_v, ok := i["exclude"]; ok {
+			tmp["exclude"] = flattenSystemIpamPoolsExclude(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -386,6 +409,64 @@ func flattenSystemIpamPoolsDescription(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemIpamPoolsSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func flattenSystemIpamPoolsExclude(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["ID"]; ok {
+			tmp["id"] = flattenSystemIpamPoolsExcludeId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude_subnet"
+		if cur_v, ok := i["exclude-subnet"]; ok {
+			tmp["exclude_subnet"] = flattenSystemIpamPoolsExcludeExcludeSubnet(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemIpamPoolsExcludeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamPoolsExcludeExcludeSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -772,6 +853,13 @@ func expandSystemIpamPools(d *schema.ResourceData, v interface{}, pre string, sv
 			tmp["subnet"], _ = expandSystemIpamPoolsSubnet(d, i["subnet"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude"
+		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+			tmp["exclude"], _ = expandSystemIpamPoolsExclude(d, i["exclude"], pre_append, sv)
+		} else {
+			tmp["exclude"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -789,6 +877,46 @@ func expandSystemIpamPoolsDescription(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemIpamPoolsSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamPoolsExclude(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ID"], _ = expandSystemIpamPoolsExcludeId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude_subnet"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["exclude-subnet"], _ = expandSystemIpamPoolsExcludeExcludeSubnet(d, i["exclude_subnet"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemIpamPoolsExcludeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamPoolsExcludeExcludeSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

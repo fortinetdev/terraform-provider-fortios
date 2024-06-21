@@ -867,6 +867,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dhcp_lease_backup_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"wifi_ca_certificate": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -1383,19 +1389,19 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"user_device_store_max_devices": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10455, 240381),
+				ValidateFunc: validation.IntBetween(10451, 240381),
 				Optional:     true,
 				Computed:     true,
 			},
 			"user_device_store_max_users": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10455, 240381),
+				ValidateFunc: validation.IntBetween(10451, 240381),
 				Optional:     true,
 				Computed:     true,
 			},
 			"user_device_store_max_unified_mem": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(20910899, 1682668748),
+				ValidateFunc: validation.IntBetween(20903936, 1682668748),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -2331,6 +2337,10 @@ func flattenSystemGlobalAdminHttpsPkiRequired(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemGlobalWifiCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalDhcpLeaseBackupInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3850,6 +3860,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("dhcp_lease_backup_interval", flattenSystemGlobalDhcpLeaseBackupInterval(o["dhcp-lease-backup-interval"], d, "dhcp_lease_backup_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-lease-backup-interval"]) {
+			return fmt.Errorf("Error reading dhcp_lease_backup_interval: %v", err)
+		}
+	}
+
 	if err = d.Set("wifi_ca_certificate", flattenSystemGlobalWifiCaCertificate(o["wifi-ca-certificate"], d, "wifi_ca_certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["wifi-ca-certificate"]) {
 			return fmt.Errorf("Error reading wifi_ca_certificate: %v", err)
@@ -5274,6 +5290,10 @@ func expandSystemGlobalAdminHttpsPkiRequired(d *schema.ResourceData, v interface
 }
 
 func expandSystemGlobalWifiCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalDhcpLeaseBackupInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7861,6 +7881,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["wifi-certificate"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_lease_backup_interval"); ok {
+		if setArgNil {
+			obj["dhcp-lease-backup-interval"] = nil
+		} else {
+			t, err := expandSystemGlobalDhcpLeaseBackupInterval(d, v, "dhcp_lease_backup_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-lease-backup-interval"] = t
 			}
 		}
 	}

@@ -85,6 +85,7 @@ The following arguments are supported:
 * `dns_mapping_ttl` - DNS mapping TTL (Set to zero to use TTL in DNS response, default = 0).
 * `ldb_method` - Method used to distribute sessions to real servers. Valid values: `static`, `round-robin`, `weighted`, `least-session`, `least-rtt`, `first-alive`, `http-host`.
 * `src_filter` - Source address filter. Each address must be either an IP/subnet (x.x.x.x/n) or a range (x.x.x.x-y.y.y.y). Separate addresses with spaces. The structure of `src_filter` block is documented below.
+* `src_vip_filter` - Enable/disable use of 'src-filter' to match destinations for the reverse SNAT rule. Valid values: `disable`, `enable`.
 * `service` - Service name. The structure of `service` block is documented below.
 * `extip` - IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `extaddr` - External FQDN address name. The structure of `extaddr` block is documented below.

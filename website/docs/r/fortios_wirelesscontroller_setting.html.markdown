@@ -26,7 +26,7 @@ The following arguments are supported:
 * `device_idle` - Upper limit of idle time of device for identification in minutes (0 - 14400, default = 1440).
 * `firmware_provision_on_authorization` - Enable/disable automatic provisioning of latest firmware on authorization. Valid values: `enable`, `disable`.
 * `rolling_wtp_upgrade` - Enable/disable rolling WTP upgrade (default = disable). Valid values: `enable`, `disable`.
-* `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 86400, 0 = disable).
+* `darrp_optimize` - Time for running Distributed Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 86400, 0 = disable).
 * `darrp_optimize_schedules` - Firewall schedules for DARRP running time. DARRP will run periodically based on darrp-optimize within the schedules. Separate multiple schedule names with a space. The structure of `darrp_optimize_schedules` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -35,7 +35,7 @@ The following arguments are supported:
 The `offending_ssid` block supports:
 
 * `id` - ID.
-* `ssid_pattern` - Define offending SSID pattern (case insensitive). For example, word, word*, *word, wo*rd.
+* `ssid_pattern` - Define offending SSID pattern (case insensitive), eg: word, word*, *word, wo*rd.
 * `action` - Actions taken for detected offending SSID. Valid values: `log`, `suppress`.
 
 The `darrp_optimize_schedules` block supports:

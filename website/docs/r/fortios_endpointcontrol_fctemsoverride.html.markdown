@@ -18,6 +18,7 @@ The following arguments are supported:
 * `name` - FortiClient Enterprise Management Server (EMS) name.
 * `dirty_reason` - Dirty Reason for FortiClient EMS. Valid values: `none`, `mismatched-ems-sn`.
 * `fortinetone_cloud_authentication` - Enable/disable authentication of FortiClient EMS Cloud through FortiCloud account. Valid values: `enable`, `disable`.
+* `cloud_authentication_access_key` - FortiClient EMS Cloud multitenancy access key
 * `server` - FortiClient EMS FQDN or IPv4 address.
 * `https_port` - FortiClient EMS HTTPS access port number. (1 - 65535, default: 443).
 * `serial_number` - EMS Serial Number.

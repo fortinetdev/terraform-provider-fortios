@@ -88,7 +88,7 @@ The following arguments are supported:
 * `client_cert` - Client certificate to use under TLS.
 * `server_identity_check` - Enable/disable RADIUS server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `account_key_processing` - Account key processing operation. The FortiGate will keep either the whole domain or strip the domain from the subject identity. Valid values: `same`, `strip`.
-* `account_key_cert_field` - Define subject identity field in certificate for user access right checking. Valid values: `othername`, `rfc822name`, `dnsname`.
+* `account_key_cert_field` - Define subject identity field in certificate for user access right checking.
 * `rsso` - Enable/disable RADIUS based single sign on feature. Valid values: `enable`, `disable`.
 * `rsso_radius_server_port` - UDP port to listen on for RADIUS Start and Stop records.
 * `rsso_radius_response` - Enable/disable sending RADIUS response packets after receiving Start and Stop records. Valid values: `enable`, `disable`.

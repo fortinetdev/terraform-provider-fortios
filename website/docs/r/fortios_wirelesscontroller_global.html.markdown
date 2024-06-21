@@ -58,6 +58,12 @@ The following arguments are supported:
 * `ap_log_server` - Enable/disable configuring FortiGate to redirect wireless event log messages or FortiAPs to send UTM log messages to a syslog server (default = disable). Valid values: `enable`, `disable`.
 * `ap_log_server_ip` - IP address that APs or FortiAPs send log messages to.
 * `ap_log_server_port` - Port that APs or FortiAPs send log messages to.
+* `max_sta_cap` - Maximum number of station cap stored on the controller (default = 0).
+* `max_sta_cap_wtp` - Maximum number of station cap's wtp info stored on the controller (1 - 16, default = 8).
+* `max_rogue_ap` - Maximum number of rogue APs stored on the controller (default = 0).
+* `max_rogue_ap_wtp` - Maximum number of rogue AP's wtp info stored on the controller (1 - 16, default = 16).
+* `max_rogue_sta` - Maximum number of rogue stations stored on the controller (default = 0).
+* `max_ble_device` - Maximum number of BLE devices stored on the controller (default = 0).
 * `dfs_lab_test` - Enable/disable DFS certificate lab test mode. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

@@ -154,6 +154,22 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"authserver_timeout_tagged": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"authserver_timeout_tagged_vlanid": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
+			"dacl": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -437,6 +453,18 @@ func flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlanid(v interfa
 	return v
 }
 
+func flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutTagged(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutTaggedVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSecurityPolicy8021XDacl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -576,6 +604,24 @@ func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o 
 		}
 	}
 
+	if err = d.Set("authserver_timeout_tagged", flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutTagged(o["authserver-timeout-tagged"], d, "authserver_timeout_tagged", sv)); err != nil {
+		if !fortiAPIPatch(o["authserver-timeout-tagged"]) {
+			return fmt.Errorf("Error reading authserver_timeout_tagged: %v", err)
+		}
+	}
+
+	if err = d.Set("authserver_timeout_tagged_vlanid", flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutTaggedVlanid(o["authserver-timeout-tagged-vlanid"], d, "authserver_timeout_tagged_vlanid", sv)); err != nil {
+		if !fortiAPIPatch(o["authserver-timeout-tagged-vlanid"]) {
+			return fmt.Errorf("Error reading authserver_timeout_tagged_vlanid: %v", err)
+		}
+	}
+
+	if err = d.Set("dacl", flattenSwitchControllerSecurityPolicy8021XDacl(o["dacl"], d, "dacl", sv)); err != nil {
+		if !fortiAPIPatch(o["dacl"]) {
+			return fmt.Errorf("Error reading dacl: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -686,6 +732,18 @@ func expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlan(d *schema.Re
 }
 
 func expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlanid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutTagged(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutTaggedVlanid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XDacl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -869,6 +927,33 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 			return &obj, err
 		} else if t != nil {
 			obj["authserver-timeout-vlanid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("authserver_timeout_tagged"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutTagged(d, v, "authserver_timeout_tagged", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["authserver-timeout-tagged"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("authserver_timeout_tagged_vlanid"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutTaggedVlanid(d, v, "authserver_timeout_tagged_vlanid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["authserver-timeout-tagged-vlanid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dacl"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XDacl(d, v, "dacl", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dacl"] = t
 		}
 	}
 

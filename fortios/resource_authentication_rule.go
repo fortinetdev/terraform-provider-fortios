@@ -156,6 +156,11 @@ func resourceAuthenticationRule() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"cert_auth_cookie": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"transaction_based": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -582,6 +587,10 @@ func flattenAuthenticationRuleCorsDepth(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenAuthenticationRuleCertAuthCookie(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationRuleTransactionBased(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -734,6 +743,12 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("cors_depth", flattenAuthenticationRuleCorsDepth(o["cors-depth"], d, "cors_depth", sv)); err != nil {
 		if !fortiAPIPatch(o["cors-depth"]) {
 			return fmt.Errorf("Error reading cors_depth: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_auth_cookie", flattenAuthenticationRuleCertAuthCookie(o["cert-auth-cookie"], d, "cert_auth_cookie", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-auth-cookie"]) {
+			return fmt.Errorf("Error reading cert_auth_cookie: %v", err)
 		}
 	}
 
@@ -940,6 +955,10 @@ func expandAuthenticationRuleCorsDepth(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandAuthenticationRuleCertAuthCookie(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAuthenticationRuleTransactionBased(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1078,6 +1097,15 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["cors-depth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cert_auth_cookie"); ok {
+		t, err := expandAuthenticationRuleCertAuthCookie(d, v, "cert_auth_cookie", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-auth-cookie"] = t
 		}
 	}
 

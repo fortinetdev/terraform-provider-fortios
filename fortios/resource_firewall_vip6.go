@@ -77,6 +77,11 @@ func resourceFirewallVip6() *schema.Resource {
 					},
 				},
 			},
+			"src_vip_filter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"extip": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -850,6 +855,10 @@ func flattenFirewallVip6SrcFilterRange(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenFirewallVip6SrcVipFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVip6Extip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1596,6 +1605,12 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("src_vip_filter", flattenFirewallVip6SrcVipFilter(o["src-vip-filter"], d, "src_vip_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["src-vip-filter"]) {
+			return fmt.Errorf("Error reading src_vip_filter: %v", err)
+		}
+	}
+
 	if err = d.Set("extip", flattenFirewallVip6Extip(o["extip"], d, "extip", sv)); err != nil {
 		if !fortiAPIPatch(o["extip"]) {
 			return fmt.Errorf("Error reading extip: %v", err)
@@ -2177,6 +2192,10 @@ func expandFirewallVip6SrcFilter(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandFirewallVip6SrcFilterRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6SrcVipFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2871,6 +2890,15 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["src-filter"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("src_vip_filter"); ok {
+		t, err := expandFirewallVip6SrcVipFilter(d, v, "src_vip_filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["src-vip-filter"] = t
 		}
 	}
 

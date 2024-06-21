@@ -34,7 +34,7 @@ The following arguments are supported:
 * `source_ip6` - Source IPv6 address for communication to the NTP server.
 * `server_mode` - Enable/disable FortiGate NTP Server Mode. Your FortiGate becomes an NTP server for other devices on your network. The FortiGate relays NTP requests to its configured NTP server. Valid values: `enable`, `disable`.
 * `authentication` - Enable/disable authentication. Valid values: `enable`, `disable`.
-* `key_type` - Key type for authentication (MD5, SHA1). Valid values: `MD5`, `SHA1`.
+* `key_type` - Key type for authentication. On FortiOS versions 6.2.4-7.4.3: MD5, SHA1. On FortiOS versions >= 7.4.4: MD5, SHA1, SHA256.
 * `key` - Key for authentication.
 * `key_id` - Key ID for authentication.
 * `interface` - FortiGate interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services. The structure of `interface` block is documented below.
@@ -47,8 +47,9 @@ The `ntpserver` block supports:
 * `id` - NTP server ID.
 * `server` - IP address or hostname of the NTP Server.
 * `ntpv3` - Enable to use NTPv3 instead of NTPv4. Valid values: `enable`, `disable`.
-* `authentication` - Enable/disable MD5(NTPv3)/SHA1(NTPv4) authentication. Valid values: `enable`, `disable`.
-* `key` - Key for MD5(NTPv3)/SHA1(NTPv4) authentication.
+* `authentication` - Enable/disable MD5/SHA1 authentication. Valid values: `enable`, `disable`.
+* `key_type` - Select NTP authentication type. Valid values: `MD5`, `SHA1`, `SHA256`.
+* `key` - Key for authentication. On FortiOS versions 6.2.0: MD5(NTPv3)/SHA1(NTPv4). On FortiOS versions >= 7.4.4: MD5(NTPv3)/SHA1(NTPv4)/SHA256(NTPv4).
 * `key_id` - Key ID for authentication.
 * `ip_type` - Choose to connect to IPv4 or/and IPv6 NTP server. Valid values: `IPv6`, `IPv4`, `Both`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

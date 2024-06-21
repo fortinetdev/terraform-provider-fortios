@@ -85,6 +85,12 @@ func resourceUserTacacs() *schema.Resource {
 				Optional:     true,
 				Sensitive:    true,
 			},
+			"status_ttl": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"authen_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -299,6 +305,10 @@ func flattenUserTacacsTertiaryKey(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenUserTacacsStatusTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserTacacsAuthenType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -349,6 +359,12 @@ func refreshObjectUserTacacs(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("port", flattenUserTacacsPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
+		}
+	}
+
+	if err = d.Set("status_ttl", flattenUserTacacsStatusTtl(o["status-ttl"], d, "status_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["status-ttl"]) {
+			return fmt.Errorf("Error reading status_ttl: %v", err)
 		}
 	}
 
@@ -420,6 +436,10 @@ func expandUserTacacsSecondaryKey(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserTacacsTertiaryKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserTacacsStatusTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -515,6 +535,15 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["tertiary-key"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("status_ttl"); ok {
+		t, err := expandUserTacacsStatusTtl(d, v, "status_ttl", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status-ttl"] = t
 		}
 	}
 

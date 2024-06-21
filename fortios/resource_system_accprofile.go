@@ -254,6 +254,11 @@ func resourceSystemAccprofile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"dlp": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"data_leak_prevention": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -814,6 +819,11 @@ func flattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.ResourceDa
 		result["emailfilter"] = flattenSystemAccprofileUtmgrpPermissionEmailfilter(i["emailfilter"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "dlp"
+	if _, ok := i["dlp"]; ok {
+		result["dlp"] = flattenSystemAccprofileUtmgrpPermissionDlp(i["dlp"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "data_leak_prevention"
 	if _, ok := i["data-leak-prevention"]; ok {
 		result["data_leak_prevention"] = flattenSystemAccprofileUtmgrpPermissionDataLeakPrevention(i["data-leak-prevention"], d, pre_append, sv)
@@ -896,6 +906,10 @@ func flattenSystemAccprofileUtmgrpPermissionWebfilter(v interface{}, d *schema.R
 }
 
 func flattenSystemAccprofileUtmgrpPermissionEmailfilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileUtmgrpPermissionDlp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1499,6 +1513,10 @@ func expandSystemAccprofileUtmgrpPermission(d *schema.ResourceData, v interface{
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emailfilter"], _ = expandSystemAccprofileUtmgrpPermissionEmailfilter(d, i["emailfilter"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "dlp"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["dlp"], _ = expandSystemAccprofileUtmgrpPermissionDlp(d, i["dlp"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "data_leak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["data-leak-prevention"], _ = expandSystemAccprofileUtmgrpPermissionDataLeakPrevention(d, i["data_leak_prevention"], pre_append, sv)
@@ -1568,6 +1586,10 @@ func expandSystemAccprofileUtmgrpPermissionWebfilter(d *schema.ResourceData, v i
 }
 
 func expandSystemAccprofileUtmgrpPermissionEmailfilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileUtmgrpPermissionDlp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

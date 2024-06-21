@@ -198,6 +198,8 @@ The following arguments are supported:
 * `fragmentation_mtu` - IKE fragmentation MTU (500 - 16000).
 * `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023). Valid values: `enable`, `disable`.
 * `azure_ad_autoconnect` - Enable/disable Azure AD Auto-Connect for FortiClient. Valid values: `enable`, `disable`.
+* `client_resume` - Enable/disable resumption of offline FortiClient sessions.  When a FortiClient enabled laptop is closed or enters sleep/hibernate mode, enabling this feature allows FortiClient to keep the tunnel during this period, and allows users to immediately resume using the IPsec tunnel when the device wakes up. Valid values: `enable`, `disable`.
+* `client_resume_interval` - Maximum time in seconds during which a VPN client may resume using a tunnel after a client PC has entered sleep mode or temporarily lost its network connection (120 - 172800, default = 1800).
 * `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
 * `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
@@ -230,6 +232,18 @@ The following arguments are supported:
 * `transport` - Set IKE transport protocol. Valid values: `udp`, `udp-fallback-tcp`, `tcp`.
 * `fortinet_esp` - Enable/disable Fortinet ESP encapsulaton. Valid values: `enable`, `disable`.
 * `fallback_tcp_threshold` - Timeout in seconds before falling back IKE/IPsec traffic to tcp.
+* `remote_gw_match` - Set type of IPv4 remote gateway address matching. Valid values: `any`, `ipmask`, `iprange`, `geography`.
+* `remote_gw_subnet` - IPv4 address and subnet mask.
+* `remote_gw_start_ip` - First IPv4 address in the range.
+* `remote_gw_end_ip` - Last IPv4 address in the range.
+* `remote_gw_country` - IPv4 addresses associated to a specific country.
+* `remote_gw6_match` - Set type of IPv6 remote gateway address matching. Valid values: `any`, `ipprefix`, `iprange`, `geography`.
+* `remote_gw6_subnet` - IPv6 address and prefix.
+* `remote_gw6_start_ip` - First IPv6 address in the range.
+* `remote_gw6_end_ip` - Last IPv6 address in the range.
+* `remote_gw6_country` - IPv6 addresses associated to a specific country.
+* `cert_peer_username_validation` - Enable/disable cross validation of peer username and the identity in the peer's certificate. Valid values: `none`, `othername`, `rfc822name`, `cn`.
+* `cert_peer_username_strip` - Enable/disable domain stripping on certificate identity. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

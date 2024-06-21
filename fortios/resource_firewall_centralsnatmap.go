@@ -169,6 +169,11 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 					},
 				},
 			},
+			"port_preserve": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"protocol": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -724,6 +729,10 @@ func flattenFirewallCentralSnatMapNatIppool6Name(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenFirewallCentralSnatMapPortPreserve(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallCentralSnatMapProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -914,6 +923,12 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 					return fmt.Errorf("Error reading nat_ippool6: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("port_preserve", flattenFirewallCentralSnatMapPortPreserve(o["port-preserve"], d, "port_preserve", sv)); err != nil {
+		if !fortiAPIPatch(o["port-preserve"]) {
+			return fmt.Errorf("Error reading port_preserve: %v", err)
 		}
 	}
 
@@ -1214,6 +1229,10 @@ func expandFirewallCentralSnatMapNatIppool6Name(d *schema.ResourceData, v interf
 	return v, nil
 }
 
+func expandFirewallCentralSnatMapPortPreserve(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallCentralSnatMapProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1354,6 +1373,15 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["nat-ippool6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("port_preserve"); ok {
+		t, err := expandFirewallCentralSnatMapPortPreserve(d, v, "port_preserve", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["port-preserve"] = t
 		}
 	}
 

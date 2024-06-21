@@ -105,6 +105,11 @@ func resourceCertificateCa() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fabric_ca": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -317,6 +322,10 @@ func flattenCertificateCaObsolete(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenCertificateCaFabricCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -396,6 +405,12 @@ func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("fabric_ca", flattenCertificateCaFabricCa(o["fabric-ca"], d, "fabric_ca", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-ca"]) {
+			return fmt.Errorf("Error reading fabric_ca: %v", err)
+		}
+	}
+
 	if err = d.Set("last_updated", flattenCertificateCaLastUpdated(o["last-updated"], d, "last_updated", sv)); err != nil {
 		if !fortiAPIPatch(o["last-updated"]) {
 			return fmt.Errorf("Error reading last_updated: %v", err)
@@ -460,6 +475,10 @@ func expandCertificateCaCaIdentifier(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandCertificateCaObsolete(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateCaFabricCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -584,6 +603,15 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["obsolete"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_ca"); ok {
+		t, err := expandCertificateCaFabricCa(d, v, "fabric_ca", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-ca"] = t
 		}
 	}
 

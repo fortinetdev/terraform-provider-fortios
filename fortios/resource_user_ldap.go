@@ -59,6 +59,12 @@ func resourceUserLdap() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"status_ttl": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"server_identity_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -426,6 +432,10 @@ func flattenUserLdapTertiaryServer(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenUserLdapStatusTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -594,6 +604,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("tertiary_server", flattenUserLdapTertiaryServer(o["tertiary-server"], d, "tertiary_server", sv)); err != nil {
 		if !fortiAPIPatch(o["tertiary-server"]) {
 			return fmt.Errorf("Error reading tertiary_server: %v", err)
+		}
+	}
+
+	if err = d.Set("status_ttl", flattenUserLdapStatusTtl(o["status-ttl"], d, "status_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["status-ttl"]) {
+			return fmt.Errorf("Error reading status_ttl: %v", err)
 		}
 	}
 
@@ -832,6 +848,10 @@ func expandUserLdapTertiaryServer(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandUserLdapStatusTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserLdapServerIdentityCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1012,6 +1032,15 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["tertiary-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("status_ttl"); ok {
+		t, err := expandUserLdapStatusTtl(d, v, "status_ttl", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status-ttl"] = t
 		}
 	}
 

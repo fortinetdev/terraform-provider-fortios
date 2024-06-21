@@ -50,6 +50,7 @@ The following attributes are exported:
 * `dhcp_relay_circuit_id` - DHCP relay circuit ID.
 * `dhcp_relay_link_selection` - DHCP relay link selection.
 * `dhcp_relay_request_all_server` - Enable/disable sending DHCP request to all servers.
+* `dhcp_relay_allow_no_end_option` - Enable/disable relaying DHCP messages with no end option.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec).
 * `dhcp_smart_relay` - Enable/disable DHCP smart relay.
 * `dhcp_relay_agent_option` - Enable/disable DHCP relay agent option.

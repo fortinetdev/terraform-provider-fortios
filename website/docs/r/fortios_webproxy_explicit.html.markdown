@@ -21,6 +21,9 @@ The following arguments are supported:
 * `http_connection_mode` - HTTP connection mode (default = static). Valid values: `static`, `multiplex`, `serverpool`.
 * `https_incoming_port` - Accept incoming HTTPS requests on one or more ports (0 - 65535, default = 0, use the same as HTTP).
 * `secure_web_proxy_cert` - Name of certificates for secure web proxy. The structure of `secure_web_proxy_cert` block is documented below.
+* `client_cert` - Enable/disable to request client certificate. Valid values: `disable`, `enable`.
+* `user_agent_detect` - Enable/disable to detect device type by HTTP user-agent if no client certificate provided. Valid values: `disable`, `enable`.
+* `empty_cert_action` - Action of an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
 * `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048). Valid values: `768`, `1024`, `1536`, `2048`.
 * `ftp_incoming_port` - Accept incoming FTP-over-HTTP requests on one or more ports (0 - 65535, default = 0; use the same as HTTP).
 * `socks_incoming_port` - Accept incoming SOCKS proxy requests on one or more ports (0 - 65535, default = 0; use the same as HTTP).
@@ -30,7 +33,7 @@ The following arguments are supported:
 * `incoming_ip6` - Restrict the explicit web proxy to only accept sessions from this IPv6 address. An interface must have this IPv6 address.
 * `outgoing_ip6` - Outgoing HTTP requests will leave this IPv6. Multiple interfaces can be specified. Interfaces must have these IPv6 addresses.
 * `strict_guest` - Enable/disable strict guest user checking by the explicit web proxy. Valid values: `enable`, `disable`.
-* `pref_dns_result` - Prefer resolving addresses using the configured IPv4 or IPv6 DNS server (default = ipv4). Valid values: `ipv4`, `ipv6`.
+* `pref_dns_result` - Prefer resolving addresses using the configured IPv4 or IPv6 DNS server (default = ipv4).
 * `unknown_http_version` - Either reject unknown HTTP traffic as malformed or handle unknown HTTP traffic as best as the proxy server can.
 * `realm` - Authentication realm used to identify the explicit web proxy (maximum of 63 characters).
 * `sec_default_action` - Accept or deny explicit web proxy sessions when no web proxy firewall policy exists. Valid values: `accept`, `deny`.

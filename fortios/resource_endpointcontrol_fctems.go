@@ -82,6 +82,12 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cloud_authentication_access_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 20),
+				Optional:     true,
+				Computed:     true,
+			},
 			"https_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -388,6 +394,10 @@ func flattenEndpointControlFctemsFortinetoneCloudAuthentication(v interface{}, d
 	return v
 }
 
+func flattenEndpointControlFctemsCloudAuthenticationAccessKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -524,6 +534,12 @@ func refreshObjectEndpointControlFctems(d *schema.ResourceData, o map[string]int
 	if err = d.Set("fortinetone_cloud_authentication", flattenEndpointControlFctemsFortinetoneCloudAuthentication(o["fortinetone-cloud-authentication"], d, "fortinetone_cloud_authentication", sv)); err != nil {
 		if !fortiAPIPatch(o["fortinetone-cloud-authentication"]) {
 			return fmt.Errorf("Error reading fortinetone_cloud_authentication: %v", err)
+		}
+	}
+
+	if err = d.Set("cloud_authentication_access_key", flattenEndpointControlFctemsCloudAuthenticationAccessKey(o["cloud-authentication-access-key"], d, "cloud_authentication_access_key", sv)); err != nil {
+		if !fortiAPIPatch(o["cloud-authentication-access-key"]) {
+			return fmt.Errorf("Error reading cloud_authentication_access_key: %v", err)
 		}
 	}
 
@@ -694,6 +710,10 @@ func expandEndpointControlFctemsFortinetoneCloudAuthentication(d *schema.Resourc
 	return v, nil
 }
 
+func expandEndpointControlFctemsCloudAuthenticationAccessKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsHttpsPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -854,6 +874,15 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["fortinetone-cloud-authentication"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cloud_authentication_access_key"); ok {
+		t, err := expandEndpointControlFctemsCloudAuthenticationAccessKey(d, v, "cloud_authentication_access_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cloud-authentication-access-key"] = t
 		}
 	}
 

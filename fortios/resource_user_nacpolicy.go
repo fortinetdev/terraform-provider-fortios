@@ -59,6 +59,17 @@ func resourceUserNacPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"match_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"match_period": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 120),
+				Optional:     true,
+				Computed:     true,
+			},
 			"mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -125,6 +136,12 @@ func resourceUserNacPolicy() *schema.Resource {
 				Computed:     true,
 			},
 			"ems_tag": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
+			"fortivoice_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
@@ -388,6 +405,14 @@ func flattenUserNacPolicyStatus(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenUserNacPolicyMatchType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserNacPolicyMatchPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserNacPolicyMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -433,6 +458,10 @@ func flattenUserNacPolicyUserGroup(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserNacPolicyEmsTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserNacPolicyFortivoiceTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -619,6 +648,18 @@ func refreshObjectUserNacPolicy(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("match_type", flattenUserNacPolicyMatchType(o["match-type"], d, "match_type", sv)); err != nil {
+		if !fortiAPIPatch(o["match-type"]) {
+			return fmt.Errorf("Error reading match_type: %v", err)
+		}
+	}
+
+	if err = d.Set("match_period", flattenUserNacPolicyMatchPeriod(o["match-period"], d, "match_period", sv)); err != nil {
+		if !fortiAPIPatch(o["match-period"]) {
+			return fmt.Errorf("Error reading match_period: %v", err)
+		}
+	}
+
 	if err = d.Set("mac", flattenUserNacPolicyMac(o["mac"], d, "mac", sv)); err != nil {
 		if !fortiAPIPatch(o["mac"]) {
 			return fmt.Errorf("Error reading mac: %v", err)
@@ -688,6 +729,12 @@ func refreshObjectUserNacPolicy(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("ems_tag", flattenUserNacPolicyEmsTag(o["ems-tag"], d, "ems_tag", sv)); err != nil {
 		if !fortiAPIPatch(o["ems-tag"]) {
 			return fmt.Errorf("Error reading ems_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("fortivoice_tag", flattenUserNacPolicyFortivoiceTag(o["fortivoice-tag"], d, "fortivoice_tag", sv)); err != nil {
+		if !fortiAPIPatch(o["fortivoice-tag"]) {
+			return fmt.Errorf("Error reading fortivoice_tag: %v", err)
 		}
 	}
 
@@ -800,6 +847,14 @@ func expandUserNacPolicyStatus(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
+func expandUserNacPolicyMatchType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicyMatchPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserNacPolicyMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -845,6 +900,10 @@ func expandUserNacPolicyUserGroup(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserNacPolicyEmsTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicyFortivoiceTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -995,6 +1054,24 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	}
 
+	if v, ok := d.GetOk("match_type"); ok {
+		t, err := expandUserNacPolicyMatchType(d, v, "match_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("match_period"); ok {
+		t, err := expandUserNacPolicyMatchPeriod(d, v, "match_period", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-period"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("mac"); ok {
 		t, err := expandUserNacPolicyMac(d, v, "mac", sv)
 		if err != nil {
@@ -1100,6 +1177,15 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 			return &obj, err
 		} else if t != nil {
 			obj["ems-tag"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fortivoice_tag"); ok {
+		t, err := expandUserNacPolicyFortivoiceTag(d, v, "fortivoice_tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortivoice-tag"] = t
 		}
 	}
 

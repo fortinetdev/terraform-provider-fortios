@@ -82,6 +82,17 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"match_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"match_period": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 120),
+							Optional:     true,
+							Computed:     true,
+						},
 						"interface_tags": &schema.Schema{
 							Type:     schema.TypeSet,
 							Optional: true,
@@ -379,6 +390,16 @@ func flattenSwitchControllerDynamicPortPolicyPolicy(v interface{}, d *schema.Res
 			tmp["category"] = flattenSwitchControllerDynamicPortPolicyPolicyCategory(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_type"
+		if cur_v, ok := i["match-type"]; ok {
+			tmp["match_type"] = flattenSwitchControllerDynamicPortPolicyPolicyMatchType(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_period"
+		if cur_v, ok := i["match-period"]; ok {
+			tmp["match_period"] = flattenSwitchControllerDynamicPortPolicyPolicyMatchPeriod(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if cur_v, ok := i["interface-tags"]; ok {
 			tmp["interface_tags"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(cur_v, d, pre_append, sv)
@@ -456,6 +477,14 @@ func flattenSwitchControllerDynamicPortPolicyPolicyStatus(v interface{}, d *sche
 }
 
 func flattenSwitchControllerDynamicPortPolicyPolicyCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerDynamicPortPolicyPolicyMatchType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerDynamicPortPolicyPolicyMatchPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -639,6 +668,16 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 			tmp["category"], _ = expandSwitchControllerDynamicPortPolicyPolicyCategory(d, i["category"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["match-type"], _ = expandSwitchControllerDynamicPortPolicyPolicyMatchType(d, i["match_type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_period"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["match-period"], _ = expandSwitchControllerDynamicPortPolicyPolicyMatchPeriod(d, i["match_period"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
 			tmp["interface-tags"], _ = expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d, i["interface_tags"], pre_append, sv)
@@ -717,6 +756,14 @@ func expandSwitchControllerDynamicPortPolicyPolicyStatus(d *schema.ResourceData,
 }
 
 func expandSwitchControllerDynamicPortPolicyPolicyCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerDynamicPortPolicyPolicyMatchType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerDynamicPortPolicyPolicyMatchPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

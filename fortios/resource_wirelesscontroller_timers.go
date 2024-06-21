@@ -84,7 +84,22 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"sta_cap_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"rogue_ap_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"rogue_sta_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"ble_device_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
@@ -340,7 +355,19 @@ func flattenWirelessControllerTimersFakeApLog(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenWirelessControllerTimersStaCapCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerTimersRogueApCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerTimersRogueStaCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerTimersBleDeviceCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -495,9 +522,27 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("sta_cap_cleanup", flattenWirelessControllerTimersStaCapCleanup(o["sta-cap-cleanup"], d, "sta_cap_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["sta-cap-cleanup"]) {
+			return fmt.Errorf("Error reading sta_cap_cleanup: %v", err)
+		}
+	}
+
 	if err = d.Set("rogue_ap_cleanup", flattenWirelessControllerTimersRogueApCleanup(o["rogue-ap-cleanup"], d, "rogue_ap_cleanup", sv)); err != nil {
 		if !fortiAPIPatch(o["rogue-ap-cleanup"]) {
 			return fmt.Errorf("Error reading rogue_ap_cleanup: %v", err)
+		}
+	}
+
+	if err = d.Set("rogue_sta_cleanup", flattenWirelessControllerTimersRogueStaCleanup(o["rogue-sta-cleanup"], d, "rogue_sta_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["rogue-sta-cleanup"]) {
+			return fmt.Errorf("Error reading rogue_sta_cleanup: %v", err)
+		}
+	}
+
+	if err = d.Set("ble_device_cleanup", flattenWirelessControllerTimersBleDeviceCleanup(o["ble-device-cleanup"], d, "ble_device_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["ble-device-cleanup"]) {
+			return fmt.Errorf("Error reading ble_device_cleanup: %v", err)
 		}
 	}
 
@@ -636,7 +681,19 @@ func expandWirelessControllerTimersFakeApLog(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandWirelessControllerTimersStaCapCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerTimersRogueApCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersRogueStaCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersBleDeviceCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -830,6 +887,19 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		}
 	}
 
+	if v, ok := d.GetOkExists("sta_cap_cleanup"); ok {
+		if setArgNil {
+			obj["sta-cap-cleanup"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersStaCapCleanup(d, v, "sta_cap_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-cap-cleanup"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOkExists("rogue_ap_cleanup"); ok {
 		if setArgNil {
 			obj["rogue-ap-cleanup"] = nil
@@ -839,6 +909,32 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["rogue-ap-cleanup"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("rogue_sta_cleanup"); ok {
+		if setArgNil {
+			obj["rogue-sta-cleanup"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersRogueStaCleanup(d, v, "rogue_sta_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rogue-sta-cleanup"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("ble_device_cleanup"); ok {
+		if setArgNil {
+			obj["ble-device-cleanup"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersBleDeviceCleanup(d, v, "ble_device_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ble-device-cleanup"] = t
 			}
 		}
 	}

@@ -234,6 +234,11 @@ func resourceDnsfilterProfile() *schema.Resource {
 					},
 				},
 			},
+			"strip_ech": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -759,6 +764,10 @@ func flattenDnsfilterProfileTransparentDnsDatabaseName(v interface{}, d *schema.
 	return v
 }
 
+func flattenDnsfilterProfileStripEch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -911,6 +920,12 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 					return fmt.Errorf("Error reading transparent_dns_database: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("strip_ech", flattenDnsfilterProfileStripEch(o["strip-ech"], d, "strip_ech", sv)); err != nil {
+		if !fortiAPIPatch(o["strip-ech"]) {
+			return fmt.Errorf("Error reading strip_ech: %v", err)
 		}
 	}
 
@@ -1234,6 +1249,10 @@ func expandDnsfilterProfileTransparentDnsDatabaseName(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandDnsfilterProfileStripEch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1378,6 +1397,15 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["transparent-dns-database"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("strip_ech"); ok {
+		t, err := expandDnsfilterProfileStripEch(d, v, "strip_ech", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["strip-ech"] = t
 		}
 	}
 

@@ -1909,6 +1909,12 @@ func resourceRouterBgp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"remote_as_filter": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
 						"local_as": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -5396,6 +5402,11 @@ func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre st
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as_filter"
+		if cur_v, ok := i["remote-as-filter"]; ok {
+			tmp["remote_as_filter"] = flattenRouterBgpNeighborGroupRemoteAsFilter(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
 		if cur_v, ok := i["local-as"]; ok {
 			v := flattenRouterBgpNeighborGroupLocalAs(cur_v, d, pre_append, sv)
@@ -6086,6 +6097,10 @@ func flattenRouterBgpNeighborGroupPrefixListOutVpnv6(v interface{}, d *schema.Re
 }
 
 func flattenRouterBgpNeighborGroupRemoteAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborGroupRemoteAsFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -10614,6 +10629,11 @@ func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre str
 			}
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as_filter"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["remote-as-filter"], _ = expandRouterBgpNeighborGroupRemoteAsFilter(d, i["remote_as_filter"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -11296,6 +11316,10 @@ func expandRouterBgpNeighborGroupPrefixListOutVpnv6(d *schema.ResourceData, v in
 }
 
 func expandRouterBgpNeighborGroupRemoteAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborGroupRemoteAsFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -828,6 +828,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"port_preserve": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ippool": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -2915,6 +2919,10 @@ func dataSourceFlattenFirewallPolicyFixedport(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyPortPreserve(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyIppool(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -4270,6 +4278,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("fixedport", dataSourceFlattenFirewallPolicyFixedport(o["fixedport"], d, "fixedport")); err != nil {
 		if !fortiAPIPatch(o["fixedport"]) {
 			return fmt.Errorf("Error reading fixedport: %v", err)
+		}
+	}
+
+	if err = d.Set("port_preserve", dataSourceFlattenFirewallPolicyPortPreserve(o["port-preserve"], d, "port_preserve")); err != nil {
+		if !fortiAPIPatch(o["port-preserve"]) {
+			return fmt.Errorf("Error reading port_preserve: %v", err)
 		}
 	}
 

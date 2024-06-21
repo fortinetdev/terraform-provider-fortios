@@ -1430,6 +1430,10 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"remote_as_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"local_as": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -4518,6 +4522,11 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 			tmp["remote_as"] = dataSourceFlattenRouterBgpNeighborGroupRemoteAs(i["remote-as"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as_filter"
+		if _, ok := i["remote-as-filter"]; ok {
+			tmp["remote_as_filter"] = dataSourceFlattenRouterBgpNeighborGroupRemoteAsFilter(i["remote-as-filter"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
 		if _, ok := i["local-as"]; ok {
 			tmp["local_as"] = dataSourceFlattenRouterBgpNeighborGroupLocalAs(i["local-as"], d, pre_append)
@@ -5188,6 +5197,10 @@ func dataSourceFlattenRouterBgpNeighborGroupPrefixListOutVpnv6(v interface{}, d 
 }
 
 func dataSourceFlattenRouterBgpNeighborGroupRemoteAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRemoteAsFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

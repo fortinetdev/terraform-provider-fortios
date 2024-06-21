@@ -105,6 +105,11 @@ func resourceVpnCertificateCa() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fabric_ca": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -317,6 +322,10 @@ func flattenVpnCertificateCaObsolete(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenVpnCertificateCaFabricCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -396,6 +405,12 @@ func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("fabric_ca", flattenVpnCertificateCaFabricCa(o["fabric-ca"], d, "fabric_ca", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-ca"]) {
+			return fmt.Errorf("Error reading fabric_ca: %v", err)
+		}
+	}
+
 	if err = d.Set("last_updated", flattenVpnCertificateCaLastUpdated(o["last-updated"], d, "last_updated", sv)); err != nil {
 		if !fortiAPIPatch(o["last-updated"]) {
 			return fmt.Errorf("Error reading last_updated: %v", err)
@@ -460,6 +475,10 @@ func expandVpnCertificateCaCaIdentifier(d *schema.ResourceData, v interface{}, p
 }
 
 func expandVpnCertificateCaObsolete(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateCaFabricCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -584,6 +603,15 @@ func getObjectVpnCertificateCa(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["obsolete"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_ca"); ok {
+		t, err := expandVpnCertificateCaFabricCa(d, v, "fabric_ca", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-ca"] = t
 		}
 	}
 

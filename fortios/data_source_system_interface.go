@@ -128,6 +128,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dhcp_relay_allow_no_end_option": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"dhcp_relay_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1693,6 +1697,10 @@ func dataSourceFlattenSystemInterfaceDhcpRelayLinkSelection(v interface{}, d *sc
 }
 
 func dataSourceFlattenSystemInterfaceDhcpRelayRequestAllServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpRelayAllowNoEndOption(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4095,6 +4103,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("dhcp_relay_request_all_server", dataSourceFlattenSystemInterfaceDhcpRelayRequestAllServer(o["dhcp-relay-request-all-server"], d, "dhcp_relay_request_all_server")); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-request-all-server"]) {
 			return fmt.Errorf("Error reading dhcp_relay_request_all_server: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_allow_no_end_option", dataSourceFlattenSystemInterfaceDhcpRelayAllowNoEndOption(o["dhcp-relay-allow-no-end-option"], d, "dhcp_relay_allow_no_end_option")); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-allow-no-end-option"]) {
+			return fmt.Errorf("Error reading dhcp_relay_allow_no_end_option: %v", err)
 		}
 	}
 

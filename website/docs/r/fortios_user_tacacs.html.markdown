@@ -33,6 +33,7 @@ The following arguments are supported:
 * `key` - Key to access the primary server.
 * `secondary_key` - Key to access the secondary server.
 * `tertiary_key` - Key to access the tertiary server.
+* `status_ttl` - Time for which server reachability is cached so that when a server is unreachable, it will not be retried for at least this period of time (0 = cache disabled, default = 300).
 * `authen_type` - Allowed authentication protocols/methods. Valid values: `mschap`, `chap`, `pap`, `ascii`, `auto`.
 * `authorization` - Enable/disable TACACS+ authorization. Valid values: `enable`, `disable`.
 * `source_ip` - source IP for communications to TACACS+ server.

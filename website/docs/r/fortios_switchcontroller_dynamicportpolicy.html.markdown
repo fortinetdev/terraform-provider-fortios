@@ -27,6 +27,8 @@ The `policy` block supports:
 * `description` - Description for the policy.
 * `status` - Enable/disable policy. Valid values: `enable`, `disable`.
 * `category` - Category of Dynamic port policy. Valid values: `device`, `interface-tag`.
+* `match_type` - Match and retain the devices based on the type. Valid values: `dynamic`, `override`.
+* `match_period` - Number of days the matched devices will be retained (0 - 120, 0 = always retain).
 * `interface_tags` - Policy matching the FortiSwitch interface object tags. The structure of `interface_tags` block is documented below.
 * `mac` - Policy matching MAC address.
 * `hw_vendor` - Match policy based on hardware vendor.

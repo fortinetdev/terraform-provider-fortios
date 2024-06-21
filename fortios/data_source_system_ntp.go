@@ -61,6 +61,10 @@ func dataSourceSystemNtp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"key_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"key": &schema.Schema{
 							Type:      schema.TypeString,
 							Sensitive: true,
@@ -215,6 +219,11 @@ func dataSourceFlattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, 
 			tmp["authentication"] = dataSourceFlattenSystemNtpNtpserverAuthentication(i["authentication"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+		if _, ok := i["key-type"]; ok {
+			tmp["key_type"] = dataSourceFlattenSystemNtpNtpserverKeyType(i["key-type"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
 			tmp["key"] = dataSourceFlattenSystemNtpNtpserverKey(i["key"], d, pre_append)
@@ -265,6 +274,10 @@ func dataSourceFlattenSystemNtpNtpserverNtpv3(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemNtpNtpserverAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNtpNtpserverKeyType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

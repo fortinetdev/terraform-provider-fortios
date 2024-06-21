@@ -162,6 +162,38 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"max_sta_cap": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"max_sta_cap_wtp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 8),
+				Optional:     true,
+				Computed:     true,
+			},
+			"max_rogue_ap": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"max_rogue_ap_wtp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 16),
+				Optional:     true,
+				Computed:     true,
+			},
+			"max_rogue_sta": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"max_ble_device": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"dfs_lab_test": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -377,6 +409,30 @@ func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenWirelessControllerGlobalMaxStaCap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalMaxStaCapWtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalMaxRogueAp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalMaxRogueApWtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalMaxRogueSta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerGlobalMaxBleDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerGlobalDfsLabTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -522,6 +578,42 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("max_sta_cap", flattenWirelessControllerGlobalMaxStaCap(o["max-sta-cap"], d, "max_sta_cap", sv)); err != nil {
+		if !fortiAPIPatch(o["max-sta-cap"]) {
+			return fmt.Errorf("Error reading max_sta_cap: %v", err)
+		}
+	}
+
+	if err = d.Set("max_sta_cap_wtp", flattenWirelessControllerGlobalMaxStaCapWtp(o["max-sta-cap-wtp"], d, "max_sta_cap_wtp", sv)); err != nil {
+		if !fortiAPIPatch(o["max-sta-cap-wtp"]) {
+			return fmt.Errorf("Error reading max_sta_cap_wtp: %v", err)
+		}
+	}
+
+	if err = d.Set("max_rogue_ap", flattenWirelessControllerGlobalMaxRogueAp(o["max-rogue-ap"], d, "max_rogue_ap", sv)); err != nil {
+		if !fortiAPIPatch(o["max-rogue-ap"]) {
+			return fmt.Errorf("Error reading max_rogue_ap: %v", err)
+		}
+	}
+
+	if err = d.Set("max_rogue_ap_wtp", flattenWirelessControllerGlobalMaxRogueApWtp(o["max-rogue-ap-wtp"], d, "max_rogue_ap_wtp", sv)); err != nil {
+		if !fortiAPIPatch(o["max-rogue-ap-wtp"]) {
+			return fmt.Errorf("Error reading max_rogue_ap_wtp: %v", err)
+		}
+	}
+
+	if err = d.Set("max_rogue_sta", flattenWirelessControllerGlobalMaxRogueSta(o["max-rogue-sta"], d, "max_rogue_sta", sv)); err != nil {
+		if !fortiAPIPatch(o["max-rogue-sta"]) {
+			return fmt.Errorf("Error reading max_rogue_sta: %v", err)
+		}
+	}
+
+	if err = d.Set("max_ble_device", flattenWirelessControllerGlobalMaxBleDevice(o["max-ble-device"], d, "max_ble_device", sv)); err != nil {
+		if !fortiAPIPatch(o["max-ble-device"]) {
+			return fmt.Errorf("Error reading max_ble_device: %v", err)
+		}
+	}
+
 	if err = d.Set("dfs_lab_test", flattenWirelessControllerGlobalDfsLabTest(o["dfs-lab-test"], d, "dfs_lab_test", sv)); err != nil {
 		if !fortiAPIPatch(o["dfs-lab-test"]) {
 			return fmt.Errorf("Error reading dfs_lab_test: %v", err)
@@ -626,6 +718,30 @@ func expandWirelessControllerGlobalApLogServerIp(d *schema.ResourceData, v inter
 }
 
 func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxStaCap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxStaCapWtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxRogueAp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxRogueApWtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxRogueSta(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxBleDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -931,6 +1047,84 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["ap-log-server-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_sta_cap"); ok {
+		if setArgNil {
+			obj["max-sta-cap"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxStaCap(d, v, "max_sta_cap", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-sta-cap"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("max_sta_cap_wtp"); ok {
+		if setArgNil {
+			obj["max-sta-cap-wtp"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxStaCapWtp(d, v, "max_sta_cap_wtp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-sta-cap-wtp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_rogue_ap"); ok {
+		if setArgNil {
+			obj["max-rogue-ap"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxRogueAp(d, v, "max_rogue_ap", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-rogue-ap"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("max_rogue_ap_wtp"); ok {
+		if setArgNil {
+			obj["max-rogue-ap-wtp"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxRogueApWtp(d, v, "max_rogue_ap_wtp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-rogue-ap-wtp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_rogue_sta"); ok {
+		if setArgNil {
+			obj["max-rogue-sta"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxRogueSta(d, v, "max_rogue_sta", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-rogue-sta"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_ble_device"); ok {
+		if setArgNil {
+			obj["max-ble-device"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxBleDevice(d, v, "max_ble_device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-ble-device"] = t
 			}
 		}
 	}

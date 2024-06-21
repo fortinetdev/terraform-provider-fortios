@@ -96,6 +96,11 @@ func resourceWirelessControllerLog() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"wtp_fips_event_log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -262,6 +267,10 @@ func flattenWirelessControllerLogWtpEventLog(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenWirelessControllerLogWtpFipsEventLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWirelessControllerLog(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -337,6 +346,12 @@ func refreshObjectWirelessControllerLog(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("wtp_fips_event_log", flattenWirelessControllerLogWtpFipsEventLog(o["wtp-fips-event-log"], d, "wtp_fips_event_log", sv)); err != nil {
+		if !fortiAPIPatch(o["wtp-fips-event-log"]) {
+			return fmt.Errorf("Error reading wtp_fips_event_log: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -391,6 +406,10 @@ func expandWirelessControllerLogWidsLog(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWirelessControllerLogWtpEventLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerLogWtpFipsEventLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -549,6 +568,19 @@ func getObjectWirelessControllerLog(d *schema.ResourceData, setArgNil bool, sv s
 				return &obj, err
 			} else if t != nil {
 				obj["wtp-event-log"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("wtp_fips_event_log"); ok {
+		if setArgNil {
+			obj["wtp-fips-event-log"] = nil
+		} else {
+			t, err := expandWirelessControllerLogWtpFipsEventLog(d, v, "wtp_fips_event_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wtp-fips-event-log"] = t
 			}
 		}
 	}

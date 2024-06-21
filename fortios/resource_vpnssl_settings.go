@@ -542,7 +542,7 @@ func resourceVpnSslSettings() *schema.Resource {
 			},
 			"tunnel_user_session_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 255),
+				ValidateFunc: validation.IntBetween(1, 86400),
 				Optional:     true,
 				Computed:     true,
 			},

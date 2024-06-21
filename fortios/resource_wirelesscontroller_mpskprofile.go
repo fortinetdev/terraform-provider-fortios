@@ -49,6 +49,22 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"mpsk_external_server_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mpsk_external_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"mpsk_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"mpsk_group": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -82,6 +98,11 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 										Optional:     true,
 										Computed:     true,
 									},
+									"key_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
 									"mac": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
@@ -92,6 +113,22 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 										ValidateFunc: validation.StringLenBetween(0, 128),
 										Optional:     true,
 										Sensitive:    true,
+									},
+									"sae_password": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 128),
+										Optional:     true,
+									},
+									"sae_pk": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"sae_private_key": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 359),
+										Optional:     true,
+										Computed:     true,
 									},
 									"concurrent_client_limit_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -302,6 +339,18 @@ func flattenWirelessControllerMpskProfileMpskConcurrentClients(v interface{}, d 
 	return v
 }
 
+func flattenWirelessControllerMpskProfileMpskExternalServerAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerMpskProfileMpskExternalServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerMpskProfileMpskType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerMpskProfileMpskGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -396,6 +445,11 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyName(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+		if cur_v, ok := i["key-type"]; ok {
+			tmp["key_type"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyKeyType(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if cur_v, ok := i["mac"]; ok {
 			tmp["mac"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMac(cur_v, d, pre_append, sv)
@@ -408,6 +462,21 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 			if c != "" {
 				tmp["passphrase"] = c
 			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_password"
+		if cur_v, ok := i["sae-password"]; ok {
+			tmp["sae_password"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_pk"
+		if cur_v, ok := i["sae-pk"]; ok {
+			tmp["sae_pk"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePk(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_private_key"
+		if cur_v, ok := i["sae-private-key"]; ok {
+			tmp["sae_private_key"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePrivateKey(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_client_limit_type"
@@ -443,11 +512,27 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKeyName(v interface{}, d *
 	return v
 }
 
+func flattenWirelessControllerMpskProfileMpskGroupMpskKeyKeyType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerMpskProfileMpskGroupMpskKeyMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePrivateKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -526,6 +611,24 @@ func refreshObjectWirelessControllerMpskProfile(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("mpsk_external_server_auth", flattenWirelessControllerMpskProfileMpskExternalServerAuth(o["mpsk-external-server-auth"], d, "mpsk_external_server_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["mpsk-external-server-auth"]) {
+			return fmt.Errorf("Error reading mpsk_external_server_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("mpsk_external_server", flattenWirelessControllerMpskProfileMpskExternalServer(o["mpsk-external-server"], d, "mpsk_external_server", sv)); err != nil {
+		if !fortiAPIPatch(o["mpsk-external-server"]) {
+			return fmt.Errorf("Error reading mpsk_external_server: %v", err)
+		}
+	}
+
+	if err = d.Set("mpsk_type", flattenWirelessControllerMpskProfileMpskType(o["mpsk-type"], d, "mpsk_type", sv)); err != nil {
+		if !fortiAPIPatch(o["mpsk-type"]) {
+			return fmt.Errorf("Error reading mpsk_type: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("mpsk_group", flattenWirelessControllerMpskProfileMpskGroup(o["mpsk-group"], d, "mpsk_group", sv)); err != nil {
 			if !fortiAPIPatch(o["mpsk-group"]) {
@@ -556,6 +659,18 @@ func expandWirelessControllerMpskProfileName(d *schema.ResourceData, v interface
 }
 
 func expandWirelessControllerMpskProfileMpskConcurrentClients(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerMpskProfileMpskExternalServerAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerMpskProfileMpskExternalServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerMpskProfileMpskType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -634,6 +749,11 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 			tmp["name"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyName(d, i["name"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["key-type"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyKeyType(d, i["key_type"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mac"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyMac(d, i["mac"], pre_append, sv)
@@ -642,6 +762,21 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["passphrase"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(d, i["passphrase"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_password"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sae-password"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(d, i["sae_password"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_pk"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sae-pk"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeySaePk(d, i["sae_pk"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_private_key"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sae-private-key"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeySaePrivateKey(d, i["sae_private_key"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_client_limit_type"
@@ -678,11 +813,27 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKeyName(d *schema.ResourceD
 	return v, nil
 }
 
+func expandWirelessControllerMpskProfileMpskGroupMpskKeyKeyType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerMpskProfileMpskGroupMpskKeyMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerMpskProfileMpskGroupMpskKeySaePk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerMpskProfileMpskGroupMpskKeySaePrivateKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -744,6 +895,33 @@ func getObjectWirelessControllerMpskProfile(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["mpsk-concurrent-clients"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mpsk_external_server_auth"); ok {
+		t, err := expandWirelessControllerMpskProfileMpskExternalServerAuth(d, v, "mpsk_external_server_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mpsk-external-server-auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mpsk_external_server"); ok {
+		t, err := expandWirelessControllerMpskProfileMpskExternalServer(d, v, "mpsk_external_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mpsk-external-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mpsk_type"); ok {
+		t, err := expandWirelessControllerMpskProfileMpskType(d, v, "mpsk_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mpsk-type"] = t
 		}
 	}
 

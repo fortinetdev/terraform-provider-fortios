@@ -41,6 +41,7 @@ The following arguments are supported:
 * `server` - (Required) LDAP server CN domain name or IP.
 * `secondary_server` - Secondary LDAP server CN domain name or IP.
 * `tertiary_server` - Tertiary LDAP server CN domain name or IP.
+* `status_ttl` - Time for which server reachability is cached so that when a server is unreachable, it will not be retried for at least this period of time (0 = cache disabled, default = 300).
 * `server_identity_check` - Enable/disable LDAP server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `source_ip` - Source IP for communications to LDAP server.
 * `source_port` - Source port to be used for communication with the LDAP server.
@@ -65,7 +66,7 @@ The following arguments are supported:
 * `password_renewal` - Enable/disable online password renewal. Valid values: `enable`, `disable`.
 * `member_attr` - Name of attribute from which to get group membership.
 * `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token. Valid values: `same`, `strip`.
-* `account_key_cert_field` - Define subject identity field in certificate for user access right checking. Valid values: `othername`, `rfc822name`, `dnsname`.
+* `account_key_cert_field` - Define subject identity field in certificate for user access right checking.
 * `account_key_upn_san` - Define SAN in certificate for user principle name matching. Valid values: `othername`, `rfc822name`, `dnsname`.
 * `account_key_filter` - Account key filter, using the UPN as the search filter.
 * `search_type` - Search type. Valid values: `recursive`.

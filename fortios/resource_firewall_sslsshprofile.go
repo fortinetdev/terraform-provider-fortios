@@ -128,6 +128,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"encrypted_client_hello": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"min_allowed_ssl_version": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -229,6 +234,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Computed: true,
 						},
 						"cert_probe_failure": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"encrypted_client_hello": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -795,6 +805,26 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 					},
 				},
 			},
+			"ech_outer_sni": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+						"sni": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"server_cert_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1212,6 +1242,11 @@ func flattenFirewallSslSshProfileSsl(v interface{}, d *schema.ResourceData, pre 
 		result["cert_probe_failure"] = flattenFirewallSslSshProfileSslCertProbeFailure(i["cert-probe-failure"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "encrypted_client_hello"
+	if _, ok := i["encrypted-client-hello"]; ok {
+		result["encrypted_client_hello"] = flattenFirewallSslSshProfileSslEncryptedClientHello(i["encrypted-client-hello"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "min_allowed_ssl_version"
 	if _, ok := i["min-allowed-ssl-version"]; ok {
 		result["min_allowed_ssl_version"] = flattenFirewallSslSshProfileSslMinAllowedSslVersion(i["min-allowed-ssl-version"], d, pre_append, sv)
@@ -1278,6 +1313,10 @@ func flattenFirewallSslSshProfileSslSniServerCertCheck(v interface{}, d *schema.
 }
 
 func flattenFirewallSslSshProfileSslCertProbeFailure(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSslSshProfileSslEncryptedClientHello(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1384,6 +1423,11 @@ func flattenFirewallSslSshProfileHttps(v interface{}, d *schema.ResourceData, pr
 		result["cert_probe_failure"] = flattenFirewallSslSshProfileHttpsCertProbeFailure(i["cert-probe-failure"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "encrypted_client_hello"
+	if _, ok := i["encrypted-client-hello"]; ok {
+		result["encrypted_client_hello"] = flattenFirewallSslSshProfileHttpsEncryptedClientHello(i["encrypted-client-hello"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "min_allowed_ssl_version"
 	if _, ok := i["min-allowed-ssl-version"]; ok {
 		result["min_allowed_ssl_version"] = flattenFirewallSslSshProfileHttpsMinAllowedSslVersion(i["min-allowed-ssl-version"], d, pre_append, sv)
@@ -1462,6 +1506,10 @@ func flattenFirewallSslSshProfileHttpsSniServerCertCheck(v interface{}, d *schem
 }
 
 func flattenFirewallSslSshProfileHttpsCertProbeFailure(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSslSshProfileHttpsEncryptedClientHello(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2424,6 +2472,57 @@ func flattenFirewallSslSshProfileSslExemptRegex(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenFirewallSslSshProfileEchOuterSni(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallSslSshProfileEchOuterSniName(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sni"
+		if cur_v, ok := i["sni"]; ok {
+			tmp["sni"] = flattenFirewallSslSshProfileEchOuterSniSni(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallSslSshProfileEchOuterSniName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSslSshProfileEchOuterSniSni(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSslSshProfileServerCertMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2836,6 +2935,22 @@ func refreshObjectFirewallSslSshProfile(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("ech_outer_sni", flattenFirewallSslSshProfileEchOuterSni(o["ech-outer-sni"], d, "ech_outer_sni", sv)); err != nil {
+			if !fortiAPIPatch(o["ech-outer-sni"]) {
+				return fmt.Errorf("Error reading ech_outer_sni: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ech_outer_sni"); ok {
+			if err = d.Set("ech_outer_sni", flattenFirewallSslSshProfileEchOuterSni(o["ech-outer-sni"], d, "ech_outer_sni", sv)); err != nil {
+				if !fortiAPIPatch(o["ech-outer-sni"]) {
+					return fmt.Errorf("Error reading ech_outer_sni: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("server_cert_mode", flattenFirewallSslSshProfileServerCertMode(o["server-cert-mode"], d, "server_cert_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["server-cert-mode"]) {
 			return fmt.Errorf("Error reading server_cert_mode: %v", err)
@@ -3068,6 +3183,10 @@ func expandFirewallSslSshProfileSsl(d *schema.ResourceData, v interface{}, pre s
 	if _, ok := d.GetOk(pre_append); ok {
 		result["cert-probe-failure"], _ = expandFirewallSslSshProfileSslCertProbeFailure(d, i["cert_probe_failure"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "encrypted_client_hello"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["encrypted-client-hello"], _ = expandFirewallSslSshProfileSslEncryptedClientHello(d, i["encrypted_client_hello"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "min_allowed_ssl_version"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["min-allowed-ssl-version"], _ = expandFirewallSslSshProfileSslMinAllowedSslVersion(d, i["min_allowed_ssl_version"], pre_append, sv)
@@ -3133,6 +3252,10 @@ func expandFirewallSslSshProfileSslSniServerCertCheck(d *schema.ResourceData, v 
 }
 
 func expandFirewallSslSshProfileSslCertProbeFailure(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSshProfileSslEncryptedClientHello(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3222,6 +3345,10 @@ func expandFirewallSslSshProfileHttps(d *schema.ResourceData, v interface{}, pre
 	if _, ok := d.GetOk(pre_append); ok {
 		result["cert-probe-failure"], _ = expandFirewallSslSshProfileHttpsCertProbeFailure(d, i["cert_probe_failure"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "encrypted_client_hello"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["encrypted-client-hello"], _ = expandFirewallSslSshProfileHttpsEncryptedClientHello(d, i["encrypted_client_hello"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "min_allowed_ssl_version"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["min-allowed-ssl-version"], _ = expandFirewallSslSshProfileHttpsMinAllowedSslVersion(d, i["min_allowed_ssl_version"], pre_append, sv)
@@ -3299,6 +3426,10 @@ func expandFirewallSslSshProfileHttpsSniServerCertCheck(d *schema.ResourceData, 
 }
 
 func expandFirewallSslSshProfileHttpsCertProbeFailure(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSshProfileHttpsEncryptedClientHello(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4171,6 +4302,46 @@ func expandFirewallSslSshProfileSslExemptRegex(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandFirewallSslSshProfileEchOuterSni(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandFirewallSslSshProfileEchOuterSniName(d, i["name"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sni"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sni"], _ = expandFirewallSslSshProfileEchOuterSniSni(d, i["sni"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallSslSshProfileEchOuterSniName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSshProfileEchOuterSniSni(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallSslSshProfileServerCertMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4518,6 +4689,15 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["ssl-exempt"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ech_outer_sni"); ok || d.HasChange("ech_outer_sni") {
+		t, err := expandFirewallSslSshProfileEchOuterSni(d, v, "ech_outer_sni", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ech-outer-sni"] = t
 		}
 	}
 

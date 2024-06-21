@@ -482,33 +482,37 @@ func refreshObjectSystemAutomationStitch(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if b_get_all_tables {
-		if err = d.Set("actions", flattenSystemAutomationStitchActions(o["actions"], d, "actions", sv)); err != nil {
-			if !fortiAPIPatch(o["actions"]) {
-				return fmt.Errorf("Error reading actions: %v", err)
-			}
-		}
-	} else {
-		if _, ok := d.GetOk("actions"); ok {
+	if _, ok := o["actions"].([]interface{}); ok {
+		if b_get_all_tables {
 			if err = d.Set("actions", flattenSystemAutomationStitchActions(o["actions"], d, "actions", sv)); err != nil {
 				if !fortiAPIPatch(o["actions"]) {
 					return fmt.Errorf("Error reading actions: %v", err)
 				}
 			}
+		} else {
+			if _, ok := d.GetOk("actions"); ok {
+				if err = d.Set("actions", flattenSystemAutomationStitchActions(o["actions"], d, "actions", sv)); err != nil {
+					if !fortiAPIPatch(o["actions"]) {
+						return fmt.Errorf("Error reading actions: %v", err)
+					}
+				}
+			}
 		}
 	}
 
-	if b_get_all_tables {
-		if err = d.Set("action", flattenSystemAutomationStitchAction(o["action"], d, "action", sv)); err != nil {
-			if !fortiAPIPatch(o["action"]) {
-				return fmt.Errorf("Error reading action: %v", err)
-			}
-		}
-	} else {
-		if _, ok := d.GetOk("action"); ok {
+	if _, ok := o["action"].([]interface{}); ok {
+		if b_get_all_tables {
 			if err = d.Set("action", flattenSystemAutomationStitchAction(o["action"], d, "action", sv)); err != nil {
 				if !fortiAPIPatch(o["action"]) {
 					return fmt.Errorf("Error reading action: %v", err)
+				}
+			}
+		} else {
+			if _, ok := d.GetOk("action"); ok {
+				if err = d.Set("action", flattenSystemAutomationStitchAction(o["action"], d, "action", sv)); err != nil {
+					if !fortiAPIPatch(o["action"]) {
+						return fmt.Errorf("Error reading action: %v", err)
+					}
 				}
 			}
 		}
@@ -709,20 +713,40 @@ func getObjectSystemAutomationStitch(d *schema.ResourceData, sv string) (*map[st
 	}
 
 	if v, ok := d.GetOk("actions"); ok || d.HasChange("actions") {
-		t, err := expandSystemAutomationStitchActions(d, v, "actions", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["actions"] = t
+		new_version_map := map[string][]string{
+			">=": []string{"7.0.1"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("action"); !ok && !d.HasChange("action") {
+				err := fmt.Errorf("Argument 'actions' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandSystemAutomationStitchActions(d, v, "actions", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["actions"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("action"); ok || d.HasChange("action") {
-		t, err := expandSystemAutomationStitchAction(d, v, "action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["action"] = t
+		new_version_map := map[string][]string{
+			"<=": []string{"7.0.0"},
+		}
+		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+			if _, ok := d.GetOk("actions"); !ok && !d.HasChange("actions") {
+				err := fmt.Errorf("Argument 'action' %s.", err)
+				return nil, err
+			}
+		} else {
+			t, err := expandSystemAutomationStitchAction(d, v, "action", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["action"] = t
+			}
 		}
 	}
 

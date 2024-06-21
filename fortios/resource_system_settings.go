@@ -833,6 +833,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"internet_service_app_ctrl_size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1612,6 +1617,10 @@ func flattenSystemSettingsGuiEnforceChangeSummary(v interface{}, d *schema.Resou
 }
 
 func flattenSystemSettingsInternetServiceDatabaseCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsInternetServiceAppCtrlSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2558,6 +2567,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("internet_service_app_ctrl_size", flattenSystemSettingsInternetServiceAppCtrlSize(o["internet-service-app-ctrl-size"], d, "internet_service_app_ctrl_size", sv)); err != nil {
+		if !fortiAPIPatch(o["internet-service-app-ctrl-size"]) {
+			return fmt.Errorf("Error reading internet_service_app_ctrl_size: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -3204,6 +3219,10 @@ func expandSystemSettingsGuiEnforceChangeSummary(d *schema.ResourceData, v inter
 }
 
 func expandSystemSettingsInternetServiceDatabaseCache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsInternetServiceAppCtrlSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5208,6 +5227,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["internet-service-database-cache"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("internet_service_app_ctrl_size"); ok {
+		if setArgNil {
+			obj["internet-service-app-ctrl-size"] = nil
+		} else {
+			t, err := expandSystemSettingsInternetServiceAppCtrlSize(d, v, "internet_service_app_ctrl_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["internet-service-app-ctrl-size"] = t
 			}
 		}
 	}

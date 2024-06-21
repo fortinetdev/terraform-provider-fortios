@@ -64,6 +64,12 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cloud_authentication_access_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 20),
+				Optional:     true,
+				Computed:     true,
+			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -352,6 +358,10 @@ func flattenEndpointControlFctemsOverrideFortinetoneCloudAuthentication(v interf
 	return v
 }
 
+func flattenEndpointControlFctemsOverrideCloudAuthenticationAccessKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenEndpointControlFctemsOverrideServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -466,6 +476,12 @@ func refreshObjectEndpointControlFctemsOverride(d *schema.ResourceData, o map[st
 	if err = d.Set("fortinetone_cloud_authentication", flattenEndpointControlFctemsOverrideFortinetoneCloudAuthentication(o["fortinetone-cloud-authentication"], d, "fortinetone_cloud_authentication", sv)); err != nil {
 		if !fortiAPIPatch(o["fortinetone-cloud-authentication"]) {
 			return fmt.Errorf("Error reading fortinetone_cloud_authentication: %v", err)
+		}
+	}
+
+	if err = d.Set("cloud_authentication_access_key", flattenEndpointControlFctemsOverrideCloudAuthenticationAccessKey(o["cloud-authentication-access-key"], d, "cloud_authentication_access_key", sv)); err != nil {
+		if !fortiAPIPatch(o["cloud-authentication-access-key"]) {
+			return fmt.Errorf("Error reading cloud_authentication_access_key: %v", err)
 		}
 	}
 
@@ -624,6 +640,10 @@ func expandEndpointControlFctemsOverrideFortinetoneCloudAuthentication(d *schema
 	return v, nil
 }
 
+func expandEndpointControlFctemsOverrideCloudAuthenticationAccessKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandEndpointControlFctemsOverrideServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -753,6 +773,15 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 			return &obj, err
 		} else if t != nil {
 			obj["fortinetone-cloud-authentication"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cloud_authentication_access_key"); ok {
+		t, err := expandEndpointControlFctemsOverrideCloudAuthenticationAccessKey(d, v, "cloud_authentication_access_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cloud-authentication-access-key"] = t
 		}
 	}
 

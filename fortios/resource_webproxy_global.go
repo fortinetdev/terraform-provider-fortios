@@ -118,6 +118,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"always_learn_client_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"learn_client_ip_from_header": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -177,6 +182,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"log_app_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"proxy_transparent_cert_inspection": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -369,6 +379,10 @@ func flattenWebProxyGlobalLearnClientIp(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenWebProxyGlobalAlwaysLearnClientIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyGlobalLearnClientIpFromHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -481,6 +495,10 @@ func flattenWebProxyGlobalLogAppId(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenWebProxyGlobalProxyTransparentCertInspection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -580,6 +598,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("always_learn_client_ip", flattenWebProxyGlobalAlwaysLearnClientIp(o["always-learn-client-ip"], d, "always_learn_client_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["always-learn-client-ip"]) {
+			return fmt.Errorf("Error reading always_learn_client_ip: %v", err)
+		}
+	}
+
 	if err = d.Set("learn_client_ip_from_header", flattenWebProxyGlobalLearnClientIpFromHeader(o["learn-client-ip-from-header"], d, "learn_client_ip_from_header", sv)); err != nil {
 		if !fortiAPIPatch(o["learn-client-ip-from-header"]) {
 			return fmt.Errorf("Error reading learn_client_ip_from_header: %v", err)
@@ -654,6 +678,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("proxy_transparent_cert_inspection", flattenWebProxyGlobalProxyTransparentCertInspection(o["proxy-transparent-cert-inspection"], d, "proxy_transparent_cert_inspection", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-transparent-cert-inspection"]) {
+			return fmt.Errorf("Error reading proxy_transparent_cert_inspection: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -720,6 +750,10 @@ func expandWebProxyGlobalWebproxyProfile(d *schema.ResourceData, v interface{}, 
 }
 
 func expandWebProxyGlobalLearnClientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalAlwaysLearnClientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -804,6 +838,10 @@ func expandWebProxyGlobalLogForwardServer(d *schema.ResourceData, v interface{},
 }
 
 func expandWebProxyGlobalLogAppId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalProxyTransparentCertInspection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1005,6 +1043,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("always_learn_client_ip"); ok {
+		if setArgNil {
+			obj["always-learn-client-ip"] = nil
+		} else {
+			t, err := expandWebProxyGlobalAlwaysLearnClientIp(d, v, "always_learn_client_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["always-learn-client-ip"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("learn_client_ip_from_header"); ok {
 		if setArgNil {
 			obj["learn-client-ip-from-header"] = nil
@@ -1118,6 +1169,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["log-app-id"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_transparent_cert_inspection"); ok {
+		if setArgNil {
+			obj["proxy-transparent-cert-inspection"] = nil
+		} else {
+			t, err := expandWebProxyGlobalProxyTransparentCertInspection(d, v, "proxy_transparent_cert_inspection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-transparent-cert-inspection"] = t
 			}
 		}
 	}

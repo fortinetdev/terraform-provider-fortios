@@ -88,6 +88,11 @@ func resourceFirewallVip() *schema.Resource {
 					},
 				},
 			},
+			"src_vip_filter": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"service": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -998,6 +1003,10 @@ func flattenFirewallVipSrcFilter(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenFirewallVipSrcFilterRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipSrcVipFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2028,6 +2037,12 @@ func refreshObjectFirewallVip(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("src_vip_filter", flattenFirewallVipSrcVipFilter(o["src-vip-filter"], d, "src_vip_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["src-vip-filter"]) {
+			return fmt.Errorf("Error reading src_vip_filter: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("service", flattenFirewallVipService(o["service"], d, "service", sv)); err != nil {
 			if !fortiAPIPatch(o["service"]) {
@@ -2745,6 +2760,10 @@ func expandFirewallVipSrcFilter(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandFirewallVipSrcFilterRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipSrcVipFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3659,6 +3678,15 @@ func getObjectFirewallVip(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["src-filter"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("src_vip_filter"); ok {
+		t, err := expandFirewallVipSrcVipFilter(d, v, "src_vip_filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["src-vip-filter"] = t
 		}
 	}
 

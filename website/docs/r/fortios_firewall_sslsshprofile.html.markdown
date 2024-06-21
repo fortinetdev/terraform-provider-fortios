@@ -70,6 +70,7 @@ The following arguments are supported:
 * `whitelist` - Enable/disable exempting servers by FortiGuard whitelist. Valid values: `enable`, `disable`.
 * `block_blacklisted_certificates` - Enable/disable blocking SSL-based botnet communication by FortiGuard certificate blacklist. Valid values: `disable`, `enable`.
 * `ssl_exempt` - Servers to exempt from SSL inspection. The structure of `ssl_exempt` block is documented below.
+* `ech_outer_sni` - ClientHelloOuter SNIs to be blocked. The structure of `ech_outer_sni` block is documented below.
 * `server_cert_mode` - Re-sign or replace the server's certificate. Valid values: `re-sign`, `replace`.
 * `use_ssl_server` - Enable/disable the use of SSL server table for SSL offloading. Valid values: `disable`, `enable`.
 * `caname` - CA certificate used by SSL Inspection.
@@ -108,6 +109,7 @@ The `ssl` block supports:
 * `cert_validation_failure` - Action based on certificate validation failure. Valid values: `allow`, `block`, `ignore`.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate. Valid values: `enable`, `strict`, `disable`.
 * `cert_probe_failure` - Action based on certificate probe failure. Valid values: `allow`, `block`.
+* `encrypted_client_hello` - Block/allow session based on existence of encrypted-client-hello. Valid values: `allow`, `block`.
 * `min_allowed_ssl_version` - Minimum SSL version to be allowed. Valid values: `ssl-3.0`, `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
 
 The `https` block supports:
@@ -130,6 +132,7 @@ The `https` block supports:
 * `cert_validation_failure` - Action based on certificate validation failure. Valid values: `allow`, `block`, `ignore`.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate. Valid values: `enable`, `strict`, `disable`.
 * `cert_probe_failure` - Action based on certificate probe failure. Valid values: `allow`, `block`.
+* `encrypted_client_hello` - Block/allow session based on existence of encrypted-client-hello. Valid values: `allow`, `block`.
 * `min_allowed_ssl_version` - Minimum SSL version to be allowed. Valid values: `ssl-3.0`, `tls-1.0`, `tls-1.1`, `tls-1.2`, `tls-1.3`.
 
 The `ftps` block supports:
@@ -244,6 +247,11 @@ The `ssl_exempt` block supports:
 * `address6` - IPv6 address object.
 * `wildcard_fqdn` - Exempt servers by wildcard FQDN.
 * `regex` - Exempt servers by regular expression.
+
+The `ech_outer_sni` block supports:
+
+* `name` - ClientHelloOuter SNI name.
+* `sni` - ClientHelloOuter SNI to be blocked.
 
 The `ssl_server` block supports:
 

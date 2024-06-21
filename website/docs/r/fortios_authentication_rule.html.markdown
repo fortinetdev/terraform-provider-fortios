@@ -40,6 +40,7 @@ The following arguments are supported:
 * `web_auth_cookie` - Enable/disable Web authentication cookies (default = disable). Valid values: `enable`, `disable`.
 * `cors_stateful` - Enable/disable allowance of CORS access (default = disable). Valid values: `enable`, `disable`.
 * `cors_depth` - Depth to allow CORS access (default = 3).
+* `cert_auth_cookie` - Enable/disable to use device certificate as authentication cookie (default = enable). Valid values: `enable`, `disable`.
 * `transaction_based` - Enable/disable transaction based authentication (default = disable). Valid values: `enable`, `disable`.
 * `web_portal` - Enable/disable web portal for proxy transparent policy (default = enable). Valid values: `enable`, `disable`.
 * `comments` - Comment.

@@ -76,6 +76,7 @@ The following arguments are supported:
 * `comment` - Comment.
 * `type` - Configure a static NAT or server load balance VIP.
 * `src_filter` - Source IP6 filter (x:x:x:x:x:x:x:x/x). Separate addresses with spaces. The structure of `src_filter` block is documented below.
+* `src_vip_filter` - Enable/disable use of 'src-filter' to match destinations for the reverse SNAT rule. Valid values: `disable`, `enable`.
 * `extip` - (Required) IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `mappedip` - (Required) Mapped IP address range in the format startIP-endIP.
 * `nat_source_vip` - Enable to perform SNAT on traffic from mappedip to the extip for all egress interfaces. Valid values: `disable`, `enable`.

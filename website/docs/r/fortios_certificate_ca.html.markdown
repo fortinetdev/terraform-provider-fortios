@@ -26,6 +26,7 @@ The following arguments are supported:
 * `source_ip` - Source IP address for communications to the SCEP server.
 * `ca_identifier` - CA identifier of the SCEP server.
 * `obsolete` - Enable/disable this CA as obsoleted. Valid values: `disable`, `enable`.
+* `fabric_ca` - Enable/disable synchronization of CA across Security Fabric. Valid values: `disable`, `enable`.
 * `last_updated` - Time at which CA was last updated.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

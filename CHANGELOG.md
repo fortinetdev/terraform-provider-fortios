@@ -1,4 +1,21 @@
-## 1.20.0 (Unreleased)
+## 1.21.0 (Unreleased)
+
+
+## 1.20.0 (Jun 21, 2024)
+BUG FIXES:
+
+* Fix extra quote issue;
+* Fix issue of multiple argument conflict caused by version differences for resource system_automationstitch;
+
+IMPROVEMENTS:
+
+* Support FortiOS version 7.4.4;
+
+FEATURES:
+
+* **New Data source:** `fortios_extensioncontroller_extendervap`
+* **New Data source:** `fortios_firewall_ondemandsniffer`
+* **New Data source:** `fortios_system_sshconfig`
 
 
 ## 1.19.1 (Apr 29, 2024)

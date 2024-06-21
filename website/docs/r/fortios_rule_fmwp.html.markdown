@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_rule_fmwp
-Show FMWP signatures. Applies to FortiOS Version `7.2.8,7.4.2,7.4.3`.
+Show FMWP signatures. Applies to FortiOS Version `7.2.8,7.4.2,7.4.3,7.4.4`.
 
 ## Argument Reference
 
