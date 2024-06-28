@@ -157,7 +157,7 @@ func updateFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 	return readFMGSystemNetworkInterface(d, m)
 }
 
-//FortiManger JSON API: No effort for delete operation
+//FortiManager JSON API: No effort for delete operation
 func deleteFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
